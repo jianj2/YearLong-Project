@@ -1,0 +1,31 @@
+/**
+  * ====================================================================
+  * CSS FILE TO STYLE the 'App' Component 
+  * ====================================================================
+  * @date created: 10th May 2020
+  * @authors: Waqas Rehmani
+  *
+  * This file contains all the CSS classes related to the App to style 
+  * the component.
+  *
+*/
+
+/* Importing font from Google Fonts */
+/* Font name: Raleway */
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+
+html, body {
+    margin: 0;
+    background: #151515;
+    color: #eee;
+    font-family: 'Raleway', sans-serif;
+    background-color: #151641;
+    color: #eee;
+}
+
+.app-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}

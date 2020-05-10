@@ -1,0 +1,36 @@
+/**
+ * ====================================================================
+ * CSS FILE TO STYLE the 'Navbar' Component 
+ * ====================================================================
+ * @date created: 10th May 2020
+ * @authors: Waqas Rehmani
+ *
+ * This file contains all the CSS classes related to the Navbar 
+ * component to style the component.
+ *
+ */
+
+.navbar-container {
+    width: 100vw;
+    height: 5vh;
+    padding: 0 1vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #151641;
+    box-shadow: 0 1px  20px 0 rgba(0,0,0,0.2);
+
+    /* border-bottom: 1px solid #000; */
+    
+}
+.navbar-left {
+    
+}
+
+.navbar-left img{
+    height: 25px;
+}
+
+..navbar-right {
+
+}
