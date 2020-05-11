@@ -14,7 +14,7 @@ var cors = require('cors');
 app.use(cors());
 
 // defining routes
-var indexRouter = require('./routes/index');
+var indexRouter = require('./routes');
 var clinicianRouter = require('./routes/clinician');
 var questionnaireRouter = require('./routes/questionnaire');
 
