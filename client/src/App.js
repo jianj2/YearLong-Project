@@ -14,49 +14,39 @@
 
 import React from 'react';
 import { BrowserRouter as Router, Route} from 'react-router-dom';
+import { useAuth0 } from "./react-auth0-spa";
+
 
 // Import styles.
 import './styles/main.css';
 
-// Import ccreens.
+// Import screens.
 import Home from './screens/Home';
 
 // Import components.
-import Navbar from './components/Navbar';
+import NavBar from './components/Navbar';
 
 
-class App extends React.Component {
-    constructor (props) {
-        super(props);
-
-        // Application state.
-        this.state = {
-
-        }
+function App() {
+    const { loading } = useAuth0();
+  
+    if (loading) {
+      return <div>Loading...</div>;
     }
-
-    // ---------------------------------------------------------------
-    // This method defines the elements for this component.
-    // ---------------------------------------------------------------
-    render() {
-        return(
-            <div className='app-container'>
+  
+    return (
+      <div className='app-container'>
                 <Router>
-                    <Navbar />
-
+                    <NavBar />
                     <Route
                         path='/' exact
                         render={() => (
                             <Home />
                         )}
                     />
- 
-
                 </Router>
             </div>
-        )
-    }
-
-}
+    );
+  }
 
 export default App;

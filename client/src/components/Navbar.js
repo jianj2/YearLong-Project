@@ -12,7 +12,8 @@
  *
  */
 
-import React, { Component } from 'react';
+import React from "react";
+import { useAuth0 } from "../react-auth0-spa";
 
 // Import styles.
 import '../styles/navbar.css';
@@ -20,24 +21,33 @@ import '../styles/navbar.css';
 // Import assets.
 import logoCompressed from '../assets/logo_compressed.png';
 
-class Navbar extends Component {
+const NavBar = () => {
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
-    // ---------------------------------------------------------------
-    // This method defines the elements for this component.
-    // ---------------------------------------------------------------
-    render(){
-        return(
-            <div className='navbar-container'>
-                <div className='navbar-left'>
-                    <img src={logoCompressed}/>
-                </div>
+  return (
+       <div className='navbar-container'> 
+            <div className='navbar-left'>
+                <img src={logoCompressed}/>
+            </div>  
+				
+      
+            <div>
+            {!isAuthenticated && (
+                <button onClick={() => loginWithRedirect({})}>Log in</button>
+            )}
 
-                <div className='navbar-right'>
-
-                </div>
+            {isAuthenticated && <button onClick={() => logout()}>Log out</button>}
             </div>
-        )
-    }
-}
 
-export default Navbar;
+            <div className='navbar-right'>
+
+            </div> 
+        </div> 
+                
+    
+  );
+};
+
+export default NavBar;
+
+
