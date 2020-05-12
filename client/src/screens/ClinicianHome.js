@@ -22,10 +22,7 @@ import { useAuth0 } from "../react-auth0-spa";
 import '../styles/home.css';
 
 
-    
-
-    
-const Home = () => {
+const ClinicianHome = () => {
 
 
     
@@ -40,9 +37,9 @@ const Home = () => {
         }
 
         return(
-            <div className='home'>
+            <div className='clinicianHome'>
                 <h1>Pediatric SSQ</h1>
-                <h3>Welcome</h3>
+                <h3>Welcome Clinician!</h3>
                 <h2>{user.name}</h2>
                 <h4>H O M E</h4>
             </div>
@@ -50,4 +47,4 @@ const Home = () => {
     
 }
 
-export default Home
+export default ClinicianHome

@@ -22,9 +22,11 @@ import './styles/main.css';
 
 // Import screens.
 import Home from './screens/Home';
+import ClinicianHome from './screens/ClinicianHome.js'
 
 // Import components.
 import NavBar from './components/Navbar';
+
 
 
 function App() {
@@ -44,6 +46,7 @@ function App() {
                             <Home />
                         )}
                     />
+                    <Route path="/clinician" component={ClinicianHome}/>
                 </Router>
             </div>
     );

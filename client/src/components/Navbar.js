@@ -21,6 +21,7 @@ import '../styles/navbar.css';
 // Import assets.
 import logoCompressed from '../assets/logo_compressed.png';
 
+// handles rendering of Navigation Bar with Login
 const NavBar = () => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
