@@ -21,10 +21,6 @@ import { useAuth0 } from "../react-auth0-spa";
 // Import styles.
 import '../styles/home.css';
 
-
-    
-
-    
 const Home = () => {
 
 

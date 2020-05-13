@@ -17,6 +17,7 @@ import { BrowserRouter as Router, Route} from 'react-router-dom';
 import { useAuth0 } from "./react-auth0-spa";
 
 
+
 // Import styles.
 import './styles/main.css';
 
@@ -26,6 +27,7 @@ import ClinicianHome from './screens/ClinicianHome.js'
 
 // Import components.
 import NavBar from './components/Navbar';
+import PrivateRoute from "./components/PrivateRoute";
 
 
 
@@ -46,7 +48,7 @@ function App() {
                             <Home />
                         )}
                     />
-                    <Route path="/clinician" component={ClinicianHome}/>
+                    <PrivateRoute path="/clinician" component={ClinicianHome}/>
                 </Router>
             </div>
     );
