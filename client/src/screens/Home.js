@@ -17,6 +17,8 @@ import React, { Component } from 'react';
 
 // Import styles.
 import '../styles/home.css';
+import NonLinearSlider from '../components/NonLinearSlider';
+
 
 class Home extends Component {
     
@@ -30,6 +32,7 @@ class Home extends Component {
                 <h1>Pediatric SSQ</h1>
                 <h3>Welcome</h3>
                 <h4>H O M E</h4>
+                <NonLinearSlider/>
             </div>
         )
     }

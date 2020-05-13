@@ -23,6 +23,8 @@ import Home from './screens/Home';
 
 // Import components.
 import Navbar from './components/Navbar';
+import NonLinearSlider from './components/NonLinearSlider';
+
 
 
 class App extends React.Component {
@@ -48,6 +50,7 @@ class App extends React.Component {
                         path='/' exact
                         render={() => (
                             <Home />
+
                         )}
                     />
  
