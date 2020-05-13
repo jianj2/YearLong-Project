@@ -32,7 +32,7 @@ class Home extends Component {
                 <h1>Pediatric SSQ</h1>
                 <h3>Welcome</h3>
                 <h4>H O M E</h4>
-                <h4>Testing again</h4>
+                <h4>Final Testing again</h4>
                 <NonLinearSlider/>
             </div>
         )
