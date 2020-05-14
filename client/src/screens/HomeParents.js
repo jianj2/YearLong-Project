@@ -19,31 +19,21 @@ import { useAuth0 } from "../react-auth0-spa";
 
 
 // Import styles.
-import '../styles/home.css';
+import '../styles/parents.css';
+import "../styles/main.css";
 
-const Home = () => {
-
-
-    
+const HomeParents = () => {
     // ---------------------------------------------------------------
     // This method defines the elements for this component.
     // ---------------------------------------------------------------
-   
-        const { loading, user } = useAuth0();
 
-        if (loading || !user) {
-          return <div>Loading...</div>;
-        }
+    return (
+        <div className="home">
+            <h1>Pediatric SSQ</h1>
+            <h3>Welcome</h3> 
+            <h4>H O M E</h4>
+        </div>
+    );
+};
 
-        return(
-            <div className='home'>
-                <h1>Pediatric SSQ</h1>
-                <h3>Welcome</h3>
-                <h2>{user.name}</h2>
-                <h4>H O M E</h4>
-            </div>
-        );
-    
-}
-
-export default Home
+export default HomeParents

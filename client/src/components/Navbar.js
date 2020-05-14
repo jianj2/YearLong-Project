@@ -14,41 +14,38 @@
 
 import React from "react";
 import { useAuth0 } from "../react-auth0-spa";
+import { IoMdLogOut } from "react-icons/io";
 
 // Import styles.
-import '../styles/navbar.css';
+import "../styles/navbar.css";
 
 // Import assets.
-import logoCompressed from '../assets/logo_compressed.png';
+import logoCompressed from "../assets/logo_compressed.png";
 
 // handles rendering of Navigation Bar with Login
 const NavBar = () => {
-  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+    const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
-  return (
-       <div className='navbar-container'> 
-            <div className='navbar-left'>
-                <img src={logoCompressed}/>
-            </div>  
-				
-      
-            <div>
-            {!isAuthenticated && (
-                <button onClick={() => loginWithRedirect({})}>Log in</button>
-            )}
-
-            {isAuthenticated && <button onClick={() => logout()}>Log out</button>}
+    return (
+        <div className="navbar-container">
+            <div className="navbar-left">
+                <img src={logoCompressed} alt="logo" />
             </div>
 
-            <div className='navbar-right'>
 
-            </div> 
-        </div> 
-                
-    
-  );
+            <div className="navbar-right">
+                { isAuthenticated && (
+                    <button 
+                        onClick={() => logout()} 
+                        classname='button' 
+                        title='Log Out'
+                    >
+                        <IoMdLogOut />
+                    </button>
+                )} 
+            </div>
+        </div>
+    );
 };
 
 export default NavBar;
-
-

@@ -1,0 +1,70 @@
+/**
+ * ====================================================================
+ * CSS FILE TO STYLE the 'Landing' Component 
+ * ====================================================================
+ * @date created: 10th May 2020
+ * @authors: Waqas Rehmani
+ *
+ * This file contains all the CSS classes related to the Login screen
+ * to style the component.
+ *
+ */
+
+.landing {
+    width: 100vw;
+    height: 94vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 2fr 2fr 1fr;
+    grid-template-areas:
+        ".  .       .           .       ."
+        ".  logo    logo        logo    ."
+        ".  parent  clinician   admin   ."
+        ".  .       .           .       ."
+
+    ;
+    grid-gap: 2vh;
+    
+}
+
+.landing-logo {
+    grid-area: logo;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+
+.landing-logo img{
+    width: 50%;
+}
+
+.landing-button {
+    background: rgba(255,255,255,0.02);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    /* height: 100%; */
+    border-radius: 15px;
+    color: #eee;
+    font-size: 1.8vh;
+    font-weight: 100;
+    transition: all 0.1s;
+}
+
+.landing-button:hover {
+    background: rgba(255,255,255,0.05);
+    font-size: 2.1vh;
+}
+
+.landing-button-parent {
+    grid-area: parent;
+}
+
+.landing-button-clinician {
+    grid-area: clinician;
+}
+
+.landing-button-admin {
+    grid-area: admin;
+}
