@@ -3,7 +3,7 @@
  * REACT COMPONENT CLASS
  * ====================================================================
  * @date created: 10th May 2020
- * @authors: Waqas Rehmani
+ * @authors: Waqas Rehmani, Cary Jin, SaiEr Ding
  *
  * The Navbar component defines our Navbar for the application. This
  * will visible at the top of our application.

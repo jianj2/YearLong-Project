@@ -1,6 +1,6 @@
 /**
  * ====================================================================
- * REACT SCREEN COMPONENT CLASS
+ * REACT SCREEN COMPONENT FUNCTION
  * ====================================================================
  * @date created: 10th May 2020
  * @authors: Waqas Rehmani, Cary Jin, SaiEr Ding

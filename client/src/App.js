@@ -29,11 +29,11 @@ import HomeAdmin from "./screens/HomeAdmin";
 import NavBar from "./components/Navbar";
 
 function App() {
-    const { loading } = useAuth0();
+    // const { loading } = useAuth0();
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    // if (loading) {
+    //     return <div>Loading...</div>;
+    // }
 
     return (
         <div className="app-container">
