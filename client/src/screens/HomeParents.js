@@ -3,15 +3,16 @@
  * REACT SCREEN COMPONENT CLASS
  * ====================================================================
  * @date created: 10th May 2020
- * @authors: Waqas Rehmani
+ * @authors: Waqas Rehmani, Cary Jin, SaiEr Ding
  *
- * The Home screen component defines our screen for the route '/'. This
- * will be the first screen users will see when they visit our 
- * application.
+ * The Home screen component defines our screen for the route
+ * '/parents'. This will be the first screen parents will see
+ * when they choose the Parents option.
  *
- * This file is used to display the Home screen.
+ * This file is used to display the Parents Home screen.
  *
  */
+
 
 import React from 'react';
 

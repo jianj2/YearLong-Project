@@ -3,7 +3,7 @@
  * REACT SCREEN COMPONENT CLASS
  * ====================================================================
  * @date created: 10th May 2020
- * @authors: Waqas Rehmani, Cary Jin
+ * @authors: Waqas Rehmani, Cary Jin, SaiEr Ding
  *
  * The Home screen component defines our screen for the route
  * '/clinician'. This will be the first screen clinicians will see
@@ -16,6 +16,8 @@
 import React, { useEffect } from "react";
 
 import { useAuth0 } from "../react-auth0-spa";
+
+import Loading from '../components/Loading';
 
 // Import styles.
 import "../styles/clinician.css";
@@ -42,7 +44,7 @@ const HomeClinician = () => {
     // const { loading, user } = useAuth0();
 
     if (loading || !user) {
-        return <div>Loading...</div>;
+        return <Loading />;
     }
 
     return (

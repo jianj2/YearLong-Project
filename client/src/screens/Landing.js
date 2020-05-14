@@ -32,7 +32,7 @@ const Landing = () => {
         <div className="landing">
             <div className="landing-logo">
                 <img src={logoComplete} />
-            </div>
+            </div> 
 
             <Link className="landing-button-parent landing-button" to="/parent">
                 Parent

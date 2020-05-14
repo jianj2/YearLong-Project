@@ -21,9 +21,6 @@ const Loading = () => {
         <div className="loading">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
-                style="margin:auto;background:#fff;display:block;"
-                width="200px"
-                height="200px"
                 viewBox="0 0 100 100"
                 preserveAspectRatio="xMidYMid"
             >
@@ -32,7 +29,7 @@ const Loading = () => {
                     cy="50"
                     fill="none"
                     stroke="#eeeeee"
-                    stroke-width="10"
+                    stroke-width="8"
                     r="35"
                     stroke-dasharray="164.93361431346415 56.97787143782138"
                     transform="rotate(5.84712 50 50)"
@@ -46,7 +43,7 @@ const Loading = () => {
                         keyTimes="0;1"
                     ></animateTransform>
                 </circle>
-            </svg></div>
+            </svg>
         </div>
     );
 }

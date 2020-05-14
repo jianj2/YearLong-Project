@@ -3,13 +3,13 @@
  * REACT SCREEN COMPONENT CLASS
  * ====================================================================
  * @date created: 10th May 2020
- * @authors: Waqas Rehmani, Cary Jin
+ * @authors: Waqas Rehmani, Cary Jin, SaiEr Ding
  *
  * The Home screen component defines our screen for the route
- * '/clinician'. This will be the first screen clinicians will see
- * when they choose the Clinician option.
+ * '/admin'. This will be the first screen the admin will see
+ * when they choose the Admin option.
  *
- * This file is used to display the Clinician Home screen.
+ * This file is used to display the Admin Home screen.
  *
  */
 
