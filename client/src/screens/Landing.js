@@ -35,7 +35,7 @@ const Landing = () => {
             </div> 
 
             <Link className="landing-button-parent landing-button" to="/parent">
-                Parent
+                Parents / Children
             </Link>
 
             <Link

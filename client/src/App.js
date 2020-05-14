@@ -21,9 +21,9 @@ import "./styles/main.css";
 
 // Import screens.
 import Landing from "./screens/Landing";
-import HomeClinician from "./screens/HomeClinician.js";
-import HomeParents from "./screens/HomeParents.js";
-import HomeAdmin from "./screens/HomeAdmin.js";
+import HomeClinician from "./screens/HomeClinician";
+import HomeParents from "./screens/HomeParents";
+import HomeAdmin from "./screens/HomeAdmin";
 
 // Import components.
 import NavBar from "./components/Navbar";

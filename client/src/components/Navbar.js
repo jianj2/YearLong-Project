@@ -14,6 +14,7 @@
 
 import React from "react";
 import { useAuth0 } from "../react-auth0-spa";
+import { Link } from 'react-router-dom'
 import { IoMdLogOut } from "react-icons/io";
 
 // Import styles.
@@ -29,20 +30,21 @@ const NavBar = () => {
     return (
         <div className="navbar-container">
             <div className="navbar-left">
-                <img src={logoCompressed} alt="logo" />
+                <Link to="/">
+                    <img src={logoCompressed} alt="logo" />
+                </Link>
             </div>
 
-
             <div className="navbar-right">
-                { isAuthenticated && (
-                    <button 
-                        onClick={() => logout()} 
-                        classname='button' 
-                        title='Log Out'
+                {isAuthenticated && (
+                    <button
+                        onClick={() => logout()}
+                        classname="button"
+                        title="Log Out"
                     >
                         <IoMdLogOut />
                     </button>
-                )} 
+                )}
             </div>
         </div>
     );

@@ -1,0 +1,52 @@
+
+/* ==================================================== */
+/*        Following classes are for HomeParents         */
+/* ==================================================== */
+.parents-home {
+
+}
+
+
+.subheader-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 2vh 4vh;
+}
+.subheader-container button{
+    margin: 0 0 0 1vh;
+}
+
+.return-form {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+/* ==================================================== */
+/*        Following classes are for LoginParent         */
+/* ==================================================== */
+.parents-form {
+    display: flex;
+    flex-flow: column;
+    /* width: 50%; */
+
+}
+
+.parents-form label{
+    align-self: center;
+    opacity: 0.7;
+}
+.parents-form input{
+    margin: 1rem 0;
+    text-align: center;
+}
+
+.parents-form button{
+    align-self: center;
+    margin: 0 0 1rem 0;
+}
+.parents-form span{
+    align-self: center;
+    opacity: 0.4;
+}
