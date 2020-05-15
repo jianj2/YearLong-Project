@@ -3,7 +3,7 @@
  * REACT COMPONENT CLASS
  * ====================================================================
  * @date created: 10th May 2020
- * @authors: Waqas Rehmani
+ * @authors: Waqas Rehmani, Cary Jin, SaiEr Ding
  *
  * The Navbar component defines our Navbar for the application. This
  * will visible at the top of our application.
@@ -12,32 +12,42 @@
  *
  */
 
-import React, { Component } from 'react';
+import React from "react";
+import { useAuth0 } from "../react-auth0-spa";
+import { Link } from 'react-router-dom'
+import { IoMdLogOut } from "react-icons/io";
 
 // Import styles.
-import '../styles/navbar.css';
+import "../styles/navbar.css";
 
 // Import assets.
-import logoCompressed from '../assets/logo_compressed.png';
+import logoCompressed from "../assets/logo_compressed.png";
 
-class Navbar extends Component {
+// handles rendering of Navigation Bar with Login
+const NavBar = () => {
+    const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
-    // ---------------------------------------------------------------
-    // This method defines the elements for this component.
-    // ---------------------------------------------------------------
-    render(){
-        return(
-            <div className='navbar-container'>
-                <div className='navbar-left'>
-                    <img src={logoCompressed}/>
-                </div>
-
-                <div className='navbar-right'>
-
-                </div>
+    return (
+        <div className="navbar-container">
+            <div className="navbar-left">
+                <Link to="/">
+                    <img src={logoCompressed} alt="logo" />
+                </Link>
             </div>
-        )
-    }
-}
 
-export default Navbar;
+            <div className="navbar-right">
+                {isAuthenticated && (
+                    <button
+                        onClick={() => logout()}
+                        classname="button"
+                        title="Log Out"
+                    >
+                        <IoMdLogOut />
+                    </button>
+                )}
+            </div>
+        </div>
+    );
+};
+
+export default NavBar;
