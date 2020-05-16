@@ -21,7 +21,8 @@ import Loading from '../components/Loading';
 
 // Import styles.
 import "../styles/clinician.css";
-import "../styles/main.css";
+import "../styles/main.css"
+import SideBar from "../components/Clinician/Sidebar";
 
 // ---------------------------------------------------------------
 // This function defines the Clinician Home screen.
@@ -47,12 +48,22 @@ const HomeClinician = () => {
         return <Loading />;
     }
 
+    let top_div;
+
+    // if () {
+    //
+    // }
+
     return (
         <div className="HomeClinician">
-            <h1>Pediatric SSQ</h1>
-            <h3>Welcome Clinician!</h3>
-            <h2>{user.name}</h2>
-            <h4>H O M E</h4>
+            <SideBar />
+            <div className="ClinicianQuestionnaires">
+                <h1>Pediatric SSQ</h1>
+                {/*<h3>Welcome Clinician!</h3>*/}
+                {/*<h2>{user.name}</h2>*/}
+                <h4>H O M E</h4>
+                {top_div}
+            </div>
         </div>
     );
 }
