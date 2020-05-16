@@ -1,6 +1,6 @@
 /**
   * ====================================================================
-  * CSS FILE TO STYLE the 'App' Component 
+  * CSS FILE TO STYLE the main elements of the application.
   * ====================================================================
   * @date created: 10th May 2020
   * @authors: Waqas Rehmani
@@ -28,4 +28,71 @@ html, body {
     height: 100vh;
     display: flex;
     flex-direction: column;
+}
+
+input {
+  padding: 0.7vh 1.5vh;
+  font-size: 1.5vh;
+  border: 2px solid #eee;
+  border-radius: 5px;
+  background: #eee;
+  outline: 0;
+  color: #333;
+  transition: all 0.2s;
+  opacity: 0.8;
+}
+input:focus {
+  border: 2px solid #DB3D94;
+  opacity: 1;
+}
+
+button {
+  cursor: pointer;
+  padding: 0.8vh 2.5vh;
+  font-size: 1.3vh;
+  font-weight: 100;
+  border: 1px solid #DB3D94;
+  background-color: #DB3D94;
+  border-radius: 2vh;
+  outline: 0;
+  color: #eee;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+button:hover {
+  background-color: #5AC0CC;
+  border-color: #5AC0CC; 
+}
+
+.button {
+  cursor: pointer;
+  padding: 0.8vh 2.5vh;
+  font-size: 1.3vh;
+  font-weight: 100;
+  border: 1px solid #DB3D94;
+  background-color: #DB3D94;
+  border-radius: 2vh;
+  outline: 0;
+  color: #eee;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.button:hover {
+  background-color: #5AC0CC;
+  border-color: #5AC0CC; 
+}
+
+.button-disabled {
+  cursor: default;
+  border: 1px solid #eee;
+  background-color: #151641;
+  color: #eee;
+  opacity: 0.5;
+}
+.button-disabled:hover {
+  background-color: #151641;
+  border: 1px solid #eee;
+  opacity: 0.4;
 }
