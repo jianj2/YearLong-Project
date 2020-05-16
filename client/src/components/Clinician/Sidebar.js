@@ -3,7 +3,7 @@
  * REACT COMPONENT CLASS
  * ====================================================================
  * @date created: 14th May 2020
- * @authors: Jin Chen Guang Yang
+ * @authors: Jin Chen, Guang Yang
  *
  * The Sidebar component defines our SideBar for the application. This
  * will visible at the top of our application.
@@ -16,7 +16,7 @@ import React from "react";
 import { Link } from 'react-router-dom'
 
 // Import styles.
-import "../../styles/navbar.css";
+import "../../styles/sidebar.css";
 
 
 // handles rendering of SideBar with Login
