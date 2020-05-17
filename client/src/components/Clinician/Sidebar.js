@@ -12,7 +12,7 @@
  *
  */
 
-import React from "react";
+import React, {useState} from "react";
 import { Link } from 'react-router-dom'
 
 // Import styles.
@@ -21,26 +21,32 @@ import "../../styles/sidebar.css";
 
 // handles rendering of SideBar with Login
 const SideBar = () => {
-    function handleClickQuestionnaires() {
 
+    //0 is the first tab - Questionnaire,
+    //1 is the second tab - Do the test
+    //2 is the third tab - Instructions
+    const [clickedElement, setClickedElement] = useState(0);
+    
+    function handleClickQuestionnaires() {
+        setClickedElement(0)
     }
 
     function handleClickDoTheTest() {
-
+        setClickedElement(1)
     }
 
     function handleInstruction() {
-
+        setClickedElement(2)
     }
 
     return (
         <div className="sidebar-container">
-            <div className="sidebar-questionnaires"
-                 onClick={handleClickQuestionnaires}>Questionnaires</div>
-            <div className="sidebar-do-the-test"
-                 onClick={handleClickDoTheTest}>Do The Test</div>
-            <div className="sidebar-instructions"
-                 onClick={handleInstruction}>Instructions</div>
+            <Link className={`sidebar-questionnaires ${(clickedElement === 0)? "active" : ""}`}
+                 onClick={handleClickQuestionnaires} to = "#Questionnaires">Questionnaires</Link>
+            <Link className={`sidebar-do-the-test ${(clickedElement === 1)? "active" : ""}`}
+                 onClick={handleClickDoTheTest} to = "#DoTheTest">Do The Test</Link>
+            <Link className={`sidebar-instructions ${(clickedElement === 2)? "active" : ""}`}
+                 onClick={handleInstruction} to = "#Instruct">Instructions</Link>
         </div>
     );
 };

@@ -11,10 +11,11 @@
  */
 
  .sidebar-container {
-    width: 310px;
+    width: 16vw;
     height: 95vh;
     /*padding: 0 1vw;*/
     display: flex;
+    position: fixed;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
@@ -23,15 +24,19 @@
 }
 
 .sidebar-questionnaires,.sidebar-do-the-test,.sidebar-instructions {
-    width: 310px;
+    width: 16vw;
     height: 80px;
     background-color: #0E0F2A;
     text-align: center;
     font-family: Raleway;
     line-height: 80px;
     font-size: 1.5em;
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
 }
-.sidebar-questionnaires:hover,.sidebar-do-the-test:hover,.sidebar-instructions:hover{
+
+.active{
     background-color: #AF8BC0;
     cursor: pointer;
 }

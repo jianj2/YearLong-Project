@@ -1,0 +1,19 @@
+/**
+ * ====================================================================
+ * CSS FILE TO STYLE the 'ContentPanel' Component
+ * ====================================================================
+ * @date created: 16th May 2020
+ * @authors:Guang Yang
+ *
+ * This file contains all the CSS classes related to the ContentPanel
+ * component to style the component.
+ *
+ */
+
+ .content-container {
+    margin-left: 16vw;
+    /*padding: 0 1vw;*/
+    display: flex;
+    flex-direction: column;
+    padding: 0 4vw;
+}

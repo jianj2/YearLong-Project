@@ -23,32 +23,33 @@ import Loading from '../components/Loading';
 import "../styles/clinician.css";
 import "../styles/main.css"
 import SideBar from "../components/Clinician/Sidebar";
+import ContentPanel from "../components/Clinician/ContentPanel";
 
 // ---------------------------------------------------------------
 // This function defines the Clinician Home screen.
 // ---------------------------------------------------------------
 const HomeClinician = () => {
-    const { loading, isAuthenticated, loginWithRedirect, user } = useAuth0();
+    // const { loading, isAuthenticated, loginWithRedirect, user } = useAuth0();
 
-    useEffect(() => {
-        if (loading || isAuthenticated) {
-            return;
-        }
-        const fn = async () => {
-            await loginWithRedirect({
-                appState: { targetUrl: window.location.pathname },
-            });
-        };
-        fn();
-    }, [loading, isAuthenticated, loginWithRedirect]);
+    // useEffect(() => {
+    //     if (loading || isAuthenticated) {
+    //         return;
+    //     }
+    //     const fn = async () => {
+    //         await loginWithRedirect({
+    //             appState: { targetUrl: window.location.pathname },
+    //         });
+    //     };
+    //     fn();
+    // }, [loading, isAuthenticated, loginWithRedirect]);
 
-    // const { loading, user } = useAuth0();
+    // // const { loading, user } = useAuth0();
 
-    if (loading || !user) {
-        return <Loading />;
-    }
+    // if (loading || !user) {
+    //     return <Loading />;
+    // }
 
-    let top_div;
+    // let top_div;
 
     // if () {
     //
@@ -57,13 +58,7 @@ const HomeClinician = () => {
     return (
         <div className="HomeClinician">
             <SideBar />
-            <div className="ClinicianQuestionnaires">
-                <h1>Pediatric SSQ</h1>
-                {/*<h3>Welcome Clinician!</h3>*/}
-                {/*<h2>{user.name}</h2>*/}
-                <h4>H O M E</h4>
-                {top_div}
-            </div>
+            <ContentPanel />
         </div>
     );
 }
