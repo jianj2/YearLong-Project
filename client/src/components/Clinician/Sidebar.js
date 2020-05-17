@@ -22,31 +22,16 @@ import "../../styles/sidebar.css";
 // handles rendering of SideBar with Login
 const SideBar = () => {
 
-    //0 is the first tab - Questionnaire,
-    //1 is the second tab - Do the test
-    //2 is the third tab - Instructions
-    const [clickedElement, setClickedElement] = useState(0);
-    
-    function handleClickQuestionnaires() {
-        setClickedElement(0)
-    }
-
-    function handleClickDoTheTest() {
-        setClickedElement(1)
-    }
-
-    function handleInstruction() {
-        setClickedElement(2)
-    }
-
+    var pathname = window.location.href.split("/").pop()
     return (
         <div className="sidebar-container">
-            <Link className={`sidebar-questionnaires ${(clickedElement === 0)? "active" : ""}`}
-                 onClick={handleClickQuestionnaires} to = "#Questionnaires">Questionnaires</Link>
-            <Link className={`sidebar-do-the-test ${(clickedElement === 1)? "active" : ""}`}
-                 onClick={handleClickDoTheTest} to = "#DoTheTest">Do The Test</Link>
-            <Link className={`sidebar-instructions ${(clickedElement === 2)? "active" : ""}`}
-                 onClick={handleInstruction} to = "#Instruct">Instructions</Link>
+            <Link className={`sidebar-questionnaires
+            ${(pathname === "clinician" || pathname === "clinician#Questionnaires")? "active" : ""}`}
+                  to = "#Questionnaires">Questionnaires</Link>
+            <Link className={`sidebar-do-the-test ${(pathname === "clinician#DoTheTest")? "active" : ""}`}
+                  to = "#DoTheTest">Do The Test</Link>
+            <Link className={`sidebar-instructions ${(pathname === "clinician#Instruct")? "active" : ""}`}
+                  to = "#Instruct">Instructions</Link>
         </div>
     );
 };

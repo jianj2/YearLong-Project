@@ -15,7 +15,7 @@ import React, {useState} from "react";
 
 // Import styles.
 import "../../styles/contentpanel.css";
-
+import ManageQuestionnaires from "../Clinician/ManageQuestionnaires";
 
 
 const ContentPanel = () => {
@@ -40,12 +40,7 @@ const ContentPanel = () => {
     else{
         return(
             <div className="content-container">
-                <div className = "standar-questionnaire-container">
-                    <div className = "SQ-header">Standard questionnaires</div>
-                </div> 
-                <div className = "customized-questionnaire-container">
-                    <div className = "CQ-header">My Custom Questionnaires</div>
-                </div> 
+                <ManageQuestionnaires/>
             </div>
         )
     }

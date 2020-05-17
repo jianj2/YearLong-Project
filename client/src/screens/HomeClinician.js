@@ -29,27 +29,27 @@ import ContentPanel from "../components/Clinician/ContentPanel";
 // This function defines the Clinician Home screen.
 // ---------------------------------------------------------------
 const HomeClinician = () => {
-    // const { loading, isAuthenticated, loginWithRedirect, user } = useAuth0();
+    const { loading, isAuthenticated, loginWithRedirect, user } = useAuth0();
 
-    // useEffect(() => {
-    //     if (loading || isAuthenticated) {
-    //         return;
-    //     }
-    //     const fn = async () => {
-    //         await loginWithRedirect({
-    //             appState: { targetUrl: window.location.pathname },
-    //         });
-    //     };
-    //     fn();
-    // }, [loading, isAuthenticated, loginWithRedirect]);
+    useEffect(() => {
+        if (loading || isAuthenticated) {
+            return;
+        }
+        const fn = async () => {
+            await loginWithRedirect({
+                appState: { targetUrl: window.location.pathname },
+            });
+        };
+        fn();
+    }, [loading, isAuthenticated, loginWithRedirect]);
 
-    // // const { loading, user } = useAuth0();
+    // const { loading, user } = useAuth0();
 
-    // if (loading || !user) {
-    //     return <Loading />;
-    // }
+    if (loading || !user) {
+        return <Loading />;
+    }
 
-    // let top_div;
+    let top_div;
 
     // if () {
     //
