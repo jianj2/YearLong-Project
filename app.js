@@ -1,5 +1,5 @@
 var express = require('express');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
 var app = express();
 
@@ -17,6 +17,7 @@ app.use(cors());
 var indexRouter = require('./routes');
 var clinicianRouter = require('./routes/clinician');
 var questionnaireRouter = require('./routes/questionnaire');
+var adminRouter = require('./routes/admin');
 
 
 // using routes
@@ -24,6 +25,7 @@ var questionnaireRouter = require('./routes/questionnaire');
 app.use('/', indexRouter);
 app.use('/clinician/', clinicianRouter);
 app.use('/questionnaire/', questionnaireRouter);
+app.use('/admin/', adminRouter);
 
 
 
