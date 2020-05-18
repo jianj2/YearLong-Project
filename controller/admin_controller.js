@@ -14,14 +14,31 @@ const mongoose = require('mongoose');
 
 var Admin = mongoose.model('admin');
 
-// Get all admin details.
-var getAllAdmin = function (req, res) {
-    Admin.find(function(err, allAdmin){
-        if(!err){
-            res.send(allAdmin);
-        } else {
-            res.send(err);
+// Login check.
+var loginAdmin = function (req, res) {
+    var _username = "AdminExample"
+    var _password = "adminpassword"
+    Admin.findOne({username:_username}, function(err, user){
+        if(err){
+            console.log(err)
         }
+        if(!user){
+            console.log('wrong username')
+        }
+        else {
+            Admin.findOne({password:_password}, function (err,isMatch) {
+                if(err){
+                    console.log(err)
+                }
+                if(isMatch){
+                    console.log('successfully login')
+                } else{
+                    console.log('wrong password')
+                }
+            })
+        }
+
+        
     });
 };
 
@@ -46,5 +63,5 @@ var createAdmin = function (req,res) {
 };
 
 
-module.exports.getAllAdmin = getAllAdmin;
+module.exports.loginAdmin = loginAdmin;
 module.exports.createAdmin = createAdmin;

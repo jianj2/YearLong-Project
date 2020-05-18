@@ -14,8 +14,8 @@ var admin_controller = require('../controller/admin_controller.js');
 
 
 // CRUD Routes for Posts
-router.get('/', admin_controller.getAllAdmin);
-router.get('/123', admin_controller.createAdmin);
+router.get('/', admin_controller.loginAdmin);
+//router.get('/123', admin_controller.createAdmin);
 
 
 module.exports = router;
