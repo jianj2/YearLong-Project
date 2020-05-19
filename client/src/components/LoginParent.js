@@ -15,10 +15,13 @@
 
 
 import React from 'react';
+
 import { useForm } from 'react-hook-form';
 
-import "../styles/parents.css";
-import '../styles/main.css'
+
+// Import styles.
+import "../styles/admin.css";
+import "../styles/main.css";
 
 export default function LoginParent({ nextStep }) {
     const { register, handleSubmit, errors } = useForm(); 
