@@ -1,4 +1,15 @@
-// Reference https://material-ui.com/components/slider/
+/**
+ * ====================================================================
+ * REACT COMPONENT FUNCTION
+ * ====================================================================
+ * @date created: 17th May 2020
+ * @authors: // Reference https://material-ui.com/components/slider/
+ *
+ * The Questionnaire component defines a slider used for range questions.
+ * Used in questions.
+ *
+ */
+
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
