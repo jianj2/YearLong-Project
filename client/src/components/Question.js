@@ -2,14 +2,11 @@
  * ====================================================================
  * REACT COMPONENT FUNCTION
  * ====================================================================
- * @date created: 10th May 2020
- * @authors: Waqas Rehmani, Cary Jin, SaiEr Ding
+ * @date created: 17th May 2020
+ * @authors: Uvin Abeysinghe, Waqas Rehmani, Ashley Curtis, Mayank Sharma, Jian Jiao
  *
- * The LoginParent component defines the login form for the parents
- * and children. This will visible when the user selects the parents/
- * children option at the landing page.
- *
- * This file is used to display the login form.
+ * The Question component defines the question form for questionnaires. These
+ * will be visible in questionnaires when the questionnaires are fillable.
  *
  */
 
@@ -39,6 +36,7 @@ export default function Question({ isMCQ, isParentFilling, rangeOptions, mcqOpti
         console.log(data)
     }
 
+    // If it is an MCQ question.
     if (isMCQ) {
         return(
             <form onSubmit={handleSubmit(onSubmit)} className="question-container">
@@ -55,6 +53,7 @@ export default function Question({ isMCQ, isParentFilling, rangeOptions, mcqOpti
 
             </form>
         )
+    //    If it is a rnage question.
     } else {
         return (
             <form onSubmit={handleSubmit(onSubmit)} className="question-container">
@@ -73,7 +72,6 @@ export default function Question({ isMCQ, isParentFilling, rangeOptions, mcqOpti
                     <label>{rangeOptions[0]}</label>
                     <label>{rangeOptions[1]}</label>
                 </div>
-
 
                 <FormControl  >
                     <FormLabel >Assign responsibility</FormLabel>
@@ -99,7 +97,6 @@ export default function Question({ isMCQ, isParentFilling, rangeOptions, mcqOpti
                     ? <div>PArent filling</div>
                     : null
                 }
-
 
             </form>
         );
