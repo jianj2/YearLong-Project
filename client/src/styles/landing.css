@@ -17,14 +17,14 @@
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 10vh 3fr 4fr 1fr;
     grid-template-areas:
-        ".  .       .           .       ."
-        ".  logo    logo        logo    ."
-        ".  parent  clinician   admin   ."
-        ".  .       .           .       ."
+        ".  .       .       .       ."
+        ".  logo    logo    logo    ."
+        ".  buttons buttons buttons   ."
+        ".  .       .       .       ."
 
     ;
     grid-gap: 2vh;
-    
+
 }
 
 .landing-logo {
@@ -39,7 +39,15 @@
     height: 25vh ; 
 }
 
+.landing-buttons {
+    grid-area: buttons;
+    display: flex;
+    justify-content: space-evenly;
+}
+
 .landing-button {
+    width: 25vh;
+    height: 25vh;
     background: rgba(255,255,255,0.02);
     display: flex;
     justify-content: center;
