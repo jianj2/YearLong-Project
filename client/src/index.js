@@ -4,7 +4,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { Auth0Provider } from "./react-auth0-spa";
+import { Auth0Provider } from "./utils/react-auth0-spa";
+import { AdminAuthProvider } from "./utils/useAdminAuth";
 import config from "./auth_config.json";
 import history from "./utils/history";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
@@ -42,14 +43,16 @@ const onRedirectCallback = (appState) => {
 ReactDOM.render(
     <React.StrictMode>
         <MuiThemeProvider theme={theme}>
-            <Auth0Provider
-                domain={config.domain}
-                client_id={config.clientId}
-                redirect_uri={window.location.origin}
-                onRedirectCallback={onRedirectCallback}
-            >
-                <App />
-            </Auth0Provider>
+            <AdminAuthProvider>
+                <Auth0Provider
+                    domain={config.domain}
+                    client_id={config.clientId}
+                    redirect_uri={window.location.origin}
+                    onRedirectCallback={onRedirectCallback}
+                >
+                    <App />
+                </Auth0Provider>
+            </AdminAuthProvider>
         </MuiThemeProvider>
     </React.StrictMode>,
     document.getElementById("root")

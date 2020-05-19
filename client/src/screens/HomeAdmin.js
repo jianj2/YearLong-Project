@@ -17,6 +17,9 @@ import React, { useEffect, useState } from "react";
 
 // Import Utilities
 import * as API from '../utils/api'
+import { useAdminAuth } from "../utils/useAdminAuth";
+import { useAuth0 } from "../utils/react-auth0-spa";
+
 
 // Import components
 import LoginAdmin from "../components/LoginAdmin";
@@ -29,18 +32,12 @@ import "../styles/main.css";
 import logoComplete from "../assets/logo_complete.png";
 
 // ---------------------------------------------------------------
-// This function defines the Clinician Home screen.
+// This function defines the Admin's Home screen.
 // ---------------------------------------------------------------
 const HomeAdmin = () => {
-    const [ isAuthenticated, setAuthenticated ] = useState(false);
+    const { isAdminAuthenticated, adminLogin } = useAdminAuth();
 
-    const adminLogin = () => {
-        
-        // WRITE YOUR SERVER CODE HERE!!!
-        setAuthenticated(true)
-    }
-
-    if (isAuthenticated) {
+    if (isAdminAuthenticated) {
         return (
             <div className="HomeClinician">
                 <h1>Pediatric SSQ</h1>
@@ -56,7 +53,7 @@ const HomeAdmin = () => {
                 </div>
 
                 <div className="landing-buttons">
-                    <LoginAdmin adminLogin={adminLogin}/>
+                    <LoginAdmin adminLogin={adminLogin} />
                 </div>
             </div>
         );

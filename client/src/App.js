@@ -14,7 +14,8 @@
 
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { useAuth0 } from "./react-auth0-spa";
+import { useAuth0 } from "./utils/react-auth0-spa";
+import { AdminAuthProvider } from "./utils/useAdminAuth";
 
 // Import styles.
 import "./styles/main.css";
@@ -36,7 +37,7 @@ function App() {
     // }
 
     return (
-        <div className="app-container">
+        <div className="app-container">            
             <Router>
                 <NavBar />
                 <Switch>
