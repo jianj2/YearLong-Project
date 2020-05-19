@@ -2,14 +2,11 @@
  * ====================================================================
  * REACT COMPONENT FUNCTION
  * ====================================================================
- * @date created: 10th May 2020
- * @authors: Waqas Rehmani, Cary Jin, SaiEr Ding
+ * @date created: 17th May 2020
+ * @authors: Uvin Abeysinghe, Waqas Rehmani, Ashley Curtis, Mayank Sharma, Jian Jiao
  *
- * The LoginParent component defines the login form for the parents
- * and children. This will visible when the user selects the parents/
- * children option at the landing page.
- *
- * This file is used to display the login form.
+ * The Questionnaire component defines a collection of questions. These
+ * will be visible when questionnaires are fillable.
  *
  */
 
@@ -60,7 +57,6 @@ export default function Questionnaire({ nextStep }) {
                     rangeOptions={q.rangeOptions}
                 />))
             }
-
 
             <button
                 className={errors.code ? "button-disabled" : "button"}
