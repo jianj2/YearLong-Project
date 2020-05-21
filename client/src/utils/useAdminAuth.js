@@ -12,13 +12,15 @@ export const AdminAuthProvider = ({children}) => {
             localStorage.getItem("adminAuthentication")
         );
         console.log("previousAuth", previousAuth);
-        API.verifyAdminLogin(previousAuth.token).then((res) => {
-            console.log("VERYIFY LOGIN in CUSTOM HOOK", res);
-            if (res.auth) {
-                setAuthenticated(true);
-                setAdminToken(previousAuth.token);
-            }
-        });
+        if (previousAuth){
+            API.verifyAdminLogin(previousAuth.token).then((res) => {
+                console.log("VERYIFY LOGIN in CUSTOM HOOK", res);
+                if (res.auth) {
+                    setAuthenticated(true);
+                    setAdminToken(previousAuth.token);
+                }
+            });
+        }
     }, []);
 
     const adminLogin = (loginData) => {
