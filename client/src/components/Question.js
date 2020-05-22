@@ -11,7 +11,7 @@
  */
 
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {
     Slider,
@@ -31,6 +31,8 @@ import '../styles/main.css'
 
 export default function Question({ isMCQ, isParentFilling, rangeOptions, mcqOptions }) {
     const { register, handleSubmit, errors } = useForm();
+    const [ extraQuestion, setExtraQuestion ] = useState('');
+
 
     const onSubmit = (data) => {
         console.log(data)
@@ -41,7 +43,7 @@ export default function Question({ isMCQ, isParentFilling, rangeOptions, mcqOpti
         return(
             <form onSubmit={handleSubmit(onSubmit)} className="question-container">
                 <p>
-                    <h2>Question:</h2> This is an MCQ quesiton.
+                    <h4>Question:</h4> This is an MCQ quesiton.
                 </p>
 
                 <RadioGroup name="gender1" onChange={() => {}}>
@@ -56,28 +58,83 @@ export default function Question({ isMCQ, isParentFilling, rangeOptions, mcqOpti
     //    If it is a rnage question.
     } else {
         return (
-            <form onSubmit={handleSubmit(onSubmit)} className="question-container">
-                <p>
-                    This is a Slider quesiton.
-                </p>
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="question-container"
+            >
+                <p>This is a Slider quesiton.</p>
                 <Slider
                     defaultValue={2}
-                    color='secondary'
+                    color="secondary"
                     step={0.1}
                     min={0}
                     max={10}
                     valueLabelDisplay="auto"
                 />
-                <div className='slider-labels'>
+                <div className="slider-labels">
                     <label>{rangeOptions[0]}</label>
                     <label>{rangeOptions[1]}</label>
                 </div>
 
-                <FormControl  >
-                    <FormLabel >Assign responsibility</FormLabel>
-                    <FormGroup className='slider-checkboxes'>
+                <RadioGroup name="gender1" onChange={() => {}}>
+                    {mcqOptions.map((item) => (
                         <FormControlLabel
-                            control={<Checkbox  name="gilad" />}
+                            value={item}
+                            control={<Radio />}
+                            label={item}
+                        />
+                    ))}
+                </RadioGroup>
+
+                <FormControl color="secondary" margin="dense">
+                    <FormLabel component="legend">
+                        Please select one of the options
+                    </FormLabel>
+                    <RadioGroup name="extra" value={extraQuestion}>
+                        <FormControlLabel
+                            value=""
+                            control={
+                                <Radio
+                                    onClick={() => setExtraQuestion("Band")}
+                                />
+                            }
+                            label="Band"
+                        />
+                        <FormControlLabel
+                            value="Production House"
+                            control={
+                                <Radio
+                                    onClick={() =>
+                                        setExtraQuestion("Production House")
+                                    }
+                                />
+                            }
+                            label="Production House"
+                        />
+                        <FormControlLabel
+                            value="Dance Crew"
+                            control={
+                                <Radio
+                                    onClick={() =>
+                                        setExtraQuestion("Dance Crew")
+                                    }
+                                />
+                            }
+                            label="Dance Crew"
+                        />
+                    </RadioGroup>
+                    <FormHelperText>
+                        {errors.collectiveKind
+                            ? errors.collectiveKind.message
+                            : "Please specify what kind of collective this is."}
+                    </FormHelperText>
+                </FormControl>
+
+                <FormControl>
+                    <FormLabel>Assign responsibility</FormLabel>
+                    <FormGroup className="slider-checkboxes">
+                        <FormControlLabel
+                            control={<Checkbox name="gilad" />}
                             label="Would not hear it."
                         />
                         <FormControlLabel
@@ -92,12 +149,7 @@ export default function Question({ isMCQ, isParentFilling, rangeOptions, mcqOpti
                     <FormHelperText>Be careful</FormHelperText>
                 </FormControl>
 
-                {
-                    isParentFilling
-                    ? <div>PArent filling</div>
-                    : null
-                }
-
+                {isParentFilling ? <div>PArent filling</div> : null}
             </form>
         );
     }

@@ -1,8 +1,17 @@
-
-h2 {
-    display: inline;
-    margin: 0;
+h1 {
     font-weight: 100;
+
+
+}
+
+h2 { 
+    font-weight: 200;
+    margin: 1rem 0;
+}
+
+
+h4 {
+    display: inline; 
 }
 
 .questionaire-container {
@@ -21,6 +30,8 @@ h2 {
     margin-bottom: 10px;
 
 }
+
+
 
 .slider-labels {
     display: flex;

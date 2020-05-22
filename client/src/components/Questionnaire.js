@@ -17,7 +17,7 @@ import { Slider } from '@material-ui/core';
 
 import Question from './Question'
 
-import * as API from '../api/api'
+import * as API from '../utils/api'
 
 import "../styles/questionnaire.css";
 import '../styles/main.css'
@@ -28,7 +28,7 @@ export default function Questionnaire({ nextStep }) {
         questionnaireId: '',
         title: '',
         description: '',
-        questions: [],
+        sections: [],
         isStandard: true,
     });
 
@@ -49,18 +49,20 @@ export default function Questionnaire({ nextStep }) {
     return (
         <form onSubmit={onSubmit} className="questionaire-container">
             <h1>{questionnaire.title}</h1>
-            {
-                questionnaire.questions.map(q =>  (
-                <Question
-                    isMCQ={q.isMCQ}
-                    mcqOptions={q.mcqOptions}
-                    rangeOptions={q.rangeOptions}
-                />))
-            }
+            {questionnaire.sections.map((section) => (
+                <div>
+                    <h2>{section.title}</h2>
+                    {section.questions.map((question) => (
+                        <Question
+                            isMCQ={question.isMCQ}
+                            mcqOptions={question.mcqOptions}
+                            rangeOptions={question.rangeOptions}
+                        />
+                    ))}
+                </div>
+            ))}
 
-            <button
-                className={errors.code ? "button-disabled" : "button"}
-            >
+            <button className={errors.code ? "button-disabled" : "button"}>
                 E N T E R
             </button>
             {errors.code && <span>{errors.code.message}</span>}

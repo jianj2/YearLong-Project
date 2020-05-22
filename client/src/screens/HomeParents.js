@@ -32,7 +32,7 @@ import "../styles/main.css";
 // This method defines the elements for this component.
 // ---------------------------------------------------------------
 const HomeParents = () => {
-    const [step, setStep] = useState(3);
+    const [step, setStep] = useState(2);
 
     const nextStep = () => {
         setStep(step + 1);
@@ -41,38 +41,23 @@ const HomeParents = () => {
         setStep(0);
     };
     const goToInstructions = () => {
-        setStep(1);
+        setStep(0);
     }
 
-    if(step == 0) {
-        return (
-            <div className="landing">
-                <div className="landing-logo">
-                    <img src={logoComplete} />
-                </div>
-
-                <div className="landing-button-clinician ">
-                    
-                    <LoginParent nextStep={nextStep} />
-                
-                </div>
-            </div>
-        );
-    }
-
-    if (step == 1) {
+    if (step == 0) {
         return (
             <div className="parents-home">
                 <div className="subheader-container">
                     <button onClick={resetSteps}>C A N C E L</button>
                     <button onClick={nextStep}>N E X T</button>
                 </div>
-                We would have instructions here.
+
+                <div>We would have instructions here stored by the admin.</div>
             </div>
         );
     }
 
-    if (step == 2) {
+    if (step == 1) {
         return (
             <div className="parents-home">
                 <div className="subheader-container">
@@ -85,7 +70,7 @@ const HomeParents = () => {
         );
     }
 
-    if (step == 3) {
+    if (step == 2) {
         return (
             <div className="parents-home">
                 <div className="subheader-container">
@@ -106,7 +91,7 @@ const HomeParents = () => {
                 <img src={logoComplete} />
             </div>
 
-            <div className="landing-button-clinician return-form">
+            <div className="return-form">
                 <h1>Response Sent</h1>
                 <Link to ="/" className="button">BACK TO HOME</Link>
             </div>

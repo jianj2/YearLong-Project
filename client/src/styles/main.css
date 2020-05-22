@@ -12,7 +12,9 @@
 
 /* Importing font from Google Fonts */
 /* Font name: Raleway */
-@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,600;0,800;1,900&display=swap');
+
+
 
 html, body {
     margin: 0;
