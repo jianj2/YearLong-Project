@@ -4,8 +4,6 @@ let header = {
     authorization: "fill in l8er",
 };
 
-
-
 // ================================================
 // Admin server calls
 // ================================================
@@ -19,8 +17,11 @@ export const adminLogin = (loginData) =>
         },
         body: JSON.stringify(loginData),
     }).then((res) => res.json());
- 
 
-export const verifyAdminLogin = (username) =>
-    fetch(`${api}/admin/verifylogin/${username}`, { ...header })
-    .then(res => res.json())
+export const verifyAdminLogin = (token) =>
+    fetch(`${api}/admin/verifylogin/${token}`, {
+        ...header,
+    }).then((res) => res.json());
+
+export const getQuestionnaires = () =>
+    fetch(`${api}/questionnaire/`, { header }).then((res) => res.json());

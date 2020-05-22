@@ -1,0 +1,48 @@
+h1 {
+    font-weight: 100;
+
+
+}
+
+h2 { 
+    font-weight: 200;
+    margin: 1rem 0;
+}
+
+
+h4 {
+    display: inline; 
+}
+
+.questionaire-container {
+    width: 60vw;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    min-width: 400px;
+}
+
+.question-container {
+    border: 1px solid #aaa;
+    background-color: rgba(255,255,255,0.05);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+
+}
+
+
+
+.slider-labels {
+    display: flex;
+    justify-content: space-between;
+}
+
+.slider-labels label{
+    padding: 10px 0 20px;
+}
+
+.slider-checkboxes {
+    display: flex;
+    flex-direction: row !important;
+}

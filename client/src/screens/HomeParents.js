@@ -18,6 +18,7 @@ import React, { useState } from "react";
 import { Link } from 'react-router-dom'
 // Import components.
 import LoginParent from '../components/LoginParent'
+import Questionnaire from '../components/Questionnaire'
 
 // Import assets.
 import logoComplete from '../assets/logo_complete.png';
@@ -31,7 +32,7 @@ import "../styles/main.css";
 // This method defines the elements for this component.
 // ---------------------------------------------------------------
 const HomeParents = () => {
-    const [step, setStep] = useState(0);
+    const [step, setStep] = useState(2);
 
     const nextStep = () => {
         setStep(step + 1);
@@ -40,38 +41,23 @@ const HomeParents = () => {
         setStep(0);
     };
     const goToInstructions = () => {
-        setStep(1);
+        setStep(0);
     }
 
-    if(step == 0) {
-        return (
-            <div className="landing">
-                <div className="landing-logo">
-                    <img src={logoComplete} />
-                </div>
-
-                <div className="landing-button-clinician ">
-                    
-                    <LoginParent nextStep={nextStep} />
-                
-                </div>
-            </div>
-        );
-    }
-
-    if (step == 1) {
+    if (step == 0) {
         return (
             <div className="parents-home">
                 <div className="subheader-container">
                     <button onClick={resetSteps}>C A N C E L</button>
                     <button onClick={nextStep}>N E X T</button>
                 </div>
-                We would have instructions here.
+
+                <div>We would have instructions here stored by the admin.</div>
             </div>
         );
     }
 
-    if (step == 2) {
+    if (step == 1) {
         return (
             <div className="parents-home">
                 <div className="subheader-container">
@@ -84,7 +70,7 @@ const HomeParents = () => {
         );
     }
 
-    if (step == 3) {
+    if (step == 2) {
         return (
             <div className="parents-home">
                 <div className="subheader-container">
@@ -94,7 +80,7 @@ const HomeParents = () => {
                     <button onClick={resetSteps}>C A N C E L</button>
                     <button onClick={nextStep}>S U B M I T</button>
                 </div>
-                QUESTIONNAIRE WOULD BE DISPLAYED HERE
+                <Questionnaire />
             </div>
         );
     }
@@ -105,7 +91,7 @@ const HomeParents = () => {
                 <img src={logoComplete} />
             </div>
 
-            <div className="landing-button-clinician return-form">
+            <div className="return-form">
                 <h1>Response Sent</h1>
                 <Link to ="/" className="button">BACK TO HOME</Link>
             </div>
