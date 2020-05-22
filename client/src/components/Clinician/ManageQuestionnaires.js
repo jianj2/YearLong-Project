@@ -17,9 +17,8 @@ import React, {useState} from "react";
 import "../../styles/managequestionnaires.css";
 import "../../styles/main.css"
 
-
 var CQid = 2
-const ManageQuestionnaires = () => {
+const ManageQuestionnaires = (props) => {
      const [Questionnaires, setQuestionnaires] 
      = useState({
         customized_Questionnaire:[
@@ -73,14 +72,17 @@ const ManageQuestionnaires = () => {
     }
 
     function CQgenerator(QID, Qname, Qdescription, date){
-        
+        var edit_url = "/clinician/"+QID+"/edit"
         return (
             <div className = "q-frame" key = {QID}>
                 <div className = "q-name">{Qname}</div>
                 <div className = "q-description">{Qdescription}</div>
                 <div className = "date">{date}</div>
                 <div className = "btns-container">
-                    <button className = "edit-btn">Edit</button>
+                    <button className = "edit-btn" 
+                    onClick = {()=> (window.location.href = edit_url) }>
+                        Edit
+                    </button>
                     <button className = "delete-btn" onClick = {(e) => Delete(QID,e)} >Delete</button>
                 </div>
             </div>

@@ -20,18 +20,20 @@ import "../../styles/sidebar.css";
 
 
 // handles rendering of SideBar with Login
-const SideBar = () => {
+const SideBar = (props) => {
 
     var pathname = window.location.href.split("/").pop()
+
     return (
         <div className="sidebar-container">
+            {console.log(pathname)}
             <Link className={`sidebar-questionnaires
-            ${(pathname === "clinician" || pathname === "clinician#Questionnaires")? "active" : ""}`}
-                  to = "#Questionnaires">Questionnaires</Link>
-            <Link className={`sidebar-do-the-test ${(pathname === "clinician#DoTheTest")? "active" : ""}`}
-                  to = "#DoTheTest">Do The Test</Link>
-            <Link className={`sidebar-instructions ${(pathname === "clinician#Instruct")? "active" : ""}`}
-                  to = "#Instruct">Instructions</Link>
+            ${(pathname === "clinician" || pathname === "Questionnaires" || pathname === "edit")? "active" : ""}`}
+                  to = "/clinician/Questionnaires">Questionnaires</Link>
+            <Link className={`sidebar-do-the-test ${(pathname === "DoTheTest")? "active" : ""}`}
+                  to = "/clinician/DoTheTest">Do The Test</Link>
+            <Link className={`sidebar-instructions ${(pathname === "Instructions")? "active" : ""}`}
+                  to = "/clinician/Instructions">Instructions</Link>
         </div>
     );
 };

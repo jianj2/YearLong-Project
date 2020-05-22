@@ -3,7 +3,7 @@
  * REACT SCREEN COMPONENT CLASS
  * ====================================================================
  * @date created: 10th May 2020
- * @authors: Waqas Rehmani, Cary Jin, SaiEr Ding
+ * @authors: Waqas Rehmani, Cary Jin, SaiEr Ding, Guang Yang
  *
  * The Home screen component defines our screen for the route
  * '/clinician'. This will be the first screen clinicians will see
@@ -24,41 +24,38 @@ import "../styles/clinician.css";
 import "../styles/main.css"
 import SideBar from "../components/Clinician/Sidebar";
 import ContentPanel from "../components/Clinician/ContentPanel";
+import {BrowserRouter as Router, Route} from "react-router-dom";
 
 // ---------------------------------------------------------------
 // This function defines the Clinician Home screen.
 // ---------------------------------------------------------------
-const HomeClinician = () => {
-    const { loading, isAuthenticated, loginWithRedirect, user } = useAuth0();
+const HomeClinician = (props) => {
+    // const { loading, isAuthenticated, loginWithRedirect, user } = useAuth0();
 
-    useEffect(() => {
-        if (loading || isAuthenticated) {
-            return;
-        }
-        const fn = async () => {
-            await loginWithRedirect({
-                appState: { targetUrl: window.location.pathname },
-            });
-        };
-        fn();
-    }, [loading, isAuthenticated, loginWithRedirect]);
+    // useEffect(() => {
+    //     if (loading || isAuthenticated) {
+    //         return;
+    //     }
+    //     const fn = async () => {
+    //         await loginWithRedirect({
+    //             appState: { targetUrl: window.location.pathname },
+    //         });
+    //     };
+    //     fn();
+    // }, [loading, isAuthenticated, loginWithRedirect]);
 
-    // const { loading, user } = useAuth0();
+    // // const { loading, user } = useAuth0();
 
-    if (loading || !user) {
-        return <Loading />;
-    }
-
-    let top_div;
-
-    // if () {
-    //
+    // if (loading || !user) {
+    //     return <Loading />;
     // }
 
     return (
         <div className="HomeClinician">
             <SideBar />
-            <ContentPanel />
+            <Router>
+                <ContentPanel active = {props.active}/>
+            </Router>
         </div>
     );
 }

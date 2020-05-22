@@ -15,25 +15,33 @@ import React, {useState} from "react";
 
 // Import styles.
 import "../../styles/contentpanel.css";
-import ManageQuestionnaires from "../Clinician/ManageQuestionnaires";
+import ManageQuestionnaires from "./ManageQuestionnaires";
+import {BrowserRouter as Router, Route} from "react-router-dom";
+import DoTheTestContainer from "./DoTheTestContainer";
+import InstructionsContainer from "./InstructionsContainer";
+import QuestionnaireContainer from "./QuestionnaireContainer"
 
-
-const ContentPanel = () => {
-    var pathname = window.location.href.split("/").pop()
-    if(pathname === "clinician#DoTheTest"){
+const ContentPanel = (props) => {
+    
+    if(props.active === 2){
         return (
             <div className="content-container">
-                Do the test
+                <DoTheTestContainer />
             </div>
-            
         );
     }
     
-    else if(pathname === "clinician#Instruct"){
+    else if(props.active === 3){
         return (
             <div className="content-container">
-                Instruct
+                <InstructionsContainer />
             </div>
+        );
+    }
+
+    else if(props.active === 4){
+        return (
+                <QuestionnaireContainer />
         );
     }
 
@@ -44,6 +52,7 @@ const ContentPanel = () => {
             </div>
         )
     }
+    
    
 };
 
