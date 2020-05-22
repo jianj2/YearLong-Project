@@ -13,26 +13,51 @@
  *
  */
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-import { useAuth0 } from "../react-auth0-spa";
+// Import Utilities
+import * as API from '../utils/api'
+import { useAdminAuth } from "../utils/useAdminAuth";
+import { useAuth0 } from "../utils/react-auth0-spa";
+
+
+// Import components
+import LoginAdmin from "../components/LoginAdmin";
 
 // Import styles.
-import "../styles/clinician.css";
+import "../styles/admin.css";
 import "../styles/main.css";
 
+// Import assets.
+import logoComplete from "../assets/logo_complete.png";
+
 // ---------------------------------------------------------------
-// This function defines the Clinician Home screen.
+// This function defines the Admin's Home screen.
 // ---------------------------------------------------------------
 const HomeAdmin = () => {
+    const { isAdminAuthenticated, adminLogin } = useAdminAuth();
 
-    return (
-        <div className="HomeClinician">
-            <h1>Pediatric SSQ</h1>
-            <h3>Welcome Admin!</h3> 
-            <h4>H O M E</h4>
-        </div>
-    );
+    if (isAdminAuthenticated) {
+        return (
+            <div className="HomeClinician">
+                <h1>Pediatric SSQ</h1>
+                <h3>Welcome Admin!</h3>
+                <h4>H O M E</h4>
+            </div>
+        );
+    } else {
+        return (
+            <div className="landing">
+                <div className="landing-logo">
+                    <img src={logoComplete} />
+                </div>
+
+                <div className="landing-buttons">
+                    <LoginAdmin adminLogin={adminLogin} />
+                </div>
+            </div>
+        );
+    }
 };
 
 export default HomeAdmin;

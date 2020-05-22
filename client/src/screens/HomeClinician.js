@@ -15,7 +15,7 @@
 
 import React, { useEffect } from "react";
 
-import { useAuth0 } from "../react-auth0-spa";
+import { useAuth0 } from "../utils/react-auth0-spa";
 
 import Loading from '../components/Loading';
 

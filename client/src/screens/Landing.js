@@ -32,25 +32,23 @@ const Landing = () => {
         <div className="landing">
             <div className="landing-logo">
                 <img src={logoComplete} />
-            </div> 
+            </div>
 
-            <Link className="landing-button-parent landing-button" to="/parent">
-                Parents / Children
-            </Link>
+            <div className="landing-buttons">
+                <Link
+                    className="landing-button"
+                    to="/clinician"
+                >
+                    Clinician
+                </Link>
 
-            <Link
-                className="landing-button-clinician landing-button"
-                to="/clinician"
-            >
-                Clinician
-            </Link>
-
-            <Link
-                className="landing-button-admin landing-button"
-                to="/admin"
-            >
-                Admin
-            </Link>
+                <Link
+                    className="landing-button"
+                    to="/admin"
+                >
+                    Admin
+                </Link>
+            </div>
         </div>
     );
 };
