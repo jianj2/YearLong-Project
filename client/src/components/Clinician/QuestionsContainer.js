@@ -88,11 +88,18 @@ const RangeQuestionFrom = () =>{
 
 
 const MultipleChoiceQuestionFrom = () =>{
-        const [number, setState] = useState([0,1,2,3]);
+        const [mcqOptions, setState] = useState([0,1,2,3]);
+
         const addAnswer = () => {
-            setState([...number, number.length]);
-            // console.log(number.length);
+            setState([...mcqOptions, mcqOptions.length]);
         }
+
+        const deleteAnswer = (index) =>{
+            const list = [...mcqOptions];
+            list.splice(index,1);
+            setState(list);
+        }
+
         return (
             <div className="multiple-choice-question-from">
                 <form className="multipleChoiceQuestion">
@@ -107,17 +114,18 @@ const MultipleChoiceQuestionFrom = () =>{
                     </p>
                     {/*add new answer textarea*/}
                     {
-                        number && number.map(item => {
+                        mcqOptions && mcqOptions.map((item,index) => {
                             return (
-                                <p key={item}>
+                                <p key={item} index={index}>
                                     <label>Answers</label>
                                     <input name={item}/>
+                                    <button className="delete-answer-button" type="button" onClick={(index) => deleteAnswer(index)}> - </button>
                                 </p>
                             )
                         })
                     }
                 </form>
-                <button className="add-answer-button" onClick={() => setState(addAnswer)}> +</button>
+                <button className="add-answer-button" onClick={addAnswer}> + </button>
             </div>
         );
 }
