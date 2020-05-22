@@ -47,11 +47,6 @@ function App() {
                         render={() => <Landing />} 
                     />
                     <Route
-                        path="/clinician"
-                        exact
-                        render={() => <HomeClinician />}
-                    />
-                    <Route
                         path="/parent"
                         exact
                         render={() => <HomeParents />}
@@ -60,6 +55,31 @@ function App() {
                         path="/admin" 
                         exact 
                         render={() => <HomeAdmin />} 
+                    />
+                    <Route
+                        path="/clinician"
+                        exact
+                        render={() => <HomeClinician active = {1}/>}
+                    />
+                    <Route 
+                        path="/clinician/Questionnaires" 
+                        exact 
+                        render={() => <HomeClinician active = {1}/>} 
+                    />
+                    <Route 
+                        path="/clinician/DoTheTest" 
+                        exact 
+                        render={() => <HomeClinician active = {2}/>} 
+                    />
+                    <Route 
+                        path="/clinician/Instructions" 
+                        exact 
+                        render={() => <HomeClinician active = {3}/>} 
+                    />
+                    <Route 
+                        path="/clinician/:id/edit" 
+                        exact 
+                        render={() => <HomeClinician active = {4}/>} 
                     />
                 </Switch>
             </Router>
