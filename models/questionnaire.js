@@ -15,11 +15,13 @@ const questionSchema = mongoose.Schema({
     description: {type: String, required:true},
     isMCQ: Boolean,
     mcqOptions: [String],
-    rangeOptions: [String],
-    location: {
-        section: String,
-        index: Number
-    }
+    rangeOptions: [String], 
+});
+
+const sectionSchema = mongoose.Schema({
+    title: { type: String, required: true },
+    description: String,
+    questions: [questionSchema]
 });
 
 
