@@ -12,6 +12,8 @@
 
 const mongoose = require('mongoose');
 
+
+
 var Questionnaire = mongoose.model('questionnaire');
 
 // Get all questionnaires
@@ -25,5 +27,23 @@ var getAllQuestionnaire = function (req, res) {
     });
 };
 
+let addNewQuestionnaire = function (req, res) {
+
+    const questionnaireId  = req.body.questionnaireId;
+    let newQuestionnaire = new Questionnaire ({
+        questionnaireId: "abcdef",
+         title: "awesome questionnaire",
+         description: "awesome",
+         questions: [],
+        isStandard: true
+
+
+    } );
+    newQuestionnaire.save();
+    console.log('POST request '+questionnaireId );
+    res.send("New Questionnaire created");
+  };
+
 
 module.exports.getAllQuestionnaire = getAllQuestionnaire;
+module.exports.addNewQuestionnaire = addNewQuestionnaire;
