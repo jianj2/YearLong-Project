@@ -31,7 +31,7 @@ let addNewQuestionnaire = function (req, res) {
 
     const questionnaireId  = req.body.questionnaireId;
     let newQuestionnaire = new Questionnaire ({
-        questionnaireId: "abcdef",
+        questionnaireId: "cdefgh",
          title: "awesome questionnaire",
          description: "awesome",
          questions: [],
@@ -41,7 +41,9 @@ let addNewQuestionnaire = function (req, res) {
     } );
     newQuestionnaire.save();
     console.log('POST request '+questionnaireId );
-    res.send("New Questionnaire created");
+    //res.send("New Questionnaire created");
+
+    res.status(200).json({"message":"New Questionnaire created"});
   };
 
 
