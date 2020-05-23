@@ -27,23 +27,40 @@ var getAllQuestionnaire = function (req, res) {
     });
 };
 
-let addNewQuestionnaire = function (req, res) {
-
+var addNewQuestionnaire = function (req, res) {
+    console.log(req.body)
     const questionnaireId  = req.body.questionnaireId;
     let newQuestionnaire = new Questionnaire ({
-        questionnaireId: "abcdef",
-         title: "awesome questionnaire",
-         description: "awesome",
-         questions: [],
+        questionnaireId: questionnaireId,
+        title: "awesome questionnaire",
+        description: "awesome",
+        questions: [],
         isStandard: true
-
-
     } );
-    newQuestionnaire.save();
-    console.log('POST request '+questionnaireId );
-    res.send("New Questionnaire created");
-  };
+    newQuestionnaire.save(function(err, createdQuestionnaire){
+
+        console.log('right here')
+        res.send({
+            code: 200,
+            message: "successfully add new questionnaire!",
+        });
+
+    });
+    // res.send({code: 200,
+    //     message: "successfully add new questionnaire!"})
+};
+
+
+let delQuestionnaire = function (req, res) {
+    const questionnaireID = req.body.questionnaireId;
+    Questionnaire.deleteOne({questionnaireId:questionnaireID},function (err,result) {
+        console.log('del now')
+        
+    })
+
+}
 
 
 module.exports.getAllQuestionnaire = getAllQuestionnaire;
 module.exports.addNewQuestionnaire = addNewQuestionnaire;
+module.exports.delQuestionnaire = delQuestionnaire;
