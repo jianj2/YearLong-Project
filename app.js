@@ -1,10 +1,16 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var path = require('path');
 
 var app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
 
 require('./models/db.js');
@@ -18,6 +24,7 @@ var indexRouter = require('./routes');
 var clinicianRouter = require('./routes/clinician');
 var questionnaireRouter = require('./routes/questionnaire');
 var adminRouter = require('./routes/admin');
+var emailRouter = require('./routes/email');
 
 
 // using routes
@@ -26,6 +33,7 @@ app.use('/', indexRouter);
 app.use('/clinician/', clinicianRouter);
 app.use('/questionnaire/', questionnaireRouter);
 app.use('/admin/', adminRouter);
+app.use('/email/', emailRouter);
 
 
 
