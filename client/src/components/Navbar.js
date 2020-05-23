@@ -28,8 +28,7 @@ import logoCompressed from "../assets/logo_compressed.png";
 const NavBar = () => {
     const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
     const { isAdminAuthenticated, adminLogout } = useAdminAuth();
-
-    console.log("isAdminAuthenticated from navbar", isAdminAuthenticated);
+ 
     return (
         <div className="navbar-container">
             <div className="navbar-left">

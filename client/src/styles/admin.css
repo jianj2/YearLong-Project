@@ -10,13 +10,10 @@
   *
 */
 
-.parents-admin {
+.admin-form {
   /* width: 50vw; */
   min-width: 400px;
   display: flex;
   flex-flow: column;
 }
-
-.parents-admin input {
-
-}
+ 

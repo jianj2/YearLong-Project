@@ -13,10 +13,6 @@
 
 import React, {useState} from "react";
 
-// Import styles.
-import "../../styles/managequestionnaires.css";
-import "../../styles/main.css"
-
 var CQid = 2
 const ManageQuestionnaires = (props) => {
      const [Questionnaires, setQuestionnaires] 

@@ -32,23 +32,8 @@ html, body {
     flex-direction: column;
 }
 
-input {
-  padding: 0.7vh 1.5vh;
-  font-size: 1.5vh;
-  border: 2px solid #eee;
-  border-radius: 5px;
-  background: #eee;
-  outline: 0;
-  color: #333;
-  transition: all 0.2s;
-  opacity: 0.8;
-}
-input:focus {
-  border: 2px solid #DB3D94;
-  opacity: 1;
-}
 
-button {
+/* button {
   cursor: pointer;
   padding: 0.8vh 2.5vh;
   font-size: 1.3vh;
@@ -65,7 +50,7 @@ button {
 button:hover {
   background-color: #5AC0CC;
   border-color: #5AC0CC; 
-}
+} */
 
 .button {
   cursor: pointer;

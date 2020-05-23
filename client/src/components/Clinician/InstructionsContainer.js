@@ -14,11 +14,6 @@
 
 import React from "react";
 
-
-// Import styles.
-import "../../styles/clinician.css";
-import "../../styles/main.css";
-
 // handles rendering of QuestionnaireContainer in the Clinician Page
 const InstructionsContainer = () => {
 
