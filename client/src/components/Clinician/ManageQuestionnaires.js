@@ -60,6 +60,7 @@ const ManageQuestionnaires = (props) => {
     function Delete(questionnaireID){
         const arrayCopy = Questionnaires.customized_Questionnaire.filter((q)=> q.QID !== questionnaireID);
         setQuestionnaires({customized_Questionnaire:arrayCopy});
+        API.delQuestionnaire();
     }
     
     function AddNew(){

@@ -26,6 +26,7 @@ export const verifyAdminLogin = (token) =>
 export const getQuestionnaires = () =>
     fetch(`${api}/questionnaire/`, { header }).then((res) => res.json());
 
+// add new questionnaire
 export const addQuestionnaire = () => {
     
     const url = api + '/questionnaire/add';
@@ -57,5 +58,18 @@ fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(data)})
 });
 
 };
+
+// delete questionnaire
+export const delQuestionnaire = (
+    data = {questionnaireId: "victor"}) =>
+    fetch(`${api}/questionnaire/del`, {
+    method: "POST",
+    headers: {
+        ...header,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+}).then((res) => res.json());
         
   
