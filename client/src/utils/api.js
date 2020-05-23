@@ -44,8 +44,18 @@ var data = {
 fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(data)})
   .then((res) => {
     console.log("receiving res");
-    console.log(res);
-     
-});
+    //console.log(res.json().resolve());
+     res.json().then(
+    //      data => ({
+    //     data: data,
+    //     status: res.status
+    // })
+).then(res => {
+    console.log(res.status, res.data.message);
 }
+)
+});
 
+};
+        
+  
