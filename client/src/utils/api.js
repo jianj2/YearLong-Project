@@ -28,7 +28,7 @@ export const getQuestionnaires = () =>
 
 export const addQuestionnaire = () => {
     
-    const url = api + '/questionnaire/';
+    const url = api + '/questionnaire/add';
 
 var headers = { ...header,
     'Content-Type': 'application/json',
