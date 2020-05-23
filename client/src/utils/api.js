@@ -25,3 +25,27 @@ export const verifyAdminLogin = (token) =>
 
 export const getQuestionnaires = () =>
     fetch(`${api}/questionnaire/`, { header }).then((res) => res.json());
+
+export const addQuestionnaire = () => {
+    
+    const url = api + '/questionnaire/';
+
+var headers = { ...header,
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+ 
+};
+
+var data = {
+  a: 1,
+  questionnaireId: "abcdef"
+};
+
+fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(data)})
+  .then((res) => {
+    console.log("receiving res");
+    console.log(res);
+     
+});
+}
+

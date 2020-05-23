@@ -15,7 +15,9 @@ import React, {useState} from "react";
 
 // Import styles.
 import "../../styles/managequestionnaires.css";
-import "../../styles/main.css"
+import "../../styles/main.css";
+import * as API from '../../utils/api';
+
 
 var CQid = 2
 const ManageQuestionnaires = (props) => {
@@ -62,13 +64,15 @@ const ManageQuestionnaires = (props) => {
     
     function AddNew(){
         CQid ++;
-        const AddedArray = Questionnaires.customized_Questionnaire
+        const AddedArray = Questionnaires.customized_Questionnaire;
         AddedArray.push(
             {
                 QID:CQid, Qname:"New custom questionnaire", Qdescription:"Details about it", date: "17/05/2020"
             }
         )
-        setQuestionnaires({customized_Questionnaire:AddedArray})
+        setQuestionnaires({customized_Questionnaire:AddedArray});
+        API.addQuestionnaire();
+
     }
 
     function CQgenerator(QID, Qname, Qdescription, date){
