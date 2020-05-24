@@ -1,20 +1,20 @@
 /**
  * ============================================
- * DEFINING QUESTIONNAIRE API CALLS CONTROLLER
+ * DEFINING EMAIL API CALLS CONTROLLER
  * ============================================
  * @date created: 24 May 2020
  * @authors: Uvin Abeysinghe
  *
- * The questionnaire_controller is used for defining the functionality of api calls related to questionnaires.
+ * The email_controller is used for defining the functionality of api calls related to emails.
  *
  */
 
 var nodemailer = require('nodemailer');
 var path = require("path");
 
-
 var send = function (req,res) {
 
+    // Used to send the email
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -23,6 +23,7 @@ var send = function (req,res) {
         }
     });
 
+    // Parameters for the email.
     var mailOptions = {
         from: 'SSQ Paediatric',
         to: req.body.to,
@@ -38,7 +39,7 @@ var send = function (req,res) {
             '        <p>Questionnaire attached</p>' +
             '    </div>',
         attachments: [
-            { // Use a URL as an attachment
+            { // Placeholder for attachments.
                 filename: 'meme.png',
                 path: 'https://i.redd.it/g1ot0484k6821.png'
             }
@@ -54,6 +55,5 @@ var send = function (req,res) {
         }
     });
 }
-
 
 module.exports.send = send;
