@@ -10,14 +10,16 @@
  */
 
 var nodemailer = require('nodemailer');
+var path = require("path");
+
 
 var send = function (req,res) {
 
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'ssq.paediatric@gmail.com',
-            pass: 'ps@12345'
+            user: require(path.join(__dirname, '..', 'config/keys')).GmailUserName,
+            pass: require(path.join(__dirname, '..', 'config/keys')).GmailPassword,
         }
     });
 
