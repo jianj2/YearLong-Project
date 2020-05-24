@@ -34,7 +34,13 @@ var send = function (req,res) {
             '    <div style="padding: 2em;font-size: 20px;font-weight: 200;">' +
             '        <p>Hi ' + req.body.to + ',</p>' +
             '        <p>Questionnaire attached</p>' +
-            '    </div>'
+            '    </div>',
+        attachments: [
+            { // Use a URL as an attachment
+                filename: 'meme.png',
+                path: 'https://i.redd.it/g1ot0484k6821.png'
+            }
+        ]
     };
 
     transporter.sendMail(mailOptions, function(error, info){
