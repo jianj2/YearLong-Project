@@ -18,6 +18,8 @@ var indexRouter = require('./routes');
 var clinicianRouter = require('./routes/clinician');
 var questionnaireRouter = require('./routes/questionnaire');
 var adminRouter = require('./routes/admin');
+var emailRouter = require('./routes/email');
+
 
 
 // using routes
@@ -26,6 +28,8 @@ app.use('/', indexRouter);
 app.use('/clinician/', clinicianRouter);
 app.use('/questionnaire/', questionnaireRouter);
 app.use('/admin/', adminRouter);
+app.use('/email/', emailRouter);
+
 
 
 
