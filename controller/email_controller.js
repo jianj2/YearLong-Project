@@ -14,7 +14,7 @@ var path = require("path");
 
 var send = function (req,res) {
 
-    // Used to send the email
+    // Used to create the email
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -46,6 +46,7 @@ var send = function (req,res) {
         ]
     };
 
+    // Used to send the email
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
             res.send(err);
