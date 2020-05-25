@@ -58,7 +58,7 @@ var addNewQuestionnaire = function (req, res) {
 let deleteQuestionnaire = function (req, res) {
     const questionnaireID = req.body.questionnaireId;
     Questionnaire.deleteOne({questionnaireId:questionnaireID},function (err,result) {
-        console.log('del now')
+        console.log('deleted now')
         
     })
 
