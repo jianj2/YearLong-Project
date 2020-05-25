@@ -20,5 +20,7 @@ var questionnaire_controller = require('../controller/questionnaire_controller.j
 router.get('/', questionnaire_controller.getAllQuestionnaire);
 
 router.post('/add', questionnaire_controller.addNewQuestionnaire);
+router.post('/del', questionnaire_controller.delQuestionnaire);
+
 
 module.exports = router;
