@@ -28,7 +28,7 @@ var getAllQuestionnaire = function (req, res) {
 };
 
 var addNewQuestionnaire = function (req, res) {
-    console.log(req.body)
+
     const questionnaireId  = req.body.questionnaireId;
     let newQuestionnaire = new Questionnaire ({
         questionnaireId: questionnaireId,
@@ -38,27 +38,23 @@ var addNewQuestionnaire = function (req, res) {
         isStandard: true
     } );
     newQuestionnaire.save(function(err, createdQuestionnaire){
-
-        console.log('right here')
+        console.log("added customised questionnaire: " + JSON.stringify(req.body));
+      
         res.send({
             code: 200,
             message: "successfully add new questionnaire!",
         });
 
-    } );
-    newQuestionnaire.save();
-    console.log('POST request '+questionnaireId );
-    //res.send("New Questionnaire created");
-
-    res.status(200).json({"message":"New Questionnaire created"});
+    });
+  
   };
 
 
 
 let deleteQuestionnaire = function (req, res) {
-    const questionnaireID = req.body.questionnaireId;
-    Questionnaire.deleteOne({questionnaireId:questionnaireID},function (err,result) {
-        console.log('deleted now')
+    const questionnaireId = req.body.questionnaireId;
+    Questionnaire.deleteOne({questionnaireId:questionnaireId},function (err,result) {
+        console.log('deleted customised questionnaire: ' + questionnaireId );
         
     })
 
