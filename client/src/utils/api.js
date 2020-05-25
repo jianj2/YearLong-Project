@@ -27,7 +27,7 @@ export const getQuestionnaires = () =>
     fetch(`${api}/questionnaire/`, { header }).then((res) => res.json());
 
 // add new questionnaire
-export const addQuestionnaire = () => {
+export const addQuestionnaire = (CQid) => {
     
     const url = api + '/questionnaire/add';
 
@@ -38,21 +38,21 @@ var headers = { ...header,
 };
 
 var data = {
-  a: 1,
-  questionnaireId: "abcdef"
+  isStandard: false,
+  questionnaireId: CQid
 };
 
 fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(data)})
   .then((res) => {
     console.log("receiving res");
-    //console.log(res.json().resolve());
+   
      res.json().then(
-    //      data => ({
-    //     data: data,
-    //     status: res.status
-    // })
+         data => ({
+        data: data,
+        status: res.status
+    })
 ).then(res => {
-    console.log(res.status, res.data.message);
+    console.log(res.data.message);
 }
 )
 });
@@ -60,9 +60,9 @@ fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(data)})
 };
 
 // delete questionnaire
-export const delQuestionnaire = (
-    data = {questionnaireId: "victor"}) =>
-    fetch(`${api}/questionnaire/del`, {
+export const deleteQuestionnaire = (CQid) => {
+    const data = {questionnaireId: CQid}
+    fetch(`${api}/questionnaire/delete`, {
     method: "POST",
     headers: {
         ...header,
@@ -71,5 +71,6 @@ export const delQuestionnaire = (
     },
     body: JSON.stringify(data),
 }).then((res) => res.json());
+    }
         
   
