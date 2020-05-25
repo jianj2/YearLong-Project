@@ -22,7 +22,7 @@ import { useAuth0 } from "../utils/react-auth0-spa";
 
 
 // Import components
-import LoginAdmin from "../components/LoginAdmin";
+import FormLoginAdmin from "../components/FormLoginAdmin";
 
 // Import styles.
 import "../styles/admin.css";
@@ -53,7 +53,7 @@ const HomeAdmin = () => {
                 </div>
 
                 <div className="landing-buttons">
-                    <LoginAdmin adminLogin={adminLogin} />
+                    <FormLoginAdmin adminLogin={adminLogin} />
                 </div>
             </div>
         );

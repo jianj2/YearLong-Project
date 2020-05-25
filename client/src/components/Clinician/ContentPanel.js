@@ -12,11 +12,10 @@
  */
 
 import React, {useState} from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-// Import styles.
-import "../../styles/contentpanel.css";
+// Import components.
 import ManageQuestionnaires from "./ManageQuestionnaires";
-import {BrowserRouter as Router, Route} from "react-router-dom";
 import DoTheTestContainer from "./DoTheTestContainer";
 import InstructionsContainer from "./InstructionsContainer";
 import QuestionnaireContainer from "./QuestionnaireContainer"

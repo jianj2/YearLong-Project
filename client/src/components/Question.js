@@ -10,9 +10,8 @@
  *
  */
 
-
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import {
     Slider,
     FormControl,
@@ -22,137 +21,241 @@ import {
     RadioGroup,
     Checkbox,
     FormGroup,
-    FormHelperText
-} from '@material-ui/core';
-
+    FormHelperText,
+} from "@material-ui/core";
 
 import "../styles/questionnaire.css";
-import '../styles/main.css'
+import "../styles/main.css";
 
-export default function Question({ isMCQ, isParentFilling, rangeOptions, mcqOptions }) {
-    const { register, handleSubmit, errors } = useForm();
-    const [ extraQuestion, setExtraQuestion ] = useState('');
+export default function Question({
+    questionIndex,
+    sectionIndex,
+    isMCQ,
+    isParentFilling,
+    rangeOptions,
+    mcqOptions,
+    description,
+    onQuestionChange,
+}) {
+    // const { register, handleSubmit, errors } = useForm();
+    const [extraQuestion, setExtraQuestion] = useState("");
+    const [sliderValue, setSliderValue] = useState(0);
+    const [frequencyValue, setFrequencyValue] = useState("");
+    const [importanceValue, setImportanceValue] = useState("");
 
+    useEffect(() => {
+        let quesionResponseData = {
+            sliderValue,
+            extraQuestion,
+            frequencyValue,
+            importanceValue,
+        };
+        onQuestionChange(sectionIndex, questionIndex, quesionResponseData);
+    }, [sliderValue, extraQuestion, frequencyValue, importanceValue]);
 
     const onSubmit = (data) => {
-        console.log(data)
-    }
+        console.log(data);
+    };
+ 
 
     // If it is an MCQ question.
-    if (isMCQ) {
-        return(
-            <form onSubmit={handleSubmit(onSubmit)} className="question-container">
-                <p>
-                    <h4>Question:</h4> This is an MCQ quesiton.
-                </p>
+    // if (isMCQ) {
+    //     return (
+    //         <form
+    //             onSubmit={handleSubmit(onSubmit)}
+    //             className="question-container"
+    //         >
+    //             <p>
+    //                 <b>Question:</b> This is an MCQ quesiton.
+    //             </p>
 
-                <RadioGroup name="gender1" onChange={() => {}}>
-                    {
-                        mcqOptions.map(item => <FormControlLabel value={item} control={<Radio />} label={item} />)
-                    }
+    //             <RadioGroup name="gender1" onChange={() => {}}>
+    //                 {mcqOptions.map((item) => (
+    //                     <FormControlLabel
+    //                         value={item}
+    //                         control={<Radio />}
+    //                         label={item}
+    //                     />
+    //                 ))}
+    //             </RadioGroup>
+    //         </form>
+    //     );
+    // } else {
+    return (
+        <div className="question-container">
+            <p>{description}</p>
+            <Slider
+                value={sliderValue}
+                color="secondary"
+                step={0.1}
+                onChange={(e, val) => setSliderValue(val)}
+                min={0}
+                max={10}
+                valueLabelDisplay="auto"
+                name="slider"
+            />
+            <div className="slider-labels">
+                <label>{rangeOptions[0]}</label>
+                <label className="slider-value">{sliderValue}</label>
+                <label>{rangeOptions[1]}</label>
+            </div>
+
+            <FormControl color="secondary" margin="dense">
+                <RadioGroup
+                    name="frequency"
+                    value={extraQuestion}
+                    className="slider-checkboxes" 
+                >
+                    <FormControlLabel
+                        value="Would not hear it."
+                        control={
+                            <Radio
+                                onClick={() =>
+                                    setExtraQuestion("Would not hear it.")
+                                }
+                            />
+                        }
+                        label="Would not hear it."
+                    />
+                    <FormControlLabel
+                        value="Do not know."
+                        control={
+                            <Radio
+                                onClick={() => setExtraQuestion("Do not know.")}
+                            />
+                        }
+                        label="Do not know."
+                    />
+                    <FormControlLabel
+                        value="Not applicable."
+                        control={
+                            <Radio
+                                onClick={() =>
+                                    setExtraQuestion("Not applicable.")
+                                }
+                            />
+                        }
+                        label="Not applicable."
+                    />
                 </RadioGroup>
+            </FormControl>
 
-
-            </form>
-        )
-    //    If it is a rnage question.
-    } else {
-        return (
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="question-container"
-            >
-                <p>This is a Slider quesiton.</p>
-                <Slider
-                    defaultValue={2}
-                    color="secondary"
-                    step={0.1}
-                    min={0}
-                    max={10}
-                    valueLabelDisplay="auto"
-                />
-                <div className="slider-labels">
-                    <label>{rangeOptions[0]}</label>
-                    <label>{rangeOptions[1]}</label>
-                </div>
-
-                <RadioGroup name="gender1" onChange={() => {}}>
-                    {mcqOptions.map((item) => (
-                        <FormControlLabel
-                            value={item}
-                            control={<Radio />}
-                            label={item}
-                        />
-                    ))}
-                </RadioGroup>
-
+            <div className="subquestion-container">
                 <FormControl color="secondary" margin="dense">
-                    <FormLabel component="legend">
-                        Please select one of the options
-                    </FormLabel>
-                    <RadioGroup name="extra" value={extraQuestion}>
+                    <p >
+                        How often does this type of situation occur for your
+                        child, in which he/she is trying tofollow someone
+                        speaking from this distance?
+                    </p>
+                    <RadioGroup
+                        name="frequency"
+                        value={frequencyValue} 
+                    >
                         <FormControlLabel
-                            value=""
-                            control={
-                                <Radio
-                                    onClick={() => setExtraQuestion("Band")}
-                                />
-                            }
-                            label="Band"
-                        />
-                        <FormControlLabel
-                            value="Production House"
+                            value="Very often (4 or more times in a week)."
                             control={
                                 <Radio
                                     onClick={() =>
-                                        setExtraQuestion("Production House")
+                                        setFrequencyValue(
+                                            "Very often (4 or more times in a week)."
+                                        )
                                     }
                                 />
                             }
-                            label="Production House"
+                            label="Very often (4 or more times in a week)."
                         />
+
                         <FormControlLabel
-                            value="Dance Crew"
+                            value="Often (1 to 3 times in a week)."
                             control={
                                 <Radio
                                     onClick={() =>
-                                        setExtraQuestion("Dance Crew")
+                                        setFrequencyValue(
+                                            "Often (1 to 3 times in a week)."
+                                        )
                                     }
                                 />
                             }
-                            label="Dance Crew"
+                            label="Often (1 to 3 times in a week)."
+                        />
+                        <FormControlLabel
+                            value="Not often (1 to 2 times in a month)."
+                            control={
+                                <Radio
+                                    onClick={() =>
+                                        setFrequencyValue(
+                                            "Not often (1 to 2 times in a month)."
+                                        )
+                                    }
+                                />
+                            }
+                            label="Not often (1 to 2 times in a month)."
                         />
                     </RadioGroup>
-                    <FormHelperText>
-                        {errors.collectiveKind
-                            ? errors.collectiveKind.message
-                            : "Please specify what kind of collective this is."}
-                    </FormHelperText>
                 </FormControl>
+            </div>
 
-                <FormControl>
-                    <FormLabel>Assign responsibility</FormLabel>
-                    <FormGroup className="slider-checkboxes">
+            <div className="subquestion-container">
+                <FormControl color="secondary" margin="dense">
+                    <p >
+                        How important do you think it is for your child to have,
+                        or to develop, the listening skillsrequired in this type
+                        of situation?
+                    </p>
+                    <RadioGroup
+                        name="importance"
+                        value={importanceValue} 
+                    >
                         <FormControlLabel
-                            control={<Checkbox name="gilad" />}
-                            label="Would not hear it."
+                            value="Very important."
+                            control={
+                                <Radio
+                                    onClick={() =>
+                                        setImportanceValue("Very important.")
+                                    }
+                                />
+                            }
+                            label="Very important."
                         />
                         <FormControlLabel
-                            control={<Checkbox name="jason" />}
-                            label="Do not know."
+                            value="Important."
+                            control={
+                                <Radio
+                                    onClick={() =>
+                                        setImportanceValue("Important.")
+                                    }
+                                />
+                            }
+                            label="Important."
                         />
                         <FormControlLabel
-                            control={<Checkbox name="antoine" />}
-                            label="Not applicable."
+                            value="Only a little bit important."
+                            control={
+                                <Radio
+                                    onClick={() =>
+                                        setImportanceValue(
+                                            "Only a little bit important."
+                                        )
+                                    }
+                                />
+                            }
+                            label="Only a little bit important."
                         />
-                    </FormGroup>
-                    <FormHelperText>Be careful</FormHelperText>
+                        <FormControlLabel
+                            value="Not important."
+                            control={
+                                <Radio
+                                    onClick={() =>
+                                        setImportanceValue("Not important.")
+                                    }
+                                />
+                            }
+                            label="Not important."
+                        />
+                    </RadioGroup>
                 </FormControl>
-
-                {isParentFilling ? <div>PArent filling</div> : null}
-            </form>
-        );
-    }
-
-
+            </div>
+        </div>
+    );
+    // }
 }

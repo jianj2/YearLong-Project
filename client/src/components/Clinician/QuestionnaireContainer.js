@@ -17,10 +17,6 @@ import TopContainer from "./TopContainer";
 import EditQuestionnaire from "./EditQuestionnaire";
 import BottomContainer from "./BottomContainer";
 
-
-// Import styles.
-import "../../styles/clinician.css";
-import "../../styles/main.css";
 // import set from "react-hook-form/dist/utils/set";
 
 // handles rendering of QuestionnaireContainer in the Clinician Page

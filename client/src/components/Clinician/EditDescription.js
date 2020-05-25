@@ -14,10 +14,6 @@
 
 import React from "react";
 
-// Import styles.
-import "../../styles/main.css";
-import "../../styles/clinician.css"
-
 // handles rendering of TopContainer in the Clinician page
 const EditDescription = () => {
 
