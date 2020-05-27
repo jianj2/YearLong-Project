@@ -78,6 +78,8 @@ const ManageQuestionnaires = (props) => {
         setQuestionnaires({ customized_Questionnaire: AddedArray });
     }
 
+   
+
     function CQgenerator(QID, Qname, Qdescription, date) {
         var edit_url = "/clinician/" + QID + "/edit";
         return (

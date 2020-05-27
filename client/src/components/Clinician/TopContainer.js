@@ -18,6 +18,8 @@ import React from "react";
 import "../../styles/topcontainer.css";
 import "../../styles/main.css";
 
+import * as API from "../../utils/api";
+
 // handles rendering of TopContainer in the Clinician page
 const TopContainer = () => {
     var manage_qustionnaire_url = "/clinician"
@@ -27,7 +29,12 @@ const TopContainer = () => {
             <button style={{width:'12%',marginLeft:'10px', marginRight:'80px'}}
             onClick = {()=> (window.location.href = manage_qustionnaire_url)}>CANCEL</button>
             <button style={{width:'12%',marginRight:'10px'}}
-            onClick = {()=> (window.location.href = manage_qustionnaire_url)}> SAVE </button>
+            onClick = {()=> {
+                API.editQuestionnaire();
+                console.log("I am saving!");
+                window.location.href = manage_qustionnaire_url;
+            }
+            }> SAVE </button>
         </div>
     );
 };

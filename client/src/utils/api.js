@@ -71,3 +71,38 @@ export const deleteQuestionnaire = (CQid) => {
         body: JSON.stringify(data),
     }).then((res) => res.json());
 };
+
+//edit questionnaire
+// TODO: get CQid from UI
+export const editQuestionnaire = async () => {
+    const url = api + "/questionnaire/edit";
+
+    var headers = {
+        ...header,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+    };
+
+    var data = {
+        questionnaireId: 'e6bc8ad0-9fe3-11ea-a404-bf73c4e43df1', // TODO to be chanegd later
+       
+    };
+
+    
+    
+    try {
+        let response = await fetch(url, {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(data),
+        });
+        //let json = await response.json();
+   
+    } catch (e) {
+        console.error(
+            "An error has occurred while adding questionnaire",
+            e
+        );
+    }
+
+}
