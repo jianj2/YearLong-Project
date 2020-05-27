@@ -46,12 +46,12 @@ var createClinician = function (req,res) {
 }
 
 
-// Share questionnaire
+// Share questionnaire through email.
 var shareQuestionnaire = function (req, res) {
     let to = req.body.to;
     let from = req.body.from;
     let questionnaireId = req.body.from.questionnaireId;
-    let url = "http://localhost:3000/parent/" + questionnaireId + "/" + from + "/";
+    let link = "http://localhost:3000/parent/" + questionnaireId + "/" + from + "" ;
 
     // Used to create the email
     var transporter = nodemailer.createTransport({
@@ -76,7 +76,7 @@ var shareQuestionnaire = function (req, res) {
             '    <div style="padding: 2em;font-size: 20px;font-weight: 200;">' +
             '        <p>Hi ' + req.body.to + ',</p>' +
             '        <p>Questionnaire attached</p>' +
-            '        <p>Go to <a style="text-decoration: none;color: #ff5c4b;" href=url  >url</a> to complete the questionnaire.</p>\n' +
+            '        <p>Go to <a style="text-decoration: none;color: #ff5c4b;" href="' + link + '"  >url</a> to complete the questionnaire.</p>\n' +
             '    </div>'
     };
 
