@@ -15,7 +15,6 @@ import React, { useState, useEffect } from "react";
 
 export default function ParentReviewSubmission({
     questionnaire,
-    questionnaireResponse,
     personalDetails,
     questionnaireData,
 }) {
@@ -101,72 +100,6 @@ export default function ParentReviewSubmission({
                     </div>
                 ))}
             </div>
-            {/* <div className="review-questionnaire">
-                {questionnaire.sections.map((section, sectionIndex) => (
-                    <div>
-                        <h2>{section.title}</h2>
-                        {section.questions.map((q, questionIndex) => (
-                            <div>
-                                <p>{q.description}</p>
-
-                                {questionnaireResponse[sectionIndex] &&
-                                    questionnaireResponse[sectionIndex][
-                                        questionIndex
-                                    ] && (
-                                        <div>
-                                            <div className="review-row">
-                                                <label>Slider Value:</label>
-                                                <span>
-                                                    {
-                                                        questionnaireResponse[
-                                                            sectionIndex
-                                                        ][questionIndex]
-                                                            .sliderValue
-                                                    }
-                                                </span>
-                                            </div>
-                                            <div className="review-row">
-                                                <label>
-                                                    Supplementary Question:
-                                                </label>
-                                                <span>
-                                                    {
-                                                        questionnaireResponse[
-                                                            sectionIndex
-                                                        ][questionIndex]
-                                                            .extraQuestion
-                                                    }
-                                                </span>
-                                            </div>
-                                            <div className="review-row">
-                                                <label>Frequency :</label>
-                                                <span>
-                                                    {
-                                                        questionnaireResponse[
-                                                            sectionIndex
-                                                        ][questionIndex]
-                                                            .frequencyValue
-                                                    }
-                                                </span>
-                                            </div>
-                                            <div className="review-row">
-                                                <label>Importance:</label>
-                                                <span>
-                                                    {
-                                                        questionnaireResponse[
-                                                            sectionIndex
-                                                        ][questionIndex]
-                                                            .importanceValue
-                                                    }
-                                                </span>
-                                            </div>
-                                        </div>
-                                    )}
-                            </div>
-                        ))}
-                    </div>
-                ))}
-            </div> */}
         </div>
     );
 }

@@ -255,6 +255,5 @@ export default function Question({
                 </FormControl>
             </div>
         </div>
-    );
-    // }
+    ); 
 }
