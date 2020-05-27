@@ -20,7 +20,7 @@ import { useAuth0 } from "../utils/react-auth0-spa";
 import Loading from '../components/Loading';
 
 // Import styles.
-// import "../styles/clinician.css";
+import "../styles/clinician.css";
 import "../styles/main.css"
 import SideBar from "../components/Clinician/Sidebar";
 import ContentPanel from "../components/Clinician/ContentPanel";

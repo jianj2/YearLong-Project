@@ -20,6 +20,9 @@ import DoTheTestContainer from "./DoTheTestContainer";
 import InstructionsContainer from "./InstructionsContainer";
 import QuestionnaireContainer from "./QuestionnaireContainer"
 
+import "../../styles/contentpanel.css";
+import "../../styles/main.css";
+
 const ContentPanel = (props) => {
     
     if(props.active === 2){
