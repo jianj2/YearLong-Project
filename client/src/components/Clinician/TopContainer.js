@@ -31,7 +31,7 @@ const TopContainer = () => {
             <button style={{width:'12%',marginRight:'10px'}}
             onClick = {()=> {
                 API.editQuestionnaire();
-                console.log("I am saving!");
+
                 window.location.href = manage_qustionnaire_url;
             }
             }> SAVE </button>

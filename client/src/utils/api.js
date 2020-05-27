@@ -73,7 +73,7 @@ export const deleteQuestionnaire = (CQid) => {
 };
 
 //edit questionnaire
-// TODO: get CQid from UI
+// TODO: get CQid and entire edited questionaire from UI
 export const editQuestionnaire = async () => {
     const url = api + "/questionnaire/edit";
 
@@ -91,6 +91,7 @@ export const editQuestionnaire = async () => {
     
     
     try {
+        console.log("editing", data);
         let response = await fetch(url, {
             method: "POST",
             headers: headers,
