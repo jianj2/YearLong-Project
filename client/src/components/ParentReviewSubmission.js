@@ -19,9 +19,7 @@ export default function ParentReviewSubmission({
     personalDetails,
     questionnaireData,
 }) {
-    console.log("questionnaire", questionnaire);
-    console.log("questionnaireResponse", questionnaireResponse);
-    console.log("personalDetails", personalDetails);
+   
     return (
         <div className="review-submission">
             <h1>Personal Details</h1>
