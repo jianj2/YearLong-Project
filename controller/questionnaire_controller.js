@@ -101,15 +101,56 @@ const addNewFilledQuestionnaire = function (req, res) {
     });
 };
 
+//edit a questionnaire 
+// TODO: Receive an actual questionnaire from req.body, rather than creating a boiler plate.
 const editQuestionnaire = function(req, res){
-    console.log("editting questionnaire");
+    console.log("editing questionnaire", req.body.questionnaireId);
+    const sections = [    {
+        title: "Speech",
+        scenarios: [
+            {
+                description: "You are at Melbourne Uni...",
+                questions: [
+                    {
+                        isMCQ: false,
+                        rangeOptions: ["Zero", "Ten"],
+                    },{
+                        description: "If only one option can be true, which of the following is correct?",
+                        isMCQ: true,
+                        mcqOptions: ["All of the above is true", " Those below the below is true",
+                         "None of the above is true", 'Those above the above is true']
+                    }
+                ],
+            },
+        ],
+    },
+    { title: "Spatial", scenarios: [] },
+    { title: "Quality", scenarios: [] },
+]
+    editedQuestionnaire = {
+        questionnaireId: req.body.questionnaireId,
+        title: "awesome questionnaire",
+        description: "no longer awesome",
+        sections: sections,
+        isStandard: false,
+    };
+  
+
+    Questionnaire.replaceOne({questionnaireId: req.body.questionnaireId}, editedQuestionnaire, (err,raw)=>{return;});
+    
+
+
+}
+
+// Maybe used later for making incremental changes in db.
+const editQuestionnaireQuestion = function(req, res){
+    console.log("editing questionnaire");
 
     //   const writeResult = Questionnaire.updateOne({questionnaireId: req.body.questionnaireId}, {$addToSet: {"sections": {title: "new section 26",
     //      scenarios: [] }} }, (err, raw) => {console.log(err, raw);});
-     const writeResult = Questionnaire.updateOne({questionnaireId: req.body.questionnaireId}, {$push: {"sections.0.scenarios.0.questions": {isMCQ: false,
+  Questionnaire.updateOne({questionnaireId: req.body.questionnaireId}, {$push: {"sections.0.scenarios.0.questions": {isMCQ: false,
         rangeOptions: ["Three", "Nine"] }} }, (err, raw) => {return});
-    
-    //console.log(writeResult);
+
 
 }
 
