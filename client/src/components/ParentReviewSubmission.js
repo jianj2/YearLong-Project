@@ -21,6 +21,7 @@ export default function ParentReviewSubmission({
     questionnaire,
     questionnaireResponse,
     personalDetails,
+    questionnaireData,
 }) {
     console.log("questionnaire", questionnaire);
     console.log("questionnaireResponse", questionnaireResponse);
@@ -62,87 +63,42 @@ export default function ParentReviewSubmission({
                                     (question, questionIndex) => (
                                         <div>
                                             <p>{question.description}</p>
-
-                                            {questionnaireResponse[
-                                                sectionIndex
-                                            ] &&
-                                                questionnaireResponse[
-                                                    sectionIndex
-                                                ][scenarioIndex][
-                                                    questionIndex
-                                                ] && (
-                                                    <div>
-                                                        <div className="review-row">
-                                                            <label>
-                                                                Slider Value:
-                                                            </label>
-                                                            <span>
-                                                                {
-                                                                    questionnaireResponse[
-                                                                        sectionIndex
-                                                                    ][
-                                                                        scenarioIndex
-                                                                    ][
-                                                                        questionIndex
-                                                                    ]
-                                                                        .sliderValue
-                                                                }
-                                                            </span>
-                                                        </div>
-                                                        <div className="review-row">
-                                                            <label>
-                                                                Supplementary
-                                                                Question:
-                                                            </label>
-                                                            <span>
-                                                                {
-                                                                    questionnaireResponse[
-                                                                        sectionIndex
-                                                                    ][
-                                                                        scenarioIndex
-                                                                    ][
-                                                                        questionIndex
-                                                                    ]
-                                                                        .extraQuestion
-                                                                }
-                                                            </span>
-                                                        </div>
-                                                        <div className="review-row">
-                                                            <label>
-                                                                Frequency :
-                                                            </label>
-                                                            <span>
-                                                                {
-                                                                    questionnaireResponse[
-                                                                        sectionIndex
-                                                                    ][
-                                                                        scenarioIndex
-                                                                    ][
-                                                                        questionIndex
-                                                                    ]
-                                                                        .frequencyValue
-                                                                }
-                                                            </span>
-                                                        </div>
-                                                        <div className="review-row">
-                                                            <label>
-                                                                Importance:
-                                                            </label>
-                                                            <span>
-                                                                {
-                                                                    questionnaireResponse[
-                                                                        sectionIndex
-                                                                    ][
-                                                                        scenarioIndex
-                                                                    ][
-                                                                        questionIndex
-                                                                    ]
-                                                                        .importanceValue
-                                                                }
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                )}
+                                            <div>
+                                                <div className="review-row">
+                                                    <label>Slider Value:</label>
+                                                    <span>
+                                                        {
+                                                            questionnaireData[sectionIndex][scenarioIndex][questionIndex].sliderValue
+                                                        }
+                                                    </span>
+                                                </div>
+                                                <div className="review-row">
+                                                    <label>
+                                                        Supplementary Question:
+                                                    </label>
+                                                    <span>
+                                                        {
+                                                            questionnaireData[sectionIndex][scenarioIndex][questionIndex].extraQuestion
+                                                        }
+                                                    </span>
+                                                </div>
+                                                <div className="review-row">
+                                                    <label>Frequency :</label>
+                                                    <span>
+                                                        {
+                                                            questionnaireData[sectionIndex][scenarioIndex][questionIndex].frequencyValue
+                                                        }
+                                                    </span>
+                                                </div>
+                                                <div className="review-row">
+                                                    <label>Importance:</label>
+                                                    <span>
+                                                        {
+                                                            questionnaireData[sectionIndex][scenarioIndex][questionIndex].importanceValue
+                                                        }
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
                                     )
                                 )}

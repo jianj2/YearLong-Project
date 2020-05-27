@@ -199,6 +199,7 @@ const HomeParents = ({ match }) => {
                         questionnaire={questionnaire}
                         personalDetails={personalDetails}
                         questionnaireResponse={questionnaireResponse}
+                        questionnaireData={questionnaireData}
                     />
                 </div>
             </div>
