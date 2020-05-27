@@ -27,7 +27,7 @@ export const getQuestionnaires = () =>
     fetch(`${api}/questionnaire/`, { header }).then((res) => res.json());
 
 // add new questionnaire
-export const addQuestionnaire = () => {
+export const addQuestionnaire = async () => {
     const url = api + "/questionnaire/add";
 
     var headers = {
@@ -40,23 +40,21 @@ export const addQuestionnaire = () => {
         isStandard: false,
     };
 
-    return new Promise((resolve) => {
-        fetch(url, {
-            method: "POST",
-            headers: headers,
-            body: JSON.stringify(data),
-        }).then((res) => {
-            console.log("receiving res");
-
-            res.json()
-                .then((data) => ({
-                    data: data,
-                    status: res.status,
-                }))
-                .then((res) => {
-                    resolve(res.data.uuid);
-                });
-        });
+    return new Promise(async (resolve) => {
+        try {
+            let response = await fetch(url, {
+                method: "POST",
+                headers: headers,
+                body: JSON.stringify(data),
+            });
+            let json = await response.json();
+            resolve(json.uuid);
+        } catch (e) {
+            console.error(
+                "An error has occurred while adding questionnaire",
+                e
+            );
+        }
     });
 };
 
