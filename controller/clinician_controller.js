@@ -77,6 +77,8 @@ var shareQuestionnaire = function (req, res) {
             '        <p>Hi ' + parentId + ',</p>' +
             '        <p>Please complete the following questionnaire.</p>' +
             '        <p>Use the following link to complete the questionnaire: <a style="text-decoration: none;color: #ff5c4b;" href="' + link + '"  >link</a></p>\n' +
+            '        <p>Thank you,</p>\n' +
+            '        <p>' + clinicianId + '</p>\n' +
             '    </div>'
     };
 
