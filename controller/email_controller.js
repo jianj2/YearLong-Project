@@ -41,6 +41,8 @@ var send = function (req,res) {
             '    <div style="padding: 2em;font-size: 20px;font-weight: 200;">' +
             '        <p>Hi ' + clinicianId+ ',</p>' +
             '        <p>Questionnaire attached</p>' +
+            '        <p>Thank you,</p>\n' +
+            '        <p>' + parentId + '</p>\n' +
             '    </div>',
         attachments: [
             { // Placeholder for attachments.
