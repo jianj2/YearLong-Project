@@ -25,5 +25,22 @@ var getAllQuestionnaire = function (req, res) {
     });
 };
 
+// Get a questionnaire
+var getQuestionnaire = function (req, res) {
+    let questionnaireId = req.params.questionnaireId;
+
+    Questionnaire.findOne({ questionnaireId }, function (
+        err,
+        questionnaire
+    ) {
+        if (!err) {
+            res.send(questionnaire);
+        } else {
+            res.send(err);
+        }
+    });
+};
+
 
 module.exports.getAllQuestionnaire = getAllQuestionnaire;
+module.exports.getQuestionnaire = getQuestionnaire;

@@ -15,6 +15,7 @@ var questionnaire_controller = require('../controller/questionnaire_controller.j
 
 // CRUD Routes for Posts
 router.get('/', questionnaire_controller.getAllQuestionnaire);
+router.get("/:questionnaireId", questionnaire_controller.getQuestionnaire);
 
 
 module.exports = router;
