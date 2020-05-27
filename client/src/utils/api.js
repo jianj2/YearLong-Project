@@ -26,6 +26,10 @@ export const verifyAdminLogin = (token) =>
 export const getQuestionnaires = () =>
     fetch(`${api}/questionnaire/`, { header }).then((res) => res.json());
 
+
+// ================================================
+// Managing Questionnaire server calls
+// ================================================
 // add new questionnaire
 export const addQuestionnaire = async () => {
     const url = api + "/questionnaire/add";
@@ -97,7 +101,7 @@ export const editQuestionnaire = async () => {
             headers: headers,
             body: JSON.stringify(data),
         });
-        //let json = await response.json();
+        let json = await response.json();
    
     } catch (e) {
         console.error(
