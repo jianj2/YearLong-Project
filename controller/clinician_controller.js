@@ -81,7 +81,6 @@ var shareQuestionnaire = function (req, res) {
             '        <p>' + clinicianId + '</p>\n' +
             '    </div>'
     };
-
     // Used to send the email
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
@@ -91,7 +90,6 @@ var shareQuestionnaire = function (req, res) {
             res.sendStatus(200);
         }
     });
-
 };
 
 module.exports.shareQuestionnaire = shareQuestionnaire;
