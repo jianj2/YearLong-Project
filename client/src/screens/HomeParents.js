@@ -13,18 +13,22 @@
  *
  */
 
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-import React, { useState } from "react";
-import { Link } from 'react-router-dom'
 // Import components.
-import LoginParent from '../components/LoginParent'
-import Questionnaire from '../components/Questionnaire'
+import FormParentDetails from "../components/FormParentDetails";
+import Questionnaire from "../components/Questionnaire";
+import ParentReviewSubmission from "../components/ParentReviewSubmission";
 
 // Import assets.
-import logoComplete from '../assets/logo_complete.png';
+import logoComplete from "../assets/logo_complete.png";
+
+// Import utils
+import * as API from "../utils/api";
 
 // Import styles.
-import '../styles/parents.css';
+import "../styles/parents.css";
 import "../styles/landing.css";
 import "../styles/main.css";
 
@@ -32,71 +36,149 @@ import "../styles/main.css";
 // This method defines the elements for this component.
 // ---------------------------------------------------------------
 const HomeParents = () => {
-    const [step, setStep] = useState(2);
+    const [wizardStep, setWizardStep] = useState(0);
+    const [questionnaire, setQuestionnaire] = useState({
+        questionnaireId: '',
+        title: '',
+        description: '',
+        sections: [],
+        isStandard: true,
+    });
+    const [clinicianEmail, setClinicianEmail] = useState("");
+    const [personalDetails, setPersonalDetails] = useState({});
+    const [questionnaireResponse, setQuestionnaireResponse] = useState(null);
+
+    // This is called when the component first mounts.
+    useEffect(() => {
+        // Do server call here to initialize everything.
+
+        API.getQuestionnaires().then((res) => {
+            // ======================================================
+            // NOTE
+            // ======================================================
+            // CHANGE THIS TO GET SPECIFIC QUESTIONNAIRE DEFINED BY A
+            // QUESTIONNAIRE ID!!!!
+            // HAVE ONLY DONE
+            // ======================================================
+            console.log(res[0]);
+            setQuestionnaire(res[0]);
+        });
+    }, []);
 
     const nextStep = () => {
-        setStep(step + 1);
-    }
-    const resetSteps = () => {
-        setStep(0);
+        setWizardStep(wizardStep + 1);
+    };
+
+    const prevStep = () => {
+        setWizardStep(wizardStep - 1);
     };
     const goToInstructions = () => {
-        setStep(0);
+        setWizardStep(0);
+    };
+
+    const submitDetails = (data) => {
+        setPersonalDetails(data);
+        nextStep();
+    };
+
+    const submitQuestionnaire = (data) => {
+        setQuestionnaireResponse(data);
+        nextStep();
     }
 
-    if (step == 0) {
+    console.log(questionnaireResponse);
+
+    if (wizardStep == 0) {
         return (
             <div className="parents-home">
                 <div className="subheader-container">
-                    <button onClick={resetSteps}>C A N C E L</button>
-                    <button onClick={nextStep}>N E X T</button>
+                    <button className="button" onClick={nextStep}>
+                        N E X T
+                    </button>
                 </div>
-
-                <div>We would have instructions here stored by the admin.</div>
+                <div className="parents-container">
+                    We would have instructions here stored by the admin.
+                </div>
             </div>
         );
     }
 
-    if (step == 1) {
+    if (wizardStep == 1) {
         return (
             <div className="parents-home">
                 <div className="subheader-container">
-                    <button onClick={goToInstructions}>I N S T R U C T I O N S</button>
-                    <button onClick={resetSteps}>C A N C E L</button>
-                    <button onClick={nextStep}>N E X T</button>
-                </div>
-                We would have A FORM FOR PERSONAL DEETS here.
-            </div>
-        );
-    }
-
-    if (step == 2) {
-        return (
-            <div className="parents-home">
-                <div className="subheader-container">
-                    <button onClick={goToInstructions}>
+                    <button className="button" onClick={goToInstructions}>
                         I N S T R U C T I O N S
                     </button>
-                    <button onClick={resetSteps}>C A N C E L</button>
-                    <button onClick={nextStep}>S U B M I T</button>
+                    <button className="button" onClick={prevStep}>
+                        B A C K
+                    </button>
                 </div>
-                <Questionnaire />
+
+                <div className="parents-container">
+                    <FormParentDetails submitDetails={submitDetails} />
+                </div>
             </div>
         );
     }
- 
+
+    if (wizardStep == 2) {
+        return (
+            <div className="parents-home">
+                <div className="subheader-container">
+                    <button className="button" onClick={goToInstructions}>
+                        I N S T R U C T I O N S
+                    </button>
+                    <button className="button" onClick={prevStep}>
+                        B A C K
+                    </button>
+                </div>
+
+                <div className="parents-container">
+                    <Questionnaire
+                        questionnaire={questionnaire}
+                        submitQuestionnaire={submitQuestionnaire}
+                    />
+                </div>
+            </div>
+        );
+    }
+
+    if (wizardStep == 3) {
+        return (
+            <div className="parents-home">
+                <div className="subheader-container">
+                    <button className="button" onClick={prevStep}>
+                        B A C K
+                    </button>
+                    <button className="button" onClick={nextStep}>
+                        S U B M I T
+                    </button>
+                </div>
+
+                <div className="parents-container">
+                    <ParentReviewSubmission
+                        questionnaire={questionnaire}
+                        personalDetails={personalDetails}
+                        questionnaireResponse={questionnaireResponse}
+                    />
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="landing">
             <div className="landing-logo">
                 <img src={logoComplete} />
             </div>
 
-            <div className="return-form">
+            <div className="form-completed">
                 <h1>Response Sent</h1>
-                <Link to ="/" className="button">BACK TO HOME</Link>
+                <h2>Thank you!</h2>
             </div>
         </div>
     );
 };
 
-export default HomeParents
+export default HomeParents;

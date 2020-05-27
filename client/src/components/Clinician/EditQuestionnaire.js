@@ -14,9 +14,7 @@
 
 import React from "react";
 
-// Import styles.
-import "../../styles/main.css";
-import "../../styles/clinician.css"
+// Import components.
 import QuestionsContainer from "./QuestionsContainer";
 import EditDescription from "./EditDescription";
 

@@ -28,7 +28,7 @@ import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 // Import styles.
 import "../styles/admin.css";
 
-export default function LoginAdmin({ adminLogin }) {
+export default function FormLoginAdmin({ adminLogin }) {
     const { register, handleSubmit, errors } = useForm();
     const [ showPassword, setShowPassword ] = useState(false);
 
@@ -39,7 +39,7 @@ export default function LoginAdmin({ adminLogin }) {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="parents-admin">
+        <form onSubmit={handleSubmit(onSubmit)} className="admin-form">
             <FormControl margin="dense">
                 <InputLabel>Username</InputLabel>
                 <Input

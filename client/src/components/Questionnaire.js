@@ -10,62 +10,101 @@
  *
  */
 
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { Slider } from "@material-ui/core";
 
-import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { Slider } from '@material-ui/core';
+import Question from "./Question";
+import Loading from "./Loading";
 
-import Question from './Question'
-
-import * as API from '../utils/api'
+import * as API from "../utils/api";
 
 import "../styles/questionnaire.css";
-import '../styles/main.css'
+import "../styles/main.css";
 
-export default function Questionnaire({ nextStep }) {
+export default function Questionnaire({ questionnaire, submitQuestionnaire }) {
     const { register, handleSubmit, errors } = useForm();
-    const [ questionnaire, setQuestionnaire ] = useState({
-        questionnaireId: '',
-        title: '',
-        description: '',
-        sections: [],
-        isStandard: true,
-    });
+    const [questionnaireResponse, setQuestionnaireResponse] = useState({});
+
+    // useEffect(() => {
+    //     console.log(
+    //         "init questionnaireResponse in USEEFEFECT",
+    //         questionnaireResponse
+    //     );
+    //     let temp = [...questionnaireResponse];
+    //     console.log('temp before', temp)
+    //     questionnaire.sections.forEach((element, index) => {
+    //         temp[index] = [];
+    //     });
+    //     console.log("temp after", temp);
+
+    //     setQuestionnaireResponse(temp);
+
+        
+    // }, [questionnaire]);
 
     useEffect(() => {
-        API.getQuestionnaires()
-            .then(res => {
-                console.log(res[0])
-                setQuestionnaire(res[0])
-            })
-    }, [])
-
+        console.log('questionnaireResponse in USEEFEFECT',questionnaireResponse);
+    }, [questionnaireResponse])
 
     const onSubmit = (e) => {
         e.preventDefault();
-        setQuestionnaire('UVin');
+
+        submitQuestionnaire(questionnaireResponse);
+    };
+
+    const onQuestionChange = (sectionIndex, questionIndex, data) => { 
+
+        // var compiledResponse = [...questionnaireResponse];
+
+        // if (!compiledResponse[sectionIndex]) {
+        //     compiledResponse[sectionIndex] = [];
+        //     console.log(
+        //         "compiledResponse[sectionIndex] nahi hai bc",
+        //         sectionIndex
+        //     );
+        // } 
+        var compiledResponse = {
+            ...questionnaireResponse,
+            [sectionIndex]: {
+                ...questionnaireResponse[sectionIndex],
+                [questionIndex]: data,
+            },
+        };
+
+        // compiledResponse[sectionIndex][questionIndex] = data; 
+        setQuestionnaireResponse(compiledResponse);
     }
+
 
     return (
         <form onSubmit={onSubmit} className="questionaire-container">
             <h1>{questionnaire.title}</h1>
-            {questionnaire.sections.map((section) => (
-                <div>
+            {questionnaire.sections.map((section, sectionIndex) => (
+                <div key={sectionIndex}>
                     <h2>{section.title}</h2>
-                    {section.questions.map((question) => (
+                    {section.questions.map((question, questionIndex) => (
                         <Question
+                            error={true}
+                            key={questionIndex}
+                            questionIndex={questionIndex}
+                            description={question.description}
                             isMCQ={question.isMCQ}
                             mcqOptions={question.mcqOptions}
                             rangeOptions={question.rangeOptions}
+                            onQuestionChange={onQuestionChange}
+                            sectionIndex={sectionIndex}
                         />
                     ))}
                 </div>
             ))}
 
-            <button className={errors.code ? "button-disabled" : "button"}>
-                E N T E R
-            </button>
-            {errors.code && <span>{errors.code.message}</span>}
+            <div className="questionaire-submit-button">
+                <button className={errors.code ? "button-disabled" : "button"}>
+                    R E V I E W
+                </button>
+            </div>
         </form>
     );
+    // }
 }
