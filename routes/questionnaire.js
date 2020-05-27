@@ -19,7 +19,7 @@ var questionnaire_controller = require('../controller/questionnaire_controller.j
 
 router.get('/', questionnaire_controller.getAllQuestionnaire);
 
-router.post('/add', questionnaire_controller.addNewFilledQuestionnaire);
+router.post('/add', questionnaire_controller.addFilledQuestionnaire);
 router.post('/delete', questionnaire_controller.deleteQuestionnaire);
 router.post('/edit', questionnaire_controller.editQuestionnaire);
 

@@ -25,8 +25,8 @@ const getAllQuestionnaire = function (req, res) {
     });
 };
 
-// add an empty filled questionnaire
-const addNewQuestionnaire = function (req, res) {
+// add an empty questionnaire
+const addEmptyQuestionnaire = function (req, res) {
     const uuid = uuidv1();
 
     let newQuestionnaire = new Questionnaire({
@@ -53,7 +53,7 @@ const addNewQuestionnaire = function (req, res) {
 };
 
 // add a sample filled questionnaire
-const addNewFilledQuestionnaire = function (req, res) {
+const addFilledQuestionnaire = function (req, res) {
     const uuid = uuidv1();
     const sections = [
         {
@@ -165,7 +165,7 @@ const deleteQuestionnaire = function (req, res) {
 };
 
 module.exports.getAllQuestionnaire = getAllQuestionnaire;
-module.exports.addNewQuestionnaire = addNewQuestionnaire;
+module.exports.addEmptyQuestionnaire = addEmptyQuestionnaire;
 module.exports.deleteQuestionnaire = deleteQuestionnaire;
-module.exports.addNewFilledQuestionnaire = addNewFilledQuestionnaire;
+module.exports.addNewFilledQuestionnaire = addFilledQuestionnaire;
 module.exports.editQuestionnaire = editQuestionnaire;
