@@ -13,9 +13,10 @@ var router = express.Router();
 var clinician_controller = require('../controller/clinician_controller.js');
 
 
-// CRUD Routes for Posts
+// Used to get all the clinicians.
 router.get('/', clinician_controller.getAllClinician);
-//router.get('/123', clinician_controller.createClinician);
 
+// Used to share a questionnaire with the parent/child.
+router.post("/share", clinician_controller.shareQuestionnaire);
 
 module.exports = router;
