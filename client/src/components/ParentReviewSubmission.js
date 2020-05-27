@@ -3,7 +3,8 @@
  * REACT COMPONENT FUNCTION
  * ====================================================================
  * @date created: 17th May 2020
- * @authors: Uvin Abeysinghe, Waqas Rehmani, Ashley Curtis, Mayank Sharma, Jian Jiao
+ * @authors:    Uvin Abeysinghe, Waqas Rehmani, Ashley Curtis, 
+ *              Mayank Sharma, Jian Jiao
  *
  * The ParentReviewSubmission component defines the component where the
  * information filled by the user is shown.
@@ -11,11 +12,6 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { Slider } from "@material-ui/core";
-
-import Question from "./Question";
-import Loading from "./Loading";
 
 export default function ParentReviewSubmission({
     questionnaire,

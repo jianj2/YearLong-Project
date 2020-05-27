@@ -3,7 +3,8 @@
  * REACT COMPONENT FUNCTION
  * ====================================================================
  * @date created: 17th May 2020
- * @authors: Uvin Abeysinghe, Waqas Rehmani, Ashley Curtis, Mayank Sharma, Jian Jiao
+ * @authors:    Uvin Abeysinghe, Waqas Rehmani, Ashley Curtis, 
+ *              Mayank Sharma, Jian Jiao
  *
  * The Question component defines the question form for questionnaires. These
  * will be visible in questionnaires when the questionnaires are fillable.
@@ -11,7 +12,8 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+
+// Import Material-UI components.
 import {
     Slider,
     FormControl,
@@ -24,6 +26,7 @@ import {
     FormHelperText,
 } from "@material-ui/core";
 
+// Import styles.
 import "../styles/questionnaire.css";
 import "../styles/main.css";
 
