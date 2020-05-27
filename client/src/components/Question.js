@@ -38,8 +38,7 @@ export default function Question({
     description,
     onQuestionChange,
     data
-}) {
-    // const { register, handleSubmit, errors } = useForm();
+}) { 
     const [extraQuestion, setExtraQuestion] = useState(data.extraQuestion);
     const [sliderValue, setSliderValue] = useState(data.sliderValue);
     const [frequencyValue, setFrequencyValue] = useState(data.frequencyValue);
@@ -59,10 +58,6 @@ export default function Question({
             quesionResponseData
         );
     }, [sliderValue, extraQuestion, frequencyValue, importanceValue]);
-
-    const onSubmit = (data) => {
-        console.log(data);
-    };
  
 
     // If it is an MCQ question.

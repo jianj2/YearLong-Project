@@ -3,7 +3,8 @@
  * REACT COMPONENT FUNCTION
  * ====================================================================
  * @date created: 17th May 2020
- * @authors: Uvin Abeysinghe, Waqas Rehmani, Ashley Curtis, Mayank Sharma, Jian Jiao
+ * @authors:    Uvin Abeysinghe, Waqas Rehmani, Ashley Curtis, 
+ *              Mayank Sharma, Jian Jiao
  *
  * The Questionnaire component defines a collection of questions. These
  * will be visible when questionnaires are fillable.
@@ -14,11 +15,10 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Slider } from "@material-ui/core";
 
+// Import components.
 import Question from "./Question";
-import Loading from "./Loading";
 
-import * as API from "../utils/api";
-
+// Import styles.
 import "../styles/questionnaire.css";
 import "../styles/main.css";
 
@@ -28,59 +28,15 @@ export default function Questionnaire({
     questionnaireData,
     handleQuestionnaireChange,
 }) {
-    const { register, handleSubmit, errors } = useForm();
-    const [questionnaireResponse, setQuestionnaireResponse] = useState({});
-    // const [questionnaireData, setQuestionnaireData] = useState({
-    //     extraQuestion: "",
-    //     sliderValue: 0,
-    //     frequencyValue: "",
-    //     importanceValue: "",
-    // })
+    const { register, handleSubmit, errors } = useForm(); 
 
-    useEffect(() => {
-        // var newQuestionnaireResponse = {};
-        // questionnaire.sections.forEach((section, sectionIndex) => {
-        //     section.scenarios.forEach((scenario, scenarioIndex) => {
-        //         scenario.questions.forEach((question, questionIndex) => {
-        //             newQuestionnaireResponse = {
-        //                 ...newQuestionnaireResponse,
-        //                 [sectionIndex]: {
-        //                     ...newQuestionnaireResponse[sectionIndex],
-        //                     [scenarioIndex]: {
-        //                         ...newQuestionnaireResponse[sectionIndex][
-        //                             scenarioIndex
-        //                         ],
-        //                         [questionIndex]: {
-        //                             extraQuestion: "",
-        //                             frequencyValue: "",
-        //                             importanceValue: "",
-        //                             sliderValue: 0,
-        //                         },
-        //                     },
-        //                 },
-        //             };
-        //         });
-        //     });
-        // });
-        // console.log('newQuestionnaireResponse', newQuestionnaireResponse);
-        // questionnaireResponse;
-    }, []);
-
-    // useEffect(() => {
-
-    //     console.log('questionnaireResponse in USEEFEFECT',questionnaireResponse);
-    // }, [questionnaireResponse])
-
+    // Mehod: Called when we submit the questionnaire
     const onSubmit = (e) => {
         e.preventDefault();
-
-        submitQuestionnaire(questionnaireResponse);
+        submitQuestionnaire();
     };
 
-    const handleChange = () => {
-        // handleQuestionnaireChange();
-    };
-
+    // Mehod: Called when we something in the questionnaire changes.
     const onQuestionChange = (
         sectionIndex,
         scenarioIndex,
@@ -89,39 +45,7 @@ export default function Questionnaire({
     ) => {
         handleQuestionnaireChange(sectionIndex, scenarioIndex, questionIndex, data);
     };
-
-    // const onQuestionChange = (
-    //     sectionIndex,
-    //     scenarioIndex,
-    //     questionIndex,
-    //     data
-    // ) => {
-    //     // var compiledResponse = [...questionnaireResponse];
-
-    //     // if (!compiledResponse[sectionIndex]) {
-    //     //     compiledResponse[sectionIndex] = [];
-    //     //     console.log(
-    //     //         "compiledResponse[sectionIndex] ",
-    //     //         sectionIndex
-    //     //     );
-    //     // }
-    //     var compiledResponse = {
-    //         ...questionnaireResponse,
-    //         [sectionIndex]: {
-    //             ...questionnaireResponse[sectionIndex],
-    //             [scenarioIndex]: {
-    //                 ...questionnaireResponse[scenarioIndex],
-    //                 [questionIndex]: data,
-    //             },
-    //         },
-    //     };
-
-    //     // compiledResponse[sectionIndex][questionIndex] = data;
-    //     setQuestionnaireResponse(compiledResponse);
-    // };
-
-    console.log("questionnaireData in Questionnaire", questionnaireData);
-
+ 
     return (
         <form onSubmit={onSubmit} className="questionaire-container">
             <h1>{questionnaire.title}</h1>
@@ -152,18 +76,6 @@ export default function Questionnaire({
                                     />
                                 )
                             )}
-
-                            {/* <Question
-                                error={true}
-                                key={questionIndex}
-                                questionIndex={questionIndex}
-                                description={question.description}
-                                isMCQ={question.isMCQ}
-                                mcqOptions={question.mcqOptions}
-                                rangeOptions={question.rangeOptions}
-                                onQuestionChange={onQuestionChange}
-                                sectionIndex={sectionIndex}
-                            /> */}
                         </div>
                     ))}
                 </div>
