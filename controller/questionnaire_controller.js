@@ -11,6 +11,8 @@
 
 
 const mongoose = require('mongoose');
+const { v1: uuidv1 } = require('uuid');
+
 
 
 
@@ -28,21 +30,22 @@ var getAllQuestionnaire = function (req, res) {
 };
 
 var addNewQuestionnaire = function (req, res) {
-
-    const questionnaireId  = req.body.questionnaireId;
+    const uuid = uuidv1();
+    
     let newQuestionnaire = new Questionnaire ({
-        questionnaireId: questionnaireId,
+        questionnaireId: uuid,
         title: "awesome questionnaire",
         description: "awesome",
         questions: [],
         isStandard: true
     } );
     newQuestionnaire.save(function(err, createdQuestionnaire){
-        console.log("added customised questionnaire: " + JSON.stringify(req.body));
+        console.log("added customised questionnaire:", uuid, JSON.stringify(req.body));
       
         res.send({
             code: 200,
             message: "successfully add new questionnaire!",
+            uuid: uuid 
         });
 
     });
