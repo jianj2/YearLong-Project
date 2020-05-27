@@ -14,7 +14,7 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 // Import components.
 import FormParentDetails from "../components/FormParentDetails";
@@ -35,7 +35,9 @@ import "../styles/main.css";
 // ---------------------------------------------------------------
 // This method defines the elements for this component.
 // ---------------------------------------------------------------
-const HomeParents = () => {
+const HomeParents = ({ match }) => {
+    console.log("pparents props", match);
+
     const [wizardStep, setWizardStep] = useState(0);
     const [questionnaire, setQuestionnaire] = useState({
         questionnaireId: '',
@@ -60,7 +62,6 @@ const HomeParents = () => {
             // QUESTIONNAIRE ID!!!!
             // HAVE ONLY DONE
             // ======================================================
-            console.log(res[0]);
             setQuestionnaire(res[0]);
         });
     }, []);
@@ -86,7 +87,7 @@ const HomeParents = () => {
         nextStep();
     }
 
-    console.log(questionnaireResponse);
+    // console.log(questionnaireResponse);
 
     if (wizardStep == 0) {
         return (
@@ -181,4 +182,4 @@ const HomeParents = () => {
     );
 };
 
-export default HomeParents;
+export default withRouter(HomeParents);
