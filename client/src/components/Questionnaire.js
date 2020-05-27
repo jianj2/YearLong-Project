@@ -83,18 +83,37 @@ export default function Questionnaire({ questionnaire, submitQuestionnaire }) {
             {questionnaire.sections.map((section, sectionIndex) => (
                 <div key={sectionIndex}>
                     <h2>{section.title}</h2>
-                    {section.questions.map((question, questionIndex) => (
-                        <Question
-                            error={true}
-                            key={questionIndex}
-                            questionIndex={questionIndex}
-                            description={question.description}
-                            isMCQ={question.isMCQ}
-                            mcqOptions={question.mcqOptions}
-                            rangeOptions={question.rangeOptions}
-                            onQuestionChange={onQuestionChange}
-                            sectionIndex={sectionIndex}
-                        />
+                    {section.scenarios.map((scenario, scenarioIndex) => (
+                        <div key={scenarioIndex}>
+                            <p>{scenario.description}</p>
+                            {scenario.questions.map(
+                                (question, questionIndex) => (
+                                    <Question
+                                        error={true}
+                                        key={questionIndex}
+                                        questionIndex={questionIndex}
+                                        description={question.description}
+                                        isMCQ={question.isMCQ}
+                                        mcqOptions={question.mcqOptions}
+                                        rangeOptions={question.rangeOptions}
+                                        onQuestionChange={onQuestionChange}
+                                        sectionIndex={sectionIndex}
+                                    />
+                                )
+                            )}
+
+                            {/* <Question
+                                error={true}
+                                key={questionIndex}
+                                questionIndex={questionIndex}
+                                description={question.description}
+                                isMCQ={question.isMCQ}
+                                mcqOptions={question.mcqOptions}
+                                rangeOptions={question.rangeOptions}
+                                onQuestionChange={onQuestionChange}
+                                sectionIndex={sectionIndex}
+                            /> */}
+                        </div>
                     ))}
                 </div>
             ))}

@@ -54,7 +54,7 @@ const HomeParents = ({ match }) => {
     useEffect(() => {
         // Do server call here to initialize everything.
 
-        API.getQuestionnaires().then((res) => {
+        API.getQuestionnaire(match.params.questionnaireId).then((res) => {
             // ======================================================
             // NOTE
             // ======================================================
@@ -62,7 +62,8 @@ const HomeParents = ({ match }) => {
             // QUESTIONNAIRE ID!!!!
             // HAVE ONLY DONE
             // ======================================================
-            setQuestionnaire(res[0]);
+            console.log('response from server', res)
+            setQuestionnaire(res);
         });
     }, []);
 
