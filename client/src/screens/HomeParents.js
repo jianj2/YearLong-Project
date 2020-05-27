@@ -35,37 +35,71 @@ import "../styles/main.css";
 // ---------------------------------------------------------------
 // This method defines the elements for this component.
 // ---------------------------------------------------------------
-const HomeParents = ({ match }) => {
-    console.log("pparents props", match);
+const HomeParents = ({ match }) => { 
 
-    const [wizardStep, setWizardStep] = useState(0);
+    const [wizardStep, setWizardStep] = useState(2);
     const [questionnaire, setQuestionnaire] = useState({
-        questionnaireId: '',
-        title: '',
-        description: '',
+        questionnaireId: "",
+        title: "",
+        description: "",
         sections: [],
         isStandard: true,
     });
+
+    // const [questionnaire, setQuestionnaire] = useState({});
     const [clinicianEmail, setClinicianEmail] = useState("");
     const [personalDetails, setPersonalDetails] = useState({});
     const [questionnaireResponse, setQuestionnaireResponse] = useState(null);
+    const [questionnaireData, setQuestionnaireData] = useState([]);
 
     // This is called when the component first mounts.
     useEffect(() => {
         // Do server call here to initialize everything.
 
         API.getQuestionnaire(match.params.questionnaireId).then((res) => {
-            // ======================================================
-            // NOTE
-            // ======================================================
-            // CHANGE THIS TO GET SPECIFIC QUESTIONNAIRE DEFINED BY A
-            // QUESTIONNAIRE ID!!!!
-            // HAVE ONLY DONE
-            // ======================================================
-            console.log('response from server', res)
+            console.log("response from server", res);
+            console.log("set Questionnaire", res);
+            let tempResponse = [];
+            res.sections.forEach((section, sectionIndex) => {
+                tempResponse[sectionIndex] = [];
+                section.scenarios.forEach((scenario, scenarioIndex) => {
+                    tempResponse[sectionIndex][scenarioIndex] = [];
+                    scenario.questions.forEach((question, questionIndex) => {
+                        tempResponse[sectionIndex][scenarioIndex][
+                            questionIndex
+                        ] = {
+                            extraQuestion: "",
+                            sliderValue: 0,
+                            frequencyValue: "",
+                            importanceValue: "",
+                        };
+                    });
+                });
+            });
+            console.log("tempResponse", tempResponse);
+            setQuestionnaireData(tempResponse);
+
             setQuestionnaire(res);
+
         });
     }, []);
+
+    
+
+    useEffect(() => {
+        console.log("questionnaireData changed in homeparents", questionnaireData);
+    }, [questionnaireData])
+
+    const handleQuestionnaireChange = (
+        sectionIndex,
+        scenarioIndex,
+        questionIndex,
+        data
+    ) => {
+        let temp = [...questionnaireData];
+        temp[sectionIndex][scenarioIndex][questionIndex] = data;
+        setQuestionnaireData(temp);
+    };
 
     const nextStep = () => {
         setWizardStep(wizardStep + 1);
@@ -86,7 +120,7 @@ const HomeParents = ({ match }) => {
     const submitQuestionnaire = (data) => {
         setQuestionnaireResponse(data);
         nextStep();
-    }
+    };
 
     // console.log(questionnaireResponse);
 
@@ -140,6 +174,8 @@ const HomeParents = ({ match }) => {
                     <Questionnaire
                         questionnaire={questionnaire}
                         submitQuestionnaire={submitQuestionnaire}
+                        questionnaireData={questionnaireData}
+                        handleQuestionnaireChange={handleQuestionnaireChange}
                     />
                 </div>
             </div>

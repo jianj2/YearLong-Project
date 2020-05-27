@@ -30,18 +30,20 @@ import "../styles/main.css";
 export default function Question({
     questionIndex,
     sectionIndex,
+    scenarioIndex,
     isMCQ,
     isParentFilling,
     rangeOptions,
     mcqOptions,
     description,
     onQuestionChange,
+    data
 }) {
     // const { register, handleSubmit, errors } = useForm();
-    const [extraQuestion, setExtraQuestion] = useState("");
-    const [sliderValue, setSliderValue] = useState(0);
-    const [frequencyValue, setFrequencyValue] = useState("");
-    const [importanceValue, setImportanceValue] = useState("");
+    const [extraQuestion, setExtraQuestion] = useState(data.extraQuestion);
+    const [sliderValue, setSliderValue] = useState(data.sliderValue);
+    const [frequencyValue, setFrequencyValue] = useState(data.frequencyValue);
+    const [importanceValue, setImportanceValue] = useState(data.importanceValue);
 
     useEffect(() => {
         let quesionResponseData = {
@@ -50,7 +52,12 @@ export default function Question({
             frequencyValue,
             importanceValue,
         };
-        onQuestionChange(sectionIndex, questionIndex, quesionResponseData);
+        onQuestionChange(
+            sectionIndex,
+            scenarioIndex,
+            questionIndex,
+            quesionResponseData
+        );
     }, [sliderValue, extraQuestion, frequencyValue, importanceValue]);
 
     const onSubmit = (data) => {
@@ -85,7 +92,7 @@ export default function Question({
         <div className="question-container">
             <p>{description}</p>
             <Slider
-                value={sliderValue}
+                value={data.sliderValue}
                 color="secondary"
                 step={0.1}
                 onChange={(e, val) => setSliderValue(val)}
@@ -96,15 +103,15 @@ export default function Question({
             />
             <div className="slider-labels">
                 <label>{rangeOptions[0]}</label>
-                <label className="slider-value">{sliderValue}</label>
+                <label className="slider-value">{data.sliderValue}</label>
                 <label>{rangeOptions[1]}</label>
             </div>
 
             <FormControl color="secondary" margin="dense">
                 <RadioGroup
                     name="frequency"
-                    value={extraQuestion}
-                    className="slider-checkboxes" 
+                    value={data.extraQuestion}
+                    className="slider-checkboxes"
                 >
                     <FormControlLabel
                         value="Would not hear it."
@@ -142,15 +149,12 @@ export default function Question({
 
             <div className="subquestion-container">
                 <FormControl color="secondary" margin="dense">
-                    <p >
+                    <p>
                         How often does this type of situation occur for your
                         child, in which he/she is trying tofollow someone
                         speaking from this distance?
                     </p>
-                    <RadioGroup
-                        name="frequency"
-                        value={frequencyValue} 
-                    >
+                    <RadioGroup name="frequency" value={data.frequencyValue}>
                         <FormControlLabel
                             value="Very often (4 or more times in a week)."
                             control={
@@ -197,15 +201,12 @@ export default function Question({
 
             <div className="subquestion-container">
                 <FormControl color="secondary" margin="dense">
-                    <p >
+                    <p>
                         How important do you think it is for your child to have,
                         or to develop, the listening skillsrequired in this type
                         of situation?
                     </p>
-                    <RadioGroup
-                        name="importance"
-                        value={importanceValue} 
-                    >
+                    <RadioGroup name="importance" value={data.importanceValue}>
                         <FormControlLabel
                             value="Very important."
                             control={

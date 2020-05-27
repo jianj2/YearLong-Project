@@ -22,30 +22,54 @@ import * as API from "../utils/api";
 import "../styles/questionnaire.css";
 import "../styles/main.css";
 
-export default function Questionnaire({ questionnaire, submitQuestionnaire }) {
+export default function Questionnaire({
+    questionnaire,
+    submitQuestionnaire,
+    questionnaireData,
+    handleQuestionnaireChange,
+}) {
     const { register, handleSubmit, errors } = useForm();
     const [questionnaireResponse, setQuestionnaireResponse] = useState({});
-
-    // useEffect(() => {
-    //     console.log(
-    //         "init questionnaireResponse in USEEFEFECT",
-    //         questionnaireResponse
-    //     );
-    //     let temp = [...questionnaireResponse];
-    //     console.log('temp before', temp)
-    //     questionnaire.sections.forEach((element, index) => {
-    //         temp[index] = [];
-    //     });
-    //     console.log("temp after", temp);
-
-    //     setQuestionnaireResponse(temp);
-
-        
-    // }, [questionnaire]);
+    // const [questionnaireData, setQuestionnaireData] = useState({
+    //     extraQuestion: "",
+    //     sliderValue: 0,
+    //     frequencyValue: "",
+    //     importanceValue: "",
+    // })
 
     useEffect(() => {
-        console.log('questionnaireResponse in USEEFEFECT',questionnaireResponse);
-    }, [questionnaireResponse])
+        // var newQuestionnaireResponse = {};
+        // questionnaire.sections.forEach((section, sectionIndex) => {
+        //     section.scenarios.forEach((scenario, scenarioIndex) => {
+        //         scenario.questions.forEach((question, questionIndex) => {
+        //             newQuestionnaireResponse = {
+        //                 ...newQuestionnaireResponse,
+        //                 [sectionIndex]: {
+        //                     ...newQuestionnaireResponse[sectionIndex],
+        //                     [scenarioIndex]: {
+        //                         ...newQuestionnaireResponse[sectionIndex][
+        //                             scenarioIndex
+        //                         ],
+        //                         [questionIndex]: {
+        //                             extraQuestion: "",
+        //                             frequencyValue: "",
+        //                             importanceValue: "",
+        //                             sliderValue: 0,
+        //                         },
+        //                     },
+        //                 },
+        //             };
+        //         });
+        //     });
+        // });
+        // console.log('newQuestionnaireResponse', newQuestionnaireResponse);
+        // questionnaireResponse;
+    }, []);
+
+    // useEffect(() => {
+
+    //     console.log('questionnaireResponse in USEEFEFECT',questionnaireResponse);
+    // }, [questionnaireResponse])
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -53,29 +77,50 @@ export default function Questionnaire({ questionnaire, submitQuestionnaire }) {
         submitQuestionnaire(questionnaireResponse);
     };
 
-    const onQuestionChange = (sectionIndex, questionIndex, data) => { 
+    const handleChange = () => {
+        // handleQuestionnaireChange();
+    };
 
-        // var compiledResponse = [...questionnaireResponse];
+    const onQuestionChange = (
+        sectionIndex,
+        scenarioIndex,
+        questionIndex,
+        data
+    ) => {
+        handleQuestionnaireChange(sectionIndex, scenarioIndex, questionIndex, data);
+    };
 
-        // if (!compiledResponse[sectionIndex]) {
-        //     compiledResponse[sectionIndex] = [];
-        //     console.log(
-        //         "compiledResponse[sectionIndex] nahi hai bc",
-        //         sectionIndex
-        //     );
-        // } 
-        var compiledResponse = {
-            ...questionnaireResponse,
-            [sectionIndex]: {
-                ...questionnaireResponse[sectionIndex],
-                [questionIndex]: data,
-            },
-        };
+    // const onQuestionChange = (
+    //     sectionIndex,
+    //     scenarioIndex,
+    //     questionIndex,
+    //     data
+    // ) => {
+    //     // var compiledResponse = [...questionnaireResponse];
 
-        // compiledResponse[sectionIndex][questionIndex] = data; 
-        setQuestionnaireResponse(compiledResponse);
-    }
+    //     // if (!compiledResponse[sectionIndex]) {
+    //     //     compiledResponse[sectionIndex] = [];
+    //     //     console.log(
+    //     //         "compiledResponse[sectionIndex] ",
+    //     //         sectionIndex
+    //     //     );
+    //     // }
+    //     var compiledResponse = {
+    //         ...questionnaireResponse,
+    //         [sectionIndex]: {
+    //             ...questionnaireResponse[sectionIndex],
+    //             [scenarioIndex]: {
+    //                 ...questionnaireResponse[scenarioIndex],
+    //                 [questionIndex]: data,
+    //             },
+    //         },
+    //     };
 
+    //     // compiledResponse[sectionIndex][questionIndex] = data;
+    //     setQuestionnaireResponse(compiledResponse);
+    // };
+
+    console.log("questionnaireData in Questionnaire", questionnaireData);
 
     return (
         <form onSubmit={onSubmit} className="questionaire-container">
@@ -92,12 +137,18 @@ export default function Questionnaire({ questionnaire, submitQuestionnaire }) {
                                         error={true}
                                         key={questionIndex}
                                         questionIndex={questionIndex}
+                                        sectionIndex={sectionIndex}
+                                        scenarioIndex={scenarioIndex}
                                         description={question.description}
                                         isMCQ={question.isMCQ}
                                         mcqOptions={question.mcqOptions}
                                         rangeOptions={question.rangeOptions}
                                         onQuestionChange={onQuestionChange}
-                                        sectionIndex={sectionIndex}
+                                        data={
+                                            questionnaireData[sectionIndex][
+                                                scenarioIndex
+                                            ][questionIndex]
+                                        }
                                     />
                                 )
                             )}
