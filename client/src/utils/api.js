@@ -27,50 +27,49 @@ export const getQuestionnaires = () =>
     fetch(`${api}/questionnaire/`, { header }).then((res) => res.json());
 
 // add new questionnaire
-export const addQuestionnaire = (CQid) => {
-    
-    const url = api + '/questionnaire/add';
+export const addQuestionnaire = () => {
+    const url = api + "/questionnaire/add";
 
-var headers = { ...header,
-    'Content-Type': 'application/json',
-    'Accept': 'application/json'
- 
-};
+    var headers = {
+        ...header,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+    };
 
-var data = {
-  isStandard: false,
-  questionnaireId: CQid
-};
+    var data = {
+        isStandard: false,
+    };
 
-fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(data)})
-  .then((res) => {
-    console.log("receiving res");
-   
-     res.json().then(
-         data => ({
-        data: data,
-        status: res.status
-    })
-).then(res => {
-    console.log(res.data.message);
-}
-)
-});
+    return new Promise((resolve) => {
+        fetch(url, {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(data),
+        }).then((res) => {
+            console.log("receiving res");
 
+            res.json()
+                .then((data) => ({
+                    data: data,
+                    status: res.status,
+                }))
+                .then((res) => {
+                    resolve(res.data.uuid);
+                });
+        });
+    });
 };
 
 // delete questionnaire
 export const deleteQuestionnaire = (CQid) => {
-    const data = {questionnaireId: CQid}
+    const data = { questionnaireId: CQid };
     fetch(`${api}/questionnaire/delete`, {
-    method: "POST",
-    headers: {
-        ...header,
-        Accept: "application/json",
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-}).then((res) => res.json());
-    }
-        
-  
+        method: "POST",
+        headers: {
+            ...header,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    }).then((res) => res.json());
+};
