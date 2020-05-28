@@ -196,7 +196,7 @@ const HomeParents = ({ match }) => {
                     loading
                     ? <Loading />
                     : null
-                }
+                } 
                 <div className="subheader-container">
                     <button className="button" onClick={prevStep}>
                         B A C K
