@@ -11,6 +11,7 @@
 
 var nodemailer = require('nodemailer');
 var path = require("path");
+var Readable = require('stream').Readable
 
 var sendEmail = function (req,res) {
     console.log(req.body)
@@ -28,6 +29,13 @@ var sendEmail = function (req,res) {
             pass: require(path.join(__dirname, '..', 'config/keys')).GmailPassword,
         }
     });
+
+    // Creating the file to send.
+    var s = new Readable()
+    s.push(JSON.stringify(personalDetails))    // the string you want
+    s.push(JSON.stringify(questionnaireData))
+    s.push(null)      // indicates end-of-file basically - the end of the stream
+
 
     // Parameters for the email.
     var mailOptions = {
@@ -50,6 +58,10 @@ var sendEmail = function (req,res) {
             "<div> <h2>Personal Details</h2>" + JSON.stringify(personalDetails) + "</div>" +
             "<div> <h2>Questionnaire Data</h2>" + JSON.stringify(questionnaireData) + "</div>" +
             "    </div>",
+            attachments : [{   // stream as an attachment
+                filename: 'data.txt',
+                content: s
+            }],
         
     };
 
