@@ -30,3 +30,12 @@ export const getQuestionnaire = (questionnaireID) =>
     fetch(`${api}/questionnaire/${questionnaireID}`, {
         header,
     }).then((res) => res.json());
+
+    
+export const sendQuestionnaireData = (data) =>
+    fetch(`${api}/email/submit`, {
+        header,
+        method: 'post',
+        data: JSON.stringify(data)
+    }).then((res) => res.json());
+
