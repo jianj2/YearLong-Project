@@ -11,97 +11,118 @@
  *
  */
 
-import React, {useState} from "react";
+import React, { useState } from "react";
 
-var CQid = 2
+// Import styles.
+import "../../styles/managequestionnaires.css";
+import "../../styles/main.css";
+import * as API from "../../utils/api";
+
 const ManageQuestionnaires = (props) => {
-     const [Questionnaires, setQuestionnaires] 
-     = useState({
-        customized_Questionnaire:[
+    const [Questionnaires, setQuestionnaires] = useState({
+        customized_Questionnaire: [
             {
-                QID:1, Qname:"First custom questionnaire", Qdescription:"Details about it", date: "17/05/2020"
+                QID: 1,
+                Qname: "First custom questionnaire",
+                Qdescription: "Details about it",
+                date: "17/05/2020",
             },
             {
-                QID:2, Qname:"Second custom questionnaire", Qdescription:"Details about it", date: "17/05/2020"
-            }
-        ]
-        });
+                QID: 2,
+                Qname: "Second custom questionnaire",
+                Qdescription: "Details about it",
+                date: "17/05/2020",
+            },
+        ],
+    });
 
-    function SQgenerator(Qname, Qdescription, date){
+    function SQgenerator(Qname, Qdescription, date) {
         return (
-                <div className = "q-frame">
-                    <div className = "q-name">{Qname}</div>
-                    <div className = "q-description">{Qdescription}</div>
-                    <div className = "date">{date}</div>
-                </div>
-            )
+            <div className="q-frame">
+                <div className="q-name">{Qname}</div>
+                <div className="q-description">{Qdescription}</div>
+                <div className="date">{date}</div>
+            </div>
+        );
     }
 
-    function CQlist(){
+    function CQlist() {
         var customized_Questionnaire_list = [];
         var q;
-        for(q of Questionnaires.customized_Questionnaire){
-            customized_Questionnaire_list.push(  
-                CQgenerator(q.QID,q.Qname,q.Qdescription, q.date)
-            )
+        for (q of Questionnaires.customized_Questionnaire) {
+            customized_Questionnaire_list.push(
+                CQgenerator(q.QID, q.Qname, q.Qdescription, q.date)
+            );
         }
-        return(
-            customized_Questionnaire_list
-        )
+        return customized_Questionnaire_list;
     }
 
-
-    function Delete(questionnaireID){
-        const arrayCopy = Questionnaires.customized_Questionnaire.filter((q)=> q.QID !== questionnaireID);
-        setQuestionnaires({customized_Questionnaire:arrayCopy});
-    }
-    
-    function AddNew(){
-        CQid ++;
-        const AddedArray = Questionnaires.customized_Questionnaire
-        AddedArray.push(
-            {
-                QID:CQid, Qname:"New custom questionnaire", Qdescription:"Details about it", date: "17/05/2020"
-            }
-        )
-        setQuestionnaires({customized_Questionnaire:AddedArray})
+    function Delete(questionnaireID) {
+        const arrayCopy = Questionnaires.customized_Questionnaire.filter(
+            (q) => q.QID !== questionnaireID
+        );
+        setQuestionnaires({ customized_Questionnaire: arrayCopy });
+        API.deleteQuestionnaire(questionnaireID);
     }
 
-    function CQgenerator(QID, Qname, Qdescription, date){
-        var edit_url = "/clinician/"+QID+"/edit"
+    async function AddNew() {
+
+        const uuid = await API.addQuestionnaire();
+        const AddedArray = Questionnaires.customized_Questionnaire;
+        AddedArray.push({
+            QID: uuid,
+            Qname: "New custom questionnaire",
+            Qdescription: "Details about it",
+            date: "17/05/2020",
+        });
+        setQuestionnaires({ customized_Questionnaire: AddedArray });
+    }
+
+   
+
+    function CQgenerator(QID, Qname, Qdescription, date) {
+        var edit_url = "/clinician/" + QID + "/edit";
         return (
-            <div className = "q-frame" key = {QID}>
-                <div className = "q-name">{Qname}</div>
-                <div className = "q-description">{Qdescription}</div>
-                <div className = "date">{date}</div>
-                <div className = "btns-container">
-                    <button className = "edit-btn" 
-                    onClick = {()=> (window.location.href = edit_url) }>
+            <div className="q-frame" key={QID}>
+                <div className="q-name">{Qname}</div>
+                <div className="q-description">{Qdescription}</div>
+                <div className="date">{date}</div>
+                <div className="btns-container">
+                    <button
+                        className="edit-btn"
+                        onClick={() => (window.location.href = edit_url)}
+                    >
                         Edit
                     </button>
-                    <button className = "delete-btn" onClick = {(e) => Delete(QID,e)} >Delete</button>
+                    <button
+                        className="delete-btn"
+                        onClick={(e) => Delete(QID, e)}
+                    >
+                        Delete
+                    </button>
                 </div>
             </div>
-            )
+        );
     }
 
-    return(
+    return (
         <div>
-            <div className = "standard-questionnaire-container">
-                <div className = "SQ-header">Standard questionnaires</div>
-                {SQgenerator("Q1","blabla", "17/05/2020")}
-                {SQgenerator("Q2","blabla", "17/05/2020")}
-            </div> 
-            <div className = "customized-questionnaire-container">
-                <div className = "CQ-header">
+            <div className="standard-questionnaire-container">
+                <div className="SQ-header">Standard questionnaires</div>
+                {SQgenerator("Q1", "blabla", "17/05/2020")}
+                {SQgenerator("Q2", "blabla", "17/05/2020")}
+            </div>
+            <div className="customized-questionnaire-container">
+                <div className="CQ-header">
                     My Custome Questionnaires
-                    <button className = "Add-btn" onClick = {AddNew}>Add New</button>
+                    <button className="Add-btn" onClick={AddNew}>
+                        Add New
+                    </button>
                 </div>
-                <CQlist/>
+                <CQlist />
             </div>
         </div>
-    )
+    );
 };
-
 
 export default ManageQuestionnaires;
