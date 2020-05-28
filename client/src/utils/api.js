@@ -1,6 +1,6 @@
 const api = "http://localhost:3001";
 
-let header = {
+const header = {
     authorization: "fill in l8er",
 };
 
@@ -34,13 +34,13 @@ export const getQuestionnaires = () =>
 export const addQuestionnaire = async () => {
     const url = api + "/questionnaire/add";
 
-    var headers = {
+    const headers = {
         ...header,
         "Content-Type": "application/json",
         Accept: "application/json",
     };
 
-    var data = {
+    const data = {
         isStandard: false,
     };
 
@@ -81,13 +81,13 @@ export const deleteQuestionnaire = (CQid) => {
 export const editQuestionnaire = async () => {
     const url = api + "/questionnaire/edit";
 
-    var headers = {
+    const headers = {
         ...header,
         "Content-Type": "application/json",
         Accept: "application/json",
     };
 
-    var data = {
+    const data = {
         questionnaireId: 'e6bc8ad0-9fe3-11ea-a404-bf73c4e43df1', // TODO to be chanegd later
        
     };
