@@ -16,6 +16,9 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // handles rendering of TopContainer in the Clinician page
+
+import "../../styles/clinician.css"
+
 const BottomContainer = (props) => {
     return (
         <div className="bottom-container">
