@@ -14,6 +14,6 @@ var router = express.Router();
 var email_controller = require('../controller/email_controller.js');
 
 // CRUD Routes for Emails
-router.post('/submit', email_controller.send);
+router.post("/submit", email_controller.sendEmail);
 
 module.exports = router;
