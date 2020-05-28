@@ -1,0 +1,189 @@
+/**
+  * ====================================================================
+  * CSS FILE TO STYLE the 'HomeClinician' Component 
+  * ====================================================================
+  * @date created: 13th May 2020
+  * @authors: Waqas Rehmani
+  *
+  * This file contains all the CSS classes related to the HomeClinician
+  * to style the component.
+  *
+*/
+
+.HomeClinician{
+  height: 100%;
+  display: flex;
+  overflow: auto;
+}
+
+.questionnaire-container{
+  margin-left: 16vw;
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-questionnaire {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  background-color: #151641;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.edit-description {
+  align-items: center;
+  margin-left: 80px;
+  margin-right: 80px;
+}
+
+.edit-description h2{
+  margin: 30px;
+}
+
+.edit-description hr{
+  alignSelf:center;
+  width:100%;
+  height:1px;
+  border:none;
+  border-top:1px solid;
+  color:#272850;
+}
+
+.edit-description label{
+  float:left;
+  display: inline-block;
+  width: 20%;
+  text-align: left;
+  margin-left: 30px;
+  margin-top: 10px;
+}
+
+.edit-description input, .rangeQuestion input, .multipleChoiceQuestion input{
+width: 65%;
+}
+
+.questionType-button{
+  color: #eeeeee !important;
+  width:42.5%;
+  border-bottom: 1px solid #eeeeee !important;
+  border-top: 0px !important;
+  border-right: 1px solid #eeeeee !important;
+  background-color: transparent;
+  font-size: 10px !important;
+}
+
+.questionRemove-button{
+  color: #eeeeee !important;
+  border-bottom:1px solid white !important;
+  width: 15%;
+  background-color: rgba(86,24,58,.29) !important;
+  font-size: 10px !important;
+}
+
+.questionType-button:hover{
+  background-color: rgba(175,139,192,.24) !important;
+}
+
+.rangeQuestion label,.multipleChoiceQuestion label{
+  display:inline-block;
+  width:20%;
+  text-align:left;
+  margin-left:30px;
+  margin-top:5px;
+  font-size: 2vh;
+}
+
+.question-container{
+  width:100%;
+  height:70%;
+  display:flex;
+  flex-direction:column;
+}
+
+.questionTable{
+  align-items:center;
+  border-radius:25px;
+  padding-block:100px;
+  border:1px solid white;
+  margin-bottom: 20px;
+  margin-left:80px;
+  margin-right:80px;
+}
+
+.add-answer-button{
+  border-radius: 50%;
+  font-size: 1.8vh;
+  padding: 0.6vh 1.2vh;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+  font-weight: 100;
+  border: 1px solid #DB3D94;
+  background-color: #DB3D94;
+  outline: 0;
+  color: #eee;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.delete-answer-button{
+  border-radius: 50%;
+  font-size: 1.8vh;
+  padding: 0.6vh 1.2vh;
+  /*margin: 0 auto;*/
+  display: inline-block;
+  margin-left: 10px;
+  cursor: pointer;
+  font-weight: 100;
+  border: 1px solid #DB3D94;
+  background-color: #DB3D94;
+  outline: 0;
+  color: #eee;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.bottom-container button{
+  width:20%;
+  margin: 20px auto;
+  cursor: pointer;
+  padding: 0.8vh 2.5vh;
+  font-size: 1.3vh;
+  font-weight: 100;
+  border: 1px solid #DB3D94;
+  background-color: #DB3D94;
+  border-radius: 2vh;
+  outline: 0;
+  color: #eee;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.Add-btn,.edit-btn,.delete-btn{
+  cursor: pointer;
+  padding: 0.8vh 2.5vh;
+  font-size: 1.3vh;
+  font-weight: 100;
+  border: 1px solid #DB3D94;
+  background-color: #DB3D94;
+  border-radius: 2vh;
+  outline: 0;
+  color: #eee;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+
+
+.bottom-container{
+  align-items: center;
+  display: flex;
+}
+
+html,body{
+  overflow: auto;
+}

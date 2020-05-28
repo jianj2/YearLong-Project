@@ -1,0 +1,122 @@
+/**
+  * ====================================================================
+  * CSS FILE TO STYLE the 'HomeParents' Component 
+  * ====================================================================
+  * @date created: 13th May 2020
+  * @authors: Waqas Rehmani
+  *
+  * This file contains all the CSS classes related to the HomeParents
+  * to style the component.
+  *
+*/
+
+
+/* ==================================================== */
+/*        Following classes are for HomeParents         */
+/* ==================================================== */
+.parents-home {
+
+}
+
+.subheader-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 2vh 4vh;
+}
+.subheader-container button{
+    margin: 0 0 0 1vh;
+}
+
+.form-completed {
+    grid-area: buttons;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+.form-completed h1, h2{
+    font-weight: 200;
+}
+
+.parents-container {
+    width: 60vw;
+    min-width: 600px;
+    margin: auto;
+    padding: 2rem;
+    background-color: rgba(0,0,0,0.15);
+    border-radius: 15px;
+}
+
+/* ==================================================== */
+/*     Following classes are for FormParentDetails      */
+/* ==================================================== */
+.parents-detail-form {
+    display: flex;
+    /* flex-flow: column; */
+    /* width: 50%; */
+
+}
+ 
+
+.parents-detail-form-column{
+    flex: 1;
+    padding: 1rem;
+    display: flex;
+    flex-flow: column;
+}
+.parents-detail-form-column div{
+    flex: 1; 
+}
+.parents-detail-form-submit-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type=date]:required:invalid {
+    color: transparent;
+} 
+input[type=date]:focus {
+    color: #eee !important;
+} 
+
+/* ==================================================== */
+/*   Following classes are for ParentReviewSubmission   */
+/* ==================================================== */
+.review-submission {
+
+}
+
+.review-submission h1{
+    font-weight: 200;
+    border-bottom: 1px solid rgba(200,200,200,0.2);
+    padding: 15px 0;
+}
+
+.review-submission h2{
+    font-weight: 400;
+    border-bottom: 1px dashed rgba(200,200,200,0.1);
+    padding: 15px 0;
+}
+
+.review-submission p{
+    font-weight: 400; 
+}
+
+
+.review-submission span{
+    /* margin: 0 0 0 20px */
+}
+
+.review-submission label{
+    font-weight: bold;
+}
+
+.review-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.review-row span {
+
+}

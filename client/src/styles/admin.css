@@ -1,0 +1,19 @@
+/**
+  * ====================================================================
+  * CSS FILE TO STYLE the 'HomeAdmin' Component 
+  * ====================================================================
+  * @date created: 13th May 2020
+  * @authors: Waqas Rehmani
+  *
+  * This file contains all the CSS classes related to the HomeAdmin 
+  * to style the component.
+  *
+*/
+
+.admin-form {
+  /* width: 50vw; */
+  min-width: 400px;
+  display: flex;
+  flex-flow: column;
+}
+ 
