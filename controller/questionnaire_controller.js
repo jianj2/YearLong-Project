@@ -25,6 +25,20 @@ const getAllQuestionnaire = function (req, res) {
     });
 };
 
+// get specific questionnaire
+const getQuestionnaire = function (req, res) {
+    const questionnaireID = req.body.questionnaireId
+    console.log(questionnaireID)
+    Questionnaire.findOne({'questionnaireId':questionnaireID}, function (err, questionnaire) {
+        if (!err){
+            res.send(questionnaire)
+        } else {
+            res.send(err)
+        }
+    })
+
+}
+
 // add an empty questionnaire
 const addEmptyQuestionnaire = function (req, res) {
     const uuid = uuidv1();
@@ -101,7 +115,7 @@ const addFilledQuestionnaire = function (req, res) {
     });
 };
 
-//edit a questionnaire 
+// edit a questionnaire
 // TODO: Receive an actual questionnaire from req.body, rather than creating a boiler plate.
 const editQuestionnaire = function(req, res){
     console.log("editing questionnaire", req.body.questionnaireId);
@@ -154,13 +168,17 @@ const editQuestionnaireQuestion = function(req, res){
 
 }
 
+// Delete questionnaire
 const deleteQuestionnaire = function (req, res) {
     const questionnaireId = req.body.questionnaireId;
-    Questionnaire.deleteOne({ questionnaireId: questionnaireId }, function (
-        err,
-        result
-    ) {
-        console.log("deleted customised questionnaire: " + questionnaireId);
+    Questionnaire.deleteOne({ questionnaireId: questionnaireId }, function (err, result)
+    {
+        //console.log("deleted customised questionnaire: " + questionnaireId);
+        if (!err){
+            res.send('successfully delete')
+        } else {
+            res.send(err)
+        }
     });
 };
 
@@ -169,3 +187,5 @@ module.exports.addEmptyQuestionnaire = addEmptyQuestionnaire;
 module.exports.deleteQuestionnaire = deleteQuestionnaire;
 module.exports.addNewFilledQuestionnaire = addFilledQuestionnaire;
 module.exports.editQuestionnaire = editQuestionnaire;
+module.exports.getQuestionnaire = getQuestionnaire;
+
