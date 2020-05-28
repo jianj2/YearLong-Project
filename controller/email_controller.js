@@ -36,6 +36,8 @@ var sendEmail = function (req,res) {
     s.push(JSON.stringify(questionnaireData))
     s.push(null)      // indicates end-of-file basically - the end of the stream
 
+    // Used to display as a table in the email
+    const { jsonToTableHtmlString } = require('json-table-converter')
 
     // Parameters for the email.
     var mailOptions = {
@@ -55,8 +57,8 @@ var sendEmail = function (req,res) {
             "        <p>Thank you,</p>\n" +
             "        <p>" +
             "</p>\n" +
-            "<div> <h2>Personal Details</h2>" + JSON.stringify(personalDetails) + "</div>" +
-            "<div> <h2>Questionnaire Data</h2>" + JSON.stringify(questionnaireData) + "</div>" +
+            "<div> <h2>Personal Details</h2>" + jsonToTableHtmlString(personalDetails,{}) + "</div>" +
+            "<div> <h2>Questionnaire Data</h2>" + jsonToTableHtmlString(questionnaireData,{}) + "</div>" +
             "    </div>",
             attachments : [{   // stream as an attachment
                 filename: 'data.txt',

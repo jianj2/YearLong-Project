@@ -12,6 +12,7 @@
     "express": "^4.16.4",
     "express-ejs-layouts": "^2.5.0",
     "express-session": "^1.16.2",
+    "json-table-converter": "^0.3.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.6.9",
     "nodemailer": "^6.4.6",
