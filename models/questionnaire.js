@@ -12,24 +12,32 @@
 const mongoose = require('mongoose');
 
 const questionSchema = mongoose.Schema({
-    description: {type: String, required:true},
+    description: String,
     isMCQ: Boolean,
     mcqOptions: [String],
-    rangeOptions: [String], 
+    rangeOptions: [String]
 });
+
+
+const scenarioSchema = mongoose.Schema({
+    description: {type: String, required:true} ,
+    questions: [questionSchema]
+
+})
 
 const sectionSchema = mongoose.Schema({
     title: { type: String, required: true },
     description: String,
-    questions: [questionSchema]
+    scenarios: [scenarioSchema]
 });
+
 
 
 const questionnaireSchema = mongoose.Schema({
     questionnaireId: { type: String, required:true, lowercase:true, unique:true, trim:true},
     title: {type: String, required:true},
     description: {type: String, required:true},
-    questions: [sectionSchema],
+    sections: [sectionSchema],
     isStandard: Boolean,
 });
 

@@ -14,7 +14,15 @@ var router = express.Router();
 var questionnaire_controller = require('../controller/questionnaire_controller.js');
 
 // CRUD Routes for Posts
+
+
+
 router.get('/', questionnaire_controller.getAllQuestionnaire);
 router.get("/:questionnaireId", questionnaire_controller.getQuestionnaire);
+
+router.post('/add', questionnaire_controller.addFilledQuestionnaire);
+router.post('/delete', questionnaire_controller.deleteQuestionnaire);
+router.post('/edit', questionnaire_controller.editQuestionnaire);
+
 
 module.exports = router;
