@@ -31,11 +31,14 @@ export const getQuestionnaire = (questionnaireID) =>
         header,
     }).then((res) => res.json());
 
-    
 export const sendQuestionnaireData = (data) =>
     fetch(`${api}/email/submit`, {
-        header,
-        method: 'post',
-        data: JSON.stringify(data)
-    }).then((res) => res.json());
+        method: "POST",
+        headers: {
+            ...header,
 
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    }).then((res) => res.json());

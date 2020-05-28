@@ -21,6 +21,7 @@ import { Link, withRouter } from "react-router-dom";
 import FormParentDetails from "../components/FormParentDetails";
 import Questionnaire from "../components/Questionnaire";
 import ParentReviewSubmission from "../components/ParentReviewSubmission";
+import Loading from '../components/Loading'
 
 // Import assets.
 import logoComplete from "../assets/logo_complete.png";
@@ -48,6 +49,7 @@ const HomeParents = ({ match }) => {
     const [clinicianEmail, setClinicianEmail] = useState("");
     const [personalDetails, setPersonalDetails] = useState({});
     const [questionnaireData, setQuestionnaireData] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     // This is called when the component first mounts.
     useEffect(() => {
@@ -111,6 +113,24 @@ const HomeParents = ({ match }) => {
         nextStep();
     };
 
+    const submitResponse = () => {
+        let data = {
+            questionnaireData,
+            personalDetails,
+            clinicianEmail: match.params.clinicianEmail,
+        };
+        console.log(data)
+        
+        setLoading(true)
+        API.sendQuestionnaireData(data).then(res => {
+            if(res) {
+                setLoading(false);
+                nextStep();
+            }
+            console.log(res)
+        })
+    }
+
     if (wizardStep == 0) {
         return (
             <div className="parents-home">
@@ -172,11 +192,16 @@ const HomeParents = ({ match }) => {
     if (wizardStep == 3) {
         return (
             <div className="parents-home">
+                {
+                    loading
+                    ? <Loading />
+                    : null
+                }
                 <div className="subheader-container">
                     <button className="button" onClick={prevStep}>
                         B A C K
                     </button>
-                    <button className="button" onClick={nextStep}>
+                    <button className="button" onClick={submitResponse}>
                         S U B M I T
                     </button>
                 </div>
