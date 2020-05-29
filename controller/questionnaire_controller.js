@@ -184,5 +184,5 @@ module.exports.getAllQuestionnaire = getAllQuestionnaire;
 module.exports.getQuestionnaire = getQuestionnaire;
 module.exports.addEmptyQuestionnaire = addEmptyQuestionnaire;
 module.exports.deleteQuestionnaire = deleteQuestionnaire;
-module.exports.addNewFilledQuestionnaire = addFilledQuestionnaire;
+module.exports.addFilledQuestionnaire = addFilledQuestionnaire;
 module.exports.editQuestionnaire = editQuestionnaire;
