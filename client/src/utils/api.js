@@ -1,6 +1,6 @@
 const api = "http://localhost:3001";
 
-const header = {
+let header = {
     authorization: "fill in l8er",
 };
 
@@ -25,6 +25,23 @@ export const verifyAdminLogin = (token) =>
 
 export const getQuestionnaires = () =>
     fetch(`${api}/questionnaire/`, { header }).then((res) => res.json());
+
+export const getQuestionnaire = (questionnaireID) =>
+    fetch(`${api}/questionnaire/${questionnaireID}`, {
+        header,
+    }).then((res) => res.json());
+
+export const sendQuestionnaireData = (data) =>
+    fetch(`${api}/email/submit`, {
+        method: "POST",
+        headers: {
+            ...header,
+
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    }).then((res) => res.json());
 
 
 // ================================================
@@ -89,11 +106,11 @@ export const editQuestionnaire = async () => {
 
     const data = {
         questionnaireId: 'e6bc8ad0-9fe3-11ea-a404-bf73c4e43df1', // TODO to be chanegd later
-       
+
     };
 
-    
-    
+
+
     try {
         console.log("editing", data);
         let response = await fetch(url, {
@@ -102,7 +119,7 @@ export const editQuestionnaire = async () => {
             body: JSON.stringify(data),
         });
         let json = await response.json();
-   
+
     } catch (e) {
         console.error(
             "An error has occurred while adding questionnaire",
