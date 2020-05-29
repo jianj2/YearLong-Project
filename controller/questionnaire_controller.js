@@ -27,9 +27,9 @@ const getAllQuestionnaire = function (req, res) {
 
 // get specific questionnaire
 const getQuestionnaire = function (req, res) {
-    const questionnaireID = req.body.questionnaireId
-    console.log(questionnaireID)
-    Questionnaire.findOne({'questionnaireId':questionnaireID}, function (err, questionnaire) {
+    let questionnaireID = req.params.questionnaireID
+    // console.log(questionnaireID)
+    Questionnaire.findOne({questionnaireId:questionnaireID}, function (err, questionnaire) {
         if (!err){
             res.send(questionnaire)
         } else {
@@ -170,17 +170,20 @@ const editQuestionnaireQuestion = function(req, res){
 
 // Delete questionnaire
 const deleteQuestionnaire = function (req, res) {
-    const questionnaireId = req.body.questionnaireId;
-    Questionnaire.deleteOne({ questionnaireId: questionnaireId }, function (err, result)
+    let questionnaireID = req.params.questionnaireID
+    Questionnaire.deleteOne({ questionnaireId:questionnaireID}, function (err, result)
     {
         //console.log("deleted customised questionnaire: " + questionnaireId);
         if (!err){
             res.send('successfully delete')
+            // console.log('here')
         } else {
             res.send(err)
         }
     });
+
 };
+
 
 module.exports.getAllQuestionnaire = getAllQuestionnaire;
 module.exports.addEmptyQuestionnaire = addEmptyQuestionnaire;
