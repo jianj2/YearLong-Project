@@ -185,7 +185,7 @@ const deleteQuestionnaire = function (req, res) {
 module.exports.getAllQuestionnaire = getAllQuestionnaire;
 module.exports.addEmptyQuestionnaire = addEmptyQuestionnaire;
 module.exports.deleteQuestionnaire = deleteQuestionnaire;
-module.exports.addNewFilledQuestionnaire = addFilledQuestionnaire;
+module.exports.addFilledQuestionnaire = addFilledQuestionnaire;
 module.exports.editQuestionnaire = editQuestionnaire;
 module.exports.getQuestionnaire = getQuestionnaire;
 
