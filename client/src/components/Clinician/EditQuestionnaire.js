@@ -23,8 +23,9 @@ const EditQuestionnaire = (props) => {
 
     return (
         <div className="edit-questionnaire">
-            <EditDescription />
-            <QuestionsContainer questionTable = {props.questionTable} removeQuestion={props.removeQuestion}/>
+            <EditDescription Questionnaire={props.Questionnaire}/>
+            {/*<QuestionsContainer questionTable = {props.questionTable} removeQuestion={props.removeQuestion}/>*/}
+            <QuestionsContainer questionnaire={props.Questionnaire} removeQuestion={props.removeQuestion}/>
         </div>
     );
 };

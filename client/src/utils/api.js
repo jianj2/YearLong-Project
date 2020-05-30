@@ -77,7 +77,7 @@ export const deleteQuestionnaire = (CQid) => {
 };
 
 //edit questionnaire
-// TODO: get CQid and entire edited questionaire from UI
+// TODO: get CQid and entire edited questionnaire from UI
 export const editQuestionnaire = async () => {
     const url = api + "/questionnaire/edit";
 
@@ -89,11 +89,10 @@ export const editQuestionnaire = async () => {
 
     const data = {
         questionnaireId: 'e6bc8ad0-9fe3-11ea-a404-bf73c4e43df1', // TODO to be chanegd later
-       
     };
 
-    
-    
+
+
     try {
         console.log("editing", data);
         let response = await fetch(url, {
@@ -102,12 +101,29 @@ export const editQuestionnaire = async () => {
             body: JSON.stringify(data),
         });
         let json = await response.json();
-   
+
     } catch (e) {
         console.error(
             "An error has occurred while adding questionnaire",
             e
         );
     }
-
 }
+
+
+// get specific questionnaire
+// TODO: get CQid and entire edited questionnaire from UI
+export const getSpecificQuestionnaire = async (CQid,setState) => {
+    const data = { questionnaireId: CQid };
+
+    fetch(`${api}/questionnaire/getQuestionnaire`, {
+        method: "POST",
+        headers: {
+            ...header,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    }).then(res => res.json())
+        .then(data => setState(data));
+};

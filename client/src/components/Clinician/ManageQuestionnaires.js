@@ -3,7 +3,7 @@
  * REACT COMPONENT
  * ====================================================================
  * @date created: 17th May 2020
- * @authors: Guang Yang
+ * @authors: Guang Yang, Jin Chen
  *
  * The content panel will display the content of managing the questionnaire lists
  *
@@ -57,6 +57,11 @@ const ManageQuestionnaires = (props) => {
         return customized_Questionnaire_list;
     }
 
+    function Edit(questionnaireID) {
+        let edit_url = "/clinician/" + questionnaireID + "/edit";
+        window.location.href = edit_url;
+    }
+
     function Delete(questionnaireID) {
         const arrayCopy = Questionnaires.customized_Questionnaire.filter(
             (q) => q.QID !== questionnaireID
@@ -81,7 +86,7 @@ const ManageQuestionnaires = (props) => {
    
 
     function CQgenerator(QID, Qname, Qdescription, date) {
-        var edit_url = "/clinician/" + QID + "/edit";
+        // var edit_url = "/clinician/" + QID + "/edit";
         return (
             <div className="q-frame" key={QID}>
                 <div className="q-name">{Qname}</div>
@@ -90,7 +95,7 @@ const ManageQuestionnaires = (props) => {
                 <div className="btns-container">
                     <button
                         className="edit-btn"
-                        onClick={() => (window.location.href = edit_url)}
+                        onClick={(e) => Edit(QID,e)}
                     >
                         Edit
                     </button>

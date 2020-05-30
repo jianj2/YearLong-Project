@@ -54,7 +54,7 @@ const HomeClinician = (props) => {
         <div className="HomeClinician">
             <SideBar />
             <Router>
-                <ContentPanel active = {props.active}/>
+                <ContentPanel active = {props.active} questionnaireID = {props.questionnaireID}/>
             </Router>
         </div>
     );

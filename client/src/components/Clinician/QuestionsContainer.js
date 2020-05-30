@@ -28,41 +28,63 @@ import { makeStyles } from '@material-ui/core/styles';
 const QuestionsContainer = (props) => {
         return (
             <div className="questions-container">
-                {props.questionTable && props.questionTable.map((item,index) => {
+                {
+                    props.questionnaire.sections && props.questionnaire.sections[0].scenarios
+                    && props.questionnaire.sections[0].scenarios[0].questions.map((item,index) => {
                     return (
-                        <QuestionTable item={item} index={index} removeQuestion={props.removeQuestion}/>
+                        <QuestionForm item={item} index={index} removeQuestion={props.removeQuestion}/>
                     )
                     })
                 }
-                {/*{props.questionTable}*/}
-                {/*<div className="questionTableThree" style={{*/}
-                {/*    alignItems: 'center', borderRadius: '25px',*/}
-                {/*    paddingBlock: '100px', border: '1px solid white',*/}
-                {/*    marginLeft: '80px', marginRight: '80px'*/}
-                {/*}}>*/}
-                {/*    <div>*/}
-                {/*        <ButtonGroup size="small" aria-label="small outlined button group"*/}
-                {/*                     style={{width: '100%'}}>*/}
-                {/*            <Button className="questionType-button" >Range Question</Button>*/}
-                {/*            <Button className="questionType-button" >Multiple Choice Question</Button>*/}
-                {/*            <Button className="questionRemove-button" >Remove</Button>*/}
-                {/*        </ButtonGroup>*/}
-                {/*    </div>*/}
-                {/*    <MultipleChoiceQuestionFrom/>*/}
-                {/*</div>*/}
              </div>
         );
 };
 
-const QuestionFrom = (props) =>{
-    if (props.whichFrom == 0){
-        return <RangeQuestionFrom />
+const QuestionForm = (props) =>{
+
+    const [isMCQ,setState] = useState(props.item.isMCQ);
+    console.log(isMCQ);
+
+    const handleRangeClick = () =>{
+        setState(false);
+    }
+    const handleMultipleClick = () =>{
+        setState(true);
+    }
+    const handleRemoveClick = () =>{
+        props.removeQuestion(props.index);
+    }
+
+    if (isMCQ == false){
+        return (
+            <div className="questionTable">
+                <div>
+                    <ButtonGroup size="small" aria-label="small outlined button group"
+                                 style={{width: '100%'}}>
+                        <Button className="questionType-button" onClick={handleRangeClick}>Range Question</Button>
+                        <Button className="questionType-button" onClick={handleMultipleClick}>Multiple Choice Question</Button>
+                        <Button className="questionRemove-button" onClick={handleRemoveClick}>Remove</Button>
+                    </ButtonGroup>
+                </div>
+                    <RangeQuestionFrom rangeOptions={props.item.rangeOptions}/>
+            </div>)
     } else {
-        return <MultipleChoiceQuestionFrom />
+        return (
+            <div className="questionTable">
+                <div>
+                    <ButtonGroup size="small" aria-label="small outlined button group"
+                                 style={{width: '100%'}}>
+                        <Button className="questionType-button" onClick={handleRangeClick}>Range Question</Button>
+                        <Button className="questionType-button" onClick={handleMultipleClick}>Multiple Choice Question</Button>
+                        <Button className="questionRemove-button" onClick={handleRemoveClick}>Remove</Button>
+                    </ButtonGroup>
+                </div>
+                <MultipleChoiceQuestionFrom description={props.item.description} mcqOptions={props.item.mcqOptions}/>
+            </div>)
     }
 }
 
-const RangeQuestionFrom = () =>{
+const RangeQuestionFrom = (props) =>{
         return (
             <div className="range-question-from">
                 <form className="rangeQuestion">
@@ -74,7 +96,7 @@ const RangeQuestionFrom = () =>{
                     <p>
                         <label>Description:</label>
                         <input name="Description"
-                               placeholder='Please select the slider to number. 0 is unlikely. 1 is will happen for sure.'/>
+                               value={props.description}/>
                     </p>
                 </form>
             </div>
@@ -82,9 +104,8 @@ const RangeQuestionFrom = () =>{
 }
 
 
-
-const MultipleChoiceQuestionFrom = () =>{
-        const [mcqOptions, setState] = useState([0,1,2,3]);
+const MultipleChoiceQuestionFrom = (props) =>{
+    const [mcqOptions, setState] = useState(props.mcqOptions);
 
         const addAnswer = () => {
             setState([...mcqOptions, mcqOptions.length]);
@@ -106,15 +127,15 @@ const MultipleChoiceQuestionFrom = () =>{
 
                     <p>
                         <label>Description:</label>
-                        <input name="Description" placeholder='Please select one of the options below:'/>
+                        <input name="Description" defaultValue={props.description}/>
                     </p>
                     {/*add new answer textarea*/}
                     {
-                        mcqOptions && mcqOptions.map((item,index) => {
+                        props.mcqOptions && props.mcqOptions.map((item,index) => {
                             return (
                                 <p key={item} index={index}>
                                     <label>Answers</label>
-                                    <input name={item}/>
+                                    <input name={item} defaultValue={item}/>
                                     <button className="delete-answer-button" type="button" onClick={(index) => deleteAnswer(index)}> - </button>
                                 </p>
                             )
@@ -125,36 +146,6 @@ const MultipleChoiceQuestionFrom = () =>{
             </div>
         );
 }
-
-const QuestionTable = (props) =>{
-
-    const [whichForm,setState] = useState(0);
-    const handleRangeClick = () =>{
-        setState(0);
-    }
-    const handleMultipleClick = () =>{
-        setState(1);
-    }
-    const handleRemoveClick = () =>{
-        props.removeQuestion(props.index);
-    }
-
-    return (
-        <div className="questionTable">
-            <div>
-                <ButtonGroup size="small" aria-label="small outlined button group"
-                             style={{width: '100%'}}>
-                    <Button className="questionType-button" onClick={handleRangeClick}>Range Question</Button>
-                    <Button className="questionType-button" onClick={handleMultipleClick}>Multiple Choice Question</Button>
-                    <Button className="questionRemove-button" onClick={handleRemoveClick}>Remove</Button>
-                </ButtonGroup>
-            </div>
-            <QuestionFrom whichFrom={whichForm}/>
-        </div>
-    );
-}
-
-
 
 QuestionsContainer.protoTypes = {
     removeQuestion: PropTypes.func

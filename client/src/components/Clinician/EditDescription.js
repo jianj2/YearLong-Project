@@ -15,23 +15,20 @@
 import React from "react";
 
 // handles rendering of TopContainer in the Clinician page
-const EditDescription = () => {
+const EditDescription = (props) => {
 
     return (
             <div className="edit-description">
-                
-                    <h2>Edit Questionnaire</h2>
-                
-                
+                <h2>Edit Questionnaire</h2>
                 <p>
                 
                     <label>Title:</label>
-                    <input type="text"/>
+                    <input type="text" defaultValue={props.Questionnaire.title}/>
                 </p>
 
                 <p>
                     <label>Description:</label>
-                    <input type="text"/>
+                    <input type="text" defaultValue={props.Questionnaire.description}/>
                 </p>
                 <hr/>
             </div>
