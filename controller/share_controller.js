@@ -11,11 +11,14 @@
 
 const mongoose = require("mongoose");
 const Share = mongoose.model("share");
+const { v1: uuidv1 } = require("uuid");
 
 
 // Create a new share.
-var share = function (req,res) {
+var shareQuestionnaire = function (req,res) {
+    const uuid = uuidv1();
     let newShare = new Share({
+        shareId: uuid,
         clinicianEmail: req.body.clinicianEmail,
         patientEmail: req.body.patientEmail,
         questionnaireId: req.body.questionnaireId,
@@ -30,4 +33,4 @@ var share = function (req,res) {
     })
 };
 
-module.exports.share = share;
+module.exports.shareQuestionnaire = shareQuestionnaire;
