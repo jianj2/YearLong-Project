@@ -65,6 +65,7 @@ export const addQuestionnaire = async () => {
 
 // delete questionnaire
 export const deleteQuestionnaire = (CQid) => {
+    console.log(CQid);
     fetch(`${api}/questionnaire/delete/${CQid}`, {
         method: "DELETE",
         headers: {
@@ -113,24 +114,21 @@ export const editQuestionnaire = async () => {
 // get specific questionnaire
 // TODO: get CQid and entire edited questionnaire from UI
 export const getSpecificQuestionnaire = async (CQid,setState) => {
-    const data = { questionnaireId: CQid };
-
-    fetch(`${api}/questionnaire/getQuestionnaire`, {
-        method: "POST",
+    console.log(CQid);
+    fetch(`${api}/questionnaire/getQuestionnaire/${CQid}`, {
+        method: "GET",
         headers: {
             ...header,
             Accept: "application/json",
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
     }).then(res => res.json())
         .then(data => setState(data));
 };
 
-// get specific questionnaire
+// get clinician questionnaire list
 // TODO: get CQid and entire edited questionnaire from UI
 export const getClinicianQuestionnaires = async (clinicianId) => {
-
     const url = `${api}/questionnaire/clinician?clinicianId=${clinicianId}` ;
     let response = await fetch(url, {
         headers: header
@@ -140,4 +138,3 @@ export const getClinicianQuestionnaires = async (clinicianId) => {
     
     return json;
 };
-

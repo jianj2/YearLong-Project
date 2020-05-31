@@ -54,13 +54,7 @@ const ManageQuestionnaires = (props) => {
     
     },[]);
    
-   
 
-     
-    
-    
-
-   
 
     function SQgenerator(Qname, Qdescription, date) {
         return (
