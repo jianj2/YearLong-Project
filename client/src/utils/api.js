@@ -137,3 +137,17 @@ export const getQuestionnaireId = (shareId) =>
     fetch(`${api}/share/${shareId}`, {
         header,
     }).then((res) => res.json());
+
+// Used to share a questionnaire.
+export const shareQuestionnaire = (data) =>
+    fetch(`${api}/clinician/share/`, {
+        method: "POST",
+        headers: {
+            ...header,
+
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    }).then((res) => res.json());
+
