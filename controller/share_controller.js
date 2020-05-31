@@ -33,4 +33,22 @@ var shareQuestionnaire = function (req,res) {
     })
 };
 
+// Get questionnaireId using ShareId
+var getQuestionnaireId = function (req, res) {
+    let ShareId = req.params.shareId;
+
+    Share.findOne({ ShareId }, function (
+        err,
+        questionnaireId
+    ) {
+        if (!err) {
+            res.send(questionnaireId);
+        } else {
+            res.send(err);
+        }
+    });
+};
+
+
+module.exports.getQuestionnaireId = getQuestionnaireId;
 module.exports.shareQuestionnaire = shareQuestionnaire;
