@@ -133,6 +133,12 @@ const addFilledQuestionnaire = function (req, res) {
             uuid: uuid,
         });
     });
+
+    // update specific clinician questionnaire
+    let clinicianId = req.body.clinicianId
+    console.log(clinicianId)
+    Clinician.updateOne({clinicianId:clinicianId},{$push:{"questionnaires":uuid}}, (err, raw) => {return})
+
 };
 
 // edit a questionnaire
