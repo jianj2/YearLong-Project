@@ -31,7 +31,7 @@ export const getQuestionnaires = () =>
 // Managing Questionnaire server calls
 // ================================================
 // add new questionnaire
-export const addQuestionnaire = async () => {
+export const addQuestionnaire = async (clinicianId) => {
     const url = api + "/questionnaire/add";
 
     const headers = {
@@ -41,6 +41,7 @@ export const addQuestionnaire = async () => {
     };
 
     const data = {
+        clinicianId,
         isStandard: false,
     };
 

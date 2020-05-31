@@ -92,7 +92,7 @@ const ManageQuestionnaires = (props) => {
 
     async function AddNew() {
 
-        const uuid = await API.addQuestionnaire();
+        const uuid = await API.addQuestionnaire(user.name);
         const AddedArray = Questionnaires.customized_Questionnaire;
         AddedArray.push({
             QID: uuid,
