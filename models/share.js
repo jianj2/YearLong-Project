@@ -13,9 +13,10 @@ const mongoose = require('mongoose');
 const shareSchema = mongoose.Schema({
     shareId: { type: String, required:true, lowercase:true, unique:true, trim:true},
     clinicianEmail: {type: String, required:true},
-    patientEmail: {type: String, required:true},
+    patientEmail: {type: String},
     questionnaireId: {type: String, required:true },
-    readOnly:{type:Boolean, required:true}
+    readOnly:{type:Boolean, required:true},
+    message:{type:String},
 });
 
 module.exports = mongoose.model('share', shareSchema);
