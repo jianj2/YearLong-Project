@@ -9,9 +9,6 @@
  *
  */
 
-var nodemailer = require('nodemailer');
-var path = require("path");
-
 const mongoose = require('mongoose');
 
 var Clinician = mongoose.model('clinician');
