@@ -59,6 +59,8 @@ var Readable = require('stream').Readable
 var sendEmail = function (req,res) {
     console.log(req.body)
 
+    console.log(req.params.shareId);
+
     let parentId = req.body.from;
     let questionnaireData = req.body.questionnaireData;
     let clinicianEmail = req.body.clinicianEmail;
