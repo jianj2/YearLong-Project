@@ -10,26 +10,24 @@
  */
 
 const mongoose = require("mongoose");
-
-// Create a new admin.
-// var createAdmin = function (req,res) {
-//     var newAdmin = new Admin({
-//         adminId: 'admin',
-//         name: "Victor",
-//         username: "AdminExample",
-//         email: "testadmin@example.com",
-//         password: "adminpassword",
-//         questionnaires: ['questionnaireId1', 'questionnaireId2'],
-//     });
-//
-//     newAdmin.save(function(err, createdAdmin) {
-//         if (!err){
-//             res.send(createdAdmin);
-//         } else {
-//             res.send(err);
-//         }
-//     })
-// };
+const Share = mongoose.model("share");
 
 
-//module.exports.createAdmin = createAdmin;
+// Create a new share.
+var share = function (req,res) {
+    let newShare = new Share({
+        clinicianEmail: req.body.clinicianEmail,
+        patientEmail: req.body.patientEmail,
+        questionnaireId: req.body.questionnaireId,
+    });
+
+    newShare.save(function(err, createdShare) {
+        if (!err){
+            res.send(createdShare);
+        } else {
+            res.send(err);
+        }
+    })
+};
+
+module.exports.share = share;
