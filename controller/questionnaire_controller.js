@@ -28,15 +28,15 @@ const getAllQuestionnaire = function (req, res) {
 
 // get specific questionnaire
 const getQuestionnaire = function (req, res) {
-    let questionnaireID = req.params.questionnaireID
-    // console.log(questionnaireID)
+    let questionnaireID = req.params.questionnaireID;
+    console.log(questionnaireID)
     Questionnaire.findOne({questionnaireId:questionnaireID}, function (err, questionnaire) {
         if (!err){
-            res.send(questionnaire)
+            res.send(questionnaire);
         } else {
-            res.send(err)
+            res.send(err);
         }
-    })
+    });
 
 }
 
