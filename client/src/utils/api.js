@@ -128,3 +128,20 @@ export const editQuestionnaire = async () => {
     }
 
 }
+
+// ================================================
+// Managing Share server calls
+// ================================================
+// get questionnaire ID using the Share ID.
+
+export const getQuestionnaireId = (shareId) =>
+    fetch(`${api}/share`, {
+        method: "GET",
+        headers: {
+            ...header,
+
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(shareId),
+    }).then((res) => res.json());
