@@ -87,7 +87,7 @@ const ManageQuestionnaires = (props) => {
             (q) => q.QID !== questionnaireID
         );
         setQuestionnaires({ customized_Questionnaire: arrayCopy });
-        API.deleteQuestionnaire(questionnaireID);
+        API.deleteQuestionnaire(questionnaireID, user.name);
     }
 
     async function AddNew() {

@@ -65,15 +65,21 @@ export const addQuestionnaire = async (clinicianId) => {
 
 
 // delete questionnaire
-export const deleteQuestionnaire = (CQid) => {
-    console.log(CQid);
-    fetch(`${api}/questionnaire/delete/${CQid}`, {
-        method: "DELETE",
+export const deleteQuestionnaire = (CQid, clinicianId) => {
+    // console.log(CQid, clinicianId);
+    const data = {
+        CQid,
+        clinicianId,
+    };
+    fetch(`${api}/questionnaire/delete`, {
+        method: "POST",
         headers: {
             ...header,
             Accept: "application/json",
             "Content-Type": "application/json",
+
         },
+        body: JSON.stringify(data),
     }).then((res) => res.json());
 };
 
