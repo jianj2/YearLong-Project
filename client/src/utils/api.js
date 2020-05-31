@@ -127,3 +127,18 @@ export const getSpecificQuestionnaire = async (CQid,setState) => {
     }).then(res => res.json())
         .then(data => setState(data));
 };
+
+// get specific questionnaire
+// TODO: get CQid and entire edited questionnaire from UI
+export const getClinicianQuestionnaires = async (clinicianId) => {
+
+    const url = `${api}/questionnaire/clinician?clinicianId=${clinicianId}` ;
+    let response = await fetch(url, {
+        headers: header
+       
+    });
+    let json = await response.json();
+    
+    return json;
+};
+

@@ -11,30 +11,56 @@
  *
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // Import styles.
 import "../../styles/managequestionnaires.css";
 import "../../styles/main.css";
 import * as API from "../../utils/api";
+import {formatDate} from "../../utils/formatter"
+import { useAuth0 } from "../../utils/react-auth0-spa";
+
 
 const ManageQuestionnaires = (props) => {
+    const { loading, isAuthenticated, loginWithRedirect, user } = useAuth0();
+    console.log(user.name); //TODO: change that when we have actual clincianId
+
     const [Questionnaires, setQuestionnaires] = useState({
-        customized_Questionnaire: [
-            {
-                QID: 1,
-                Qname: "First custom questionnaire",
-                Qdescription: "Details about it",
-                date: "17/05/2020",
-            },
-            {
-                QID: 2,
-                Qname: "Second custom questionnaire",
-                Qdescription: "Details about it",
-                date: "17/05/2020",
-            },
-        ],
+        // customized_Questionnaire: [
+        //     {
+        //         QID: 1,
+        //         Qname: "First custom questionnaire",
+        //         Qdescription: "Details about it",
+        //         date: "17/05/2020",
+        //     },
+        //     {
+        //         QID: 2,
+        //         Qname: "Second custom questionnaire",
+        //         Qdescription: "Details about it",
+        //         date: "17/05/2020",
+        //     },
+        // ],
+         customized_Questionnaire: []
+        
     });
+     useEffect( () => {
+        async function retrieveQuestionnaires(){const customisedQuestionnaires = await API.getClinicianQuestionnaires(user.name);
+            console.log(customisedQuestionnaires);
+            const today = formatDate();
+            const customisedQuestionnairesElement = customisedQuestionnaires.map((q)=> {return {QID:q.questionnaireId, Qname:q.title, Qdescription:q.description, date:today} });
+            setQuestionnaires({customized_Questionnaire: customisedQuestionnairesElement});
+        };
+        retrieveQuestionnaires();
+    
+    },[]);
+   
+   
+
+     
+    
+    
+
+   
 
     function SQgenerator(Qname, Qdescription, date) {
         return (
