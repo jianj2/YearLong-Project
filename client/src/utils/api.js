@@ -62,17 +62,16 @@ export const addQuestionnaire = async () => {
     });
 };
 
+
 // delete questionnaire
 export const deleteQuestionnaire = (CQid) => {
-    const data = { questionnaireId: CQid };
-    fetch(`${api}/questionnaire/delete`, {
-        method: "POST",
+    fetch(`${api}/questionnaire/delete/${CQid}`, {
+        method: "DELETE",
         headers: {
             ...header,
             Accept: "application/json",
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
     }).then((res) => res.json());
 };
 
