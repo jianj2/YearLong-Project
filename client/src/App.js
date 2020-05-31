@@ -47,7 +47,7 @@ function App() {
                         render={() => <Landing />} 
                     />
                     <Route
-                        path="/parent/:questionnaireId/:clinicianEmail"
+                        path="/parent/:shareId"
                         exact
                         render={() => <HomeParents />}
                     />
