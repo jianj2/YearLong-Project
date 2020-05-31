@@ -51,6 +51,8 @@ const HomeParents = ({ match }) => {
     const [questionnaireData, setQuestionnaireData] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    let questionnaireId =API.getQuestionnaireId(match.params.shareId);
+    console.log(questionnaireId);
     // This is called when the component first mounts.
     useEffect(() => {
         // Server call to get the questionnaire.
