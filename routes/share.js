@@ -16,5 +16,6 @@ var share_controller = require('../controller/share_controller.js');
 // CRUD Routes for Shares
 router.get('/:shareId', share_controller.getShareDetails);
 // router.get('/', share_controller.getQuestionnaireId());
+router.post("/submit", share_controller.sendEmail);
 
 module.exports = router;
