@@ -19,6 +19,7 @@ var clinicianRouter = require('./routes/clinician');
 var questionnaireRouter = require('./routes/questionnaire');
 var adminRouter = require('./routes/admin');
 var emailRouter = require('./routes/email');
+var shareRouter = require('./routes/share');
 
 
 
@@ -29,6 +30,7 @@ app.use('/clinician/', clinicianRouter);
 app.use('/questionnaire/', questionnaireRouter);
 app.use('/admin/', adminRouter);
 app.use('/email/', emailRouter);
+app.use('/share/', shareRouter);
 
 
 

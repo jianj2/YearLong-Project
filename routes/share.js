@@ -14,6 +14,7 @@ var router = express.Router();
 var share_controller = require('../controller/share_controller.js');
 
 // CRUD Routes for Shares
-router.get('/', share_controller.getQuestionnaireId());
+router.get('/', share_controller.getQuestionnaireId);
+// router.get('/', share_controller.getQuestionnaireId());
 
 module.exports = router;
