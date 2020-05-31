@@ -35,14 +35,14 @@ var shareQuestionnaire = function (req,res) {
 
 // Get questionnaireId using ShareId
 var getQuestionnaireId = function (req, res) {
-    let shareId = req.body.shareId;
+    let shareId = req.params.shareId;
 
     Share.findOne({ shareId }, function (
         err,
         share
     ) {
         if (!err) {
-            res.send(share.questionnaireId);
+            res.send({"questionnaireId":share.questionnaireId});
         } else {
             res.send(err);
         }
