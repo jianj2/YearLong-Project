@@ -18,17 +18,37 @@ import React from "react";
 import QuestionsContainer from "./QuestionsContainer";
 import EditDescription from "./EditDescription";
 
+import "../../styles/clinician.css"
+import * as API from "../../utils/api";
 // handles rendering of TopContainer in the Clinician page
 const EditQuestionnaire = (props) => {
     const {Questionnaire,removeQuestion,changeToRangeQuestion,
-        changeToMCQQuestion,addAnswerToMCQQuestion,deleteAnswerToMCQQuestion} = props;
+        changeToMCQQuestion,addAnswerToMCQQuestion,deleteAnswerToMCQQuestion,addQuestion,
+        handleQuestionnaireTitleChange,handleQuestionnaireDesChange} = props;
+
+    var manage_questionnaire_url = "/clinician"
 
     return (
         <div className="edit-questionnaire">
-            <EditDescription Questionnaire={Questionnaire}/>
+
+
+            <button style={{width:'12%',marginLeft:'10px', marginRight:'80px'}}
+                    onClick = {(event)=> {event.preventDefault(); window.location.href = manage_questionnaire_url}}>CANCEL</button>
+            <button style={{width:'12%',marginRight:'10px'}}
+                    onClick = {(event)=> {
+                        event.preventDefault();
+                        API.editQuestionnaire(Questionnaire);
+                        // window.location.href = manage_questionnaire_url;
+                    }}> SAVE </button>
+
+            <EditDescription Questionnaire={Questionnaire}
+                             handleQuestionnaireTitleChange={handleQuestionnaireTitleChange}
+                             handleQuestionnaireDesChange={handleQuestionnaireDesChange}/>
+
             <QuestionsContainer questionnaire={Questionnaire} removeQuestion={removeQuestion}
                                 changeToRangeQuestion={changeToRangeQuestion} changeToMCQQuestion={changeToMCQQuestion}
                                 addAnswerToMCQQuestion={addAnswerToMCQQuestion} deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}/>
+            <button onClick={(event)=>{event.preventDefault(); return addQuestion()}}> ADD NEW QUESTION </button>
         </div>
     );
 };

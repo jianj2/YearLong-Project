@@ -32,7 +32,7 @@ const QuestionnaireContainer = (props) => {
     },[])
 
     //add question from questionnaire
-    const addQuestion = () =>{
+    const addQuestion = (event) =>{
         const newQuestion = {
             isMCQ: false,
             rangeOptions: []
@@ -88,15 +88,38 @@ const QuestionnaireContainer = (props) => {
         setQuestionnaire(questionnaireTemp);
     }
 
-    //save the questionnaire
+    // to change the content of questionnaire title
+    const handleQuestionnaireTitleChange = (event) =>{
+        const questionnaireTemp = Object.assign({},questionnaire);
+        questionnaireTemp.title = event.target.value;
+        setQuestionnaire(questionnaireTemp);
+        console.log(questionnaire);
+    }
+
+    // to change the content of questionnaire description
+    const handleQuestionnaireDesChange = (event) =>{
+        const questionnaireTemp = Object.assign({},questionnaire);
+        questionnaireTemp.description = event.target.value;
+        setQuestionnaire(questionnaireTemp);
+        console.log(questionnaire);
+    }
+
+    // to change the content .... (need to add more)
 
     return (
         <div className="questionnaire-container">
-            <TopContainer />
+
+            {/*<TopContainer />*/}
+            <form action="">
             <EditQuestionnaire Questionnaire={questionnaire} removeQuestion={removeQuestion}
                                changeToRangeQuestion={changeToRangeQuestion} changeToMCQQuestion={changeToMCQQuestion}
-                               addAnswerToMCQQuestion={addAnswerToMCQQuestion} deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}/>
-            <BottomContainer addQuestion={addQuestion} />
+                               addQuestion={addQuestion} addAnswerToMCQQuestion={addAnswerToMCQQuestion}
+                               deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
+                               handleQuestionnaireTitleChange={handleQuestionnaireTitleChange}
+                               handleQuestionnaireDesChange={handleQuestionnaireDesChange}/>
+            </form>
+            {/*<BottomContainer addQuestion={addQuestion} />*/}
+
         </div>
     );
 };

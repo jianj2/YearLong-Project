@@ -153,13 +153,13 @@ const MultipleChoiceQuestionFrom = (props) =>{
                                     <label>Answers</label>
                                     <input name={item} defaultValue={item}/>
                                     <button className="delete-answer-button" type="button"
-                                            onClick={() => deleteAnswer(questionIndex,index)}> - </button>
+                                            onClick={(event) => {event.preventDefault(); return deleteAnswer(questionIndex,index)}}> - </button>
                                 </p>
                             )
                         })
                     }
                 </form>
-                <button className="add-answer-button" onClick={() => addAnswer(questionIndex)}> + </button>
+                <button className="add-answer-button" onClick={(event) =>{event.preventDefault(); return addAnswer(questionIndex)}}> + </button>
             </div>
         );
 }

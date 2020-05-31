@@ -85,9 +85,9 @@ export const deleteQuestionnaire = (CQid, clinicianId) => {
 
 //edit questionnaire
 // TODO: get CQid and entire edited questionnaire from UI
-export const editQuestionnaire = async () => {
+export const editQuestionnaire = async (questionnaire) => {
     const url = api + "/questionnaire/edit";
-
+    console.log(questionnaire);
     const headers = {
         ...header,
         "Content-Type": "application/json",
@@ -144,18 +144,3 @@ export const getClinicianQuestionnaires = async (clinicianId) => {
     
     return json;
 };
-
-// export const getSpecificQuestionnaire = async (CQid) => {
-//     let response = await fetch(`${api}/questionnaire/getQuestionnaire/${CQid}`, {
-//         method: "GET",
-//         headers: {
-//             ...header,
-//             Accept: "application/json",
-//             "Content-Type": "application/json",
-//         },
-//     })
-//     let json = await response.json();
-//
-//     return json;
-// };
-

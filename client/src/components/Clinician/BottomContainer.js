@@ -20,12 +20,14 @@ import PropTypes from "prop-types";
 import "../../styles/clinician.css"
 
 const BottomContainer = (props) => {
+
     return (
         <div className="bottom-container">
             <button onClick={props.addQuestion}> ADD NEW QUESTION </button>
         </div>
     );
 };
+
 BottomContainer.protoTypes = {
     addQuestion: PropTypes.func
 }
