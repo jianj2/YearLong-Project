@@ -31,7 +31,10 @@ var shareQuestionnaire = function (req,res) {
 
     newShare.save(function(err, createdShare) {
         if (!err){
-            sendInvitationEmail(req,res,createdShare);
+            // Only send the email if the patient email is defined.
+            if(createdShare.patientEmail != undefined){
+                sendInvitationEmail(req,res,createdShare);
+            }
             res.send(createdShare);
         } else {
             res.send(err);
@@ -143,6 +146,10 @@ const deleteShare = function (req, res) {
 var sendInvitationEmail = function (req, res, createdShare) {
     let patientEmail = createdShare.patientEmail;
     let link = "http://localhost:3000/parent/" + createdShare.shareId + "" ;
+    let message = "";
+    if (createdShare.message != undefined){
+        message = "Message from the clinician: " + createdShare.message + "";
+    }
 
     // Used to create the email
     var transporter = nodemailer.createTransport({
@@ -168,6 +175,7 @@ var sendInvitationEmail = function (req, res, createdShare) {
             '        <p>Hi,</p>' +
             '        <p>Please complete the following questionnaire.</p>' +
             '        <p>Use the following link to complete the questionnaire: <a style="text-decoration: none;color: #ff5c4b;" href="' + link + '"  >link</a></p>\n' +
+            '        <p style ="color: #151641;" >' + message +'</p>\n' +
             '        <p>Thank you,</p>\n' +
             '        <p>' + 'Team SSQ' + '</p>\n' +
             '    </div>'
