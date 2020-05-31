@@ -15,6 +15,7 @@ const shareSchema = mongoose.Schema({
     clinicianEmail: {type: String, required:true},
     patientEmail: {type: String, required:true},
     questionnaireId: {type: String, required:true },
+    readOnly:{type:Boolean, required:true}
 });
 
 module.exports = mongoose.model('share', shareSchema);

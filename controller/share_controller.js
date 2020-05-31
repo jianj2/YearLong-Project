@@ -22,6 +22,7 @@ var shareQuestionnaire = function (req,res) {
         clinicianEmail: req.body.clinicianEmail,
         patientEmail: req.body.patientEmail,
         questionnaireId: req.body.questionnaireId,
+        readOnly:req.body.readOnly,
     });
 
     newShare.save(function(err, createdShare) {
