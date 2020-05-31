@@ -58,6 +58,7 @@ const HomeParents = ({ match }) => {
         // Server call to get the questionnaireId
         API.getQuestionnaireId(match.params.shareId).then((res) =>{
             // Server call to get the questionnaire.
+            setClinicianEmail(res.clinicianEmail);
             API.getQuestionnaire(res.questionnaireId).then((res) => {
                 // Define initial values for the Questionnaire
                 let tempResponse = [];
@@ -122,7 +123,7 @@ const HomeParents = ({ match }) => {
         let data = {
             questionnaireData,
             personalDetails,
-            clinicianEmail: match.params.clinicianEmail,
+            clinicianEmail: clinicianEmail,
         };
         console.log(data)
         
