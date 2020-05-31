@@ -24,15 +24,24 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 
 // handles rendering of TopContainer in the Clinician page
-
 const QuestionsContainer = (props) => {
+    const {sections} = props.questionnaire;
+    const {removeQuestion,changeToRangeQuestion,changeToMCQQuestion,
+        addAnswerToMCQQuestion,deleteAnswerToMCQQuestion} = props;
+
         return (
             <div className="questions-container">
                 {
-                    props.questionnaire.sections && props.questionnaire.sections[0].scenarios
-                    && props.questionnaire.sections[0].scenarios[0].questions.map((item,index) => {
+                    sections && sections[0].scenarios
+                    && sections[0].scenarios[0].questions.map((item,index) => {
                     return (
-                        <QuestionForm item={item} index={index} removeQuestion={props.removeQuestion}/>
+                        <QuestionForm item={item}
+                                      questionIndex={index}
+                                      removeQuestion={removeQuestion}
+                                      changeToRangeQuestion={changeToRangeQuestion}
+                                      changeToMCQQuestion={changeToMCQQuestion}
+                                      addAnswerToMCQQuestion={addAnswerToMCQQuestion}
+                                      deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}/>
                     )
                     })
                 }
@@ -40,19 +49,23 @@ const QuestionsContainer = (props) => {
         );
 };
 
+//decide which kind of question to show
 const QuestionForm = (props) =>{
 
-    const [isMCQ,setState] = useState(props.item.isMCQ);
-    console.log(isMCQ);
+    const {rangeOptions,description,mcqOptions,isMCQ} = props.item;
+    const {questionIndex,removeQuestion,changeToMCQQuestion,changeToRangeQuestion,
+        addAnswerToMCQQuestion,deleteAnswerToMCQQuestion} = props;
+
+    // const [isMCQ,setState] = useState(props.item.isMCQ);
 
     const handleRangeClick = () =>{
-        setState(false);
+        changeToRangeQuestion(questionIndex);
     }
     const handleMultipleClick = () =>{
-        setState(true);
+        changeToMCQQuestion(questionIndex);
     }
     const handleRemoveClick = () =>{
-        props.removeQuestion(props.index);
+        removeQuestion(questionIndex);
     }
 
     if (isMCQ == false){
@@ -66,7 +79,7 @@ const QuestionForm = (props) =>{
                         <Button className="questionRemove-button" onClick={handleRemoveClick}>Remove</Button>
                     </ButtonGroup>
                 </div>
-                    <RangeQuestionFrom rangeOptions={props.item.rangeOptions}/>
+                    <RangeQuestionFrom questionIndex={questionIndex} rangeOptions={rangeOptions}/>
             </div>)
     } else {
         return (
@@ -79,11 +92,15 @@ const QuestionForm = (props) =>{
                         <Button className="questionRemove-button" onClick={handleRemoveClick}>Remove</Button>
                     </ButtonGroup>
                 </div>
-                <MultipleChoiceQuestionFrom description={props.item.description} mcqOptions={props.item.mcqOptions}/>
+                <MultipleChoiceQuestionFrom description={description} mcqOptions={mcqOptions}
+                                            addAnswerToMCQQuestion={addAnswerToMCQQuestion}
+                                            deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
+                                            questionIndex={questionIndex}/>
             </div>)
     }
 }
 
+//display the range question
 const RangeQuestionFrom = (props) =>{
         return (
             <div className="range-question-from">
@@ -103,18 +120,17 @@ const RangeQuestionFrom = (props) =>{
         );
 }
 
-
+//display the multiple choice question
 const MultipleChoiceQuestionFrom = (props) =>{
-    const [mcqOptions, setState] = useState(props.mcqOptions);
 
-        const addAnswer = () => {
-            setState([...mcqOptions, mcqOptions.length]);
+    const {addAnswerToMCQQuestion,deleteAnswerToMCQQuestion,mcqOptions,questionIndex} = props;
+
+        const addAnswer = (questionIndex) => {
+            addAnswerToMCQQuestion(questionIndex);
         }
 
-        const deleteAnswer = (index) =>{
-            const list = [...mcqOptions];
-            list.splice(index,1);
-            setState(list);
+        const deleteAnswer = (questionIndex,answerIndex) =>{
+            deleteAnswerToMCQQuestion(questionIndex,answerIndex);
         }
 
         return (
@@ -131,18 +147,19 @@ const MultipleChoiceQuestionFrom = (props) =>{
                     </p>
                     {/*add new answer textarea*/}
                     {
-                        props.mcqOptions && props.mcqOptions.map((item,index) => {
+                        mcqOptions && mcqOptions.map((item,index) => {
                             return (
-                                <p key={item} index={index}>
+                                <p>
                                     <label>Answers</label>
                                     <input name={item} defaultValue={item}/>
-                                    <button className="delete-answer-button" type="button" onClick={(index) => deleteAnswer(index)}> - </button>
+                                    <button className="delete-answer-button" type="button"
+                                            onClick={() => deleteAnswer(questionIndex,index)}> - </button>
                                 </p>
                             )
                         })
                     }
                 </form>
-                <button className="add-answer-button" onClick={addAnswer}> + </button>
+                <button className="add-answer-button" onClick={() => addAnswer(questionIndex)}> + </button>
             </div>
         );
 }

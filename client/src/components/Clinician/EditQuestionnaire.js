@@ -20,12 +20,15 @@ import EditDescription from "./EditDescription";
 
 // handles rendering of TopContainer in the Clinician page
 const EditQuestionnaire = (props) => {
+    const {Questionnaire,removeQuestion,changeToRangeQuestion,
+        changeToMCQQuestion,addAnswerToMCQQuestion,deleteAnswerToMCQQuestion} = props;
 
     return (
         <div className="edit-questionnaire">
-            <EditDescription Questionnaire={props.Questionnaire}/>
-            {/*<QuestionsContainer questionTable = {props.questionTable} removeQuestion={props.removeQuestion}/>*/}
-            <QuestionsContainer questionnaire={props.Questionnaire} removeQuestion={props.removeQuestion}/>
+            <EditDescription Questionnaire={Questionnaire}/>
+            <QuestionsContainer questionnaire={Questionnaire} removeQuestion={removeQuestion}
+                                changeToRangeQuestion={changeToRangeQuestion} changeToMCQQuestion={changeToMCQQuestion}
+                                addAnswerToMCQQuestion={addAnswerToMCQQuestion} deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}/>
         </div>
     );
 };
