@@ -19,7 +19,9 @@ var sendEmail = function (req,res) {
     let parentId = req.body.from;
     let questionnaireData = req.body.questionnaireData;
     let clinicianEmail = req.body.clinicianEmail; 
-    let personalDetails = req.body.personalDetails; 
+    let personalDetails = req.body.personalDetails;
+
+    console.log(clinicianEmail);
 
     // Used to create the email
     var transporter = nodemailer.createTransport({

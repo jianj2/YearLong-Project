@@ -33,8 +33,8 @@ var shareQuestionnaire = function (req,res) {
     })
 };
 
-// Get questionnaireId using ShareId
-var getQuestionnaireId = function (req, res) {
+// Get ShareDetails using ShareId
+var getShareDetails = function (req, res) {
     let shareId = req.params.shareId;
 
     Share.findOne({ shareId }, function (
@@ -42,7 +42,7 @@ var getQuestionnaireId = function (req, res) {
         share
     ) {
         if (!err) {
-            res.send({"questionnaireId":share.questionnaireId});
+            res.send(share);
         } else {
             res.send(err);
         }
@@ -50,5 +50,5 @@ var getQuestionnaireId = function (req, res) {
 };
 
 
-module.exports.getQuestionnaireId = getQuestionnaireId;
+module.exports.getShareDetails = getShareDetails;
 module.exports.shareQuestionnaire = shareQuestionnaire;
