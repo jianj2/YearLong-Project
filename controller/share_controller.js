@@ -12,6 +12,12 @@
 const mongoose = require("mongoose");
 const Share = mongoose.model("share");
 const { v1: uuidv1 } = require("uuid");
+var nodemailer = require('nodemailer');
+var path = require("path");
+var Readable = require('stream').Readable
+
+
+
 
 
 // Create a new share.
@@ -51,22 +57,18 @@ var getShareDetails = function (req, res) {
     });
 };
 
+
+var completeShare = function (req,res) {
+    sendEmail(req,res);
+    deleteShare(req,res);
+}
+
 // Sending the results in an email.
-var nodemailer = require('nodemailer');
-var path = require("path");
-var Readable = require('stream').Readable
+var sendEmail = function (req, res) {
 
-var sendEmail = function (req,res) {
-    console.log(req.body)
-
-    console.log(req.params.shareId);
-
-    let parentId = req.body.from;
     let questionnaireData = req.body.questionnaireData;
     let clinicianEmail = req.body.clinicianEmail;
     let personalDetails = req.body.personalDetails;
-
-    console.log(clinicianEmail);
 
     // Used to create the email
     var transporter = nodemailer.createTransport({
@@ -123,8 +125,24 @@ var sendEmail = function (req,res) {
             res.send(true);
         }
     });
+
+
 }
 
+// Delete the share from our database.
+const deleteShare = function (req, res) {
+    const shareId = req.params.shareId;
+    Share.deleteOne({ shareId: shareId }, function (
+        err,
+        result
+    ) {
+        console.log("Share Deleted:: " + shareId);
+    });
+};
+
+
 module.exports.sendEmail = sendEmail;
+module.exports.deleteShare = deleteShare;
+module.exports.completeShare = completeShare;
 module.exports.getShareDetails = getShareDetails;
 module.exports.shareQuestionnaire = shareQuestionnaire;
