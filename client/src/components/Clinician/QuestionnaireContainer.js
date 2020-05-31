@@ -104,7 +104,38 @@ const QuestionnaireContainer = (props) => {
         console.log(questionnaire);
     }
 
-    // to change the content .... (need to add more)
+    // to change the question of range questions (because the scheme in the data base didn't have this para,
+    // but we have in the frontend, so we need to change it later, comment this first).
+
+    // const handleRangeQuestionChange = (event,questionIndex) =>{
+    // }
+
+    //same situation
+
+    // const handleRangeDesChange = (event) =>{
+    // }
+
+    // to change the question of multi choice questions (because the scheme in the data base didn't have this para,
+    // but we have in the frontend, so we need to change it later, comment this first).
+    // const handleMultiChoiceQuestionChange = () =>{
+    //
+    // }
+
+
+    const handleMultiChoiceDesChange = (event,questionIndex) =>{
+        const questionnaireTemp = Object.assign({},questionnaire);
+        questionnaireTemp.sections[0].scenarios[0].questions[questionIndex].description = event.target.value;
+        setQuestionnaire(questionnaireTemp);
+        console.log(questionnaire);
+    }
+
+    const handleMultiAnsChange = (event,questionIndex,answerIndex) =>{
+        const questionnaireTemp = Object.assign({},questionnaire);
+        questionnaireTemp.sections[0].scenarios[0].questions[questionIndex].mcqOptions[answerIndex] = event.target.value;
+        setQuestionnaire(questionnaireTemp);
+        console.log(questionnaire);
+    }
+
 
     return (
         <div className="questionnaire-container">
@@ -116,10 +147,11 @@ const QuestionnaireContainer = (props) => {
                                addQuestion={addQuestion} addAnswerToMCQQuestion={addAnswerToMCQQuestion}
                                deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
                                handleQuestionnaireTitleChange={handleQuestionnaireTitleChange}
-                               handleQuestionnaireDesChange={handleQuestionnaireDesChange}/>
+                               handleQuestionnaireDesChange={handleQuestionnaireDesChange}
+                               handleMultiChoiceDesChange={handleMultiChoiceDesChange}
+                               handleMultiAnsChange={handleMultiAnsChange}/>
             </form>
             {/*<BottomContainer addQuestion={addQuestion} />*/}
-
         </div>
     );
 };

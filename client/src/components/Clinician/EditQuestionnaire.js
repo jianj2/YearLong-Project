@@ -24,7 +24,8 @@ import * as API from "../../utils/api";
 const EditQuestionnaire = (props) => {
     const {Questionnaire,removeQuestion,changeToRangeQuestion,
         changeToMCQQuestion,addAnswerToMCQQuestion,deleteAnswerToMCQQuestion,addQuestion,
-        handleQuestionnaireTitleChange,handleQuestionnaireDesChange} = props;
+        handleQuestionnaireTitleChange,handleQuestionnaireDesChange,handleMultiAnsChange,
+        handleMultiChoiceDesChange} = props;
 
     var manage_questionnaire_url = "/clinician"
 
@@ -47,7 +48,9 @@ const EditQuestionnaire = (props) => {
 
             <QuestionsContainer questionnaire={Questionnaire} removeQuestion={removeQuestion}
                                 changeToRangeQuestion={changeToRangeQuestion} changeToMCQQuestion={changeToMCQQuestion}
-                                addAnswerToMCQQuestion={addAnswerToMCQQuestion} deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}/>
+                                addAnswerToMCQQuestion={addAnswerToMCQQuestion} deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
+                                handleMultiChoiceDesChange={handleMultiChoiceDesChange} handleMultiAnsChange={handleMultiAnsChange} />
+
             <button onClick={(event)=>{event.preventDefault(); return addQuestion()}}> ADD NEW QUESTION </button>
         </div>
     );

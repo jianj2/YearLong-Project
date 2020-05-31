@@ -27,7 +27,8 @@ import { makeStyles } from '@material-ui/core/styles';
 const QuestionsContainer = (props) => {
     const {sections} = props.questionnaire;
     const {removeQuestion,changeToRangeQuestion,changeToMCQQuestion,
-        addAnswerToMCQQuestion,deleteAnswerToMCQQuestion} = props;
+        addAnswerToMCQQuestion,deleteAnswerToMCQQuestion,handleMultiChoiceDesChange,
+        handleMultiAnsChange} = props;
 
         return (
             <div className="questions-container">
@@ -41,7 +42,9 @@ const QuestionsContainer = (props) => {
                                       changeToRangeQuestion={changeToRangeQuestion}
                                       changeToMCQQuestion={changeToMCQQuestion}
                                       addAnswerToMCQQuestion={addAnswerToMCQQuestion}
-                                      deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}/>
+                                      deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
+                                      handleMultiChoiceDesChange={handleMultiChoiceDesChange}
+                                      handleMultiAnsChange={handleMultiAnsChange}/>
                     )
                     })
                 }
@@ -54,7 +57,8 @@ const QuestionForm = (props) =>{
 
     const {rangeOptions,description,mcqOptions,isMCQ} = props.item;
     const {questionIndex,removeQuestion,changeToMCQQuestion,changeToRangeQuestion,
-        addAnswerToMCQQuestion,deleteAnswerToMCQQuestion} = props;
+        addAnswerToMCQQuestion,deleteAnswerToMCQQuestion,handleMultiChoiceDesChange,
+        handleMultiAnsChange} = props;
 
     // const [isMCQ,setState] = useState(props.item.isMCQ);
 
@@ -95,13 +99,28 @@ const QuestionForm = (props) =>{
                 <MultipleChoiceQuestionFrom description={description} mcqOptions={mcqOptions}
                                             addAnswerToMCQQuestion={addAnswerToMCQQuestion}
                                             deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
-                                            questionIndex={questionIndex}/>
+                                            questionIndex={questionIndex}
+                                            handleMultiChoiceDesChange={handleMultiChoiceDesChange}
+                                            handleMultiAnsChange={handleMultiAnsChange}/>
             </div>)
     }
 }
 
 //display the range question
 const RangeQuestionFrom = (props) =>{
+
+    // to change the question of range questions (because the scheme in the data base didn't have this para,
+    // but we have in the frontend, so we need to change it later, comment this first).
+
+    // const handleRangeQuestionChange = (event) =>{
+    // }
+
+    //same situation
+
+    // const handleRangeDesChange = (event) =>{
+    //
+    // }
+
         return (
             <div className="range-question-from">
                 <form className="rangeQuestion">
@@ -125,13 +144,31 @@ const MultipleChoiceQuestionFrom = (props) =>{
 
     const {addAnswerToMCQQuestion,deleteAnswerToMCQQuestion,mcqOptions,questionIndex} = props;
 
-        const addAnswer = (questionIndex) => {
-            addAnswerToMCQQuestion(questionIndex);
-        }
 
-        const deleteAnswer = (questionIndex,answerIndex) =>{
-            deleteAnswerToMCQQuestion(questionIndex,answerIndex);
-        }
+    const addAnswer = (questionIndex) => {
+        addAnswerToMCQQuestion(questionIndex);
+    }
+
+    const deleteAnswer = (questionIndex,answerIndex) =>{
+        deleteAnswerToMCQQuestion(questionIndex,answerIndex);
+    }
+
+    // to change the question of range questions (because the scheme in the data base didn't have this para,
+    // but we have in the frontend, so we need to change it later, comment this first).
+
+    // const handleMultiChoiceQuestionChange = (event) =>{
+    //
+    // }
+
+    //
+    const handleMultiChoiceDesChange = (event,questionIndex) =>{
+        props.handleMultiChoiceDesChange(event,questionIndex);
+    }
+
+    const handleMultiAnsChange = (event,questionIndex,answerIndex) =>{
+        props.handleMultiAnsChange(event,questionIndex,answerIndex);
+    }
+
 
         return (
             <div className="multiple-choice-question-from">
@@ -143,7 +180,8 @@ const MultipleChoiceQuestionFrom = (props) =>{
 
                     <p>
                         <label>Description:</label>
-                        <input name="Description" defaultValue={props.description}/>
+                        <input name="Description" defaultValue={props.description}
+                        onChange={(event) => handleMultiChoiceDesChange(event,questionIndex)}/>
                     </p>
                     {/*add new answer textarea*/}
                     {
@@ -151,7 +189,7 @@ const MultipleChoiceQuestionFrom = (props) =>{
                             return (
                                 <p>
                                     <label>Answers</label>
-                                    <input name={item} defaultValue={item}/>
+                                    <input name={item} defaultValue={item} onChange={(event) => handleMultiAnsChange(event,questionIndex,index)}/>
                                     <button className="delete-answer-button" type="button"
                                             onClick={(event) => {event.preventDefault(); return deleteAnswer(questionIndex,index)}}> - </button>
                                 </p>
