@@ -30,13 +30,13 @@ export default function Questionnaire({
 }) {
     const { register, handleSubmit, errors } = useForm(); 
 
-    // Mehod: Called when we submit the questionnaire
+    // Method: Called when we submit the questionnaire
     const onSubmit = (e) => {
         e.preventDefault();
         submitQuestionnaire();
     };
 
-    // Mehod: Called when we something in the questionnaire changes.
+    // Method: Called when we something in the questionnaire changes.
     const onQuestionChange = (
         sectionIndex,
         scenarioIndex,
