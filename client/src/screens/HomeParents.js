@@ -51,34 +51,37 @@ const HomeParents = ({ match }) => {
     const [questionnaireData, setQuestionnaireData] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    let questionnaireId =API.getQuestionnaireId(match.params.shareId);
-    console.log(questionnaireId);
+
     // This is called when the component first mounts.
     useEffect(() => {
-        // Server call to get the questionnaire.
-        API.getQuestionnaire(match.params.questionnaireId).then((res) => {
-            // Define initial values for the Questionnaire
-            let tempResponse = [];
-            res.sections.forEach((section, sectionIndex) => {
-                tempResponse[sectionIndex] = [];
-                section.scenarios.forEach((scenario, scenarioIndex) => {
-                    tempResponse[sectionIndex][scenarioIndex] = [];
-                    scenario.questions.forEach((question, questionIndex) => {
-                        tempResponse[sectionIndex][scenarioIndex][
-                            questionIndex
-                        ] = {
-                            extraQuestion: "",
-                            sliderValue: 0,
-                            frequencyValue: "",
-                            importanceValue: "",
-                        };
+
+        // Server call to get the questionnaireId
+        API.getQuestionnaireId(match.params.shareId).then((res) =>{
+            // Server call to get the questionnaire.
+            API.getQuestionnaire(res.questionnaireId).then((res) => {
+                // Define initial values for the Questionnaire
+                let tempResponse = [];
+                res.sections.forEach((section, sectionIndex) => {
+                    tempResponse[sectionIndex] = [];
+                    section.scenarios.forEach((scenario, scenarioIndex) => {
+                        tempResponse[sectionIndex][scenarioIndex] = [];
+                        scenario.questions.forEach((question, questionIndex) => {
+                            tempResponse[sectionIndex][scenarioIndex][
+                                questionIndex
+                            ] = {
+                                extraQuestion: "",
+                                sliderValue: 0,
+                                frequencyValue: "",
+                                importanceValue: "",
+                            };
+                        });
                     });
                 });
+                // Updating the state using the initial data and the questionnaire
+                // retrieved from the server.
+                setQuestionnaireData(tempResponse);
+                setQuestionnaire(res);
             });
-            // Updating the state using the initial data and the questionnaire
-            // retrieved from the server.
-            setQuestionnaireData(tempResponse);
-            setQuestionnaire(res);
         });
     }, []);
 
