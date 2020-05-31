@@ -31,8 +31,8 @@ export const getQuestionnaire = (questionnaireID) =>
         header,
     }).then((res) => res.json());
 
-export const sendQuestionnaireData = (data) =>
-    fetch(`${api}/email/submit`, {
+export const sendQuestionnaireData = (data, shareId) =>
+    fetch(`${api}/share/submit/${shareId}`, {
         method: "POST",
         headers: {
             ...header,

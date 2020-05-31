@@ -128,7 +128,7 @@ const HomeParents = ({ match }) => {
         console.log(data)
         
         setLoading(true)
-        API.sendQuestionnaireData(data).then(res => {
+        API.sendQuestionnaireData(data,match.params.shareId).then(res => {
             if(res) {
                 setLoading(false);
                 nextStep();
