@@ -196,10 +196,11 @@ const editQuestionnaireQuestion = function(req, res){
 
 // Delete questionnaire
 const deleteQuestionnaire = function (req, res) {
-    let questionnaireID = req.params.questionnaireID
+    let questionnaireID = req.body.CQid
+    // console.log(result)
     Questionnaire.deleteOne({ questionnaireId:questionnaireID}, function (err, result)
     {
-        //console.log("deleted customised questionnaire: " + questionnaireId);
+        console.log("deleted customised questionnaire: " + questionnaireID);
         if (!err){
             res.send('successfully delete')
             // console.log('here')
@@ -207,6 +208,11 @@ const deleteQuestionnaire = function (req, res) {
             res.send(err)
         }
     });
+
+    // update specific clinician questionnaire
+    let clinicianId = req.body.clinicianId
+    console.log(clinicianId)
+    Clinician.updateOne({clinicianId:clinicianId},{$pull:{"questionnaires":questionnaireID}}, (err, raw) => {return})
 
 };
 
