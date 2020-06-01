@@ -37,12 +37,17 @@ const HomeClinician = (props) => {
             return;
         }
         const fn = async () => {
+           
             await loginWithRedirect({
-                appState: { targetUrl: window.location.pathname },
+             
+                redirect_uri: 'http://localhost:3000/clinician'  //TODO: figure out why window.location.pathname doesn't work
+                //appState: { targetUrl: window.location.pathname},
             });
         };
         fn();
     }, [loading, isAuthenticated, loginWithRedirect]);
+
+   
 
     // const { loading, user } = useAuth0();
 
