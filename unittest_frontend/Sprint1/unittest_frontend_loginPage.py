@@ -17,7 +17,7 @@ class unittest_frontend_loginPage(unittest.TestCase):
         clinician_login = self.driver.find_element_by_link_text("Clinician")
         clinician_login.click()
         time.sleep(5)
-        assert "http://localhost:3000/clinician" in self.driver.current_url
+        assert "g6Fo2SBLaHlPRExoNmlHLUloaTVleGNqWm8zM0QzMzRjakpkeaN0aWTZIEozdnNGanNINmY4OFVVQVBnUF83eE8wdWRVSzZRRGxFo2NpZNkga281SUl1Z29SWFFmMnVDcHFSY2xvY3diaHJicUFZeDQ" in self.driver.current_url
 
     def test_navbar_left(self):
         navbar_left = self.driver.find_element_by_class_name("navbar-left")
