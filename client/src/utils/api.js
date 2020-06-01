@@ -87,7 +87,6 @@ export const deleteQuestionnaire = (CQid, clinicianId) => {
 // TODO: get CQid and entire edited questionnaire from UI
 export const editQuestionnaire = async (questionnaire) => {
     const url = api + "/questionnaire/edit";
-    console.log(questionnaire);
     const headers = {
         ...header,
         "Content-Type": "application/json",
@@ -95,13 +94,13 @@ export const editQuestionnaire = async (questionnaire) => {
     };
 
     const data = {
-        questionnaireId: 'e6bc8ad0-9fe3-11ea-a404-bf73c4e43df1', // TODO to be chanegd later
+        questionnaire
     };
 
 
 
     try {
-        console.log("editing", data);
+      
         let response = await fetch(url, {
             method: "POST",
             headers: headers,
@@ -111,7 +110,7 @@ export const editQuestionnaire = async (questionnaire) => {
 
     } catch (e) {
         console.error(
-            "An error has occurred while adding questionnaire",
+            "An error has occurred while saving the edited questionnaire",
             e
         );
     }
