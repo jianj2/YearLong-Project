@@ -166,7 +166,7 @@ class unittest_frontend_clinicianLoginPage(unittest.TestCase):
         email = self.driver.find_element_by_id("email")
         email.send_keys("unittest2@gmail.com")
         password = self.driver.find_element_by_id("password")
-        password.send_keys("Unittest123")
+        password.send_keys("1")
         login = self.driver.find_element_by_id("btn-login")
         login.click()
         time.sleep(5)
@@ -194,3 +194,4 @@ class unittest_frontend_clinicianLoginPage(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
