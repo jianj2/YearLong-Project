@@ -17,7 +17,7 @@ class unittest_frontend_loginPage(unittest.TestCase):
         clinician_login = self.driver.find_element_by_link_text("Clinician")
         clinician_login.click()
         time.sleep(5)
-        assert "g6Fo2SBLaHlPRExoNmlHLUloaTVleGNqWm8zM0QzMzRjakpkeaN0aWTZIEozdnNGanNINmY4OFVVQVBnUF83eE8wdWRVSzZRRGxFo2NpZNkga281SUl1Z29SWFFmMnVDcHFSY2xvY3diaHJicUFZeDQ" in self.driver.current_url
+        assert "Client Log In: Pediatric SSQ" in self.driver.title
 
     def test_navbar_left(self):
         navbar_left = self.driver.find_element_by_class_name("navbar-left")
@@ -30,6 +30,9 @@ class unittest_frontend_loginPage(unittest.TestCase):
         admin_login.click()
         time.sleep(5)
         assert ("http://localhost:3000/admin" in self.driver.current_url)
+
+    def tearDown(self):
+        self.driver.close()
 
 
 if __name__ == '__main__':
