@@ -26,20 +26,7 @@ const ManageQuestionnaires = (props) => {
     console.log(user.name); //TODO: change that when we have actual clincianId
 
     const [Questionnaires, setQuestionnaires] = useState({
-        // customized_Questionnaire: [
-        //     {
-        //         QID: 1,
-        //         Qname: "First custom questionnaire",
-        //         Qdescription: "Details about it",
-        //         date: "17/05/2020",
-        //     },
-        //     {
-        //         QID: 2,
-        //         Qname: "Second custom questionnaire",
-        //         Qdescription: "Details about it",
-        //         date: "17/05/2020",
-        //     },
-        // ],
+       
          customized_Questionnaire: []
         
     });
@@ -93,12 +80,13 @@ const ManageQuestionnaires = (props) => {
     async function AddNew() {
 
         const uuid = await API.addQuestionnaire(user.name);
+        const today = formatDate();
         const AddedArray = Questionnaires.customized_Questionnaire;
         AddedArray.push({
             QID: uuid,
             Qname: "New custom questionnaire",
-            Qdescription: "Details about it",
-            date: "17/05/2020",
+            Qdescription: "Provide some description for this questionnaire.",
+            date:  today,
         });
         setQuestionnaires({ customized_Questionnaire: AddedArray });
     }
@@ -134,8 +122,8 @@ const ManageQuestionnaires = (props) => {
         <div>
             <div className="standard-questionnaire-container">
                 <div className="SQ-header">Standard questionnaires</div>
-                {SQgenerator("Q1", "blabla", "17/05/2020")}
-                {SQgenerator("Q2", "blabla", "17/05/2020")}
+                {SQgenerator("SSQ-P", "SSQ for parents", "17/05/2020")}
+                {SQgenerator("SSQ-C", "SSQ for children ", "17/05/2020")}
             </div>
             <div className="customized-questionnaire-container">
                 <div className="CQ-header">
