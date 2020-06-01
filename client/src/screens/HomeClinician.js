@@ -44,6 +44,7 @@ const HomeClinician = (props) => {
                 //appState: { targetUrl: window.location.pathname},
             });
         };
+
         fn();
     }, [loading, isAuthenticated, loginWithRedirect]);
 
@@ -54,6 +55,7 @@ const HomeClinician = (props) => {
     if (loading || !user) {
         return <Loading />;
     }
+
 
     return (
         <div className="HomeClinician">

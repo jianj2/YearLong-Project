@@ -98,7 +98,6 @@ export const editQuestionnaire = async (questionnaire) => {
     };
 
 
-
     try {
       
         let response = await fetch(url, {
