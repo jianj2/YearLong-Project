@@ -30,31 +30,31 @@ import {BrowserRouter as Router, Route} from "react-router-dom";
 // This function defines the Clinician Home screen.
 // ---------------------------------------------------------------
 const HomeClinician = (props) => {
-    // const { loading, isAuthenticated, loginWithRedirect, user } = useAuth0();
+    const { loading, isAuthenticated, loginWithRedirect, user } = useAuth0();
 
-    // useEffect(() => {
-    //     if (loading || isAuthenticated) {
-    //         return;
-    //     }
-    //     const fn = async () => {
-    //         await loginWithRedirect({
-    //             appState: { targetUrl: window.location.pathname },
-    //         });
-    //     };
-    //     fn();
-    // }, [loading, isAuthenticated, loginWithRedirect]);
+    useEffect(() => {
+        if (loading || isAuthenticated) {
+            return;
+        }
+        const fn = async () => {
+            await loginWithRedirect({
+                appState: { targetUrl: window.location.pathname },
+            });
+        };
+        fn();
+    }, [loading, isAuthenticated, loginWithRedirect]);
 
-    // // const { loading, user } = useAuth0();
+    // const { loading, user } = useAuth0();
 
-    // if (loading || !user) {
-    //     return <Loading />;
-    // }
+    if (loading || !user) {
+        return <Loading />;
+    }
 
     return (
         <div className="HomeClinician">
             <SideBar />
             <Router>
-                <ContentPanel active = {props.active}/>
+                <ContentPanel active = {props.active} questionnaireID = {props.questionnaireID}/>
             </Router>
         </div>
     );

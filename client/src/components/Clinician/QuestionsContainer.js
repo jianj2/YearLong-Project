@@ -27,45 +27,103 @@ import { makeStyles } from '@material-ui/core/styles';
 import "../../styles/main.css"
 
 // handles rendering of TopContainer in the Clinician page
-
 const QuestionsContainer = (props) => {
+    const {sections} = props.questionnaire;
+    const {removeQuestion,changeToRangeQuestion,changeToMCQQuestion,
+        addAnswerToMCQQuestion,deleteAnswerToMCQQuestion,handleMultiChoiceDesChange,
+        handleMultiAnsChange} = props;
+
         return (
             <div className="questions-container">
-                {props.questionTable && props.questionTable.map((item,index) => {
+                {
+                    sections && sections[0].scenarios
+                    && sections[0].scenarios[0].questions.map((item,index) => {
                     return (
-                        <QuestionTable item={item} index={index} removeQuestion={props.removeQuestion}/>
+                        <QuestionForm item={item}
+                                      questionIndex={index}
+                                      removeQuestion={removeQuestion}
+                                      changeToRangeQuestion={changeToRangeQuestion}
+                                      changeToMCQQuestion={changeToMCQQuestion}
+                                      addAnswerToMCQQuestion={addAnswerToMCQQuestion}
+                                      deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
+                                      handleMultiChoiceDesChange={handleMultiChoiceDesChange}
+                                      handleMultiAnsChange={handleMultiAnsChange}/>
                     )
                     })
                 }
-                {/*{props.questionTable}*/}
-                {/*<div className="questionTableThree" style={{*/}
-                {/*    alignItems: 'center', borderRadius: '25px',*/}
-                {/*    paddingBlock: '100px', border: '1px solid white',*/}
-                {/*    marginLeft: '80px', marginRight: '80px'*/}
-                {/*}}>*/}
-                {/*    <div>*/}
-                {/*        <ButtonGroup size="small" aria-label="small outlined button group"*/}
-                {/*                     style={{width: '100%'}}>*/}
-                {/*            <Button className="questionType-button" >Range Question</Button>*/}
-                {/*            <Button className="questionType-button" >Multiple Choice Question</Button>*/}
-                {/*            <Button className="questionRemove-button" >Remove</Button>*/}
-                {/*        </ButtonGroup>*/}
-                {/*    </div>*/}
-                {/*    <MultipleChoiceQuestionFrom/>*/}
-                {/*</div>*/}
              </div>
         );
 };
 
-const QuestionFrom = (props) =>{
-    if (props.whichFrom == 0){
-        return <RangeQuestionFrom />
+//decide which kind of question to show
+const QuestionForm = (props) =>{
+
+    const {rangeOptions,description,mcqOptions,isMCQ} = props.item;
+    const {questionIndex,removeQuestion,changeToMCQQuestion,changeToRangeQuestion,
+        addAnswerToMCQQuestion,deleteAnswerToMCQQuestion,handleMultiChoiceDesChange,
+        handleMultiAnsChange} = props;
+
+    // const [isMCQ,setState] = useState(props.item.isMCQ);
+
+    const handleRangeClick = () =>{
+        changeToRangeQuestion(questionIndex);
+    }
+    const handleMultipleClick = () =>{
+        changeToMCQQuestion(questionIndex);
+    }
+    const handleRemoveClick = () =>{
+        removeQuestion(questionIndex);
+    }
+
+    if (isMCQ == false){
+        return (
+            <div className="questionTable">
+                <div>
+                    <ButtonGroup size="small" aria-label="small outlined button group"
+                                 style={{width: '100%'}}>
+                        <Button className="questionType-button" onClick={handleRangeClick}>Range Question</Button>
+                        <Button className="questionType-button" onClick={handleMultipleClick}>Multiple Choice Question</Button>
+                        <Button className="questionRemove-button" onClick={handleRemoveClick}>Remove</Button>
+                    </ButtonGroup>
+                </div>
+                    <RangeQuestionFrom questionIndex={questionIndex} rangeOptions={rangeOptions}/>
+            </div>)
     } else {
-        return <MultipleChoiceQuestionFrom />
+        return (
+            <div className="questionTable">
+                <div>
+                    <ButtonGroup size="small" aria-label="small outlined button group"
+                                 style={{width: '100%'}}>
+                        <Button className="questionType-button" onClick={handleRangeClick}>Range Question</Button>
+                        <Button className="questionType-button" onClick={handleMultipleClick}>Multiple Choice Question</Button>
+                        <Button className="questionRemove-button" onClick={handleRemoveClick}>Remove</Button>
+                    </ButtonGroup>
+                </div>
+                <MultipleChoiceQuestionFrom description={description} mcqOptions={mcqOptions}
+                                            addAnswerToMCQQuestion={addAnswerToMCQQuestion}
+                                            deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
+                                            questionIndex={questionIndex}
+                                            handleMultiChoiceDesChange={handleMultiChoiceDesChange}
+                                            handleMultiAnsChange={handleMultiAnsChange}/>
+            </div>)
     }
 }
 
-const RangeQuestionFrom = () =>{
+//display the range question
+const RangeQuestionFrom = (props) =>{
+
+    // to change the question of range questions (because the scheme in the data base didn't have this para,
+    // but we have in the frontend, so we need to change it later, comment this first).
+
+    // const handleRangeQuestionChange = (event) =>{
+    // }
+
+    //same situation
+
+    // const handleRangeDesChange = (event) =>{
+    //
+    // }
+
         return (
             <div className="range-question-from">
                 <form className="rangeQuestion">
@@ -78,27 +136,43 @@ const RangeQuestionFrom = () =>{
                     <p>
                         <label>Description:</label>
                         <input name="Description"
-                               placeholder='Please select the slider to number. 0 is unlikely. 1 is will happen for sure.'/>
+                               value={props.description}/>
                     </p>
                 </form>
             </div>
         );
 }
 
+//display the multiple choice question
+const MultipleChoiceQuestionFrom = (props) =>{
+
+    const {addAnswerToMCQQuestion,deleteAnswerToMCQQuestion,mcqOptions,questionIndex} = props;
 
 
-const MultipleChoiceQuestionFrom = () =>{
-        const [mcqOptions, setState] = useState([0,1,2,3]);
+    const addAnswer = (questionIndex) => {
+        addAnswerToMCQQuestion(questionIndex);
+    }
 
-        const addAnswer = () => {
-            setState([...mcqOptions, mcqOptions.length]);
-        }
+    const deleteAnswer = (questionIndex,answerIndex) =>{
+        deleteAnswerToMCQQuestion(questionIndex,answerIndex);
+    }
 
-        const deleteAnswer = (index) =>{
-            const list = [...mcqOptions];
-            list.splice(index,1);
-            setState(list);
-        }
+    // to change the question of range questions (because the scheme in the data base didn't have this para,
+    // but we have in the frontend, so we need to change it later, comment this first).
+
+    // const handleMultiChoiceQuestionChange = (event) =>{
+    //
+    // }
+
+    //
+    const handleMultiChoiceDesChange = (event,questionIndex) =>{
+        props.handleMultiChoiceDesChange(event,questionIndex);
+    }
+
+    const handleMultiAnsChange = (event,questionIndex,answerIndex) =>{
+        props.handleMultiAnsChange(event,questionIndex,answerIndex);
+    }
+
 
         return (
             <div className="multiple-choice-question-from">
@@ -110,55 +184,27 @@ const MultipleChoiceQuestionFrom = () =>{
 
                     <p>
                         <label>Description:</label>
-                        <input name="Description" placeholder='Please select one of the options below:'/>
+                        <input name="Description" defaultValue={props.description}
+                        onChange={(event) => handleMultiChoiceDesChange(event,questionIndex)}/>
                     </p>
                     {/*add new answer textarea*/}
                     {
                         mcqOptions && mcqOptions.map((item,index) => {
                             return (
-                                <p key={item} index={index}>
+                                <p>
                                     <label>Answers</label>
-                                    <input name={item}/>
-                                    <button className="delete-answer-button" type="button" onClick={(index) => deleteAnswer(index)}> - </button>
+                                    <input name={item} defaultValue={item} onChange={(event) => handleMultiAnsChange(event,questionIndex,index)}/>
+                                    <button className="delete-answer-button" type="button"
+                                            onClick={(event) => {event.preventDefault(); return deleteAnswer(questionIndex,index)}}> - </button>
                                 </p>
                             )
                         })
                     }
                 </form>
-                <button className="add-answer-button" onClick={addAnswer}> + </button>
+                <button className="add-answer-button" onClick={(event) =>{event.preventDefault(); return addAnswer(questionIndex)}}> + </button>
             </div>
         );
 }
-
-const QuestionTable = (props) =>{
-
-    const [whichForm,setState] = useState(0);
-    const handleRangeClick = () =>{
-        setState(0);
-    }
-    const handleMultipleClick = () =>{
-        setState(1);
-    }
-    const handleRemoveClick = () =>{
-        props.removeQuestion(props.index);
-    }
-
-    return (
-        <div className="questionTable">
-            <div>
-                <ButtonGroup size="small" aria-label="small outlined button group"
-                             style={{width: '100%'}}>
-                    <Button className="questionType-button" onClick={handleRangeClick}>Range Question</Button>
-                    <Button className="questionType-button" onClick={handleMultipleClick}>Multiple Choice Question</Button>
-                    <Button className="questionRemove-button" onClick={handleRemoveClick}>Remove</Button>
-                </ButtonGroup>
-            </div>
-            <QuestionFrom whichFrom={whichForm}/>
-        </div>
-    );
-}
-
-
 
 QuestionsContainer.protoTypes = {
     removeQuestion: PropTypes.func

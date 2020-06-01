@@ -1,6 +1,6 @@
 const api = "http://localhost:3001";
 
-let header = {
+const header = {
     authorization: "fill in l8er",
 };
 
@@ -31,16 +31,17 @@ export const getQuestionnaires = () =>
 // Managing Questionnaire server calls
 // ================================================
 // add new questionnaire
-export const addQuestionnaire = async () => {
+export const addQuestionnaire = async (clinicianId) => {
     const url = api + "/questionnaire/add";
 
-    var headers = {
+    const headers = {
         ...header,
         "Content-Type": "application/json",
         Accept: "application/json",
     };
 
-    var data = {
+    const data = {
+        clinicianId,
         isStandard: false,
     };
 
@@ -62,38 +63,43 @@ export const addQuestionnaire = async () => {
     });
 };
 
+
 // delete questionnaire
-export const deleteQuestionnaire = (CQid) => {
-    const data = { questionnaireId: CQid };
+export const deleteQuestionnaire = (CQid, clinicianId) => {
+    // console.log(CQid, clinicianId);
+    const data = {
+        CQid,
+        clinicianId,
+    };
     fetch(`${api}/questionnaire/delete`, {
         method: "POST",
         headers: {
             ...header,
             Accept: "application/json",
             "Content-Type": "application/json",
+
         },
         body: JSON.stringify(data),
     }).then((res) => res.json());
 };
 
 //edit questionnaire
-// TODO: get CQid and entire edited questionaire from UI
-export const editQuestionnaire = async () => {
+// TODO: get CQid and entire edited questionnaire from UI
+export const editQuestionnaire = async (questionnaire) => {
     const url = api + "/questionnaire/edit";
-
-    var headers = {
+    console.log(questionnaire);
+    const headers = {
         ...header,
         "Content-Type": "application/json",
         Accept: "application/json",
     };
 
-    var data = {
+    const data = {
         questionnaireId: 'e6bc8ad0-9fe3-11ea-a404-bf73c4e43df1', // TODO to be chanegd later
-       
     };
 
-    
-    
+
+
     try {
         console.log("editing", data);
         let response = await fetch(url, {
@@ -102,12 +108,39 @@ export const editQuestionnaire = async () => {
             body: JSON.stringify(data),
         });
         let json = await response.json();
-   
+
     } catch (e) {
         console.error(
             "An error has occurred while adding questionnaire",
             e
         );
     }
-
 }
+
+
+// get specific questionnaire
+// TODO: get CQid and entire edited questionnaire from UI
+export const getSpecificQuestionnaire = async (CQid,setState) => {
+    fetch(`${api}/questionnaire/getQuestionnaire/${CQid}`, {
+        method: "GET",
+        headers: {
+            ...header,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+    }).then(res => res.json())
+        .then(data => setState(data));
+};
+
+// get clinician questionnaire list
+// TODO: get CQid and entire edited questionnaire from UI
+export const getClinicianQuestionnaires = async (clinicianId) => {
+    const url = `${api}/questionnaire/clinician?clinicianId=${clinicianId}` ;
+    let response = await fetch(url, {
+        headers: header
+       
+    });
+    let json = await response.json();
+    
+    return json;
+};

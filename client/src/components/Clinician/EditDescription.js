@@ -15,23 +15,30 @@
 import React from "react";
 
 // handles rendering of TopContainer in the Clinician page
-const EditDescription = () => {
+const EditDescription = (props) => {
+
+    // to modify the questionnaire title in real time.
+    const handleQuestionnaireTitleChange = (event) => {
+        props.handleQuestionnaireTitleChange(event)
+    }
+    // to modify the questionnaire description in real time.
+    const handleQuestionnaireDescriptionChange = (event) =>{
+        props.handleQuestionnaireDesChange(event);
+    }
 
     return (
             <div className="edit-description">
-                
-                    <h2>Edit Questionnaire</h2>
-                
-                
+                <h2>Edit Questionnaire</h2>
                 <p>
-                
                     <label>Title:</label>
-                    <input type="text"/>
+                    <input type="text" defaultValue={props.Questionnaire.title}
+                    onChange={handleQuestionnaireTitleChange}/>
                 </p>
 
                 <p>
                     <label>Description:</label>
-                    <input type="text"/>
+                    <input type="text" defaultValue={props.Questionnaire.description}
+                    onChange={handleQuestionnaireDescriptionChange}/>
                 </p>
                 <hr/>
             </div>
