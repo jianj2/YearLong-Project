@@ -65,58 +65,29 @@ const addEmptyQuestionnaire = function (req, res) {
 
     let newQuestionnaire = new Questionnaire({
         questionnaireId: uuid,
-        title: "awesome questionnaire",
-        description: "awesome",
-        sections: [],
-        isStandard: req.body.isStandard,
-    });
-
-    newQuestionnaire.save(function (err, createdQuestionnaire) {
-        console.log(
-            "added customised questionnaire:",
-            uuid,
-            JSON.stringify(req.body)
-        );
-
-        res.send({
-            code: 200,
-            message: "successfully add new questionnaire!",
-            uuid: uuid,
-        });
-    });
-};
-
-// add a sample filled questionnaire
-const addFilledQuestionnaire = function (req, res) {
-    const uuid = uuidv1();
-    const sections = [
-        {
-            title: "Speech",
-            scenarios: [
-                {
-                    description: "You are at Melbourne Uni...",
-                    questions: [
-                        {
-                            isMCQ: false,
-                            rangeOptions: ["Zero", "Ten"],
-                        },{
-                            description: "If only one option can be true, which of the following is correct?",
-                            isMCQ: true,
-                            mcqOptions: ["All of the above is true", " Those below the below is true",
-                             "None of the above is true", 'Those above the above is true']
-                        }
-                    ],
-                },
-            ],
-        },
-        { title: "Spatial", scenarios: [] },
-        { title: "Quality", scenarios: [] },
-    ];
-    let newQuestionnaire = new Questionnaire({
-        questionnaireId: uuid,
-        title: "awesome questionnaire",
-        description: "awesome",
-        sections: sections,
+        title: "New custom questionnaire",
+        description: "Provide some description for this questionnaire.",
+        sections: [ {
+                        title: "Speech",
+                        scenarios: [
+                                            {
+                                                description: "You are at Melbourne Uni...",
+                                                questions: [
+                                                    {
+                                                        isMCQ: false,
+                                                        rangeOptions: ["Zero", "Ten"],
+                                                    },{
+                                                        description: "If only one option can be true, which of the following is correct?",
+                                                        isMCQ: true,
+                                                        mcqOptions: ["All of the above is true", " Those below the below is true",
+                                                         "None of the above is true", 'Those above the above is true']
+                                                    }
+                                                ],
+                                            },
+                                        ],
+                                    },
+                    { title: "Spatial", scenarios: [] },
+                    { title: "Quality", scenarios: [] },],
         isStandard: req.body.isStandard,
     });
 
@@ -135,11 +106,66 @@ const addFilledQuestionnaire = function (req, res) {
     });
 
     // update specific clinician questionnaire
-    let clinicianId = req.body.clinicianId
-    console.log(clinicianId)
+    let clinicianId = req.body.clinicianId;
+ 
     Clinician.updateOne({clinicianId:clinicianId},{$push:{"questionnaires":uuid}}, (err, raw) => {return})
 
 };
+
+// // add a sample filled questionnaire
+// const addFilledQuestionnaire = function (req, res) {
+//     const uuid = uuidv1();
+//     const sections = [
+//         {
+//             title: "Speech",
+//             scenarios: [
+//                 {
+//                     description: "You are at Melbourne Uni...",
+//                     questions: [
+//                         {
+//                             isMCQ: false,
+//                             rangeOptions: ["Zero", "Ten"],
+//                         },{
+//                             description: "If only one option can be true, which of the following is correct?",
+//                             isMCQ: true,
+//                             mcqOptions: ["All of the above is true", " Those below the below is true",
+//                              "None of the above is true", 'Those above the above is true']
+//                         }
+//                     ],
+//                 },
+//             ],
+//         },
+//         { title: "Spatial", scenarios: [] },
+//         { title: "Quality", scenarios: [] },
+//     ];
+//     let newQuestionnaire = new Questionnaire({
+//         questionnaireId: uuid,
+//         title: "awesome questionnaire",
+//         description: "awesome",
+//         sections: sections,
+//         isStandard: req.body.isStandard,
+//     });
+
+//     newQuestionnaire.save(function (err, createdQuestionnaire) {
+//         console.log(
+//             "added customised questionnaire:",
+//             uuid,
+//             JSON.stringify(req.body)
+//         );
+
+//         res.send({
+//             code: 200,
+//             message: "successfully add new questionnaire!",
+//             uuid: uuid,
+//         });
+//     });
+
+//     // update specific clinician questionnaire
+//     let clinicianId = req.body.clinicianId
+//     console.log(clinicianId)
+//     Clinician.updateOne({clinicianId:clinicianId},{$push:{"questionnaires":uuid}}, (err, raw) => {return})
+
+// };
 
 // edit a questionnaire
 // TODO: Receive an actual questionnaire from req.body, rather than creating a boiler plate.
@@ -220,7 +246,6 @@ const deleteQuestionnaire = function (req, res) {
 module.exports.getAllQuestionnaire = getAllQuestionnaire;
 module.exports.addEmptyQuestionnaire = addEmptyQuestionnaire;
 module.exports.deleteQuestionnaire = deleteQuestionnaire;
-module.exports.addFilledQuestionnaire = addFilledQuestionnaire;
 module.exports.editQuestionnaire = editQuestionnaire;
 module.exports.getQuestionnaire = getQuestionnaire;
 module.exports.getClinicianQuestionnaires = getClinicianQuestionnaires;

@@ -22,7 +22,7 @@ router.get('/clinician/', questionnaire_controller.getClinicianQuestionnaires);
 
 
 router.post('/delete', questionnaire_controller.deleteQuestionnaire);
-router.post('/add', questionnaire_controller.addFilledQuestionnaire);
+router.post('/add', questionnaire_controller.addEmptyQuestionnaire);
 router.post('/edit', questionnaire_controller.editQuestionnaire);
 
 
