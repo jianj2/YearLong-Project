@@ -23,6 +23,9 @@ import BottomContainer from "./BottomContainer";
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 
+// import style
+import "../../styles/main.css"
+
 // handles rendering of TopContainer in the Clinician page
 
 const QuestionsContainer = (props) => {
@@ -68,7 +71,8 @@ const RangeQuestionFrom = () =>{
                 <form className="rangeQuestion">
                     <p>
                         <label>Question:</label>
-                        <input name="Question" placeholder='How likely is this to happen?'/>
+                        {/*<input name="Question" placeholder='How likely is this to happen?'/>*/}
+                        <TextField id="standard-basic" label="Standard" />
                     </p>
 
                     <p>

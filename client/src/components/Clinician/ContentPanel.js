@@ -20,6 +20,7 @@ import DoTheTestContainer from "./DoTheTestContainer";
 import InstructionsContainer from "./InstructionsContainer";
 import QuestionnaireContainer from "./QuestionnaireContainer"
 
+//import style
 import "../../styles/contentpanel.css";
 import "../../styles/main.css";
 
