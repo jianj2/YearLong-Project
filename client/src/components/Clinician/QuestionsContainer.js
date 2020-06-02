@@ -250,7 +250,7 @@ const MultipleChoiceQuestionFrom = (props) => {
                                     <InputLabel>Answer {index+1}</InputLabel>
                                     <Input
                                         placeholder="Write the Answer."
-                                        defaultValue={mcqOptions[index]}
+                                        value={mcqOptions[index]}
                                         onChange={(event) =>
                                             handleMultiAnsChange(
                                                 event,
