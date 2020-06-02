@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 
 
-class sample_test(unittest.TestCase):
+class unittest_frontend_parentPage1(unittest.TestCase):
 
     def setUp(self):
         self.driver = webdriver.Chrome("chromedriver.exe")
