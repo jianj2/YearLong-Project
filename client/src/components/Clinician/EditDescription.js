@@ -13,6 +13,18 @@
  */
 
 import React from "react";
+import {
+    Slider,
+    FormControl,
+    FormLabel,
+    FormControlLabel,
+    Radio,
+    RadioGroup,
+    Checkbox,
+    FormGroup,
+    FormHelperText,
+} from "@material-ui/core";
+
 
 // handles rendering of TopContainer in the Clinician page
 const EditDescription = (props) => {

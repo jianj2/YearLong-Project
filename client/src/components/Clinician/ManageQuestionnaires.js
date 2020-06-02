@@ -89,6 +89,9 @@ const ManageQuestionnaires = (props) => {
             date:  today,
         });
         setQuestionnaires({ customized_Questionnaire: AddedArray });
+        
+        let edit_url = "/clinician/" + uuid + "/edit";
+        window.location.href = edit_url;
     }
 
    

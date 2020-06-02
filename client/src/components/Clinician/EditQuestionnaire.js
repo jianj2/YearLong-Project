@@ -48,8 +48,6 @@ const EditQuestionnaire = (props) => {
 
     return (
         <div className="edit-questionnaire">
-
-
             {/*<button style={{width:'12%',marginLeft:'10px', marginRight:'80px'}}*/}
             {/*        onClick = {(event)=> {event.preventDefault(); window.location.href = manage_questionnaire_url}}>CANCEL</button>*/}
             {/*<button style={{width:'12%',marginRight:'10px'}}*/}
@@ -59,17 +57,21 @@ const EditQuestionnaire = (props) => {
             {/*            // window.location.href = manage_questionnaire_url;*/}
             {/*        }}> SAVE </button>*/}
 
-            <Button variant="outlined" color="primary"
-                    style={{width:'12%',marginLeft:'10px', marginRight:'80px'}}
-                    onClick={(event)=>{event.preventDefault();window.location.href = manage_questionnaire_url}}>
-                Cancel
-            </Button>
+            <div>
+                <button
+                    className="button"
+                    onClick={(event) => {
+                        event.preventDefault();
+                        window.location.href = manage_questionnaire_url;
+                    }}
+                >
+                    Cancel
+                </button>
 
-            <Button variant="outlined" color="primary"
-                    style={{width:'12%',marginLeft:'10px', marginRight:'80px'}}
-                    onClick={handleClickOpen}>
-                Save
-            </Button>
+                <button className="button" onClick={handleClickOpen}>
+                    Save
+                </button>
+            </div>
 
             <Dialog
                 open={open}
@@ -77,37 +79,56 @@ const EditQuestionnaire = (props) => {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-
                 <DialogTitle id="alert-dialog-title">{"Save"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                     Are you sure to save this questionnaire?
+                        Are you sure to save this questionnaire?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
                         Disagree
                     </Button>
-                    <Button onClick={() => {
-                        handleClose();
-                        API.editQuestionnaire(Questionnaire);
-                        window.location.href = manage_questionnaire_url;
-                    }} color="primary" autoFocus>
+                    <Button
+                        onClick={() => {
+                            handleClose();
+                            API.editQuestionnaire(Questionnaire);
+                            window.location.href = manage_questionnaire_url;
+                        }}
+                        color="primary"
+                        autoFocus
+                    >
                         Agree
                     </Button>
                 </DialogActions>
             </Dialog>
 
-            <EditDescription Questionnaire={Questionnaire}
-                             handleQuestionnaireTitleChange={handleQuestionnaireTitleChange}
-                             handleQuestionnaireDesChange={handleQuestionnaireDesChange}/>
+            <EditDescription
+                Questionnaire={Questionnaire}
+                handleQuestionnaireTitleChange={handleQuestionnaireTitleChange}
+                handleQuestionnaireDesChange={handleQuestionnaireDesChange}
+            />
 
-            <QuestionsContainer questionnaire={Questionnaire} removeQuestion={removeQuestion}
-                                changeToRangeQuestion={changeToRangeQuestion} changeToMCQQuestion={changeToMCQQuestion}
-                                addAnswerToMCQQuestion={addAnswerToMCQQuestion} deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
-                                handleMultiChoiceDesChange={handleMultiChoiceDesChange} handleMultiAnsChange={handleMultiAnsChange} />
+            <QuestionsContainer
+                questionnaire={Questionnaire}
+                removeQuestion={removeQuestion}
+                changeToRangeQuestion={changeToRangeQuestion}
+                changeToMCQQuestion={changeToMCQQuestion}
+                addAnswerToMCQQuestion={addAnswerToMCQQuestion}
+                deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
+                handleMultiChoiceDesChange={handleMultiChoiceDesChange}
+                handleMultiAnsChange={handleMultiAnsChange}
+            />
 
-            <button onClick={(event)=>{event.preventDefault(); return addQuestion()}}> ADD NEW QUESTION </button>
+            <button
+                onClick={(event) => {
+                    event.preventDefault();
+                    return addQuestion();
+                }}
+            >
+                {" "}
+                ADD NEW QUESTION{" "}
+            </button>
         </div>
     );
 };
