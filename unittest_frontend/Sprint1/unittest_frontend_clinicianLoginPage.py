@@ -16,19 +16,19 @@ class unittest_frontend_clinicianLoginPage(unittest.TestCase):
     def test_select_email(self):
         email = self.driver.find_element_by_id("email")
         email.click()
-        time.sleep(5)
+        time.sleep(2)
 
     def test_input_email(self):
         email = self.driver.find_element_by_id("email")
         email.send_keys("test_email@google.com")
-        time.sleep(5)
+        time.sleep(2)
 
     def test_login_with_correct_format_email(self):
         email = self.driver.find_element_by_id("email")
         email.send_keys("test_email@google.com")
         login = self.driver.find_element_by_id("btn-login")
         login.click()
-        time.sleep(5)
+        time.sleep(2)
         assert "Wrong email or password." \
                in self.driver.find_element_by_id("error-message").text
 
@@ -37,7 +37,7 @@ class unittest_frontend_clinicianLoginPage(unittest.TestCase):
         email.send_keys("test_email@google.com")
         signup = self.driver.find_element_by_id("btn-signup")
         signup.click()
-        time.sleep(5)
+        time.sleep(2)
         assert "String (password) is too short (0 chars), minimum 1" \
             in self.driver.find_element_by_id("error-message").text
 
@@ -46,7 +46,7 @@ class unittest_frontend_clinicianLoginPage(unittest.TestCase):
         email.send_keys("test_email")
         login = self.driver.find_element_by_id("btn-login")
         login.click()
-        time.sleep(5)
+        time.sleep(2)
         assert "Wrong email or password." \
                in self.driver.find_element_by_id("error-message").text
 
@@ -55,26 +55,26 @@ class unittest_frontend_clinicianLoginPage(unittest.TestCase):
         email.send_keys("test_email")
         signup = self.driver.find_element_by_id("btn-signup")
         signup.click()
-        time.sleep(5)
+        time.sleep(2)
         assert "String (password) is too short (0 chars), minimum 1" \
             in self.driver.find_element_by_id("error-message").text
 
     def test_select_password(self):
         password = self.driver.find_element_by_id("password")
         password.click()
-        time.sleep(5)
+        time.sleep(2)
 
     def test_input_password(self):
         password = self.driver.find_element_by_id("password")
         password.send_keys("test_password")
-        time.sleep(5)
+        time.sleep(2)
 
     def test_login_with_correct_format_password(self):
         password = self.driver.find_element_by_id("password")
         password.send_keys("Password123")
         login = self.driver.find_element_by_id("btn-login")
         login.click()
-        time.sleep(5)
+        time.sleep(2)
         assert "Need email" \
                in self.driver.find_element_by_id("error-message").text
 
@@ -83,7 +83,7 @@ class unittest_frontend_clinicianLoginPage(unittest.TestCase):
         password.send_keys("Password123")
         signup = self.driver.find_element_by_id("btn-signup")
         signup.click()
-        time.sleep(5)
+        time.sleep(2)
         assert "error in email - email format validation failed:" \
             in self.driver.find_element_by_id("error-message").text
 
@@ -92,7 +92,7 @@ class unittest_frontend_clinicianLoginPage(unittest.TestCase):
         password.send_keys("test_password")
         login = self.driver.find_element_by_id("btn-login")
         login.click()
-        time.sleep(5)
+        time.sleep(2)
         assert "Need email" \
                in self.driver.find_element_by_id("error-message").text
 
@@ -101,14 +101,14 @@ class unittest_frontend_clinicianLoginPage(unittest.TestCase):
         password.send_keys("test_password")
         signup = self.driver.find_element_by_id("btn-signup")
         signup.click()
-        time.sleep(5)
+        time.sleep(2)
         assert "error in email - email format validation failed" \
             in self.driver.find_element_by_id("error-message").text
 
     def test_signup_without_input(self):
         signup = self.driver.find_element_by_id("btn-signup")
         signup.click()
-        time.sleep(5)
+        time.sleep(2)
         assert "String (password) is too short (0 chars), minimum 1" \
             in self.driver.find_element_by_id("error-message").text
 
@@ -119,7 +119,7 @@ class unittest_frontend_clinicianLoginPage(unittest.TestCase):
         password.send_keys("1")
         signup = self.driver.find_element_by_id("btn-signup")
         signup.click()
-        time.sleep(5)
+        time.sleep(2)
         assert "error in email - email format validation failed: unittest" \
             in self.driver.find_element_by_id("error-message").text
 
@@ -130,7 +130,7 @@ class unittest_frontend_clinicianLoginPage(unittest.TestCase):
         password.send_keys("Unittest123")
         signup = self.driver.find_element_by_id("btn-signup")
         signup.click()
-        time.sleep(5)
+        time.sleep(2)
         assert "Authorize Pediatric Scale" in self.driver.title
 
     def test_signup_with_exist_account(self):
@@ -140,14 +140,14 @@ class unittest_frontend_clinicianLoginPage(unittest.TestCase):
         password.send_keys("Password123")
         signup = self.driver.find_element_by_id("btn-signup")
         signup.click()
-        time.sleep(5)
+        time.sleep(2)
         assert "Invalid sign up" \
             in self.driver.find_element_by_id("error-message").text
 
     def test_login_without_input(self):
         login = self.driver.find_element_by_id("btn-login")
         login.click()
-        time.sleep(5)
+        time.sleep(2)
         assert "Need email or password" \
             in self.driver.find_element_by_id("error-message").text
 
@@ -158,7 +158,7 @@ class unittest_frontend_clinicianLoginPage(unittest.TestCase):
         password.send_keys("1")
         login = self.driver.find_element_by_id("btn-login")
         login.click()
-        time.sleep(5)
+        time.sleep(2)
         assert "Wrong email or password." \
             in self.driver.find_element_by_id("error-message").text
 
@@ -169,7 +169,7 @@ class unittest_frontend_clinicianLoginPage(unittest.TestCase):
         password.send_keys("Unittest123")
         login = self.driver.find_element_by_id("btn-login")
         login.click()
-        time.sleep(5)
+        time.sleep(2)
         assert "http://localhost:3000/clinician" in self.driver.current_url
 
     def test_logout(self):
@@ -179,11 +179,11 @@ class unittest_frontend_clinicianLoginPage(unittest.TestCase):
         password.send_keys("Unittest123")
         login = self.driver.find_element_by_id("btn-login")
         login.click()
-        time.sleep(5)
+        time.sleep(2)
         assert "http://localhost:3000/clinician" in self.driver.current_url
         logout = self.driver.find_element_by_class_name("button")
         logout.click()
-        time.sleep(5)
+        time.sleep(2)
         assert "http://localhost:3000" in self.driver.current_url
 
 

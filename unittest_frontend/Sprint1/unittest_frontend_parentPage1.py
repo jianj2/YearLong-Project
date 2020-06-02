@@ -16,13 +16,13 @@ class unittest_frontend_parentPage1(unittest.TestCase):
     def test_navbar_left(self):
         navbar_left = self.driver.find_element_by_class_name("navbar-left")
         navbar_left.click()
-        time.sleep(5)
+        time.sleep(2)
         assert ("http://localhost:3000" in self.driver.current_url)
 
     def test_nextButton_forPage1(self):
         next_button = self.driver.find_element_by_class_name("button")
         next_button.click()
-        time.sleep(5)
+        time.sleep(2)
 
     def tearDown(self):
         self.driver.close()
