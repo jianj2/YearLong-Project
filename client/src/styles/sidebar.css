@@ -10,33 +10,56 @@
  *
  */
 
- .sidebar-container {
-    width: 16vw;
-    height: 95vh;
-    /*padding: 0 1vw;*/
-    display: flex;
-    position: fixed;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    background-color: #101132;
-    /* border-bottom: 1px solid #000; */
+@media all and (max-width: 800px) {
+    .sidebar-container {
+        /* flex: 0; */
+        width: 100vw !important;
+        height: 9rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        background-color: #101132;
+    }
+    .sidebar-container a {
+        font-size: 1rem;
+        height: 3rem;
+    }
 }
 
-.sidebar-questionnaires,.sidebar-do-the-test,.sidebar-instructions {
-    width: 16vw;
-    height: 80px;
-    background-color: #0E0F2A;
+.sidebar-container {
+    /* flex: 1; */
+    width: 25vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: #101132;
+}
+
+.sidebar-questionnaires,
+.sidebar-do-the-test,
+.sidebar-instructions { 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 6rem;
+    background-color: rgba(0,0,0,0.2);
     text-align: center;
-    font-family: Raleway;
-    line-height: 80px;
+    font-family: Raleway; 
     font-size: 1.5em;
     cursor: pointer;
     color: white;
     text-decoration: none;
+    transition: all 0.2;
+}
+.sidebar-container a {
+    transition: all 0.2;
 }
 
-.active{
-    background-color: #AF8BC0;
+.sidebar-container a:hover {
+    background-color: #af8bc0;
+}
+
+.active {
+    background-color: #db3d94;
     cursor: pointer;
 }

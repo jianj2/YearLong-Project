@@ -13,34 +13,40 @@
  *
  */
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useAuth0 } from "../utils/react-auth0-spa";
 
-import Loading from '../components/Loading';
+import Loading from "../components/Loading";
 
 // Import styles.
 import "../styles/clinician.css";
-import "../styles/main.css"
+import "../styles/main.css";
 import SideBar from "../components/Clinician/Sidebar";
+
 import ContentPanel from "../components/Clinician/ContentPanel";
-import {BrowserRouter as Router, Route} from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import ClinicianDrawer from "../components/ClinicianDrawer";
+
+
+
 
 // ---------------------------------------------------------------
 // This function defines the Clinician Home screen.
 // ---------------------------------------------------------------
 const HomeClinician = (props) => {
     const { loading, isAuthenticated, loginWithRedirect, user } = useAuth0();
+    // const []
+
 
     useEffect(() => {
         if (loading || isAuthenticated) {
             return;
         }
         const fn = async () => {
-           
             await loginWithRedirect({
-             
-                redirect_uri: 'http://localhost:3000/clinician'  //TODO: figure out why window.location.pathname doesn't work
+                redirect_uri: "http://localhost:3000/clinician", //TODO: figure out why window.location.pathname doesn't work
                 //appState: { targetUrl: window.location.pathname},
             });
         };
@@ -48,23 +54,22 @@ const HomeClinician = (props) => {
         fn();
     }, [loading, isAuthenticated, loginWithRedirect]);
 
-   
-
     // const { loading, user } = useAuth0();
 
     if (loading || !user) {
         return <Loading />;
     }
 
-
     return (
         <div className="HomeClinician">
-            <SideBar />
-            <Router>
-                <ContentPanel active = {props.active} questionnaireID = {props.questionnaireID}/>
-            </Router>
+            <SideBar /> 
+            
+            <ContentPanel
+                active={props.active}
+                questionnaireID={props.questionnaireID}
+            /> 
         </div>
     );
-}
+};
 
 export default HomeClinician;

@@ -9,11 +9,22 @@
   * to style the component.
   *
 */
+ 
+
+@media all and (max-width: 800px) {
+  .HomeClinician{
+    height: 100vh;
+    display: flex; 
+    flex-flow: row wrap;
+    flex-direction: column;
+  }
+
+}
+
 
 .HomeClinician{
-  height: 100%;
-  display: flex;
-  overflow: auto;
+  height: 100vh;
+  display: flex; 
 }
 
 .questionnaire-container{
