@@ -124,7 +124,7 @@ const ManageQuestionnaires = (props) => {
     return (
         <div>
             <div className="standard-questionnaire-container">
-                <div className="SQ-header">Standard questionnaires</div>
+                <div className="SQ-header"><h1>Standard questionnaires</h1></div>
                 {SQgenerator("SSQ-P", "SSQ for parents", "17/05/2020")}
                 {SQgenerator("SSQ-C", "SSQ for children ", "17/05/2020")}
             </div>
