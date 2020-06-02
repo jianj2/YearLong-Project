@@ -24,7 +24,7 @@ import * as API from "../../utils/api";
 const QuestionnaireContainer = (props) => {
 
     // the questionnaire content
-    const [questionnaire, setQuestionnaire] = useState({});
+    const [questionnaire, setQuestionnaire] = useState(null);
 
     // get the questionnaire content from API
     useEffect(() =>{

@@ -13,26 +13,36 @@
  */
 
 import React from "react";
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 // Import components.
 import QuestionsContainer from "./QuestionsContainer";
 import EditDescription from "./EditDescription";
+import Loading from "../Loading";
 
-import "../../styles/clinician.css"
+import "../../styles/clinician.css";
 
 import * as API from "../../utils/api";
 // handles rendering of TopContainer in the Clinician page
 const EditQuestionnaire = (props) => {
-    const {Questionnaire,removeQuestion,changeToRangeQuestion,
-        changeToMCQQuestion,addAnswerToMCQQuestion,deleteAnswerToMCQQuestion,addQuestion,
-        handleQuestionnaireTitleChange,handleQuestionnaireDesChange,handleMultiAnsChange,
-        handleMultiChoiceDesChange} = props;
+    const {
+        Questionnaire,
+        removeQuestion,
+        changeToRangeQuestion,
+        changeToMCQQuestion,
+        addAnswerToMCQQuestion,
+        deleteAnswerToMCQQuestion,
+        addQuestion,
+        handleQuestionnaireTitleChange,
+        handleQuestionnaireDesChange,
+        handleMultiAnsChange,
+        handleMultiChoiceDesChange,
+    } = props;
 
     const [open, setOpen] = React.useState(false);
 
@@ -44,94 +54,99 @@ const EditQuestionnaire = (props) => {
         setOpen(false);
     };
 
-    var manage_questionnaire_url = "/clinician"
+    var manage_questionnaire_url = "/clinician";
 
-    return (
-        <div className="edit-questionnaire">
-            {/*<button style={{width:'12%',marginLeft:'10px', marginRight:'80px'}}*/}
-            {/*        onClick = {(event)=> {event.preventDefault(); window.location.href = manage_questionnaire_url}}>CANCEL</button>*/}
-            {/*<button style={{width:'12%',marginRight:'10px'}}*/}
-            {/*        onClick = {(event)=> {*/}
-            {/*            event.preventDefault();*/}
-            {/*            API.editQuestionnaire(Questionnaire);*/}
-            {/*            // window.location.href = manage_questionnaire_url;*/}
-            {/*        }}> SAVE </button>*/}
+    if (!Questionnaire) {
+        return <Loading />;
+    } else {
+        return (
+            <div className="edit-questionnaire">
+                {/*<button style={{width:'12%',marginLeft:'10px', marginRight:'80px'}}*/}
+                {/*        onClick = {(event)=> {event.preventDefault(); window.location.href = manage_questionnaire_url}}>CANCEL</button>*/}
+                {/*<button style={{width:'12%',marginRight:'10px'}}*/}
+                {/*        onClick = {(event)=> {*/}
+                {/*            event.preventDefault();*/}
+                {/*            API.editQuestionnaire(Questionnaire);*/}
+                {/*            // window.location.href = manage_questionnaire_url;*/}
+                {/*        }}> SAVE </button>*/}
 
-            <div>
-                <button
-                    className="button"
-                    onClick={(event) => {
-                        event.preventDefault();
-                        window.location.href = manage_questionnaire_url;
-                    }}
-                >
-                    Cancel
-                </button>
-
-                <button className="button" onClick={handleClickOpen}>
-                    Save
-                </button>
-            </div>
-
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">{"Save"}</DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        Are you sure to save this questionnaire?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Disagree
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            handleClose();
-                            API.editQuestionnaire(Questionnaire);
+                <div>
+                    <button
+                        className="button"
+                        onClick={(event) => {
+                            event.preventDefault();
                             window.location.href = manage_questionnaire_url;
                         }}
-                        color="primary"
-                        autoFocus
                     >
-                        Agree
-                    </Button>
-                </DialogActions>
-            </Dialog>
+                        Cancel
+                    </button>
 
-            <EditDescription
-                Questionnaire={Questionnaire}
-                handleQuestionnaireTitleChange={handleQuestionnaireTitleChange}
-                handleQuestionnaireDesChange={handleQuestionnaireDesChange}
-            />
+                    <button className="button" onClick={handleClickOpen}>
+                        Save
+                    </button>
+                </div>
 
-            <QuestionsContainer
-                questionnaire={Questionnaire}
-                removeQuestion={removeQuestion}
-                changeToRangeQuestion={changeToRangeQuestion}
-                changeToMCQQuestion={changeToMCQQuestion}
-                addAnswerToMCQQuestion={addAnswerToMCQQuestion}
-                deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
-                handleMultiChoiceDesChange={handleMultiChoiceDesChange}
-                handleMultiAnsChange={handleMultiAnsChange}
-            />
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">{"Save"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Are you sure to save this questionnaire?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose} color="primary">
+                            Disagree
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                handleClose();
+                                API.editQuestionnaire(Questionnaire);
+                                window.location.href = manage_questionnaire_url;
+                            }}
+                            color="primary"
+                            autoFocus
+                        >
+                            Agree
+                        </Button>
+                    </DialogActions>
+                </Dialog>
 
-            <button
-                onClick={(event) => {
-                    event.preventDefault();
-                    return addQuestion();
-                }}
-            >
-                {" "}
-                ADD NEW QUESTION{" "}
-            </button>
-        </div>
-    );
+                <EditDescription
+                    Questionnaire={Questionnaire}
+                    handleQuestionnaireTitleChange={
+                        handleQuestionnaireTitleChange
+                    }
+                    handleQuestionnaireDesChange={handleQuestionnaireDesChange}
+                />
+
+                <QuestionsContainer
+                    questionnaire={Questionnaire}
+                    removeQuestion={removeQuestion}
+                    changeToRangeQuestion={changeToRangeQuestion}
+                    changeToMCQQuestion={changeToMCQQuestion}
+                    addAnswerToMCQQuestion={addAnswerToMCQQuestion}
+                    deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
+                    handleMultiChoiceDesChange={handleMultiChoiceDesChange}
+                    handleMultiAnsChange={handleMultiAnsChange}
+                />
+
+                <button
+                    onClick={(event) => {
+                        event.preventDefault();
+                        return addQuestion();
+                    }}
+                >
+                    {" "}
+                    ADD NEW QUESTION{" "}
+                </button>
+            </div>
+        );
+    }
 };
-
 
 export default EditQuestionnaire;

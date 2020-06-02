@@ -23,6 +23,7 @@ import {
 } from "@material-ui/core";
 
 
+
 // handles rendering of TopContainer in the Clinician page
 const EditDescription = (props, { Questionnaire }) => {
     // to modify the questionnaire title in real time.
@@ -37,9 +38,9 @@ const EditDescription = (props, { Questionnaire }) => {
     return (
         <div className="edit-description">
             <h2>Edit Questionnaire</h2>
-            <div className="edit-questionnaire-form">
+            <div className="edit-questionnaire-description-form">
                 <FormControl margin="dense">
-                    <InputLabel>Username</InputLabel>
+                    <InputLabel>Title</InputLabel>
                     <Input
                         name="username"
                         placeholder="Write the title."
@@ -51,11 +52,12 @@ const EditDescription = (props, { Questionnaire }) => {
                     </FormHelperText>
                 </FormControl>
                 <FormControl margin="dense">
-                    <InputLabel>Username</InputLabel>
+                    <InputLabel>Description</InputLabel>
                     <Input
                         name="username"
                         placeholder="Write the description."
                         value={props.Questionnaire.description}
+                        defaultValue={props.Questionnaire.description}
                         onChange={handleQuestionnaireDescriptionChange}
                     />
                     <FormHelperText>
@@ -63,21 +65,6 @@ const EditDescription = (props, { Questionnaire }) => {
                     </FormHelperText>
                 </FormControl>
             </div>
-            {/* <input
-                type="text"
-                defaultValue={props.Questionnaire.title}
-                onChange={handleQuestionnaireTitleChange}
-            /> */}
-
-            <p>
-                <label>Description:</label>
-                <input
-                    type="text"
-                    defaultValue={props.Questionnaire.description}
-                    onChange={handleQuestionnaireDescriptionChange}
-                />
-            </p>
-            <hr />
         </div>
     );
 };
