@@ -13,11 +13,10 @@
 
 
 .content-container {
-    /*padding: 0 1vw;*/
     display: flex;
     flex: 3;
  
     flex-direction: column;
     padding: 0 4vw;
-    /* width: 100%; */
+    
 }
