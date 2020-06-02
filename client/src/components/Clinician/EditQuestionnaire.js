@@ -28,6 +28,7 @@ import Loading from "../Loading";
 import "../../styles/clinician.css";
 
 import * as API from "../../utils/api";
+import SectionsContainer from "./SectionsContainer";
 // handles rendering of TopContainer in the Clinician page
 const EditQuestionnaire = (props) => {
     const {
@@ -61,15 +62,6 @@ const EditQuestionnaire = (props) => {
     } else {
         return (
             <div className="edit-questionnaire">
-                {/*<button style={{width:'12%',marginLeft:'10px', marginRight:'80px'}}*/}
-                {/*        onClick = {(event)=> {event.preventDefault(); window.location.href = manage_questionnaire_url}}>CANCEL</button>*/}
-                {/*<button style={{width:'12%',marginRight:'10px'}}*/}
-                {/*        onClick = {(event)=> {*/}
-                {/*            event.preventDefault();*/}
-                {/*            API.editQuestionnaire(Questionnaire);*/}
-                {/*            // window.location.href = manage_questionnaire_url;*/}
-                {/*        }}> SAVE </button>*/}
-
                 <div className="edit-questionnaire-header">
                     <button
                         id="edit-cancel-button"
@@ -143,24 +135,26 @@ const EditQuestionnaire = (props) => {
                     handleMultiAnsChange={handleMultiAnsChange}
                 />
 
-                {/*<button*/}
-                {/*    onClick={(event) => {*/}
-                {/*        event.preventDefault();*/}
-                {/*        return addQuestion();*/}
-                {/*    }}*/}
-                {/*>*/}
-                {/*    {" "}*/}
-                {/*    ADD NEW QUESTION{" "}*/}
-                {/*</button>*/}
-                <div className="add-question-button">
-                    <button className="button"
-                            onClick={(event)=>{
-                                event.preventDefault();
-                                addQuestion();
-                            }}>
-                        ADD NEW QUESTION
-                    </button>
-                </div>
+                {/*<div className="add-question-button">*/}
+                {/*    <button className="button"*/}
+                {/*            onClick={(event)=>{*/}
+                {/*                event.preventDefault();*/}
+                {/*                addQuestion();*/}
+                {/*            }}>*/}
+                {/*        ADD NEW QUESTION*/}
+                {/*    </button>*/}
+                {/*</div>*/}
+
+                <SectionsContainer
+                    sections={Questionnaire.sections}
+                    addQuestion={addQuestion}
+                    removeQuestion={removeQuestion}
+                    changeToRangeQuestion={changeToRangeQuestion}
+                    changeToMCQQuestion={changeToMCQQuestion}
+                    addAnswerToMCQQuestion={addAnswerToMCQQuestion}
+                    deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
+                    handleMultiChoiceDesChange={handleMultiChoiceDesChange}
+                    handleMultiAnsChange={handleMultiAnsChange}/>
             </div>
         );
     }

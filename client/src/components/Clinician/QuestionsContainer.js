@@ -37,8 +37,10 @@ import "../../styles/main.css";
 
 // handles rendering of TopContainer in the Clinician page
 const QuestionsContainer = (props) => {
-    const { sections } = props.questionnaire;
+    // const { sections } = props.questionnaire;
+
     const {
+        questions,
         removeQuestion,
         changeToRangeQuestion,
         changeToMCQQuestion,
@@ -50,12 +52,14 @@ const QuestionsContainer = (props) => {
 
     return (
         <div className="questions-container">
-            {sections &&
-                sections[0].scenarios &&
-                sections[0].scenarios[0].questions.map((item, index) => {
+            {/*{sections &&*/}
+            {/*    sections[0].scenarios &&*/}
+            {/*    sections[0].scenarios[0].questions.map((item, index) => {*/}
+            {questions && questions.map((item, index) => {
                     return (
                         <QuestionForm
                             item={item}
+                            key={item._id}
                             questionIndex={index}
                             removeQuestion={removeQuestion}
                             changeToRangeQuestion={changeToRangeQuestion}
@@ -87,7 +91,7 @@ const QuestionForm = ({
     handleMultiAnsChange,
     item,
 }) => {
-    const { rangeOptions, description, mcqOptions, isMCQ } = item;
+    const { rangeOptions, description, mcqOptions, isMCQ} = item;
 
     const handleRangeClick = (e) => {
         e.preventDefault();
@@ -173,13 +177,16 @@ const RangeQuestionFrom = (props) => {
         <div className="questionTable-form">
             <FormControl margin="dense">
                 <InputLabel>Question</InputLabel>
-                <Input placeholder="Write the question." />
+                <Input
+                    placeholder="Write the question."
+                />
                 <FormHelperText>Write the question.</FormHelperText>
             </FormControl>
 
             <FormControl margin="dense">
                 <InputLabel>Description</InputLabel>
-                <Input placeholder="Write the description." />
+                <Input placeholder="Write the description."
+                />
                 <FormHelperText>Write the description.</FormHelperText>
             </FormControl>
         </div>
@@ -224,7 +231,9 @@ const MultipleChoiceQuestionFrom = (props) => {
         <div className="questionTable-form">
             <FormControl margin="dense">
                 <InputLabel>Question</InputLabel>
-                <Input placeholder="Write the question."/>
+                <Input
+                    placeholder="Write the question."
+                />
                 <FormHelperText>Write the question.</FormHelperText>
             </FormControl>
 
@@ -232,7 +241,7 @@ const MultipleChoiceQuestionFrom = (props) => {
                 <InputLabel>Description</InputLabel>
                 <Input
                     placeholder="Write the description."
-                    defaultValue={description}
+                    value={description}
                     onChange={(event) =>
                         handleMultiChoiceDesChange(event, questionIndex)
                     }
@@ -244,7 +253,7 @@ const MultipleChoiceQuestionFrom = (props) => {
             {mcqOptions &&
                 mcqOptions.map((item, index) => {
                     return (
-                        <div className="questionTable-answer">
+                        <div className="questionTable-answer" key={index}>
                             <div>
                                 <FormControl margin="dense">
                                     <InputLabel>Answer {index+1}</InputLabel>
