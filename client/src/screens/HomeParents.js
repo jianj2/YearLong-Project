@@ -5,7 +5,7 @@
  * @date created: 10th May 2020
  * @authors:    Waqas Rehmani, Cary Jin, SaiEr Ding, Uvin AbeySinghe.
  *
- * 
+ *
  * The Home screen component defines our screen for the route
  * '/parents/*'. This will be the first screen parents will see
  * when they choose the Parents option.
@@ -21,7 +21,7 @@ import { Link, withRouter } from "react-router-dom";
 import FormParentDetails from "../components/FormParentDetails";
 import Questionnaire from "../components/Questionnaire";
 import ParentReviewSubmission from "../components/ParentReviewSubmission";
-import Loading from '../components/Loading'
+import Loading from "../components/Loading";
 
 // Import assets.
 import logoComplete from "../assets/logo_complete.png";
@@ -51,12 +51,10 @@ const HomeParents = ({ match }) => {
     const [questionnaireData, setQuestionnaireData] = useState([]);
     const [loading, setLoading] = useState(false);
 
-
     // This is called when the component first mounts.
     useEffect(() => {
-
         // Server call to get the questionnaireId
-        API.getQuestionnaireId(match.params.shareId).then((res) =>{
+        API.getQuestionnaireId(match.params.shareId).then((res) => {
             // Server call to get the questionnaire.
             setClinicianEmail(res.clinicianEmail);
             API.getQuestionnaire(res.questionnaireId).then((res) => {
@@ -66,16 +64,18 @@ const HomeParents = ({ match }) => {
                     tempResponse[sectionIndex] = [];
                     section.scenarios.forEach((scenario, scenarioIndex) => {
                         tempResponse[sectionIndex][scenarioIndex] = [];
-                        scenario.questions.forEach((question, questionIndex) => {
-                            tempResponse[sectionIndex][scenarioIndex][
-                                questionIndex
-                            ] = {
-                                extraQuestion: "",
-                                sliderValue: 0,
-                                frequencyValue: "",
-                                importanceValue: "",
-                            };
-                        });
+                        scenario.questions.forEach(
+                            (question, questionIndex) => {
+                                tempResponse[sectionIndex][scenarioIndex][
+                                    questionIndex
+                                ] = {
+                                    extraQuestion: "",
+                                    sliderValue: 0,
+                                    frequencyValue: "",
+                                    importanceValue: "",
+                                };
+                            }
+                        );
                     });
                 });
                 // Updating the state using the initial data and the questionnaire
@@ -125,17 +125,17 @@ const HomeParents = ({ match }) => {
             personalDetails,
             clinicianEmail: clinicianEmail,
         };
-        console.log(data)
-        
-        setLoading(true)
-        API.sendQuestionnaireData(data,match.params.shareId).then(res => {
-            if(res) {
+        console.log(data);
+
+        setLoading(true);
+        API.sendQuestionnaireData(data, match.params.shareId).then((res) => {
+            if (res) {
                 setLoading(false);
                 nextStep();
             }
-            console.log(res)
-        })
-    }
+            console.log(res);
+        });
+    };
 
     if (wizardStep == 0) {
         return (
@@ -198,11 +198,7 @@ const HomeParents = ({ match }) => {
     if (wizardStep == 3) {
         return (
             <div className="parents-home">
-                {
-                    loading
-                    ? <Loading />
-                    : null
-                } 
+                {loading ? <Loading /> : null}
                 <div className="subheader-container">
                     <button className="button" onClick={prevStep}>
                         B A C K
