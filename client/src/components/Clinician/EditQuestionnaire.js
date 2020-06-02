@@ -70,8 +70,9 @@ const EditQuestionnaire = (props) => {
                 {/*            // window.location.href = manage_questionnaire_url;*/}
                 {/*        }}> SAVE </button>*/}
 
-                <div>
+                <div className="edit-questionnaire-header">
                     <button
+                        id="edit-cancel-button"
                         className="button"
                         onClick={(event) => {
                             event.preventDefault();
@@ -81,7 +82,14 @@ const EditQuestionnaire = (props) => {
                         Cancel
                     </button>
 
-                    <button className="button" onClick={handleClickOpen}>
+                    <button
+                        id="edit-save-button"
+                        className="button"
+                        onClick={(event)=>{
+                            event.preventDefault();
+                            handleClickOpen()
+                            }}
+                    >
                         Save
                     </button>
                 </div>
@@ -135,15 +143,24 @@ const EditQuestionnaire = (props) => {
                     handleMultiAnsChange={handleMultiAnsChange}
                 />
 
-                <button
-                    onClick={(event) => {
-                        event.preventDefault();
-                        return addQuestion();
-                    }}
-                >
-                    {" "}
-                    ADD NEW QUESTION{" "}
-                </button>
+                {/*<button*/}
+                {/*    onClick={(event) => {*/}
+                {/*        event.preventDefault();*/}
+                {/*        return addQuestion();*/}
+                {/*    }}*/}
+                {/*>*/}
+                {/*    {" "}*/}
+                {/*    ADD NEW QUESTION{" "}*/}
+                {/*</button>*/}
+                <div className="add-question-button">
+                    <button className="button"
+                            onClick={(event)=>{
+                                event.preventDefault();
+                                addQuestion();
+                            }}>
+                        ADD NEW QUESTION
+                    </button>
+                </div>
             </div>
         );
     }

@@ -27,9 +27,6 @@ import SideBar from "../components/Clinician/Sidebar";
 import ContentPanel from "../components/Clinician/ContentPanel";
 
 
-
-
-
 // ---------------------------------------------------------------
 // This function defines the Clinician Home screen.
 // ---------------------------------------------------------------
