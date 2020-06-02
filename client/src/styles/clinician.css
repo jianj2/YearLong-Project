@@ -34,6 +34,11 @@
   overflow: auto;
 }
 
+.edit-questionnaire-form {
+  display: flex;
+  flex-direction: column;
+}
+
 .edit-description {
   align-items: center;
   margin-left: 80px;
