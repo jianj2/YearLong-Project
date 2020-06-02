@@ -27,7 +27,7 @@ import SideBar from "../components/Clinician/Sidebar";
 import ContentPanel from "../components/Clinician/ContentPanel";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import ClinicianDrawer from "../components/ClinicianDrawer";
+// import ClinicianDrawer from "../components/ClinicianDrawer";
 
 
 

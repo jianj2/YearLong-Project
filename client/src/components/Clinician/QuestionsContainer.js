@@ -193,6 +193,7 @@ const MultipleChoiceQuestionFrom = (props) => {
         deleteAnswerToMCQQuestion,
         mcqOptions,
         questionIndex,
+        description
     } = props;
 
     const addAnswer = (questionIndex) => {
@@ -223,7 +224,7 @@ const MultipleChoiceQuestionFrom = (props) => {
         <div className="questionTable-form">
             <FormControl margin="dense">
                 <InputLabel>Question</InputLabel>
-                <Input placeholder="Write the question." />
+                <Input placeholder="Write the question."/>
                 <FormHelperText>Write the question.</FormHelperText>
             </FormControl>
 
@@ -231,6 +232,7 @@ const MultipleChoiceQuestionFrom = (props) => {
                 <InputLabel>Description</InputLabel>
                 <Input
                     placeholder="Write the description."
+                    defaultValue={description}
                     onChange={(event) =>
                         handleMultiChoiceDesChange(event, questionIndex)
                     }
@@ -245,9 +247,10 @@ const MultipleChoiceQuestionFrom = (props) => {
                         <div className="questionTable-answer">
                             <div>
                                 <FormControl margin="dense">
-                                    <InputLabel>Description</InputLabel>
+                                    <InputLabel>Answer {index+1}</InputLabel>
                                     <Input
-                                        placeholder="Write the description."
+                                        placeholder="Write the Answer."
+                                        defaultValue={mcqOptions[index]}
                                         onChange={(event) =>
                                             handleMultiAnsChange(
                                                 event,
@@ -257,7 +260,7 @@ const MultipleChoiceQuestionFrom = (props) => {
                                         }
                                     />
                                     <FormHelperText>
-                                        Write the description.
+                                        Write the Answer.
                                     </FormHelperText>
                                 </FormControl>
                             </div>
