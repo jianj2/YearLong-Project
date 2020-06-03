@@ -50,6 +50,7 @@ const QuestionsContainer = (props) => {
 
     return (
         <div className="questions-container">
+            <h2>Questions</h2>
             {sections &&
                 sections[0].scenarios &&
                 sections[0].scenarios[0].questions.map((item, index) => {
@@ -172,6 +173,7 @@ const RangeQuestionFrom = (props) => {
 
     return (
         <div className="questionTable-form">
+            
             <FormControl margin="dense">
                 <InputLabel>Description</InputLabel>
                 <Input
@@ -179,7 +181,7 @@ const RangeQuestionFrom = (props) => {
                 <FormHelperText>Write the description.</FormHelperText>
             </FormControl>
 
-            <h2>Ranges</h2>
+            <h3>Ranges</h3>
             <FormControl margin="dense">
                 <InputLabel>RangeStarts</InputLabel>
                 <Input
@@ -260,7 +262,7 @@ const MultipleChoiceQuestionFrom = (props) => {
                 <FormHelperText>Write the description.</FormHelperText>
             </FormControl>
 
-            <h2>Answers</h2>
+            <h3>Answers</h3>
             {mcqOptions &&
                 mcqOptions.map((item, index) => {
                     return (

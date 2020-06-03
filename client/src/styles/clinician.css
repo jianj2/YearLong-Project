@@ -129,7 +129,9 @@ width: 65%;
   font-size: 2vh;
 } */
 
-
+.questions-container h2{
+  padding-left: 80px;
+}
 
 .question-container{
   width:100%;
