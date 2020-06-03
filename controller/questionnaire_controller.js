@@ -180,9 +180,30 @@ const deleteQuestionnaire = function (req, res) {
     });
 };
 
+
+// given ClinicianId, gets the list of the clinician's customised questionnaires
+
+const getClinicianQuestionnaires = function(req,res){
+    let clinicianId = req.query.clinicianId;
+
+    Clinician.findOne({clinicianId:clinicianId}, async function (err, clinician) {
+        if (!err){
+            const questionnaireIds = clinician.questionnaires;
+            const questionnaires = await Questionnaire.find().where('questionnaireId').in(questionnaireIds).exec();
+            res.send(questionnaires);
+
+        } else {
+            res.send(err);
+        }
+    });
+
+
+}
+
 module.exports.getAllQuestionnaire = getAllQuestionnaire;
 module.exports.getQuestionnaire = getQuestionnaire;
 module.exports.addEmptyQuestionnaire = addEmptyQuestionnaire;
 module.exports.deleteQuestionnaire = deleteQuestionnaire;
 module.exports.addFilledQuestionnaire = addFilledQuestionnaire;
 module.exports.editQuestionnaire = editQuestionnaire;
+module.exports.getClinicianQuestionnaires = getClinicianQuestionnaires;
