@@ -53,9 +53,9 @@ const SectionsContainer = (
         changeToRangeQuestion,
         changeToMCQQuestion,
         addAnswerToMCQQuestion,
-        deleteAnswerToMCQQuestion,
-        handleMultiChoiceDesChange,
-        handleMultiAnsChange,
+        deleteAnswerFromMCQQuestion,
+            handleQuestionDesChange,
+            handleQuestionOptsChange,
         handleSecTitleChange,
         handleSceDesChange,
         sections}) => {
@@ -73,15 +73,16 @@ const SectionsContainer = (
                                 id="panel1a-header"
                                 className={classes.summary}
                             >
-                                <div className="delete-section-button">
-                                    <button className="button"
-                                            onClick={(event)=>{
-                                                event.preventDefault();
-                                                // removeScenario(index);
-                                            }}>
-                                        <DeleteForeverIcon />
-                                    </button>
-                                </div>
+                                
+                                {/*<div className="delete-section-button">*/}
+                                {/*    <button className="button"*/}
+                                {/*            onClick={(event)=>{*/}
+                                {/*                event.preventDefault();*/}
+                                {/*                // removeScenario(index);*/}
+                                {/*            }}>*/}
+                                {/*        <DeleteForeverIcon />*/}
+                                {/*    </button>*/}
+                                {/*</div>*/}
 
                                 <Typography>Section {index+1}</Typography>
                             </ExpansionPanelSummary>
@@ -97,11 +98,11 @@ const SectionsContainer = (
                                     changeToRangeQuestion={changeToRangeQuestion}
                                     changeToMCQQuestion={changeToMCQQuestion}
                                     addAnswerToMCQQuestion={addAnswerToMCQQuestion}
-                                    deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
+                                    deleteAnswerFromMCQQuestion={deleteAnswerFromMCQQuestion}
                                     handleSecTitleChange={handleSecTitleChange}
                                     handleSceDesChange={handleSceDesChange}
-                                    handleMultiChoiceDesChange={handleMultiChoiceDesChange}
-                                    handleMultiAnsChange={handleMultiAnsChange}/>
+                                    handleQuestionDesChange={handleQuestionDesChange}
+                                    handleQuestionOptsChange={handleQuestionOptsChange}/>
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
                     )
@@ -121,11 +122,11 @@ const Section = (
         changeToRangeQuestion,
         changeToMCQQuestion,
         addAnswerToMCQQuestion,
-        deleteAnswerToMCQQuestion,
+        deleteAnswerFromMCQQuestion,
         handleSceDesChange,
         handleSecTitleChange,
-        handleMultiChoiceDesChange,
-        handleMultiAnsChange}) =>{
+            handleQuestionDesChange,
+            handleQuestionOptsChange}) =>{
 
     const {scenarios,title} = item;
 
@@ -158,10 +159,10 @@ const Section = (
                 changeToRangeQuestion={changeToRangeQuestion}
                 changeToMCQQuestion={changeToMCQQuestion}
                 addAnswerToMCQQuestion={addAnswerToMCQQuestion}
-                deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
+                deleteAnswerFromMCQQuestion={deleteAnswerFromMCQQuestion}
                 handleSceDesChange={handleSceDesChange}
-                handleMultiChoiceDesChange={handleMultiChoiceDesChange}
-                handleMultiAnsChange={handleMultiAnsChange}/>
+                handleQuestionDesChange={handleQuestionDesChange}
+                handleQuestionOptsChange={handleQuestionOptsChange}/>
 
                 <div className="add-delete-button-div">
                     <div className="add-scenario-button">

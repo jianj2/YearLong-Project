@@ -31,6 +31,31 @@ const QuestionnaireContainer = (props) => {
         API.getSpecificQuestionnaire(props.questionnaireID,setQuestionnaire);
     },[])
 
+
+    // these function can be combine together later
+
+    //add section to questionnaire
+
+    //remove section to questionnaire
+
+    //add scenario to questionnaire
+    const addScenario = (sectionIndex) =>{
+        const newScenario = {
+            description:'',
+            questions:[]
+        }
+        const questionnaireTemp = Object.assign({},questionnaire);
+        questionnaireTemp.sections[sectionIndex].scenarios.push(newScenario);
+        setQuestionnaire(questionnaireTemp);
+    }
+
+    //remove scenario to questionnaire
+    const removeScenario = (sectionIndex,scenarioIndex) =>{
+        const questionnaireTemp = Object.assign({},questionnaire);
+        questionnaireTemp.sections[sectionIndex].scenarios.splice(scenarioIndex,1);
+        setQuestionnaire(questionnaireTemp);
+    }
+
     //add question to questionnaire
     const addQuestion = (sectionIndex,scenarioIndex) =>{
         const newQuestion = {
@@ -49,27 +74,20 @@ const QuestionnaireContainer = (props) => {
         setQuestionnaire(questionnaireTemp);
     }
 
-    //add scenario to questionnaire
-    const addScenario = (sectionIndex) =>{
-        const newScenario = {
-            description:'',
-            questions:[]
-        }
+    //add answer to the multiple choice question
+    const addAnswerToMCQQuestion = (sectionIndex,scenarioIndex,questionIndex) =>{
+        const newAnswer = "";
         const questionnaireTemp = Object.assign({},questionnaire);
-        questionnaireTemp.sections[sectionIndex].scenarios.push(newScenario);
-        setQuestionnaire(questionnaireTemp);
-    }
-    //remove scenario to questionnaire
-    const removeScenario = (sectionIndex,scenarioIndex) =>{
-        const questionnaireTemp = Object.assign({},questionnaire);
-        questionnaireTemp.sections[sectionIndex].scenarios.splice(scenarioIndex,1);
+        questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].mcqOptions.push(newAnswer);
         setQuestionnaire(questionnaireTemp);
     }
 
-    //add section to questionnaire
-
-    //remove section to questionnaire
-
+    //delete answer to the multiple choice question
+    const deleteAnswerFromMCQQuestion = (sectionIndex,scenarioIndex,questionIndex,answerIndex) =>{
+        const questionnaireTemp = Object.assign({},questionnaire);
+        questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].mcqOptions.splice(answerIndex,1);
+        setQuestionnaire(questionnaireTemp);
+    }
 
     //change question to range question
     const changeToRangeQuestion = (sectionIndex,scenarioIndex,questionIndex) =>{
@@ -94,19 +112,20 @@ const QuestionnaireContainer = (props) => {
         setQuestionnaire(questionnaireTemp);
     }
 
-    //add answer to the multiple choice question
-    const addAnswerToMCQQuestion = (sectionIndex,scenarioIndex,questionIndex) =>{
-        const newAnswer = "";
+    // to change the content of questionnaire title
+    const handleQuestionnaireTitleChange = (event) =>{
         const questionnaireTemp = Object.assign({},questionnaire);
-        questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].mcqOptions.push(newAnswer);
+        questionnaireTemp.title = event.target.value;
         setQuestionnaire(questionnaireTemp);
+        console.log(questionnaire);
     }
 
-    //delete answer to the multiple choice question
-    const deleteAnswerToMCQQuestion = (sectionIndex,scenarioIndex,questionIndex,answerIndex) =>{
+    // to change the content of questionnaire description
+    const handleQuestionnaireDesChange = (event) =>{
         const questionnaireTemp = Object.assign({},questionnaire);
-        questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].mcqOptions.splice(answerIndex,1);
+        questionnaireTemp.description = event.target.value;
         setQuestionnaire(questionnaireTemp);
+        console.log(questionnaire);
     }
 
     // to change the content of section title
@@ -125,71 +144,42 @@ const QuestionnaireContainer = (props) => {
         console.log(questionnaire);
     }
 
-    // to change the content of questionnaire title
-    const handleQuestionnaireTitleChange = (event) =>{
-        const questionnaireTemp = Object.assign({},questionnaire);
-        questionnaireTemp.title = event.target.value;
-        setQuestionnaire(questionnaireTemp);
-        console.log(questionnaire);
-    }
-
-    // to change the content of questionnaire description
-    const handleQuestionnaireDesChange = (event) =>{
-        const questionnaireTemp = Object.assign({},questionnaire);
-        questionnaireTemp.description = event.target.value;
-        setQuestionnaire(questionnaireTemp);
-        console.log(questionnaire);
-    }
-
-    // to change the question of range questions (because the scheme in the data base didn't have this para,
-    // but we have in the frontend, so we need to change it later, comment this first).
-
-    // const handleRangeQuestionChange = (event,questionIndex) =>{
-    // }
-
-    //same situation
-
-    // const handleRangeDesChange = (event) =>{
-    // }
-
-    // to change the question of multi choice questions (because the scheme in the data base didn't have this para,
-    // but we have in the frontend, so we need to change it later, comment this first).
-    // const handleMultiChoiceQuestionChange = () =>{
-    //
-    // }
-
-
-    const handleMultiChoiceDesChange = (event, sectionIndex, scenarioIndex, questionIndex) =>{
+    // to change the content of question description
+    const handleQuestionDesChange = (event, sectionIndex, scenarioIndex, questionIndex) =>{
         const questionnaireTemp = Object.assign({},questionnaire);
         questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].description = event.target.value;
         setQuestionnaire(questionnaireTemp);
         console.log(questionnaire);
     }
 
-    const handleMultiAnsChange = (event, sectionIndex, scenarioIndex, questionIndex, answerIndex) =>{
+    //tp change the content of question options
+    const handleQuestionOptsChange = (event, sectionIndex, scenarioIndex, questionIndex, answerIndex) =>{
         const questionnaireTemp = Object.assign({},questionnaire);
-        questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].mcqOptions[answerIndex] = event.target.value;
+        if (questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].isMCQ == false) {
+            questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].rangeOptions[answerIndex] = event.target.value;
+        } else {
+            questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].mcqOptions[answerIndex] = event.target.value;
+        }
         setQuestionnaire(questionnaireTemp);
-        console.log(questionnaire);
+        console.log(sectionIndex,scenarioIndex,questionIndex,answerIndex);
     }
-
 
     return (
         <div className="questionnaire-container">
 
             {/*<TopContainer />*/}
             <form action="">
-            <EditQuestionnaire Questionnaire={questionnaire} removeQuestion={removeQuestion}
-                               changeToRangeQuestion={changeToRangeQuestion} changeToMCQQuestion={changeToMCQQuestion}
-                               addQuestion={addQuestion} addAnswerToMCQQuestion={addAnswerToMCQQuestion}
+            <EditQuestionnaire Questionnaire={questionnaire}
                                addScenario={addScenario} removeScenario={removeScenario}
-                               deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
+                               addQuestion={addQuestion} removeQuestion={removeQuestion}
+                               addAnswerToMCQQuestion={addAnswerToMCQQuestion} deleteAnswerFromMCQQuestion={deleteAnswerFromMCQQuestion}
+                               changeToRangeQuestion={changeToRangeQuestion} changeToMCQQuestion={changeToMCQQuestion}
                                handleQuestionnaireTitleChange={handleQuestionnaireTitleChange}
                                handleQuestionnaireDesChange={handleQuestionnaireDesChange}
-                               handleMultiChoiceDesChange={handleMultiChoiceDesChange}
-                               handleMultiAnsChange={handleMultiAnsChange}
                                handleSecTitleChange={handleSecTitleChange}
-                               handleSceDesChange={handleSceDesChange}/>
+                               handleSceDesChange={handleSceDesChange}
+                               handleQuestionDesChange={handleQuestionDesChange}
+                               handleQuestionOptsChange={handleQuestionOptsChange}/>
             </form>
             {/*<BottomContainer addQuestion={addQuestion} />*/}
         </div>

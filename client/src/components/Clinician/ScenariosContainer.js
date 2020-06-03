@@ -55,10 +55,10 @@ const ScenariosContainer = (
         changeToRangeQuestion,
         changeToMCQQuestion,
         addAnswerToMCQQuestion,
-        deleteAnswerToMCQQuestion,
+        deleteAnswerFromMCQQuestion,
         handleSceDesChange,
-        handleMultiChoiceDesChange,
-        handleMultiAnsChange}) => {
+            handleQuestionDesChange,
+            handleQuestionOptsChange}) => {
 
     const classes = useStyles();
 
@@ -98,10 +98,10 @@ const ScenariosContainer = (
                                         changeToRangeQuestion={changeToRangeQuestion}
                                         changeToMCQQuestion={changeToMCQQuestion}
                                         addAnswerToMCQQuestion={addAnswerToMCQQuestion}
-                                        deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
+                                        deleteAnswerFromMCQQuestion={deleteAnswerFromMCQQuestion}
                                         handleSceDesChange={handleSceDesChange}
-                                        handleMultiChoiceDesChange={handleMultiChoiceDesChange}
-                                        handleMultiAnsChange={handleMultiAnsChange}/>
+                                        handleQuestionDesChange={handleQuestionDesChange}
+                                        handleQuestionOptsChange={handleQuestionOptsChange}/>
                                         </ExpansionPanelDetails>
                                     </ExpansionPanel>
                             )})}
@@ -118,10 +118,10 @@ const Scenario = (
         changeToRangeQuestion,
         changeToMCQQuestion,
         addAnswerToMCQQuestion,
-        deleteAnswerToMCQQuestion,
+        deleteAnswerFromMCQQuestion,
         handleSceDesChange,
-        handleMultiChoiceDesChange,
-        handleMultiAnsChange}) =>{
+            handleQuestionDesChange,
+            handleQuestionOptsChange}) =>{
 
     const {questions,description} = item;
 
@@ -155,9 +155,9 @@ const Scenario = (
                 changeToRangeQuestion={changeToRangeQuestion}
                 changeToMCQQuestion={changeToMCQQuestion}
                 addAnswerToMCQQuestion={addAnswerToMCQQuestion}
-                deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
-                handleMultiChoiceDesChange={handleMultiChoiceDesChange}
-                handleMultiAnsChange={handleMultiAnsChange}/>
+                deleteAnswerFromMCQQuestion={deleteAnswerFromMCQQuestion}
+                handleQuestionDesChange={handleQuestionDesChange}
+                handleQuestionOptsChange={handleQuestionOptsChange}/>
 
             <div className="add-question-button">
                 <button className="button"

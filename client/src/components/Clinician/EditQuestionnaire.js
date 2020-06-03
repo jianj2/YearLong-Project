@@ -30,23 +30,22 @@ import "../../styles/clinician.css";
 import * as API from "../../utils/api";
 import SectionsContainer from "./SectionsContainer";
 // handles rendering of TopContainer in the Clinician page
-const EditQuestionnaire = (props) => {
-    const {
-        Questionnaire,
-        removeQuestion,
-        changeToRangeQuestion,
-        changeToMCQQuestion,
-        addAnswerToMCQQuestion,
-        deleteAnswerToMCQQuestion,
-        addQuestion,
-        addScenario,removeScenario,
-        handleQuestionnaireTitleChange,
-        handleQuestionnaireDesChange,
-        handleMultiAnsChange,
-        handleMultiChoiceDesChange,
-        handleSecTitleChange,
-        handleSceDesChange
-    } = props;
+const EditQuestionnaire = ({
+                               Questionnaire,
+                               removeQuestion,
+                               changeToRangeQuestion,
+                               changeToMCQQuestion,
+                               addAnswerToMCQQuestion,
+                               deleteAnswerFromMCQQuestion,
+                               addQuestion,
+                               addScenario,removeScenario,
+                               handleQuestionnaireTitleChange,
+                               handleQuestionnaireDesChange,
+                               handleQuestionDesChange,
+                               handleQuestionOptsChange,
+                               handleSecTitleChange,
+                               handleSceDesChange
+                           } ) => {
 
     const [open, setOpen] = React.useState(false);
 
@@ -127,27 +126,6 @@ const EditQuestionnaire = (props) => {
                     handleQuestionnaireDesChange={handleQuestionnaireDesChange}
                 />
 
-                {/*<QuestionsContainer*/}
-                {/*    questionnaire={Questionnaire}*/}
-                {/*    removeQuestion={removeQuestion}*/}
-                {/*    changeToRangeQuestion={changeToRangeQuestion}*/}
-                {/*    changeToMCQQuestion={changeToMCQQuestion}*/}
-                {/*    addAnswerToMCQQuestion={addAnswerToMCQQuestion}*/}
-                {/*    deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}*/}
-                {/*    handleMultiChoiceDesChange={handleMultiChoiceDesChange}*/}
-                {/*    handleMultiAnsChange={handleMultiAnsChange}*/}
-                {/*/>*/}
-
-                {/*<div className="add-question-button">*/}
-                {/*    <button className="button"*/}
-                {/*            onClick={(event)=>{*/}
-                {/*                event.preventDefault();*/}
-                {/*                addQuestion();*/}
-                {/*            }}>*/}
-                {/*        ADD NEW QUESTION*/}
-                {/*    </button>*/}
-                {/*</div>*/}
-
                 <SectionsContainer
                     sections={Questionnaire.sections}
                     addQuestion={addQuestion}
@@ -157,9 +135,9 @@ const EditQuestionnaire = (props) => {
                     changeToRangeQuestion={changeToRangeQuestion}
                     changeToMCQQuestion={changeToMCQQuestion}
                     addAnswerToMCQQuestion={addAnswerToMCQQuestion}
-                    deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
-                    handleMultiChoiceDesChange={handleMultiChoiceDesChange}
-                    handleMultiAnsChange={handleMultiAnsChange}
+                    deleteAnswerFromMCQQuestion={deleteAnswerFromMCQQuestion}
+                    handleQuestionDesChange={handleQuestionDesChange}
+                    handleQuestionOptsChange={handleQuestionOptsChange}
                     handleSecTitleChange={handleSecTitleChange}
                     handleSceDesChange={handleSceDesChange}/>
             </div>
