@@ -121,8 +121,8 @@ export const editQuestionnaire = async () => {
 
 // get specific questionnaire
 // TODO: get CQid and entire edited questionnaire from UI
-export const getSpecificQuestionnaire = (CQid) =>
-    fetch(`${api}/questionnaire/getQuestionnaire/${CQid}`, {
+export const getSpecificQuestionnaire = (questionnaireId) =>
+    fetch(`${api}/questionnaire/getQuestionnaire/${questionnaireId}`, {
         header,
     }).then((res) => res.json());
 

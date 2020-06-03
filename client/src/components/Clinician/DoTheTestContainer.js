@@ -16,27 +16,36 @@ import React, { useEffect, useState } from "react";
 import { useAuth0 } from "../../utils/react-auth0-spa";
 
 import * as API from "../../utils/api";
-import QuestionnaireList from "./QuestionnaireList";
+import QuestionnaireList from "../QuestionnaireList";
+import Questionnaire from "../Questionnaire";
+import ParentReviewSubmission from "../ParentReviewSubmission";
+
+import FormParentDetails from "../FormParentDetails";
 
 // handles rendering of QuestionnaireContainer in the Clinician Page
 const DoTheTestContainer = () => {
     const { loading, isAuthenticated, loginWithRedirect, user } = useAuth0();
     const [wizardStep, setWizardStep] = useState(-1);
 
-    const [questionnaires, setQuestionnaires] = useState([]);
+    const [personalDetails, setPersonalDetails] = useState({});
 
-    console.log(user);
+    const [questionnaires, setQuestionnaires] = useState([]);
+    const [questionnaireData, setQuestionnaireData] = useState([]);
+
+    const [selectedQuestionnaire, setSelectedQuestionnaire] = useState({
+        questionnaireId: "",
+        title: "",
+        description: "",
+        sections: [],
+        isStandard: false,
+    });
 
     useEffect(() => {
-        API.getClinicianQuestionnaires(user.name).then(res => {
-            console.log(res)
+        API.getClinicianQuestionnaires(user.name).then((res) => {
+            console.log(res);
             setQuestionnaires(res);
-        })
-            
+        });
     }, []);
- 
-
-    
 
     // Method called to go to the next page in the wizard.
     const nextStep = () => {
@@ -51,26 +60,125 @@ const DoTheTestContainer = () => {
     };
     // Method called to go to the instructions page in the wizard.
     const submitDetails = (data) => {
-        // setPersonalDetails(data);
+        setPersonalDetails(data);
+        console.log("details submitted", data);
         nextStep();
     };
     // Method called when we submit the questionnaire.
     const submitQuestionnaire = (data) => {
         nextStep();
+        console.log('questionnaire submitted',data)
     };
 
-    const onClickQuestion = (data) => {
-        console.log("questionnaire clicked", data);
+    // Method called to update questionnaire data when a question is updated.
+    const handleQuestionnaireChange = (
+        sectionIndex,
+        scenarioIndex,
+        questionIndex,
+        data
+    ) => {
+        let temp = [...questionnaireData];
+        temp[sectionIndex][scenarioIndex][questionIndex] = data;
+        setQuestionnaireData(temp);
+    };
+
+    const onClickQuestion = (questionnaireId) => {
+        console.log("questionnaire clicked", questionnaireId);
+        setWizardStep(0);
+        API.getSpecificQuestionnaire(questionnaireId).then((res) => {
+            console.log(res);
+            // Define initial values for the Questionnaire
+            let tempResponse = [];
+            res.sections.forEach((section, sectionIndex) => {
+                tempResponse[sectionIndex] = [];
+                section.scenarios.forEach((scenario, scenarioIndex) => {
+                    tempResponse[sectionIndex][scenarioIndex] = [];
+                    scenario.questions.forEach((question, questionIndex) => {
+                        tempResponse[sectionIndex][scenarioIndex][
+                            questionIndex
+                        ] = {
+                            extraQuestion: "",
+                            sliderValue: 0,
+                            frequencyValue: "",
+                            importanceValue: "",
+                        };
+                    });
+                });
+            });
+            // Updating the state using the initial data and the questionnaire
+            // retrieved from the server.
+            setQuestionnaireData(tempResponse);
+            setSelectedQuestionnaire(res);
+        });
+    };
+
+    const submitResponse = () => {
+        let data = {
+            questionnaireData,
+            personalDetails, 
+        };
+        console.log("RESPONSE: ", data);
     };
 
     if (wizardStep === 0) {
-        return <div className="dothetest-container">asdasd</div>;
+        return (
+            <div className="dothetest-container">
+                <div className="subheader-container">
+                    <button className="button" onClick={prevStep}>
+                        B A C K
+                    </button>
+                </div>
+
+                <div className="parents-container">
+                    <FormParentDetails submitDetails={submitDetails} />
+                </div>
+            </div>
+        );
     } else if (wizardStep === 1) {
-        return <div className="dothetest-container">asdfsadf</div>;
+        return (
+            <div className="dothetest-container">
+                <div className="subheader-container">
+                    <button className="button" onClick={goToInstructions}>
+                        I N S T R U C T I O N S
+                    </button>
+                    <button className="button" onClick={prevStep}>
+                        B A C K
+                    </button>
+                </div>
+
+                <div className="parents-container">
+                    <Questionnaire
+                        questionnaire={selectedQuestionnaire}
+                        submitQuestionnaire={submitQuestionnaire}
+                        questionnaireData={questionnaireData}
+                        handleQuestionnaireChange={handleQuestionnaireChange}
+                    />
+                </div>
+            </div>
+        );
     } else if (wizardStep === 2) {
-        return <div className="dothetest-container">asdf</div>;
+        return (
+            <div className="dothetest-container">
+                <div className="subheader-container">
+                    <button className="button" onClick={prevStep}>
+                        B A C K
+                    </button>
+                    <button className="button" onClick={submitResponse}>
+                        S U B M I T
+                    </button>
+                </div>
+
+                <div className="parents-container">
+                    <ParentReviewSubmission
+                        questionnaire={selectedQuestionnaire}
+                        personalDetails={personalDetails}
+                        questionnaireData={questionnaireData}
+                    />
+                </div>
+            </div>
+        );
     } else if (wizardStep === 3) {
-        return <div className="dothetest-container">asdf</div>;
+        return <div className="dothetest-container">Questionanire submitted?</div>;
     } else {
         return (
             <div className="dothetest-container">

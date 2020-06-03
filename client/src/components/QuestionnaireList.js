@@ -17,7 +17,7 @@
 
 import React, { useEffect, useState } from "react";
 
-import "../../styles/questionnaireList.css";
+import "../styles/questionnaireList.css";
 
 const QuestionnaireList = ({
     questionnaires,
