@@ -39,6 +39,7 @@ const EditQuestionnaire = (props) => {
         addAnswerToMCQQuestion,
         deleteAnswerToMCQQuestion,
         addQuestion,
+        addScenario,
         handleQuestionnaireTitleChange,
         handleQuestionnaireDesChange,
         handleMultiAnsChange,
@@ -124,16 +125,16 @@ const EditQuestionnaire = (props) => {
                     handleQuestionnaireDesChange={handleQuestionnaireDesChange}
                 />
 
-                <QuestionsContainer
-                    questionnaire={Questionnaire}
-                    removeQuestion={removeQuestion}
-                    changeToRangeQuestion={changeToRangeQuestion}
-                    changeToMCQQuestion={changeToMCQQuestion}
-                    addAnswerToMCQQuestion={addAnswerToMCQQuestion}
-                    deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
-                    handleMultiChoiceDesChange={handleMultiChoiceDesChange}
-                    handleMultiAnsChange={handleMultiAnsChange}
-                />
+                {/*<QuestionsContainer*/}
+                {/*    questionnaire={Questionnaire}*/}
+                {/*    removeQuestion={removeQuestion}*/}
+                {/*    changeToRangeQuestion={changeToRangeQuestion}*/}
+                {/*    changeToMCQQuestion={changeToMCQQuestion}*/}
+                {/*    addAnswerToMCQQuestion={addAnswerToMCQQuestion}*/}
+                {/*    deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}*/}
+                {/*    handleMultiChoiceDesChange={handleMultiChoiceDesChange}*/}
+                {/*    handleMultiAnsChange={handleMultiAnsChange}*/}
+                {/*/>*/}
 
                 {/*<div className="add-question-button">*/}
                 {/*    <button className="button"*/}
@@ -149,6 +150,7 @@ const EditQuestionnaire = (props) => {
                     sections={Questionnaire.sections}
                     addQuestion={addQuestion}
                     removeQuestion={removeQuestion}
+                    addScenario={addScenario}
                     changeToRangeQuestion={changeToRangeQuestion}
                     changeToMCQQuestion={changeToMCQQuestion}
                     addAnswerToMCQQuestion={addAnswerToMCQQuestion}

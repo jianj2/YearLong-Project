@@ -36,20 +36,34 @@ import { makeStyles } from "@material-ui/core/styles";
 import "../../styles/main.css";
 
 // handles rendering of TopContainer in the Clinician page
-const QuestionsContainer = (props) => {
+const QuestionsContainer = ({
+                                questions,
+                                scenarioIndex,
+                                sectionIndex,
+                                removeQuestion,
+                                changeToRangeQuestion,
+                                changeToMCQQuestion,
+                                addAnswerToMCQQuestion,
+                                deleteAnswerToMCQQuestion,
+                                handleMultiChoiceDesChange,
+                                handleMultiAnsChange,
+                            } ) => {
     // const { sections } = props.questionnaire;
 
-    const {
-        questions,
-        removeQuestion,
-        changeToRangeQuestion,
-        changeToMCQQuestion,
-        addAnswerToMCQQuestion,
-        deleteAnswerToMCQQuestion,
-        handleMultiChoiceDesChange,
-        handleMultiAnsChange,
-    } = props;
+    // const {
+    //     questions,
+    //     scenarioIndex,
+    //     sectionIndex,
+    //     removeQuestion,
+    //     changeToRangeQuestion,
+    //     changeToMCQQuestion,
+    //     addAnswerToMCQQuestion,
+    //     deleteAnswerToMCQQuestion,
+    //     handleMultiChoiceDesChange,
+    //     handleMultiAnsChange,
+    // } = props;
 
+    console.log(scenarioIndex);
     return (
         <div className="questions-container">
             {/*{sections &&*/}
@@ -61,6 +75,8 @@ const QuestionsContainer = (props) => {
                             item={item}
                             key={item._id}
                             questionIndex={index}
+                            scenarioIndex={scenarioIndex}
+                            sectionIndex={sectionIndex}
                             removeQuestion={removeQuestion}
                             changeToRangeQuestion={changeToRangeQuestion}
                             changeToMCQQuestion={changeToMCQQuestion}
@@ -83,6 +99,8 @@ const QuestionsContainer = (props) => {
 const QuestionForm = ({
     questionIndex,
     removeQuestion,
+    sectionIndex,
+    scenarioIndex,
     changeToMCQQuestion,
     changeToRangeQuestion,
     addAnswerToMCQQuestion,
@@ -95,15 +113,15 @@ const QuestionForm = ({
 
     const handleRangeClick = (e) => {
         e.preventDefault();
-        changeToRangeQuestion(questionIndex);
+        changeToRangeQuestion(scenarioIndex,questionIndex);
     };
     const handleMultipleClick = (e) => {
         e.preventDefault();
-        changeToMCQQuestion(questionIndex);
+        changeToMCQQuestion(scenarioIndex,questionIndex);
     };
     const handleRemoveClick = (e) => {
         e.preventDefault();
-        removeQuestion(questionIndex);
+        removeQuestion(scenarioIndex,questionIndex);
     };
 
     const renderHeader = () => {

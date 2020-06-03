@@ -18,6 +18,7 @@ import QuestionsContainer from "./QuestionsContainer";
 
 const ScenariosContainer = (
         {scenarios,
+        sectionIndex,
         removeQuestion,
         addQuestion,
         changeToRangeQuestion,
@@ -34,6 +35,7 @@ const ScenariosContainer = (
                         <Scenario
                             item={item}
                             key={item._id}
+                            sectionIndex={sectionIndex}
                             scenarioIndex={index}
                             removeQuestion={removeQuestion}
                             addQuestion={addQuestion}
@@ -52,6 +54,8 @@ const ScenariosContainer = (
 
 const Scenario = (
         {item,
+        sectionIndex,
+        scenarioIndex,
         removeQuestion,
         addQuestion,
         changeToRangeQuestion,
@@ -62,21 +66,24 @@ const Scenario = (
         handleMultiAnsChange}) =>{
 
     const {questions,description} = item;
-
     return (
         <div className="scenario">
 
-            <FormControl margin="dense">
-                <InputLabel>Scenario description</InputLabel>
-                <Input
-                    value={description}
-                    placeholder="Write the scenario description."
-                />
-                <FormHelperText>Write the scenario description.</FormHelperText>
-            </FormControl>
+            <div className="scenario-description">
+                <FormControl margin="dense">
+                    <InputLabel>Scenario description</InputLabel>
+                    <Input
+                        value={description}
+                        placeholder="Write the scenario description."
+                    />
+                    <FormHelperText>Write the scenario description.</FormHelperText>
+                </FormControl>
+            </div>
 
             <QuestionsContainer
                 questions={questions}
+                scenarioIndex={scenarioIndex}
+                sectionIndex={sectionIndex}
                 removeQuestion={removeQuestion}
                 addQuestion={addQuestion}
                 changeToRangeQuestion={changeToRangeQuestion}
@@ -85,12 +92,12 @@ const Scenario = (
                 deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
                 handleMultiChoiceDesChange={handleMultiChoiceDesChange}
                 handleMultiAnsChange={handleMultiAnsChange}/>
-                
+
             <div className="add-question-button">
                 <button className="button"
                         onClick={(event)=>{
                             event.preventDefault();
-                            addQuestion();
+                            addQuestion(scenarioIndex);
                         }}>
                     ADD NEW QUESTION
                 </button>

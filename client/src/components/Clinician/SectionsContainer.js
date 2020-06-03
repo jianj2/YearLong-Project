@@ -19,6 +19,7 @@ import {FormControl, FormHelperText, Input, InputLabel} from "@material-ui/core"
 const SectionsContainer = (
         {removeQuestion,
         addQuestion,
+        addScenario,
         changeToRangeQuestion,
         changeToMCQQuestion,
         addAnswerToMCQQuestion,
@@ -38,6 +39,7 @@ const SectionsContainer = (
                             sectionIndex={index}
                             removeQuestion={removeQuestion}
                             addQuestion={addQuestion}
+                            addScenario={addScenario}
                             changeToRangeQuestion={changeToRangeQuestion}
                             changeToMCQQuestion={changeToMCQQuestion}
                             addAnswerToMCQQuestion={addAnswerToMCQQuestion}
@@ -53,8 +55,10 @@ const SectionsContainer = (
 
 const Section = (
         {item,
+        sectionIndex,
         removeQuestion,
         addQuestion,
+        addScenario,
         changeToRangeQuestion,
         changeToMCQQuestion,
         addAnswerToMCQQuestion,
@@ -66,16 +70,21 @@ const Section = (
 
     return (
         <div className="section">
-            <FormControl margin="dense">
-                <InputLabel>Section Title</InputLabel>
-                <Input
-                    placeholder="Write the section title."
-                    value={title}
-                />
-                <FormHelperText>Write the section title.</FormHelperText>
-            </FormControl>
+
+            <div className="section-title">
+                <FormControl margin="dense">
+                    <InputLabel>Section Title</InputLabel>
+                    <Input
+                        placeholder="Write the section title."
+                        value={title}
+                    />
+                    <FormHelperText>Write the section title.</FormHelperText>
+                </FormControl>
+            </div>
+
             <ScenariosContainer
                 scenarios={scenarios}
+                sectionIndex={sectionIndex}
                 removeQuestion={removeQuestion}
                 addQuestion={addQuestion}
                 changeToRangeQuestion={changeToRangeQuestion}
@@ -84,6 +93,16 @@ const Section = (
                 deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
                 handleMultiChoiceDesChange={handleMultiChoiceDesChange}
                 handleMultiAnsChange={handleMultiAnsChange}/>
+
+            <div className="add-scenario-button">
+                <button className="button"
+                        onClick={(event)=>{
+                            event.preventDefault();
+                            addScenario();
+                        }}>
+                    ADD NEW SCENARIO
+                </button>
+            </div>
         </div>
     );
 }

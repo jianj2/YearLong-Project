@@ -31,60 +31,76 @@ const QuestionnaireContainer = (props) => {
         API.getSpecificQuestionnaire(props.questionnaireID,setQuestionnaire);
     },[])
 
-    //add question from questionnaire
-    const addQuestion = (event) =>{
+    //add question to questionnaire
+    const addQuestion = (scenarioIndex) =>{
         const newQuestion = {
             isMCQ: false,
             rangeOptions: []
         }
         const questionnaireTemp = Object.assign({},questionnaire);
-        // this is because the front-end ui still cannot show the sections and scenarios
-        questionnaireTemp.sections[0].scenarios[0].questions.push(newQuestion);
+        questionnaireTemp.sections[0].scenarios[scenarioIndex].questions.push(newQuestion);
         setQuestionnaire(questionnaireTemp);
     }
 
     //remove question from questionnaire
-    const removeQuestion = (questionIndex) =>{
+    const removeQuestion = (scenarioIndex,questionIndex) =>{
         const questionnaireTemp = Object.assign({},questionnaire);
-        questionnaireTemp.sections[0].scenarios[0].questions.splice(questionIndex,1);
+        questionnaireTemp.sections[0].scenarios[scenarioIndex].questions.splice(questionIndex,1);
         setQuestionnaire(questionnaireTemp);
     }
 
+    //add scenario to questionnaire
+    const addScenario = () =>{
+        const newScenario = {
+            description:'',
+            questions:[]
+        }
+        const questionnaireTemp = Object.assign({},questionnaire);
+        questionnaireTemp.sections[0].scenarios.push(newScenario);
+        setQuestionnaire(questionnaireTemp);
+    }
+    //remove scenario to questionnaire
+
+    //add section to questionnaire
+
+    //remove section to questionnaire
+
+
     //change question to range question
-    const changeToRangeQuestion = (questionIndex) =>{
+    const changeToRangeQuestion = (scenarioIndex,questionIndex) =>{
         const newQuestion = {
             isMCQ: false,
             rangeOptions: []
         }
         const questionnaireTemp = Object.assign({},questionnaire);
-        questionnaireTemp.sections[0].scenarios[0].questions.splice(questionIndex,1,newQuestion);
+        questionnaireTemp.sections[0].scenarios[scenarioIndex].questions.splice(questionIndex,1,newQuestion);
         setQuestionnaire(questionnaireTemp);
     }
 
     //change question to MCQ question
-    const changeToMCQQuestion = (questionIndex) =>{
+    const changeToMCQQuestion = (scenarioIndex,questionIndex) =>{
         const newQuestion = {
             description: "",
             isMCQ: true,
             mcqOptions: []
         }
         const questionnaireTemp = Object.assign({},questionnaire);
-        questionnaireTemp.sections[0].scenarios[0].questions.splice(questionIndex,1,newQuestion);
+        questionnaireTemp.sections[0].scenarios[scenarioIndex].questions.splice(questionIndex,1,newQuestion);
         setQuestionnaire(questionnaireTemp);
     }
 
     //add answer to the multiple choice question
-    const addAnswerToMCQQuestion = (questionIndex) =>{
+    const addAnswerToMCQQuestion = (scenarioIndex,questionIndex) =>{
         const newAnswer = "";
         const questionnaireTemp = Object.assign({},questionnaire);
-        questionnaireTemp.sections[0].scenarios[0].questions[questionIndex].mcqOptions.push(newAnswer);
+        questionnaireTemp.sections[0].scenarios[scenarioIndex].questions[questionIndex].mcqOptions.push(newAnswer);
         setQuestionnaire(questionnaireTemp);
     }
 
     //delete answer to the multiple choice question
-    const deleteAnswerToMCQQuestion = (questionIndex,answerIndex) =>{
+    const deleteAnswerToMCQQuestion = (scenarioIndex,questionIndex,answerIndex) =>{
         const questionnaireTemp = Object.assign({},questionnaire);
-        questionnaireTemp.sections[0].scenarios[0].questions[questionIndex].mcqOptions.splice(answerIndex,1);
+        questionnaireTemp.sections[0].scenarios[scenarioIndex].questions[questionIndex].mcqOptions.splice(answerIndex,1);
         setQuestionnaire(questionnaireTemp);
     }
 
@@ -145,6 +161,7 @@ const QuestionnaireContainer = (props) => {
             <EditQuestionnaire Questionnaire={questionnaire} removeQuestion={removeQuestion}
                                changeToRangeQuestion={changeToRangeQuestion} changeToMCQQuestion={changeToMCQQuestion}
                                addQuestion={addQuestion} addAnswerToMCQQuestion={addAnswerToMCQQuestion}
+                               addScenario={addScenario}
                                deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
                                handleQuestionnaireTitleChange={handleQuestionnaireTitleChange}
                                handleQuestionnaireDesChange={handleQuestionnaireDesChange}

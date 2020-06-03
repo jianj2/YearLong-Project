@@ -260,12 +260,18 @@ width: 65%;
   display: flex;
 }
 
-.add-question-button{
+.add-question-button,.add-scenario-button{
   text-align: center;
+  padding: 2vh 2vh;
 }
 
 #edit-cancel-button{
   margin-left: 1vw;
+}
+
+.section-title,.scenario-description{
+  display: flex;
+  justify-content: center;
 }
 
 
