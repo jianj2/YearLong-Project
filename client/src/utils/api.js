@@ -60,7 +60,6 @@ export const addQuestionnaire = async () => {
     const data = {
         isStandard: false,
     };
-
     return new Promise(async (resolve) => {
         try {
             let response = await fetch(url, {
@@ -108,8 +107,6 @@ export const editQuestionnaire = async () => {
         questionnaireId: 'e6bc8ad0-9fe3-11ea-a404-bf73c4e43df1', // TODO to be chanegd later
 
     };
-
-
 
     try {
         console.log("editing", data);

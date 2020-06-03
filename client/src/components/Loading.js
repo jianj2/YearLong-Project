@@ -29,9 +29,9 @@ const Loading = () => {
                     cy="50"
                     fill="none"
                     stroke="#eeeeee"
-                    stroke-width="8"
+                    strokeWidth="8"
                     r="35"
-                    stroke-dasharray="164.93361431346415 56.97787143782138"
+                    strokeDasharray="164.93361431346415 56.97787143782138"
                     transform="rotate(5.84712 50 50)"
                 >
                     <animateTransform
