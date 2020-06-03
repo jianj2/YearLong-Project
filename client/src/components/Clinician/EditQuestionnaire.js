@@ -44,15 +44,27 @@ const EditQuestionnaire = (props) => {
         handleMultiChoiceDesChange,
     } = props;
 
-    const [open, setOpen] = React.useState(false);
+    const [saveDialogOpen, setSaveDialogOpen] = React.useState(false);
+    
+    const [cancelDialogOpen, setCancelDialogOpen] = React.useState(false);
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const handleSaveOpen = () => {
+        setSaveDialogOpen(true);
     };
 
-    const handleClose = () => {
-        setOpen(false);
+    const handleSaveClose = () => {
+        setSaveDialogOpen(false);
     };
+
+    const handleCancelOpen = () => {
+        setCancelDialogOpen(true);
+    };
+
+    
+    const handleCancelClose = () => {
+        setCancelDialogOpen(false);
+    };
+
 
     var manage_questionnaire_url = "/clinician";
 
@@ -76,7 +88,8 @@ const EditQuestionnaire = (props) => {
                         className="button"
                         onClick={(event) => {
                             event.preventDefault();
-                            window.location.href = manage_questionnaire_url;
+                            handleCancelOpen();
+                            
                         }}
                     >
                         Cancel
@@ -87,7 +100,7 @@ const EditQuestionnaire = (props) => {
                         className="button"
                         onClick={(event)=>{
                             event.preventDefault();
-                            handleClickOpen()
+                            handleSaveOpen();
                             }}
                     >
                         Save
@@ -95,8 +108,8 @@ const EditQuestionnaire = (props) => {
                 </div>
 
                 <Dialog
-                    open={open}
-                    onClose={handleClose}
+                    open={saveDialogOpen}
+                    onClose={handleSaveClose}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
@@ -107,14 +120,44 @@ const EditQuestionnaire = (props) => {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose} color="primary">
+                        <Button onClick={handleSaveClose} color="primary">
                             Disagree
                         </Button>
                         <Button
                             onClick={() => {
-                                handleClose();
+                                handleSaveClose();
                                 API.editQuestionnaire(Questionnaire);
                                 window.location.href = manage_questionnaire_url;
+                            }}
+                            color="primary"
+                            autoFocus
+                        >
+                            Agree
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+
+                <Dialog
+                    open={cancelDialogOpen}
+                    onClose={handleCancelClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">{"Save"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Are you sure to save this questionnaire?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleCancelClose} color="primary">
+                            Disagree
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                handleCancelClose();
+                                window.location.href = manage_questionnaire_url;
+                               
                             }}
                             color="primary"
                             autoFocus
