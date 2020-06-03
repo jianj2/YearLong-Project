@@ -13,43 +13,30 @@
  */
 
 import React, { useEffect, useState } from "react";
+import { useAuth0 } from "../../utils/react-auth0-spa";
 
-import * as API from '../../utils/api'
+import * as API from "../../utils/api";
+import QuestionnaireList from "./QuestionnaireList";
 
 // handles rendering of QuestionnaireContainer in the Clinician Page
 const DoTheTestContainer = () => {
+    const { loading, isAuthenticated, loginWithRedirect, user } = useAuth0();
+    const [wizardStep, setWizardStep] = useState(-1);
+
+    const [questionnaires, setQuestionnaires] = useState([]);
+
+    console.log(user);
 
     useEffect(() => {
-        // Server call to get the questionnaire.
-        
-        // API.getQuestionnaire(match.params.questionnaireId).then((res) => {
-        //     // Define initial values for the Questionnaire
-        //     let tempResponse = [];
-        //     res.sections.forEach((section, sectionIndex) => {
-        //         tempResponse[sectionIndex] = [];
-        //         section.scenarios.forEach((scenario, scenarioIndex) => {
-        //             tempResponse[sectionIndex][scenarioIndex] = [];
-        //             scenario.questions.forEach((question, questionIndex) => {
-        //                 tempResponse[sectionIndex][scenarioIndex][
-        //                     questionIndex
-        //                 ] = {
-        //                     extraQuestion: "",
-        //                     sliderValue: 0,
-        //                     frequencyValue: "",
-        //                     importanceValue: "",
-        //                 };
-        //             });
-        //         });
-        //     });
-        //     // Updating the state using the initial data and the questionnaire
-        //     // retrieved from the server.
-        //     setQuestionnaireData(tempResponse);
-        //     setQuestionnaire(res);
-        // });
+        API.getClinicianQuestionnaires(user.name).then(res => {
+            console.log(res)
+            setQuestionnaires(res);
+        })
+            
     }, []);
+ 
 
-
-    const [wizardStep, setWizardStep] = useState(-1);
+    
 
     // Method called to go to the next page in the wizard.
     const nextStep = () => {
@@ -73,38 +60,23 @@ const DoTheTestContainer = () => {
     };
 
     if (wizardStep === 0) {
-        return (
-            <div className="dothetest-container">
-                asdasd
-            </div>
-        );
+        return <div className="dothetest-container">asdasd</div>;
     } else if (wizardStep === 1) {
-        return (
-            <div className="dothetest-container">
-                asdfsadf
-            </div>
-        );
+        return <div className="dothetest-container">asdfsadf</div>;
     } else if (wizardStep === 2) {
-        return (
-            <div className="dothetest-container">
-                asdf
-            </div>
-        );
+        return <div className="dothetest-container">asdf</div>;
     } else if (wizardStep === 3) {
-        return (
-            <div className="dothetest-container">
-                asdf
-            </div>
-        );
+        return <div className="dothetest-container">asdf</div>;
     } else {
         return (
-            <div className="dothetest-container">
-                Questonnaire list
+            <div className="dothetest-container"> 
+                <QuestionnaireList 
+                    questionnaires={questionnaires} 
+                    listTitle={'My Questionnaires'} 
+                />
             </div>
         );
     }
-
 };
-
 
 export default DoTheTestContainer;

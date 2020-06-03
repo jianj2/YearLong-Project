@@ -43,7 +43,6 @@ export const sendQuestionnaireData = (data) =>
         body: JSON.stringify(data),
     }).then((res) => res.json());
 
-
 // ================================================
 // Managing Questionnaire server calls
 // ================================================
@@ -104,8 +103,7 @@ export const editQuestionnaire = async () => {
     };
 
     const data = {
-        questionnaireId: 'e6bc8ad0-9fe3-11ea-a404-bf73c4e43df1', // TODO to be chanegd later
-
+        questionnaireId: "e6bc8ad0-9fe3-11ea-a404-bf73c4e43df1", // TODO to be chanegd later
     };
 
     try {
@@ -116,12 +114,22 @@ export const editQuestionnaire = async () => {
             body: JSON.stringify(data),
         });
         let json = await response.json();
-
     } catch (e) {
-        console.error(
-            "An error has occurred while adding questionnaire",
-            e
-        );
+        console.error("An error has occurred while adding questionnaire", e);
     }
+};
 
-}
+// get specific questionnaire
+// TODO: get CQid and entire edited questionnaire from UI
+export const getSpecificQuestionnaire = (CQid) =>
+    fetch(`${api}/questionnaire/getQuestionnaire/${CQid}`, {
+        header,
+    }).then((res) => res.json());
+
+// get clinician questionnaire list
+// TODO: get CQid and entire edited questionnaire from UI
+
+export const getClinicianQuestionnaires = (clinicianId) =>
+    fetch(`${api}/questionnaire/clinician?clinicianId=${clinicianId}`, {
+        header,
+    }).then((res) => res.json());
