@@ -29,6 +29,7 @@ const getAllQuestionnaire = function (req, res) {
 // Get a questionnaire
 var getQuestionnaire = function (req, res) {
     let questionnaireId = req.params.questionnaireId;
+    console.log("get questionnaire:", questionnaireId);
 
     Questionnaire.findOne({ questionnaireId }, function (
         err,
@@ -191,12 +192,9 @@ const getClinicianQuestionnaires = function(req,res){
         if (!err){
             const questionnaireIds = clinician.questionnaires;
             const questionnaires = await Questionnaire.find().where('questionnaireId').in(questionnaireIds).exec();
-            console.log("HEREE !!!111 ")
             res.send(questionnaires);
         } else {
             res.send(err);
-            console.log("HEREE !!!ERRROOROR ");
-
         }
     });
 

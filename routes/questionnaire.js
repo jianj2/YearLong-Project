@@ -17,7 +17,7 @@ var questionnaire_controller = require('../controller/questionnaire_controller.j
 
 
 
-router.get('/getQuestionnaire/:questionnaireID', questionnaire_controller.getQuestionnaire);
+router.get('/getQuestionnaire/:questionnaireId', questionnaire_controller.getQuestionnaire);
 router.get('/clinician/', questionnaire_controller.getClinicianQuestionnaires);
 
 router.get('/', questionnaire_controller.getAllQuestionnaire);
