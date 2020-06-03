@@ -18,10 +18,9 @@
     font-weight: 200;
     font-family: Raleway;
 
- }
+}
 
 .questionnaire-list-item {
-    cursor: pointer;
     margin: auto auto 1rem auto;
     padding: 20px;
     border-radius: 10px;
@@ -34,7 +33,10 @@
     transition: all 0.2s;
 }
 
-.questionnaire-list-item:hover{
+.questionnaire-list-item-selectable {
+    cursor: pointer;
+}
+.questionnaire-list-item-selectable:hover{
     background-color: rgba(100,100,100,0.2);
     
 }

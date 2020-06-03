@@ -59,6 +59,10 @@ const DoTheTestContainer = () => {
         nextStep();
     };
 
+    const onClickQuestion = (data) => {
+        console.log("questionnaire clicked", data);
+    };
+
     if (wizardStep === 0) {
         return <div className="dothetest-container">asdasd</div>;
     } else if (wizardStep === 1) {
@@ -69,10 +73,14 @@ const DoTheTestContainer = () => {
         return <div className="dothetest-container">asdf</div>;
     } else {
         return (
-            <div className="dothetest-container"> 
-                <QuestionnaireList 
-                    questionnaires={questionnaires} 
-                    listTitle={'My Questionnaires'} 
+            <div className="dothetest-container">
+                <QuestionnaireList
+                    questionnaires={questionnaires}
+                    listTitle={"My Questionnaires"}
+                    isSelectable={true}
+                    onClickQuestion={onClickQuestion}
+                    canEdit={false}
+                    canDelete={false}
                 />
             </div>
         );
