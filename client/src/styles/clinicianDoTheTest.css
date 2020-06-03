@@ -1,0 +1,17 @@
+
+
+.dothetest-container {
+
+}
+
+.dothetest-submit {
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dothetest-submit h1{
+    font-weight: 200;
+}

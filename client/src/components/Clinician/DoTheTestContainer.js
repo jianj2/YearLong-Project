@@ -19,8 +19,10 @@ import * as API from "../../utils/api";
 import QuestionnaireList from "../QuestionnaireList";
 import Questionnaire from "../Questionnaire";
 import ParentReviewSubmission from "../ParentReviewSubmission";
-
 import FormParentDetails from "../FormParentDetails";
+
+import "../../styles/clinicianDoTheTest.css";
+
 
 // handles rendering of QuestionnaireContainer in the Clinician Page
 const DoTheTestContainer = () => {
@@ -54,10 +56,12 @@ const DoTheTestContainer = () => {
     // Method called to go to the preivious page in the wizard.
     const prevStep = () => {
         setWizardStep(wizardStep - 1);
-    };
-    const goToInstructions = () => {
-        setWizardStep(0);
-    };
+    }; 
+    // Method called to reset wizard.
+    const resetStep = () => {
+        setWizardStep(-1);
+    }; 
+
     // Method called to go to the instructions page in the wizard.
     const submitDetails = (data) => {
         setPersonalDetails(data);
@@ -67,7 +71,7 @@ const DoTheTestContainer = () => {
     // Method called when we submit the questionnaire.
     const submitQuestionnaire = (data) => {
         nextStep();
-        console.log('questionnaire submitted',data)
+        console.log("questionnaire submitted", data);
     };
 
     // Method called to update questionnaire data when a question is updated.
@@ -115,11 +119,12 @@ const DoTheTestContainer = () => {
     const submitResponse = () => {
         let data = {
             questionnaireData,
-            personalDetails, 
+            personalDetails,
         };
         console.log("RESPONSE: ", data);
+        setWizardStep(3);
     };
-
+    console.log("wizardStep", wizardStep);
     if (wizardStep === 0) {
         return (
             <div className="dothetest-container">
@@ -137,10 +142,7 @@ const DoTheTestContainer = () => {
     } else if (wizardStep === 1) {
         return (
             <div className="dothetest-container">
-                <div className="subheader-container">
-                    <button className="button" onClick={goToInstructions}>
-                        I N S T R U C T I O N S
-                    </button>
+                <div className="subheader-container"> 
                     <button className="button" onClick={prevStep}>
                         B A C K
                     </button>
@@ -178,7 +180,17 @@ const DoTheTestContainer = () => {
             </div>
         );
     } else if (wizardStep === 3) {
-        return <div className="dothetest-container">Questionanire submitted?</div>;
+        return (
+            <div className="dothetest-container">
+                <div className="dothetest-submit">
+                    <h1>Questionnaire Responses Recorded!</h1>
+                    <p>A report will be sent to your registered email address.</p>
+                    <button className="button" onClick={resetStep}>
+                        G O &nbsp; B A C K
+                    </button>
+                </div>
+            </div>
+        );
     } else {
         return (
             <div className="dothetest-container">
