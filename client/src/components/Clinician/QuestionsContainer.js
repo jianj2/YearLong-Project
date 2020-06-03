@@ -44,8 +44,8 @@ const QuestionsContainer = (props) => {
         changeToMCQQuestion,
         addAnswerToMCQQuestion,
         deleteAnswerToMCQQuestion,
-        handleMultiChoiceDesChange,
-        handleMultiAnsChange,
+        handleQuestionDesChange,
+        handleQuestionOptsChange,
     } = props;
 
     return (
@@ -64,10 +64,10 @@ const QuestionsContainer = (props) => {
                             deleteAnswerToMCQQuestion={
                                 deleteAnswerToMCQQuestion
                             }
-                            handleMultiChoiceDesChange={
-                                handleMultiChoiceDesChange
+                            handleQuestionDesChange={
+                                handleQuestionDesChange
                             }
-                            handleMultiAnsChange={handleMultiAnsChange}
+                            handleQuestionOptsChange={handleQuestionOptsChange}
                         />
                     );
                 })}
@@ -83,8 +83,8 @@ const QuestionForm = ({
     changeToRangeQuestion,
     addAnswerToMCQQuestion,
     deleteAnswerToMCQQuestion,
-    handleMultiChoiceDesChange,
-    handleMultiAnsChange,
+    handleQuestionDesChange,
+    handleQuestionOptsChange,
     item,
 }) => {
     const { rangeOptions, description, mcqOptions, isMCQ } = item;
@@ -134,6 +134,8 @@ const QuestionForm = ({
                 <RangeQuestionFrom
                     questionIndex={questionIndex}
                     rangeOptions={rangeOptions}
+                    handleQuestionDesChange={handleQuestionDesChange}
+                    handleQuestionOptsChange={handleQuestionOptsChange}
                 />
             </div>
         );
@@ -147,8 +149,8 @@ const QuestionForm = ({
                     addAnswerToMCQQuestion={addAnswerToMCQQuestion}
                     deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
                     questionIndex={questionIndex}
-                    handleMultiChoiceDesChange={handleMultiChoiceDesChange}
-                    handleMultiAnsChange={handleMultiAnsChange}
+                    handleQuestionDesChange={handleQuestionDesChange}
+                    handleQuestionOptsChange={handleQuestionOptsChange}
                 />
             </div>
         );
@@ -157,30 +159,47 @@ const QuestionForm = ({
 
 //display the range question
 const RangeQuestionFrom = (props) => {
-    // to change the question of range questions (because the scheme in the data base didn't have this para,
-    // but we have in the frontend, so we need to change it later, comment this first).
 
-    // const handleRangeQuestionChange = (event) =>{
-    // }
+    const {rangeOptions,questionIndex} = props;
 
-    //same situation
-
-    // const handleRangeDesChange = (event) =>{
+    // const handleRangeDesChange = (questionIndex) =>{
     //
     // }
+
+    const handleRangeChange = (event, questionIndex, answerIndex) =>{
+        props.handleQuestionOptsChange(event,questionIndex,answerIndex);
+    }
 
     return (
         <div className="questionTable-form">
             <FormControl margin="dense">
-                <InputLabel>Question</InputLabel>
-                <Input placeholder="Write the question." />
-                <FormHelperText>Write the question.</FormHelperText>
+                <InputLabel>Description</InputLabel>
+                <Input
+                    placeholder="Write the description." />
+                <FormHelperText>Write the description.</FormHelperText>
+            </FormControl>
+
+            <h2>Ranges</h2>
+            <FormControl margin="dense">
+                <InputLabel>RangeStarts</InputLabel>
+                <Input
+                    placeholder="Write the number."
+                    value={rangeOptions[0]}
+                    onChange={(event) =>
+                        handleRangeChange(event, questionIndex, 0)
+                    }/>
+                <FormHelperText>Write the Range Starts.</FormHelperText>
             </FormControl>
 
             <FormControl margin="dense">
-                <InputLabel>Description</InputLabel>
-                <Input placeholder="Write the description." />
-                <FormHelperText>Write the description.</FormHelperText>
+                <InputLabel>RangeEnds</InputLabel>
+                <Input
+                    placeholder="Write the number."
+                    value={rangeOptions[1]}
+                    onChange={(event) =>
+                        handleRangeChange(event, questionIndex, 1)
+                    }/>
+                <FormHelperText>Write the Range Ends.</FormHelperText>
             </FormControl>
         </div>
     );
@@ -213,20 +232,21 @@ const MultipleChoiceQuestionFrom = (props) => {
 
     //
     const handleMultiChoiceDesChange = (event, questionIndex) => {
-        props.handleMultiChoiceDesChange(event, questionIndex);
+        props.handleQuestionDesChange(event, questionIndex);
     };
 
     const handleMultiAnsChange = (event, questionIndex, answerIndex) => {
-        props.handleMultiAnsChange(event, questionIndex, answerIndex);
+        props.handleQuestionOptsChange(event, questionIndex, answerIndex);
     };
 
     return (
         <div className="questionTable-form">
-            <FormControl margin="dense">
-                <InputLabel>Question</InputLabel>
-                <Input placeholder="Write the question."/>
-                <FormHelperText>Write the question.</FormHelperText>
-            </FormControl>
+
+            {/*<FormControl margin="dense">*/}
+            {/*    <InputLabel>Question</InputLabel>*/}
+            {/*    <Input placeholder="Write the question."/>*/}
+            {/*    <FormHelperText>Write the question.</FormHelperText>*/}
+            {/*</FormControl>*/}
 
             <FormControl margin="dense">
                 <InputLabel>Description</InputLabel>

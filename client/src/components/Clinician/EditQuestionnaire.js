@@ -40,8 +40,8 @@ const EditQuestionnaire = (props) => {
         addQuestion,
         handleQuestionnaireTitleChange,
         handleQuestionnaireDesChange,
-        handleMultiAnsChange,
-        handleMultiChoiceDesChange,
+        handleQuestionDesChange,
+        handleQuestionOptsChange,
     } = props;
 
     const [saveDialogOpen, setSaveDialogOpen] = React.useState(false);
@@ -184,8 +184,8 @@ const EditQuestionnaire = (props) => {
                     changeToMCQQuestion={changeToMCQQuestion}
                     addAnswerToMCQQuestion={addAnswerToMCQQuestion}
                     deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
-                    handleMultiChoiceDesChange={handleMultiChoiceDesChange}
-                    handleMultiAnsChange={handleMultiAnsChange}
+                    handleQuestionDesChange={handleQuestionDesChange}
+                    handleQuestionOptsChange={handleQuestionOptsChange}
                 />
 
                 {/*<button*/}
