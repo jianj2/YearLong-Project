@@ -48,8 +48,6 @@ const QuestionsContainer = ({
                                 handleQuestionDesChange,
                                 handleQuestionOptsChange,
                             } ) => {
-
-    console.log(scenarioIndex);
     return (
         <div className="questions-container">
             {questions && questions.map((item, index) => {

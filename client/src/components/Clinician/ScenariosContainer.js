@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
         fontWeight: theme.typography.fontWeightRegular,
     },
     panel:{
-        width: '90%',
+        width: '95%',
         backgroundColor:'rgba(0,0,0,0.2)',
     },
     summary:{
@@ -46,48 +46,51 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const ScenariosContainer = (
-        {scenarios,
-        sectionIndex,
-        removeQuestion,
-        removeScenario,
-        addQuestion,
-        changeToRangeQuestion,
-        changeToMCQQuestion,
-        addAnswerToMCQQuestion,
-        deleteAnswerFromMCQQuestion,
-        handleSceDesChange,
-            handleQuestionDesChange,
-            handleQuestionOptsChange}) => {
+const ScenariosContainer = ({
+                                scenarios,
+                                sectionIndex,
+                                removeQuestion,
+                                removeScenario,
+                                addQuestion,
+                                changeToRangeQuestion,
+                                changeToMCQQuestion,
+                                addAnswerToMCQQuestion,
+                                deleteAnswerFromMCQQuestion,
+                                handleSceDesChange,
+                                handleQuestionDesChange,
+                                handleQuestionOptsChange}) => {
 
     const classes = useStyles();
 
     return (
         <div className="scenarios-container">
-
-                    {
-                        scenarios && scenarios.map((item, index) => {
-                            return(
-                                    <ExpansionPanel className={classes.panel}>
-                                        <ExpansionPanelSummary
-                                            expandIcon={<ExpandMoreIcon />}
-                                            aria-controls="panel1a-content"
-                                            id="panel1a-header"
-                                            className={classes.summary}
-                                        >
-                                            <div className="delete-scenario-button">
-                                                <button className="button"
-                                                        onClick={(event)=>{
-                                                            event.preventDefault();
-                                                            removeScenario(sectionIndex,index);
-                                                        }}>
-                                                    <DeleteForeverIcon />
-                                                </button>
-                                            </div>
-
-                                            <Typography>Scenario {index+1}</Typography>
-                                        </ExpansionPanelSummary>
-                                        <ExpansionPanelDetails className={classes.details}>
+            {
+                scenarios && scenarios.map((item, index) => {
+                    return(
+                            <ExpansionPanel className={classes.panel}>
+                                <ExpansionPanelSummary
+                                    aria-label="Expand"
+                                    expandIcon={<ExpandMoreIcon />}
+                                    aria-controls="panel1a-content"
+                                    id="panel1a-header"
+                                    className={classes.summary}
+                                >
+                                    <div
+                                        className="delete-scenario-button"
+                                        onClick={(event) => event.stopPropagation()}
+                                        onFocus={(event) => event.stopPropagation()}
+                                    >
+                                        <button className="button"
+                                                onClick={(event)=>{
+                                                    event.preventDefault();
+                                                    removeScenario(sectionIndex,index);
+                                                }}>
+                                            <DeleteForeverIcon />
+                                        </button>
+                                    </div>
+                                    <Typography>Scenario {index+1}</Typography>
+                                </ExpansionPanelSummary>
+                                <ExpansionPanelDetails className={classes.details}>
                                     <Scenario
                                         item={item}
                                         key={item._id}
@@ -109,19 +112,19 @@ const ScenariosContainer = (
     );
 };
 
-const Scenario = (
-        {item,
-        sectionIndex,
-        scenarioIndex,
-        removeQuestion,
-        addQuestion,
-        changeToRangeQuestion,
-        changeToMCQQuestion,
-        addAnswerToMCQQuestion,
-        deleteAnswerFromMCQQuestion,
-        handleSceDesChange,
-            handleQuestionDesChange,
-            handleQuestionOptsChange}) =>{
+const Scenario = ({
+                      item,
+                      sectionIndex,
+                      scenarioIndex,
+                      removeQuestion,
+                      addQuestion,
+                      changeToRangeQuestion,
+                      changeToMCQQuestion,
+                      addAnswerToMCQQuestion,
+                      deleteAnswerFromMCQQuestion,
+                      handleSceDesChange,
+                      handleQuestionDesChange,
+                      handleQuestionOptsChange}) =>{
 
     const {questions,description} = item;
 

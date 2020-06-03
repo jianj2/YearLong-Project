@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
         fontWeight: theme.typography.fontWeightRegular,
     },
     panel:{
-        width: '90%',
+        width: '95%',
         backgroundColor:'#101132',
     },
     summary:{
@@ -66,14 +66,14 @@ const SectionsContainer = (
             {
                 sections && sections.map((item, index) => {
                     return(
-                        <ExpansionPanel className={classes.panel}>
+                        <ExpansionPanel className={classes.panel} TransitionProps={{ unmountOnExit: true }}>
                             <ExpansionPanelSummary
                                 expandIcon={<ExpandMoreIcon />}
                                 aria-controls="panel1a-content"
                                 id="panel1a-header"
                                 className={classes.summary}
                             >
-                                
+
                                 {/*<div className="delete-section-button">*/}
                                 {/*    <button className="button"*/}
                                 {/*            onClick={(event)=>{*/}
