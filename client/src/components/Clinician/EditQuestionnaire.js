@@ -146,7 +146,7 @@ const EditQuestionnaire = (props) => {
                     <DialogTitle id="alert-dialog-title">{"Save"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            Are you sure you want to cancel this questionnaire?
+                            Your changes will not be saved. Are you sure you want to cancel editing this questionnaire? 
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
