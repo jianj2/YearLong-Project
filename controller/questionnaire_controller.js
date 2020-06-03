@@ -13,6 +13,7 @@ const mongoose = require("mongoose");
 const { v1: uuidv1 } = require("uuid");
 
 const Questionnaire = mongoose.model("questionnaire");
+const Clinician = mongoose.model("clinician");
 
 // Get all questionnaires
 const getAllQuestionnaire = function (req, res) {
@@ -190,10 +191,12 @@ const getClinicianQuestionnaires = function(req,res){
         if (!err){
             const questionnaireIds = clinician.questionnaires;
             const questionnaires = await Questionnaire.find().where('questionnaireId').in(questionnaireIds).exec();
+            console.log("HEREE !!!111 ")
             res.send(questionnaires);
-
         } else {
             res.send(err);
+            console.log("HEREE !!!ERRROOROR ");
+
         }
     });
 
