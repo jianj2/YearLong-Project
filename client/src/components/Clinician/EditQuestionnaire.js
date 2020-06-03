@@ -120,10 +120,7 @@ const EditQuestionnaire = (props) => {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleSaveClose} color="primary">
-                            No
-                        </Button>
-                        <Button
+                    <Button
                             onClick={() => {
                                 handleSaveClose();
                                 API.editQuestionnaire(Questionnaire);
@@ -134,6 +131,10 @@ const EditQuestionnaire = (props) => {
                         >
                             Yes
                         </Button>
+                        <Button onClick={handleSaveClose} color="primary">
+                            No
+                        </Button>
+                        
                     </DialogActions>
                 </Dialog>
 
@@ -150,10 +151,7 @@ const EditQuestionnaire = (props) => {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleCancelClose} color="primary">
-                            No
-                        </Button>
-                        <Button
+                    <Button
                             onClick={() => {
                                 handleCancelClose();
                                 window.location.href = manage_questionnaire_url;
@@ -164,6 +162,10 @@ const EditQuestionnaire = (props) => {
                         >
                             Yes
                         </Button>
+                        <Button onClick={handleCancelClose} color="primary">
+                            No
+                        </Button>
+                        
                     </DialogActions>
                 </Dialog>
 
