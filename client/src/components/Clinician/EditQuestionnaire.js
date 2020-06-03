@@ -116,12 +116,12 @@ const EditQuestionnaire = (props) => {
                     <DialogTitle id="alert-dialog-title">{"Save"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            Are you sure to save this questionnaire?
+                            Are you sure you want to save this questionnaire?
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleSaveClose} color="primary">
-                            Disagree
+                            No
                         </Button>
                         <Button
                             onClick={() => {
@@ -132,7 +132,7 @@ const EditQuestionnaire = (props) => {
                             color="primary"
                             autoFocus
                         >
-                            Agree
+                            Yes
                         </Button>
                     </DialogActions>
                 </Dialog>
@@ -146,12 +146,12 @@ const EditQuestionnaire = (props) => {
                     <DialogTitle id="alert-dialog-title">{"Save"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            Are you sure to save this questionnaire?
+                            Are you sure you want to cancel this questionnaire?
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleCancelClose} color="primary">
-                            Disagree
+                            No
                         </Button>
                         <Button
                             onClick={() => {
@@ -162,7 +162,7 @@ const EditQuestionnaire = (props) => {
                             color="primary"
                             autoFocus
                         >
-                            Agree
+                            Yes
                         </Button>
                     </DialogActions>
                 </Dialog>
