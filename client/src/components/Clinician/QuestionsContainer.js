@@ -113,15 +113,15 @@ const QuestionForm = ({
 
     const handleRangeClick = (e) => {
         e.preventDefault();
-        changeToRangeQuestion(scenarioIndex,questionIndex);
+        changeToRangeQuestion(sectionIndex,scenarioIndex,questionIndex);
     };
     const handleMultipleClick = (e) => {
         e.preventDefault();
-        changeToMCQQuestion(scenarioIndex,questionIndex);
+        changeToMCQQuestion(sectionIndex,scenarioIndex,questionIndex);
     };
     const handleRemoveClick = (e) => {
         e.preventDefault();
-        removeQuestion(scenarioIndex,questionIndex);
+        removeQuestion(sectionIndex,scenarioIndex,questionIndex);
     };
 
     const renderHeader = () => {
@@ -168,6 +168,8 @@ const QuestionForm = ({
                     mcqOptions={mcqOptions}
                     addAnswerToMCQQuestion={addAnswerToMCQQuestion}
                     deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
+                    sectionIndex={sectionIndex}
+                    scenarioIndex={scenarioIndex}
                     questionIndex={questionIndex}
                     handleMultiChoiceDesChange={handleMultiChoiceDesChange}
                     handleMultiAnsChange={handleMultiAnsChange}
@@ -218,16 +220,20 @@ const MultipleChoiceQuestionFrom = (props) => {
         deleteAnswerToMCQQuestion,
         mcqOptions,
         questionIndex,
-        description
+        description,
+        sectionIndex,
+        scenarioIndex,
+        handleMultiChoiceDesChange,
+        handleMultiAnsChange
     } = props;
 
-    const addAnswer = (questionIndex) => {
-        addAnswerToMCQQuestion(questionIndex);
-    };
+    // const addAnswer = (sectionIndex,scenarioIndex,questionIndex) => {
+    //     addAnswerToMCQQuestion(sectionIndex,scenarioIndex,questionIndex);
+    // };
 
-    const deleteAnswer = (questionIndex, answerIndex) => {
-        deleteAnswerToMCQQuestion(questionIndex, answerIndex);
-    };
+    // const deleteAnswer = (sectionIndex,scenarioIndex,questionIndex, answerIndex) => {
+    //     deleteAnswerToMCQQuestion(sectionIndex,scenarioIndex,questionIndex, answerIndex);
+    // };
 
     // to change the question of range questions (because the scheme in the data base didn't have this para,
     // but we have in the frontend, so we need to change it later, comment this first).
@@ -237,13 +243,13 @@ const MultipleChoiceQuestionFrom = (props) => {
     // }
 
     //
-    const handleMultiChoiceDesChange = (event, questionIndex) => {
-        props.handleMultiChoiceDesChange(event, questionIndex);
-    };
-
-    const handleMultiAnsChange = (event, questionIndex, answerIndex) => {
-        props.handleMultiAnsChange(event, questionIndex, answerIndex);
-    };
+    // const handleMultiChoiceDesChange = (event, questionIndex) => {
+    //     props.handleMultiChoiceDesChange(event, questionIndex);
+    // };
+    //
+    // const handleMultiAnsChange = (event, questionIndex, answerIndex) => {
+    //     props.handleMultiAnsChange(event, questionIndex, answerIndex);
+    // };
 
     return (
         <div className="questionTable-form">
@@ -261,7 +267,12 @@ const MultipleChoiceQuestionFrom = (props) => {
                     placeholder="Write the description."
                     value={description}
                     onChange={(event) =>
-                        handleMultiChoiceDesChange(event, questionIndex)
+                        handleMultiChoiceDesChange(
+                            event,
+                            sectionIndex,
+                            scenarioIndex,
+                            questionIndex
+                        )
                     }
                 />
                 <FormHelperText>Write the description.</FormHelperText>
@@ -281,6 +292,8 @@ const MultipleChoiceQuestionFrom = (props) => {
                                         onChange={(event) =>
                                             handleMultiAnsChange(
                                                 event,
+                                                sectionIndex,
+                                                scenarioIndex,
                                                 questionIndex,
                                                 index
                                             )
@@ -296,10 +309,7 @@ const MultipleChoiceQuestionFrom = (props) => {
                                 type="button"
                                 onClick={(event) => {
                                     event.preventDefault();
-                                    return deleteAnswer(
-                                        questionIndex,
-                                        index
-                                    );
+                                    deleteAnswerToMCQQuestion(sectionIndex,scenarioIndex,questionIndex, index);
                                 }}
                             >
                                 {" "}
@@ -312,7 +322,7 @@ const MultipleChoiceQuestionFrom = (props) => {
                 className="add-answer-button"
                 onClick={(event) => {
                     event.preventDefault();
-                    return addAnswer(questionIndex);
+                    addAnswerToMCQQuestion(sectionIndex,scenarioIndex,questionIndex);
                 }}
             >
                 {" "}

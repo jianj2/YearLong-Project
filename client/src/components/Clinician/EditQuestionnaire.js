@@ -39,11 +39,13 @@ const EditQuestionnaire = (props) => {
         addAnswerToMCQQuestion,
         deleteAnswerToMCQQuestion,
         addQuestion,
-        addScenario,
+        addScenario,removeScenario,
         handleQuestionnaireTitleChange,
         handleQuestionnaireDesChange,
         handleMultiAnsChange,
         handleMultiChoiceDesChange,
+        handleSecTitleChange,
+        handleSceDesChange
     } = props;
 
     const [open, setOpen] = React.useState(false);
@@ -151,12 +153,15 @@ const EditQuestionnaire = (props) => {
                     addQuestion={addQuestion}
                     removeQuestion={removeQuestion}
                     addScenario={addScenario}
+                    removeScenario={removeScenario}
                     changeToRangeQuestion={changeToRangeQuestion}
                     changeToMCQQuestion={changeToMCQQuestion}
                     addAnswerToMCQQuestion={addAnswerToMCQQuestion}
                     deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
                     handleMultiChoiceDesChange={handleMultiChoiceDesChange}
-                    handleMultiAnsChange={handleMultiAnsChange}/>
+                    handleMultiAnsChange={handleMultiAnsChange}
+                    handleSecTitleChange={handleSecTitleChange}
+                    handleSceDesChange={handleSceDesChange}/>
             </div>
         );
     }
