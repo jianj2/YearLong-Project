@@ -31,6 +31,7 @@ import "../styles/questionnaire.css";
 import "../styles/main.css";
 
 export default function Question({
+    readOnly,
     questionIndex,
     sectionIndex,
     scenarioIndex,

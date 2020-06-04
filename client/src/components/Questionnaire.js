@@ -23,6 +23,7 @@ import "../styles/questionnaire.css";
 import "../styles/main.css";
 
 export default function Questionnaire({
+    readOnly,
     questionnaire,
     submitQuestionnaire,
     questionnaireData,
@@ -58,6 +59,7 @@ export default function Questionnaire({
                             {scenario.questions.map(
                                 (question, questionIndex) => (
                                     <Question
+                                        readOnly={readOnly}
                                         error={true}
                                         key={questionIndex}
                                         questionIndex={questionIndex}

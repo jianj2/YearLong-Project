@@ -59,6 +59,7 @@ const HomeParents = ({ match }) => {
             console.log(res)
             // Server call to get the questionnaire.
             setClinicianEmail(res.clinicianEmail);
+            setReadOnly(res.readOnly);
             API.getQuestionnaire(res.questionnaireId).then((res) => {
                 // Define initial values for the Questionnaire
                 let tempResponse = [];
@@ -187,6 +188,7 @@ const HomeParents = ({ match }) => {
 
                 <div className="parents-container">
                     <Questionnaire
+                        readOnly={readOnly}
                         questionnaire={questionnaire}
                         submitQuestionnaire={submitQuestionnaire}
                         questionnaireData={questionnaireData}
