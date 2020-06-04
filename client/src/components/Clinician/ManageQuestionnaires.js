@@ -3,7 +3,7 @@
  * REACT COMPONENT
  * ====================================================================
  * @date created: 17th May 2020
- * @authors: Guang Yang
+ * @authors: Guang Yang, Jin Chen
  *
  * The content panel will display the content of managing the questionnaire lists
  *
@@ -11,30 +11,37 @@
  *
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // Import styles.
 import "../../styles/managequestionnaires.css";
 import "../../styles/main.css";
 import * as API from "../../utils/api";
+import {formatDate} from "../../utils/formatter"
+import { useAuth0 } from "../../utils/react-auth0-spa";
+
 
 const ManageQuestionnaires = (props) => {
+    const { loading, isAuthenticated, loginWithRedirect, user } = useAuth0();
+    console.log(user.name); //TODO: change that when we have actual clincianId
+
     const [Questionnaires, setQuestionnaires] = useState({
-        customized_Questionnaire: [
-            {
-                QID: 1,
-                Qname: "First custom questionnaire",
-                Qdescription: "Details about it",
-                date: "17/05/2020",
-            },
-            {
-                QID: 2,
-                Qname: "Second custom questionnaire",
-                Qdescription: "Details about it",
-                date: "17/05/2020",
-            },
-        ],
+       
+         customized_Questionnaire: []
+        
     });
+     useEffect( () => {
+        async function retrieveQuestionnaires(){const customisedQuestionnaires = await API.getClinicianQuestionnaires(user.name);
+            console.log(customisedQuestionnaires);
+            const today = formatDate();
+            const customisedQuestionnairesElement = customisedQuestionnaires.map((q)=> {return {QID:q.questionnaireId, Qname:q.title, Qdescription:q.description, date:today} });
+            setQuestionnaires({customized_Questionnaire: customisedQuestionnairesElement});
+        };
+        retrieveQuestionnaires();
+    
+    },[]);
+   
+
 
     function SQgenerator(Qname, Qdescription, date) {
         return (
@@ -57,31 +64,40 @@ const ManageQuestionnaires = (props) => {
         return customized_Questionnaire_list;
     }
 
+    function Edit(questionnaireID) {
+        let edit_url = "/clinician/" + questionnaireID + "/edit";
+        window.location.href = edit_url;
+    }
+
     function Delete(questionnaireID) {
         const arrayCopy = Questionnaires.customized_Questionnaire.filter(
             (q) => q.QID !== questionnaireID
         );
         setQuestionnaires({ customized_Questionnaire: arrayCopy });
-        API.deleteQuestionnaire(questionnaireID);
+        API.deleteQuestionnaire(questionnaireID, user.name);
     }
 
     async function AddNew() {
 
-        const uuid = await API.addQuestionnaire();
+        const uuid = await API.addQuestionnaire(user.name);
+        const today = formatDate();
         const AddedArray = Questionnaires.customized_Questionnaire;
         AddedArray.push({
             QID: uuid,
             Qname: "New custom questionnaire",
-            Qdescription: "Details about it",
-            date: "17/05/2020",
+            Qdescription: "Provide some description for this questionnaire.",
+            date:  today,
         });
         setQuestionnaires({ customized_Questionnaire: AddedArray });
+        
+        // let edit_url = "/clinician/" + uuid + "/edit";
+        // window.location.href = edit_url;
     }
 
    
 
     function CQgenerator(QID, Qname, Qdescription, date) {
-        var edit_url = "/clinician/" + QID + "/edit";
+        // var edit_url = "/clinician/" + QID + "/edit";
         return (
             <div className="q-frame" key={QID}>
                 <div className="q-name">{Qname}</div>
@@ -90,7 +106,7 @@ const ManageQuestionnaires = (props) => {
                 <div className="btns-container">
                     <button
                         className="edit-btn"
-                        onClick={() => (window.location.href = edit_url)}
+                        onClick={(e) => Edit(QID,e)}
                     >
                         Edit
                     </button>
@@ -108,13 +124,13 @@ const ManageQuestionnaires = (props) => {
     return (
         <div>
             <div className="standard-questionnaire-container">
-                <div className="SQ-header">Standard questionnaires</div>
-                {SQgenerator("Q1", "blabla", "17/05/2020")}
-                {SQgenerator("Q2", "blabla", "17/05/2020")}
+                <div className="SQ-header"><h1>Standard questionnaires</h1></div>
+                {SQgenerator("SSQ-P", "SSQ for parents", "17/05/2020")}
+                {SQgenerator("SSQ-C", "SSQ for children ", "17/05/2020")}
             </div>
             <div className="customized-questionnaire-container">
                 <div className="CQ-header">
-                    My Custome Questionnaires
+                    <h1>My Custom Questionnaires</h1>
                     <button className="Add-btn" onClick={AddNew}>
                         Add New
                     </button>

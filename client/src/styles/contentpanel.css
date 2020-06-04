@@ -10,11 +10,13 @@
  *
  */
 
- .content-container {
-    margin-left: 16vw;
-    /*padding: 0 1vw;*/
+
+
+.content-container {
     display: flex;
+    flex: 3;
+ 
     flex-direction: column;
     padding: 0 4vw;
-    width: 100%;
+    
 }

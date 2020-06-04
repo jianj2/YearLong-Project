@@ -12,152 +12,334 @@
  *
  */
 
-import React,{useState} from "react";
-import PropTypes from "prop-types";
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
+import React, { useState } from "react";
+import {
+    Input,
+    FormControl,
+    InputLabel,
+    FormHelperText,
+    InputAdornment,
+    IconButton,
+} from "@material-ui/core";
 
-import {render} from "react-dom";
+import PropTypes from "prop-types";
+import Button from "@material-ui/core/Button";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+
+import { render } from "react-dom";
 import BottomContainer from "./BottomContainer";
 
-import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
+import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core/styles";
+
+// import style
+import "../../styles/main.css";
 
 // handles rendering of TopContainer in the Clinician page
-
-const QuestionsContainer = (props) => {
-        return (
-            <div className="questions-container">
-                {props.questionTable && props.questionTable.map((item,index) => {
+const QuestionsContainer = ({
+                                questions,
+                                scenarioIndex,
+                                sectionIndex,
+                                removeQuestion,
+                                changeToRangeQuestion,
+                                changeToMCQQuestion,
+                                addAnswerToMCQQuestion,
+                                deleteAnswerFromMCQQuestion,
+                                handleQuestionDesChange,
+                                handleQuestionOptsChange,
+                            } ) => {
+    return (
+        <div className="questions-container">
+            {questions && questions.map((item, index) => {
                     return (
-                        <QuestionTable item={item} index={index} removeQuestion={props.removeQuestion}/>
-                    )
-                    })
-                }
-                {/*{props.questionTable}*/}
-                {/*<div className="questionTableThree" style={{*/}
-                {/*    alignItems: 'center', borderRadius: '25px',*/}
-                {/*    paddingBlock: '100px', border: '1px solid white',*/}
-                {/*    marginLeft: '80px', marginRight: '80px'*/}
-                {/*}}>*/}
-                {/*    <div>*/}
-                {/*        <ButtonGroup size="small" aria-label="small outlined button group"*/}
-                {/*                     style={{width: '100%'}}>*/}
-                {/*            <Button className="questionType-button" >Range Question</Button>*/}
-                {/*            <Button className="questionType-button" >Multiple Choice Question</Button>*/}
-                {/*            <Button className="questionRemove-button" >Remove</Button>*/}
-                {/*        </ButtonGroup>*/}
-                {/*    </div>*/}
-                {/*    <MultipleChoiceQuestionFrom/>*/}
-                {/*</div>*/}
-             </div>
-        );
+                        <QuestionForm
+                            item={item}
+                            key={item._id}
+                            questionIndex={index}
+                            scenarioIndex={scenarioIndex}
+                            sectionIndex={sectionIndex}
+                            removeQuestion={removeQuestion}
+                            changeToRangeQuestion={changeToRangeQuestion}
+                            changeToMCQQuestion={changeToMCQQuestion}
+                            addAnswerToMCQQuestion={addAnswerToMCQQuestion}
+                            deleteAnswerFromMCQQuestion={
+                                deleteAnswerFromMCQQuestion
+                            }
+                            handleQuestionDesChange={
+                                handleQuestionDesChange
+                            }
+                            handleQuestionOptsChange={handleQuestionOptsChange}
+                        />
+                    );
+                })}
+        </div>
+    );
 };
 
-const QuestionFrom = (props) =>{
-    if (props.whichFrom == 0){
-        return <RangeQuestionFrom />
+//decide which kind of question to show
+const QuestionForm = ({
+    questionIndex,
+    removeQuestion,
+    sectionIndex,
+    scenarioIndex,
+    changeToMCQQuestion,
+    changeToRangeQuestion,
+    addAnswerToMCQQuestion,
+    deleteAnswerFromMCQQuestion,
+    handleQuestionDesChange,
+    handleQuestionOptsChange,
+    item,
+}) => {
+    const { rangeOptions, description, mcqOptions, isMCQ} = item;
+
+    const handleRangeClick = (e) => {
+        e.preventDefault();
+        changeToRangeQuestion(sectionIndex,scenarioIndex,questionIndex);
+    };
+    const handleMultipleClick = (e) => {
+        e.preventDefault();
+        changeToMCQQuestion(sectionIndex,scenarioIndex,questionIndex);
+    };
+    const handleRemoveClick = (e) => {
+        e.preventDefault();
+        removeQuestion(sectionIndex,scenarioIndex,questionIndex);
+    };
+
+    const renderHeader = () => {
+        return (
+            <div className="questionTable-button-group">
+                <button
+                    className={!isMCQ ? "questionTable-button-selected" : ""}
+                    onClick={handleRangeClick}
+                >
+                    Range Question
+                </button>
+                <button
+                    className={isMCQ ? "questionTable-button-selected" : ""}
+                    onClick={handleMultipleClick}
+                >
+                    Multiple Choice Question
+                </button>
+                <button
+                    id="questionTable-remove-button"
+                    onClick={handleRemoveClick}
+                >
+                    Remove
+                </button>
+            </div>
+        );
+    };
+
+    if (isMCQ == false) {
+        return (
+            <div className="questionTable">
+                {renderHeader()}
+                <RangeQuestionFrom
+                    sectionIndex={sectionIndex}
+                    scenarioIndex={scenarioIndex}
+                    questionIndex={questionIndex}
+                    rangeOptions={rangeOptions}
+                    handleQuestionDesChange={handleQuestionDesChange}
+                    handleQuestionOptsChange={handleQuestionOptsChange}
+                />
+            </div>
+        );
     } else {
-        return <MultipleChoiceQuestionFrom />
-    }
-}
-
-const RangeQuestionFrom = () =>{
         return (
-            <div className="range-question-from">
-                <form className="rangeQuestion">
-                    <p>
-                        <label>Question:</label>
-                        <input name="Question" placeholder='How likely is this to happen?'/>
-                    </p>
-
-                    <p>
-                        <label>Description:</label>
-                        <input name="Description"
-                               placeholder='Please select the slider to number. 0 is unlikely. 1 is will happen for sure.'/>
-                    </p>
-                </form>
+            <div className="questionTable">
+                {renderHeader()} 
+                <MultipleChoiceQuestionFrom
+                    description={description}
+                    mcqOptions={mcqOptions}
+                    addAnswerToMCQQuestion={addAnswerToMCQQuestion}
+                    deleteAnswerFromMCQQuestion={deleteAnswerFromMCQQuestion}
+                    sectionIndex={sectionIndex}
+                    scenarioIndex={scenarioIndex}
+                    questionIndex={questionIndex}
+                    handleQuestionDesChange={handleQuestionDesChange}
+                    handleQuestionOptsChange={handleQuestionOptsChange}
+                />
             </div>
         );
-}
-
-
-
-const MultipleChoiceQuestionFrom = () =>{
-        const [mcqOptions, setState] = useState([0,1,2,3]);
-
-        const addAnswer = () => {
-            setState([...mcqOptions, mcqOptions.length]);
-        }
-
-        const deleteAnswer = (index) =>{
-            const list = [...mcqOptions];
-            list.splice(index,1);
-            setState(list);
-        }
-
-        return (
-            <div className="multiple-choice-question-from">
-                <form className="multipleChoiceQuestion">
-                    <p>
-                        <label>Question:</label>
-                        <input name="Question" placeholder='What’s your favourite fruit?'/>
-                    </p>
-
-                    <p>
-                        <label>Description:</label>
-                        <input name="Description" placeholder='Please select one of the options below:'/>
-                    </p>
-                    {/*add new answer textarea*/}
-                    {
-                        mcqOptions && mcqOptions.map((item,index) => {
-                            return (
-                                <p key={item} index={index}>
-                                    <label>Answers</label>
-                                    <input name={item}/>
-                                    <button className="delete-answer-button" type="button" onClick={(index) => deleteAnswer(index)}> - </button>
-                                </p>
-                            )
-                        })
-                    }
-                </form>
-                <button className="add-answer-button" onClick={addAnswer}> + </button>
-            </div>
-        );
-}
-
-const QuestionTable = (props) =>{
-
-    const [whichForm,setState] = useState(0);
-    const handleRangeClick = () =>{
-        setState(0);
     }
-    const handleMultipleClick = () =>{
-        setState(1);
-    }
-    const handleRemoveClick = () =>{
-        props.removeQuestion(props.index);
+};
+
+//display the range question
+const RangeQuestionFrom = ({
+                               sectionIndex,
+                               scenarioIndex,
+                               questionIndex,
+                               rangeOptions,
+                               handleQuestionDesChange,
+                               handleQuestionOptsChange}) => {
+
+    const handleRangeChange = (event, questionIndex, answerIndex) =>{
+        handleQuestionOptsChange(event,questionIndex,answerIndex);
     }
 
     return (
-        <div className="questionTable">
-            <div>
-                <ButtonGroup size="small" aria-label="small outlined button group"
-                             style={{width: '100%'}}>
-                    <Button className="questionType-button" onClick={handleRangeClick}>Range Question</Button>
-                    <Button className="questionType-button" onClick={handleMultipleClick}>Multiple Choice Question</Button>
-                    <Button className="questionRemove-button" onClick={handleRemoveClick}>Remove</Button>
-                </ButtonGroup>
-            </div>
-            <QuestionFrom whichFrom={whichForm}/>
+        <div className="questionTable-form">
+
+            {/*<FormControl margin="dense">*/}
+            {/*    <InputLabel>Description</InputLabel>*/}
+            {/*    <Input*/}
+            {/*        placeholder="Write the question."*/}
+            {/*    />*/}
+            {/*    <FormHelperText>Write the question.</FormHelperText>*/}
+            {/*</FormControl>*/}
+
+            <h3>Ranges</h3>
+            <FormControl margin="dense">
+                <InputLabel>RangeStarts</InputLabel>
+                <Input
+                    placeholder="Write the Range Starts."
+                    value={rangeOptions[0]}
+                    onChange={(event) =>{
+                        handleQuestionOptsChange(
+                            event,
+                            sectionIndex,
+                            scenarioIndex,
+                            questionIndex,
+                            0);
+                    }}
+                />
+                <FormHelperText>Write the Range Starts.</FormHelperText>
+            </FormControl>
+
+           
+            <FormControl margin="dense">
+                <InputLabel>RangeEnds</InputLabel>
+                <Input
+                    placeholder="Write the Range Ends."
+                    value={rangeOptions[1]}
+                    onChange={(event) =>{
+                        handleQuestionOptsChange(
+                            event,
+                            sectionIndex,
+                            scenarioIndex,
+                            questionIndex,
+                            1);
+                    }}
+                />
+                <FormHelperText>Write the Range Ends.</FormHelperText>
+            </FormControl>
         </div>
     );
-}
+};
 
+//display the multiple choice question
+const MultipleChoiceQuestionFrom = (props) => {
+    const {
+        addAnswerToMCQQuestion,
+        deleteAnswerFromMCQQuestion,
+        mcqOptions,
+        questionIndex,
+        description,
+        sectionIndex,
+        scenarioIndex,
+        handleQuestionDesChange,
+        handleQuestionOptsChange
+    } = props;
 
+    // const addAnswer = (sectionIndex,scenarioIndex,questionIndex) => {
+    //     addAnswerToMCQQuestion(sectionIndex,scenarioIndex,questionIndex);
+    // };
+
+    // const deleteAnswer = (sectionIndex,scenarioIndex,questionIndex, answerIndex) => {
+    //     deleteAnswerToMCQQuestion(sectionIndex,scenarioIndex,questionIndex, answerIndex);
+    // };
+
+    // to change the question of range questions (because the scheme in the data base didn't have this para,
+    // but we have in the frontend, so we need to change it later, comment this first).
+
+    // const handleMultiChoiceQuestionChange = (event) =>{
+    //
+    // }
+
+    //
+    // const handleMultiChoiceDesChange = (event, questionIndex) => {
+    //     props.handleMultiChoiceDesChange(event, questionIndex);
+    // };
+    //
+    // const handleMultiAnsChange = (event, questionIndex, answerIndex) => {
+    //     props.handleMultiAnsChange(event, questionIndex, answerIndex);
+    // };
+
+    return (
+        <div className="questionTable-form">
+            <FormControl margin="dense">
+                <InputLabel>Description</InputLabel>
+                <Input
+                    placeholder="Write the description."
+                    value={description}
+                    onChange={(event) =>
+                        handleQuestionDesChange(
+                            event,
+                            sectionIndex,
+                            scenarioIndex,
+                            questionIndex
+                        )
+                    }
+                />
+                <FormHelperText>Write the description.</FormHelperText>
+            </FormControl>
+
+            <h3>Answers</h3>
+            {mcqOptions &&
+                mcqOptions.map((item, index) => {
+                    return (
+                        <div className="questionTable-answer" key={index}>
+                            <div>
+                                <FormControl margin="dense">
+                                    <InputLabel>Answer {index+1}</InputLabel>
+                                    <Input
+                                        placeholder="Write the Answer."
+                                        value={mcqOptions[index]}
+                                        onChange={(event) =>
+                                            handleQuestionOptsChange(
+                                                event,
+                                                sectionIndex,
+                                                scenarioIndex,
+                                                questionIndex,
+                                                index
+                                            )
+                                        }
+                                    />
+                                    <FormHelperText>
+                                        Write the Answer.
+                                    </FormHelperText>
+                                </FormControl>
+                            </div>
+                            <button
+                                className="delete-answer-button"
+                                type="button"
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    deleteAnswerFromMCQQuestion(sectionIndex,scenarioIndex,questionIndex, index);
+                                }}
+                            >
+                                {" "}
+                                -{" "}
+                            </button>
+                        </div> 
+                    );
+            })} 
+            <button
+                className="add-answer-button"
+                onClick={(event) => {
+                    event.preventDefault();
+                    addAnswerToMCQQuestion(sectionIndex,scenarioIndex,questionIndex);
+                }}
+            >
+                {" "}
+                +{" "}
+            </button>
+        </div>
+    );
+};
 
 QuestionsContainer.protoTypes = {
-    removeQuestion: PropTypes.func
-}
+    removeQuestion: PropTypes.func,
+};
 
 export default QuestionsContainer;

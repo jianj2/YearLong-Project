@@ -76,10 +76,10 @@ function App() {
                         exact 
                         render={() => <HomeClinician active = {3}/>} 
                     />
-                    <Route 
+                    <Route
                         path="/clinician/:id/edit" 
-                        exact 
-                        render={() => <HomeClinician active = {4}/>} 
+                        exact
+                        render={({match}) => (<HomeClinician active = {4} questionnaireID={match.params.id}/>)}
                     />
                 </Switch>
             </Router>

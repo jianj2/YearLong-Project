@@ -20,6 +20,7 @@ import DoTheTestContainer from "./DoTheTestContainer";
 import InstructionsContainer from "./InstructionsContainer";
 import QuestionnaireContainer from "./QuestionnaireContainer"
 
+//import style
 import "../../styles/contentpanel.css";
 import "../../styles/main.css";
 
@@ -43,19 +44,18 @@ const ContentPanel = (props) => {
 
     else if(props.active === 4){
         return (
-                <QuestionnaireContainer />
+                <QuestionnaireContainer questionnaireID = {props.questionnaireID}/>
         );
     }
 
     else{
         return(
             <div className="content-container">
-                <ManageQuestionnaires/>
+                <ManageQuestionnaires />
             </div>
         )
     }
     
-   
 };
 
 

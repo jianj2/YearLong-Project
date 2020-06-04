@@ -10,16 +10,30 @@
  *
  */
 
-.SQ-header {
-    font-size: 40px;
-    font-family: Raleway;
-    margin:30px 0;
+
+@media all and (max-width: 800px) {
+    .CQ-header, .SQ-header{
+        display: flex;
+        flex-direction: column; 
+        align-items: stretch;
+        min-width: 400px;
+    }
+    .CQ-header h1, .SQ-header h1{
+        font-size: 6vw;
+        min-width: 400px;
+    }
+
 }
 
-.CQ-header{
-    font-size: 40px;
-    font-family: Raleway;
-    margin: 30px 0;
+
+.CQ-header,.SQ-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem 0;
+}
+.CQ-header h1, .SQ-header h1{
+    font-weight: 200;
 }
 
 .q-frame{

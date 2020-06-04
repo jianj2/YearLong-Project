@@ -89,7 +89,7 @@ const DoTheTestContainer = () => {
     const onClickQuestion = (questionnaireId) => {
         console.log("questionnaire clicked", questionnaireId);
         setWizardStep(0);
-        API.getSpecificQuestionnaire(questionnaireId).then((res) => {
+        API.getQuestionnaire(questionnaireId).then((res) => {
             console.log(res);
             // Define initial values for the Questionnaire
             let tempResponse = [];
