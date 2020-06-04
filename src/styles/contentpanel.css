@@ -16,5 +16,6 @@
     display: flex;
     flex: 3;
     flex-direction: column;
-    padding: 0 5vw;
+    padding: 0 5vw 2rem;
+    overflow: auto;
 }
