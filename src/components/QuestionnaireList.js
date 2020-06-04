@@ -13,6 +13,41 @@
  *
  * This file is used to display the Sidebar component
  *
+ * Props:
+ *  -questionnaires: (Array):
+ *      This would be the array of questionnaire, which will be
+ *      displayed.
+ *
+ *  -listTitle: (String):
+ *      This would be title that displays on top of the list.
+ *
+ *  -isSelectable: (Boolean):
+ *      If true, the list items are selectable.
+ *
+ *  - onClickQuestion: (Function):
+ *      Defines what happens when the list item is clicked. Only works
+ *      when isSelectable === true. This function returns the
+ *      questionnaireId which can be used by the parent component
+ *      calling this List to use that ID in any way it wants.
+ *
+ *  - canEdit: (Boolean):
+ *      If true, shows the Edit Button.
+ *
+ *  - onClickEdit: (Function):
+ *      Defines what the edit button must do. Returns the
+ *      questionnaireId which can be used by the parent component
+ *      calling this List to take the app to the edit questionnaire
+ *      page.
+ *
+ *  - canDelete: (Boolean):
+ *      If true, shows the Delete Button.
+ *
+ *  - onClickDelete: (Function):
+ *      Defines what the delete button must do. Returns the
+ *      questionnaireId which can be used by the parent component
+ *      calling this List to delete the questionnaire.
+ *
+ *
  */
 
 import React, { useEffect, useState } from "react";
@@ -25,7 +60,9 @@ const QuestionnaireList = ({
     isSelectable,
     onClickQuestion,
     canEdit,
+    onClickEdit,
     canDelete,
+    onClickDelete,
 }) => {
     const ListItem = ({
         questionnaireId,
@@ -35,7 +72,9 @@ const QuestionnaireList = ({
         isSelectable,
         onClickQuestion,
         canEdit,
+        onClickEdit,
         canDelete,
+        onClickDelete,
     }) => {
         // var edit_url = "/clinician/" + QID + "/edit";
         return (
@@ -46,7 +85,7 @@ const QuestionnaireList = ({
                         : "questionnaire-list-item"
                 }
                 onClick={() => {
-                    if (isSelectable) onClickQuestion(questionnaireId)
+                    if (isSelectable) onClickQuestion(questionnaireId);
                 }}
             >
                 <div className="q-name">{title}</div>
@@ -54,11 +93,21 @@ const QuestionnaireList = ({
                 <div className="date">{Date.now()}</div>
                 <div className="btns-container">
                     {canEdit ? (
-                        <button className="edit-btn">Edit</button>
+                        <button
+                            className="edit-btn"
+                            onClick={() => onClickEdit(questionnaireId)}
+                        >
+                            Edit
+                        </button>
                     ) : null}
 
                     {canDelete ? (
-                        <button className="delete-btn">Delete</button>
+                        <button
+                            className="delete-btn"
+                            onClick={() => onClickDelete(questionnaireId)}
+                        >
+                            Delete
+                        </button>
                     ) : null}
                 </div>
             </div>
@@ -76,7 +125,9 @@ const QuestionnaireList = ({
                     isSelectable={isSelectable}
                     onClickQuestion={onClickQuestion}
                     canEdit={canEdit}
+                    onClickEdit={onClickEdit}
                     canDelete={canDelete}
+                    onClickDelete={onClickDelete}
                 />
             ))}
         </div>

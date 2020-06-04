@@ -200,7 +200,9 @@ const DoTheTestContainer = () => {
                     isSelectable={true}
                     onClickQuestion={onClickQuestion}
                     canEdit={false}
+                    onClickEdit={() => {}}
                     canDelete={false}
+                    onClickDelete={() => {}}
                 />
             </div>
         );
