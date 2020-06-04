@@ -63,14 +63,7 @@ export default function Question({
     //     onQuestionChange(sectionIndex, scenarioIndex, questionIndex, quesionResponseData);
     // }, [sliderValue, extraQuestion, frequencyValue, importanceValue]);
 
-    useEffect(() => {
-        let quesionResponseData = {
-            sliderValue,
-            extraQuestion,
-            frequencyValue,
-            importanceValue,
-        };
-
+    useEffect(() => { 
         console.log("answered:", answered);
         onQuestionChange(sectionIndex, scenarioIndex, questionIndex, answered);
     }, [answered]);
