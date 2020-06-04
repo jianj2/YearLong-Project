@@ -11,9 +11,9 @@
  */
 
 .navbar-container {
-    width: 98vw;
+    width: 96vw;
     height: 5vh;
-    padding: 0 1vw;
+    padding: 0 2vw;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -36,14 +36,25 @@
 }
 
 .navbar-right button {
+    cursor: pointer;
     background: 0;
-    padding: 0;
+    padding: 0 5px 0 1rem;
     outline: 0;
     border: 0;
     margin: 0 5px;
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: 200;
+
 
 }
 
+.navbar-right label  {
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 200;
+}
 .navbar-right svg {
     cursor: pointer;
     color: #eee;
