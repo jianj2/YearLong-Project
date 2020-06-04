@@ -54,14 +54,9 @@
 
 .edit-description {
   align-items: center;
-  margin-left: 80px;
-  margin-right: 80px;
+  margin: 0 4rem; 
 }
-
-.edit-description h2{
-  /* margin: 30px; */
-}
-
+ 
 .edit-description hr{
   alignSelf:center;
   width:100%;
@@ -144,11 +139,9 @@ width: 65%;
   align-items:center;
   border-radius:25px;
   padding-block:100px;
-  border:1px solid white;
-  margin-bottom: 20px;
-  margin-left:80px;
-  margin-right:80px;
+  border:1px solid white; 
   overflow: hidden;
+  margin: 0 1rem;
 }
 
 .questionTable-form {
@@ -279,8 +272,6 @@ width: 65%;
   display: flex;
   justify-content: center;
   align-items: center;
-
-
 }
 
 #edit-cancel-button{
@@ -297,14 +288,16 @@ width: 65%;
 .scenarios-container{
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; 
+
 }
 
 .sections-container{
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 8vh;
+  margin: 1rem 3rem; 
+
 }
 
 
