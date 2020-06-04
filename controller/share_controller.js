@@ -145,7 +145,8 @@ const deleteShare = function (req, res) {
 // Send questionnaire link through email.
 var sendInvitationEmail = function (req, res, createdShare) {
     let patientEmail = createdShare.patientEmail;
-    let link = "http://localhost:3000/parent/" + createdShare.shareId + "" ;
+    // let link = "http://localhost:3000/parent/" + createdShare.shareId + "" ;
+    let link = "https://dev-client.herokuapp.com/parent/" + createdShare.shareId + ""; ;
     let message = "";
     if (createdShare.message != undefined){
         message = "Message from the clinician: " + createdShare.message + "";
