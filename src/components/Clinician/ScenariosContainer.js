@@ -15,7 +15,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import { MdDelete } from "react-icons/md";
 import {
     ExpansionPanel,
@@ -88,7 +87,7 @@ const ScenariosContainer = ({
                                             removeScenario(sectionIndex, index);
                                         }}
                                     >
-                                        <DeleteForeverIcon />
+                                        <MdDelete />
                                     </button>
                                 </div>
                                 <Typography>Scenario {index + 1}</Typography>
