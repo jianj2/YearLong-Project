@@ -13,9 +13,10 @@
  */
 
 import React from "react";
-import { makeStyles } from '@material-ui/core/styles';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import { makeStyles } from "@material-ui/core/styles";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import { MdDelete } from "react-icons/md";
 import {
     ExpansionPanel,
     ExpansionPanelDetails,
@@ -24,109 +25,123 @@ import {
     FormHelperText,
     Input,
     InputLabel,
-    Typography
+    Typography,
 } from "@material-ui/core";
 import QuestionsContainer from "./QuestionsContainer";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     heading: {
         fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightRegular,
     },
-    panel:{
-        width: '95%',
-        backgroundColor:'rgba(0,0,0,0.2)',
+    panel: {
+        width: "95%",
+        backgroundColor: "rgba(0,0,0,0.2)",
     },
-    summary:{
-        paddingLeft:'2vw',
+    summary: {
+        paddingLeft: "2vw",
     },
-    details:{
-        display:'block',
-        padding:0,
+    details: {
+        display: "block",
+        padding: 0,
     },
 }));
 
 const ScenariosContainer = ({
-                                scenarios,
-                                sectionIndex,
-                                removeQuestion,
-                                removeScenario,
-                                addQuestion,
-                                changeToRangeQuestion,
-                                changeToMCQQuestion,
-                                addAnswerToMCQQuestion,
-                                deleteAnswerFromMCQQuestion,
-                                handleSceDesChange,
-                                handleQuestionDesChange,
-                                handleQuestionOptsChange}) => {
-
+    scenarios,
+    sectionIndex,
+    removeQuestion,
+    removeScenario,
+    addQuestion,
+    changeToRangeQuestion,
+    changeToMCQQuestion,
+    addAnswerToMCQQuestion,
+    deleteAnswerFromMCQQuestion,
+    handleSceDesChange,
+    handleQuestionDesChange,
+    handleQuestionOptsChange,
+}) => {
     const classes = useStyles();
 
     return (
         <div className="scenarios-container">
-            {
-                scenarios && scenarios.map((item, index) => {
-                    return(
-                            <ExpansionPanel className={classes.panel}>
-                                <ExpansionPanelSummary
-                                    aria-label="Expand"
-                                    expandIcon={<ExpandMoreIcon />}
-                                    aria-controls="panel1a-content"
-                                    id="panel1a-header"
-                                    className={classes.summary}
+            {scenarios &&
+                scenarios.map((item, index) => {
+                    return (
+                        <ExpansionPanel className={classes.panel}>
+                            <ExpansionPanelSummary
+                                aria-label="Expand"
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1a-content"
+                                id="panel1a-header"
+                                className={classes.summary}
+                            >
+                                <div
+                                    className="delete-scenario-button"
+                                    onClick={(event) => event.stopPropagation()}
+                                    onFocus={(event) => event.stopPropagation()}
                                 >
-                                    <div
-                                        className="delete-scenario-button"
-                                        onClick={(event) => event.stopPropagation()}
-                                        onFocus={(event) => event.stopPropagation()}
+                                    <button
+                                        className="button"
+                                        onClick={(event) => {
+                                            event.preventDefault();
+                                            removeScenario(sectionIndex, index);
+                                        }}
                                     >
-                                        <button className="button"
-                                                onClick={(event)=>{
-                                                    event.preventDefault();
-                                                    removeScenario(sectionIndex,index);
-                                                }}>
-                                            <DeleteForeverIcon />
-                                        </button>
-                                    </div>
-                                    <Typography>Scenario {index+1}</Typography>
-                                </ExpansionPanelSummary>
-                                <ExpansionPanelDetails className={classes.details}>
-                                    <Scenario
-                                        item={item}
-                                        key={item._id}
-                                        sectionIndex={sectionIndex}
-                                        scenarioIndex={index}
-                                        removeQuestion={removeQuestion}
-                                        addQuestion={addQuestion}
-                                        changeToRangeQuestion={changeToRangeQuestion}
-                                        changeToMCQQuestion={changeToMCQQuestion}
-                                        addAnswerToMCQQuestion={addAnswerToMCQQuestion}
-                                        deleteAnswerFromMCQQuestion={deleteAnswerFromMCQQuestion}
-                                        handleSceDesChange={handleSceDesChange}
-                                        handleQuestionDesChange={handleQuestionDesChange}
-                                        handleQuestionOptsChange={handleQuestionOptsChange}/>
-                                        </ExpansionPanelDetails>
-                                    </ExpansionPanel>
-                            )})}
+                                        <DeleteForeverIcon />
+                                    </button>
+                                </div>
+                                <Typography>Scenario {index + 1}</Typography>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails className={classes.details}>
+                                <Scenario
+                                    item={item}
+                                    key={item._id}
+                                    sectionIndex={sectionIndex}
+                                    scenarioIndex={index}
+                                    removeQuestion={removeQuestion}
+                                    addQuestion={addQuestion}
+                                    changeToRangeQuestion={
+                                        changeToRangeQuestion
+                                    }
+                                    changeToMCQQuestion={changeToMCQQuestion}
+                                    addAnswerToMCQQuestion={
+                                        addAnswerToMCQQuestion
+                                    }
+                                    deleteAnswerFromMCQQuestion={
+                                        deleteAnswerFromMCQQuestion
+                                    }
+                                    handleSceDesChange={handleSceDesChange}
+                                    handleQuestionDesChange={
+                                        handleQuestionDesChange
+                                    }
+                                    handleQuestionOptsChange={
+                                        handleQuestionOptsChange
+                                    }
+                                />
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel>
+                    );
+                })}
         </div>
     );
 };
 
 const Scenario = ({
-                      item,
-                      sectionIndex,
-                      scenarioIndex,
-                      removeQuestion,
-                      addQuestion,
-                      changeToRangeQuestion,
-                      changeToMCQQuestion,
-                      addAnswerToMCQQuestion,
-                      deleteAnswerFromMCQQuestion,
-                      handleSceDesChange,
-                      handleQuestionDesChange,
-                      handleQuestionOptsChange}) =>{
-
-    const {questions,description} = item;
+    item,
+    sectionIndex,
+    scenarioIndex,
+    removeQuestion,
+    addQuestion,
+    changeToRangeQuestion,
+    changeToMCQQuestion,
+    addAnswerToMCQQuestion,
+    deleteAnswerFromMCQQuestion,
+    handleSceDesChange,
+    handleQuestionDesChange,
+    handleQuestionOptsChange,
+}) => {
+    const { questions, description } = item;
 
     // const handleDesChange = (event,sectionIndex,scenarioIndex) =>{
     //     handleSceDesChange(event,sectionIndex,scenarioIndex);
@@ -134,7 +149,6 @@ const Scenario = ({
 
     return (
         <div className="scenario">
-
             <div className="scenario-description">
                 <FormControl margin="dense">
                     <InputLabel>Scenario description</InputLabel>
@@ -142,10 +156,16 @@ const Scenario = ({
                         value={description}
                         placeholder="Write the scenario description."
                         onChange={(event) => {
-                            handleSceDesChange(event, sectionIndex, scenarioIndex);
+                            handleSceDesChange(
+                                event,
+                                sectionIndex,
+                                scenarioIndex
+                            );
                         }}
                     />
-                    <FormHelperText>Write the scenario description.</FormHelperText>
+                    <FormHelperText>
+                        Write the scenario description.
+                    </FormHelperText>
                 </FormControl>
             </div>
 
@@ -160,19 +180,21 @@ const Scenario = ({
                 addAnswerToMCQQuestion={addAnswerToMCQQuestion}
                 deleteAnswerFromMCQQuestion={deleteAnswerFromMCQQuestion}
                 handleQuestionDesChange={handleQuestionDesChange}
-                handleQuestionOptsChange={handleQuestionOptsChange}/>
+                handleQuestionOptsChange={handleQuestionOptsChange}
+            />
 
             <div className="add-question-button">
-                <button className="button"
-                        onClick={(event)=>{
-                            event.preventDefault();
-                            addQuestion(sectionIndex,scenarioIndex);
-                        }}>
+                <button
+                    className="button"
+                    onClick={(event) => {
+                        event.preventDefault();
+                        addQuestion(sectionIndex, scenarioIndex);
+                    }}
+                >
                     ADD NEW QUESTION
                 </button>
             </div>
         </div>
-
-    )
-}
+    );
+};
 export default ScenariosContainer;

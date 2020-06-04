@@ -273,8 +273,9 @@ width: 65%;
 
 .delete-scenario-button button{
   padding: 0;
-  border-radius: 0;
+  border-radius: 5px;
   margin-right: 2vw;
+  font-size: 11px;
 }
 
 #edit-cancel-button{
@@ -284,7 +285,7 @@ width: 65%;
 .section-title,.scenario-description{
   display: flex;
   justify-content: center;
-  padding: 1rem 6rem;
+  padding: 0 1rem 1rem;
   flex-flow: column;
 }
 
