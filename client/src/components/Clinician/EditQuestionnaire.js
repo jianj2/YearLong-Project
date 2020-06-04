@@ -28,21 +28,24 @@ import Loading from "../Loading";
 import "../../styles/clinician.css";
 
 import * as API from "../../utils/api";
+import SectionsContainer from "./SectionsContainer";
 // handles rendering of TopContainer in the Clinician page
-const EditQuestionnaire = (props) => {
-    const {
-        Questionnaire,
-        removeQuestion,
-        changeToRangeQuestion,
-        changeToMCQQuestion,
-        addAnswerToMCQQuestion,
-        deleteAnswerToMCQQuestion,
-        addQuestion,
-        handleQuestionnaireTitleChange,
-        handleQuestionnaireDesChange,
-        handleQuestionDesChange,
-        handleQuestionOptsChange,
-    } = props;
+const EditQuestionnaire = ({
+                               Questionnaire,
+                               removeQuestion,
+                               changeToRangeQuestion,
+                               changeToMCQQuestion,
+                               addAnswerToMCQQuestion,
+                               deleteAnswerFromMCQQuestion,
+                               addQuestion,
+                               addScenario,removeScenario,
+                               handleQuestionnaireTitleChange,
+                               handleQuestionnaireDesChange,
+                               handleQuestionDesChange,
+                               handleQuestionOptsChange,
+                               handleSecTitleChange,
+                               handleSceDesChange
+                           } ) => {
 
     const [saveDialogOpen, setSaveDialogOpen] = React.useState(false);
     
@@ -73,15 +76,6 @@ const EditQuestionnaire = (props) => {
     } else {
         return (
             <div className="edit-questionnaire">
-                {/*<button style={{width:'12%',marginLeft:'10px', marginRight:'80px'}}*/}
-                {/*        onClick = {(event)=> {event.preventDefault(); window.location.href = manage_questionnaire_url}}>CANCEL</button>*/}
-                {/*<button style={{width:'12%',marginRight:'10px'}}*/}
-                {/*        onClick = {(event)=> {*/}
-                {/*            event.preventDefault();*/}
-                {/*            API.editQuestionnaire(Questionnaire);*/}
-                {/*            // window.location.href = manage_questionnaire_url;*/}
-                {/*        }}> SAVE </button>*/}
-
                 <div className="edit-questionnaire-header">
                     <button
                         id="edit-cancel-button"
@@ -177,35 +171,20 @@ const EditQuestionnaire = (props) => {
                     handleQuestionnaireDesChange={handleQuestionnaireDesChange}
                 />
 
-                <QuestionsContainer
-                    questionnaire={Questionnaire}
+                <SectionsContainer
+                    sections={Questionnaire.sections}
+                    addQuestion={addQuestion}
                     removeQuestion={removeQuestion}
+                    addScenario={addScenario}
+                    removeScenario={removeScenario}
                     changeToRangeQuestion={changeToRangeQuestion}
                     changeToMCQQuestion={changeToMCQQuestion}
                     addAnswerToMCQQuestion={addAnswerToMCQQuestion}
-                    deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
+                    deleteAnswerFromMCQQuestion={deleteAnswerFromMCQQuestion}
                     handleQuestionDesChange={handleQuestionDesChange}
                     handleQuestionOptsChange={handleQuestionOptsChange}
-                />
-
-                {/*<button*/}
-                {/*    onClick={(event) => {*/}
-                {/*        event.preventDefault();*/}
-                {/*        return addQuestion();*/}
-                {/*    }}*/}
-                {/*>*/}
-                {/*    {" "}*/}
-                {/*    ADD NEW QUESTION{" "}*/}
-                {/*</button>*/}
-                <div className="add-question-button">
-                    <button className="button"
-                            onClick={(event)=>{
-                                event.preventDefault();
-                                addQuestion();
-                            }}>
-                        ADD NEW QUESTION
-                    </button>
-                </div>
+                    handleSecTitleChange={handleSecTitleChange}
+                    handleSceDesChange={handleSceDesChange}/>
             </div>
         );
     }

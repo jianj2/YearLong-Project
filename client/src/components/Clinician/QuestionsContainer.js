@@ -36,34 +36,34 @@ import { makeStyles } from "@material-ui/core/styles";
 import "../../styles/main.css";
 
 // handles rendering of TopContainer in the Clinician page
-const QuestionsContainer = (props) => {
-    const { sections } = props.questionnaire;
-    const {
-        removeQuestion,
-        changeToRangeQuestion,
-        changeToMCQQuestion,
-        addAnswerToMCQQuestion,
-        deleteAnswerToMCQQuestion,
-        handleQuestionDesChange,
-        handleQuestionOptsChange,
-    } = props;
-
+const QuestionsContainer = ({
+                                questions,
+                                scenarioIndex,
+                                sectionIndex,
+                                removeQuestion,
+                                changeToRangeQuestion,
+                                changeToMCQQuestion,
+                                addAnswerToMCQQuestion,
+                                deleteAnswerFromMCQQuestion,
+                                handleQuestionDesChange,
+                                handleQuestionOptsChange,
+                            } ) => {
     return (
         <div className="questions-container">
-            <h2>Questions</h2>
-            {sections &&
-                sections[0].scenarios &&
-                sections[0].scenarios[0].questions.map((item, index) => {
+            {questions && questions.map((item, index) => {
                     return (
                         <QuestionForm
                             item={item}
+                            key={item._id}
                             questionIndex={index}
+                            scenarioIndex={scenarioIndex}
+                            sectionIndex={sectionIndex}
                             removeQuestion={removeQuestion}
                             changeToRangeQuestion={changeToRangeQuestion}
                             changeToMCQQuestion={changeToMCQQuestion}
                             addAnswerToMCQQuestion={addAnswerToMCQQuestion}
-                            deleteAnswerToMCQQuestion={
-                                deleteAnswerToMCQQuestion
+                            deleteAnswerFromMCQQuestion={
+                                deleteAnswerFromMCQQuestion
                             }
                             handleQuestionDesChange={
                                 handleQuestionDesChange
@@ -80,27 +80,29 @@ const QuestionsContainer = (props) => {
 const QuestionForm = ({
     questionIndex,
     removeQuestion,
+    sectionIndex,
+    scenarioIndex,
     changeToMCQQuestion,
     changeToRangeQuestion,
     addAnswerToMCQQuestion,
-    deleteAnswerToMCQQuestion,
+    deleteAnswerFromMCQQuestion,
     handleQuestionDesChange,
     handleQuestionOptsChange,
     item,
 }) => {
-    const { rangeOptions, description, mcqOptions, isMCQ } = item;
+    const { rangeOptions, description, mcqOptions, isMCQ} = item;
 
     const handleRangeClick = (e) => {
         e.preventDefault();
-        changeToRangeQuestion(questionIndex);
+        changeToRangeQuestion(sectionIndex,scenarioIndex,questionIndex);
     };
     const handleMultipleClick = (e) => {
         e.preventDefault();
-        changeToMCQQuestion(questionIndex);
+        changeToMCQQuestion(sectionIndex,scenarioIndex,questionIndex);
     };
     const handleRemoveClick = (e) => {
         e.preventDefault();
-        removeQuestion(questionIndex);
+        removeQuestion(sectionIndex,scenarioIndex,questionIndex);
     };
 
     const renderHeader = () => {
@@ -133,6 +135,8 @@ const QuestionForm = ({
             <div className="questionTable">
                 {renderHeader()}
                 <RangeQuestionFrom
+                    sectionIndex={sectionIndex}
+                    scenarioIndex={scenarioIndex}
                     questionIndex={questionIndex}
                     rangeOptions={rangeOptions}
                     handleQuestionDesChange={handleQuestionDesChange}
@@ -148,7 +152,9 @@ const QuestionForm = ({
                     description={description}
                     mcqOptions={mcqOptions}
                     addAnswerToMCQQuestion={addAnswerToMCQQuestion}
-                    deleteAnswerToMCQQuestion={deleteAnswerToMCQQuestion}
+                    deleteAnswerFromMCQQuestion={deleteAnswerFromMCQQuestion}
+                    sectionIndex={sectionIndex}
+                    scenarioIndex={scenarioIndex}
                     questionIndex={questionIndex}
                     handleQuestionDesChange={handleQuestionDesChange}
                     handleQuestionOptsChange={handleQuestionOptsChange}
@@ -159,13 +165,13 @@ const QuestionForm = ({
 };
 
 //display the range question
-const RangeQuestionFrom = (props) => {
-
-    const {rangeOptions,questionIndex} = props;
-
-    // const handleRangeDesChange = (questionIndex) =>{
-    //
-    // }
+const RangeQuestionFrom = ({
+                               sectionIndex,
+                               scenarioIndex,
+                               questionIndex,
+                               rangeOptions,
+                               handleQuestionDesChange,
+                               handleQuestionOptsChange}) => {
 
     const handleRangeChange = (event, questionIndex, answerIndex) =>{
         props.handleQuestionOptsChange(event,questionIndex,answerIndex);
@@ -173,34 +179,48 @@ const RangeQuestionFrom = (props) => {
 
     return (
         <div className="questionTable-form">
-            
-            <FormControl margin="dense">
-                <InputLabel>Description</InputLabel>
-                <Input
-                    placeholder="Write the description." />
-                <FormHelperText>Write the description.</FormHelperText>
-            </FormControl>
+
+            {/*<FormControl margin="dense">*/}
+            {/*    <InputLabel>Description</InputLabel>*/}
+            {/*    <Input*/}
+            {/*        placeholder="Write the question."*/}
+            {/*    />*/}
+            {/*    <FormHelperText>Write the question.</FormHelperText>*/}
+            {/*</FormControl>*/}
 
             <h3>Ranges</h3>
             <FormControl margin="dense">
                 <InputLabel>RangeStarts</InputLabel>
                 <Input
-                    placeholder="Write the number."
+                    placeholder="Write the Range Starts."
                     value={rangeOptions[0]}
-                    onChange={(event) =>
-                        handleRangeChange(event, questionIndex, 0)
-                    }/>
+                    onChange={(event) =>{
+                        handleQuestionOptsChange(
+                            event,
+                            sectionIndex,
+                            scenarioIndex,
+                            questionIndex,
+                            0);
+                    }}
+                />
                 <FormHelperText>Write the Range Starts.</FormHelperText>
             </FormControl>
 
+            <h3>Ranges</h3>
             <FormControl margin="dense">
                 <InputLabel>RangeEnds</InputLabel>
                 <Input
-                    placeholder="Write the number."
+                    placeholder="Write the Range Ends."
                     value={rangeOptions[1]}
-                    onChange={(event) =>
-                        handleRangeChange(event, questionIndex, 1)
-                    }/>
+                    onChange={(event) =>{
+                        handleQuestionOptsChange(
+                            event,
+                            sectionIndex,
+                            scenarioIndex,
+                            questionIndex,
+                            1);
+                    }}
+                />
                 <FormHelperText>Write the Range Ends.</FormHelperText>
             </FormControl>
         </div>
@@ -211,19 +231,23 @@ const RangeQuestionFrom = (props) => {
 const MultipleChoiceQuestionFrom = (props) => {
     const {
         addAnswerToMCQQuestion,
-        deleteAnswerToMCQQuestion,
+        deleteAnswerFromMCQQuestion,
         mcqOptions,
         questionIndex,
-        description
+        description,
+        sectionIndex,
+        scenarioIndex,
+        handleQuestionDesChange,
+        handleQuestionOptsChange
     } = props;
 
-    const addAnswer = (questionIndex) => {
-        addAnswerToMCQQuestion(questionIndex);
-    };
+    // const addAnswer = (sectionIndex,scenarioIndex,questionIndex) => {
+    //     addAnswerToMCQQuestion(sectionIndex,scenarioIndex,questionIndex);
+    // };
 
-    const deleteAnswer = (questionIndex, answerIndex) => {
-        deleteAnswerToMCQQuestion(questionIndex, answerIndex);
-    };
+    // const deleteAnswer = (sectionIndex,scenarioIndex,questionIndex, answerIndex) => {
+    //     deleteAnswerToMCQQuestion(sectionIndex,scenarioIndex,questionIndex, answerIndex);
+    // };
 
     // to change the question of range questions (because the scheme in the data base didn't have this para,
     // but we have in the frontend, so we need to change it later, comment this first).
@@ -233,30 +257,28 @@ const MultipleChoiceQuestionFrom = (props) => {
     // }
 
     //
-    const handleMultiChoiceDesChange = (event, questionIndex) => {
-        props.handleQuestionDesChange(event, questionIndex);
-    };
-
-    const handleMultiAnsChange = (event, questionIndex, answerIndex) => {
-        props.handleQuestionOptsChange(event, questionIndex, answerIndex);
-    };
+    // const handleMultiChoiceDesChange = (event, questionIndex) => {
+    //     props.handleMultiChoiceDesChange(event, questionIndex);
+    // };
+    //
+    // const handleMultiAnsChange = (event, questionIndex, answerIndex) => {
+    //     props.handleMultiAnsChange(event, questionIndex, answerIndex);
+    // };
 
     return (
         <div className="questionTable-form">
-
-            {/*<FormControl margin="dense">*/}
-            {/*    <InputLabel>Question</InputLabel>*/}
-            {/*    <Input placeholder="Write the question."/>*/}
-            {/*    <FormHelperText>Write the question.</FormHelperText>*/}
-            {/*</FormControl>*/}
-
             <FormControl margin="dense">
                 <InputLabel>Description</InputLabel>
                 <Input
                     placeholder="Write the description."
-                    defaultValue={description}
+                    value={description}
                     onChange={(event) =>
-                        handleMultiChoiceDesChange(event, questionIndex)
+                        handleQuestionDesChange(
+                            event,
+                            sectionIndex,
+                            scenarioIndex,
+                            questionIndex
+                        )
                     }
                 />
                 <FormHelperText>Write the description.</FormHelperText>
@@ -266,7 +288,7 @@ const MultipleChoiceQuestionFrom = (props) => {
             {mcqOptions &&
                 mcqOptions.map((item, index) => {
                     return (
-                        <div className="questionTable-answer">
+                        <div className="questionTable-answer" key={index}>
                             <div>
                                 <FormControl margin="dense">
                                     <InputLabel>Answer {index+1}</InputLabel>
@@ -274,8 +296,10 @@ const MultipleChoiceQuestionFrom = (props) => {
                                         placeholder="Write the Answer."
                                         value={mcqOptions[index]}
                                         onChange={(event) =>
-                                            handleMultiAnsChange(
+                                            handleQuestionOptsChange(
                                                 event,
+                                                sectionIndex,
+                                                scenarioIndex,
                                                 questionIndex,
                                                 index
                                             )
@@ -291,10 +315,7 @@ const MultipleChoiceQuestionFrom = (props) => {
                                 type="button"
                                 onClick={(event) => {
                                     event.preventDefault();
-                                    return deleteAnswer(
-                                        questionIndex,
-                                        index
-                                    );
+                                    deleteAnswerFromMCQQuestion(sectionIndex,scenarioIndex,questionIndex, index);
                                 }}
                             >
                                 {" "}
@@ -307,7 +328,7 @@ const MultipleChoiceQuestionFrom = (props) => {
                 className="add-answer-button"
                 onClick={(event) => {
                     event.preventDefault();
-                    return addAnswer(questionIndex);
+                    addAnswerToMCQQuestion(sectionIndex,scenarioIndex,questionIndex);
                 }}
             >
                 {" "}
