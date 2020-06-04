@@ -31,8 +31,8 @@ export const getQuestionnaire = (questionnaireID) =>
         header,
     }).then((res) => res.json());
 
-export const sendQuestionnaireData = (data) =>
-    fetch(`${api}/email/submit`, {
+export const sendQuestionnaireData = (data, shareId) =>
+    fetch(`${api}/share/submit/${shareId}`, {
         method: "POST",
         headers: {
             ...header,
@@ -145,6 +145,9 @@ export const getAndSetSpecificQuestionnaire = async (CQid, setState) => {
     }).then(res => res.json())
         .then(data => setState(data));
 };
+ 
+}
+
 
 // get clinician questionnaire list
 // TODO: get CQid and entire edited questionnaire from UI
@@ -160,14 +163,27 @@ export const getClinicianQuestionnaires = async (clinicianId) => {
 };
 
    
-// get specific questionnaire
-// TODO: get CQid and entire edited questionnaire from UI
-export const getSpecificQuestionnaire = (questionnaireId) =>
-    fetch(`${api}/questionnaire/getQuestionnaire/${questionnaireId}`, {
+// ================================================
+// Managing Share server calls
+// ================================================
+// get questionnaire ID using the Share ID.
+export const getShareDetails = (shareId) =>
+    fetch(`${api}/share/${shareId}`, {
         header,
     }).then((res) => res.json());
 
-// get clinician questionnaire list
-// TODO: get CQid and entire edited questionnaire from UI
+// Used to share a questionnaire.
+export const shareQuestionnaire = (data) =>
+    fetch(`${api}/clinician/share/`, {
+        method: "POST",
+        headers: {
+            ...header,
+
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    }).then((res) => res.json());
+ 
 
 

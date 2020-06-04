@@ -23,6 +23,7 @@ import "../styles/questionnaire.css";
 import "../styles/main.css";
 
 export default function Questionnaire({
+    readOnly,
     questionnaire,
     submitQuestionnaire,
     questionnaireData,
@@ -30,13 +31,13 @@ export default function Questionnaire({
 }) {
     const { register, handleSubmit, errors } = useForm(); 
 
-    // Mehod: Called when we submit the questionnaire
+    // Method: Called when we submit the questionnaire
     const onSubmit = (e) => {
         e.preventDefault();
         submitQuestionnaire();
     };
 
-    // Mehod: Called when we something in the questionnaire changes.
+    // Method: Called when we something in the questionnaire changes.
     const onQuestionChange = (
         sectionIndex,
         scenarioIndex,
@@ -58,6 +59,7 @@ export default function Questionnaire({
                             {scenario.questions.map(
                                 (question, questionIndex) => (
                                     <Question
+                                        readOnly={readOnly}
                                         error={true}
                                         key={questionIndex}
                                         questionIndex={questionIndex}
@@ -81,10 +83,15 @@ export default function Questionnaire({
                 </div>
             ))}
 
-            <div className="questionaire-submit-button">
-                <button id="review" className={errors.code ? "button-disabled" : "button"}>
-                    R E V I E W
-                </button>
+            <div className="questionaire-submit-button"> 
+                {
+                    readOnly 
+                    ?   null
+                    :   <button id="review" className={errors.code ? "button-disabled" : "button"}>
+                            R E V I E W
+                        </button>
+
+                }  
             </div>
         </form>
     );
