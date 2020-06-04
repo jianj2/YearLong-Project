@@ -47,6 +47,13 @@
  *      questionnaireId which can be used by the parent component
  *      calling this List to delete the questionnaire.
  *
+ *   - canShare: (Boolean):
+ *      If true, shows the Share Button.
+ *
+ *  - onClickShare: (Function):
+ *      Defines what the Share button must do. Returns the
+ *      questionnaireId which can be used by the parent component
+ *      calling this List to Share the questionnaire.
  *
  */
 

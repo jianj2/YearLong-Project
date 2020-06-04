@@ -17,31 +17,33 @@ import React, { useState, useEffect } from "react";
 import "../../styles/managequestionnaires.css";
 import "../../styles/main.css";
 import * as API from "../../utils/api";
-import {formatDate} from "../../utils/formatter"
+import { formatDate } from "../../utils/formatter";
 import { useAuth0 } from "../../utils/react-auth0-spa";
-
+import QuestionnaireList from "../QuestionnaireList";
 
 const ManageQuestionnaires = (props) => {
     const { loading, isAuthenticated, loginWithRedirect, user } = useAuth0();
     console.log(user.name); //TODO: change that when we have actual clincianId
 
     const [Questionnaires, setQuestionnaires] = useState({
-       
-         customized_Questionnaire: []
-        
+        customized_Questionnaire: [],
     });
-     useEffect( () => {
-        async function retrieveQuestionnaires(){const customisedQuestionnaires = await API.getClinicianQuestionnaires(user.name);
+
+    const [customQuestionnaires, setCustomQuestionnaires] = useState([]);
+
+    useEffect(() => {
+        async function retrieveQuestionnaires() {
+            const customisedQuestionnaires = await API.getClinicianQuestionnaires(user.name);
             console.log(customisedQuestionnaires);
             const today = formatDate();
-            const customisedQuestionnairesElement = customisedQuestionnaires.map((q)=> {return {QID:q.questionnaireId, Qname:q.title, Qdescription:q.description, date:today} });
-            setQuestionnaires({customized_Questionnaire: customisedQuestionnairesElement});
-        };
+            const customisedQuestionnairesElement = customisedQuestionnaires.map((q) => {
+                return { QID: q.questionnaireId, Qname: q.title, Qdescription: q.description, date: today };
+            });
+            setQuestionnaires({ customized_Questionnaire: customisedQuestionnairesElement });
+            setCustomQuestionnaires(customisedQuestionnaires);
+        }
         retrieveQuestionnaires();
-    
-    },[]);
-   
-
+    }, []);
 
     function SQgenerator(Qname, Qdescription, date) {
         return (
@@ -57,9 +59,7 @@ const ManageQuestionnaires = (props) => {
         var customized_Questionnaire_list = [];
         var q;
         for (q of Questionnaires.customized_Questionnaire) {
-            customized_Questionnaire_list.push(
-                CQgenerator(q.QID, q.Qname, q.Qdescription, q.date)
-            );
+            customized_Questionnaire_list.push(CQgenerator(q.QID, q.Qname, q.Qdescription, q.date));
         }
         return customized_Questionnaire_list;
     }
@@ -70,15 +70,12 @@ const ManageQuestionnaires = (props) => {
     }
 
     function Delete(questionnaireID) {
-        const arrayCopy = Questionnaires.customized_Questionnaire.filter(
-            (q) => q.QID !== questionnaireID
-        );
+        const arrayCopy = Questionnaires.customized_Questionnaire.filter((q) => q.QID !== questionnaireID);
         setQuestionnaires({ customized_Questionnaire: arrayCopy });
         API.deleteQuestionnaire(questionnaireID, user.name);
     }
 
     async function AddNew() {
-
         const uuid = await API.addQuestionnaire(user.name);
         const today = formatDate();
         const AddedArray = Questionnaires.customized_Questionnaire;
@@ -86,15 +83,13 @@ const ManageQuestionnaires = (props) => {
             QID: uuid,
             Qname: "New custom questionnaire",
             Qdescription: "Provide some description for this questionnaire.",
-            date:  today,
+            date: today,
         });
         setQuestionnaires({ customized_Questionnaire: AddedArray });
-        
+
         // let edit_url = "/clinician/" + uuid + "/edit";
         // window.location.href = edit_url;
     }
-
-   
 
     function CQgenerator(QID, Qname, Qdescription, date) {
         // var edit_url = "/clinician/" + QID + "/edit";
@@ -104,16 +99,10 @@ const ManageQuestionnaires = (props) => {
                 <div className="q-description">{Qdescription}</div>
                 <div className="date">{date}</div>
                 <div className="btns-container">
-                    <button
-                        className="edit-btn"
-                        onClick={(e) => Edit(QID,e)}
-                    >
+                    <button className="edit-btn" onClick={(e) => Edit(QID, e)}>
                         Edit
                     </button>
-                    <button
-                        className="delete-btn"
-                        onClick={(e) => Delete(QID, e)}
-                    >
+                    <button className="delete-btn" onClick={(e) => Delete(QID, e)}>
                         Delete
                     </button>
                 </div>
@@ -124,19 +113,33 @@ const ManageQuestionnaires = (props) => {
     return (
         <div>
             <div className="standard-questionnaire-container">
-                <div className="SQ-header"><h1>Standard questionnaires</h1></div>
+                <div className="SQ-header">
+                    <h1>Standard questionnaires</h1>
+                </div>
                 {SQgenerator("SSQ-P", "SSQ for parents", "17/05/2020")}
                 {SQgenerator("SSQ-C", "SSQ for children ", "17/05/2020")}
             </div>
-            <div className="customized-questionnaire-container">
+            {/* <div className="customized-questionnaire-container">
                 <div className="CQ-header">
                     <h1>My Custom Questionnaires</h1>
                     <button className="Add-btn" onClick={AddNew}>
                         Add New
                     </button>
                 </div>
+                
                 <CQlist />
-            </div>
+            </div> */}
+
+            <QuestionnaireList
+                questionnaires={customQuestionnaires}
+                listTitle={"My Questionnaires"}
+                isSelectable={false}
+                onClickQuestion={() => {}}
+                canEdit={true}
+                onClickEdit={() => {}}
+                canDelete={true}
+                onClickDelete={() => {}}
+            /> 
         </div>
     );
 };
