@@ -26,19 +26,26 @@ const getAllQuestionnaire = function (req, res) {
     });
 };
 
-// get specific questionnaire
-const getQuestionnaire = function (req, res) {
-    let questionnaireID = req.params.questionnaireID;
-    console.log(questionnaireID)
-    Questionnaire.findOne({questionnaireId:questionnaireID}, function (err, questionnaire) {
-        if (!err){
+
+
+var getQuestionnaire = function (req, res) {
+    let questionnaireId = req.params.questionnaireId;
+    console.log("get questionnaire:", questionnaireId);
+
+    Questionnaire.findOne({ questionnaireId }, function (
+        err,
+        questionnaire
+    ) {
+        if (!err) {
+
             res.send(questionnaire);
         } else {
             res.send(err);
         }
-    });
 
-}
+    });
+};
+
 
 // given ClinicianId, gets the list of the clinician's customised questionnaires 
 
@@ -112,60 +119,7 @@ const addEmptyQuestionnaire = function (req, res) {
 
 };
 
-// // add a sample filled questionnaire
-// const addFilledQuestionnaire = function (req, res) {
-//     const uuid = uuidv1();
-//     const sections = [
-//         {
-//             title: "Speech",
-//             scenarios: [
-//                 {
-//                     description: "You are at Melbourne Uni...",
-//                     questions: [
-//                         {
-//                             isMCQ: false,
-//                             rangeOptions: ["Zero", "Ten"],
-//                         },{
-//                             description: "If only one option can be true, which of the following is correct?",
-//                             isMCQ: true,
-//                             mcqOptions: ["All of the above is true", " Those below the below is true",
-//                              "None of the above is true", 'Those above the above is true']
-//                         }
-//                     ],
-//                 },
-//             ],
-//         },
-//         { title: "Spatial", scenarios: [] },
-//         { title: "Quality", scenarios: [] },
-//     ];
-//     let newQuestionnaire = new Questionnaire({
-//         questionnaireId: uuid,
-//         title: "awesome questionnaire",
-//         description: "awesome",
-//         sections: sections,
-//         isStandard: req.body.isStandard,
-//     });
 
-//     newQuestionnaire.save(function (err, createdQuestionnaire) {
-//         console.log(
-//             "added customised questionnaire:",
-//             uuid,
-//             JSON.stringify(req.body)
-//         );
-
-//         res.send({
-//             code: 200,
-//             message: "successfully add new questionnaire!",
-//             uuid: uuid,
-//         });
-//     });
-
-//     // update specific clinician questionnaire
-//     let clinicianId = req.body.clinicianId
-//     console.log(clinicianId)
-//     Clinician.updateOne({clinicianId:clinicianId},{$push:{"questionnaires":uuid}}, (err, raw) => {return})
-
-// };
 
 // edit a questionnaire
 // TODO: Receive an actual questionnaire from req.body, rather than creating a boiler plate.
@@ -174,8 +128,6 @@ const editQuestionnaire = function(req, res){
     const questionnaireId = req.body.questionnaire.questionnaireId;
     const editedQuestionnaire = req.body.questionnaire;
     Questionnaire.replaceOne({questionnaireId: questionnaireId}, editedQuestionnaire, (err,raw)=>{return;});
-    
-
 
 }
 
@@ -215,9 +167,8 @@ const deleteQuestionnaire = function (req, res) {
 
 
 module.exports.getAllQuestionnaire = getAllQuestionnaire;
+module.exports.getQuestionnaire = getQuestionnaire;
 module.exports.addEmptyQuestionnaire = addEmptyQuestionnaire;
 module.exports.deleteQuestionnaire = deleteQuestionnaire;
 module.exports.editQuestionnaire = editQuestionnaire;
-module.exports.getQuestionnaire = getQuestionnaire;
 module.exports.getClinicianQuestionnaires = getClinicianQuestionnaires;
-
