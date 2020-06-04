@@ -64,15 +64,22 @@ const ManageQuestionnaires = (props) => {
         return customized_Questionnaire_list;
     }
 
-    function Edit(questionnaireID) {
+    // Function called when Edit is clicked on the QuestionnaireList
+    const editQuestionnaire = (questionnaireID) => {
         let edit_url = "/clinician/" + questionnaireID + "/edit";
         window.location.href = edit_url;
     }
 
-    function Delete(questionnaireID) {
+    // Function called when Delete is clicked on the QuestionnaireList
+    const deleteQuestionnaire = (questionnaireID) => {
         const arrayCopy = Questionnaires.customized_Questionnaire.filter((q) => q.QID !== questionnaireID);
         setQuestionnaires({ customized_Questionnaire: arrayCopy });
         API.deleteQuestionnaire(questionnaireID, user.name);
+    }
+
+    // Function called when Share is clicked on the QuestionnaireList
+    const shareQuestionnaire = (questionnaireID) => {
+        
     }
 
     async function AddNew() {
@@ -99,10 +106,10 @@ const ManageQuestionnaires = (props) => {
                 <div className="q-description">{Qdescription}</div>
                 <div className="date">{date}</div>
                 <div className="btns-container">
-                    <button className="edit-btn" onClick={(e) => Edit(QID, e)}>
+                    <button className="edit-btn" onClick={(e) => editQuestionnaire(QID, e)}>
                         Edit
                     </button>
-                    <button className="delete-btn" onClick={(e) => Delete(QID, e)}>
+                    <button className="delete-btn" onClick={(e) => deleteQuestionnaire(QID, e)}>
                         Delete
                     </button>
                 </div>
@@ -136,10 +143,12 @@ const ManageQuestionnaires = (props) => {
                 isSelectable={false}
                 onClickQuestion={() => {}}
                 canEdit={true}
-                onClickEdit={() => {}}
+                onClickEdit={editQuestionnaire}
                 canDelete={true}
-                onClickDelete={() => {}}
-            /> 
+                onClickDelete={deleteQuestionnaire}
+                canShare={true}
+                onClickShare={shareQuestionnaire}
+            />
         </div>
     );
 };

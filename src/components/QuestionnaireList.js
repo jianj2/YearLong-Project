@@ -59,6 +59,10 @@
 
 import React, { useEffect, useState } from "react";
 
+// Import Utils
+import { formatDate } from "../utils/formatter";
+
+// Import Styles
 import "../styles/questionnaireList.css";
 
 const QuestionnaireList = ({
@@ -70,7 +74,11 @@ const QuestionnaireList = ({
     onClickEdit,
     canDelete,
     onClickDelete,
+    canShare,
+    onClickShare,
 }) => {
+
+
     const ListItem = ({
         questionnaireId,
         title,
@@ -82,40 +90,41 @@ const QuestionnaireList = ({
         onClickEdit,
         canDelete,
         onClickDelete,
+        canShare,
+        onClickShare,
     }) => {
         // var edit_url = "/clinician/" + QID + "/edit";
         return (
             <div
-                className={
-                    isSelectable
-                        ? "questionnaire-list-item questionnaire-list-item-selectable"
-                        : "questionnaire-list-item"
-                }
+                className={isSelectable ? "questionnaire-list-item questionnaire-list-item-selectable" : "questionnaire-list-item"}
                 onClick={() => {
                     if (isSelectable) onClickQuestion(questionnaireId);
                 }}
             >
                 <div className="q-name">{title}</div>
                 <div className="q-description">{description}</div>
-                <div className="date">{Date.now()}</div>
-                <div className="btns-container">
-                    {canEdit ? (
-                        <button
-                            className="edit-btn"
-                            onClick={() => onClickEdit(questionnaireId)}
-                        >
-                            Edit
-                        </button>
-                    ) : null}
 
-                    {canDelete ? (
-                        <button
-                            className="delete-btn"
-                            onClick={() => onClickDelete(questionnaireId)}
-                        >
-                            Delete
-                        </button>
-                    ) : null}
+                <div className="list-item-footer">
+                    <div className="list-item-date">{formatDate()}</div>
+                    <div className="questionnaire-list-button-container">
+                        {canShare ? (
+                            <button className="button" onClick={() => onClickShare(questionnaireId)}>
+                                S H A R E
+                            </button>
+                        ) : null}
+
+                        {canEdit ? (
+                            <button className="button" onClick={() => onClickEdit(questionnaireId)}>
+                                E D I T
+                            </button>
+                        ) : null}
+
+                        {canDelete ? (
+                            <button className="button" onClick={() => onClickDelete(questionnaireId)}>
+                                D E L E T E
+                            </button>
+                        ) : null}
+                    </div>
                 </div>
             </div>
         );
@@ -135,6 +144,8 @@ const QuestionnaireList = ({
                     onClickEdit={onClickEdit}
                     canDelete={canDelete}
                     onClickDelete={onClickDelete}
+                    canShare={canShare}
+                    onClickShare={onClickShare}
                 />
             ))}
         </div>
