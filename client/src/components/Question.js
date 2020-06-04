@@ -31,6 +31,7 @@ import "../styles/questionnaire.css";
 import "../styles/main.css";
 
 export default function Question({
+    readOnly,
     questionIndex,
     sectionIndex,
     scenarioIndex,
@@ -96,6 +97,7 @@ export default function Question({
                 onChange={(e, val) => setSliderValue(val)}
                 min={0}
                 max={10}
+                disabled={readOnly}
                 valueLabelDisplay="auto"
                 name="slider"
             />
@@ -115,6 +117,7 @@ export default function Question({
                         value="Would not hear it."
                         control={
                             <Radio
+                                disabled={readOnly}
                                 onClick={() =>
                                     setExtraQuestion("Would not hear it.")
                                 }
@@ -126,6 +129,7 @@ export default function Question({
                         value="Do not know."
                         control={
                             <Radio
+                                disabled={readOnly}
                                 onClick={() => setExtraQuestion("Do not know.")}
                             />
                         }
@@ -135,6 +139,7 @@ export default function Question({
                         value="Not applicable."
                         control={
                             <Radio
+                                disabled={readOnly}
                                 onClick={() =>
                                     setExtraQuestion("Not applicable.")
                                 }
@@ -157,6 +162,7 @@ export default function Question({
                             value="Very often (4 or more times in a week)."
                             control={
                                 <Radio
+                                    disabled={readOnly}
                                     onClick={() =>
                                         setFrequencyValue(
                                             "Very often (4 or more times in a week)."
@@ -171,6 +177,7 @@ export default function Question({
                             value="Often (1 to 3 times in a week)."
                             control={
                                 <Radio
+                                    disabled={readOnly}
                                     onClick={() =>
                                         setFrequencyValue(
                                             "Often (1 to 3 times in a week)."
@@ -184,6 +191,7 @@ export default function Question({
                             value="Not often (1 to 2 times in a month)."
                             control={
                                 <Radio
+                                    disabled={readOnly}
                                     onClick={() =>
                                         setFrequencyValue(
                                             "Not often (1 to 2 times in a month)."
@@ -209,6 +217,7 @@ export default function Question({
                             value="Very important."
                             control={
                                 <Radio
+                                    disabled={readOnly}
                                     onClick={() =>
                                         setImportanceValue("Very important.")
                                     }
@@ -220,6 +229,7 @@ export default function Question({
                             value="Important."
                             control={
                                 <Radio
+                                    disabled={readOnly}
                                     onClick={() =>
                                         setImportanceValue("Important.")
                                     }
@@ -231,6 +241,7 @@ export default function Question({
                             value="Only a little bit important."
                             control={
                                 <Radio
+                                    disabled={readOnly}
                                     onClick={() =>
                                         setImportanceValue(
                                             "Only a little bit important."
@@ -244,6 +255,7 @@ export default function Question({
                             value="Not important."
                             control={
                                 <Radio
+                                    disabled={readOnly}
                                     onClick={() =>
                                         setImportanceValue("Not important.")
                                     }

@@ -31,8 +31,8 @@ export const getQuestionnaire = (questionnaireID) =>
         header,
     }).then((res) => res.json());
 
-export const sendQuestionnaireData = (data) =>
-    fetch(`${api}/email/submit`, {
+export const sendQuestionnaireData = (data, shareId) =>
+    fetch(`${api}/share/submit/${shareId}`, {
         method: "POST",
         headers: {
             ...header,
@@ -118,7 +118,31 @@ export const editQuestionnaire = async () => {
         console.error("An error has occurred while adding questionnaire", e);
     }
 };
+ 
+}
 
+// ================================================
+// Managing Share server calls
+// ================================================
+// get questionnaire ID using the Share ID.
+export const getShareDetails = (shareId) =>
+    fetch(`${api}/share/${shareId}`, {
+        header,
+    }).then((res) => res.json());
+
+// Used to share a questionnaire.
+export const shareQuestionnaire = (data) =>
+    fetch(`${api}/clinician/share/`, {
+        method: "POST",
+        headers: {
+            ...header,
+
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    }).then((res) => res.json());
+ 
 // get specific questionnaire
 // TODO: get CQid and entire edited questionnaire from UI
 export const getSpecificQuestionnaire = (questionnaireId) =>
@@ -132,4 +156,4 @@ export const getSpecificQuestionnaire = (questionnaireId) =>
 export const getClinicianQuestionnaires = (clinicianId) =>
     fetch(`${api}/questionnaire/clinician?clinicianId=${clinicianId}`, {
         header,
-    }).then((res) => res.json());
+    }).then((res) => res.json()); 

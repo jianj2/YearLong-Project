@@ -5,7 +5,7 @@
  * @date created: 10th May 2020
  * @authors:    Waqas Rehmani, Cary Jin, SaiEr Ding, Uvin AbeySinghe.
  *
- * 
+ *
  * The Home screen component defines our screen for the route
  * '/parents/*'. This will be the first screen parents will see
  * when they choose the Parents option.
@@ -21,7 +21,7 @@ import { Link, withRouter } from "react-router-dom";
 import FormParentDetails from "../components/FormParentDetails";
 import Questionnaire from "../components/Questionnaire";
 import ParentReviewSubmission from "../components/ParentReviewSubmission";
-import Loading from '../components/Loading'
+import Loading from "../components/Loading";
 
 // Import assets.
 import logoComplete from "../assets/logo_complete.png";
@@ -34,6 +34,9 @@ import "../styles/parents.css";
 import "../styles/landing.css";
 import "../styles/main.css";
 
+
+const INSTRUCTIONS_READ_ONLY = "Go to the next page to view the questions. These would be the questions asked to you by the clinician on the call.";
+const INSTRUCTIONS = "We would have instructions here stored by the admin."
 // ---------------------------------------------------------------
 // This method defines the elements for this component.
 // ---------------------------------------------------------------
@@ -49,34 +52,43 @@ const HomeParents = ({ match }) => {
     const [clinicianEmail, setClinicianEmail] = useState("");
     const [personalDetails, setPersonalDetails] = useState({});
     const [questionnaireData, setQuestionnaireData] = useState([]);
+    const [readOnly, setReadOnly] = useState(false);
     const [loading, setLoading] = useState(false);
 
     // This is called when the component first mounts.
     useEffect(() => {
-        // Server call to get the questionnaire.
-        API.getQuestionnaire(match.params.questionnaireId).then((res) => {
-            // Define initial values for the Questionnaire
-            let tempResponse = [];
-            res.sections.forEach((section, sectionIndex) => {
-                tempResponse[sectionIndex] = [];
-                section.scenarios.forEach((scenario, scenarioIndex) => {
-                    tempResponse[sectionIndex][scenarioIndex] = [];
-                    scenario.questions.forEach((question, questionIndex) => {
-                        tempResponse[sectionIndex][scenarioIndex][
-                            questionIndex
-                        ] = {
-                            extraQuestion: "",
-                            sliderValue: 0,
-                            frequencyValue: "",
-                            importanceValue: "",
-                        };
+        // Server call to get the questionnaireId
+        API.getShareDetails(match.params.shareId).then((res) => {
+            console.log(res)
+            // Server call to get the questionnaire.
+            setClinicianEmail(res.clinicianEmail);
+            setReadOnly(res.readOnly);
+            API.getQuestionnaire(res.questionnaireId).then((res) => {
+                // Define initial values for the Questionnaire
+                let tempResponse = [];
+                res.sections.forEach((section, sectionIndex) => {
+                    tempResponse[sectionIndex] = [];
+                    section.scenarios.forEach((scenario, scenarioIndex) => {
+                        tempResponse[sectionIndex][scenarioIndex] = [];
+                        scenario.questions.forEach(
+                            (question, questionIndex) => {
+                                tempResponse[sectionIndex][scenarioIndex][
+                                    questionIndex
+                                ] = {
+                                    extraQuestion: "",
+                                    sliderValue: 0,
+                                    frequencyValue: "",
+                                    importanceValue: "",
+                                };
+                            }
+                        );
                     });
                 });
+                // Updating the state using the initial data and the questionnaire
+                // retrieved from the server.
+                setQuestionnaireData(tempResponse);
+                setQuestionnaire(res);
             });
-            // Updating the state using the initial data and the questionnaire
-            // retrieved from the server.
-            setQuestionnaireData(tempResponse);
-            setQuestionnaire(res);
         });
     }, []);
 
@@ -117,19 +129,19 @@ const HomeParents = ({ match }) => {
         let data = {
             questionnaireData,
             personalDetails,
-            clinicianEmail: match.params.clinicianEmail,
+            clinicianEmail: clinicianEmail,
         };
-        console.log(data)
-        
-        setLoading(true)
-        API.sendQuestionnaireData(data).then(res => {
-            if(res) {
+        console.log(data);
+
+        setLoading(true);
+        API.sendQuestionnaireData(data, match.params.shareId).then((res) => {
+            if (res) {
                 setLoading(false);
                 nextStep();
             }
-            console.log(res)
-        })
-    }
+            console.log(res);
+        });
+    };
 
     if (wizardStep == 0) {
         return (
@@ -140,20 +152,25 @@ const HomeParents = ({ match }) => {
                     </button>
                 </div>
                 <div className="parents-container">
-                    We would have instructions here stored by the admin.
+                    <h1>I N S T R U C T I O N S</h1>
+                    {readOnly ? (
+                        <p>{INSTRUCTIONS_READ_ONLY}</p>
+                    ) : (
+                        <p>{INSTRUCTIONS}</p>
+                    )}
                 </div>
             </div>
         );
     }
 
     if (wizardStep == 1) {
+        // If it is read only, we skip this step
+        if (readOnly) nextStep() 
         return (
-            <div className="parents-home">
-                <div className="subheader-container">
-                    <button id="instructions" className="button" onClick={goToInstructions}>
-                        I N S T R U C T I O N S
-                    </button>
+            <div className="parents-home"> 
+                <div className="subheader-container"> 
                     <button id="back" className="button" onClick={prevStep}>
+ 
                         B A C K
                     </button>
                 </div>
@@ -171,14 +188,19 @@ const HomeParents = ({ match }) => {
                 <div className="subheader-container">
                     <button id="instructions" className="button" onClick={goToInstructions}>
                         I N S T R U C T I O N S
-                    </button>
-                    <button id="back" className="button" onClick={prevStep}>
-                        B A C K
-                    </button>
+                    </button> 
+                    { readOnly
+                        ? null
+                        :   <button id="back" className="button" onClick={prevStep}>
+                                B A C K
+                            </button>
+                    }
+                     
                 </div>
 
                 <div className="parents-container">
                     <Questionnaire
+                        readOnly={readOnly}
                         questionnaire={questionnaire}
                         submitQuestionnaire={submitQuestionnaire}
                         questionnaireData={questionnaireData}
@@ -191,12 +213,12 @@ const HomeParents = ({ match }) => {
 
     if (wizardStep == 3) {
         return (
-            <div className="parents-home">
+            <div className="parents-home"> 
                 {
                     loading
                     ? <Loading />
                     : null
-                }
+                } 
                 <div className="subheader-container">
                     <button id="back" className="button" onClick={prevStep}>
                         B A C K
