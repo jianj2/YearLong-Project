@@ -133,7 +133,7 @@ export const editQuestionnaire = async () => {
 // Managing Share server calls
 // ================================================
 // get questionnaire ID using the Share ID.
-export const getQuestionnaireId = (shareId) =>
+export const getShareDetails = (shareId) =>
     fetch(`${api}/share/${shareId}`, {
         header,
     }).then((res) => res.json());

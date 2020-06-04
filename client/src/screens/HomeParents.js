@@ -49,12 +49,14 @@ const HomeParents = ({ match }) => {
     const [clinicianEmail, setClinicianEmail] = useState("");
     const [personalDetails, setPersonalDetails] = useState({});
     const [questionnaireData, setQuestionnaireData] = useState([]);
+    const [readOnly, setReadOnly] = useState(false);
     const [loading, setLoading] = useState(false);
 
     // This is called when the component first mounts.
     useEffect(() => {
         // Server call to get the questionnaireId
-        API.getQuestionnaireId(match.params.shareId).then((res) => {
+        API.getShareDetails(match.params.shareId).then((res) => {
+            console.log(res)
             // Server call to get the questionnaire.
             setClinicianEmail(res.clinicianEmail);
             API.getQuestionnaire(res.questionnaireId).then((res) => {
