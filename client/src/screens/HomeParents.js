@@ -34,6 +34,9 @@ import "../styles/parents.css";
 import "../styles/landing.css";
 import "../styles/main.css";
 
+
+const INSTRUCTIONS_READ_ONLY = "";
+const INSTRUCTIONS = "We would have instructions here stored by the admin."
 // ---------------------------------------------------------------
 // This method defines the elements for this component.
 // ---------------------------------------------------------------
@@ -149,7 +152,8 @@ const HomeParents = ({ match }) => {
                     </button>
                 </div>
                 <div className="parents-container">
-                    We would have instructions here stored by the admin.
+                    Instructions
+                    
                 </div>
             </div>
         );

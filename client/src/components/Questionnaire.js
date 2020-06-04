@@ -84,9 +84,14 @@ export default function Questionnaire({
             ))}
 
             <div className="questionaire-submit-button">
-                <button className={errors.code ? "button-disabled" : "button"}>
-                    R E V I E W
-                </button>
+                {
+                    readOnly 
+                    ?   null
+                    :   <button className={errors.code ? "button-disabled" : "button"}>
+                            R E V I E W
+                        </button>
+
+                } 
             </div>
         </form>
     );
