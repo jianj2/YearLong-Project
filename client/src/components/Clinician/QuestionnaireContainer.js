@@ -28,7 +28,7 @@ const QuestionnaireContainer = (props) => {
 
     // get the questionnaire content from API
     useEffect(() =>{
-        API.getSpecificQuestionnaire(props.questionnaireID,setQuestionnaire);
+        API.getAndSetSpecificQuestionnaire(props.questionnaireID,setQuestionnaire);
     },[])
 
 
