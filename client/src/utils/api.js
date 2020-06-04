@@ -1,6 +1,6 @@
 const api = "http://localhost:3001";
 
-const header = {
+let header = {
     authorization: "fill in l8er",
 };
 
@@ -26,6 +26,22 @@ export const verifyAdminLogin = (token) =>
 export const getQuestionnaires = () =>
     fetch(`${api}/questionnaire/`, { header }).then((res) => res.json());
 
+export const getQuestionnaire = (questionnaireID) =>
+    fetch(`${api}/questionnaire/${questionnaireID}`, {
+        header,
+    }).then((res) => res.json());
+
+export const sendQuestionnaireData = (data) =>
+    fetch(`${api}/email/submit`, {
+        method: "POST",
+        headers: {
+            ...header,
+
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    }).then((res) => res.json());
 
 // ================================================
 // Managing Questionnaire server calls
@@ -44,7 +60,6 @@ export const addQuestionnaire = async (clinicianId) => {
         clinicianId,
         isStandard: false,
     };
-
     return new Promise(async (resolve) => {
         try {
             let response = await fetch(url, {
@@ -107,6 +122,7 @@ export const editQuestionnaire = async (questionnaire) => {
         });
         let json = await response.json();
 
+
     } catch (e) {
         console.error(
             "An error has occurred while saving the edited questionnaire",
@@ -118,7 +134,7 @@ export const editQuestionnaire = async (questionnaire) => {
 
 // get specific questionnaire
 // TODO: get CQid and entire edited questionnaire from UI
-export const getSpecificQuestionnaire = async (CQid, setState) => {
+export const getAndSetSpecificQuestionnaire = async (CQid, setState) => {
     fetch(`${api}/questionnaire/getQuestionnaire/${CQid}`, {
         method: "GET",
         headers: {
@@ -142,3 +158,16 @@ export const getClinicianQuestionnaires = async (clinicianId) => {
     
     return json;
 };
+
+   
+// get specific questionnaire
+// TODO: get CQid and entire edited questionnaire from UI
+export const getSpecificQuestionnaire = (questionnaireId) =>
+    fetch(`${api}/questionnaire/getQuestionnaire/${questionnaireId}`, {
+        header,
+    }).then((res) => res.json());
+
+// get clinician questionnaire list
+// TODO: get CQid and entire edited questionnaire from UI
+
+

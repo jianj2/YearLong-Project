@@ -3,10 +3,11 @@
  * REACT SCREEN COMPONENT FUNCTION
  * ====================================================================
  * @date created: 10th May 2020
- * @authors: Waqas Rehmani, Cary Jin, SaiEr Ding
+ * @authors:    Waqas Rehmani, Cary Jin, SaiEr Ding, Uvin AbeySinghe.
  *
+ * 
  * The Home screen component defines our screen for the route
- * '/parents'. This will be the first screen parents will see
+ * '/parents/*'. This will be the first screen parents will see
  * when they choose the Parents option.
  *
  * This file is used to display the Parents Home screen.
@@ -14,12 +15,13 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 // Import components.
 import FormParentDetails from "../components/FormParentDetails";
 import Questionnaire from "../components/Questionnaire";
 import ParentReviewSubmission from "../components/ParentReviewSubmission";
+import Loading from '../components/Loading'
 
 // Import assets.
 import logoComplete from "../assets/logo_complete.png";
@@ -35,58 +37,99 @@ import "../styles/main.css";
 // ---------------------------------------------------------------
 // This method defines the elements for this component.
 // ---------------------------------------------------------------
-const HomeParents = () => {
+const HomeParents = ({ match }) => {
     const [wizardStep, setWizardStep] = useState(0);
     const [questionnaire, setQuestionnaire] = useState({
-        questionnaireId: '',
-        title: '',
-        description: '',
+        questionnaireId: "",
+        title: "",
+        description: "",
         sections: [],
         isStandard: true,
     });
     const [clinicianEmail, setClinicianEmail] = useState("");
     const [personalDetails, setPersonalDetails] = useState({});
-    const [questionnaireResponse, setQuestionnaireResponse] = useState(null);
+    const [questionnaireData, setQuestionnaireData] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     // This is called when the component first mounts.
     useEffect(() => {
-        // Do server call here to initialize everything.
-
-        API.getQuestionnaires().then((res) => {
-            // ======================================================
-            // NOTE
-            // ======================================================
-            // CHANGE THIS TO GET SPECIFIC QUESTIONNAIRE DEFINED BY A
-            // QUESTIONNAIRE ID!!!!
-            // HAVE ONLY DONE
-            // ======================================================
-            console.log(res[0]);
-            setQuestionnaire(res[0]);
+        // Server call to get the questionnaire.
+        API.getQuestionnaire(match.params.questionnaireId).then((res) => {
+            // Define initial values for the Questionnaire
+            let tempResponse = [];
+            res.sections.forEach((section, sectionIndex) => {
+                tempResponse[sectionIndex] = [];
+                section.scenarios.forEach((scenario, scenarioIndex) => {
+                    tempResponse[sectionIndex][scenarioIndex] = [];
+                    scenario.questions.forEach((question, questionIndex) => {
+                        tempResponse[sectionIndex][scenarioIndex][
+                            questionIndex
+                        ] = {
+                            extraQuestion: "",
+                            sliderValue: 0,
+                            frequencyValue: "",
+                            importanceValue: "",
+                        };
+                    });
+                });
+            });
+            // Updating the state using the initial data and the questionnaire
+            // retrieved from the server.
+            setQuestionnaireData(tempResponse);
+            setQuestionnaire(res);
         });
     }, []);
 
+    // Method called to update questionnaire data when a question is updated.
+    const handleQuestionnaireChange = (
+        sectionIndex,
+        scenarioIndex,
+        questionIndex,
+        data
+    ) => {
+        let temp = [...questionnaireData];
+        temp[sectionIndex][scenarioIndex][questionIndex] = data;
+        setQuestionnaireData(temp);
+    };
+
+    // Method called to go to the next page in the wizard.
     const nextStep = () => {
         setWizardStep(wizardStep + 1);
     };
-
+    // Method called to go to the preivious page in the wizard.
     const prevStep = () => {
         setWizardStep(wizardStep - 1);
     };
     const goToInstructions = () => {
         setWizardStep(0);
     };
-
+    // Method called to go to the instructions page in the wizard.
     const submitDetails = (data) => {
         setPersonalDetails(data);
         nextStep();
     };
-
+    // Method called when we submit the questionnaire.
     const submitQuestionnaire = (data) => {
-        setQuestionnaireResponse(data);
         nextStep();
-    }
+    };
 
-    console.log(questionnaireResponse);
+    const submitResponse = () => {
+        let data = {
+            questionnaireData,
+            personalDetails,
+            clinicianEmail: match.params.clinicianEmail,
+        };
+        console.log(data)
+        
+        setLoading(true)
+        API.sendQuestionnaireData(data).then(res => {
+            if(res) {
+                setLoading(false);
+                nextStep();
+            }
+            console.log(res)
+        })
+    }
 
     if (wizardStep == 0) {
         return (
@@ -107,10 +150,10 @@ const HomeParents = () => {
         return (
             <div className="parents-home">
                 <div className="subheader-container">
-                    <button className="button" onClick={goToInstructions}>
+                    <button id="instructions" className="button" onClick={goToInstructions}>
                         I N S T R U C T I O N S
                     </button>
-                    <button className="button" onClick={prevStep}>
+                    <button id="back" className="button" onClick={prevStep}>
                         B A C K
                     </button>
                 </div>
@@ -126,10 +169,10 @@ const HomeParents = () => {
         return (
             <div className="parents-home">
                 <div className="subheader-container">
-                    <button className="button" onClick={goToInstructions}>
+                    <button id="instructions" className="button" onClick={goToInstructions}>
                         I N S T R U C T I O N S
                     </button>
-                    <button className="button" onClick={prevStep}>
+                    <button id="back" className="button" onClick={prevStep}>
                         B A C K
                     </button>
                 </div>
@@ -138,6 +181,8 @@ const HomeParents = () => {
                     <Questionnaire
                         questionnaire={questionnaire}
                         submitQuestionnaire={submitQuestionnaire}
+                        questionnaireData={questionnaireData}
+                        handleQuestionnaireChange={handleQuestionnaireChange}
                     />
                 </div>
             </div>
@@ -147,11 +192,16 @@ const HomeParents = () => {
     if (wizardStep == 3) {
         return (
             <div className="parents-home">
+                {
+                    loading
+                    ? <Loading />
+                    : null
+                }
                 <div className="subheader-container">
-                    <button className="button" onClick={prevStep}>
+                    <button id="back" className="button" onClick={prevStep}>
                         B A C K
                     </button>
-                    <button className="button" onClick={nextStep}>
+                    <button id="submit" className="button" onClick={submitResponse}>
                         S U B M I T
                     </button>
                 </div>
@@ -160,7 +210,7 @@ const HomeParents = () => {
                     <ParentReviewSubmission
                         questionnaire={questionnaire}
                         personalDetails={personalDetails}
-                        questionnaireResponse={questionnaireResponse}
+                        questionnaireData={questionnaireData}
                     />
                 </div>
             </div>
@@ -181,4 +231,4 @@ const HomeParents = () => {
     );
 };
 
-export default HomeParents;
+export default withRouter(HomeParents);

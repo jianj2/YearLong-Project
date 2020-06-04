@@ -147,7 +147,7 @@ export default function FormParentDetails({ submitDetails }) {
                 </FormControl>
 
                 <div className="parents-detail-form-submit-button">
-                    <button className="button">N E X T</button>
+                    <button id="next" className="button">N E X T</button>
                 </div>
             </div>
 

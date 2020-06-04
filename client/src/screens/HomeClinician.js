@@ -32,8 +32,6 @@ import ContentPanel from "../components/Clinician/ContentPanel";
 // ---------------------------------------------------------------
 const HomeClinician = (props) => {
     const { loading, isAuthenticated, loginWithRedirect, user } = useAuth0();
-    // const []
-
 
     useEffect(() => {
         if (loading || isAuthenticated) {
