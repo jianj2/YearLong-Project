@@ -52,12 +52,8 @@
 /* ==================================================== */
 .parents-detail-form {
     display: flex;
-    /* flex-flow: column; */
-    /* width: 50%; */
-
 }
  
-
 .parents-detail-form-column{
     flex: 1;
     padding: 1rem;
@@ -71,6 +67,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 10px 0;
 }
 
 input[type=date]:required:invalid {

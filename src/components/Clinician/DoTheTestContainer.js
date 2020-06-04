@@ -133,10 +133,8 @@ const DoTheTestContainer = () => {
                         B A C K
                     </button>
                 </div>
-
-                <div className="parents-container">
-                    <FormParentDetails submitDetails={submitDetails} />
-                </div>
+ 
+                <FormParentDetails submitDetails={submitDetails} clinicianAccess={true}/>
             </div>
         );
     } else if (wizardStep === 1) {

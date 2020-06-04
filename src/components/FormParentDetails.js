@@ -29,14 +29,13 @@ import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 // Import styles.
 // import "../styles/parents.css";
 
-export default function FormParentDetails({ submitDetails }) {
-    const { register, handleSubmit, errors } = useForm(); 
+export default function FormParentDetails({ submitDetails, clinicianAccess }) {
+    const { register, handleSubmit, errors } = useForm();
 
     const handleButtonPress = (data) => {
         console.log(data);
         submitDetails(data);
     };
- 
 
     return (
         <form
@@ -79,26 +78,28 @@ export default function FormParentDetails({ submitDetails }) {
                     </FormHelperText>
                 </FormControl>
 
-                <FormControl margin="dense">
-                    <InputLabel>Completed By</InputLabel>
-                    <Select
-                        name="completedBy"
-                        error={errors.completedBy !== undefined}
-                        native
-                        inputRef={register({
-                            required: "This is required.",
-                        })}
-                    >
-                        <option value="" disabled selected></option>
-                        <option value="parent">Parent</option>
-                        <option value="child">Child</option>
-                    </Select>
-                    <FormHelperText>
-                        {errors.completedBy
-                            ? errors.completedBy.message
-                            : "Please specify who is filling the form."}
-                    </FormHelperText>
-                </FormControl>
+                {clinicianAccess ? <div></div> : (
+                    <FormControl margin="dense">
+                        <InputLabel>Completed By</InputLabel>
+                        <Select
+                            name="completedBy"
+                            error={errors.completedBy !== undefined}
+                            native
+                            inputRef={register({
+                                required: "This is required.",
+                            })}
+                        >
+                            <option value="" disabled selected></option>
+                            <option value="parent">Parent</option>
+                            <option value="child">Child</option>
+                        </Select>
+                        <FormHelperText>
+                            {errors.completedBy
+                                ? errors.completedBy.message
+                                : "Please specify who is filling the form."}
+                        </FormHelperText>
+                    </FormControl>
+                )}
             </div>
 
             <div className="parents-detail-form-column">
@@ -147,7 +148,9 @@ export default function FormParentDetails({ submitDetails }) {
                 </FormControl>
 
                 <div className="parents-detail-form-submit-button">
-                    <button id="next" className="button">N E X T</button>
+                    <button id="next" className="button">
+                        N E X T
+                    </button>
                 </div>
             </div>
 
