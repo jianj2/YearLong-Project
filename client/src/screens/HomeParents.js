@@ -164,13 +164,11 @@ const HomeParents = ({ match }) => {
     }
 
     if (wizardStep == 1) {
-        
+        // If it is read only, we skip this step
+        if (readOnly) nextStep() 
         return (
             <div className="parents-home">
-                <div className="subheader-container">
-                    <button className="button" onClick={goToInstructions}>
-                        I N S T R U C T I O N S
-                    </button>
+                <div className="subheader-container"> 
                     <button className="button" onClick={prevStep}>
                         B A C K
                     </button>
@@ -190,9 +188,13 @@ const HomeParents = ({ match }) => {
                     <button className="button" onClick={goToInstructions}>
                         I N S T R U C T I O N S
                     </button>
-                    <button className="button" onClick={prevStep}>
-                        B A C K
-                    </button>
+                    { readOnly
+                        ? null
+                        :   <button className="button" onClick={prevStep}>
+                                B A C K
+                            </button>
+                    }
+                    
                 </div>
 
                 <div className="parents-container">
