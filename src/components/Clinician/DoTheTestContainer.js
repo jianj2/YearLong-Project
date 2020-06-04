@@ -26,7 +26,7 @@ import "../../styles/clinicianDoTheTest.css";
 
 // handles rendering of QuestionnaireContainer in the Clinician Page
 const DoTheTestContainer = () => {
-    const { loading, isAuthenticated, loginWithRedirect, user } = useAuth0();
+    const { user } = useAuth0();
     const [wizardStep, setWizardStep] = useState(-1);
 
     const [personalDetails, setPersonalDetails] = useState({

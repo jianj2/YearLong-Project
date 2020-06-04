@@ -50,7 +50,13 @@ const HomeParents = ({ match }) => {
         isStandard: true,
     });
     const [clinicianEmail, setClinicianEmail] = useState("");
-    const [personalDetails, setPersonalDetails] = useState({});
+    const [personalDetails, setPersonalDetails] = useState({
+        name: "",
+        date: "",
+        completedBy: "clinician",
+        rightDeviceType: "",
+        leftDeviceType: "",
+    });
     const [questionnaireData, setQuestionnaireData] = useState([]);
     const [readOnly, setReadOnly] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -72,13 +78,9 @@ const HomeParents = ({ match }) => {
                         tempResponse[sectionIndex][scenarioIndex] = [];
                         scenario.questions.forEach(
                             (question, questionIndex) => {
-                                tempResponse[sectionIndex][scenarioIndex][
-                                    questionIndex
-                                ] = {
-                                    extraQuestion: "",
-                                    sliderValue: 0,
-                                    frequencyValue: "",
-                                    importanceValue: "",
+                                tempResponse[sectionIndex][scenarioIndex][questionIndex] = {
+                                    value: "",
+                                    supplementaryValue: "",
                                 };
                             }
                         );
@@ -167,16 +169,19 @@ const HomeParents = ({ match }) => {
         // If it is read only, we skip this step
         if (readOnly) nextStep() 
         return (
-            <div className="parents-home"> 
-                <div className="subheader-container"> 
+            <div className="parents-home">
+                <div className="subheader-container">
                     <button id="back" className="button" onClick={prevStep}>
- 
                         B A C K
                     </button>
                 </div>
 
                 <div className="parents-container">
-                    <FormParentDetails submitDetails={submitDetails} />
+                    <FormParentDetails 
+                        submitDetails={submitDetails} 
+                        clinicianAccess={false} 
+                        defaultValue={personalDetails} 
+                    />
                 </div>
             </div>
         );
