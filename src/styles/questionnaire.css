@@ -29,19 +29,19 @@
 .scenario-container{
     display: flex;
     flex-flow: column wrap;
-    align-items: stretch;
-
-}
-
-.question-container {
+    align-items: stretch; 
     border: 1px solid rgba(255,255,255,0.05);
     background-color: rgba(255,255,255,0.03);
     padding: 20px;
     border-radius: 10px;
-    margin-bottom: 10px;
-    /* width: 100%; */
+    margin-bottom: 10px; 
     display: flex; 
-    flex-flow: column nowrap;
+    flex-flow: column nowrap; 
+} 
+.question-container { 
+    display: flex; 
+    flex-flow: column nowrap; 
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 .slider-labels {
