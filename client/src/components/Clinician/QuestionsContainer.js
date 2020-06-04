@@ -174,7 +174,7 @@ const RangeQuestionFrom = ({
                                handleQuestionOptsChange}) => {
 
     const handleRangeChange = (event, questionIndex, answerIndex) =>{
-        props.handleQuestionOptsChange(event,questionIndex,answerIndex);
+        handleQuestionOptsChange(event,questionIndex,answerIndex);
     }
 
     return (
@@ -206,7 +206,7 @@ const RangeQuestionFrom = ({
                 <FormHelperText>Write the Range Starts.</FormHelperText>
             </FormControl>
 
-            <h3>Ranges</h3>
+           
             <FormControl margin="dense">
                 <InputLabel>RangeEnds</InputLabel>
                 <Input
