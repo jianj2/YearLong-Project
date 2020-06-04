@@ -55,12 +55,12 @@ const HomeClinician = (props) => {
 
     return (
         <div className="HomeClinician">
-            <SideBar /> 
-            
+            <SideBar />
+
             <ContentPanel
                 active={props.active}
-                questionnaireID={props.questionnaireID}
-            /> 
+                questionnaireID={props.questionnaireID} 
+            />
         </div>
     );
 };

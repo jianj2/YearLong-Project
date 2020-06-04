@@ -37,11 +37,11 @@
 }
 
 .q-frame{
-    margin: auto;
+    margin: 0 0 1rem 0;
     padding: 20px;
     border-radius: 10px;
     min-width: 400px;
-    border: #B6B7C2;
+    border: rgba(255,255,255,0.3);
     border-style: solid;
     border-width: 1px;
     background-color: #1E1F48;
