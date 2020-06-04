@@ -3,7 +3,7 @@
  * REACT COMPONENT FUNCTION
  * ====================================================================
  * @date created: 17th May 2020
- * @authors:    Uvin Abeysinghe, Waqas Rehmani, Ashley Curtis, 
+ * @authors:    Uvin Abeysinghe, Waqas Rehmani, Ashley Curtis,
  *              Mayank Sharma, Jian Jiao
  *
  * The ParentReviewSubmission component defines the component where the
@@ -11,14 +11,13 @@
  *
  */
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 
-export default function ParentReviewSubmission({
-    questionnaire,
-    personalDetails,
-    questionnaireData,
+export default function ParentReviewSubmission({ 
+    questionnaire, 
+    personalDetails, 
+    questionnaireData 
 }) {
-   
     return (
         <div className="review-submission">
             <h1>Personal Details</h1>
@@ -48,53 +47,33 @@ export default function ParentReviewSubmission({
             <h1>Your Responses</h1>
             <div className="review-questionnaire">
                 {questionnaire.sections.map((section, sectionIndex) => (
-                    <div key={sectionIndex}>
-                        <h2>{section.title}</h2>
+                    <div key={sectionIndex} className="review-questionnaire-section">
+                        <h2>Section: {section.title}</h2>
                         {section.scenarios.map((scenario, scenarioIndex) => (
-                            <div key={scenarioIndex}>
-                                {scenario.questions.map(
-                                    (question, questionIndex) => (
+                            <div key={scenarioIndex} className="review-questionnaire-scenario">
+                                {scenario.questions.map((question, questionIndex) => (
+                                    <div key={questionIndex} className="review-questionnaire-question">
+                                        <p>{question.description}</p>
                                         <div>
-                                            <p>{question.description}</p>
-                                            <div>
-                                                <div className="review-row">
-                                                    <label>Slider Value:</label>
-                                                    <span>
-                                                        {
-                                                            questionnaireData[sectionIndex][scenarioIndex][questionIndex].sliderValue
-                                                        }
-                                                    </span>
-                                                </div>
-                                                <div className="review-row">
-                                                    <label>
-                                                        Supplementary Question:
-                                                    </label>
-                                                    <span>
-                                                        {
-                                                            questionnaireData[sectionIndex][scenarioIndex][questionIndex].extraQuestion
-                                                        }
-                                                    </span>
-                                                </div>
-                                                <div className="review-row">
-                                                    <label>Frequency :</label>
-                                                    <span>
-                                                        {
-                                                            questionnaireData[sectionIndex][scenarioIndex][questionIndex].frequencyValue
-                                                        }
-                                                    </span>
-                                                </div>
-                                                <div className="review-row">
-                                                    <label>Importance:</label>
-                                                    <span>
-                                                        {
-                                                            questionnaireData[sectionIndex][scenarioIndex][questionIndex].importanceValue
-                                                        }
-                                                    </span>
-                                                </div>
+                                            <div className="review-row">
+                                                <label>Slider Value:</label>
+                                                <span>{questionnaireData[sectionIndex][scenarioIndex][questionIndex].sliderValue}</span>
+                                            </div>
+                                            <div className="review-row">
+                                                <label>Supplementary Question:</label>
+                                                <span>{questionnaireData[sectionIndex][scenarioIndex][questionIndex].extraQuestion}</span>
+                                            </div>
+                                            <div className="review-row">
+                                                <label>Frequency :</label>
+                                                <span>{questionnaireData[sectionIndex][scenarioIndex][questionIndex].frequencyValue}</span>
+                                            </div>
+                                            <div className="review-row">
+                                                <label>Importance:</label>
+                                                <span>{questionnaireData[sectionIndex][scenarioIndex][questionIndex].importanceValue}</span>
                                             </div>
                                         </div>
-                                    )
-                                )}
+                                    </div>
+                                ))}
                             </div>
                         ))}
                     </div>

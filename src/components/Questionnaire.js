@@ -46,6 +46,8 @@ export default function Questionnaire({
     ) => {
         handleQuestionnaireChange(sectionIndex, scenarioIndex, questionIndex, data);
     };
+
+    console.log(questionnaire);
  
     return (
         <form onSubmit={onSubmit} className="questionaire-container">

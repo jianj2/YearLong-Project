@@ -84,6 +84,26 @@ input[type=date]:focus {
 
 }
 
+.review-personal-details {
+    padding: 1rem;
+    background-color: rgba(0,0,0,0.15);
+    border-radius: 20px;
+}
+
+.review-questionnaire-section {
+    padding: 1rem;
+    background-color: rgba(0,0,0,0.15);
+    border-radius: 20px;
+    margin: 0 0 1rem;
+}
+
+.review-questionnaire-scenario{
+
+}
+.review-questionnaire-question {
+
+}
+
 .review-submission h1{
     font-weight: 200;
     border-bottom: 1px solid rgba(200,200,200,0.2);
@@ -91,6 +111,7 @@ input[type=date]:focus {
 }
 
 .review-submission h2{
+    margin: 0;
     font-weight: 400;
     border-bottom: 1px dashed rgba(200,200,200,0.1);
     padding: 15px 0;
@@ -106,12 +127,15 @@ input[type=date]:focus {
 }
 
 .review-submission label{
-    font-weight: bold;
+    font-weight: 200;
+    color: #aaa;
 }
 
 .review-row {
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 0.5rem 0;
 }
 
 .review-row span {

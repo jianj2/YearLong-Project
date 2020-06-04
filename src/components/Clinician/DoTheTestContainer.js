@@ -171,11 +171,13 @@ const DoTheTestContainer = () => {
                     </button>
                 </div>
 
-                <ParentReviewSubmission
-                    questionnaire={selectedQuestionnaire}
-                    personalDetails={personalDetails}
-                    questionnaireData={questionnaireData}
-                />
+                <div className="dothetest-scrollable-container">
+                    <ParentReviewSubmission
+                        questionnaire={selectedQuestionnaire}
+                        personalDetails={personalDetails}
+                        questionnaireData={questionnaireData}
+                    />
+                </div>
             </div>
         );
     } else if (wizardStep === 3) {

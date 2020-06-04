@@ -12,7 +12,7 @@
 }
  
 .questionaire-container {
-    /* margin: auto; */
+    margin: 0 0 2rem 0;
     /* padding: 20px; */
     border-radius: 10px; 
     display: flex;
