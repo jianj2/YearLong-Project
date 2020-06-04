@@ -167,9 +167,10 @@ const HomeParents = ({ match }) => {
         // If it is read only, we skip this step
         if (readOnly) nextStep() 
         return (
-            <div className="parents-home">
+            <div className="parents-home"> 
                 <div className="subheader-container"> 
-                    <button className="button" onClick={prevStep}>
+                    <button id="back" className="button" onClick={prevStep}>
+ 
                         B A C K
                     </button>
                 </div>
@@ -185,16 +186,16 @@ const HomeParents = ({ match }) => {
         return (
             <div className="parents-home">
                 <div className="subheader-container">
-                    <button className="button" onClick={goToInstructions}>
+                    <button id="instructions" className="button" onClick={goToInstructions}>
                         I N S T R U C T I O N S
-                    </button>
+                    </button> 
                     { readOnly
                         ? null
-                        :   <button className="button" onClick={prevStep}>
+                        :   <button id="back" className="button" onClick={prevStep}>
                                 B A C K
                             </button>
                     }
-                    
+                     
                 </div>
 
                 <div className="parents-container">
@@ -212,13 +213,17 @@ const HomeParents = ({ match }) => {
 
     if (wizardStep == 3) {
         return (
-            <div className="parents-home">
-                {loading ? <Loading /> : null}
+            <div className="parents-home"> 
+                {
+                    loading
+                    ? <Loading />
+                    : null
+                } 
                 <div className="subheader-container">
-                    <button className="button" onClick={prevStep}>
+                    <button id="back" className="button" onClick={prevStep}>
                         B A C K
                     </button>
-                    <button className="button" onClick={submitResponse}>
+                    <button id="submit" className="button" onClick={submitResponse}>
                         S U B M I T
                     </button>
                 </div>
