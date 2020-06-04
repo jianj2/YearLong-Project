@@ -29,7 +29,9 @@ const DoTheTestContainer = () => {
     const { loading, isAuthenticated, loginWithRedirect, user } = useAuth0();
     const [wizardStep, setWizardStep] = useState(-1);
 
-    const [personalDetails, setPersonalDetails] = useState({});
+    const [personalDetails, setPersonalDetails] = useState({
+
+    });
 
     const [questionnaires, setQuestionnaires] = useState([]);
     const [questionnaireData, setQuestionnaireData] = useState([]);
@@ -88,7 +90,7 @@ const DoTheTestContainer = () => {
 
     const onClickQuestion = (questionnaireId) => {
         console.log("questionnaire clicked", questionnaireId);
-        setWizardStep(1);
+        setWizardStep(0);
         API.getQuestionnaire(questionnaireId).then((res) => {
             console.log(res);
             // Define initial values for the Questionnaire
@@ -98,13 +100,9 @@ const DoTheTestContainer = () => {
                 section.scenarios.forEach((scenario, scenarioIndex) => {
                     tempResponse[sectionIndex][scenarioIndex] = [];
                     scenario.questions.forEach((question, questionIndex) => {
-                        tempResponse[sectionIndex][scenarioIndex][
-                            questionIndex
-                        ] = {
-                            extraQuestion: "",
-                            sliderValue: 0,
-                            frequencyValue: "",
-                            importanceValue: "",
+                        tempResponse[sectionIndex][scenarioIndex][questionIndex] = {
+                            value: "",
+                            supplementaryValue: "", 
                         };
                     });
                 });
@@ -137,6 +135,7 @@ const DoTheTestContainer = () => {
                 <FormParentDetails
                     submitDetails={submitDetails}
                     clinicianAccess={true}
+                    defaultValue={personalDetails}
                 />
             </div>
         );

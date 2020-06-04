@@ -18,6 +18,7 @@ export default function ParentReviewSubmission({
     personalDetails, 
     questionnaireData 
 }) {
+    console.log("questionnaire in review", questionnaire)
     return (
         <div className="review-submission">
             <h1>Personal Details</h1>
@@ -51,26 +52,39 @@ export default function ParentReviewSubmission({
                         <h2>Section: {section.title}</h2>
                         {section.scenarios.map((scenario, scenarioIndex) => (
                             <div key={scenarioIndex} className="review-questionnaire-scenario">
+                                <p>{scenario.description}</p>
                                 {scenario.questions.map((question, questionIndex) => (
                                     <div key={questionIndex} className="review-questionnaire-question">
                                         <p>{question.description}</p>
                                         <div>
-                                            <div className="review-row">
-                                                <label>Slider Value:</label>
-                                                <span>{questionnaireData[sectionIndex][scenarioIndex][questionIndex].sliderValue}</span>
-                                            </div>
-                                            <div className="review-row">
-                                                <label>Supplementary Question:</label>
-                                                <span>{questionnaireData[sectionIndex][scenarioIndex][questionIndex].extraQuestion}</span>
-                                            </div>
-                                            <div className="review-row">
+                                            {!question.isMCQ ? (
+                                                <div>
+                                                    <div className="review-row">
+                                                        <label>Slider Value:</label>
+                                                        <span>{questionnaireData[sectionIndex][scenarioIndex][questionIndex].value}</span>
+                                                    </div>
+                                                    <div className="review-row">
+                                                        <label>Supplementary Question:</label>
+                                                        <span>{questionnaireData[sectionIndex][scenarioIndex][questionIndex].supplementaryValue}</span>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    <div className="review-row">
+                                                        <label>Answer</label>
+                                                        <span>{questionnaireData[sectionIndex][scenarioIndex][questionIndex].value}</span>
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* <div className="review-row">
                                                 <label>Frequency :</label>
                                                 <span>{questionnaireData[sectionIndex][scenarioIndex][questionIndex].frequencyValue}</span>
                                             </div>
                                             <div className="review-row">
                                                 <label>Importance:</label>
                                                 <span>{questionnaireData[sectionIndex][scenarioIndex][questionIndex].importanceValue}</span>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                 ))}

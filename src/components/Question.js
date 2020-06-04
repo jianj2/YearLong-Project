@@ -8,7 +8,16 @@
  *
  * The Question component defines the question form for questionnaires. These
  * will be visible in questionnaires when the questionnaires are fillable.
- *
+ * 
+ * 
+ * --------------------------------------------------------------------------------------------
+ *                                          N O T E
+ * --------------------------------------------------------------------------------------------
+ *  -   Each question's answer has two values which are "value" and "supplementaryValue".
+ *      This can be seen in the state. The idea behind the supplementaryValue is that 
+ *      the slider question always holds a supplementary MCQ question so in order to tackle
+ *      that, I came up with this structure. ~ @waqas
+ * 
  */
 
 import React, { useState, useEffect } from "react";
@@ -37,7 +46,22 @@ export default function Question({
     const [sliderValue, setSliderValue] = useState(data.sliderValue);
     const [frequencyValue, setFrequencyValue] = useState(data.frequencyValue);
     const [importanceValue, setImportanceValue] = useState(data.importanceValue);
-    const [mcqValue, setMCQValue] = useState('');
+
+    const [answered, setAnswered] = useState({
+        value: "",
+        supplementaryValue: "",
+    });
+    
+
+    // useEffect(() => {
+    //     let quesionResponseData = {
+    //         sliderValue,
+    //         extraQuestion,
+    //         frequencyValue,
+    //         importanceValue,
+    //     };
+    //     onQuestionChange(sectionIndex, scenarioIndex, questionIndex, quesionResponseData);
+    // }, [sliderValue, extraQuestion, frequencyValue, importanceValue]);
 
     useEffect(() => {
         let quesionResponseData = {
@@ -46,8 +70,14 @@ export default function Question({
             frequencyValue,
             importanceValue,
         };
-        onQuestionChange(sectionIndex, scenarioIndex, questionIndex, quesionResponseData);
-    }, [sliderValue, extraQuestion, frequencyValue, importanceValue]);
+
+        console.log("answered:", answered);
+        onQuestionChange(sectionIndex, scenarioIndex, questionIndex, answered);
+    }, [answered]);
+
+    const handleChangeSlider = () => {
+
+    }
 
     // If it is an MCQ question.
     if (isMCQ) {
@@ -55,9 +85,20 @@ export default function Question({
             <div className="question-container">
                 <FormControl color="secondary" margin="dense">
                     <p>{description}</p>
-                    <RadioGroup name="frequency" value={mcqValue}>
-                        {mcqOptions.map((answer, answerIndex) => (
-                            <FormControlLabel value={answer} control={<Radio disabled={readOnly} onClick={() => setMCQValue(answer)} />} label={answer} />
+                    <RadioGroup name="frequency" value={data.value}>
+                        {mcqOptions.map((item, index) => (
+                            <FormControlLabel
+                                key={index}
+                                value={item}
+                                control={
+                                    <Radio disabled={readOnly} onClick={() => setAnswered(
+                                        {   
+                                            ...answered, 
+                                            value: item 
+                                        })} />
+                                }
+                                label={item}
+                            />
                         ))}
                     </RadioGroup>
                 </FormControl>
@@ -68,10 +109,15 @@ export default function Question({
             <div className="question-container">
                 <p>{description}</p>
                 <Slider
-                    value={data.sliderValue}
+                    value={data.value}
                     color="secondary"
                     step={0.1}
-                    onChange={(e, val) => setSliderValue(val)}
+                    onChange={(e, val) =>
+                        setAnswered({
+                            ...answered,
+                            value: val,
+                        })
+                    }
                     min={0}
                     max={10}
                     disabled={readOnly}
@@ -80,25 +126,55 @@ export default function Question({
                 />
                 <div className="slider-labels">
                     <label>{rangeOptions[0]}</label>
-                    <label className="slider-value">{data.sliderValue}</label>
+                    <label className="slider-value">{data.value}</label>
                     <label>{rangeOptions[1]}</label>
                 </div>
 
                 <FormControl color="secondary" margin="dense">
-                    <RadioGroup name="frequency" value={data.extraQuestion} className="slider-checkboxes">
+                    <RadioGroup name="frequency" value={data.supplementaryValue} className="slider-checkboxes">
                         <FormControlLabel
                             value="Would not hear it."
-                            control={<Radio disabled={readOnly} onClick={() => setExtraQuestion("Would not hear it.")} />}
+                            control={
+                                <Radio
+                                    disabled={readOnly}
+                                    onClick={() =>
+                                        setAnswered({
+                                            ...answered,
+                                            supplementaryValue: "Would not hear it.",
+                                        })
+                                    }
+                                />
+                            }
                             label="Would not hear it."
                         />
                         <FormControlLabel
                             value="Do not know."
-                            control={<Radio disabled={readOnly} onClick={() => setExtraQuestion("Do not know.")} />}
+                            control={
+                                <Radio
+                                    disabled={readOnly}
+                                    onClick={() =>
+                                        setAnswered({
+                                            ...answered,
+                                            supplementaryValue: "Do not know.",
+                                        })
+                                    }
+                                />
+                            }
                             label="Do not know."
                         />
                         <FormControlLabel
                             value="Not applicable."
-                            control={<Radio disabled={readOnly} onClick={() => setExtraQuestion("Not applicable.")} />}
+                            control={
+                                <Radio
+                                    disabled={readOnly}
+                                    onClick={() =>
+                                        setAnswered({
+                                            ...answered,
+                                            supplementaryValue: "Not applicable.",
+                                        })
+                                    }
+                                />
+                            }
                             label="Not applicable."
                         />
                     </RadioGroup>

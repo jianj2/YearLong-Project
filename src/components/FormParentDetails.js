@@ -29,7 +29,7 @@ import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 // Import styles.
 // import "../styles/parents.css";
 
-export default function FormParentDetails({ submitDetails, clinicianAccess }) {
+export default function FormParentDetails({ submitDetails, clinicianAccess, defaultValue }) {
     const { register, handleSubmit, errors } = useForm();
 
     const handleButtonPress = (data) => {
@@ -38,14 +38,12 @@ export default function FormParentDetails({ submitDetails, clinicianAccess }) {
     };
 
     return (
-        <form
-            onSubmit={handleSubmit(handleButtonPress)}
-            className="parents-detail-form"
-        >
+        <form onSubmit={handleSubmit(handleButtonPress)} className="parents-detail-form">
             <div className="parents-detail-form-column">
                 <FormControl margin="dense">
                     <InputLabel>Child's Name</InputLabel>
                     <Input
+                        // defaultValue={defaultValue.name}
                         name="name"
                         placeholder="Write the child's name"
                         error={errors.name !== undefined}
@@ -53,16 +51,13 @@ export default function FormParentDetails({ submitDetails, clinicianAccess }) {
                             required: "You have not entered the name.",
                         })}
                     />
-                    <FormHelperText>
-                        {errors.name
-                            ? errors.name.message
-                            : "Please enter the child's name."}
-                    </FormHelperText>
+                    <FormHelperText>{errors.name ? errors.name.message : "Please enter the child's name."}</FormHelperText>
                 </FormControl>
 
                 <FormControl margin="dense">
                     <InputLabel>Child's Date of Birth</InputLabel>
                     <Input
+                        // defaultValue={defaultValue.date}
                         name="date"
                         type="date"
                         required
@@ -71,17 +66,16 @@ export default function FormParentDetails({ submitDetails, clinicianAccess }) {
                             required: "You have not entered the date of birth.",
                         })}
                     />
-                    <FormHelperText>
-                        {errors.date
-                            ? errors.date.message
-                            : "Please enter the child's name."}
-                    </FormHelperText>
+                    <FormHelperText>{errors.date ? errors.date.message : "Please enter the child's name."}</FormHelperText>
                 </FormControl>
 
-                {clinicianAccess ? <div></div> : (
+                {clinicianAccess ? (
+                    <div></div>
+                ) : (
                     <FormControl margin="dense">
                         <InputLabel>Completed By</InputLabel>
                         <Select
+                            // defaultValue={defaultValue.completedBy}
                             name="completedBy"
                             error={errors.completedBy !== undefined}
                             native
@@ -93,11 +87,7 @@ export default function FormParentDetails({ submitDetails, clinicianAccess }) {
                             <option value="parent">Parent</option>
                             <option value="child">Child</option>
                         </Select>
-                        <FormHelperText>
-                            {errors.completedBy
-                                ? errors.completedBy.message
-                                : "Please specify who is filling the form."}
-                        </FormHelperText>
+                        <FormHelperText>{errors.completedBy ? errors.completedBy.message : "Please specify who is filling the form."}</FormHelperText>
                     </FormControl>
                 )}
             </div>
@@ -106,6 +96,7 @@ export default function FormParentDetails({ submitDetails, clinicianAccess }) {
                 <FormControl margin="dense">
                     <InputLabel>Right Device Type</InputLabel>
                     <Select
+                        // defaultValue={defaultValue.rightDeviceType}
                         name="rightDeviceType"
                         error={errors.rightDeviceType !== undefined}
                         // required
@@ -118,16 +109,13 @@ export default function FormParentDetails({ submitDetails, clinicianAccess }) {
                         <option value="deviceA">Device A</option>
                         <option value="deviceB">Device B</option>
                     </Select>
-                    <FormHelperText>
-                        {errors.rightDeviceType
-                            ? errors.rightDeviceType.message
-                            : "Please specify the device type."}
-                    </FormHelperText>
+                    <FormHelperText>{errors.rightDeviceType ? errors.rightDeviceType.message : "Please specify the device type."}</FormHelperText>
                 </FormControl>
 
                 <FormControl margin="dense">
                     <InputLabel>Left Device Type</InputLabel>
                     <Select
+                        // defaultValue={defaultValue.leftDeviceType}
                         name="leftDeviceType"
                         error={errors.leftDeviceType !== undefined}
                         // required
@@ -140,11 +128,7 @@ export default function FormParentDetails({ submitDetails, clinicianAccess }) {
                         <option value="deviceA">Device A</option>
                         <option value="deviceB">Device B</option>
                     </Select>
-                    <FormHelperText>
-                        {errors.leftDeviceType
-                            ? errors.leftDeviceType.message
-                            : "Please specify the device type."}
-                    </FormHelperText>
+                    <FormHelperText>{errors.leftDeviceType ? errors.leftDeviceType.message : "Please specify the device type."}</FormHelperText>
                 </FormControl>
 
                 <div className="parents-detail-form-submit-button">
