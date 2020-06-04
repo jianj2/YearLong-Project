@@ -35,7 +35,7 @@ import "../styles/landing.css";
 import "../styles/main.css";
 
 
-const INSTRUCTIONS_READ_ONLY = "";
+const INSTRUCTIONS_READ_ONLY = "Go to the next page to view the questions. These would be the questions asked to you by the clinician on the call.";
 const INSTRUCTIONS = "We would have instructions here stored by the admin."
 // ---------------------------------------------------------------
 // This method defines the elements for this component.
@@ -152,14 +152,19 @@ const HomeParents = ({ match }) => {
                     </button>
                 </div>
                 <div className="parents-container">
-                    Instructions
-                    
+                    <h1>I N S T R U C T I O N S</h1>
+                    {readOnly ? (
+                        <p>{INSTRUCTIONS_READ_ONLY}</p>
+                    ) : (
+                        <p>{INSTRUCTIONS}</p>
+                    )}
                 </div>
             </div>
         );
     }
 
     if (wizardStep == 1) {
+        
         return (
             <div className="parents-home">
                 <div className="subheader-container">
