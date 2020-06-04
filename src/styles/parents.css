@@ -47,7 +47,7 @@
     /* height: 95vh; */
     width: 60vw;
     min-width: 600px;
-    margin: auto;
+    margin: 0 auto;
     padding: 2rem;
     background-color: rgba(0,0,0,0.15);
     border-radius: 15px;
