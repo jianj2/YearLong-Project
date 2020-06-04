@@ -43,7 +43,7 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                 <FormControl margin="dense">
                     <InputLabel>Child's Name</InputLabel>
                     <Input
-                        // defaultValue={defaultValue.name}
+                        defaultValue={defaultValue.name}
                         name="name"
                         placeholder="Write the child's name"
                         error={errors.name !== undefined}
@@ -57,7 +57,7 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                 <FormControl margin="dense">
                     <InputLabel>Child's Date of Birth</InputLabel>
                     <Input
-                        // defaultValue={defaultValue.date}
+                        defaultValue={defaultValue.date}
                         name="date"
                         type="date"
                         required
@@ -75,7 +75,7 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                     <FormControl margin="dense">
                         <InputLabel>Completed By</InputLabel>
                         <Select
-                            // defaultValue={defaultValue.completedBy}
+                            defaultValue={defaultValue.completedBy}
                             name="completedBy"
                             error={errors.completedBy !== undefined}
                             native
@@ -96,7 +96,7 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                 <FormControl margin="dense">
                     <InputLabel>Right Device Type</InputLabel>
                     <Select
-                        // defaultValue={defaultValue.rightDeviceType}
+                        defaultValue={defaultValue.rightDeviceType}
                         name="rightDeviceType"
                         error={errors.rightDeviceType !== undefined}
                         // required
@@ -115,7 +115,7 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                 <FormControl margin="dense">
                     <InputLabel>Left Device Type</InputLabel>
                     <Select
-                        // defaultValue={defaultValue.leftDeviceType}
+                        defaultValue={defaultValue.leftDeviceType}
                         name="leftDeviceType"
                         error={errors.leftDeviceType !== undefined}
                         // required

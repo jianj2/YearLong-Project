@@ -30,7 +30,11 @@ const DoTheTestContainer = () => {
     const [wizardStep, setWizardStep] = useState(-1);
 
     const [personalDetails, setPersonalDetails] = useState({
-
+        name: "",
+        date: "",
+        completedBy: "clinician",
+        rightDeviceType: "",
+        leftDeviceType: "",
     });
 
     const [questionnaires, setQuestionnaires] = useState([]);
