@@ -1,4 +1,5 @@
-const api = "http://localhost:3001";
+// const api = "http://localhost:3001";
+const api = "https://dev-server.herokuapp.com"; //heroku
 
 let header = {
     authorization: "fill in l8er",
