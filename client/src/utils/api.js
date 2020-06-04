@@ -146,7 +146,7 @@ export const getAndSetSpecificQuestionnaire = async (CQid, setState) => {
         .then(data => setState(data));
 };
  
-}
+
 
 
 // get clinician questionnaire list
