@@ -128,25 +128,28 @@ const DoTheTestContainer = () => {
     if (wizardStep === 0) {
         return (
             <div className="dothetest-container">
-                <div className="subheader-container">
-                    <button className="button" onClick={prevStep}>
-                        B A C K
-                    </button>
-                </div>
- 
-                <FormParentDetails submitDetails={submitDetails} clinicianAccess={true}/>
-            </div>
-        );
-    } else if (wizardStep === 1) {
-        return (
-            <div className="dothetest-container">
-                <div className="subheader-container"> 
+                <div className="dothetest-subheader-container">
                     <button className="button" onClick={prevStep}>
                         B A C K
                     </button>
                 </div>
 
-                <div className="parents-container">
+                <FormParentDetails
+                    submitDetails={submitDetails}
+                    clinicianAccess={true}
+                />
+            </div>
+        );
+    } else if (wizardStep === 1) {
+        return (
+            <div className="dothetest-container">
+                <div className="dothetest-subheader-container">
+                    <button className="button" onClick={prevStep}>
+                        B A C K
+                    </button>
+                </div>
+
+                <div className="dothetest-scrollable-container">
                     <Questionnaire
                         questionnaire={selectedQuestionnaire}
                         submitQuestionnaire={submitQuestionnaire}
@@ -159,7 +162,7 @@ const DoTheTestContainer = () => {
     } else if (wizardStep === 2) {
         return (
             <div className="dothetest-container">
-                <div className="subheader-container">
+                <div className="dothetest-subheader-container">
                     <button className="button" onClick={prevStep}>
                         B A C K
                     </button>
@@ -168,13 +171,11 @@ const DoTheTestContainer = () => {
                     </button>
                 </div>
 
-                <div className="parents-container">
-                    <ParentReviewSubmission
-                        questionnaire={selectedQuestionnaire}
-                        personalDetails={personalDetails}
-                        questionnaireData={questionnaireData}
-                    />
-                </div>
+                <ParentReviewSubmission
+                    questionnaire={selectedQuestionnaire}
+                    personalDetails={personalDetails}
+                    questionnaireData={questionnaireData}
+                />
             </div>
         );
     } else if (wizardStep === 3) {

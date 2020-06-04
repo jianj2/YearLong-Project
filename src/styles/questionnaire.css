@@ -10,21 +10,39 @@
 .questionaire-container h4 {
     display: inline; 
 }
-
+ 
 .questionaire-container {
-    margin: auto;
-    padding: 20px;
+    /* margin: auto; */
+    /* padding: 20px; */
     border-radius: 10px; 
+    display: flex;
+    flex-flow: column wrap;
+    align-items: stretch;
+}
+
+
+.section-container{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: stretch;   
+}
+.scenario-container{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: stretch;
+
 }
 
 .question-container {
-    border: 1px solid #aaa;
+    border: 1px solid rgba(255,255,255,0.05);
     background-color: rgba(255,255,255,0.03);
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 10px;
-
-} 
+    /* width: 100%; */
+    display: flex; 
+    flex-flow: column nowrap;
+}
 
 .slider-labels {
     display: flex;

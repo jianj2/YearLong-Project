@@ -1,7 +1,10 @@
 
 
 .dothetest-container {
-
+    display: flex;
+    flex-direction: column;
+    height: 95vh;
+    
 }
 
 .dothetest-submit {
@@ -10,8 +13,20 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow: auto;
 }
 
 .dothetest-submit h1{
     font-weight: 200;
+}
+
+.dothetest-subheader-container {
+    padding: 1rem 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.dothetest-scrollable-container {
+    flex: 1;
+    overflow: auto;
 }

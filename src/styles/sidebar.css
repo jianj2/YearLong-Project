@@ -12,9 +12,9 @@
 
 @media all and (max-width: 800px) {
     .sidebar-container {
-        /* flex: 0; */
+        /* flex: none; */
         width: 100vw !important;
-        height: 9rem;
+        /* height: 9rem; */
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -27,7 +27,9 @@
 }
 
 .sidebar-container {
-    /* flex: 1; */
+    flex: 1;
+    /* min-height: 100vh; */
+    /* height: 100%; */
     width: 25vw;
     display: flex;
     flex-direction: column;

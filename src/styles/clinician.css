@@ -121,18 +121,7 @@ width: 65%;
   margin-top:5px;
   font-size: 2vh;
 } */
-
-.questions-container h2{
-  padding-left: 80px;
-}
-
-.question-container{
-  width:100%;
-  height:70%;
-  display:flex;
-  flex-direction:column;
-}
-
+ 
 .questionTable{
   align-items:center;
   border-radius:15px;

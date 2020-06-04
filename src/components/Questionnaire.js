@@ -51,10 +51,10 @@ export default function Questionnaire({
         <form onSubmit={onSubmit} className="questionaire-container">
             <h1>{questionnaire.title}</h1>
             {questionnaire.sections.map((section, sectionIndex) => (
-                <div key={sectionIndex}>
+                <div key={sectionIndex} className="section-container">
                     <h2>{section.title}</h2>
                     {section.scenarios.map((scenario, scenarioIndex) => (
-                        <div key={scenarioIndex}>
+                        <div key={scenarioIndex} className="scenario-container">
                             <p>{scenario.description}</p>
                             {scenario.questions.map(
                                 (question, questionIndex) => (
@@ -83,15 +83,15 @@ export default function Questionnaire({
                 </div>
             ))}
 
-            <div className="questionaire-submit-button"> 
-                {
-                    readOnly 
-                    ?   null
-                    :   <button id="review" className={errors.code ? "button-disabled" : "button"}>
-                            R E V I E W
-                        </button>
-
-                }  
+            <div className="questionaire-submit-button">
+                {readOnly ? null : (
+                    <button
+                        id="review"
+                        className={errors.code ? "button-disabled" : "button"}
+                    >
+                        R E V I E W
+                    </button>
+                )}
             </div>
         </form>
     );
