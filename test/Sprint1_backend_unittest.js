@@ -206,8 +206,7 @@ describe('Sprint1 Backend unit-test',function(){
                 .post('/submit/91376460-a720-11ea-9d2c-af01a9595956')
                 .end(function(err,res){
                     if(!err){
-                        console.log(res);
-                        console.log(res.body);
+                        res.should.have.status(200);
                         done();
                     }else {
                         done(err);
