@@ -5,6 +5,7 @@ var expect = chai.expect;
 const { v1: uuidv1 } = require("uuid");
 chai.use(chaiHttp);
 
+//var server = require('../app');
 
 describe('Sprint1 Backend unit-test',function(){
 
@@ -149,5 +150,71 @@ describe('Sprint1 Backend unit-test',function(){
         });
     });
 
+
+    describe('Test the share.js router',function(){
+
+       it('Test the first shareId',function(done){
+           chai.request('http://localhost:3001/share')
+               .get('/4f3bf7a0-a686-11ea-963d-d72d9d1c93cb')
+               .end(function(err,res){
+                   if(!err){
+                       res.body.shareId.should.equal('4f3bf7a0-a686-11ea-963d-d72d9d1c93cb');
+                       res.body.clinicianEmail.should.equal('donuvin@gmail.com');
+                       res.body.patientEmail.should.equal('wrehmani@student.unimelb.edu.au');
+                       res.body.questionnaireId.should.equal('c93d2b80-a682-11ea-963d-d72d9d1c93cb');
+                       res.body.readOnly.should.equal(false);
+                       done();
+                   }else{
+                       done(err);
+                   }
+               });
+       });
+
+        it('Test the second shareId',function(done){
+            chai.request('http://localhost:3001/share')
+                .get('/64a9d1d0-a68a-11ea-9b09-53ae67cb454d')
+                .end(function(err,res){
+                    if(!err){
+                        res.body.shareId.should.equal('64a9d1d0-a68a-11ea-9b09-53ae67cb454d');
+                        res.body.clinicianEmail.should.equal('wrehmani@student.unimelb.edu.au');
+                        res.body.patientEmail.should.equal('donuvin@gmail.com');
+                        res.body.questionnaireId.should.equal('5c757050-a67b-11ea-a416-756fbdf3f4a8');
+                        res.body.readOnly.should.equal(true);
+                        done();
+                    }else{
+                        done(err);
+                    }
+                });
+        });
+
+        it('Test the shareId does not exist',function(done){
+            chai.request('http://localhost:3001/share')
+                .get('/testerId')
+                .end(function(err,res){
+                    if(!err){
+                        res.should.have.status(200);
+                        done();
+                    }else{
+                        done(err);
+                    }
+                });
+        });
+
+        //have some problems with this test
+        it('Test the completeShare',function(done){
+            chai.request('http://localhost:3001/share')
+                .post('/submit/91376460-a720-11ea-9d2c-af01a9595956')
+                .end(function(err,res){
+                    if(!err){
+                        console.log(res);
+                        console.log(res.body);
+                        done();
+                    }else {
+                        done(err);
+                    }
+                });
+        });
+    });
+    
 
 });
