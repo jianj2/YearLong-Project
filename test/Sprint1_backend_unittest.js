@@ -5,7 +5,7 @@ var expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('Sprint1 Backend unit-test',function(){
-     describe('Test the admin.js router',function(){
+    describe('Test the admin.js router',function(){
         it('Test adminLogin with empty username',function(done){
             chai.request('http://localhost:3001/admin/')
                 .post('/login')
@@ -70,6 +70,34 @@ describe('Sprint1 Backend unit-test',function(){
                     }else{
                         done(err);
                     }
+                });
+        });
+    });
+    describe('Test the clinician.js router',function(){
+        it('Test getAllClinician',function(done){
+            chai.request('http://localhost:3001/clinician/')
+                .get('/')
+                .end(function(err,res){
+                    if(!err){
+                        res.should.have.property('body');
+                        res.body.should.have.lengthOf(4);
+                        done();
+                    }else{
+                        done(err);
+                    }
+                });
+        });
+        //Has some problems with testing the create function
+        it('Test creatClinician',function(done){
+            chai.request('http://localhost:3001/clinician/')
+                .post('/share')
+                .end(function(err,res){
+                   if(!err){
+                       console.log(res.body);
+                       done();
+                   }else{
+                       done(err);
+                   }
                 });
         });
     });
