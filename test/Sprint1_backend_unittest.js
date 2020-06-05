@@ -80,20 +80,37 @@ describe('Sprint1 Backend unit-test',function(){
                 .end(function(err,res){
                     if(!err){
                         res.should.have.property('body');
-                        res.body.should.have.lengthOf(4);
+                        res.body.should.have.lengthOf(5);
                         done();
                     }else{
                         done(err);
                     }
                 });
         });
-        //Has some problems with testing the create function
-        it('Test creatClinician',function(done){
+        it('Test clinician shares the questionnaire',function(done){
+            const uuid = uuidv1();
             chai.request('http://localhost:3001/clinician/')
                 .post('/share')
+                .send({
+                    'shareId': uuid,
+                    'clinicianEmail': 'donuvin@gmail.com',
+                    'patientEmail': 'jiaojian1996@gmail.com',
+                    'questionnaireId': 'c93d2b90-a682-11ea-963d-d72d9d1c93cb',
+                    'readOnly': true,
+                    'message': 'test',})
                 .end(function(err,res){
                    if(!err){
-                       console.log(res.body);
+                       res.body.should.have.property('shareId');
+                       res.body.should.have.property('clinicianEmail');
+                       res.body.should.have.property('patientEmail');
+                       res.body.should.have.property('questionnaireId');
+                       res.body.should.have.property('readOnly');
+                       res.body.should.have.property('message');
+                       res.body.clinicianEmail.should.equal('donuvin@gmail.com');
+                       res.body.patientEmail.should.equal('jiaojian1996@gmail.com');
+                       res.body.questionnaireId.should.equal('c93d2b90-a682-11ea-963d-d72d9d1c93cb');
+                       res.body.readOnly.should.equal(true);
+                       res.body.message.should.equal('test');
                        done();
                    }else{
                        done(err);
