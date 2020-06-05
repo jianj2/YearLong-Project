@@ -2,12 +2,17 @@ var chai = require('chai');
 var chaiHttp = require('chai-http');
 var should = chai.should();
 var expect = chai.expect;
+const { v1: uuidv1 } = require("uuid");
 chai.use(chaiHttp);
 
+
 describe('Sprint1 Backend unit-test',function(){
+
+
     describe('Test the admin.js router',function(){
+
         it('Test adminLogin with empty username',function(done){
-            chai.request('http://localhost:3001/admin/')
+            chai.request('http://localhost:3001/admin')
                 .post('/login')
                 .send({'username': '', 'password': 'testPassword'})
                 .end(function(err,res){
@@ -22,8 +27,9 @@ describe('Sprint1 Backend unit-test',function(){
                     }
                 });
         });
+
         it('Test adminLogin with empty password',function(done){
-            chai.request('http://localhost:3001/admin/')
+            chai.request('http://localhost:3001/admin')
                 .post('/login')
                 .send({'username': 'tester', 'password': ''})
                 .end(function(err,res){
@@ -38,8 +44,9 @@ describe('Sprint1 Backend unit-test',function(){
                     }
                 });
         });
+
         it('Test adminLogin with correct information',function(done){
-            chai.request('http://localhost:3001/admin/')
+            chai.request('http://localhost:3001/admin')
                 .post('/login')
                 .send({'username': 'AdminUser1', 'password': 'pw1234'})
                 .end(function(err,res){
@@ -56,8 +63,9 @@ describe('Sprint1 Backend unit-test',function(){
                     }
                 });
         });
+
         it('Test adminLogin with wrong information',function(done){
-            chai.request('http://localhost:3001/admin/')
+            chai.request('http://localhost:3001/admin')
                 .post('/login')
                 .send({'username': 'tester', 'password': 'testPassword'})
                 .end(function(err,res){
@@ -73,9 +81,12 @@ describe('Sprint1 Backend unit-test',function(){
                 });
         });
     });
+
+
     describe('Test the clinician.js router',function(){
+
         it('Test getAllClinician',function(done){
-            chai.request('http://localhost:3001/clinician/')
+            chai.request('http://localhost:3001/clinician')
                 .get('/')
                 .end(function(err,res){
                     if(!err){
@@ -87,9 +98,10 @@ describe('Sprint1 Backend unit-test',function(){
                     }
                 });
         });
+
         it('Test clinician shares the questionnaire',function(done){
             const uuid = uuidv1();
-            chai.request('http://localhost:3001/clinician/')
+            chai.request('http://localhost:3001/clinician')
                 .post('/share')
                 .send({
                     'shareId': uuid,
@@ -118,4 +130,24 @@ describe('Sprint1 Backend unit-test',function(){
                 });
         });
     });
+
+
+    describe('Test the index.js router',function(){
+
+        it('Test the index.js',function(done){
+            chai.request('http://localhost:3001')
+                .get('/')
+                .end(function(err,res){
+                    if(!err){
+                        res.should.have.property('text');
+                        res.text.should.equal('Pediatric SSQ Server');
+                        done();
+                    }else{
+                        done(err);
+                    }
+                });
+        });
+    });
+
+
 });
