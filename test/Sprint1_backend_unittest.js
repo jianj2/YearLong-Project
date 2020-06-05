@@ -5,8 +5,8 @@ var expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('Sprint1 Backend unit-test',function(){
-    describe('Test the admin.js router',function(){
-        it('Test adminLogin with empty username)',function(done){
+     describe('Test the admin.js router',function(){
+        it('Test adminLogin with empty username',function(done){
             chai.request('http://localhost:3001/admin/')
                 .post('/login')
                 .send({'username': '', 'password': 'testPassword'})
@@ -22,7 +22,7 @@ describe('Sprint1 Backend unit-test',function(){
                     }
                 });
         });
-        it('Test adminLogin with empty password)',function(done){
+        it('Test adminLogin with empty password',function(done){
             chai.request('http://localhost:3001/admin/')
                 .post('/login')
                 .send({'username': 'tester', 'password': ''})
@@ -38,7 +38,7 @@ describe('Sprint1 Backend unit-test',function(){
                     }
                 });
         });
-        it('Test adminLogin with correct information)',function(done){
+        it('Test adminLogin with correct information',function(done){
             chai.request('http://localhost:3001/admin/')
                 .post('/login')
                 .send({'username': 'AdminUser1', 'password': 'pw1234'})
@@ -56,7 +56,7 @@ describe('Sprint1 Backend unit-test',function(){
                     }
                 });
         });
-        it('Test adminLogin with wrong information)',function(done){
+        it('Test adminLogin with wrong information',function(done){
             chai.request('http://localhost:3001/admin/')
                 .post('/login')
                 .send({'username': 'tester', 'password': 'testPassword'})
