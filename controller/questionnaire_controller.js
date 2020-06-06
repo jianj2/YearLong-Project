@@ -118,7 +118,12 @@ const editQuestionnaire = function (req, res) {
     const questionnaireId = req.body.questionnaire.questionnaireId;
     const editedQuestionnaire = req.body.questionnaire;
     Questionnaire.replaceOne({ questionnaireId: questionnaireId }, editedQuestionnaire, (err, raw) => {
-        return;
+        if (!err) {
+            res.send("successfully edit");
+            // console.log('here')
+        } else {
+            res.send(err);
+        }
     });
 };
 
