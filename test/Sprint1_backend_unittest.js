@@ -5,12 +5,13 @@ var expect = chai.expect;
 const { v1: uuidv1 } = require("uuid");
 chai.use(chaiHttp);
 let delete_id = uuidv1();
+let share_id = uuidv1();
 
 describe('Sprint1 Backend unit-test',function(){
 
 
     describe('Test the admin.js router',function(){
-    
+
         it('Test adminLogin with empty username',function(done){
             chai.request('http://localhost:3001/admin')
                 .post('/login')
@@ -27,7 +28,7 @@ describe('Sprint1 Backend unit-test',function(){
                     }
                 });
         });
-    
+
         it('Test adminLogin with empty password',function(done){
             chai.request('http://localhost:3001/admin')
                 .post('/login')
@@ -44,7 +45,7 @@ describe('Sprint1 Backend unit-test',function(){
                     }
                 });
         });
-    
+
         it('Test adminLogin with correct information',function(done){
             chai.request('http://localhost:3001/admin')
                 .post('/login')
@@ -63,7 +64,7 @@ describe('Sprint1 Backend unit-test',function(){
                     }
                 });
         });
-    
+
         it('Test adminLogin with wrong information',function(done){
             chai.request('http://localhost:3001/admin')
                 .post('/login')
@@ -81,10 +82,10 @@ describe('Sprint1 Backend unit-test',function(){
                 });
         });
     });
-    
-    
+
+
     describe('Test the clinician.js router',function(){
-    
+
         it('Test getAllClinician',function(done){
             chai.request('http://localhost:3001/clinician')
                 .get('/')
@@ -98,7 +99,7 @@ describe('Sprint1 Backend unit-test',function(){
                     }
                 });
         });
-    
+
         it('Test clinician shares the questionnaire',function(done){
             chai.request('http://localhost:3001/clinician')
                 .post('/share')
@@ -109,29 +110,30 @@ describe('Sprint1 Backend unit-test',function(){
                     'readOnly': false,
                     'message': 'test',})
                 .end(function(err,res){
-                   if(!err){
-                       res.body.should.have.property('shareId');
-                       res.body.should.have.property('clinicianEmail');
-                       res.body.should.have.property('patientEmail');
-                       res.body.should.have.property('questionnaireId');
-                       res.body.should.have.property('readOnly');
-                       res.body.should.have.property('message');
-                       res.body.clinicianEmail.should.equal('jiaojian1996@gmail.com');
-                       res.body.patientEmail.should.equal('jiaojian1996@gmail.com');
-                       res.body.questionnaireId.should.equal('c93d2b90-a682-11ea-963d-d72d9d1c93cb');
-                       res.body.readOnly.should.equal(false);
-                       res.body.message.should.equal('test');
-                       done();
-                   }else{
-                       done(err);
-                   }
+                    if(!err){
+                        res.body.should.have.property('shareId');
+                        res.body.should.have.property('clinicianEmail');
+                        res.body.should.have.property('patientEmail');
+                        res.body.should.have.property('questionnaireId');
+                        res.body.should.have.property('readOnly');
+                        res.body.should.have.property('message');
+                        share_id = res.body.shareId;
+                        res.body.clinicianEmail.should.equal('jiaojian1996@gmail.com');
+                        res.body.patientEmail.should.equal('jiaojian1996@gmail.com');
+                        res.body.questionnaireId.should.equal('c93d2b90-a682-11ea-963d-d72d9d1c93cb');
+                        res.body.readOnly.should.equal(false);
+                        res.body.message.should.equal('test');
+                        done();
+                    }else{
+                        done(err);
+                    }
                 });
         });
     });
-    
-    
+
+
     describe('Test the index.js router',function(){
-    
+
         it('Test the index.js',function(done){
             chai.request('http://localhost:3001')
                 .get('/')
@@ -150,23 +152,23 @@ describe('Sprint1 Backend unit-test',function(){
 
     describe('Test the share.js router',function(){
 
-       it('Test the first shareId',function(done){
-           chai.request('http://localhost:3001/share')
-               .get('/4f3bf7a0-a686-11ea-963d-d72d9d1c93cb')
-               .end(function(err,res){
-                   if(!err){
-                       res.body.shareId.should.equal('4f3bf7a0-a686-11ea-963d-d72d9d1c93cb');
-                       res.body.clinicianEmail.should.equal('donuvin@gmail.com');
-                       res.body.patientEmail.should.equal('wrehmani@student.unimelb.edu.au');
-                       res.body.questionnaireId.should.equal('c93d2b80-a682-11ea-963d-d72d9d1c93cb');
-                       res.body.readOnly.should.equal(false);
-                       done();
-                   }else{
-                       done(err);
-                   }
-               });
-       });
-       
+        it('Test the first shareId',function(done){
+            chai.request('http://localhost:3001/share')
+                .get('/4f3bf7a0-a686-11ea-963d-d72d9d1c93cb')
+                .end(function(err,res){
+                    if(!err){
+                        res.body.shareId.should.equal('4f3bf7a0-a686-11ea-963d-d72d9d1c93cb');
+                        res.body.clinicianEmail.should.equal('donuvin@gmail.com');
+                        res.body.patientEmail.should.equal('wrehmani@student.unimelb.edu.au');
+                        res.body.questionnaireId.should.equal('c93d2b80-a682-11ea-963d-d72d9d1c93cb');
+                        res.body.readOnly.should.equal(false);
+                        done();
+                    }else{
+                        done(err);
+                    }
+                });
+        });
+
         it('Test the second shareId',function(done){
             chai.request('http://localhost:3001/share')
                 .get('/64a9d1d0-a68a-11ea-9b09-53ae67cb454d')
@@ -183,7 +185,7 @@ describe('Sprint1 Backend unit-test',function(){
                     }
                 });
         });
-       
+
         it('Test the shareId does not exist',function(done){
             chai.request('http://localhost:3001/share')
                 .get('/testerId')
@@ -199,7 +201,7 @@ describe('Sprint1 Backend unit-test',function(){
 
         it('Test the completeShare',function(done){
             chai.request('http://localhost:3001/share')
-                .post('/submit/44658470-a7be-11ea-97ef-23fd8b2a64b6')
+                .post('/submit/'+share_id)
                 .send({'questionnaireData':'',
                     'clinicianEmail':'jiaojian1996@gmail.com',
                     'personalDetails':{'name': 'Daniel', 'date': '2020-06-02', 'completedBy': 'parent',
@@ -218,7 +220,7 @@ describe('Sprint1 Backend unit-test',function(){
 
         it('Test the completeShare with a expire shareId',function(done){
             chai.request('http://localhost:3001/share')
-                .post('/submit/44658470-a7be-11ea-97ef-23fd8b2a64b6')
+                .post('/submit/'+share_id)
                 .send({'questionnaireData':'',
                     'clinicianEmail':'jiaojian1996@gmail.com',
                     'personalDetails':{'name': 'Daniel', 'date': '2020-06-02', 'completedBy': 'parent',
@@ -344,11 +346,11 @@ describe('Sprint1 Backend unit-test',function(){
             chai.request('http://localhost:3001/questionnaire')
                 .post('/edit')
                 .send({'questionnaire': {'_id': '5edb399a7f8f3d102cefb714',
-                    'questionnaireId': '28c6fb70-a7c0-11ea-97ef-23fd8b2a64b6',
-                    'title': "Unit Test Edit",
-                    'description': "Please click edit to begin with this questionnaire.",
-                    'sections': [],
-                    'isStandard': false,
+                        'questionnaireId': '28c6fb70-a7c0-11ea-97ef-23fd8b2a64b6',
+                        'title': "Unit Test Edit",
+                        'description': "Please click edit to begin with this questionnaire.",
+                        'sections': [],
+                        'isStandard': false,
                         '__v': 0}})
                 .end(function(err,res){
                     if(!err){
@@ -367,16 +369,15 @@ describe('Sprint1 Backend unit-test',function(){
                 .post('/delete')
                 .send({'CQid':delete_id,'clinicianId':'unittest2@gmail.com'})
                 .end(function(err,res){
-                   if(!err){
-                       res.should.have.status(200);
-                       res.text.should.equal('successfully delete');
-                       done();
-                   }else{
-                       done(err);
-                   }
+                    if(!err){
+                        res.should.have.status(200);
+                        res.text.should.equal('successfully delete');
+                        done();
+                    }else{
+                        done(err);
+                    }
                 });
-
         });
-   });
-    
+    });
+
 });
