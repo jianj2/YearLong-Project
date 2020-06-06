@@ -91,7 +91,7 @@ describe('Sprint1 Backend unit-test',function(){
                 .end(function(err,res){
                     if(!err){
                         res.should.have.property('body');
-                        res.body.should.have.lengthOf(5);
+                        res.body.should.have.lengthOf(7);
                         done();
                     }else{
                         done(err);
