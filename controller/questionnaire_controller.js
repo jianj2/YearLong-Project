@@ -132,7 +132,12 @@ const editQuestionnaireQuestion = function (req, res) {
         { questionnaireId: req.body.questionnaireId },
         { $push: { "sections.0.scenarios.0.questions": { isMCQ: false, rangeOptions: ["Three", "Nine"] } } },
         (err, raw) => {
-            return;
+            if (!err) {
+            res.send("successfully edit");
+            // console.log('here')
+        } else {
+            res.send(err);
+        }
         }
     );
 };
