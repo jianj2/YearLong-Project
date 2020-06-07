@@ -191,7 +191,7 @@ describe('Sprint1 Backend unit-test',function(){
                 .get('/testerId')
                 .end(function(err,res){
                     if(!err){
-                        res.should.have.status(200);
+                        res.should.have.status(500);
                         done();
                     }else{
                         done(err);
