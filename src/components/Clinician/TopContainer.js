@@ -22,7 +22,7 @@ import * as API from "../../utils/api";
 
 // handles rendering of TopContainer in the Clinician page
 const TopContainer = () => {
-    var manage_qustionnaire_url = "/clinician"
+    const manage_qustionnaire_url = "/clinician"
     return (
         
         <div className="top-container">
