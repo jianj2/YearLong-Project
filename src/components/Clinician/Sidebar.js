@@ -12,7 +12,7 @@
  *
  */
 
-import React, {useState} from "react";
+import React from "react";
 import { Link } from 'react-router-dom'
 
 // Import styles.
@@ -22,7 +22,7 @@ import "../../styles/sidebar.css";
 // handles rendering of SideBar with Login
 const SideBar = (props) => {
 
-    var pathname = window.location.href.split("/").pop()
+    const pathname = window.location.href.split("/").pop()
 
     return (
         <div className="sidebar-container">

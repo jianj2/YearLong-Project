@@ -21,7 +21,6 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 // Import components.
-import QuestionsContainer from "./QuestionsContainer";
 import EditDescription from "./EditDescription";
 import Loading from "../Loading";
 
