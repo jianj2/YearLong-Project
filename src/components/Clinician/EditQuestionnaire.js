@@ -69,7 +69,7 @@ const EditQuestionnaire = ({
     };
 
 
-    var manage_questionnaire_url = "/clinician";
+    const manage_questionnaire_url = "/clinician";
 
     if (!Questionnaire) {
         return <Loading />;
