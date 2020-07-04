@@ -1,7 +1,7 @@
-var express = require('express');
-var bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
 
-var app = express();
+const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -10,15 +10,15 @@ app.use(bodyParser.json());
 require('./models/db.js');
 
 // CORS
-var cors = require('cors');
+const cors = require('cors');
 app.use(cors());
 
 // defining routes
-var indexRouter = require('./routes');
-var clinicianRouter = require('./routes/clinician');
-var questionnaireRouter = require('./routes/questionnaire');
-var adminRouter = require('./routes/admin');
-var shareRouter = require('./routes/share');
+const indexRouter = require('./routes');
+const clinicianRouter = require('./routes/clinician');
+const questionnaireRouter = require('./routes/questionnaire');
+const adminRouter = require('./routes/admin');
+const shareRouter = require('./routes/share');
 
 
 
@@ -36,7 +36,7 @@ app.use('/share/', shareRouter);
 
 
 
-var port = process.env.PORT || 3001;
+const port = process.env.PORT || 3001;
 app.listen(port, function (req,res) {
     console.log("server is running on port " + port + "!");
 });

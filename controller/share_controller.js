@@ -12,13 +12,13 @@
 const mongoose = require("mongoose");
 const Share = mongoose.model("share");
 const { v1: uuidv1 } = require("uuid");
-var nodemailer = require('nodemailer');
-var path = require("path");
-var Readable = require('stream').Readable
+const nodemailer = require('nodemailer');
+const path = require("path");
+const Readable = require('stream').Readable
 
 
 // Create a new share.
-var shareQuestionnaire = function (req,res) {
+const shareQuestionnaire = function (req,res) {
     const uuid = uuidv1();
     let newShare = new Share({
         shareId: uuid,
@@ -43,7 +43,7 @@ var shareQuestionnaire = function (req,res) {
 };
 
 // Get ShareDetails using ShareId
-var getShareDetails = function (req, res) {
+const getShareDetails = function (req, res) {
     let shareId = req.params.shareId;
 
     Share.findOne({ shareId }, function (
@@ -59,20 +59,20 @@ var getShareDetails = function (req, res) {
 };
 
 
-var completeShare = function (req,res) {
+const completeShare = function (req,res) {
     sendResultsEmail(req,res);
     deleteShare(req,res);
 }
 
 // Sending the results in an email.
-var sendResultsEmail = function (req, res) {
+const sendResultsEmail = function (req, res) {
 
     let questionnaireData = req.body.questionnaireData;
     let clinicianEmail = req.body.clinicianEmail;
     let personalDetails = req.body.personalDetails;
 
     // Used to create the email
-    var transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
             user: require(path.join(__dirname, '..', 'config/keys')).GmailUserName,
@@ -81,7 +81,7 @@ var sendResultsEmail = function (req, res) {
     });
 
     // Creating the file to send.
-    var s = new Readable()
+    const s = new Readable()
     s.push(JSON.stringify(personalDetails))    // the string you want
     s.push(JSON.stringify(questionnaireData))
     s.push(null)      // indicates end-of-file basically - the end of the stream
@@ -90,7 +90,7 @@ var sendResultsEmail = function (req, res) {
     const { jsonToTableHtmlString } = require('json-table-converter')
 
     // Parameters for the email.
-    var mailOptions = {
+    const mailOptions = {
         from: "SSQ Paediatric",
         to: clinicianEmail,
         subject: "Questionnaire completed for " + personalDetails.name + ".",
@@ -143,7 +143,7 @@ const deleteShare = function (req, res) {
 
 
 // Send questionnaire link through email.
-var sendInvitationEmail = function (req, res, createdShare) {
+const sendInvitationEmail = function (req, res, createdShare) {
     let patientEmail = createdShare.patientEmail;
     let link = "http://localhost:3000/parent/" + createdShare.shareId + "" ;
     let message = "";
@@ -152,7 +152,7 @@ var sendInvitationEmail = function (req, res, createdShare) {
     }
 
     // Used to create the email
-    var transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
             user: require(path.join(__dirname, '..', 'config/keys')).GmailUserName,
@@ -161,7 +161,7 @@ var sendInvitationEmail = function (req, res, createdShare) {
     });
 
     // Parameters for the email.
-    var mailOptions = {
+    const mailOptions = {
         from: 'SSQ Paediatric',
         to: patientEmail,
         subject: " You are invited to complete the following questionnaire.",

@@ -11,10 +11,10 @@
 
 const mongoose = require('mongoose');
 
-var Clinician = mongoose.model('clinician');
+const Clinician = mongoose.model('clinician');
 
 // Get all clinician details.
-var getAllClinician = function (req, res) {
+const getAllClinician = function (req, res) {
     Clinician.find(function(err, allClinician){
         if(!err){
             res.send(allClinician);
@@ -25,8 +25,8 @@ var getAllClinician = function (req, res) {
 };
 
 // Create a new clinician.
-var createClinician = function (req,res) {
-    var newClinician = new Clinician({
+const createClinician = function (req,res) {
+    const newClinician = new Clinician({
         clinicianId: 'id1',
         name: "Uvin Abeysinghe",
         email: "asb@salkdjac.om",

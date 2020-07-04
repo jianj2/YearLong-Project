@@ -9,9 +9,9 @@
  */
 
 
-var express = require('express');
-var router = express.Router();
-var share_controller = require('../controller/share_controller.js');
+const express = require('express');
+const router = express.Router();
+const share_controller = require('../controller/share_controller.js');
 
 // CRUD Routes for Shares
 router.get('/:shareId', share_controller.getShareDetails);

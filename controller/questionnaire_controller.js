@@ -26,7 +26,7 @@ const getAllQuestionnaire = function (req, res) {
     });
 };
 
-var getQuestionnaire = function (req, res) {
+const getQuestionnaire = function (req, res) {
     let questionnaireId = req.params.questionnaireId;
     console.log("get questionnaire:", questionnaireId);
 

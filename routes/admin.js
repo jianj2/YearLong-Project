@@ -8,9 +8,9 @@
  * The routes/admin.js is used for defining the routes of each API call in admin_controller made from the frontend
  */
 
-var express = require('express');
-var router = express.Router();
-var admin_controller = require('../controller/admin_controller.js');
+const express = require('express');
+const router = express.Router();
+const admin_controller = require('../controller/admin_controller.js');
 
 
 // CRUD Routes for Posts
