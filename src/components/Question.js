@@ -37,7 +37,7 @@ export default function Question({
     isMCQ,
     isParentFilling,
     rangeOptions,
-    mcqOptions,
+    MCQOptions: MCQOptions,
     description,
     onQuestionChange,
     data,
@@ -79,7 +79,7 @@ export default function Question({
                 <FormControl color="secondary" margin="dense">
                     <p>{description}</p>
                     <RadioGroup name="frequency" value={data.value}>
-                        {mcqOptions.map((item, index) => (
+                        {MCQOptions.map((item, index) => (
                             <FormControlLabel
                                 key={index}
                                 value={item}

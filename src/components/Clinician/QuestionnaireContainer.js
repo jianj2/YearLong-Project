@@ -78,14 +78,14 @@ const QuestionnaireContainer = (props) => {
     const addAnswerToMCQQuestion = (sectionIndex,scenarioIndex,questionIndex) =>{
         const newAnswer = "";
         const questionnaireTemp = Object.assign({},questionnaire);
-        questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].mcqOptions.push(newAnswer);
+        questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].MCQOptions.push(newAnswer);
         setQuestionnaire(questionnaireTemp);
     }
 
     //delete answer to the multiple choice question
     const deleteAnswerFromMCQQuestion = (sectionIndex,scenarioIndex,questionIndex,answerIndex) =>{
         const questionnaireTemp = Object.assign({},questionnaire);
-        questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].mcqOptions.splice(answerIndex,1);
+        questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].MCQOptions.splice(answerIndex,1);
         setQuestionnaire(questionnaireTemp);
     }
 
@@ -105,7 +105,7 @@ const QuestionnaireContainer = (props) => {
         const newQuestion = {
             description: "",
             isMCQ: true,
-            mcqOptions: []
+            MCQOptions: []
         }
         const questionnaireTemp = Object.assign({},questionnaire);
         questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions.splice(questionIndex,1,newQuestion);
@@ -158,7 +158,7 @@ const QuestionnaireContainer = (props) => {
         if (questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].isMCQ == false) {
             questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].rangeOptions[answerIndex] = event.target.value;
         } else {
-            questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].mcqOptions[answerIndex] = event.target.value;
+            questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].MCQOptions[answerIndex] = event.target.value;
         }
         setQuestionnaire(questionnaireTemp);
         console.log(sectionIndex,scenarioIndex,questionIndex,answerIndex);

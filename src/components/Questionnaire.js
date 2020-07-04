@@ -69,7 +69,7 @@ export default function Questionnaire({
                                         scenarioIndex={scenarioIndex}
                                         description={question.description}
                                         isMCQ={question.isMCQ}
-                                        mcqOptions={question.mcqOptions}
+                                        MCQOptions={question.MCQOptions}
                                         rangeOptions={question.rangeOptions}
                                         onQuestionChange={onQuestionChange}
                                         data={
