@@ -74,7 +74,7 @@ const ManageQuestionnaires = (props) => {
         retrieveQuestionnaires();
     }, []);
 
-    function SQgenerator(Qname, Qdescription, date) {
+    function standardisedQuestionnaireGenerator(Qname, Qdescription, date) {
         return (
             <div className="q-frame">
                 <div className="q-name">{Qname}</div>
@@ -236,8 +236,8 @@ const ManageQuestionnaires = (props) => {
                 <div className="SQ-header">
                     <h1>Standard questionnaires</h1>
                 </div>
-                {SQgenerator("SSQ-P", "SSQ for parents", "17/05/2020")}
-                {SQgenerator("SSQ-C", "SSQ for children ", "17/05/2020")}
+                {standardisedQuestionnaireGenerator("SSQ-P", "SSQ for parents", "17/05/2020")}
+                {standardisedQuestionnaireGenerator("SSQ-C", "SSQ for children ", "17/05/2020")}
             </div>
 
             <div className="CQ-header">
