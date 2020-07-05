@@ -72,7 +72,7 @@ const ManageQuestionnaires = (props) => {
         }
 
         retrieveQuestionnaires();
-    }, []);
+    }, [user]);
 
     function standardisedQuestionnaireGenerator(Qname, Qdescription, date) {
         return (
