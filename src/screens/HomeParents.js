@@ -92,7 +92,7 @@ const HomeParents = ({ match }) => {
                 setQuestionnaire(res);
             });
         });
-    }, []);
+    });
 
     // Method called to update questionnaire data when a question is updated.
     const handleQuestionnaireChange = (

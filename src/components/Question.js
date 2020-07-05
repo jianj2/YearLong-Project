@@ -42,6 +42,7 @@ export default function Question({
     onQuestionChange,
     data,
 }) {
+
     const [extraQuestion, setExtraQuestion] = useState(data.extraQuestion);
     const [sliderValue, setSliderValue] = useState(data.sliderValue);
     const [frequencyValue, setFrequencyValue] = useState(data.frequencyValue);
@@ -66,7 +67,7 @@ export default function Question({
     useEffect(() => { 
         console.log("answered:", answered);
         onQuestionChange(sectionIndex, scenarioIndex, questionIndex, answered);
-    }, [answered]);
+    }, [sectionIndex, scenarioIndex, questionIndex, answered, onQuestionChange]);
 
     const handleChangeSlider = () => {
 
