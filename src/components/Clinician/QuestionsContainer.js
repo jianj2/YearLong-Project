@@ -130,7 +130,7 @@ const QuestionForm = ({
         );
     };
 
-    if (isMCQ == false) {
+    if (isMCQ === false) {
         return (
             <div className="questionTable">
                 {renderHeader()}

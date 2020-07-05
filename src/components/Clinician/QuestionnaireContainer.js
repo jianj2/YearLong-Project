@@ -155,7 +155,7 @@ const QuestionnaireContainer = (props) => {
     //tp change the content of question options
     const handleQuestionOptsChange = (event, sectionIndex, scenarioIndex, questionIndex, answerIndex) =>{
         const questionnaireTemp = Object.assign({},questionnaire);
-        if (questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].isMCQ == false) {
+        if (questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].isMCQ === false) {
             questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].rangeOptions[answerIndex] = event.target.value;
         } else {
             questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].MCQOptions[answerIndex] = event.target.value;

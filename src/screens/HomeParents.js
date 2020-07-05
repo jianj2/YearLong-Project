@@ -145,7 +145,7 @@ const HomeParents = ({ match }) => {
         });
     };
 
-    if (wizardStep == 0) {
+    if (wizardStep === 0) {
         return (
             <div className="parents-home">
                 <div className="subheader-container">
@@ -165,7 +165,7 @@ const HomeParents = ({ match }) => {
         );
     }
 
-    if (wizardStep == 1) {
+    if (wizardStep === 1) {
         // If it is read only, we skip this step
         if (readOnly) nextStep() 
         return (
@@ -187,7 +187,7 @@ const HomeParents = ({ match }) => {
         );
     }
 
-    if (wizardStep == 2) {
+    if (wizardStep === 2) {
         return (
             <div className="parents-home">
                 <div className="subheader-container">
@@ -216,7 +216,7 @@ const HomeParents = ({ match }) => {
         );
     }
 
-    if (wizardStep == 3) {
+    if (wizardStep === 3) {
         return (
             <div className="parents-home"> 
                 {
