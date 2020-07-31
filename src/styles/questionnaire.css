@@ -1,0 +1,95 @@
+.questionaire-container h1 {
+    font-weight: 100; 
+}
+
+.questionaire-container h2 { 
+    font-weight: 200;
+    margin: 1rem 0;
+}
+
+.questionaire-container h4 {
+    display: inline; 
+}
+ 
+.questionaire-container {
+    margin: 0 0 2rem 0;
+    /* padding: 20px; */
+    border-radius: 10px; 
+    display: flex;
+    flex-flow: column wrap;
+    align-items: stretch;
+}
+
+
+.section-container{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: stretch;   
+}
+.scenario-container{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: stretch; 
+    border: 1px solid rgba(255,255,255,0.05);
+    background-color: rgba(255,255,255,0.03);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 10px; 
+    display: flex; 
+    flex-flow: column nowrap; 
+} 
+.question-container { 
+    display: flex; 
+    flex-flow: column nowrap; 
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.slider-labels {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.slider-value {
+    background-color: rgba(245, 0, 87, 0.7);
+    padding: 0 !important;
+    margin: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Gill Sans';
+    font-weight: 200;
+    transition: all 0.1s;
+}
+
+.slider-labels label{
+    /* padding: 10px 0 20px; */
+}
+
+.slider-checkboxes {
+    display: flex;
+    flex-direction: row !important;
+}
+
+.questionaire-submit-button {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0 0;
+}
+
+
+.subquestion-container {
+    margin: 1rem 0 0 0 ;
+    /* padding: 0 0 0 2rem; */
+    border-top: 1px solid rgba(255,255,255,0.1);
+
+}
+.subquestion-container p {
+    margin: 0.5rem 0;
+    font-weight: 200;
+    color: #888;
+}
+

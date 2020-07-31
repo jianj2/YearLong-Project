@@ -1,0 +1,85 @@
+/**
+ * ====================================================================
+ * CSS FILE TO STYLE the 'QuestionnaireLIst' Component for the Clinician
+ * ====================================================================
+ * @date created:   17th May 2020
+ * @authors:        Waqas
+ *
+ * This file contains all the CSS classes related to the ManageQuestionnaires
+ * component to style the component.
+ *
+ */
+
+ .questionnaire-list-container {
+
+ }
+
+.questionnaire-list-container h1 {
+    font-weight: 200;
+    font-family: Raleway;
+
+}
+
+.questionnaire-list-item {
+    margin: auto auto 1rem auto;
+    padding: 20px;
+    border-radius: 10px;
+    min-width: 400px;
+    border: rgba(255,255,255,0.2);
+    border-style: solid;
+    border-width: 1px;
+    background-color: rgba(100,100,100,0.1);
+    position: relative;
+    transition: all 0.2s;
+    display: flex;
+    flex-flow: column;
+}
+
+.questionnaire-list-item-selectable {
+    cursor: pointer;
+}
+.questionnaire-list-item-selectable:hover{
+    background-color: rgba(100,100,100,0.2);
+    
+}
+
+.Add-btn{
+    position: relative;
+    float: right;
+    margin-top: 10px;
+}
+
+.q-name{
+    font-size: 1.5xrem;
+    font-family: Raleway;
+    margin: 0 0 0.5rem 0;
+    color: #eee;
+}
+
+.q-description{
+    font-size: 0.8rem;
+    font-family: Raleway;
+    color: #999;
+    margin: 0 0 0.5rem 0;
+}
+
+.list-item-date{
+    font-size: 0.8rem;
+    font-weight: 200;
+    color: #888;
+   
+}
+
+.edit-btn{
+    margin-right: 10px;
+}
+
+.list-item-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.questionnaire-list-button-container button{
+     margin: 0 0 0 1rem;
+}
