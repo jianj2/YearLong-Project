@@ -37,11 +37,12 @@ export default function Question({
     isMCQ,
     isParentFilling,
     rangeOptions,
-    mcqOptions,
+    MCQOptions: MCQOptions,
     description,
     onQuestionChange,
     data,
 }) {
+
     const [extraQuestion, setExtraQuestion] = useState(data.extraQuestion);
     const [sliderValue, setSliderValue] = useState(data.sliderValue);
     const [frequencyValue, setFrequencyValue] = useState(data.frequencyValue);
@@ -66,7 +67,7 @@ export default function Question({
     useEffect(() => { 
         console.log("answered:", answered);
         onQuestionChange(sectionIndex, scenarioIndex, questionIndex, answered);
-    }, [answered]);
+    }, [sectionIndex, scenarioIndex, questionIndex, answered, onQuestionChange]);
 
     const handleChangeSlider = () => {
 
@@ -79,7 +80,7 @@ export default function Question({
                 <FormControl color="secondary" margin="dense">
                     <p>{description}</p>
                     <RadioGroup name="frequency" value={data.value}>
-                        {mcqOptions.map((item, index) => (
+                        {MCQOptions.map((item, index) => (
                             <FormControlLabel
                                 key={index}
                                 value={item}
