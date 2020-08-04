@@ -1,0 +1,16 @@
+---
+name: client-CI/CD
+
+on:
+  push:
+    branches: [development-client]
+
+jobs:  
+  build:
+    runs-on: ubuntu-latest
+    name: build
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: testing if it works
+      run: echo building ....
