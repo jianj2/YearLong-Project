@@ -52,7 +52,7 @@ const DoTheTestContainer = () => {
             console.log(res);
             setQuestionnaires(res);
         });
-    }, []);
+    }, [user]);
 
     // Method called to go to the next page in the wizard.
     const nextStep = () => {

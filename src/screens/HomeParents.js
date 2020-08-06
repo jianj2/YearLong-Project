@@ -92,7 +92,7 @@ const HomeParents = ({ match }) => {
                 setQuestionnaire(res);
             });
         });
-    }, []);
+    });
 
     // Method called to update questionnaire data when a question is updated.
     const handleQuestionnaireChange = (
@@ -145,7 +145,7 @@ const HomeParents = ({ match }) => {
         });
     };
 
-    if (wizardStep == 0) {
+    if (wizardStep === 0) {
         return (
             <div className="parents-home">
                 <div className="subheader-container">
@@ -165,9 +165,9 @@ const HomeParents = ({ match }) => {
         );
     }
 
-    if (wizardStep == 1) {
+    if (wizardStep === 1) {
         // If it is read only, we skip this step
-        if (readOnly) nextStep() 
+        if (readOnly) nextStep()
         return (
             <div className="parents-home">
                 <div className="subheader-container">
@@ -177,30 +177,30 @@ const HomeParents = ({ match }) => {
                 </div>
 
                 <div className="parents-container">
-                    <FormParentDetails 
-                        submitDetails={submitDetails} 
-                        clinicianAccess={false} 
-                        defaultValue={personalDetails} 
+                    <FormParentDetails
+                        submitDetails={submitDetails}
+                        clinicianAccess={false}
+                        defaultValue={personalDetails}
                     />
                 </div>
             </div>
         );
     }
 
-    if (wizardStep == 2) {
+    if (wizardStep === 2) {
         return (
             <div className="parents-home">
                 <div className="subheader-container">
                     <button id="instructions" className="button" onClick={goToInstructions}>
                         I N S T R U C T I O N S
-                    </button> 
+                    </button>
                     { readOnly
                         ? null
                         :   <button id="back" className="button" onClick={prevStep}>
                                 B A C K
                             </button>
                     }
-                     
+
                 </div>
 
                 <div className="parents-container">
@@ -216,9 +216,9 @@ const HomeParents = ({ match }) => {
         );
     }
 
-    if (wizardStep == 3) {
+    if (wizardStep === 3) {
         return (
-            <div className="parents-home"> 
+            <div className="parents-home">
                 {
                     loading
                     ? <Loading />

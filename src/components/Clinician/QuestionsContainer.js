@@ -90,7 +90,7 @@ const QuestionForm = ({
     handleQuestionOptsChange,
     item,
 }) => {
-    const { rangeOptions, description, mcqOptions, isMCQ} = item;
+    const { rangeOptions, description, MCQOptions, isMCQ} = item;
 
     const handleRangeClick = (e) => {
         e.preventDefault();
@@ -130,7 +130,7 @@ const QuestionForm = ({
         );
     };
 
-    if (isMCQ == false) {
+    if (isMCQ === false) {
         return (
             <div className="questionTable">
                 {renderHeader()}
@@ -150,7 +150,7 @@ const QuestionForm = ({
                 {renderHeader()} 
                 <MultipleChoiceQuestionFrom
                     description={description}
-                    mcqOptions={mcqOptions}
+                    MCQOptions={MCQOptions}
                     addAnswerToMCQQuestion={addAnswerToMCQQuestion}
                     deleteAnswerFromMCQQuestion={deleteAnswerFromMCQQuestion}
                     sectionIndex={sectionIndex}
@@ -232,7 +232,7 @@ const MultipleChoiceQuestionFrom = (props) => {
     const {
         addAnswerToMCQQuestion,
         deleteAnswerFromMCQQuestion,
-        mcqOptions,
+        MCQOptions,
         questionIndex,
         description,
         sectionIndex,
@@ -285,8 +285,8 @@ const MultipleChoiceQuestionFrom = (props) => {
             </FormControl>
 
             <h3>Answers</h3>
-            {mcqOptions &&
-                mcqOptions.map((item, index) => {
+            {MCQOptions &&
+                MCQOptions.map((item, index) => {
                     return (
                         <div className="questionTable-answer" key={index}>
                             <div>
@@ -294,7 +294,7 @@ const MultipleChoiceQuestionFrom = (props) => {
                                     <InputLabel>Answer {index+1}</InputLabel>
                                     <Input
                                         placeholder="Write the Answer."
-                                        value={mcqOptions[index]}
+                                        value={MCQOptions[index]}
                                         onChange={(event) =>
                                             handleQuestionOptsChange(
                                                 event,

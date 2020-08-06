@@ -57,7 +57,7 @@
  *
  */
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 // Import Utils
 import { formatDate } from "../utils/formatter";
