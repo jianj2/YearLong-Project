@@ -14,7 +14,6 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { DatePicker } from 'material-ui-pickers';
 import { useForm } from "react-hook-form";
 import moment from "moment";
 import {
@@ -31,10 +30,30 @@ import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 // Import styles.
 // import "../styles/parents.css";
 
-export default function FormParentDetails({ submitDetails, clinicianAccess, defaultValue }) {
+export default function FormParentDetails({ submitDetails, clinicianAccess, defaultValue, getPersonalDetails }) {
     const { register, handleSubmit, errors } = useForm();
 
-    const [dob, setDob] = useState(0);
+    const [date, setDate] = useState(defaultValue.date);
+    const [name, setName] = useState(defaultValue.name);
+    const [rightDeviceType, setRightDeviceType] = useState(defaultValue.rightDeviceType);
+    const [leftDeviceType, setLeftDeviceType] = useState(defaultValue.leftDeviceType);
+    const [completedBy, setCompletedBy] = useState(defaultValue.completedBy);
+
+
+    useEffect(() => {
+
+        const personalData = {
+            name,
+            date,
+            rightDeviceType,
+            leftDeviceType,
+            completedBy : clinicianAccess ? "clinician" : completedBy
+        }
+
+        getPersonalDetails(personalData)
+    }, [name,date,rightDeviceType,leftDeviceType,completedBy])
+
+
 
     const handleButtonPress = (data) => {
         console.log(data);
@@ -45,7 +64,7 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
 
     const handleDateChange = (event) => {
         if ( Date.parse("1900-01-01") > Date.parse(event.target.value)  || moment().format("YYYY-MM-DD") < Date.parse(event.target.value)) {
-            setDob("")
+            setDate("")
         }
     };
 
@@ -55,7 +74,9 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                 <FormControl margin="dense">
                     <InputLabel>Child's Name</InputLabel>
                     <Input
-                        defaultValue={defaultValue.name}
+                        value={name}
+                        onChange={(event) => setName(event.target.value)}
+                        // defaultValue={defaultValue.name}
                         name="name"
                         placeholder="Write the child's name"
                         error={errors.name !== undefined}
@@ -69,9 +90,9 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                 <FormControl margin="dense">
                     <InputLabel>Child's Date of Birth</InputLabel>
                     <Input
-                        defaultValue={defaultValue.date}
-                        value={dob}
-                        onChange={(event) => setDob(event.target.value)}
+                        // defaultValue={defaultValue.date}
+                        value={date}
+                        onChange={(event) => setDate(event.target.value)}
                         name="date"
                         type="date"
                         required
@@ -91,7 +112,9 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                     <FormControl margin="dense">
                         <InputLabel>Completed By</InputLabel>
                         <Select
-                            defaultValue={defaultValue.completedBy}
+                            // defaultValue={defaultValue.completedBy}
+                            value={completedBy}
+                            onChange={(event) => setCompletedBy(event.target.value)}
                             name="completedBy"
                             error={errors.completedBy !== undefined}
                             native
@@ -108,11 +131,15 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                 )}
             </div>
 
+
+
             <div className="parents-detail-form-column">
                 <FormControl margin="dense">
                     <InputLabel>Right Device Type</InputLabel>
                     <Select
-                        defaultValue={defaultValue.rightDeviceType}
+                        value={rightDeviceType}
+                        onChange={(event) => setRightDeviceType(event.target.value)}
+                        // defaultValue={defaultValue.rightDeviceType}
                         name="rightDeviceType"
                         error={errors.rightDeviceType !== undefined}
                         // required
@@ -131,7 +158,9 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                 <FormControl margin="dense">
                     <InputLabel>Left Device Type</InputLabel>
                     <Select
-                        defaultValue={defaultValue.leftDeviceType}
+                        // defaultValue={defaultValue.leftDeviceType}
+                        value={leftDeviceType}
+                        onChange={(event) => setLeftDeviceType(event.target.value)}
                         name="leftDeviceType"
                         error={errors.leftDeviceType !== undefined}
                         // required
@@ -147,11 +176,15 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                     <FormHelperText>{errors.leftDeviceType ? errors.leftDeviceType.message : "Please specify the device type."}</FormHelperText>
                 </FormControl>
 
+                {clinicianAccess ? (
+                    <div></div>
+                ) : (
                 <div className="parents-detail-form-submit-button">
                     <button id="next" className="button">
                         N E X T
                     </button>
                 </div>
+                )}
             </div>
 
             {errors.code && <span>{errors.code.message}</span>}
