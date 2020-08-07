@@ -77,7 +77,7 @@ const addEmptyQuestionnaire = function (req, res) {
                             {
                                 description: "If only one option can be true, which of the following is correct?",
                                 isMCQ: true,
-                                mcqOptions: [
+                                MCQOptions: [
                                     "All of the above is true",
                                     " Those below the below is true",
                                     "None of the above is true",

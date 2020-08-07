@@ -14,7 +14,7 @@ const mongoose = require('mongoose');
 const questionSchema = mongoose.Schema({
     description: String,
     isMCQ: Boolean,
-    mcqOptions: [String],
+    MCQOptions: [String],
     rangeOptions: [String]
 });
 
