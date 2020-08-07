@@ -36,6 +36,7 @@ const DoTheTestContainer = () => {
         leftDeviceType: "",
     });
 
+
     const [questionnaires, setQuestionnaires] = useState([]);
     const [questionnaireData, setQuestionnaireData] = useState([]);
 
@@ -111,6 +112,11 @@ const DoTheTestContainer = () => {
         });
     };
 
+    const getPersonalDetails = (data) => {
+        setPersonalDetails(data)
+        console.log("data", data)
+    };
+
     const submitResponse = () => {
         let data = {
             questionnaireData,
@@ -127,12 +133,12 @@ const DoTheTestContainer = () => {
                     <button className="button" onClick={prevStep}>
                         B A C K
                     </button>
-                    <button className="button" onClick={prevStep}>
+                    <button className="button" onClick={nextStep}>
                         N E X T
                     </button>
                 </div>
 
-                <FormParentDetails submitDetails={submitDetails} clinicianAccess={true} defaultValue={personalDetails} />
+                <FormParentDetails submitDetails={submitDetails} clinicianAccess={true} defaultValue={personalDetails} getPersonalDetails={getPersonalDetails} />
             </div>
         );
     } else if (wizardStep === 1) {
