@@ -37,7 +37,7 @@ export default function Question({
     isMCQ,
     isParentFilling,
     rangeOptions,
-    MCQOptions: MCQOptions,
+    MCQOptions,
     description,
     onQuestionChange,
     data,
@@ -64,10 +64,10 @@ export default function Question({
     //     onQuestionChange(sectionIndex, scenarioIndex, questionIndex, quesionResponseData);
     // }, [sliderValue, extraQuestion, frequencyValue, importanceValue]);
 
-    useEffect(() => { 
+    useEffect(() => {
         console.log("answered:", answered);
         onQuestionChange(sectionIndex, scenarioIndex, questionIndex, answered);
-    }, [sectionIndex, scenarioIndex, questionIndex, answered, onQuestionChange]);
+    }, [answered]);
 
     const handleChangeSlider = () => {
 
