@@ -167,7 +167,7 @@ const HomeParents = ({ match }) => {
 
     if (wizardStep === 1) {
         // If it is read only, we skip this step
-        if (readOnly) nextStep()
+        if (readOnly) nextStep() 
         return (
             <div className="parents-home">
                 <div className="subheader-container">
@@ -177,10 +177,10 @@ const HomeParents = ({ match }) => {
                 </div>
 
                 <div className="parents-container">
-                    <FormParentDetails
-                        submitDetails={submitDetails}
-                        clinicianAccess={false}
-                        defaultValue={personalDetails}
+                    <FormParentDetails 
+                        submitDetails={submitDetails} 
+                        clinicianAccess={false} 
+                        defaultValue={personalDetails} 
                     />
                 </div>
             </div>
@@ -193,14 +193,14 @@ const HomeParents = ({ match }) => {
                 <div className="subheader-container">
                     <button id="instructions" className="button" onClick={goToInstructions}>
                         I N S T R U C T I O N S
-                    </button>
+                    </button> 
                     { readOnly
                         ? null
                         :   <button id="back" className="button" onClick={prevStep}>
                                 B A C K
                             </button>
                     }
-
+                     
                 </div>
 
                 <div className="parents-container">
@@ -218,7 +218,7 @@ const HomeParents = ({ match }) => {
 
     if (wizardStep === 3) {
         return (
-            <div className="parents-home">
+            <div className="parents-home"> 
                 {
                     loading
                     ? <Loading />
