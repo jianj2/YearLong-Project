@@ -9,9 +9,9 @@
  */
 
 
-var express = require('express');
-var router = express.Router();
-var questionnaire_controller = require('../controller/questionnaire_controller.js');
+const express = require('express');
+const router = express.Router();
+const questionnaire_controller = require('../controller/questionnaire_controller.js');
 
 // CRUD Routes for Posts
 

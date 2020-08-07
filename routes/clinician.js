@@ -8,10 +8,10 @@
  * The routes/clinician.js is used for defining the routes of each API call in clinician_controller made from the frontend
  */
 
-var express = require('express');
-var router = express.Router();
-var clinician_controller = require('../controller/clinician_controller.js');
-var share_controller = require('../controller/share_controller.js');
+const express = require('express');
+const router = express.Router();
+const clinician_controller = require('../controller/clinician_controller.js');
+const share_controller = require('../controller/share_controller.js');
 
 
 // Used to get all the clinicians.

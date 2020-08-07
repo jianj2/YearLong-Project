@@ -11,10 +11,10 @@
 
 const mongoose = require("mongoose");
 const adminKeyFile = require("../config/admin.json");
-var jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
 // Login check.
-var loginAdmin = function (req, res) {
+const loginAdmin = function (req, res) {
     console.log("admin file", adminKeyFile);
     console.log(req.body);
 
@@ -43,7 +43,7 @@ var loginAdmin = function (req, res) {
     }
     if (username === _username && password === _password) {
 
-        var token = jwt.sign({ username: username }, "secretLOL", {
+        const token = jwt.sign({ username: username }, "secretLOL", {
             // expiresIn: 86400, // expires in 24 hours
             expiresIn: 100, // expires in 100 seconds FOR TESTING
         });
@@ -69,7 +69,7 @@ var loginAdmin = function (req, res) {
 
 
 
-var verifyLogin = (req, res) => {
+const verifyLogin = (req, res) => {
     let token = req.params.token;
 
     jwt.verify(token, "secretLOL", function (err, decoded) {

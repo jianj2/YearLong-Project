@@ -11,7 +11,7 @@
 
 const mongoose = require('mongoose');
 
-var path = require("path");
+const path = require("path");
 
 const url = require(path.join(__dirname, '..', 'config/keys')).MongoURI;
 
