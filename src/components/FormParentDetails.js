@@ -14,7 +14,9 @@
  */
 
 import React, { useEffect, useState } from "react";
+import { DatePicker } from 'material-ui-pickers';
 import { useForm } from "react-hook-form";
+import moment from "moment";
 import {
     Input,
     FormControl,
@@ -36,6 +38,8 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
         console.log(data);
         submitDetails(data);
     };
+
+    const maxDate = new Date(new Date().getTime());
 
     return (
         <form onSubmit={handleSubmit(handleButtonPress)} className="parents-detail-form">
@@ -61,6 +65,8 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                         name="date"
                         type="date"
                         required
+                        className="date-picker"
+                        inputProps={{ min: "1900-01-01", max: moment().format("YYYY-MM-DD")  }}
                         error={errors.date !== undefined}
                         inputRef={register({
                             required: "You have not entered the date of birth.",
