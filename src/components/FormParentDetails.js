@@ -50,7 +50,7 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
             completedBy : clinicianAccess ? "clinician" : completedBy
         }
 
-        getPersonalDetails(personalData)
+        getPersonalDetails(personalData);
     }, [name,date,rightDeviceType,leftDeviceType,completedBy])
 
 

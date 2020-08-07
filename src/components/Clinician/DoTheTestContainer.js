@@ -117,6 +117,7 @@ const DoTheTestContainer = () => {
         console.log("data", data)
     };
 
+
     const submitResponse = () => {
         let data = {
             questionnaireData,
@@ -138,7 +139,8 @@ const DoTheTestContainer = () => {
                     </button>
                 </div>
 
-                <FormParentDetails submitDetails={submitDetails} clinicianAccess={true} defaultValue={personalDetails} getPersonalDetails={getPersonalDetails} />
+                <FormParentDetails submitDetails={submitDetails} clinicianAccess={true} defaultValue={personalDetails}
+                                   getPersonalDetails={getPersonalDetails} />
             </div>
         );
     } else if (wizardStep === 1) {
