@@ -78,10 +78,15 @@
 
 input[type=date]:required:invalid {
     color: transparent;
-} 
+}
+
 input[type=date]:focus {
     color: #eee !important;
-} 
+}
+
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
 
 /* ==================================================== */
 /*   Following classes are for ParentReviewSubmission   */
