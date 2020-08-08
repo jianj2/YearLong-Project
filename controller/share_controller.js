@@ -50,7 +50,7 @@ const getShareDetails = function (req, res) {
         err,
         share
     ) {
-        if (!err) {
+        if (!err && share != null) {
             res.send({statusCode:200, message:"Valid ShareId", data:share});
         } else {
             res.send({statusCode:400, message:"Invalid ShareId", data:err})
