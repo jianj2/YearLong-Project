@@ -41,7 +41,7 @@ const INSTRUCTIONS = "We would have instructions here stored by the admin."
 // This method defines the elements for this component.
 // ---------------------------------------------------------------
 const HomeParents = ({ match }) => {
-    const [wizardStep, setWizardStep] = useState(0);
+    const [wizardStep, setWizardStep] = useState(-2);
     const [questionnaire, setQuestionnaire] = useState({
         questionnaireId: "",
         title: "",
@@ -50,26 +50,34 @@ const HomeParents = ({ match }) => {
         isStandard: true,
     });
     const [clinicianEmail, setClinicianEmail] = useState("");
+
     const [personalDetails, setPersonalDetails] = useState({
         name: "",
         date: "",
-        completedBy: "clinician",
+        completedBy: "parent",
         rightDeviceType: "",
         leftDeviceType: "",
     });
+
     const [questionnaireData, setQuestionnaireData] = useState([]);
     const [readOnly, setReadOnly] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    const getPersonalDetails = (data) => {
+        setPersonalDetails(data)
+        console.log("data", data)
+    };
+
     // This is called when the component first mounts.
     useEffect(() => {
         // Server call to get the questionnaireId
-        API.getShareDetails(match.params.shareId).then((res) => {
-            console.log(res)
+        API.getShareDetails(match.params.shareId).then((response) => {
+            if (response.statusCode === 200) {
+
             // Server call to get the questionnaire.
-            setClinicianEmail(res.clinicianEmail);
-            setReadOnly(res.readOnly);
-            API.getQuestionnaire(res.questionnaireId).then((res) => {
+            setClinicianEmail(response.data.clinicianEmail);
+            setReadOnly(response.data.readOnly);
+            API.getQuestionnaire(response.data.questionnaireId).then((res) => {
                 // Define initial values for the Questionnaire
                 let tempResponse = [];
                 res.sections.forEach((section, sectionIndex) => {
@@ -90,7 +98,11 @@ const HomeParents = ({ match }) => {
                 // retrieved from the server.
                 setQuestionnaireData(tempResponse);
                 setQuestionnaire(res);
+                setWizardStep(0);
             });
+            }else{
+                setWizardStep(-1)
+            }
         });
     }, []);
 
@@ -145,6 +157,27 @@ const HomeParents = ({ match }) => {
         });
     };
 
+
+    if (wizardStep === -2) {
+        return (
+            <div className="parents-home">
+                <Loading/>
+            </div>
+        );
+    }
+
+    if (wizardStep === -1) {
+        return (
+            <div className="parents-home">
+                <div className="subheader-container">
+                </div>
+                <div className="parents-container">
+                    <h1 style={{textAlign: "center" }}>I N V A L I D &nbsp; L I N K</h1>
+                </div>
+            </div>
+        );
+    }
+
     if (wizardStep === 0) {
         return (
             <div className="parents-home">
@@ -180,7 +213,8 @@ const HomeParents = ({ match }) => {
                     <FormParentDetails 
                         submitDetails={submitDetails} 
                         clinicianAccess={false} 
-                        defaultValue={personalDetails} 
+                        defaultValue={personalDetails}
+                        getPersonalDetails={getPersonalDetails}
                     />
                 </div>
             </div>
