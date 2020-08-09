@@ -17,11 +17,11 @@ const questionnaire_controller = require('../controller/questionnaire_controller
 
 
 
-router.get('/getQuestionnaire/:questionnaireId', questionnaire_controller.getQuestionnaire);
+router.get('/getQuestionnaire/:questionnaireId', questionnaire_controller.getQuestionnaireAsync);
 router.get('/clinician/', questionnaire_controller.getClinicianQuestionnaires);
 
 router.get('/', questionnaire_controller.getAllQuestionnaire);
-router.get("/:questionnaireId", questionnaire_controller.getQuestionnaire);
+router.get("/:questionnaireId", questionnaire_controller.getQuestionnaireSync);
 
 router.post('/delete', questionnaire_controller.deleteQuestionnaire);
 router.post('/add', questionnaire_controller.addEmptyQuestionnaire);
