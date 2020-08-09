@@ -79,26 +79,33 @@ const HomeParents = ({ match }) => {
             setReadOnly(response.data.readOnly);
             API.getQuestionnaire(response.data.questionnaireId).then((res) => {
                 // Define initial values for the Questionnaire
-                let tempResponse = [];
-                res.sections.forEach((section, sectionIndex) => {
-                    tempResponse[sectionIndex] = [];
-                    section.scenarios.forEach((scenario, scenarioIndex) => {
-                        tempResponse[sectionIndex][scenarioIndex] = [];
-                        scenario.questions.forEach(
-                            (question, questionIndex) => {
-                                tempResponse[sectionIndex][scenarioIndex][questionIndex] = {
-                                    value: "",
-                                    supplementaryValue: "",
-                                };
-                            }
-                        );
+                if (res.statusCode === 200 ){
+
+                    let tempResponse = [];
+                    res.data.sections.forEach((section, sectionIndex) => {
+                        tempResponse[sectionIndex] = [];
+                        section.scenarios.forEach((scenario, scenarioIndex) => {
+                            tempResponse[sectionIndex][scenarioIndex] = [];
+                            scenario.questions.forEach(
+                                (question, questionIndex) => {
+                                    tempResponse[sectionIndex][scenarioIndex][questionIndex] = {
+                                        value: "",
+                                        supplementaryValue: "",
+                                    };
+                                }
+                            );
+                        });
                     });
-                });
-                // Updating the state using the initial data and the questionnaire
-                // retrieved from the server.
-                setQuestionnaireData(tempResponse);
-                setQuestionnaire(res);
-                setWizardStep(0);
+                    // Updating the state using the initial data and the questionnaire
+                    // retrieved from the server.
+                    setQuestionnaireData(tempResponse);
+                    setQuestionnaire(res.data);
+                    setWizardStep(0);
+
+                }else{
+                    setWizardStep(-1)
+                }
+
             });
             }else{
                 setWizardStep(-1)
