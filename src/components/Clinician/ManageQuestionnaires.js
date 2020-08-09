@@ -49,12 +49,19 @@ const ManageQuestionnaires = (props) => {
     const [loading, setLoading] = useState(false);
 
     const [isShareModalVisible, setIsShareModalVisible] = useState(false);
+    const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+
     const [shareModalData, setShareModalData] = useState({
         patientEmail: "",
         questionnaireId: "",
         clinicianEmail: user.name,
         message: "",
         readOnly: false
+    });
+
+    const [deleteQuestionnaireData, setdeleteQuestionnaireData] = useState({
+        deleteQuestionnaireID: "",
+        deleteQuestionnaireName: ""
     });
 
     useEffect(() => {
@@ -84,14 +91,6 @@ const ManageQuestionnaires = (props) => {
         );
     }
 
-    // function CQlist() {
-    //     var customized_Questionnaire_list = [];
-    //     var q;
-    //     for (q of Questionnaires.customized_Questionnaire) {
-    //         customized_Questionnaire_list.push(CQgenerator(q.QID, q.Qname, q.Qdescription, q.date));
-    //     }
-    //     return customized_Questionnaire_list;
-    // }
 
     // Function called when Edit is clicked on the QuestionnaireList
     const editQuestionnaire = (questionnaireID) => {
@@ -100,11 +99,19 @@ const ManageQuestionnaires = (props) => {
     };
 
     // Function called when Delete is clicked on the QuestionnaireList
-    const deleteQuestionnaire = (questionnaireId) => {
+    const deleteQuestionnaire = (questionnaireId, title) => {
         console.log("delete ", questionnaireId);
-        const arrayCopy = questionnaires.filter((q) => q.questionnaireId !== questionnaireId);
-        setQuestionnaires(arrayCopy);
-        API.deleteQuestionnaire(questionnaireId, user.name);
+        console.log("delete ", title);
+        setdeleteQuestionnaireData(
+            {
+                deleteQuestionnaireID: questionnaireId,
+                deleteQuestionnaireName: title
+            }
+        )
+        openDeleteConfirmation();
+        // const arrayCopy = questionnaires.filter((q) => q.questionnaireId !== questionnaireId);
+        // setQuestionnaires(arrayCopy);
+        // API.deleteQuestionnaire(questionnaireId, user.name);
     };
 
     // Function called when Share is clicked on the QuestionnaireList
@@ -226,10 +233,59 @@ const ManageQuestionnaires = (props) => {
         );
     };
 
+
+
+ // ========================================================================
+    // Delete Modal Functions
+    // ========================================================================
+    const openDeleteConfirmation = () => setIsDeleteModalVisible(true);
+    const closeDeleteConfirmation = () => setIsDeleteModalVisible(false);
+
+    const deleteSelecctedQuestionnaire = () => {
+        let questionnaireId = deleteQuestionnaireData.deleteQuestionnaireID
+        const arrayCopy = questionnaires.filter((q) => q.questionnaireId !== questionnaireId);
+        setQuestionnaires(arrayCopy);
+        API.deleteQuestionnaire(questionnaireId, user.name);
+        closeDeleteConfirmation();
+    }
+
+    const renderDeleteModal = () => {
+        return (
+            <Modal
+                open={isDeleteModalVisible}
+                onClose={closeDeleteConfirmation}
+                closeAfterTransition
+                className={classes.modal}
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Fade in={isDeleteModalVisible}>
+                    <div className = "share-modal-container">
+                        <h3 class = "center-text">Are you sure you want to delete {deleteQuestionnaireData.deleteQuestionnaireName}?</h3>
+                        <div className = "buttons-container">
+                            <button className="button" id = "margin-button" onClick={deleteSelecctedQuestionnaire} >
+                                CONFIRM
+                            </button>
+                            <button className="button" id = "margin-button" onClick={closeDeleteConfirmation}>
+                                CANCEL
+                            </button>
+                        </div>
+                    </div>
+                </Fade>
+            </Modal>
+        );
+    };
+
+
+
+
+
     return (
         <div>
             {loading ? <Loading /> : null}
-
+            {renderDeleteModal()}
             {renderShareModal()}
 
             <div className="standard-questionnaire-container">
