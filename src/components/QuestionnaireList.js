@@ -64,6 +64,7 @@ import { formatDate } from "../utils/formatter";
 
 // Import Styles
 import "../styles/questionnaireList.css";
+import { DialogTitle } from "@material-ui/core";
 
 const QuestionnaireList = ({
     questionnaires,
@@ -120,7 +121,7 @@ const QuestionnaireList = ({
                         ) : null}
 
                         {canDelete ? (
-                            <button className="button" onClick={() => onClickDelete(questionnaireId)}>
+                            <button className="button" onClick={() => onClickDelete(questionnaireId, title)}>
                                 D E L E T E
                             </button>
                         ) : null}
