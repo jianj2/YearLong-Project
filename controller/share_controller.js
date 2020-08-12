@@ -50,10 +50,10 @@ const getShareDetails = function (req, res) {
         err,
         share
     ) {
-        if (!err) {
-            res.send(share);
+        if (!err && share != null) {
+            res.send({statusCode:200, message:"Valid ShareId", data:share});
         } else {
-            res.send(err);
+            res.send({statusCode:400, message:"Invalid ShareId", data:err})
         }
     });
 };
@@ -70,6 +70,29 @@ const sendResultsEmail = function (req, res) {
     let questionnaireData = req.body.questionnaireData;
     let clinicianEmail = req.body.clinicianEmail;
     let personalDetails = req.body.personalDetails;
+    var total_score=0;
+    var section_score=new Array();
+    var total_q=0;
+    var section_num=0;
+    for(var i=0;i<questionnaireData.length;i++){
+        var section_q=0;
+        var score=0;
+        for (var j=0; j<questionnaireData[i].length;j++) {
+            for (var z = 0; z < questionnaireData[i][j].length; z++) {
+                if (!questionnaireData[i][j][z].isMCQ) {
+                    if (questionnaireData[i][j][z].value != '') {
+                        score += questionnaireData[i][j][z].value;
+                    }
+                    section_q += 1;
+                }
+            }
+        }
+        section_score[section_num] = score / section_q;
+        total_score += score;
+        section_num += 1;
+        total_q += section_q;
+    };
+    var average_score=total_score/total_q;
 
     // Used to create the email
     const transporter = nodemailer.createTransport({
@@ -81,13 +104,14 @@ const sendResultsEmail = function (req, res) {
     });
 
     // Creating the file to send.
-    const s = new Readable()
-    s.push(JSON.stringify(personalDetails))    // the string you want
-    s.push(JSON.stringify(questionnaireData))
-    s.push(null)      // indicates end-of-file basically - the end of the stream
+    const s = new Readable();
+    s.push(JSON.stringify(personalDetails)) ;   // the string you want
+    s.push(JSON.stringify(questionnaireData));
+    s.push(null)     ; // indicates end-of-file basically - the end of the stream
 
     // Used to display as a table in the email
     const { jsonToTableHtmlString } = require('json-table-converter')
+
 
     // Parameters for the email.
     const mailOptions = {
@@ -109,6 +133,9 @@ const sendResultsEmail = function (req, res) {
             "</p>\n" +
             "<div> <h2>Personal Details</h2>" + jsonToTableHtmlString(personalDetails,{}) + "</div>" +
             "<div> <h2>Questionnaire Data</h2>" + jsonToTableHtmlString(questionnaireData,{}) + "</div>" +
+            "<div> <h2>Average score</h2>" + average_score + "</div>" +
+            "<div> <h2>Section score</h2>" + section_score + "</div>" +
+            "<div> <h2>Question number</h2>" + total_q + "</div>" +
             "    </div>",
         attachments : [{   // stream as an attachment
             filename: 'data.txt',
@@ -149,7 +176,7 @@ const sendInvitationEmail = function (req, res, createdShare) {
     let message = "";
     if (createdShare.message != undefined){
         message = "Message from the clinician: " + createdShare.message + "";
-    }
+    };
 
     // Used to create the email
     const transporter = nodemailer.createTransport({
