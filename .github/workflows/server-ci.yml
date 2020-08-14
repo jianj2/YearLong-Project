@@ -3,18 +3,35 @@ name: server-CI/CD
 
 on:
   push:
-    branches: [development-server]
+    branches: 
+    - deployment-server 
+    - development-server 
+    - master-server
+  pull_request:
+    branches:
+    - development-server 
+    - master-server
 
-jobs:  
-  build:
-    runs-on: ubuntu-latest
-    name: build
+jobs:
+  pipeline:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, ubuntu-18.04, ubuntu-16.04, macos-latest]
+    name: pipeline
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - name: testing if it works
+    - name: Build
       run: echo building ....
-
+    - name: Test
+      run: echo testing ....
+    - name: Deploy 
+      run: echo deploying ....
+    - name: release
+      run: echo releasing ....
+    - name: Publish
+      run: echo publishing ....
 
 
 
