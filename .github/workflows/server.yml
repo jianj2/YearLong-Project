@@ -17,18 +17,20 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, ubuntu-18.04, ubuntu-16.04, macos-latest]
+        os: [ubuntu-20.04, ubuntu-18.04, ubuntu-16.04, macos-latest, windows-latest]
     name: pipeline
     steps:
     - name: checkout
       uses: actions/checkout@v2
     - name: Build
       run: echo building ....
+    - name: Cache
+      run: Caching build ....
     - name: Test
       run: echo testing ....
     - name: Deploy 
       run: echo deploying ....
-    - name: release
+    - name: Release
       run: echo releasing ....
     - name: Publish
       run: echo publishing ....
