@@ -189,6 +189,26 @@ const deleteQuestionnaire = function (req, res) {
     });
 };
 
+
+// gets all standardised questionnaires 
+const getStandardisedQuestionnaires = function (req, res){
+
+        Questionnaire.find({isStandard: true}, function (err, questionnaires) {
+
+            if (!err && questionnaires != null) {
+                
+    
+                res.send({statusCode:200, message:"Valid", data:questionnaires});
+    
+            } else {
+                res.send({statusCode:400, message:"Invalid", data:err});
+            }
+        });
+    
+
+};
+
+
 module.exports.getAllQuestionnaire = getAllQuestionnaire;
 module.exports.getQuestionnaireSync = getQuestionnaireSync;
 module.exports.addEmptyQuestionnaire = addEmptyQuestionnaire;
@@ -196,4 +216,5 @@ module.exports.deleteQuestionnaire = deleteQuestionnaire;
 module.exports.editQuestionnaire = editQuestionnaire;
 module.exports.getClinicianQuestionnaires = getClinicianQuestionnaires;
 module.exports.getQuestionnaireAsync = getQuestionnaireAsync;
+module.exports.getStandardisedQuestionnaires = getStandardisedQuestionnaires;
 
