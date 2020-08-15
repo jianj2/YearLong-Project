@@ -45,7 +45,9 @@ const ManageQuestionnaires = (props) => {
     const { isAuthenticated, loginWithRedirect, user } = useAuth0();
     // console.log("user.name", user.name); //TODO: change that when we have actual clincianId
 
-    const [questionnaires, setQuestionnaires] = useState([]);
+    const [customisedQuestionnaires, setCustomisedQuestionnaires] = useState([]);
+    const [standardisedQuestionnaires, setStandardisedQuestionnaires] = useState([]);
+
     const [loading, setLoading] = useState(false);
 
     const [isShareModalVisible, setIsShareModalVisible] = useState(false);
@@ -66,7 +68,7 @@ const ManageQuestionnaires = (props) => {
 
     useEffect(() => {
         setLoading(true);
-        async function retrieveQuestionnaires() {
+        async function retrieveCustomisedQuestionnaires() {
             const customisedQuestionnaires = await API.getClinicianQuestionnaires(user.name);
             console.log(customisedQuestionnaires);
             const today = formatDate();
@@ -74,11 +76,20 @@ const ManageQuestionnaires = (props) => {
                 return { QID: q.questionnaireId, Qname: q.title, Qdescription: q.description, date: today };
             });
             // setQuestionnaires({ customized_Questionnaire: customisedQuestionnairesElement });
-            setQuestionnaires(customisedQuestionnaires);
+            setCustomisedQuestionnaires(customisedQuestionnaires);
             setLoading(false);
         }
+        async function retrieveStandardisedQuestionnaires(){
+            const standardisedQuestionnaires = [];
+            console.log(standardisedQuestionnaires);
+            setStandardisedQuestionnaires(customisedQuestionnaires);
+            
+        }
 
-        retrieveQuestionnaires();
+
+    
+        retrieveStandardisedQuestionnaires();
+        retrieveCustomisedQuestionnaires();
     }, [user]);
 
     function standardisedQuestionnaireGenerator(Qname, Qdescription, date) {
@@ -130,7 +141,7 @@ const ManageQuestionnaires = (props) => {
         const uuid = await API.addQuestionnaire(user.name);
 
         // const today = formatDate();
-        const AddedArray = questionnaires;
+        const AddedArray = customisedQuestionnaires;
         let newQuestionnaire = {
             questionnaireId: uuid,
             title: "New Questionnaire",
@@ -138,7 +149,7 @@ const ManageQuestionnaires = (props) => {
             sections: [],
             isStandard: false,
         };
-        setQuestionnaires([newQuestionnaire, ...questionnaires]);
+        setCustomisedQuestionnaires([newQuestionnaire, ...customisedQuestionnaires]);
         setLoading(false);
         // let edit_url = "/clinician/" + uuid + "/edit";
         // window.location.href = edit_url;
@@ -243,8 +254,8 @@ const ManageQuestionnaires = (props) => {
 
     const deleteSelecctedQuestionnaire = () => {
         let questionnaireId = deleteQuestionnaireData.deleteQuestionnaireID
-        const arrayCopy = questionnaires.filter((q) => q.questionnaireId !== questionnaireId);
-        setQuestionnaires(arrayCopy);
+        const arrayCopy = customisedQuestionnaires.filter((q) => q.questionnaireId !== questionnaireId);
+        setCustomisedQuestionnaires(arrayCopy);
         API.deleteQuestionnaire(questionnaireId, user.name);
         closeDeleteConfirmation();
     }
@@ -290,10 +301,22 @@ const ManageQuestionnaires = (props) => {
 
             <div className="standard-questionnaire-container">
                 <div className="SQ-header">
-                    <h1>Standard questionnaires</h1>
+                    <h1>Standard Questionnaires</h1>
                 </div>
-                {standardisedQuestionnaireGenerator("SSQ-P", "SSQ for parents", "17/05/2020")}
-                {standardisedQuestionnaireGenerator("SSQ-C", "SSQ for children ", "17/05/2020")}
+                <QuestionnaireList
+                questionnaires={standardisedQuestionnaires}
+                listTitle={""}
+                isSelectable={false}
+                onClickQuestion={() => {}}
+                canEdit={false}
+                onClickEdit={editQuestionnaire}
+                canDelete={true}
+                onClickDelete={deleteQuestionnaire}
+                canShare={true}
+                onClickShare={shareQuestionnaire}
+                />
+                {/* {standardisedQuestionnaireGenerator("SSQ-P", "SSQ for parents", "17/05/2020")}
+                {standardisedQuestionnaireGenerator("SSQ-C", "SSQ for children ", "17/05/2020")} */}
             </div>
 
             <div className="CQ-header">
@@ -304,7 +327,7 @@ const ManageQuestionnaires = (props) => {
             </div>
 
             <QuestionnaireList
-                questionnaires={questionnaires}
+                questionnaires={customisedQuestionnaires}
                 listTitle={""}
                 isSelectable={false}
                 onClickQuestion={() => {}}
