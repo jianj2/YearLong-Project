@@ -174,8 +174,8 @@ const sendInvitationEmail = function (req, res, createdShare) {
             '    <div style="padding: 2em;font-size: 20px;font-weight: 200;">' +
             '        <p>Hi,</p>' +
             '        <p>Please complete the following questionnaire.</p>' +
-            '        <p>Use the following link to complete the questionnaire: <a style="text-decoration: none;color: #ff5c4b;" href="' + link + '"  >link</a></p>\n' +
             '        <p style ="color: #151641;" >' + message +'</p>\n' +
+            '        <p>Use the following link to complete the questionnaire: <a style="text-decoration: none;color: #ff5c4b;" href="' + link + '"  >link</a></p>\n' +
             '        <p>Thank you,</p>\n' +
             '        <p>' + 'Team SSQ' + '</p>\n' +
             '    </div>'
