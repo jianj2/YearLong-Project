@@ -340,8 +340,8 @@ const ManageQuestionnaires = (props) => {
             <QuestionnaireList
                 questionnaires={customisedQuestionnaires}
                 listTitle={""}
-                isSelectable={false}
-                onClickQuestion={() => {}}
+                isSelectable={true}
+                onClickQuestion={viewQuestionnaire}
                 canEdit={true}
                 onClickEdit={editQuestionnaire}
                 canDelete={true}

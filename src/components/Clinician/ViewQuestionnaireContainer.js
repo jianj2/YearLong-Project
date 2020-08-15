@@ -65,6 +65,7 @@ const ViewQuestionnaireContainer = (props) => {
     return (
         loaded?
         <Questionnaire
+                    readOnly = {true}
                     questionnaire={questionnaire}
                     submitQuestionnaire={()=>{}}
                     questionnaireData={questionnaireData}
