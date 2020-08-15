@@ -315,7 +315,7 @@ const ManageQuestionnaires = (props) => {
                 onClickQuestion={() => {}}
                 canEdit={false}
                 onClickEdit={editQuestionnaire}
-                canDelete={true}
+                canDelete={false}
                 onClickDelete={deleteQuestionnaire}
                 canShare={true}
                 onClickShare={shareQuestionnaire}
