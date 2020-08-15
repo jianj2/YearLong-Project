@@ -110,8 +110,14 @@ const ManageQuestionnaires = (props) => {
 
     // Function called when Edit is clicked on the QuestionnaireList
     const editQuestionnaire = (questionnaireID) => {
-        let edit_url = "/clinician/" + questionnaireID + "/edit";
+        const edit_url = "/clinician/" + questionnaireID + "/edit";
         window.location.href = edit_url;
+    };
+
+    const viewQuestionnaire = (questionnaireID) =>{
+        const view_url = "/standard/" + questionnaireID + "/view";
+        window.location.href = view_url;
+
     };
 
     // Function called when Delete is clicked on the QuestionnaireList
@@ -311,8 +317,8 @@ const ManageQuestionnaires = (props) => {
                 <QuestionnaireList
                 questionnaires={standardisedQuestionnaires}
                 listTitle={""}
-                isSelectable={false}
-                onClickQuestion={() => {}}
+                isSelectable={true}
+                onClickQuestion={viewQuestionnaire}
                 canEdit={false}
                 onClickEdit={editQuestionnaire}
                 canDelete={false}

@@ -135,15 +135,23 @@ export const editQuestionnaire = async (questionnaire) => {
 // get specific questionnaire
 // TODO: get CQid and entire edited questionnaire from UI
 export const getAndSetSpecificQuestionnaire = async (CQid, setState) => {
-    fetch(`${api}/questionnaire/getQuestionnaire/${CQid}`, {
+    console.log("getting data");
+    let res = await fetch(`${api}/questionnaire/getQuestionnaire/${CQid}`, {
         method: "GET",
         headers: {
             ...header,
             Accept: "application/json",
             "Content-Type": "application/json",
         },
-    }).then(res => res.json())
-        .then(data => setState(data));
+    });
+    let json = await res.json();
+
+  
+    setState(json);
+    console.log("setting data");
+    return json;
+
+   
 };
  
 
