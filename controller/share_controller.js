@@ -15,6 +15,8 @@ const { v1: uuidv1 } = require("uuid");
 const nodemailer = require('nodemailer');
 const path = require("path");
 const Readable = require('stream').Readable
+const PDFDocument = require('pdfkit');
+var fs = require('fs');
 
 
 // Create a new share.
@@ -80,6 +82,12 @@ const sendResultsEmail = function (req, res) {
         }
     });
 
+    const doc = new PDFDocument;
+    doc.pipe(fs.createWriteStream('results.pdf'));
+    doc.addPage()
+    .text(JSON.stringify(questionnaireData),100,100);
+    doc.end();
+
     // Creating the file to send.
     const s = new Readable()
     s.push(JSON.stringify(personalDetails))    // the string you want
@@ -111,8 +119,8 @@ const sendResultsEmail = function (req, res) {
             "<div> <h2>Questionnaire Data</h2>" + jsonToTableHtmlString(questionnaireData,{}) + "</div>" +
             "    </div>",
         attachments : [{   // stream as an attachment
-            filename: 'data.txt',
-            content: s
+            filename: 'results.pdf',
+            content: doc
         }],
 
     };
