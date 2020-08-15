@@ -169,7 +169,7 @@ const ManageQuestionnaires = (props) => {
                     <form className="share-modal-container" onSubmit={handleShareSubmit}>
                         <h2>Share Details</h2>
                         <FormControl margin="dense">
-                            <InputLabel>Patient's Email</InputLabel>
+                            <InputLabel>Email</InputLabel>
                             <Input
                                 onChange={(e) => {
                                     setShareModalData({
@@ -237,7 +237,7 @@ const ManageQuestionnaires = (props) => {
                     <h1>Standard questionnaires</h1>
                 </div>
                 {standardisedQuestionnaireGenerator("SSQ-P", "SSQ for parents", "17/05/2020")}
-                {standardisedQuestionnaireGenerator("SSQ-C", "SSQ for children ", "17/05/2020")}
+                {standardisedQuestionnaireGenerator("SSQ-CH", "SSQ for children ", "17/05/2020")}
             </div>
 
             <div className="CQ-header">

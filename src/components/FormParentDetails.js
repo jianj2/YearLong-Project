@@ -136,7 +136,7 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
             <div className="parents-detail-form-column">
                 <FormControl margin="dense">
                     <InputLabel>Right Device Type</InputLabel>
-                    <Select
+                    <Select id="DeviceOne"
                         value={rightDeviceType}
                         onChange={(event) => setRightDeviceType(event.target.value)}
                         // defaultValue={defaultValue.rightDeviceType}
@@ -146,12 +146,14 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                         native
                         inputRef={register({
                             required: "You have not specified the device type.",
-                        })}
-                    >
+                        })}>
                         <option value="" disabled selected></option>
-                        <option value="deviceA">Device A</option>
-                        <option value="deviceB">Device B</option>
+                        <option value="none">None</option>
+                        <option value="hearingaid">Hearing</option>
+                        <option value="cochlearimplant">Cochlear Implant</option>
+                        <option value="other">Other</option>
                     </Select>
+
                     <FormHelperText>{errors.rightDeviceType ? errors.rightDeviceType.message : "Please specify the device type."}</FormHelperText>
                 </FormControl>
 
@@ -170,9 +172,12 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                         })}
                     >
                         <option value="" disabled selected></option>
-                        <option value="deviceA">Device A</option>
-                        <option value="deviceB">Device B</option>
+                        <option value="none">None</option>
+                        <option value="hearingaid">Hearing</option>
+                        <option value="cochlearimplant">Cochlear Implant</option>
+                        <option value="other">Other</option>
                     </Select>
+
                     <FormHelperText>{errors.leftDeviceType ? errors.leftDeviceType.message : "Please specify the device type."}</FormHelperText>
                 </FormControl>
 

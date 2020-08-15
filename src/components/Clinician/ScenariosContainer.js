@@ -90,7 +90,7 @@ const ScenariosContainer = ({
                                         <MdDelete />
                                     </button>
                                 </div>
-                                <Typography>Scenario {index + 1}</Typography>
+                                <Typography>Listening Scenario {index + 1}</Typography>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails className={classes.details}>
                                 <Scenario
