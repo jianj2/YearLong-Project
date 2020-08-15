@@ -80,9 +80,14 @@ const ManageQuestionnaires = (props) => {
             setLoading(false);
         }
         async function retrieveStandardisedQuestionnaires(){
-            const standardisedQuestionnaires = [];
-            console.log(standardisedQuestionnaires);
-            setStandardisedQuestionnaires(customisedQuestionnaires);
+
+            const response = await API.getStandardisedQuestionnaires();
+            if (response.statusCode === 200){
+                setStandardisedQuestionnaires(response.data);
+            }
+        
+    
+            
             
         }
 
@@ -92,15 +97,15 @@ const ManageQuestionnaires = (props) => {
         retrieveCustomisedQuestionnaires();
     }, [user]);
 
-    function standardisedQuestionnaireGenerator(Qname, Qdescription, date) {
-        return (
-            <div className="q-frame">
-                <div className="q-name">{Qname}</div>
-                <div className="q-description">{Qdescription}</div>
-                <div className="date">{date}</div>
-            </div>
-        );
-    }
+    // function standardisedQuestionnaireGenerator(Qname, Qdescription, date) {
+    //     return (
+    //         <div className="q-frame">
+    //             <div className="q-name">{Qname}</div>
+    //             <div className="q-description">{Qdescription}</div>
+    //             <div className="date">{date}</div>
+    //         </div>
+    //     );
+    // }
 
 
     // Function called when Edit is clicked on the QuestionnaireList

@@ -150,9 +150,22 @@ export const getAndSetSpecificQuestionnaire = async (CQid, setState) => {
 
 
 // get clinician questionnaire list
-// TODO: get CQid and entire edited questionnaire from UI
+
 export const getClinicianQuestionnaires = async (clinicianId) => {
     const url = `${api}/questionnaire/clinician?clinicianId=${clinicianId}` ;
+    let response = await fetch(url, {
+        headers: header
+       
+    });
+    let json = await response.json();
+    
+    return json;
+};
+
+// get standardised questionnaires 
+export const getStandardisedQuestionnaires = async () => {
+ 
+    const url = `${api}/questionnaire/standardised` ;
     let response = await fetch(url, {
         headers: header
        
