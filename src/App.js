@@ -81,6 +81,12 @@ function App() {
                         exact
                         render={({match}) => (<HomeClinician active = {4} questionnaireID={match.params.id}/>)}
                     />
+
+                    <Route
+                        path="/standard/:id/view" 
+                        exact 
+                        render={({match}) => <HomeClinician active = {5} questionnaireID={match.params.id}/> }
+                    />
                 </Switch>
             </Router>
         </div>
