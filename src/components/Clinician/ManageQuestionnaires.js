@@ -84,15 +84,8 @@ const ManageQuestionnaires = (props) => {
             const response = await API.getStandardisedQuestionnaires();
             if (response.statusCode === 200){
                 setStandardisedQuestionnaires(response.data);
-            }
-        
-    
-            
-            
+            }  
         }
-
-
-    
         retrieveStandardisedQuestionnaires();
         retrieveCustomisedQuestionnaires();
     }, [user]);
