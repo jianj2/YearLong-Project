@@ -97,17 +97,6 @@ const ManageQuestionnaires = (props) => {
         retrieveCustomisedQuestionnaires();
     }, [user]);
 
-    // function standardisedQuestionnaireGenerator(Qname, Qdescription, date) {
-    //     return (
-    //         <div className="q-frame">
-    //             <div className="q-name">{Qname}</div>
-    //             <div className="q-description">{Qdescription}</div>
-    //             <div className="date">{date}</div>
-    //         </div>
-    //     );
-    // }
-
-
     // Function called when Edit is clicked on the QuestionnaireList
     const editQuestionnaire = (questionnaireID) => {
         const edit_url = "/clinician/" + questionnaireID + "/edit";
