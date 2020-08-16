@@ -48,15 +48,8 @@ const ViewQuestionnaireContainer = (props) => {
             } else {
                 console.log("An error has occured when setting empty response for questionnaire");
             }
-   
         }
         prepareQuestionnaire();
-
-
-        
-      
-      
-        
     }, [props.questionnaireID]);
 
    
