@@ -13,6 +13,10 @@ const mongoose = require("mongoose");
 const adminKeyFile = require("../config/admin.json");
 const jwt = require("jsonwebtoken");
 
+const Questionnaire = mongoose.model("questionnaire");
+const Clinician = mongoose.model("clinician");
+const { v1: uuidv1 } = require("uuid");
+
 // Login check.
 const loginAdmin = function (req, res) {
     console.log("admin file", adminKeyFile);
@@ -87,26 +91,51 @@ const verifyLogin = (req, res) => {
     });
 }
 
-// Create a new admin.
-// var createAdmin = function (req,res) {
-//     var newAdmin = new Admin({
-//         adminId: 'admin',
-//         name: "Victor",
-//         username: "AdminExample",
-//         email: "testadmin@example.com",
-//         password: "adminpassword",
-//         questionnaires: ['questionnaireId1', 'questionnaireId2'],
-//     });
-//
-//     newAdmin.save(function(err, createdAdmin) {
-//         if (!err){
-//             res.send(createdAdmin);
-//         } else {
-//             res.send(err);
-//         }
-//     })
-// };
+// add a standardised questionnaires
+const addStandardisedQuestionnaire = function (req, res) {
+    const uuid = uuidv1();
+
+    let newQuestionnaire = new Questionnaire({
+        questionnaireId: uuid,
+        title: "SSQ-CH",
+        description: "SSQ-CH",
+        sections: [
+            {
+                title: "Speech",
+                scenarios: [
+                    {
+                        description: "You are at Melbourne Uni...",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description: "If only one option can be true, which of the following is correct?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "All of the above is true",
+                                    " Those below the below is true",
+                                    "None of the above is true",
+                                    "Those above the above is true",
+                                ],
+                            },
+                        ],
+                    },
+                ],
+            },
+            { title: "Spatial", scenarios: [] },
+            { title: "Quality", scenarios: [] },
+        ],
+        isStandard: true,
+    });
+
+    newQuestionnaire.save(function (err, createdQuestionnaire) {
+        console.log("added standardised questionnaire:", uuid);
+    });
+};
+
 
 module.exports.loginAdmin = loginAdmin;
 module.exports.verifyLogin = verifyLogin;
-//module.exports.createAdmin = createAdmin;
+module.exports.addStandardisedQuestionnaire = addStandardisedQuestionnaire;
