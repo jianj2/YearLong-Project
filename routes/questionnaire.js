@@ -13,9 +13,8 @@ const express = require('express');
 const router = express.Router();
 const questionnaire_controller = require('../controller/questionnaire_controller.js');
 
+
 // CRUD Routes for Posts
-
-
 
 router.get('/getQuestionnaire/:questionnaireId', questionnaire_controller.getQuestionnaireAsync);
 router.get('/clinician/', questionnaire_controller.getClinicianQuestionnaires);
