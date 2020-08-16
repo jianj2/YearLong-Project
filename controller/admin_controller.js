@@ -136,6 +136,22 @@ const addStandardisedQuestionnaire = function (req, res) {
 };
 
 
+// Get all standardised questionnaires for admin
+const getStandardisedQuestionnaire = function (req, res) {
+
+    Questionnaire.find({ isStandard:true}, function (err, questionnaire) {
+        if (!err && questionnaire != null) {
+            console.log('successful');
+            res.send(questionnaire)
+
+        } else {
+            res.send(err)
+        }
+    });
+};
+
+
 module.exports.loginAdmin = loginAdmin;
 module.exports.verifyLogin = verifyLogin;
 module.exports.addStandardisedQuestionnaire = addStandardisedQuestionnaire;
+module.exports.getStandardisedQuestionnaire = getStandardisedQuestionnaire;
