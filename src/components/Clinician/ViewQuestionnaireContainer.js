@@ -1,8 +1,21 @@
 import React, { useState, useEffect } from "react";
 import * as API from "../../utils/api";
 import Questionnaire from "../Questionnaire";
-const ViewQuestionnaireContainer = (props) => {
 
+/**
+ * ====================================================================
+ * REACT COMPONENT
+ * ====================================================================
+ * @date created: 16th Aug 2020
+ * @authors: Cary Jin
+ *
+ * This class handles the rendering of read-only versions of questionnaires
+ * This includes both standardised and customised questionnaires.
+ *
+ */
+
+
+const ViewQuestionnaireContainer = (props) => {
 
     const [questionnaire, setSelectedQuestionnaire] = useState({
         questionnaireId: "",
@@ -14,8 +27,6 @@ const ViewQuestionnaireContainer = (props) => {
 
     const [questionnaireData, setQuestionnaireData] = useState([]);
     const [loaded, setLoaded] = useState(false);
-
-
    
     // get the questionnaire content from API
     useEffect(() =>{
@@ -52,9 +63,6 @@ const ViewQuestionnaireContainer = (props) => {
         prepareQuestionnaire();
     }, [props.questionnaireID]);
 
-   
-
-
     return (
         loaded?
         <Questionnaire
@@ -65,8 +73,6 @@ const ViewQuestionnaireContainer = (props) => {
                     handleQuestionnaireChange={()=>{}}
                 />:<div></div>
     );
-
-
 
 }
 
