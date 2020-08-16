@@ -135,7 +135,6 @@ export const editQuestionnaire = async (questionnaire) => {
 // get specific questionnaire
 // TODO: get CQid and entire edited questionnaire from UI
 export const getAndSetSpecificQuestionnaire = async (CQid, setState) => {
-    console.log("getting data");
     let res = await fetch(`${api}/questionnaire/getQuestionnaire/${CQid}`, {
         method: "GET",
         headers: {
@@ -145,13 +144,8 @@ export const getAndSetSpecificQuestionnaire = async (CQid, setState) => {
         },
     });
     let json = await res.json();
-
-  
     setState(json);
-    console.log("setting data");
-    return json;
-
-   
+    return json
 };
  
 
@@ -176,7 +170,6 @@ export const getStandardisedQuestionnaires = async () => {
     const url = `${api}/questionnaire/standardised` ;
     let response = await fetch(url, {
         headers: header
-       
     });
     let json = await response.json();
     
