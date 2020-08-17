@@ -28,3 +28,4 @@ mongoose.connect(url,  { useNewUrlParser: true } ,  function (err) {
 require('./questionnaire.js');
 require('./clinician.js');
 require('./share');
+require('./instruction.js');
