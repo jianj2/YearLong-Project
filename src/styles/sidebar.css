@@ -39,7 +39,9 @@
 
 .sidebar-questionnaires,
 .sidebar-do-the-test,
-.sidebar-instructions { 
+.sidebar-instructions,
+.sidebar-ssq-instructions,
+.sidebar-ssq-introduction  {
     display: flex;
     align-items: center;
     justify-content: center;

@@ -23,6 +23,8 @@ import { useAdminAuth } from "../utils/useAdminAuth";
 
 // Import components
 import FormLoginAdmin from "../components/FormLoginAdmin";
+import AdminSideBar from "../components/Admin/AdminSideBar";
+import AdminContentPanel from "../components/Admin/AdminContentPanel";
 
 // Import styles.
 import "../styles/admin.css";
@@ -30,19 +32,22 @@ import "../styles/main.css";
 
 // Import assets.
 import logoComplete from "../assets/logo_complete.png";
+import ContentPanel from "../components/Clinician/ContentPanel";
 
 // ---------------------------------------------------------------
 // This function defines the Admin's Home screen.
 // ---------------------------------------------------------------
-const HomeAdmin = () => {
+const HomeAdmin = (props) => {
     const { isAdminAuthenticated, adminLogin } = useAdminAuth();
 
     if (isAdminAuthenticated) {
         return (
-            <div className="HomeClinician">
-                <h1>Pediatric SSQ</h1>
-                <h3>Welcome Admin!</h3>
-                <h4>H O M E</h4>
+            <div className="HomeAdmin">
+                <AdminSideBar />
+
+                <AdminContentPanel
+                    active={props.active}
+                />
             </div>
         );
     } else {
