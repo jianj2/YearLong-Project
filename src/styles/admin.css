@@ -10,6 +10,20 @@
   *
 */
 
+@media all and (max-width: 800px) {
+  .HomeAdmin{
+    height: 100vh;
+    display: flex;
+    flex-flow: row wrap;
+    flex-direction: row;
+  }
+}
+
+.HomeAdmin{
+  height: 95vh;
+  display: flex;
+}
+
 .admin-form {
   /* width: 50vw; */
   min-width: 400px;
