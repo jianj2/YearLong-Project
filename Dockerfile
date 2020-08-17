@@ -4,6 +4,8 @@ RUN mkdir /client
 
 WORKDIR /client
 
+ENV PATH /client/node_modules/.bin:$PATH
+
 COPY . /client
 
 RUN apt-get update
