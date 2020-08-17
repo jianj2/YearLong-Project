@@ -18,7 +18,7 @@ const admin_controller = require('../controller/admin_controller.js');
 
 router.post('/login', admin_controller.loginAdmin);
 router.get("/verifylogin/:token", admin_controller.verifyLogin);
-router.get('/getStandardizedQuestionnaire', admin_controller.getStandardisedQuestionnaire);
+router.get('/getStandardisedQuestionnaire', admin_controller.getStandardisedQuestionnaire);
 
 
 module.exports = router;
