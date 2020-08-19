@@ -58,7 +58,8 @@ const ManageQuestionnaires = (props) => {
         questionnaireId: "",
         clinicianEmail: user.name,
         message: "",
-        readOnly: false
+        readOnly: false,
+        sections:{}
     });
 
     const [deleteQuestionnaireData, setdeleteQuestionnaireData] = useState({
@@ -119,8 +120,9 @@ const ManageQuestionnaires = (props) => {
     };
 
     // Function called when Share is clicked on the QuestionnaireList
-    const shareQuestionnaire = (questionnaireId) => {
+    const shareQuestionnaire = (questionnaireId, sections) => {
         console.log("share Questionnaire ", questionnaireId);
+        console.log("sections", sections);
         setShareModalData({
             ...shareModalData,
             questionnaireId,
@@ -210,6 +212,19 @@ const ManageQuestionnaires = (props) => {
                             />
                             <FormHelperText>Please enter a personalised Message that you want to send to the patient (optional).</FormHelperText>
                         </FormControl>
+
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={true}
+                                    // onChange={}
+                                    name="talentMain.Music"
+                                    // inputRef={register}
+                                />
+                            }
+                            label="Music"
+                        />
+
 
                         <FormControl>
                             <FormControlLabel
