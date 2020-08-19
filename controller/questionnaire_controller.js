@@ -85,7 +85,7 @@ const addEmptyQuestionnaire = function (req, res) {
         description: "Please click edit to begin with this questionnaire.",
         sections: [
             {
-                title: "Speech",
+                title: "Section 1 - Speech",
                 scenarios: [
                     {
                         description: "You are at Melbourne Uni...",
@@ -108,8 +108,8 @@ const addEmptyQuestionnaire = function (req, res) {
                     },
                 ],
             },
-            { title: "Spatial", scenarios: [] },
-            { title: "Quality", scenarios: [] },
+            { title: "Section 2 - Spatial", scenarios: [] },
+            { title: "Section 3 - Quality", scenarios: [] },
         ],
         isStandard: req.body.isStandard,
     });
