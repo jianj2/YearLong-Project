@@ -59,13 +59,14 @@ const ManageQuestionnaires = (props) => {
         clinicianEmail: user.name,
         message: "",
         readOnly: false,
-        sections:{}
     });
 
     const [deleteQuestionnaireData, setdeleteQuestionnaireData] = useState({
         deleteQuestionnaireID: "",
         deleteQuestionnaireName: ""
     });
+
+    const [shareSection, setShareSection] = useState({});
 
     useEffect(() => {
         setLoading(true);
@@ -122,11 +123,20 @@ const ManageQuestionnaires = (props) => {
     // Function called when Share is clicked on the QuestionnaireList
     const shareQuestionnaire = (questionnaireId, sections) => {
         console.log("share Questionnaire ", questionnaireId);
-        console.log("sections", sections);
+
+
+        var temp = {}
+        sections.map((index) => {
+            temp = ({ ...temp,[(index.title).toString()]:false });
+        })
+
+        setShareSection(temp);
+
         setShareModalData({
             ...shareModalData,
-            questionnaireId,
+            questionnaireId,shareSection
         });
+
         openModal();
     };
 
@@ -156,9 +166,16 @@ const ManageQuestionnaires = (props) => {
     const openModal = () => setIsShareModalVisible(true);
     const closeModal = () => setIsShareModalVisible(false);
 
+
     const handleShareSubmit = (e) => {
         e.preventDefault();
-        setLoading(true); 
+        setLoading(true);
+
+        setShareModalData({
+            ...shareModalData,
+            shareSection,
+        });
+
         API.shareQuestionnaire(shareModalData).then( res => {
             console.log("printing the res: ", res);
             setLoading(false); 
@@ -213,17 +230,34 @@ const ManageQuestionnaires = (props) => {
                             <FormHelperText>Please enter a personalised Message that you want to send to the patient (optional).</FormHelperText>
                         </FormControl>
 
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={true}
-                                    // onChange={}
-                                    name="talentMain.Music"
-                                    // inputRef={register}
+
+
+                        {Object.entries(shareSection).map((k,v)=>
+                            (
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            checked={k[1]}
+
+                                            onChange={(e) => { shareSection[k[0]]=e.target.checked;
+                                                setShareModalData({
+                                                    ...shareModalData,
+                                                    shareSection
+                                                });
+                                            }
+
+
+                                            }
+
+                                            name="section selection"
+                                            // inputRef={register}
+                                        />
+                                    }
+                                    label={k[0]}
                                 />
-                            }
-                            label="Music"
-                        />
+                            )
+
+                        )}
 
 
                         <FormControl>
