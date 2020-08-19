@@ -11,7 +11,7 @@
 const mongoose = require('mongoose');
 
 const visibleSections = mongoose.Schema({
-    title: { type: String, required: true },
+    title: {type: String, required: true },
     visible:{type:Boolean, required:true},
 });
 
@@ -22,7 +22,7 @@ const shareSchema = mongoose.Schema({
     questionnaireId: {type: String, required:true },
     readOnly:{type:Boolean, required:true},
     message:{type:String},
-    sections:[visibleSections]
+    shareSection:[visibleSections]
 });
 
 
