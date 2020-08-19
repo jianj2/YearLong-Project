@@ -171,6 +171,7 @@ const ManageQuestionnaires = (props) => {
         e.preventDefault();
         setLoading(true);
 
+        //sharesection is {section:isVisible}
         setShareModalData({
             ...shareModalData,
             shareSection,

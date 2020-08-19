@@ -27,7 +27,7 @@ export default function Questionnaire({
     questionnaire,
     submitQuestionnaire,
     questionnaireData,
-    handleQuestionnaireChange,
+    handleQuestionnaireChange,visibleSections,
 }) {
     const { register, handleSubmit, errors } = useForm(); 
 
@@ -36,6 +36,7 @@ export default function Questionnaire({
         e.preventDefault();
         submitQuestionnaire();
     };
+
 
     // Method: Called when we something in the questionnaire changes.
     const onQuestionChange = (
@@ -48,42 +49,60 @@ export default function Questionnaire({
     };
 
     console.log(questionnaire);
- 
+
+    // checks if a section is visible.
+    function isVisible(title) {
+        visibleSections.map((o) => {
+            if ((o.title).toString() === title.toString()) {
+                console.log(o.visible)
+                return o.visible;
+            }
+        })
+        return false;
+    }
+
     return (
         <form onSubmit={onSubmit} className="questionaire-container">
             <h1>{questionnaire.title}</h1>
             {questionnaire.sections.map((section, sectionIndex) => (
+
+                isVisible(section.title)? (
                 <div key={sectionIndex} className="section-container">
-                    <h2>{section.title}</h2>
-                    {section.scenarios.map((scenario, scenarioIndex) => (
-                        <div key={scenarioIndex} className="scenario-container">
-                            <p>{scenario.description}</p>
-                            {scenario.questions.map(
-                                (question, questionIndex) => (
-                                    <Question
-                                        readOnly={readOnly}
-                                        error={true}
-                                        key={questionIndex}
-                                        questionIndex={questionIndex}
-                                        sectionIndex={sectionIndex}
-                                        scenarioIndex={scenarioIndex}
-                                        description={question.description}
-                                        isMCQ={question.isMCQ}
-                                        MCQOptions={question.MCQOptions}
-                                        rangeOptions={question.rangeOptions}
-                                        onQuestionChange={onQuestionChange}
-                                        data={
-                                            questionnaireData[sectionIndex][
-                                                scenarioIndex
+                <h2>{section.title}</h2>
+                {section.scenarios.map((scenario, scenarioIndex) => (
+                    <div key={scenarioIndex} className="scenario-container">
+                        <p>{scenario.description}</p>
+                        {scenario.questions.map(
+                            (question, questionIndex) => (
+                                <Question
+                                    readOnly={readOnly}
+                                    error={true}
+                                    key={questionIndex}
+                                    questionIndex={questionIndex}
+                                    sectionIndex={sectionIndex}
+                                    scenarioIndex={scenarioIndex}
+                                    description={question.description}
+                                    isMCQ={question.isMCQ}
+                                    MCQOptions={question.MCQOptions}
+                                    rangeOptions={question.rangeOptions}
+                                    onQuestionChange={onQuestionChange}
+                                    data={
+                                        questionnaireData[sectionIndex][
+                                            scenarioIndex
                                             ][questionIndex]
-                                        }
-                                    />
-                                )
-                            )}
-                        </div>
-                    ))}
+                                    }
+                                />
+                            )
+                        )}
+                    </div>
+                ))}
                 </div>
-            ))}
+                    ):null
+
+
+            )
+
+            )}
 
             <div className="questionaire-submit-button">
                 {readOnly ? null : (
