@@ -10,7 +10,7 @@ COPY . /client
 
 RUN apt-get update
 RUN npm install
-RUN npm audit fix
+RUN npm build
 
 EXPOSE 3000
 
