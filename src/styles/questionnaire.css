@@ -20,6 +20,9 @@
     align-items: stretch;
 }
 
+/*questionnaire-container-outer{*/
+/*    overflow: hidden;*/
+/*}*/
 
 .section-container{
     display: flex;
