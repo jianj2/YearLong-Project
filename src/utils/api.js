@@ -176,6 +176,16 @@ export const getStandardisedQuestionnaires = async () => {
     return json;
 };
 
+//get standardised questionnaires(admin)
+export const getStandardisedQuestionnaireForAdmin = async () => {
+    const url = `${api}/admin/getStandardisedQuestionnaire`;
+    let response = await fetch(url, {
+        headers: header
+    });
+    let json = await response.json();
+    return json;
+}
+
    
 // ================================================
 // Managing Share server calls
