@@ -51,7 +51,6 @@ export default function Questionnaire({
         handleQuestionnaireChange(sectionIndex, scenarioIndex, questionIndex, data);
     };
 
-    console.log(questionnaire);
 
     // get a list of the visible sections
     const getVisibleSections = (sections, visibilityInfoList ) => {

@@ -232,7 +232,8 @@ const ManageQuestionnaires = (props) => {
                         </FormControl>
 
 
-
+                        {/* list of all the sections with check boxes*/}
+                        <FormControl margin="dense" style={{border: '1px inset #56577d'}}>
                         {Object.entries(shareSection).map((k,v)=>
                             (
                                 <FormControlLabel
@@ -249,9 +250,7 @@ const ManageQuestionnaires = (props) => {
 
 
                                             }
-
                                             name="section selection"
-                                            // inputRef={register}
                                         />
                                     }
                                     label={k[0]}
@@ -259,6 +258,10 @@ const ManageQuestionnaires = (props) => {
                             )
 
                         )}
+
+                        <FormHelperText>Please select the sections you want to share.</FormHelperText>
+                    </FormControl>
+
 
 
                         <FormControl>
