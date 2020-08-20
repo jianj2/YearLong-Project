@@ -23,7 +23,7 @@ const shareQuestionnaire = function (req,res) {
     // convert to a list of objects
     let visibleSection = []
     Object.entries(req.body.shareSection).map((k,v) =>{
-        visibleSection.push({title: k[0], visible: k[1]});
+        visibleSection.push({title: k[0], isVisible: k[1]});
     })
 
 

@@ -12,7 +12,7 @@ const mongoose = require('mongoose');
 
 const visibleSections = mongoose.Schema({
     title: {type: String, required: true },
-    visible:{type:Boolean, required:true},
+    isVisible:{type:Boolean, required:true},
 });
 
 const shareSchema = mongoose.Schema({
