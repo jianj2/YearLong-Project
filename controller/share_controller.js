@@ -82,11 +82,14 @@ const sendResultsEmail = function (req, res) {
         }
     });
 
+    
     const doc = new PDFDocument;
-    doc.pipe(fs.createWriteStream('results.pdf'));
-    doc.addPage()
-    .text(JSON.stringify(questionnaireData),100,100);
+    doc
+    .fontSize(25)
+    .text(JSON.stringify(questionnaireData), 100, 100)
+    .text("test here");
     doc.end();
+    
 
     // Creating the file to send.
     const s = new Readable()
