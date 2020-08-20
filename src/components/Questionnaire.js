@@ -52,8 +52,10 @@ export default function Questionnaire({
     };
 
 
+    //////////// Share section update /////////////////////////////
     // get a list of the visible sections
     const getVisibleSections = (sections, visibilityInfoList ) => {
+
         const filteredSections = sections.filter((section) => {
                 const foundVisibilityInfo = visibilityInfoList.find((visibilityInfo) => {
                     return (visibilityInfo.title === section.title)
@@ -62,12 +64,21 @@ export default function Questionnaire({
             }
         );
         return filteredSections;
+
     }
 
     // set the updates questionnaire sections.
-    let filteredSections = getVisibleSections(questionnaire.sections, sectionVisibility)
-    questionnaire.sections = filteredSections
+    const updateSections = ((questionnaire, sectionVisibility) =>{
+        console.log(sectionVisibility)
+        if (sectionVisibility != undefined ){
 
+            questionnaire.sections = getVisibleSections(questionnaire.sections, sectionVisibility)
+        }
+
+    })
+
+    updateSections(questionnaire, sectionVisibility)
+    //////////////////////////////////////////////////////////////
 
     return (
         <form onSubmit={onSubmit} className="questionaire-container">
