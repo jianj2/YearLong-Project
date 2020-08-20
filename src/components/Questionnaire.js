@@ -29,7 +29,7 @@ export default function Questionnaire({
     questionnaire,
     submitQuestionnaire,
     questionnaireData,
-    handleQuestionnaireChange,visibleSections,
+    handleQuestionnaireChange,sectionVisibility
 }) {
     const { register, handleSubmit, errors } = useForm();
 
@@ -53,8 +53,8 @@ export default function Questionnaire({
 
     console.log(questionnaire);
 
-
-    const getVisibleSection = (sections, visibilityInfoList ) => {
+    // get a list of the visible sections
+    const getVisibleSections = (sections, visibilityInfoList ) => {
         const filteredSections = sections.filter((section) => {
                 const foundVisibilityInfo = visibilityInfoList.find((visibilityInfo) => {
                     return (visibilityInfo.title === section.title)
@@ -65,17 +65,16 @@ export default function Questionnaire({
         return filteredSections;
     }
 
-    console.table(questionnaire.sections);
-    console.table(visibleSections)
-    let filteredSections = getVisibleSection(questionnaire.sections, visibleSections)
-    console.table(filteredSections)
+    // set the updates questionnaire sections.
+    let filteredSections = getVisibleSections(questionnaire.sections, sectionVisibility)
+    questionnaire.sections = filteredSections
 
 
     return (
         <form onSubmit={onSubmit} className="questionaire-container">
             <h1>{questionnaire.title}</h1>
 
-            {filteredSections.map((section, sectionIndex) => (
+            {questionnaire.sections.map((section, sectionIndex) => (
 
 
                 <div key={sectionIndex} className="section-container">
