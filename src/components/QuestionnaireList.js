@@ -91,6 +91,7 @@ const QuestionnaireList = ({
         onClickDelete,
         canShare,
         onClickShare,
+        sections,
     }) => {
         // var edit_url = "/clinician/" + QID + "/edit";
         return (
@@ -115,7 +116,7 @@ const QuestionnaireList = ({
                                 className="button"
                                 onClick={(event) => {
                                     event.stopPropagation();
-                                    onClickShare(questionnaireId);
+                                    onClickShare(questionnaireId, sections);
                                 }}
                             >
                                 S H A R E
@@ -167,6 +168,7 @@ const QuestionnaireList = ({
                     onClickDelete={onClickDelete}
                     canShare={canShare}
                     onClickShare={onClickShare}
+                    sections={question.sections}
                 />
             ))}
         </div>

@@ -58,13 +58,15 @@ const ManageQuestionnaires = (props) => {
         questionnaireId: "",
         clinicianEmail: user.name,
         message: "",
-        readOnly: false
+        readOnly: false,
     });
 
     const [deleteQuestionnaireData, setdeleteQuestionnaireData] = useState({
         deleteQuestionnaireID: "",
         deleteQuestionnaireName: ""
     });
+
+    const [shareSection, setShareSection] = useState({});
 
     useEffect(() => {
         setLoading(true);
@@ -119,12 +121,22 @@ const ManageQuestionnaires = (props) => {
     };
 
     // Function called when Share is clicked on the QuestionnaireList
-    const shareQuestionnaire = (questionnaireId) => {
+    const shareQuestionnaire = (questionnaireId, sections) => {
         console.log("share Questionnaire ", questionnaireId);
+
+
+        var temp = {}
+        sections.map((index) => {
+            temp = ({ ...temp,[(index.title).toString()]:false });
+        })
+
+        setShareSection(temp);
+
         setShareModalData({
             ...shareModalData,
-            questionnaireId,
+            questionnaireId,shareSection
         });
+
         openModal();
     };
 
@@ -154,9 +166,17 @@ const ManageQuestionnaires = (props) => {
     const openModal = () => setIsShareModalVisible(true);
     const closeModal = () => setIsShareModalVisible(false);
 
+
     const handleShareSubmit = (e) => {
         e.preventDefault();
-        setLoading(true); 
+        setLoading(true);
+
+        //sharesection is {section:isVisible}
+        setShareModalData({
+            ...shareModalData,
+            shareSection,
+        });
+
         API.shareQuestionnaire(shareModalData).then( res => {
             console.log("printing the res: ", res);
             setLoading(false); 
@@ -210,6 +230,39 @@ const ManageQuestionnaires = (props) => {
                             />
                             <FormHelperText>Please enter a personalised Message that you want to send to the patient (optional).</FormHelperText>
                         </FormControl>
+
+
+                        {/* list of all the sections with check boxes*/}
+                        <FormControl margin="dense" style={{border: '1px inset #56577d'}}>
+                        {Object.entries(shareSection).map((k,v)=>
+                            (
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            checked={k[1]}
+
+                                            onChange={(e) => { shareSection[k[0]]=e.target.checked;
+                                                setShareModalData({
+                                                    ...shareModalData,
+                                                    shareSection
+                                                });
+                                            }
+
+
+                                            }
+                                            name="section selection"
+                                        />
+                                    }
+                                    label={k[0]}
+                                />
+                            )
+
+                        )}
+
+                        <FormHelperText>Please select the sections you want to share.</FormHelperText>
+                    </FormControl>
+
+
 
                         <FormControl>
                             <FormControlLabel
