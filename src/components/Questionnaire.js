@@ -22,6 +22,8 @@ import Question from "./Question";
 import "../styles/questionnaire.css";
 import "../styles/main.css";
 
+
+
 export default function Questionnaire({
     readOnly,
     questionnaire,
@@ -29,7 +31,8 @@ export default function Questionnaire({
     questionnaireData,
     handleQuestionnaireChange,visibleSections,
 }) {
-    const { register, handleSubmit, errors } = useForm(); 
+    const { register, handleSubmit, errors } = useForm();
+
 
     // Method: Called when we submit the questionnaire
     const onSubmit = (e) => {
@@ -50,23 +53,31 @@ export default function Questionnaire({
 
     console.log(questionnaire);
 
-    // checks if a section is visible.
-    function isVisible(title) {
-        visibleSections.map((o) => {
-            if ((o.title).toString() === title.toString()) {
-                console.log(o.visible)
-                return o.visible;
+
+    const getVisibleSection = (sections, visibilityInfoList ) => {
+        const filteredSections = sections.filter((section) => {
+                const foundVisibilityInfo = visibilityInfoList.find((visibilityInfo) => {
+                    return (visibilityInfo.title === section.title)
+                });
+                return foundVisibilityInfo.visible
             }
-        })
-        return false;
+        );
+        return filteredSections;
     }
+
+    console.table(questionnaire.sections);
+    console.table(visibleSections)
+    let filteredSections = getVisibleSection(questionnaire.sections, visibleSections)
+    console.table(filteredSections)
+
 
     return (
         <form onSubmit={onSubmit} className="questionaire-container">
             <h1>{questionnaire.title}</h1>
-            {questionnaire.sections.map((section, sectionIndex) => (
 
-                isVisible(section.title)? (
+            {filteredSections.map((section, sectionIndex) => (
+
+
                 <div key={sectionIndex} className="section-container">
                 <h2>{section.title}</h2>
                 {section.scenarios.map((scenario, scenarioIndex) => (
@@ -97,10 +108,21 @@ export default function Questionnaire({
                     </div>
                 ))}
                 </div>
-                    ):null
 
 
-            )
+
+
+
+
+
+
+
+                )
+
+
+
+
+
 
             )}
 

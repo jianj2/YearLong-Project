@@ -254,7 +254,6 @@ const HomeParents = ({ match }) => {
                         questionnaireData={questionnaireData}
                         handleQuestionnaireChange={handleQuestionnaireChange}
                         visibleSections={visibleSections}
-
                     />
                 </div>
             </div>
