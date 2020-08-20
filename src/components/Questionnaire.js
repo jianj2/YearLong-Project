@@ -59,7 +59,7 @@ export default function Questionnaire({
                 const foundVisibilityInfo = visibilityInfoList.find((visibilityInfo) => {
                     return (visibilityInfo.title === section.title)
                 });
-                return foundVisibilityInfo.visible
+                return foundVisibilityInfo.isVisible
             }
         );
         return filteredSections;
