@@ -51,10 +51,25 @@ function App() {
                         exact
                         render={() => <HomeParents />}
                     />
-                    <Route 
-                        path="/admin" 
-                        exact 
-                        render={() => <HomeAdmin />} 
+                    <Route
+                        path="/admin"
+                        exact
+                        render={() => <HomeAdmin active ={1}/>}
+                    />
+                    <Route
+                        path="/admin/Questionnaires"
+                        exact
+                        render={() => <HomeAdmin active = {1}/>}
+                    />
+                    <Route
+                        path="/admin/SSQ_Instructions"
+                        exact
+                        render={() => <HomeAdmin active = {2} />}
+                    />
+                    <Route
+                        path="/admin/SSQ_Introduction"
+                        exact
+                        render={() => <HomeAdmin active = {3} />}
                     />
                     <Route
                         path="/clinician"
@@ -80,6 +95,12 @@ function App() {
                         path="/clinician/:id/edit" 
                         exact
                         render={({match}) => (<HomeClinician active = {4} questionnaireID={match.params.id}/>)}
+                    />
+
+                    <Route
+                        path="/standard/:id/view" 
+                        exact 
+                        render={({match}) => <HomeClinician active = {5} questionnaireID={match.params.id}/> }
                     />
                 </Switch>
             </Router>

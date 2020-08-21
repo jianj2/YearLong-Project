@@ -19,6 +19,7 @@ import ManageQuestionnaires from "./ManageQuestionnaires";
 import DoTheTestContainer from "./DoTheTestContainer";
 import InstructionsContainer from "./InstructionsContainer";
 import QuestionnaireContainer from "./QuestionnaireContainer";
+import ViewQuestionnaireContainer from "./ViewQuestionnaireContainer";
 
 //import style
 import "../../styles/contentpanel.css";
@@ -45,7 +46,16 @@ const ContentPanel = (props) => {
                 />
             </div>
         );
-    } else {
+    } else if (props.active === 5){
+        return (
+          <div className="content-container">
+                <ViewQuestionnaireContainer
+                    questionnaireID={props.questionnaireID}
+                />
+            </div>
+        );
+
+    }else {
         return (
             <div className="content-container">
                 <ManageQuestionnaires />

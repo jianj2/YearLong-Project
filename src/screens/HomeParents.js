@@ -62,6 +62,7 @@ const HomeParents = ({ match }) => {
     const [questionnaireData, setQuestionnaireData] = useState([]);
     const [readOnly, setReadOnly] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [sectionVisibility, setSectionVisibility] = useState([]);
 
     const getPersonalDetails = (data) => {
         setPersonalDetails(data)
@@ -77,28 +78,36 @@ const HomeParents = ({ match }) => {
             // Server call to get the questionnaire.
             setClinicianEmail(response.data.clinicianEmail);
             setReadOnly(response.data.readOnly);
+            setSectionVisibility(response.data.shareSection);
             API.getQuestionnaire(response.data.questionnaireId).then((res) => {
                 // Define initial values for the Questionnaire
-                let tempResponse = [];
-                res.sections.forEach((section, sectionIndex) => {
-                    tempResponse[sectionIndex] = [];
-                    section.scenarios.forEach((scenario, scenarioIndex) => {
-                        tempResponse[sectionIndex][scenarioIndex] = [];
-                        scenario.questions.forEach(
-                            (question, questionIndex) => {
-                                tempResponse[sectionIndex][scenarioIndex][questionIndex] = {
-                                    value: "",
-                                    supplementaryValue: "",
-                                };
-                            }
-                        );
+                if (res.statusCode === 200 ){
+
+                    let tempResponse = [];
+                    res.data.sections.forEach((section, sectionIndex) => {
+                        tempResponse[sectionIndex] = [];
+                        section.scenarios.forEach((scenario, scenarioIndex) => {
+                            tempResponse[sectionIndex][scenarioIndex] = [];
+                            scenario.questions.forEach(
+                                (question, questionIndex) => {
+                                    tempResponse[sectionIndex][scenarioIndex][questionIndex] = {
+                                        value: "",
+                                        supplementaryValue: "",
+                                    };
+                                }
+                            );
+                        });
                     });
-                });
-                // Updating the state using the initial data and the questionnaire
-                // retrieved from the server.
-                setQuestionnaireData(tempResponse);
-                setQuestionnaire(res);
-                setWizardStep(0);
+                    // Updating the state using the initial data and the questionnaire
+                    // retrieved from the server.
+                    setQuestionnaireData(tempResponse);
+                    setQuestionnaire(res.data);
+                    setWizardStep(0);
+
+                }else{
+                    setWizardStep(-1)
+                }
+
             });
             }else{
                 setWizardStep(-1)
@@ -244,6 +253,7 @@ const HomeParents = ({ match }) => {
                         submitQuestionnaire={submitQuestionnaire}
                         questionnaireData={questionnaireData}
                         handleQuestionnaireChange={handleQuestionnaireChange}
+                        sectionVisibility={sectionVisibility}
                     />
                 </div>
             </div>

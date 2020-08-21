@@ -104,3 +104,15 @@
     margin: 1rem 0;
     align-self: center;
 }
+
+.buttons-container{
+    text-align: center;
+}
+
+ #margin-button{
+    margin: 1rem 2rem;
+}
+
+.center-text{
+    text-align: center;
+}

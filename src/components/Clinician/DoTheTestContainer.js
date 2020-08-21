@@ -90,25 +90,29 @@ const DoTheTestContainer = () => {
         console.log("questionnaire clicked", questionnaireId);
         setWizardStep(0);
         API.getQuestionnaire(questionnaireId).then((res) => {
-            console.log(res);
-            // Define initial values for the Questionnaire
-            let tempResponse = [];
-            res.sections.forEach((section, sectionIndex) => {
-                tempResponse[sectionIndex] = [];
-                section.scenarios.forEach((scenario, scenarioIndex) => {
-                    tempResponse[sectionIndex][scenarioIndex] = [];
-                    scenario.questions.forEach((question, questionIndex) => {
-                        tempResponse[sectionIndex][scenarioIndex][questionIndex] = {
-                            value: "",
-                            supplementaryValue: "",
-                        };
+            // check if the questionnaire is available.
+            if(res.statusCode === 200 ){
+
+                let tempResponse = [];
+                res.data.sections.forEach((section, sectionIndex) => {
+                    tempResponse[sectionIndex] = [];
+                    section.scenarios.forEach((scenario, scenarioIndex) => {
+                        tempResponse[sectionIndex][scenarioIndex] = [];
+                        scenario.questions.forEach((question, questionIndex) => {
+                            tempResponse[sectionIndex][scenarioIndex][questionIndex] = {
+                                value: "",
+                                supplementaryValue: "",
+                            };
+                        });
                     });
                 });
-            });
-            // Updating the state using the initial data and the questionnaire
-            // retrieved from the server.
-            setQuestionnaireData(tempResponse);
-            setSelectedQuestionnaire(res);
+                // Updating the state using the initial data and the questionnaire
+                // retrieved from the server.
+                setQuestionnaireData(tempResponse);
+                setSelectedQuestionnaire(res.data);
+
+            }
+
         });
     };
 
