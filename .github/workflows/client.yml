@@ -23,7 +23,11 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - name: Build
-      run: docker build . -t paediatrics-ssq-client/ssq-client -f Dockerfile.client.prod
+      uses: docker/build-push-action@v1
+      with:
+        registry: docker.pkg.github.com
+        repository: paediatrics-ssq-client/reactapp
+        tags: latest
     - name: Cache
       run: echo caching ....
     - name: Test
