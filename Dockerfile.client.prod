@@ -1,4 +1,5 @@
 FROM node:stretch-slim as building
+
 RUN mkdir /client
 
 WORKDIR /client
@@ -9,15 +10,19 @@ COPY . /client
 
 RUN apt-get update
 RUN npm install
+RUN npm audit fix
 RUN npm run build
-
 
 FROM nginx:latest
 
-COPY --from=building /client/build /usr/share/nginx/html
+RUN mkdir /client
 
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+WORKDIR /client
 
-EXPOSE 80
+COPY --from=building /client/build /client/build
+
+COPY ./nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 3000
 
 CMD ["nginx", "-g", "daemon off;"]
