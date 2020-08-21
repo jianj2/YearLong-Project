@@ -23,7 +23,6 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - name: Build
-      uses: docker/build-push-action@v1
       run: docker build . -t paediatrics-ssq-client/ssq-client -f Dockerfile.client.prod
     - name: Cache
       run: echo caching ....
