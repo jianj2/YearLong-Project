@@ -25,6 +25,7 @@ jobs:
     - name: Build
       uses: docker/build-push-action@v1
       with:
+        dockerfile: Dockerfile.client.prod
         registry: docker.pkg.github.com
         repository: paediatrics-ssq-client/reactapp
         tags: latest
