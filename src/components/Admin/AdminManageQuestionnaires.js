@@ -8,15 +8,45 @@
  *
  */
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 // Components
 import Loading from "../Loading";
+import QuestionnaireList from "../QuestionnaireList";
+
+//style
 import "../../styles/questionnaireList.css";
+
+// utils
+
+import * as API from "../../utils/api";
 
 // handles rendering of SSQInstructionsContainer in the Admin Page
 const AdminManageQuestionnaires = () => {
-    // const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [standardisedQuestionnaires, setStandardisedQuestionnaires] = useState([]);
+
+    const viewQuestionnaire = (questionnaireID) =>{
+        const view_url = "/admin/standard/" + questionnaireID + "/view";
+        window.location.href = view_url;
+
+    };
+
+    const editQuestionnaire = (questionnaireID) => {
+        const edit_url = "/admin/" + questionnaireID + "/edit";
+        window.location.href = edit_url;
+    };
+
+    useEffect(()=>{
+        setLoading(true);
+        async function retrieveStandardisedQuestionnaires(){
+            const response = await API.getStandardisedQuestionnaireForAdmin();
+            console.log(response);
+            setStandardisedQuestionnaires(response); // cause the structure is not the same with cary's
+            setLoading(false);
+        }
+        retrieveStandardisedQuestionnaires();
+    },[])
 
     function standardisedQuestionnaireGenerator(Qname, Qdescription, date) {
         return (
@@ -36,13 +66,21 @@ const AdminManageQuestionnaires = () => {
 
     return (
         <div className="admin-manage-questionnaires">
-            <div className="standard-questionnaire-container">
-                <div className="SQ-header">
-                    <h1>Standard questionnaires</h1>
+            {loading ? <Loading/> :
+                <div className="standard-questionnaire-container">
+                    <div className="SQ-header">
+                        <h1>Standard questionnaires</h1>
+                    </div>
+                    <QuestionnaireList
+                        questionnaires={standardisedQuestionnaires}
+                        listTitle={""}
+                        isSelectable={true}
+                        onClickQuestion={viewQuestionnaire}
+                        canEdit={true}
+                        onClickEdit={editQuestionnaire}
+                    />
                 </div>
-                {standardisedQuestionnaireGenerator("SSQ-P", "SSQ for parents", "17/05/2020")}
-                {standardisedQuestionnaireGenerator("SSQ-C", "SSQ for children ", "17/05/2020")}
-            </div>
+            }
         </div>
     );
 };

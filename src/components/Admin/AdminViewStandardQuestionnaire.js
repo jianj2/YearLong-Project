@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as API from "../../utils/api";
 import Questionnaire from "../Questionnaire";
-import Loading from "../Loading";
-
 /**
  * ====================================================================
  * REACT COMPONENT
@@ -15,48 +13,45 @@ import Loading from "../Loading";
  *
  */
 
-
-const ViewQuestionnaireContainer = (props) => {
-
+const AdminViewStandardQuestionnaire = (props)=>{
     const [questionnaire, setSelectedQuestionnaire] = useState({
         questionnaireId: "",
         title: "",
         description: "",
         sections: [],
-        isStandard: false,
+        isStandard: true,
     });
 
     const [questionnaireData, setQuestionnaireData] = useState([]);
     const [loaded, setLoaded] = useState(false);
-   
-    // get the questionnaire content from API
-    useEffect(() =>{
-    
+
+    useEffect(()=>{
+
         const prepareQuestionnaire = async () => {
             const questionnaire = await API.getAndSetSpecificQuestionnaire(props.questionnaireID,setSelectedQuestionnaire);
             setSelectedQuestionnaire(questionnaire);
             let emptyResponse = [];
             console.log(`current q: ${questionnaire.title}`);
             if (questionnaire.questionnaireId !== ""){
-            
+
                 questionnaire.sections.forEach((section, sectionIndex) => {
-                emptyResponse[sectionIndex] = [];
-                section.scenarios.forEach((scenario, scenarioIndex) => {
-                    emptyResponse[sectionIndex][scenarioIndex] = [];
-                    scenario.questions.forEach(
-                        (question, questionIndex) => {
-                            emptyResponse[sectionIndex][scenarioIndex][questionIndex] = {
-                                value: "",
-                                supplementaryValue: "",
-                            };
-                        }
-                    );
+                    emptyResponse[sectionIndex] = [];
+                    section.scenarios.forEach((scenario, scenarioIndex) => {
+                        emptyResponse[sectionIndex][scenarioIndex] = [];
+                        scenario.questions.forEach(
+                            (question, questionIndex) => {
+                                emptyResponse[sectionIndex][scenarioIndex][questionIndex] = {
+                                    value: "",
+                                    supplementaryValue: "",
+                                };
+                            }
+                        );
+                    });
+
                 });
-            
-            });
-            
-            setQuestionnaireData(emptyResponse);
-            setLoaded(true);
+
+                setQuestionnaireData(emptyResponse);
+                setLoaded(true);
             } else {
                 console.log("An error has occured when setting empty response for questionnaire");
             }
@@ -66,15 +61,14 @@ const ViewQuestionnaireContainer = (props) => {
 
     return (
         loaded?
-        <Questionnaire
-                    readOnly = {true}
-                    questionnaire={questionnaire}
-                    submitQuestionnaire={()=>{}}
-                    questionnaireData={questionnaireData}
-                    handleQuestionnaireChange={()=>{}}
-                />:<div>Oops! No Questionnaire Available!</div>
-    );
-
+            <Questionnaire
+                readOnly = {true}
+                questionnaire={questionnaire}
+                submitQuestionnaire={()=>{}}
+                questionnaireData={questionnaireData}
+                handleQuestionnaireChange={()=>{}}
+            />:<div>Oops! No Questionnaire Available!</div>
+    )
 }
 
-export default ViewQuestionnaireContainer;
+export default AdminViewStandardQuestionnaire;
