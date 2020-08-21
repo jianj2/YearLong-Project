@@ -14,11 +14,11 @@ const admin_controller = require('../controller/admin_controller.js');
 
 
 // CRUD Routes for Posts
+//admin_controller.addStandardisedQuestionnaire()
+
 router.post('/login', admin_controller.loginAdmin);
-
 router.get("/verifylogin/:token", admin_controller.verifyLogin);
-
-//router.get('/123', admin_controller.createAdmin);
+router.get('/getStandardisedQuestionnaire', admin_controller.getStandardisedQuestionnaire);
 
 
 module.exports = router;

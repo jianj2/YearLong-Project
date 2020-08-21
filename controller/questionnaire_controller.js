@@ -26,18 +26,38 @@ const getAllQuestionnaire = function (req, res) {
     });
 };
 
-const getQuestionnaire = function (req, res) {
+// Get questionnaires in sync
+const getQuestionnaireSync = function (req, res) {
     let questionnaireId = req.params.questionnaireId;
-    console.log("get questionnaire:", questionnaireId);
+    console.log("get questionnaire sync:", questionnaireId);
 
     Questionnaire.findOne({ questionnaireId }, function (err, questionnaire) {
-        if (!err) {
-            res.send(questionnaire);
+        if (!err && questionnaire != null) {
+
+            res.send({statusCode:200, message:"Valid", data:questionnaire});
+
         } else {
-            res.send(err);
+            res.send({statusCode:400, message:"Invalid", data:err})
         }
     });
 };
+
+// Get questionnaires in async
+const getQuestionnaireAsync = function (req, res) {
+    let questionnaireId = req.params.questionnaireId;
+    console.log("get questionnaire async:", questionnaireId);
+
+    Questionnaire.findOne({ questionnaireId }, function (err, questionnaire) {
+        if (!err && questionnaire != null) {
+
+            res.send(questionnaire)
+
+        } else {
+            res.send(err)
+        }
+    });
+};
+
 
 // given ClinicianId, gets the list of the clinician's customised questionnaires
 
@@ -65,7 +85,7 @@ const addEmptyQuestionnaire = function (req, res) {
         description: "Please click edit to begin with this questionnaire.",
         sections: [
             {
-                title: "Speech",
+                title: "Section 1 - Speech",
                 scenarios: [
                     {
                         description: "You are at Melbourne Uni...",
@@ -88,8 +108,8 @@ const addEmptyQuestionnaire = function (req, res) {
                     },
                 ],
             },
-            { title: "Spatial", scenarios: [] },
-            { title: "Quality", scenarios: [] },
+            { title: "Section 2 - Spatial", scenarios: [] },
+            { title: "Section 3 - Quality", scenarios: [] },
         ],
         isStandard: req.body.isStandard,
     });
@@ -169,9 +189,32 @@ const deleteQuestionnaire = function (req, res) {
     });
 };
 
+
+// gets all standardised questionnaires 
+const getStandardisedQuestionnaires = function (req, res){
+
+        Questionnaire.find({isStandard: true}, function (err, questionnaires) {
+
+            if (!err && questionnaires != null) {
+                
+    
+                res.send({statusCode:200, message:"Valid", data:questionnaires});
+    
+            } else {
+                res.send({statusCode:400, message:"Invalid", data:err});
+            }
+        });
+    
+
+};
+
+
 module.exports.getAllQuestionnaire = getAllQuestionnaire;
-module.exports.getQuestionnaire = getQuestionnaire;
+module.exports.getQuestionnaireSync = getQuestionnaireSync;
 module.exports.addEmptyQuestionnaire = addEmptyQuestionnaire;
 module.exports.deleteQuestionnaire = deleteQuestionnaire;
 module.exports.editQuestionnaire = editQuestionnaire;
 module.exports.getClinicianQuestionnaires = getClinicianQuestionnaires;
+module.exports.getQuestionnaireAsync = getQuestionnaireAsync;
+module.exports.getStandardisedQuestionnaires = getStandardisedQuestionnaires;
+
