@@ -30,4 +30,24 @@
   display: flex;
   flex-flow: column;
 }
- 
+
+.Instruction-title{
+  /* margin-top: 5em; */
+  min-width: 400px;
+  display: flex;
+  flex-flow: column;
+}
+
+.Instruction-contents{
+  /* margin-top: 3em; */
+  min-width: 400px;
+  display: flex;
+  flex-flow: column;
+}
+
+.Instruction-button-group{
+  display: flex;
+  flex-direction: row-reverse;
+  padding-top: 2vh;
+  padding-right: 2vw;
+}

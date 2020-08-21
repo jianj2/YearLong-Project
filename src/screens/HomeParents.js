@@ -62,6 +62,24 @@ const HomeParents = ({ match }) => {
     const [questionnaireData, setQuestionnaireData] = useState([]);
     const [readOnly, setReadOnly] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [instruction, setInstruction] = useState({
+        title: "",
+        content: ""
+    });
+    const [isInit, setIsInit] = useState(true);
+    const getInstruction = () => {
+        API.getInstructions().then((res) =>{
+            setInstruction({
+                title: res["title"],
+                content: res["content"]
+            })   
+        })
+    };
+
+    if(isInit){
+        getInstruction();
+        setIsInit(false);
+    }
 
     const getPersonalDetails = (data) => {
         setPersonalDetails(data)
@@ -198,7 +216,10 @@ const HomeParents = ({ match }) => {
                     {readOnly ? (
                         <p>{INSTRUCTIONS_READ_ONLY}</p>
                     ) : (
-                        <p>{INSTRUCTIONS}</p>
+                        <div>
+                            <h2>{instruction.title}</h2>
+                            <p>{instruction.content}</p>
+                        </div>
                     )}
                 </div>
             </div>
