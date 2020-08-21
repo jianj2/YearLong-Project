@@ -3,3 +3,4 @@
 .cache
 *.md
 node_modules
+build
