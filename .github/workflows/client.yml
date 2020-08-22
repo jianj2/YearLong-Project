@@ -3,11 +3,15 @@ name: client-CI/CD
 
 on:
   push:
+    tags:
+      - 'v*'
     branches: 
     - deployment-client 
     - development-client 
     - master-client
   pull_request:
+    tags:
+      - 'v*'
     branches:
     - development-client 
     - master-client
@@ -22,14 +26,14 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - name: Build
+    - name: Build, cache and push docker image
       uses: whoan/docker-build-with-cache-action@v5
       with:
         username: mayankshar21
         password: "${{ secrets.GITHUB_TOKEN }}"
         registry: docker.pkg.github.com
-        image_name: node
-        image_tag: 14.8.0-stretch-slim
+        image_name: paediatrics-ssq-client
+        image_tag: latest
         dockerfile: Dockerfile
         push_git_tag: true
     - name: Test
