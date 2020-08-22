@@ -84,10 +84,35 @@ const sendResultsEmail = function (req, res) {
 
     
     const doc = new PDFDocument;
-    doc
-    .fontSize(25)
-    .text(JSON.stringify(questionnaireData), 100, 100)
-    .text("test here");
+    doc.fontSize(25).text("Patient Information", 100);
+    doc.fillOpacity(0.1).rect(80, 105, 420, 180).fill('purple');
+    doc.fillOpacity(1).fill('black');
+
+
+    doc.font('Helvetica-Bold').fontSize(15)
+    .text('Patient Name', 100, 120)
+    .text('Right Device Type', 100, 170)
+    .text('Left Device Type', 100, 220)
+    .text('Date of Birth', 300, 120)
+    .text('Completed By', 300, 170);
+
+    doc.font('Helvetica').fontSize(15)
+    .text(personalDetails.name, 100, 140)
+    .text(personalDetails.date, 300, 140)
+    .text(personalDetails.rightDeviceType, 100, 190)
+    .text(personalDetails.leftDeviceType, 100, 240)
+    .text(personalDetails.completedBy, 300, 190);
+
+    doc.fontSize(25).text("Questionnaire Response", 80, 300);
+
+
+
+//    doc
+//    .fontSize(25)
+//    .text(JSON.stringify(questionnaireData), 100, 100)
+//    .text("test here");
+
+
     doc.end();
     
 
