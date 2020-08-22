@@ -148,10 +148,10 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                             required: "You have not specified the device type.",
                         })}>
                         <option value="" disabled selected></option>
-                        <option value="none">None</option>
-                        <option value="hearingaid">Hearing</option>
-                        <option value="cochlearimplant">Cochlear Implant</option>
-                        <option value="other">Other</option>
+                        <option value="None">None</option>
+                        <option value="Hearing Aid">Hearing Aid</option>
+                        <option value="Cochlear Implant">Cochlear Implant</option>
+                        <option value="Other">Other</option>
                     </Select>
 
                     <FormHelperText>{errors.rightDeviceType ? errors.rightDeviceType.message : "Please specify the device type."}</FormHelperText>
@@ -172,10 +172,10 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                         })}
                     >
                         <option value="" disabled selected></option>
-                        <option value="none">None</option>
-                        <option value="hearingaid">Hearing</option>
-                        <option value="cochlearimplant">Cochlear Implant</option>
-                        <option value="other">Other</option>
+                        <option value="None">None</option>
+                        <option value="Hearing Aid">Hearing Aid</option>
+                        <option value="Cochlear Implant">Cochlear Implant</option>
+                        <option value="Other">Other</option>
                     </Select>
 
                     <FormHelperText>{errors.leftDeviceType ? errors.leftDeviceType.message : "Please specify the device type."}</FormHelperText>
