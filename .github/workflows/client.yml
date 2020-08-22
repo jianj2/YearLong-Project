@@ -29,7 +29,7 @@ jobs:
         password: "${{ secrets.GITHUB_TOKEN }}"
         registry: docker.pkg.github.com
         image_name: paediatrics-ssq-client
-        image_tag: "${{ github.ref }}""
+        image_tag: "${{ github.ref }}"
         dockerfile: Dockerfile
         push_git_tag: true
     - name: Test
