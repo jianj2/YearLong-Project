@@ -74,6 +74,16 @@ const completeShare = function (req,res) {
 const getQuestionnaireDetails = function (req) {
     let shareId = req.params.shareId;
     let questionnaireId = null;
+    let questionnaireData = req.body.questionnaireData;
+
+
+    let questionIndex = -1
+    let sectionIndex = -1
+    let scenarioIndex = -1
+
+
+    let questionnaireResult = {}
+
     Share.findOne({ shareId }, function (
         err,
         share
@@ -81,21 +91,37 @@ const getQuestionnaireDetails = function (req) {
         if (!err && share != null) {
             questionnaireId = share.questionnaireId;
             console.log("Q ID", questionnaireId);
-            let questionnaireQuestions = {}
             Questionnaire.findOne({ questionnaireId }, function (err, questionnaire) {
                 if (!err && questionnaire != null) {
-                    questionnaireQuestions = questionnaire;
-                    console.log(questionnaireQuestions)
-                    return questionnaireQuestions;
+
+                    questionnaire.sections.map((section) => {
+                        sectionIndex++
+                        scenarioIndex = -1
+                        questionIndex = -1
+
+
+                        console.log("1",section.title)
+                        section.scenarios.map((scenario) => {
+
+                            scenarioIndex++
+                            questionIndex = -1
+
+                            console.log("2",scenario.description)
+                            scenario.questions.map((question) => {
+                                questionIndex++
+
+                                console.log("3",question)
+                                console.log("answer:",questionnaireData[sectionIndex][scenarioIndex][questionIndex])
+
+
+                            })
+                        })
+                    })
+
                 }
             });
-
-
         }
     });
-
-
-
 };
 
 
