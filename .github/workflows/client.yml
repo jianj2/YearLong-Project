@@ -3,15 +3,11 @@ name: client-CI/CD
 
 on:
   push:
-    tags:
-      - 'v*'
     branches: 
     - deployment-client 
     - development-client 
     - master-client
   pull_request:
-    tags:
-      - 'v*'
     branches:
     - development-client 
     - master-client
@@ -33,7 +29,7 @@ jobs:
         password: "${{ secrets.GITHUB_TOKEN }}"
         registry: docker.pkg.github.com
         image_name: paediatrics-ssq-client
-        image_tag: latest
+        image_tag: "${{ github.ref }}""
         dockerfile: Dockerfile
         push_git_tag: true
     - name: Test
