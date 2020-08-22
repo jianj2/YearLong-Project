@@ -16,6 +16,7 @@ const nodemailer = require('nodemailer');
 const path = require("path");
 const Readable = require('stream').Readable
 const PDFDocument = require('pdfkit');
+const Questionnaire = mongoose.model("questionnaire");
 var fs = require('fs');
 
 
@@ -63,8 +64,42 @@ const getShareDetails = function (req, res) {
 
 const completeShare = function (req,res) {
     sendResultsEmail(req,res);
-    deleteShare(req,res);
+    //deleteShare(req,res);
 }
+
+
+
+
+// Get ShareDetails using ShareId
+const getQuestionnaireDetails = function (req) {
+    let shareId = req.params.shareId;
+    let questionnaireId = null;
+    Share.findOne({ shareId }, function (
+        err,
+        share
+    ) {
+        if (!err && share != null) {
+            questionnaireId = share.questionnaireId;
+            console.log("Q ID", questionnaireId);
+            let questionnaireQuestions = {}
+            Questionnaire.findOne({ questionnaireId }, function (err, questionnaire) {
+                if (!err && questionnaire != null) {
+                    questionnaireQuestions = questionnaire;
+                    console.log(questionnaireQuestions)
+                    return questionnaireQuestions;
+                }
+            });
+
+
+        }
+    });
+
+
+
+};
+
+
+
 
 // Sending the results in an email.
 const sendResultsEmail = function (req, res) {
@@ -82,9 +117,15 @@ const sendResultsEmail = function (req, res) {
         }
     });
 
-    
+
+    // Get questionnaire using the share ID
+    let questionnaireQuestions = getQuestionnaireDetails(req);
+    console.log("questionnaireQuestions", questionnaireQuestions)
+
+    console.table(JSON.stringify(questionnaireData))
+
     const doc = new PDFDocument;
-    doc.fontSize(25).text("Patient Information", 100);
+    doc.fontSize(25).text("Patient Information", 80);
     doc.fillOpacity(0.1).rect(80, 105, 420, 180).fill('purple');
     doc.fillOpacity(1).fill('black');
 
@@ -103,7 +144,14 @@ const sendResultsEmail = function (req, res) {
     .text(personalDetails.leftDeviceType, 100, 240)
     .text(personalDetails.completedBy, 300, 190);
 
-    doc.fontSize(25).text("Questionnaire Response", 80, 300);
+    doc.fontSize(25).text("Questionnaire Response", 80, 310);
+    doc.lineCap('butt')
+       .moveTo(80,340)
+       .lineTo(500, 340)
+       .stroke();
+
+     //doc.fontSize(15)
+     //.pipe(JSON.stringify(questionnaireData));
 
 
 
