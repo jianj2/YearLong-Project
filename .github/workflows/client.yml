@@ -28,8 +28,7 @@ jobs:
         username: mayankshar21
         password: "${{ secrets.GITHUB_TOKEN }}"
         registry: docker.pkg.github.com
-        image_name: node:stretch-slim
-        image_tag: latest
+        image_name: node:14.8.0-stretch-slim
         dockerfile: Dockerfile
     - name: Test
       run: echo testing ....
