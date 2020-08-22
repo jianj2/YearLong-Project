@@ -23,14 +23,14 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - name: Build
-      uses: docker/build-push-action@v1
+      uses: whoan/docker-build-with-cache-action@v5
       with:
-        dockerfile: Dockerfile.client.prod
+        username: mayankshar21
+        password: "${{ secrets.GITHUB_TOKEN }}"
         registry: docker.pkg.github.com
-        repository: paediatrics-ssq-client/reactapp
-        tags: latest
-    - name: Cache
-      run: echo caching ....
+        image_name: node:stretch-slim
+        image_tag: latest
+        dockerfile: Dockerfile
     - name: Test
       run: echo testing ....
     - name: Deploy 
