@@ -54,7 +54,12 @@ const ContentPanel = (props) => {
                 />
             </div>
         );
-
+    } else if (props.active === 6){
+        return (
+            <div className="content-container">
+                <DoTheTestContainer />
+            </div>
+        );
     }else {
         return (
             <div className="content-container">
