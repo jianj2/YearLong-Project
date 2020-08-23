@@ -26,9 +26,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Run CI
-      run: npm ci
+    - name: Install node dependencies
+      run: npm install
     - name: Test react app
       run: echo "Will add python tests"
-    - name: Build npm
-      run: npm run build
+    - name: Build react app:ci
+      run: npm run build:ci
+      env: 
+        CI: false
