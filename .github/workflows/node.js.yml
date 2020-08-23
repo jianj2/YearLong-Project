@@ -31,6 +31,6 @@ jobs:
     - name: Test react app
       run: echo "Will add python tests"
     - name: Build react app:ci
-      run: npm run build:ci
+      run: npm run build
       env: 
-        CI: false
+        CI: ""
