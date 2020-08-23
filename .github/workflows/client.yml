@@ -7,10 +7,14 @@ on:
     - deployment-client 
     - development-client 
     - master-client
+    tags:
+      - v*
   pull_request:
     branches:
     - development-client 
     - master-client
+    tags:
+      - v*
 
 jobs:
   pipeline:
@@ -20,7 +24,7 @@ jobs:
         os: [ubuntu-20.04, ubuntu-18.04, ubuntu-16.04]
     name: pipeline
     steps:
-    - name: checkout
+    - name: Checkout
       uses: actions/checkout@v2
     - name: Build, cache and push docker image
       uses: whoan/docker-build-with-cache-action@v5
@@ -29,7 +33,7 @@ jobs:
         password: "${{ secrets.GITHUB_TOKEN }}"
         registry: docker.pkg.github.com
         image_name: paediatrics-ssq-client
-        image_tag: "${{ github.ref }}"
+        image_tag: latest
         dockerfile: Dockerfile
         push_git_tag: true
     - name: Test
