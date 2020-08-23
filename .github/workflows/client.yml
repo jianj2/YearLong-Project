@@ -26,7 +26,7 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Build, cache and push docker image
+    - name: Build, cache and publish docker image
       uses: whoan/docker-build-with-cache-action@v5
       with:
         username: mayankshar21
@@ -45,7 +45,9 @@ jobs:
         username: ${{ secrets.USER_NAME }}
         key: ${{ secrets.SERVER_KEY }}
         port: ${{ secrets.SERVER_PORT }}
-        script: whoami
+        script: |
+          whoami
+          ls -al
 
 
 
