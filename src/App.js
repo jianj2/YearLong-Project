@@ -99,6 +99,11 @@ function App() {
                         exact 
                         render={() => <HomeClinician active = {2}/>} 
                     />
+                    <Route
+                        path="/clinician/Share"
+                        exact
+                        render={() => <HomeClinician active = {6}/>}
+                    />
                     <Route 
                         path="/clinician/Instructions" 
                         exact 
