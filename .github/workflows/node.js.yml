@@ -29,14 +29,6 @@ jobs:
         # registry-url: https://npm.pkg.github.com/
     - name: Run CI
       run: npm ci
-    - name: Cache multiple paths
-      uses: actions/cache@v2
-      with:
-        path: |
-          ~/cache
-          !~/cache/exclude
-          **/node_modules
-        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
     - name: Test react app
       run: echo "Will add python tests"
     - name: Install static server
@@ -49,3 +41,4 @@ jobs:
     #   run: npm publish
     #   env:
     #     NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    

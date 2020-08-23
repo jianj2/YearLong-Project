@@ -38,12 +38,14 @@ jobs:
         push_git_tag: true
     - name: Test
       run: echo testing ....
-    - name: Deploy 
-      run: echo deploying ....
-    - name: Release
-      run: echo releasing ....
-    - name: Publish
-      run: echo publishing ....
+    - name: Deploy react app to EC2 
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST_NAME }}
+        username: ${{ secrets.USER_NAME }}
+        key: ${{ secrets.SERVER_KEY }}
+        script: whoami
+
 
 
 
