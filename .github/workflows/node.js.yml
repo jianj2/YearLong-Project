@@ -26,11 +26,18 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Install node dependencies
-      run: npm install
+        registry-url: https://npm.pkg.github.com/
+    - name: Run CI
+      run: npm ci
     - name: Test react app
       run: echo "Will add python tests"
+    - name: Install static server
+      run: npm install -g serve
     - name: Build react app:ci
       run: npm run build
       env: 
         CI: ""
+    - name: Publish react package to registry
+    - run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
