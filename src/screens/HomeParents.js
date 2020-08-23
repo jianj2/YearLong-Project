@@ -62,6 +62,7 @@ const HomeParents = ({ match }) => {
     const [questionnaireData, setQuestionnaireData] = useState([]);
     const [readOnly, setReadOnly] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [sectionVisibility, setSectionVisibility] = useState([]);
 
     const getPersonalDetails = (data) => {
         setPersonalDetails(data)
@@ -77,6 +78,7 @@ const HomeParents = ({ match }) => {
             // Server call to get the questionnaire.
             setClinicianEmail(response.data.clinicianEmail);
             setReadOnly(response.data.readOnly);
+            setSectionVisibility(response.data.shareSection);
             API.getQuestionnaire(response.data.questionnaireId).then((res) => {
                 // Define initial values for the Questionnaire
                 if (res.statusCode === 200 ){
@@ -251,6 +253,7 @@ const HomeParents = ({ match }) => {
                         submitQuestionnaire={submitQuestionnaire}
                         questionnaireData={questionnaireData}
                         handleQuestionnaireChange={handleQuestionnaireChange}
+                        sectionVisibility={sectionVisibility}
                     />
                 </div>
             </div>

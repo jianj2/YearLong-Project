@@ -71,6 +71,19 @@ function App() {
                         exact
                         render={() => <HomeAdmin active = {3} />}
                     />
+
+                    <Route
+                        path="/admin/:id/edit"
+                        exact
+                        render={({match}) => (<HomeAdmin active = {4} questionnaireID={match.params.id}/>)}
+                    />
+
+                    <Route
+                        path="/admin/standard/:id/view"
+                        exact
+                        render={({match}) => <HomeAdmin active = {5} questionnaireID={match.params.id}/> }
+                    />
+
                     <Route
                         path="/clinician"
                         exact
@@ -85,11 +98,6 @@ function App() {
                         path="/clinician/DoTheTest" 
                         exact 
                         render={() => <HomeClinician active = {2}/>} 
-                    />
-                    <Route
-                        path="/clinician/Share"
-                        exact
-                        render={() => <HomeClinician active = {6}/>}
                     />
                     <Route 
                         path="/clinician/Instructions" 

@@ -23,11 +23,13 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 // Import components.
 import EditDescription from "./EditDescription";
 import Loading from "../Loading";
-
+import SectionsContainer from "./SectionsContainer";
+//style
 import "../../styles/clinician.css";
 
+//utils
 import * as API from "../../utils/api";
-import SectionsContainer from "./SectionsContainer";
+
 // handles rendering of TopContainer in the Clinician page
 const EditQuestionnaire = ({
                                Questionnaire,

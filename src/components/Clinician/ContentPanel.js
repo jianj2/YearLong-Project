@@ -20,7 +20,6 @@ import DoTheTestContainer from "./DoTheTestContainer";
 import InstructionsContainer from "./InstructionsContainer";
 import QuestionnaireContainer from "./QuestionnaireContainer";
 import ViewQuestionnaireContainer from "./ViewQuestionnaireContainer";
-import ShareQuestionnaireContainer from "./ShareQuestionnaireContainer";
 
 //import style
 import "../../styles/contentpanel.css";
@@ -55,12 +54,7 @@ const ContentPanel = (props) => {
                 />
             </div>
         );
-    } else if (props.active === 6){
-        return (
-            <div className="content-container">
-                <ShareQuestionnaireContainer />
-            </div>
-        );
+
     }else {
         return (
             <div className="content-container">

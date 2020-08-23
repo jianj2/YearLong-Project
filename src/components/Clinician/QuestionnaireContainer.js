@@ -165,23 +165,25 @@ const QuestionnaireContainer = (props) => {
     }
 
     return (
-        <div className="questionnaire-container">
+        <div className="questionnaire-container-outer">
+            <div className="questionnaire-container">
 
-            {/*<TopContainer />*/}
-            <form action="">
-            <EditQuestionnaire Questionnaire={questionnaire}
-                               addScenario={addScenario} removeScenario={removeScenario}
-                               addQuestion={addQuestion} removeQuestion={removeQuestion}
-                               addAnswerToMCQQuestion={addAnswerToMCQQuestion} deleteAnswerFromMCQQuestion={deleteAnswerFromMCQQuestion}
-                               changeToRangeQuestion={changeToRangeQuestion} changeToMCQQuestion={changeToMCQQuestion}
-                               handleQuestionnaireTitleChange={handleQuestionnaireTitleChange}
-                               handleQuestionnaireDesChange={handleQuestionnaireDesChange}
-                               handleSecTitleChange={handleSecTitleChange}
-                               handleSceDesChange={handleSceDesChange}
-                               handleQuestionDesChange={handleQuestionDesChange}
-                               handleQuestionOptsChange={handleQuestionOptsChange}/>
-            </form>
-            {/*<BottomContainer addQuestion={addQuestion} />*/}
+                {/*<TopContainer />*/}
+                <form action="">
+                    <EditQuestionnaire Questionnaire={questionnaire}
+                                       addScenario={addScenario} removeScenario={removeScenario}
+                                       addQuestion={addQuestion} removeQuestion={removeQuestion}
+                                       addAnswerToMCQQuestion={addAnswerToMCQQuestion} deleteAnswerFromMCQQuestion={deleteAnswerFromMCQQuestion}
+                                       changeToRangeQuestion={changeToRangeQuestion} changeToMCQQuestion={changeToMCQQuestion}
+                                       handleQuestionnaireTitleChange={handleQuestionnaireTitleChange}
+                                       handleQuestionnaireDesChange={handleQuestionnaireDesChange}
+                                       handleSecTitleChange={handleSecTitleChange}
+                                       handleSceDesChange={handleSceDesChange}
+                                       handleQuestionDesChange={handleQuestionDesChange}
+                                       handleQuestionOptsChange={handleQuestionOptsChange}/>
+                </form>
+                {/*<BottomContainer addQuestion={addQuestion} />*/}
+            </div>
         </div>
     );
 };

@@ -21,6 +21,9 @@ import SSQIntroductionContainer from "./SSQIntroductionContainer";
 //import style
 import "../../styles/contentpanel.css";
 import "../../styles/main.css";
+import ViewQuestionnaireContainer from "../Clinician/ViewQuestionnaireContainer";
+import QuestionnaireContainer from "../Clinician/QuestionnaireContainer";
+import AdminViewStandardQuestionnaire from "./AdminViewStandardQuestionnaire";
 
 const AdminContentPanel = (props) => {
     if (props.active === 2) {
@@ -38,7 +41,17 @@ const AdminContentPanel = (props) => {
     } else if (props.active === 4) {
         return (
             <div className="content-container">
-                QuestionnaireContainer
+                <QuestionnaireContainer
+                    questionnaireID={props.questionnaireID}
+                />
+            </div>
+        );
+    } else if (props.active === 5){
+        return (
+            <div className="content-container">
+                <AdminViewStandardQuestionnaire
+                     questionnaireID={props.questionnaireID}
+                />
             </div>
         );
     } else {

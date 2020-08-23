@@ -112,7 +112,7 @@ const QuestionForm = ({
                     className={!isMCQ ? "questionTable-button-selected" : ""}
                     onClick={handleRangeClick}
                 >
-                    Range Question
+                    Performance Rating
                 </button>
                 <button
                     className={isMCQ ? "questionTable-button-selected" : ""}

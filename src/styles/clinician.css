@@ -43,7 +43,7 @@
   background-color: #151641;
   display: flex;
   flex-direction: column;
-  overflow: auto;
+  overflow: hidden;
   padding-bottom: 2vh;
 }
 
