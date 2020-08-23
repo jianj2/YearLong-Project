@@ -305,7 +305,7 @@ const ManageQuestionnaires = (props) => {
                 onClickEdit={editQuestionnaire}
                 canDelete={false}
                 onClickDelete={deleteQuestionnaire}
-                canShare={true}
+                canShare={false}
                 onClickShare={shareQuestionnaire}
                 />
                 {/* {standardisedQuestionnaireGenerator("SSQ-P", "SSQ for parents", "17/05/2020")}
@@ -328,7 +328,7 @@ const ManageQuestionnaires = (props) => {
                 onClickEdit={editQuestionnaire}
                 canDelete={true}
                 onClickDelete={deleteQuestionnaire}
-                canShare={true}
+                canShare={false}
                 onClickShare={shareQuestionnaire}
             />
         </div>
