@@ -38,6 +38,6 @@ jobs:
       env: 
         CI: ""
     - name: Publish react package to registry
-    - run: npm publish
+      run: npm publish
       env:
         NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
