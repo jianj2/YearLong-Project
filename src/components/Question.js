@@ -49,7 +49,7 @@ export default function Question({
     const [importanceValue, setImportanceValue] = useState(data.importanceValue);
 
     const [answered, setAnswered] = useState({
-        value: "",
+        value: undefined,
         supplementaryValue: "",
     });
     
@@ -99,81 +99,161 @@ export default function Question({
             </div>
         );
     } else {
-        return (
-            <div className="question-container">
-                <p>{description}</p>
-                <Slider
-                    value={data.value}
-                    color="secondary"
-                    step={0.1}
-                    onChange={(e, val) =>
-                        setAnswered({
-                            ...answered,
-                            value: val,
-                        })
-                    }
-                    min={0}
-                    max={10}
-                    disabled={readOnly}
-                    valueLabelDisplay="auto"
-                    name="slider"
-                />
-                <div className="slider-labels">
-                    <label>{rangeOptions[0]}</label>
-                    <label className="slider-value">{data.value}</label>
-                    <label>{rangeOptions[1]}</label>
+        if(data.value != undefined){
+            return (
+                <div className="question-container">
+                    <p>{description}</p>
+                    <Slider
+                        value={data.value}
+                        color="secondary"
+                        step={0.1}
+                        onChange={(e, val) =>
+                            setAnswered({
+                                ...answered,
+                                value: val,
+                            })
+                        }
+                        min={0}
+                        max={10}
+                        disabled={readOnly}
+                        valueLabelDisplay="auto"
+                        name="slider"
+                    />
+                    <div className="slider-labels">
+                        <label>{rangeOptions[0]}</label>
+                        <label className="slider-value">{data.value}</label>
+                        <label>{rangeOptions[1]}</label>
+                    </div>
+                    <FormControl color="secondary" margin="dense">
+                        <RadioGroup name="frequency" value={data.supplementaryValue} className="slider-checkboxes">
+                            <FormControlLabel
+                                value="Would not hear it."
+                                control={
+                                    <Radio
+                                        value="disabled"
+                                        disabled
+                                        onClick={() =>
+                                            setAnswered({
+                                                ...answered,
+                                                supplementaryValue: "Would not hear it.",
+                                            })
+                                        }
+                                    />
+                                }
+                                label="Would not hear it."
+                            />
+                            <FormControlLabel
+                                value="Do not know."
+                                control={
+                                    <Radio
+                                        value="disabled"
+                                        disabled
+                                        onClick={() =>
+                                            setAnswered({
+                                                ...answered,
+                                                supplementaryValue: "Do not know.",
+                                            })
+                                        }
+                                    />
+                                }
+                                label="Do not know."
+                            />
+                            <FormControlLabel
+                                value="Not applicable."
+                                control={
+                                    <Radio
+                                        value="disabled"
+                                        disabled
+                                        onClick={() =>
+                                            setAnswered({
+                                                ...answered,
+                                                supplementaryValue: "Not applicable.",
+                                            })
+                                        }
+                                    />
+                                }
+                                label="Not applicable."
+                            />
+                        </RadioGroup>
+                    </FormControl>
                 </div>
-
-                <FormControl color="secondary" margin="dense">
-                    <RadioGroup name="frequency" value={data.supplementaryValue} className="slider-checkboxes">
-                        <FormControlLabel
-                            value="Would not hear it."
-                            control={
-                                <Radio
-                                    disabled={readOnly}
-                                    onClick={() =>
-                                        setAnswered({
-                                            ...answered,
-                                            supplementaryValue: "Would not hear it.",
-                                        })
-                                    }
-                                />
-                            }
-                            label="Would not hear it."
-                        />
-                        <FormControlLabel
-                            value="Do not know."
-                            control={
-                                <Radio
-                                    disabled={readOnly}
-                                    onClick={() =>
-                                        setAnswered({
-                                            ...answered,
-                                            supplementaryValue: "Do not know.",
-                                        })
-                                    }
-                                />
-                            }
-                            label="Do not know."
-                        />
-                        <FormControlLabel
-                            value="Not applicable."
-                            control={
-                                <Radio
-                                    disabled={readOnly}
-                                    onClick={() =>
-                                        setAnswered({
-                                            ...answered,
-                                            supplementaryValue: "Not applicable.",
-                                        })
-                                    }
-                                />
-                            }
-                            label="Not applicable."
-                        />
-                    </RadioGroup>
-                </FormControl>
-            </div>
-        );
+            );
+        } else{
+            return (
+                <div className="question-container">
+                    <p>{description}</p>
+                    <Slider
+                        value={data.value}
+                        color="secondary"
+                        step={0.1}
+                        onChange={(e, val) =>
+                            setAnswered({
+                                ...answered,
+                                value: val,
+                            })
+                        }
+                        min={0}
+                        max={10}
+                        disabled={readOnly}
+                        valueLabelDisplay="auto"
+                        name="slider"
+                    />
+                    <div className="slider-labels">
+                        <label>{rangeOptions[0]}</label>
+                        <label className="slider-value">{data.value}</label>
+                        <label>{rangeOptions[1]}</label>
+                    </div>
+                    <FormControl color="secondary" margin="dense">
+                        <RadioGroup name="frequency" value={data.supplementaryValue} className="slider-checkboxes">
+                            <FormControlLabel
+                                value="Would not hear it."
+                                control={
+                                    <Radio
+                                        disabled={readOnly}
+                                        onClick={() =>
+                                            setAnswered({
+                                                ...answered,
+                                                supplementaryValue: "Would not hear it.",
+                                            })
+                                        }
+                                    />
+                                }
+                                label="Would not hear it."
+                            />
+                            <FormControlLabel
+                                value="Do not know."
+                                control={
+                                    <Radio
+                                        disabled={readOnly}
+                                        onClick={() =>
+                                            setAnswered({
+                                                ...answered,
+                                                supplementaryValue: "Do not know.",
+                                            })
+                                        }
+                                    />
+                                }
+                                label="Do not know."
+                            />
+                            <FormControlLabel
+                                value="Not applicable."
+                                control={
+                                    <Radio
+                                        disabled={readOnly}
+                                        onClick={() =>
+                                            setAnswered({
+                                                ...answered,
+                                                supplementaryValue: "Not applicable.",
+                                            })
+                                        }
+                                    />
+                                }
+                                label="Not applicable."
+                            />
+                        </RadioGroup>
+                    </FormControl>
+                </div>
+            );
+        }
     }
 }
