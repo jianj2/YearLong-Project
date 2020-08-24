@@ -25,12 +25,21 @@ import "../styles/main.css";
 
 
 export default function Questionnaire({
+<<<<<<< HEAD
                                           readOnly,
                                           questionnaire,
                                           submitQuestionnaire,
                                           questionnaireData,
                                           handleQuestionnaireChange,sectionVisibility
                                       }) {
+=======
+    readOnly,
+    questionnaire,
+    submitQuestionnaire,
+    questionnaireData,
+    handleQuestionnaireChange,sectionVisibility
+}) {
+>>>>>>> origin/development-client
     const { register, handleSubmit, errors } = useForm();
 
 
@@ -92,6 +101,7 @@ export default function Questionnaire({
             {questionnaire.sections.map((section, sectionIndex) => (
 
 
+<<<<<<< HEAD
                     <div key={sectionIndex} className="section-container">
                         <h2>{section.title}</h2>
                         {section.scenarios.map((scenario, scenarioIndex) => (
@@ -122,6 +132,38 @@ export default function Questionnaire({
                             </div>
                         ))}
                     </div>
+=======
+                <div key={sectionIndex} className="section-container">
+                <h2>{section.title}</h2>
+                {section.scenarios.map((scenario, scenarioIndex) => (
+                    <div key={scenarioIndex} className="scenario-container">
+                        <p>{scenario.description}</p>
+                        {scenario.questions.map(
+                            (question, questionIndex) => (
+                                <Question
+                                    readOnly={readOnly}
+                                    error={true}
+                                    key={questionIndex}
+                                    questionIndex={questionIndex}
+                                    sectionIndex={sectionIndex}
+                                    scenarioIndex={scenarioIndex}
+                                    description={question.description}
+                                    isMCQ={question.isMCQ}
+                                    MCQOptions={question.MCQOptions}
+                                    rangeOptions={question.rangeOptions}
+                                    onQuestionChange={onQuestionChange}
+                                    data={
+                                        questionnaireData[sectionIndex][
+                                            scenarioIndex
+                                            ][questionIndex]
+                                    }
+                                />
+                            )
+                        )}
+                    </div>
+                ))}
+                </div>
+>>>>>>> origin/development-client
 
 
 

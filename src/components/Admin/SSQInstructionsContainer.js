@@ -50,7 +50,11 @@ const SSQInstructionsContainer = () => {
             setInstruction({
                 title: res["title"],
                 content: res["content"]
+<<<<<<< HEAD
             })
+=======
+            })   
+>>>>>>> origin/development-client
         })
     }
 
@@ -58,7 +62,11 @@ const SSQInstructionsContainer = () => {
         getInstruction();
         setIsInit(false)
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> origin/development-client
     // ========================================================================
     // Cancel Modal Functions
     // ========================================================================
@@ -135,9 +143,15 @@ const SSQInstructionsContainer = () => {
 
 
     const saveInstruction = (e) =>{
+<<<<<<< HEAD
         setLoading(true);
         API.sendInstructions(instruction).then( res =>{
                 setLoading(false);
+=======
+        setLoading(true); 
+        API.sendInstructions(instruction).then( res =>{
+                setLoading(false); 
+>>>>>>> origin/development-client
                 if (res.status === 200){
                     setsaveSuccess(true);
                     openSaveModal();
@@ -148,7 +162,11 @@ const SSQInstructionsContainer = () => {
                 }
             }
         )
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> origin/development-client
     }
 
     return (
@@ -158,9 +176,15 @@ const SSQInstructionsContainer = () => {
             {loading ? <Loading /> : null}
             <div className = "Instruction-button-group">
                 <button id="edit-cancel-button" className="button"
+<<<<<<< HEAD
                         onClick = {()=> openCancelConfirmation()}>Cancel</button>
                 <button id="edit-save-button" className="button"
                         onClick = {()=> saveInstruction()}>Save</button>
+=======
+                onClick = {()=> openCancelConfirmation()}>Cancel</button>
+                <button id="edit-save-button" className="button"
+                onClick = {()=> saveInstruction()}>Save</button>
+>>>>>>> origin/development-client
             </div>
             <h1>SSQ Instruction</h1>
             <h2>Instruction Title</h2>
@@ -196,7 +220,11 @@ const SSQInstructionsContainer = () => {
                 rowsMax = {20}
             />
         </div>
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> origin/development-client
     );
 };
 

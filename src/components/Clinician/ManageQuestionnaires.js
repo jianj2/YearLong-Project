@@ -115,9 +115,6 @@ const ManageQuestionnaires = (props) => {
             }
         )
         openDeleteConfirmation();
-        // const arrayCopy = questionnaires.filter((q) => q.questionnaireId !== questionnaireId);
-        // setQuestionnaires(arrayCopy);
-        // API.deleteQuestionnaire(questionnaireId, user.name);
     };
 
     // Function called when Share is clicked on the QuestionnaireList
