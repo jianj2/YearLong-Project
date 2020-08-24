@@ -86,6 +86,7 @@ jobs:
         port: ${{ secrets.SERVER_PORT }}
         source: ./
         target: ~/client
+        overwrite: true
   
   Deploy:
     needs: ["SCP","Docker_build_cache_publish"]

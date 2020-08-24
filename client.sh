@@ -2,18 +2,15 @@
 
 echo "Deployment process initiated ..."
 
-# Removing old versions 
-sudo apt-get remove docker docker-engine docker.io containerd runc
-
-which docker 
-sudo docker --version | grep "Docker version"
-
 # Check if docker exists
-if [[ $? -eq 0 ]]; then
+if [ $(which docker) && $(sudo docker --version) ]; then
     echo "Docker installed ..."
 else
     echo "Installing docker ..."
 
+    # Removing old versions 
+    sudo apt-get remove docker docker-engine docker.io containerd runc
+    
     # Updating the repository
     sudo apt-get update
     
@@ -45,7 +42,7 @@ else
 fi
 
 # Remove already running container
-if [[ $(sudo docker ps -q -f name=react-app) ]]; then
+if [ $(sudo docker ps -q -f name=react-app) ]; then
     sudo docker stop $(sudo docker ps -q -f name=react-app)
     echo "container stopped ..."
     sudo docker rm $(sudo docker ps -aq -f name=react-app)
@@ -55,7 +52,7 @@ else
 fi
 
 # Remove docker images from registry
-if [[ $(sudo docker images docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client -q) ]]; then
+if [ $(sudo docker images docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client -q) ]; then
     sudo docker rmi $(sudo docker images docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client -q)
     echo "Registry image removed ..."
 else
@@ -63,7 +60,7 @@ else
 fi
 
 # Remove docker images from local build
-if [[ $(sudo docker images paediatrics-ssq-client -q) ]]; then
+if [ $(sudo docker images paediatrics-ssq-client -q) ]; then
     sudo docker rmi $(sudo docker images docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client -q)
     echo "Local image removed ..."
 else
@@ -71,7 +68,7 @@ else
 fi
 
 # create docker network 
-if [[ $(sudo docker network ls -f name=ssq-paediatrics) ]]; then
+if [ $(sudo docker network ls -f name=ssq-paediatrics) ]; then
     echo "Docker network ssq-paediatrics exists ..."
 else
     echo "Creating network ..."
@@ -80,7 +77,7 @@ fi
 
 result=$(sudo docker pull docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client:latest)
 # Pull from github registry to run image
-if [[ $result = *"latest: Pulling from"* ]]; then
+if [ $result = *"latest: Pulling from"* ]; then
     echo "Image pulled ..."
     # Run docker run ...
     sudo docker run -d docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client \
