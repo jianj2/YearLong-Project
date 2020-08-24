@@ -41,6 +41,7 @@ const EditQuestionnaire = ({
                                addQuestion,
                                addScenario,removeScenario,
                                handleQuestionnaireTitleChange,
+                               handleQuestionnaireTypeChange,
                                handleQuestionnaireDesChange,
                                handleQuestionDesChange,
                                handleQuestionOptsChange,
@@ -170,6 +171,7 @@ const EditQuestionnaire = ({
                         handleQuestionnaireTitleChange
                     }
                     handleQuestionnaireDesChange={handleQuestionnaireDesChange}
+                    handleQuestionnaireTypeChange = {handleQuestionnaireTypeChange}
                 />
 
                 <SectionsContainer

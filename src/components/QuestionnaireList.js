@@ -61,7 +61,8 @@ import React from "react";
 
 // Import Utils
 import { formatDate } from "../utils/formatter";
-
+import Chip from '@material-ui/core/Chip';
+import { Avatar } from '@material-ui/core';
 // Import Styles
 import "../styles/questionnaireList.css";
 import { DialogTitle } from "@material-ui/core";
@@ -82,6 +83,7 @@ const QuestionnaireList = ({
         questionnaireId,
         title,
         description,
+        isSSQ_Ch,
         date,
         isSelectable,
         onClickQuestion,
@@ -105,7 +107,30 @@ const QuestionnaireList = ({
                     if (isSelectable) onClickQuestion(questionnaireId);
                 }}
             >
-                <div className="q-name">{title}</div>
+                <div className="q-name">
+                    {canDelete ? 
+                        isSSQ_Ch? 
+                            (<Chip
+                            id = "SSQtype"
+                            variant="outlined"
+                            size="small"
+                            avatar={<Avatar>Ch</Avatar>}
+                            label="SSQ-FOR-CHILDERN"
+                            /> )
+                            : 
+                                (<Chip
+                                id = "SSQtype"
+                                variant="outlined"
+                                size="small"
+                                avatar={<Avatar>P</Avatar>}
+                                label="SSQ-FOR-PARENTS"
+                                /> )
+                        : null
+                    }
+
+                    {title} 
+                </div>
+
                 <div className="q-description">{description}</div>
 
                 <div className="list-item-footer">
@@ -160,6 +185,7 @@ const QuestionnaireList = ({
                     questionnaireId={question.questionnaireId}
                     title={question.title}
                     description={question.description}
+                    isSSQ_Ch = {question.isSSQ_Ch}
                     isSelectable={isSelectable}
                     onClickQuestion={onClickQuestion}
                     canEdit={canEdit}

@@ -12,7 +12,7 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { Modal, Backdrop, Fade, FormControl, InputLabel, Input, FormHelperText, FormControlLabel, Checkbox } from "@material-ui/core";
+import { Modal, Backdrop, Fade, FormControl, InputLabel, Input, FormHelperText, FormControlLabel, Checkbox, Chip } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 // Import Utils.
@@ -150,6 +150,7 @@ const ManageQuestionnaires = (props) => {
             description: "Please click edit to begin with this questionnaire.",
             sections: [],
             isStandard: false,
+            isSSQ_Ch: true,
         };
         setCustomisedQuestionnaires([newQuestionnaire, ...customisedQuestionnaires]);
         setLoading(false);
