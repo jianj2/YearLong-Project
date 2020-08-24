@@ -78,15 +78,17 @@ jobs:
     name: SCP
     steps:  
     - name: SCP files to server
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.HOST_NAME }}
-        username: ${{ secrets.USER_NAME }}
-        key: ${{ secrets.SERVER_KEY }}
-        port: ${{ secrets.SERVER_PORT }}
-        rm: true
-        source: ./
-        target: ~/client      
+      run: |
+        ls
+
+      # with:
+      #  host: ${{ secrets.HOST_NAME }}
+      #  username: ${{ secrets.USER_NAME }}
+      #  key: ${{ secrets.SERVER_KEY }}
+      #  port: ${{ secrets.SERVER_PORT }}
+      #  rm: true
+      #  source: ./
+      #  target: ~/client      
   
   Deploy:
     needs: ["SCP","Docker_build_cache_publish"]
