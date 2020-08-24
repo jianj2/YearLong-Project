@@ -186,11 +186,8 @@ export const getStandardisedQuestionnaireForAdmin = async () => {
     return json;
 }
 
-<<<<<<< HEAD
 
-=======
-   
->>>>>>> origin/development-client
+
 // ================================================
 // Managing Share server calls
 // ================================================
