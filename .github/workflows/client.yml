@@ -21,7 +21,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04, ubuntu-18.04, ubuntu-16.04]
+        os: [ubuntu-latest]
     name: pipeline
     steps:
     - name: Checkout
@@ -38,6 +38,15 @@ jobs:
         push_git_tag: true
     - name: Test
       run: echo testing ....
+    - name: SCP files to server
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST_NAME }}
+        username: ${{ secrets.USER_NAME }}
+        key: ${{ secrets.SERVER_KEY }}
+        port: ${{ secrets.SERVER_PORT }}
+        source: ./
+        target: ~/client
     - name: Deploy react app to EC2 
       uses: appleboy/ssh-action@master
       with:
@@ -46,8 +55,7 @@ jobs:
         key: ${{ secrets.SERVER_KEY }}
         port: ${{ secrets.SERVER_PORT }}
         script: |
-          whoami
-          ls -al
+         cd client
 
 
 
