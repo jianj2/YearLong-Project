@@ -43,6 +43,7 @@ const HomeAdmin = (props) => {
     if (isAdminAuthenticated) {
         return (
             <div className="HomeAdmin">
+
                 <AdminSideBar />
 
                 <AdminContentPanel

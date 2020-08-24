@@ -3,7 +3,7 @@
  * REACT COMPONENT FUNCTION
  * ====================================================================
  * @date created: 17th May 2020
- * @authors:    Uvin Abeysinghe, Waqas Rehmani, Ashley Curtis, 
+ * @authors:    Uvin Abeysinghe, Waqas Rehmani, Ashley Curtis,
  *              Mayank Sharma, Jian Jiao
  *
  * The Questionnaire component defines a collection of questions. These
@@ -25,12 +25,12 @@ import "../styles/main.css";
 
 
 export default function Questionnaire({
-    readOnly,
-    questionnaire,
-    submitQuestionnaire,
-    questionnaireData,
-    handleQuestionnaireChange,sectionVisibility
-}) {
+                                          readOnly,
+                                          questionnaire,
+                                          submitQuestionnaire,
+                                          questionnaireData,
+                                          handleQuestionnaireChange,sectionVisibility
+                                      }) {
     const { register, handleSubmit, errors } = useForm();
 
 
@@ -60,7 +60,12 @@ export default function Questionnaire({
                 const foundVisibilityInfo = visibilityInfoList.find((visibilityInfo) => {
                     return (visibilityInfo.title === section.title)
                 });
-                return foundVisibilityInfo.isVisible
+                if (foundVisibilityInfo != undefined){
+                    return foundVisibilityInfo.isVisible
+                }else{
+                    return null
+                }
+
             }
         );
         return filteredSections;
@@ -70,7 +75,7 @@ export default function Questionnaire({
     // set the updates questionnaire sections.
     const updateSections = ((questionnaire, sectionVisibility) =>{
         console.log(sectionVisibility)
-        if (sectionVisibility != undefined  ){
+        if (sectionVisibility != undefined ){
 
             questionnaire.sections = getVisibleSections(questionnaire.sections, sectionVisibility)
         }
@@ -87,36 +92,36 @@ export default function Questionnaire({
             {questionnaire.sections.map((section, sectionIndex) => (
 
 
-                <div key={sectionIndex} className="section-container">
-                <h2>{section.title}</h2>
-                {section.scenarios.map((scenario, scenarioIndex) => (
-                    <div key={scenarioIndex} className="scenario-container">
-                        <p>{scenario.description}</p>
-                        {scenario.questions.map(
-                            (question, questionIndex) => (
-                                <Question
-                                    readOnly={readOnly}
-                                    error={true}
-                                    key={questionIndex}
-                                    questionIndex={questionIndex}
-                                    sectionIndex={sectionIndex}
-                                    scenarioIndex={scenarioIndex}
-                                    description={question.description}
-                                    isMCQ={question.isMCQ}
-                                    MCQOptions={question.MCQOptions}
-                                    rangeOptions={question.rangeOptions}
-                                    onQuestionChange={onQuestionChange}
-                                    data={
-                                        questionnaireData[sectionIndex][
-                                            scenarioIndex
-                                            ][questionIndex]
-                                    }
-                                />
-                            )
-                        )}
+                    <div key={sectionIndex} className="section-container">
+                        <h2>{section.title}</h2>
+                        {section.scenarios.map((scenario, scenarioIndex) => (
+                            <div key={scenarioIndex} className="scenario-container">
+                                <p>{scenario.description}</p>
+                                {scenario.questions.map(
+                                    (question, questionIndex) => (
+                                        <Question
+                                            readOnly={readOnly}
+                                            error={true}
+                                            key={questionIndex}
+                                            questionIndex={questionIndex}
+                                            sectionIndex={sectionIndex}
+                                            scenarioIndex={scenarioIndex}
+                                            description={question.description}
+                                            isMCQ={question.isMCQ}
+                                            MCQOptions={question.MCQOptions}
+                                            rangeOptions={question.rangeOptions}
+                                            onQuestionChange={onQuestionChange}
+                                            data={
+                                                questionnaireData[sectionIndex][
+                                                    scenarioIndex
+                                                    ][questionIndex]
+                                            }
+                                        />
+                                    )
+                                )}
+                            </div>
+                        ))}
                     </div>
-                ))}
-                </div>
 
 
 

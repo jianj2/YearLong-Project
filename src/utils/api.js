@@ -114,7 +114,7 @@ export const editQuestionnaire = async (questionnaire) => {
 
 
     try {
-      
+
         let response = await fetch(url, {
             method: "POST",
             headers: headers,
@@ -147,7 +147,7 @@ export const getAndSetSpecificQuestionnaire = async (CQid, setState) => {
     setState(json);
     return json
 };
- 
+
 
 
 
@@ -157,22 +157,22 @@ export const getClinicianQuestionnaires = async (clinicianId) => {
     const url = `${api}/questionnaire/clinician?clinicianId=${clinicianId}` ;
     let response = await fetch(url, {
         headers: header
-       
+
     });
     let json = await response.json();
-    
+
     return json;
 };
 
 // get standardised questionnaires 
 export const getStandardisedQuestionnaires = async () => {
- 
+
     const url = `${api}/questionnaire/standardised` ;
     let response = await fetch(url, {
         headers: header
     });
     let json = await response.json();
-    
+
     return json;
 };
 
@@ -186,7 +186,7 @@ export const getStandardisedQuestionnaireForAdmin = async () => {
     return json;
 }
 
-   
+
 // ================================================
 // Managing Share server calls
 // ================================================
@@ -208,6 +208,30 @@ export const shareQuestionnaire = (data) =>
         },
         body: JSON.stringify(data),
     }).then((res) => res.json());
+
+
+// get Instructions
+export const getInstructions = async () => {
+
+    const url = `${api}/admin/instruction` ;
+    let response = await fetch(url, {
+        headers: header
+    });
+    let json = await response.json();
+
+    return json;
+};
+
+// send Instructions
+export const sendInstructions = (data) =>
+    fetch(`${api}/admin/instruction`, {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    }).then((res) => res);
  
 
 
