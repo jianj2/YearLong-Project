@@ -2,14 +2,18 @@
 
 echo "Deployment process initiated ..."
 
+# Removing old versions 
+sudo apt-get remove docker docker-engine docker.io containerd runc
+
+which docker 
+sudo docker --version | grep "Docker version"
+
 # Check if docker exists
-if [[ $(which docker) && $(docker --version) ]]; then
+if [[ $? -eq 0 ]]; then
     echo "Docker installed ..."
 else
     echo "Installing docker ..."
-    # Removing old versions 
-    sudo apt-get remove docker docker-engine docker.io containerd runc
-    
+
     # Updating the repository
     sudo apt-get update
     
@@ -22,7 +26,7 @@ else
     software-properties-common -y
     
     # Add Docker’s official GPG key
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
     
     # Verifying key with fingerprint
     sudo apt-key fingerprint 0EBFCD88
@@ -41,45 +45,45 @@ else
 fi
 
 # Remove already running container
-if [[ $(docker ps -q -f name=react-app) ]]; then
-    docker stop $(docker ps -q -f name=react-app)
+if [[ $(sudo docker ps -q -f name=react-app) ]]; then
+    sudo docker stop $(sudo docker ps -q -f name=react-app)
     echo "container stopped ..."
-    docker rm $(docker ps -aq -f name=react-app)
+    sudo docker rm $(sudo docker ps -aq -f name=react-app)
     echo "container removed ..."
 else
     echo "No such containers exist ..."
 fi
 
 # Remove docker images from registry
-if [[ $(docker images docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client -q) ]]; then
-    docker rmi $(docker images docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client -q)
+if [[ $(sudo docker images docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client -q) ]]; then
+    sudo docker rmi $(sudo docker images docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client -q)
     echo "Registry image removed ..."
 else
     echo "Registry image does not exist ..."
 fi
 
 # Remove docker images from local build
-if [[ $(docker images paediatrics-ssq-client -q) ]]; then
-    docker rmi $(docker images docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client -q)
+if [[ $(sudo docker images paediatrics-ssq-client -q) ]]; then
+    sudo docker rmi $(sudo docker images docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client -q)
     echo "Local image removed ..."
 else
     echo "Local image does not exist ..."
 fi
 
 # create docker network 
-if [[ $(docker network ls -f name=ssq-paediatrics) ]]; then
+if [[ $(sudo docker network ls -f name=ssq-paediatrics) ]]; then
     echo "Docker network ssq-paediatrics exists ..."
 else
     echo "Creating network ..."
-    docker network create -d bridge ssq-paediatrics
+    sudo docker network create -d bridge ssq-paediatrics
 fi
 
-result=$(docker pull docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client:latest)
+result=$(sudo docker pull docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client:latest)
 # Pull from github registry to run image
 if [[ $result = *"latest: Pulling from"* ]]; then
     echo "Image pulled ..."
     # Run docker run ...
-    docker run -d docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client \
+    sudo docker run -d docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client \
     -p 5000:5000 \
     --name react-app \
     --network ssq-paediatrics
@@ -88,9 +92,9 @@ if [[ $result = *"latest: Pulling from"* ]]; then
 else
     echo "Building from files ..." 
     # Run docker build ...
-    docker build . -t paediatrics-ssq-client
+    sudo docker build . -t paediatrics-ssq-client
     # Run docker run ...
-    docker run -d paediatrics-ssq-client \
+    sudo docker run -d paediatrics-ssq-client \
     -p 5000:5000 \
     --name react-app \
     --network ssq-paediatrics
