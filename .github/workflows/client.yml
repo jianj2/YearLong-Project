@@ -55,8 +55,9 @@ jobs:
         key: ${{ secrets.SERVER_KEY }}
         port: ${{ secrets.SERVER_PORT }}
         script: |
-         cd client
-
+          cd client
+          chmod u+x deploy.sh
+          ./client.sh
 
 
 
