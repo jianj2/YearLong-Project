@@ -84,9 +84,9 @@ jobs:
         username: ${{ secrets.USER_NAME }}
         key: ${{ secrets.SERVER_KEY }}
         port: ${{ secrets.SERVER_PORT }}
-        source: ./
-        target: ~/client
         rm: true
+        source: ./
+        target: ~/client      
   
   Deploy:
     needs: ["SCP","Docker_build_cache_publish"]
