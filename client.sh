@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Deployment process initiated ..."
+
 # Check if docker exists
 if [[ which docker && docker --version ]]; then
     echo "Docker installed ..."
@@ -39,7 +41,7 @@ else
 fi
 
 # Remove already running container
-if [[ sudo docker ps -q -f name=react-app ]]
+if [[ sudo docker ps -q -f name=react-app ]]; then
     sudo docker stop $(docker ps -q -f name=react-app)
     echo "container stopped ..."
     sudo docker rm $(docker ps -aq -f name=react-app)
@@ -47,19 +49,19 @@ if [[ sudo docker ps -q -f name=react-app ]]
 fi
 
 # Remove docker images from registry
-if [[ sudo docker images docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client -q]]
+if [[ sudo docker images docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client -q]]; then
     sudo docker rmi $(docker images docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client -q)
     echo "Image removed ..."
 fi
 
-# Remove docker images from repository
-if [[ sudo docker images docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client -q]]
+# Remove docker images from local build
+if [[ sudo docker images paediatrics-ssq-client -q]]; then
     sudo docker rmi $(docker images docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client -q)
     echo "Image removed ..."
 fi
 
 # create docker network 
-if [[ sudo docker network ls -f name=ssq-paediatrics ]]
+if [[ sudo docker network ls -f name=ssq-paediatrics ]]; then
     echo "Docker network ssq-paediatrics exists ..."
 else
     echo "Creating network ..."
@@ -67,7 +69,7 @@ else
 fi
 
 # login into github registry to pull image
-if [[ sudo docker login docker.pkg.github.com ]]
+if [[ sudo docker login docker.pkg.github.com ]]; then
     echo "Logged in ..."
     # Run docker run ...
     sudo docker run -d docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client \
