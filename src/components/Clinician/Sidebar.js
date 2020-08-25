@@ -32,6 +32,8 @@ const SideBar = (props) => {
                   to = "/clinician/Questionnaires">Questionnaires</Link>
             <Link className={`sidebar-do-the-test ${(pathname === "DoTheTest")? "active" : ""}`}
                   to = "/clinician/DoTheTest">Complete the questionnaire</Link>
+            <Link className={`sidebar-share ${(pathname === "Share")? "active" : ""}`}
+                  to = "/clinician/Share">Share</Link>
             <Link className={`sidebar-instructions ${(pathname === "Instructions")? "active" : ""}`}
                   to = "/clinician/Instructions">Instructions</Link>
         </div>

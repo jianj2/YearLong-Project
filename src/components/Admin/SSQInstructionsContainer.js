@@ -50,7 +50,7 @@ const SSQInstructionsContainer = () => {
             setInstruction({
                 title: res["title"],
                 content: res["content"]
-            })   
+            })
         })
     }
 
@@ -58,7 +58,7 @@ const SSQInstructionsContainer = () => {
         getInstruction();
         setIsInit(false)
     }
-    
+
     // ========================================================================
     // Cancel Modal Functions
     // ========================================================================
@@ -135,9 +135,9 @@ const SSQInstructionsContainer = () => {
 
 
     const saveInstruction = (e) =>{
-        setLoading(true); 
+        setLoading(true);
         API.sendInstructions(instruction).then( res =>{
-                setLoading(false); 
+                setLoading(false);
                 if (res.status === 200){
                     setsaveSuccess(true);
                     openSaveModal();
@@ -148,7 +148,7 @@ const SSQInstructionsContainer = () => {
                 }
             }
         )
-        
+
     }
 
     return (
@@ -158,9 +158,9 @@ const SSQInstructionsContainer = () => {
             {loading ? <Loading /> : null}
             <div className = "Instruction-button-group">
                 <button id="edit-cancel-button" className="button"
-                onClick = {()=> openCancelConfirmation()}>Cancel</button>
+                        onClick = {()=> openCancelConfirmation()}>Cancel</button>
                 <button id="edit-save-button" className="button"
-                onClick = {()=> saveInstruction()}>Save</button>
+                        onClick = {()=> saveInstruction()}>Save</button>
             </div>
             <h1>SSQ Instruction</h1>
             <h2>Instruction Title</h2>
@@ -196,7 +196,7 @@ const SSQInstructionsContainer = () => {
                 rowsMax = {20}
             />
         </div>
-        
+
     );
 };
 

@@ -236,6 +236,9 @@ const HomeParents = ({ match }) => {
         return (
             <div className="parents-home">
                 <div className="subheader-container">
+                    <button id="instructions" className="button" onClick={goToInstructions}>
+                        I N S T R U C T I O N S
+                    </button>
                     <button id="back" className="button" onClick={prevStep}>
                         B A C K
                     </button>
@@ -292,6 +295,9 @@ const HomeParents = ({ match }) => {
                     : null
                 } 
                 <div className="subheader-container">
+                    <button id="instructions" className="button" onClick={goToInstructions}>
+                        I N S T R U C T I O N S
+                    </button>
                     <button id="back" className="button" onClick={prevStep}>
                         B A C K
                     </button>
