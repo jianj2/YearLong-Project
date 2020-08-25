@@ -21,4 +21,8 @@ router.get('/', clinician_controller.getAllClinician);
 //router.post("/share", clinician_controller.shareQuestionnaire);
 router.post("/share", share_controller.shareQuestionnaire);
 
+// Used to share a questionnaire with the parent/child.
+//router.post("/share", clinician_controller.shareQuestionnaire);
+router.post("/complete-questionnaire", clinician_controller.completeQuestionnaire);
+
 module.exports = router;
