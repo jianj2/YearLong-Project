@@ -78,66 +78,6 @@ const completeShare = function (req,res) {
     //deleteShare(req,res);
 }
 
-
-
-
-// Get ShareDetails using ShareId
-const getQuestionnaireDetails = function (req) {
-    let shareId = req.params.shareId;
-    let questionnaireId = null;
-    let questionnaireData = req.body.questionnaireData;
-
-
-    let questionIndex = -1
-    let sectionIndex = -1
-    let scenarioIndex = -1
-
-
-    let questionnaireResult = {}
-
-    Share.findOne({ shareId }, function (
-        err,
-        share
-    ) {
-        if (!err && share != null) {
-            questionnaireId = share.questionnaireId;
-            console.log("Q ID", questionnaireId);
-            Questionnaire.findOne({ questionnaireId }, function (err, questionnaire) {
-                if (!err && questionnaire != null) {
-
-                    questionnaire.sections.map((section) => {
-                        sectionIndex++
-                        scenarioIndex = -1
-                        questionIndex = -1
-
-
-                        console.log("1",section.title)
-                        section.scenarios.map((scenario) => {
-
-                            scenarioIndex++
-                            questionIndex = -1
-
-                            console.log("2",scenario.description)
-                            scenario.questions.map((question) => {
-                                questionIndex++
-
-                                console.log("3",question)
-                                console.log("answer:",questionnaireData[sectionIndex][scenarioIndex][questionIndex])
-
-
-                            })
-                        })
-                    })
-
-                }
-            });
-        }
-    });
-};
-
-
-
-
 // Sending the results in an email.
 const sendResultsEmail = function (req, res) {
 
@@ -154,10 +94,6 @@ const sendResultsEmail = function (req, res) {
         }
     });
 
-
-    // Get questionnaire using the share ID
-    //let questionnaireQuestions = getQuestionnaireDetails(req);
-    //console.log("questionnaireQuestions", questionnaireQuestions)
     const doc = new PDFDocument;
 
         doc.font('Helvetica-Bold').fontSize(14).text("Patient Details", 80);
@@ -196,6 +132,8 @@ const sendResultsEmail = function (req, res) {
 
 
         let spacing = 340
+        // actual page is 792 but setting it to 700 helps to prevent overflow problems
+        let docHeight = 700
 
 
         Share.findOne({ shareId }, function (
@@ -214,45 +152,85 @@ const sendResultsEmail = function (req, res) {
                             scenarioIndex = -1
                             questionIndex = -1
 
+                            if (spacing > docHeight) {
+                                doc.addPage();
+                                spacing = 80;
+                            }
                             // title for each section
                             doc.font('Helvetica-Bold').fontSize(14).text(section.title, 80, spacing);
-                            spacing = spacing + 20;
+                            spacing = spacing + 30;
+//                            console.log("1",section.title)
+
                             section.scenarios.map((scenario) => {
                                 scenarioIndex++
                                 questionIndex = -1
 
+//                                console.log("2",scenario.description)
                                 //description for each scenario
-                                doc.font('Helvetica').fontSize(12).text(scenario.description, 80, spacing);
+                                if (spacing > docHeight) {
+                                    doc.addPage();
+                                    spacing = 80;
+                                }
+
+                                doc.font('Helvetica-Bold').fontSize(14).text("Scenario", 80, spacing);
                                 spacing = spacing + 20;
+
+                                doc.font('Helvetica').fontSize(12).text(scenario.description, 80, spacing);
+                                spacing = spacing + Math.ceil(doc.heightOfString(scenario.description) / 10) * 10 + 5;
 
                                 scenario.questions.map((question) => {
                                     questionIndex++
+                                    if (spacing > docHeight) {
+                                        doc.addPage();
+                                        spacing = 80;
+                                    }
+
+//                                    console.log("3",question)
+//                                    console.log("answer:",questionnaireData[sectionIndex][scenarioIndex][questionIndex])
 
                                     // if the question is range type then the print out both value and supplementary value
                                     if (!question.isMCQ) {
+
                                         doc.font('Helvetica-Bold')
-                                        .text("Slider Value", 80, spacing)
-                                        .text("Supplementary Value", 280, spacing);
-                                        spacing = spacing + 20;
+                                        .text("Answer: ", 80, spacing)
 
                                         doc.font('Helvetica')
-                                        .text(questionnaireData[sectionIndex][scenarioIndex][questionIndex].value, 80, spacing)
+                                        .text(questionnaireData[sectionIndex][scenarioIndex][questionIndex].value, 280, spacing)
+
+                                        spacing = spacing + 20;
+
+                                        if (spacing > docHeight) {
+                                            doc.addPage();
+                                            spacing = 80;
+                                        }
+
+
+                                        doc.font('Helvetica-Bold')
+                                        .text("Supplementary Answer: ", 80, spacing);
+                                        doc.font('Helvetica')
                                         .text(questionnaireData[sectionIndex][scenarioIndex][questionIndex].supplementaryValue, 280, spacing);
-                                        spacing = spacing + 30;
+                                        spacing = spacing + 35;
                                     }
 
                                     // mcq questions will have the question and answer printed on pdf
                                     else {
                                     doc.font('Helvetica-Bold')
                                     .text(question.description, 80, spacing);
+                                    spacing = spacing + Math.ceil(doc.heightOfString(question.description) / 10) * 10 + 5;
 
-                                    spacing = spacing + 20;
+                                    if (spacing > docHeight) {
+                                        doc.addPage();
+                                        spacing = 80;
+                                    }
+
+                                    doc.text("Answer: ", 80, spacing)
 
                                     doc.font('Helvetica')
-                                    .text(questionnaireData[sectionIndex][scenarioIndex][questionIndex].value, 80, spacing);
-                                    spacing = spacing + 20;
+                                    .text(questionnaireData[sectionIndex][scenarioIndex][questionIndex].value, 280, spacing);
+                                    spacing = spacing + 35;
                                     }
                                 })
+
                             })
 
                             // adds separation line
@@ -262,6 +240,11 @@ const sendResultsEmail = function (req, res) {
                             .lineTo(500, spacing)
                             .stroke();
                             spacing = spacing + 20;
+
+                                if (spacing > docHeight) {
+                                    doc.addPage();
+                                    spacing = 80;
+                                }
 
                         })
                             doc.end();
