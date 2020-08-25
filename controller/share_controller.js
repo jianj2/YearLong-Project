@@ -40,27 +40,36 @@ const shareQuestionnaire = function (req,res) {
         shareSection:visibleSection,
     });
 
-    console.log(req.body)
+    console.log("newShare", newShare)
 
     newShare.save(function(err, createdShare) {
+        console.log("Share created");
+
         if (!err){
             // Only send the email if the patient email is defined.
-            if(createdShare.patientEmail != undefined){
+            // if(createdShare.patientEmail != undefined){
                 // sendInvitationEmail(req,res,createdShare);
                 sendInvitationEmail(createdShare)
                     .then(emailRes => {
                         if (emailRes.success){
+                            console.log("SEND SHAREEEEE");
+                            console.log("SEND SHAREEEEE");
                             res.send(emailRes);
                         }
                     })
                     .catch(emailRej => {
                         if(emailRej.success) {
+
+                            console.log("FAIL SHAREEEEE");
+                            console.log("FAIL SHAREEEEE");
                             res.send(emailRej);
                         }
                     })
-            }
-            res.send(createdShare);
+            // }
+            // res.send(createdShare)
         } else {
+            console.log("err SHAREEEEE", err);
+            console.log("err SHAREEEEE");
             res.send(err);
         }
     })
@@ -84,8 +93,18 @@ const getShareDetails = function (req, res) {
 
 
 const completeShare = function (req,res) {
+    let questionnaireData  = req.body.questionnaireData;
+    let clinicianEmail  = req.body.clinicianEmail;
+    let personalDetails  = req.body.personalDetails;
+
     sendResultsEmail(questionnaireData, clinicianEmail, personalDetails)
-    // deleteShare(req,res);
+        .then(emailRes => {
+            console.log("COMPLETE SHAREEEEE");
+            console.log("COMPLETE SHAREEEEE");
+            deleteShare(req,res);
+            res.send(emailRes)
+        })
+        .catch(emailRej => res.send(emailRej))
 }
 
 // Sending the results in an email.

@@ -14,6 +14,13 @@ const nodemailer = require('nodemailer');
 const path = require("path");
 const Readable = require('stream').Readable
 
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: require(path.join(__dirname, '..', 'config/keys')).GmailUserName,
+        pass: require(path.join(__dirname, '..', 'config/keys')).GmailPassword,
+    }
+});
 
 // Send questionnaire link through email.
 const sendInvitationEmail = function (createdShare) {
@@ -25,7 +32,6 @@ const sendInvitationEmail = function (createdShare) {
         if (createdShare.message != undefined) {
             message = "Message from the clinician: " + createdShare.message + "";
         }
-        ;
 
         // Used to create the email
         const transporter = nodemailer.createTransport({
@@ -56,6 +62,7 @@ const sendInvitationEmail = function (createdShare) {
                 '        <p>' + 'Team SSQ' + '</p>\n' +
                 '    </div>'
         };
+
 
         // Resolves this promise if sendEmail promise is resolved.
         // Rejects this promise if sendEmail promise is rejected.
