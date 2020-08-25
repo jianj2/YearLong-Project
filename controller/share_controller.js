@@ -172,7 +172,7 @@ const sendResultsEmail = function (req, res) {
                                     spacing = 80;
                                 }
 
-                                doc.font('Helvetica-Bold').fontSize(14).text("Scenario", 80, spacing);
+                                doc.font('Helvetica-Bold').fontSize(12).text("Scenario: ", 80, spacing);
                                 spacing = spacing + 20;
 
                                 doc.font('Helvetica').fontSize(12).text(scenario.description, 80, spacing);
@@ -191,25 +191,28 @@ const sendResultsEmail = function (req, res) {
                                     // if the question is range type then the print out both value and supplementary value
                                     if (!question.isMCQ) {
 
-                                        doc.font('Helvetica-Bold')
-                                        .text("Answer: ", 80, spacing)
+                                        if (questionnaireData[sectionIndex][scenarioIndex][questionIndex].value == '') {
+                                                doc.font('Helvetica-Bold')
+                                                   .text("Answer: ", 80, spacing);
+                                                doc.font('Helvetica')
+                                                   .text(questionnaireData[sectionIndex][scenarioIndex][questionIndex].supplementaryValue, 280, spacing);
 
-                                        doc.font('Helvetica')
-                                        .text(questionnaireData[sectionIndex][scenarioIndex][questionIndex].value, 280, spacing)
+                                        }
 
-                                        spacing = spacing + 20;
+                                        else {
+                                               doc.font('Helvetica-Bold')
+                                                  .text("Answer: ", 80, spacing)
+
+                                               doc.font('Helvetica')
+                                                  .text(questionnaireData[sectionIndex][scenarioIndex][questionIndex].value, 280, spacing)
+                                        }
+
+                                        spacing = spacing + 35;
 
                                         if (spacing > docHeight) {
                                             doc.addPage();
                                             spacing = 80;
                                         }
-
-
-                                        doc.font('Helvetica-Bold')
-                                        .text("Supplementary Answer: ", 80, spacing);
-                                        doc.font('Helvetica')
-                                        .text(questionnaireData[sectionIndex][scenarioIndex][questionIndex].supplementaryValue, 280, spacing);
-                                        spacing = spacing + 35;
                                     }
 
                                     // mcq questions will have the question and answer printed on pdf
