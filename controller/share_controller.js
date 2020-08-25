@@ -84,7 +84,7 @@ const getShareDetails = function (req, res) {
 
 
 const completeShare = function (req,res) {
-    sendResultsEmail(req,res);
+    sendResultsEmail(questionnaireData, clinicianEmail, personalDetails)
     // deleteShare(req,res);
 }
 
