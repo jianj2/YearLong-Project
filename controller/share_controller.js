@@ -16,6 +16,8 @@ const nodemailer = require('nodemailer');
 const path = require("path");
 const Readable = require('stream').Readable
 
+// const { sendInvitationEmail, sendResultsEmail } = require('./email_controller');
+
 
 // Create a new share.
 const shareQuestionnaire = function (req,res) {
@@ -72,7 +74,7 @@ const getShareDetails = function (req, res) {
 
 const completeShare = function (req,res) {
     sendResultsEmail(req,res);
-    deleteShare(req,res);
+    // deleteShare(req,res);
 }
 
 // Sending the results in an email.
@@ -164,8 +166,6 @@ const sendResultsEmail = function (req, res) {
             res.send(true);
         }
     });
-
-
 }
 
 // Delete the share from our database.
