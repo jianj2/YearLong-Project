@@ -23,7 +23,7 @@ import ParentReviewSubmission from "../ParentReviewSubmission";
 import FormParentDetails from "../FormParentDetails";
 
 // Import Utils
-import  { getClinicianQuestionnaires, getQuestionnaire }  from "../../utils/api";
+import  { getClinicianQuestionnaires, getQuestionnaire, completeQuestionnaire }  from "../../utils/api";
 
 // Import Styles
 import "../../styles/clinicianDoTheTest.css";
@@ -131,9 +131,15 @@ const DoTheTestContainer = () => {
         let data = {
             questionnaireData,
             personalDetails,
+            clinicianEmail: user.name,
         };
         console.log("RESPONSE: ", data);
-        setWizardStep(3);
+        completeQuestionnaire(data).then( res => {
+            console.log("complete question", res)
+            setWizardStep(3);
+        })
+
+
     };
     console.log("wizardStep", wizardStep);
     if (wizardStep === 0) {
