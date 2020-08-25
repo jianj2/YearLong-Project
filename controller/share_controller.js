@@ -19,6 +19,14 @@ const Readable = require('stream').Readable
 
 // Create a new share.
 const shareQuestionnaire = function (req,res) {
+
+    // convert to a list of objects
+    let visibleSection = []
+    Object.entries(req.body.shareSection).map((k,v) =>{
+        visibleSection.push({title: k[0], isVisible: k[1]});
+    })
+
+
     const uuid = uuidv1();
     let newShare = new Share({
         shareId: uuid,
@@ -27,7 +35,10 @@ const shareQuestionnaire = function (req,res) {
         questionnaireId: req.body.questionnaireId,
         readOnly:req.body.readOnly,
         message:req.body.message,
+        shareSection:visibleSection,
     });
+
+    console.log(req.body)
 
     newShare.save(function(err, createdShare) {
         if (!err){
@@ -201,8 +212,8 @@ const sendInvitationEmail = function (req, res, createdShare) {
             '    <div style="padding: 2em;font-size: 20px;font-weight: 200;">' +
             '        <p>Hi,</p>' +
             '        <p>Please complete the following questionnaire.</p>' +
-            '        <p>Use the following link to complete the questionnaire: <a style="text-decoration: none;color: #ff5c4b;" href="' + link + '"  >link</a></p>\n' +
             '        <p style ="color: #151641;" >' + message +'</p>\n' +
+            '        <p>Use the following link to complete the questionnaire: <a style="text-decoration: none;color: #ff5c4b;" href="' + link + '"  >link</a></p>\n' +
             '        <p>Thank you,</p>\n' +
             '        <p>' + 'Team SSQ' + '</p>\n' +
             '    </div>'

@@ -39,6 +39,7 @@ const questionnaireSchema = mongoose.Schema({
     description: {type: String, required:true},
     sections: [sectionSchema],
     isStandard: Boolean,
+    isSSQ_Ch: {type: Boolean, required: false},
 });
 
 module.exports = mongoose.model('questionnaire', questionnaireSchema);

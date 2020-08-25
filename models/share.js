@@ -10,6 +10,11 @@
 
 const mongoose = require('mongoose');
 
+const visibleSections = mongoose.Schema({
+    title: {type: String, required: true },
+    isVisible:{type:Boolean, required:true},
+});
+
 const shareSchema = mongoose.Schema({
     shareId: { type: String, required:true, lowercase:true, unique:true, trim:true},
     clinicianEmail: {type: String, required:true},
@@ -17,6 +22,9 @@ const shareSchema = mongoose.Schema({
     questionnaireId: {type: String, required:true },
     readOnly:{type:Boolean, required:true},
     message:{type:String},
+    shareSection:[visibleSections]
 });
+
+
 
 module.exports = mongoose.model('share', shareSchema);

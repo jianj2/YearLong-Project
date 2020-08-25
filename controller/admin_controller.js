@@ -13,6 +13,11 @@ const mongoose = require("mongoose");
 const adminKeyFile = require("../config/admin.json");
 const jwt = require("jsonwebtoken");
 
+const Questionnaire = mongoose.model("questionnaire");
+const Clinician = mongoose.model("clinician");
+const Instruction = mongoose.model("instruction");
+const { v1: uuidv1 } = require("uuid");
+
 // Login check.
 const loginAdmin = function (req, res) {
     console.log("admin file", adminKeyFile);
@@ -87,26 +92,116 @@ const verifyLogin = (req, res) => {
     });
 }
 
-// Create a new admin.
-// var createAdmin = function (req,res) {
-//     var newAdmin = new Admin({
-//         adminId: 'admin',
-//         name: "Victor",
-//         username: "AdminExample",
-//         email: "testadmin@example.com",
-//         password: "adminpassword",
-//         questionnaires: ['questionnaireId1', 'questionnaireId2'],
-//     });
-//
-//     newAdmin.save(function(err, createdAdmin) {
-//         if (!err){
-//             res.send(createdAdmin);
-//         } else {
-//             res.send(err);
-//         }
-//     })
-// };
+// add a standardised questionnaires
+const addStandardisedQuestionnaire = function (req, res) {
+    const uuid = uuidv1();
+
+    let newQuestionnaire = new Questionnaire({
+        questionnaireId: uuid,
+        title: "SSQ-CH",
+        description: "SSQ-CH",
+        sections: [
+            {
+                title: "Speech",
+                scenarios: [
+                    {
+                        description: "You are at Melbourne Uni...",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description: "If only one option can be true, which of the following is correct?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "All of the above is true",
+                                    " Those below the below is true",
+                                    "None of the above is true",
+                                    "Those above the above is true",
+                                ],
+                            },
+                        ],
+                    },
+                ],
+            },
+            { title: "Spatial", scenarios: [] },
+            { title: "Quality", scenarios: [] },
+        ],
+        isStandard: true,
+    });
+
+    newQuestionnaire.save(function (err, createdQuestionnaire) {
+        console.log("added standardised questionnaire:", uuid);
+    });
+};
+
+//add an instruction
+const addInstruction = function (req, res) {
+
+    let newInstruction = new Instruction({
+        title: "Hello world",
+        content: "How are you?"
+    });
+
+    newInstruction.save(function (err, createdQuestionnaire) {
+        console.log("added instruction!");
+    });
+};
+
+
+// Get all standardised questionnaires for admin
+const getStandardisedQuestionnaire = function (req, res) {
+
+    Questionnaire.find({ isStandard:true}, function (err, questionnaire) {
+        if (!err && questionnaire != null) {
+            console.log('successful');
+            res.send(questionnaire)
+
+        } else {
+            res.send(err)
+        }
+    });
+};
+
+//Get the title and content of the Instruction
+const getInstruction = function (req, res) {
+
+    Instruction.findOne({}, function(err, Instruction){
+        if (!err && Instruction != null) {
+            res.send(Instruction)
+        } else {
+            res.send(err)
+        }
+    }) 
+}
+
+//Update the Instruction
+const updateInstruction = function (req, res) {
+    console.log(req.body);
+    let title = req.body.title;
+    let content = req.body.content;
+
+    Instruction.update({}, {
+        $set: {
+            title: title,
+            content: content
+        }
+    },
+    (err, raw) => {
+        if (!err) {
+        res.send("successfully edit");
+        // console.log('here')
+        } else {
+            res.send(err);
+        }
+    })
+} 
 
 module.exports.loginAdmin = loginAdmin;
 module.exports.verifyLogin = verifyLogin;
-//module.exports.createAdmin = createAdmin;
+module.exports.addStandardisedQuestionnaire = addStandardisedQuestionnaire;
+module.exports.getStandardisedQuestionnaire = getStandardisedQuestionnaire;
+module.exports.getInstruction = getInstruction;
+module.exports.updateInstruction = updateInstruction;
+module.exports.addInstruction = addInstruction
