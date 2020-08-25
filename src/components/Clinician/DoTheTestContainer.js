@@ -12,15 +12,20 @@
  *
  */
 
+// Import Libraries
 import React, { useEffect, useState } from "react";
 import { useAuth0 } from "../../utils/react-auth0-spa";
 
-import * as API from "../../utils/api";
+// Import Components
 import QuestionnaireList from "../QuestionnaireList";
 import Questionnaire from "../Questionnaire";
 import ParentReviewSubmission from "../ParentReviewSubmission";
 import FormParentDetails from "../FormParentDetails";
 
+// Import Utils
+import  { getClinicianQuestionnaires, getQuestionnaire }  from "../../utils/api";
+
+// Import Styles
 import "../../styles/clinicianDoTheTest.css";
 
 // handles rendering of QuestionnaireContainer in the Clinician Page
@@ -36,7 +41,6 @@ const DoTheTestContainer = () => {
         leftDeviceType: "",
     });
 
-
     const [questionnaires, setQuestionnaires] = useState([]);
     const [questionnaireData, setQuestionnaireData] = useState([]);
 
@@ -48,8 +52,9 @@ const DoTheTestContainer = () => {
         isStandard: false,
     });
 
+    // This is called whenever "user" changes
     useEffect(() => {
-        API.getClinicianQuestionnaires(user.name).then((res) => {
+        getClinicianQuestionnaires(user.name).then((res) => {
             console.log(res);
             setQuestionnaires(res);
         });
@@ -89,7 +94,7 @@ const DoTheTestContainer = () => {
     const onClickQuestion = (questionnaireId) => {
         console.log("questionnaire clicked", questionnaireId);
         setWizardStep(0);
-        API.getQuestionnaire(questionnaireId).then((res) => {
+        getQuestionnaire(questionnaireId).then((res) => {
             // check if the questionnaire is available.
             if(res.statusCode === 200 ){
 
