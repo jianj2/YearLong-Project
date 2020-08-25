@@ -166,12 +166,12 @@ const sendEmail = function (mailOptions) {
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
                 reject({
-                    status: false,
+                    success: false,
                     details: error
                 });
             } else {
                 resolve({
-                    status: true,
+                    success: true,
                     details: info
                 });
             }
