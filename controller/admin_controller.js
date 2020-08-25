@@ -15,6 +15,7 @@ const jwt = require("jsonwebtoken");
 
 const Questionnaire = mongoose.model("questionnaire");
 const Clinician = mongoose.model("clinician");
+const Instruction = mongoose.model("instruction");
 const { v1: uuidv1 } = require("uuid");
 
 // Login check.
@@ -135,6 +136,19 @@ const addStandardisedQuestionnaire = function (req, res) {
     });
 };
 
+//add an instruction
+const addInstruction = function (req, res) {
+
+    let newInstruction = new Instruction({
+        title: "Hello world",
+        content: "How are you?"
+    });
+
+    newInstruction.save(function (err, createdQuestionnaire) {
+        console.log("added instruction!");
+    });
+};
+
 
 // Get all standardised questionnaires for admin
 const getStandardisedQuestionnaire = function (req, res) {
@@ -150,8 +164,44 @@ const getStandardisedQuestionnaire = function (req, res) {
     });
 };
 
+//Get the title and content of the Instruction
+const getInstruction = function (req, res) {
+
+    Instruction.findOne({}, function(err, Instruction){
+        if (!err && Instruction != null) {
+            res.send(Instruction)
+        } else {
+            res.send(err)
+        }
+    }) 
+}
+
+//Update the Instruction
+const updateInstruction = function (req, res) {
+    console.log(req.body);
+    let title = req.body.title;
+    let content = req.body.content;
+
+    Instruction.update({}, {
+        $set: {
+            title: title,
+            content: content
+        }
+    },
+    (err, raw) => {
+        if (!err) {
+        res.send("successfully edit");
+        // console.log('here')
+        } else {
+            res.send(err);
+        }
+    })
+} 
 
 module.exports.loginAdmin = loginAdmin;
 module.exports.verifyLogin = verifyLogin;
 module.exports.addStandardisedQuestionnaire = addStandardisedQuestionnaire;
 module.exports.getStandardisedQuestionnaire = getStandardisedQuestionnaire;
+module.exports.getInstruction = getInstruction;
+module.exports.updateInstruction = updateInstruction;
+module.exports.addInstruction = addInstruction

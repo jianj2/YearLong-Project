@@ -83,6 +83,7 @@ const addEmptyQuestionnaire = function (req, res) {
         questionnaireId: uuid,
         title: "New Questionnaire",
         description: "Please click edit to begin with this questionnaire.",
+        isSSQ_Ch: true,
         sections: [
             {
                 title: "Section 1 - Speech",
