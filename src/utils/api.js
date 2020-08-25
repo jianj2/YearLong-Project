@@ -233,27 +233,4 @@ export const sendInstructions = (data) =>
         },
         body: JSON.stringify(data),
     }).then((res) => res);
- 
 
-// get Instructions
-export const getInstructions = async () => {
- 
-    const url = `${api}/admin/instruction` ;
-    let response = await fetch(url, {
-        headers: header
-    });
-    let json = await response.json();
-    
-    return json;
-};
-
-// send Instructions
-export const sendInstructions = (data) =>
-    fetch(`${api}/admin/instruction`, {
-        method: "POST",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    }).then((res) => res);
