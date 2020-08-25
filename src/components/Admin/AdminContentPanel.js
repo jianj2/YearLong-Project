@@ -2,8 +2,8 @@
  * ====================================================================
  * REACT COMPONENT
  * ====================================================================
- * @date created: 16th May 2020
- * @authors: Guang Yang
+ * @date created: 15th August 2020
+ * @authors: Jin Chen
  *
  * The content panel will display the content when people click the side bar
  *
@@ -11,32 +11,31 @@
  *
  */
 
-import React, { useState } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import React from "react";
 
 // Import components.
-import ManageQuestionnaires from "./ManageQuestionnaires";
-import DoTheTestContainer from "./DoTheTestContainer";
-import InstructionsContainer from "./InstructionsContainer";
-import QuestionnaireContainer from "./QuestionnaireContainer";
-import ViewQuestionnaireContainer from "./ViewQuestionnaireContainer";
-import ShareContainer from "./ShareContainer";
+import AdminManageQuestionnaires from "./AdminManageQuestionnaires";
+import SSQInstructionsContainer from "./SSQInstructionsContainer";
+import SSQIntroductionContainer from "./SSQIntroductionContainer";
 
 //import style
 import "../../styles/contentpanel.css";
 import "../../styles/main.css";
+import ViewQuestionnaireContainer from "../Clinician/ViewQuestionnaireContainer";
+import QuestionnaireContainer from "../Clinician/QuestionnaireContainer";
+import AdminViewStandardQuestionnaire from "./AdminViewStandardQuestionnaire";
 
-const ContentPanel = (props) => {
+const AdminContentPanel = (props) => {
     if (props.active === 2) {
         return (
             <div className="content-container">
-                <DoTheTestContainer />
+                <SSQInstructionsContainer />
             </div>
         );
     } else if (props.active === 3) {
         return (
             <div className="content-container">
-                <InstructionsContainer />
+                <SSQIntroductionContainer />
             </div>
         );
     } else if (props.active === 4) {
@@ -49,25 +48,19 @@ const ContentPanel = (props) => {
         );
     } else if (props.active === 5){
         return (
-          <div className="content-container">
-                <ViewQuestionnaireContainer
-                    questionnaireID={props.questionnaireID}
+            <div className="content-container">
+                <AdminViewStandardQuestionnaire
+                     questionnaireID={props.questionnaireID}
                 />
             </div>
         );
-    }else if(props.active === 6){
+    } else {
         return (
             <div className="content-container">
-                <ShareContainer />
-            </div>
-        );
-    }else {
-        return (
-            <div className="content-container">
-                <ManageQuestionnaires />
+                <AdminManageQuestionnaires />
             </div>
         );
     }
 };
 
-export default ContentPanel;
+export default AdminContentPanel;

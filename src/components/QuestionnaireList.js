@@ -78,8 +78,6 @@ const QuestionnaireList = ({
     canShare,
     onClickShare,
 }) => {
-
-
     const ListItem = ({
         questionnaireId,
         title,
@@ -93,11 +91,16 @@ const QuestionnaireList = ({
         onClickDelete,
         canShare,
         onClickShare,
+        sections,
     }) => {
         // var edit_url = "/clinician/" + QID + "/edit";
         return (
             <div
-                className={isSelectable ? "questionnaire-list-item questionnaire-list-item-selectable" : "questionnaire-list-item"}
+                className={
+                    isSelectable
+                        ? "questionnaire-list-item questionnaire-list-item-selectable"
+                        : "questionnaire-list-item"
+                }
                 onClick={() => {
                     if (isSelectable) onClickQuestion(questionnaireId);
                 }}
@@ -109,19 +112,37 @@ const QuestionnaireList = ({
                     <div className="list-item-date">{formatDate()}</div>
                     <div className="questionnaire-list-button-container">
                         {canShare ? (
-                            <button className="button" onClick={() => onClickShare(questionnaireId)}>
+                            <button
+                                className="button"
+                                onClick={(event) => {
+                                    event.stopPropagation();
+                                    onClickShare(questionnaireId, sections);
+                                }}
+                            >
                                 S H A R E
                             </button>
                         ) : null}
 
                         {canEdit ? (
-                            <button className="button" onClick={() => onClickEdit(questionnaireId)}>
+                            <button
+                                className="button"
+                                onClick={(event) => {
+                                    event.stopPropagation();
+                                    onClickEdit(questionnaireId);
+                                }}
+                            >
                                 E D I T
                             </button>
                         ) : null}
 
                         {canDelete ? (
-                            <button className="button" onClick={() => onClickDelete(questionnaireId, title)}>
+                            <button
+                                className="button"
+                                onClick={(event) => {
+                                    event.stopPropagation();
+                                    onClickDelete(questionnaireId, title);
+                                }}
+                            >
                                 D E L E T E
                             </button>
                         ) : null}
@@ -147,6 +168,7 @@ const QuestionnaireList = ({
                     onClickDelete={onClickDelete}
                     canShare={canShare}
                     onClickShare={onClickShare}
+                    sections={question.sections}
                 />
             ))}
         </div>

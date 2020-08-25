@@ -191,7 +191,7 @@ const DoTheTestContainer = () => {
         return (
             <div className="dothetest-container">
                 <div className="dothetest-submit">
-                    <h1>Questionnaire Responses Recorded!</h1>
+                    <h1>Questionnaire Completed!</h1>
                     <p>A report will be sent to your registered email address.</p>
                     <button className="button" onClick={resetStep}>
                         G O &nbsp; B A C K
