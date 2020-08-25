@@ -8,6 +8,6 @@ RUN npm install -g serve
 
 RUN npm run build --production
 
-EXPOSE 5000
+EXPOSE 3000
 
 CMD ["serve","-s","build"]
