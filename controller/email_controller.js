@@ -3,7 +3,7 @@
  * DEFINING SHARE API CALLS CONTROLLER
  * ========================================
  * @date created: 31 May 2020
- * @authors: Uvin, Waqas
+ * @authors: Uvin
  *
  * The share_controller is used for defining the functionality of api calls related to share.
  *
