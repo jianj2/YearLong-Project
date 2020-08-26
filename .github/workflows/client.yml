@@ -17,13 +17,11 @@ on:
     branches: 
     - deployment-client 
     - development-client 
-    - master-client
     tags:
       - v*
   pull_request:
     branches:
     - development-client 
-    - master-client
     tags:
       - v*
 
