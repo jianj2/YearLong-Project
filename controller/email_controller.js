@@ -10,6 +10,7 @@
  *
  */
 
+const { jsonToTableHtmlString } = require('json-table-converter')
 const nodemailer = require('nodemailer');
 const path = require("path");
 const Readable = require('stream').Readable
@@ -401,6 +402,9 @@ const sendResultsEmail = function (questionnaireId, questionnaireData, clinician
                 }];
                 // Resolves this promise if sendEmail promise is resolved.
                 // Rejects this promise if sendEmail promise is rejected.
+                console.log("uvin",mailOptions)
+                console.log(reportResolved)
+
                 sendEmail(mailOptions)
                     .then(res => resolve(res))
                     .catch(rej => reject(rej))

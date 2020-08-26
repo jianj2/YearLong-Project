@@ -25,7 +25,7 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
     return new Promise((resolve, reject) => {
         console.log("Enter Generate Report");
         //needs to merge
-        const doc = new PDFDocument;
+        const doc = new PDFDocument();
 
         doc.font('Helvetica-Bold').fontSize(14).text("Patient Details", 80);
 
@@ -64,7 +64,8 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
         // actual page is 792 but setting it to 700 helps to prevent overflow problems
         let docHeight = 700
 
-        let questionnaireId = shareData.questionnaireId;
+
+        console.log("Enter Generate Report 2");
 
         Questionnaire.findOne({questionnaireId}, function (err, questionnaire) {
             if (!err) {
@@ -187,7 +188,7 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
                 const {jsonToTableHtmlString} = require('json-table-converter')
 
                 resolve({
-                    filename: "Report.pdf",
+                    fileName: "Report.pdf",
                     content: doc,
                 })
             } else {
