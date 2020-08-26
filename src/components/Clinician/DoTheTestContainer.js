@@ -23,7 +23,7 @@ import ParentReviewSubmission from "../ParentReviewSubmission";
 import FormParentDetails from "../FormParentDetails";
 
 // Import Utils
-import  { getClinicianQuestionnaires, getQuestionnaire, completeQuestionnaire }  from "../../utils/api";
+import  { getClinicianQuestionnaires, getQuestionnaire, completeQuestionnaire, getStandardisedQuestionnaires }  from "../../utils/api";
 
 // Import Styles
 import "../../styles/clinicianDoTheTest.css";
@@ -60,7 +60,7 @@ const DoTheTestContainer = () => {
     // This is called whenever "user" changes
     useEffect(() => {
         async function retrieveStandardisedQuestionnaires() {
-            const response = await API.getStandardisedQuestionnaires();
+            const response = await getStandardisedQuestionnaires();
             if (response.statusCode === 200) {
                 setStandardisedQuestionnaires(response.data);
             }
