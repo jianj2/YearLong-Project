@@ -34,13 +34,13 @@ create_docker_network()
 # Remove container
 remove_docker_container()
 {
-    docker stop $(docker ps -q -f name=react-app)
+    docker rm $(docker ps -q -f name=react-app)
 }
 
 # Stop already running container
 stop_docker_container()
 {
-    docker rm $(docker ps -aq -f name=react-app)
+    docker stop $(docker ps -aq -f name=react-app)
 }
 
 # Remove docker images from local build

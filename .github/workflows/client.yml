@@ -43,7 +43,7 @@ jobs:
       with:
         python-version: 3.8
     
-    - name: Install dependencies
+    - name: Install flake8
       run: |
         cd src/Sprint1
         python -m pip install --upgrade pip
@@ -73,6 +73,13 @@ jobs:
       with:
         python-version: 3.8
 
+    - name: Install selenium
+      run: |
+        cd src\Sprint1
+        python -m pip install --upgrade pip
+        pip install selenium
+        cd ..\..
+    
     - name: Run selenium tests
       run: |
         cd src\Sprint1
