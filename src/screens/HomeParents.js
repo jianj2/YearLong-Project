@@ -173,6 +173,7 @@ const HomeParents = ({ match }) => {
             questionnaireData,
             personalDetails,
             clinicianEmail: clinicianEmail,
+            questionnaireId: questionnaire.questionnaireId,
         };
         console.log(data);
 

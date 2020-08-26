@@ -153,7 +153,10 @@ const DoTheTestContainer = () => {
             questionnaireData,
             personalDetails,
             clinicianEmail: user.name,
+            questionnaireId: selectedQuestionnaire.questionnaireId,
         };
+
+        // console.log("DATATATA", data);
 
         completeQuestionnaire(data).then( res => {
             console.log("complete question", res)
