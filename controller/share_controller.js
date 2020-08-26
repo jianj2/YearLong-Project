@@ -175,8 +175,11 @@ const sendResultsEmail = function (req, res) {
                                 doc.font('Helvetica-Bold').fontSize(12).text("Scenario: ", 80, spacing);
                                 spacing = spacing + 20;
 
-                                doc.font('Helvetica').fontSize(12).text(scenario.description, 80, spacing);
-                                spacing = spacing + Math.ceil(doc.heightOfString(scenario.description) / 10) * 10 + 5;
+                                doc.font('Helvetica').fontSize(12).text(scenario.description, 80, spacing, {
+                                                                                                             width: 420,
+                                                                                                             align: 'justify'
+                                                                                                           });
+                                spacing = spacing + Math.ceil(doc.heightOfString(scenario.description) / 10) * 10 + 15;
 
                                 scenario.questions.map((question) => {
                                     questionIndex++
@@ -218,8 +221,10 @@ const sendResultsEmail = function (req, res) {
                                     // mcq questions will have the question and answer printed on pdf
                                     else {
                                     doc.font('Helvetica-Bold')
-                                    .text(question.description, 80, spacing);
-                                    spacing = spacing + Math.ceil(doc.heightOfString(question.description) / 10) * 10 + 5;
+                                    .text(question.description, 80, spacing, { width: 420,
+                                                                               align: 'justify'});
+
+                                    spacing = spacing + Math.ceil(doc.heightOfString(question.description) / 10) * 10 + 10;
 
                                     if (spacing > docHeight) {
                                         doc.addPage();
