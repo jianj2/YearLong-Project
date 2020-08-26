@@ -21,4 +21,7 @@ router.get('/', clinician_controller.getAllClinician);
 //router.post("/share", clinician_controller.shareQuestionnaire);
 router.post("/share", share_controller.shareQuestionnaire);
 
+// Used to complete the questionnaire by the clinician himself.
+router.post("/complete-questionnaire", clinician_controller.completeQuestionnaire);
+
 module.exports = router;
