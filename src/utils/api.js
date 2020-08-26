@@ -43,6 +43,22 @@ export const sendQuestionnaireData = (data, shareId) =>
         body: JSON.stringify(data),
     }).then((res) => res.json());
 
+
+// ================================================
+// Clinician server calls
+// ================================================
+export const completeQuestionnaire = (data) =>
+    fetch(`${api}/clinician/complete-questionnaire/`, {
+        method: "POST",
+        headers: {
+            ...header,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    }).then((res) => res.json());
+
+
 // ================================================
 // Managing Questionnaire server calls
 // ================================================

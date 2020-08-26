@@ -50,7 +50,7 @@ const ShareQuestionnaire = (props) => {
         setStandardisedQuestionnaires,
     ] = useState([]);
 
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const [isShareModalVisible, setIsShareModalVisible] = useState(false);
 
@@ -125,14 +125,13 @@ const ShareQuestionnaire = (props) => {
         e.preventDefault();
         setLoading(true);
 
-        //sharesection is {section:isVisible}
+        //share section is {section:isVisible}
         setShareModalData({
             ...shareModalData,
             shareSection,
         });
 
-        API.shareQuestionnaire(shareModalData).then((res) => {
-            console.log("printing the res: ", res);
+        API.shareQuestionnaire(shareModalData).then( res => {
             setLoading(false);
             closeModal();
         });
@@ -253,8 +252,8 @@ const ShareQuestionnaire = (props) => {
 
     return (
         <div>
-            {loading ? <Loading /> : null}
             {renderShareModal()}
+            {loading ? <Loading /> : null}
 
             <div className="standard-questionnaire-container">
                 <div className="SQ-header">

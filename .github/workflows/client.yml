@@ -1,0 +1,115 @@
+---
+name: client-CI/CD
+
+on:
+  push:
+    branches: 
+    - deployment-client 
+    - development-client 
+    - master-client
+    tags:
+      - v*
+  pull_request:
+    branches:
+    - development-client 
+    - master-client
+    tags:
+      - v*
+
+jobs:
+  Python_test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    name: Python test
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - name: Set up Python 3.8 for Linting
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    
+    - name: Install dependencies
+      run: |
+        cd src/Sprint1
+        python -m pip install --upgrade pip
+        pip install flake8
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        cd ../../
+    
+  Docker_build_cache_publish:
+    needs: Python_test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    name: Docker build cache publish
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - name: Build, cache and publish docker image
+      uses: whoan/docker-build-with-cache-action@v5
+      with:
+        username: mayankshar21
+        password: "${{ secrets.GITHUB_TOKEN }}"
+        registry: docker.pkg.github.com
+        image_name: paediatrics-ssq-client
+        image_tag: latest
+        dockerfile: Dockerfile
+        push_git_tag: true
+  
+  SCP:
+    needs: Python_test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    name: SCP
+    steps:  
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - name: SCP files to server
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST_NAME }}
+        username: ${{ secrets.USER_NAME }}
+        key: ${{ secrets.SERVER_KEY }}
+        port: ${{ secrets.SERVER_PORT }}
+        rm: true
+        source: ./
+        target: ~/client      
+  
+  Deploy:
+    needs: ["SCP","Docker_build_cache_publish"]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    name: Deploy
+    steps:              
+    - name: Deploy react app to EC2 
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST_NAME }}
+        username: ${{ secrets.USER_NAME }}
+        key: ${{ secrets.SERVER_KEY }}
+        port: ${{ secrets.SERVER_PORT }}
+        script: |
+          cd client
+          chmod u+x client.sh
+          ./client.sh
+
+
+

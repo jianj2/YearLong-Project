@@ -12,22 +12,28 @@
  *
  */
 
+// Import Libraries
 import React, { useEffect, useState } from "react";
 import { useAuth0 } from "../../utils/react-auth0-spa";
 
-import * as API from "../../utils/api";
+// Import Components
 import QuestionnaireList from "../QuestionnaireList";
 import Questionnaire from "../Questionnaire";
 import ParentReviewSubmission from "../ParentReviewSubmission";
 import FormParentDetails from "../FormParentDetails";
 
+// Import Utils
+import  { getClinicianQuestionnaires, getQuestionnaire, completeQuestionnaire, getStandardisedQuestionnaires }  from "../../utils/api";
+
+// Import Styles
 import "../../styles/clinicianDoTheTest.css";
+import Loading from "../Loading";
 
 // handles rendering of QuestionnaireContainer in the Clinician Page
 const DoTheTestContainer = () => {
     const { user } = useAuth0();
     const [wizardStep, setWizardStep] = useState(-1);
-
+    const [loading, setLoading] = useState(false);
     const [personalDetails, setPersonalDetails] = useState({
         name: "",
         date: "",
@@ -51,15 +57,16 @@ const DoTheTestContainer = () => {
         isStandard: false,
     });
 
+    // This is called whenever "user" changes
     useEffect(() => {
         async function retrieveStandardisedQuestionnaires() {
-            const response = await API.getStandardisedQuestionnaires();
+            const response = await getStandardisedQuestionnaires();
             if (response.statusCode === 200) {
                 setStandardisedQuestionnaires(response.data);
             }
         }
         async function retrieveCustomisedQuestionnaires() {
-            API.getClinicianQuestionnaires(user.name).then((res) => {
+            getClinicianQuestionnaires(user.name).then((res) => {
                 console.log(res);
                 setQuestionnaires(res);
             });
@@ -108,7 +115,7 @@ const DoTheTestContainer = () => {
     const onClickQuestion = (questionnaireId) => {
         console.log("questionnaire clicked", questionnaireId);
         setWizardStep(0);
-        API.getQuestionnaire(questionnaireId).then((res) => {
+        getQuestionnaire(questionnaireId).then((res) => {
             // check if the questionnaire is available.
             if (res.statusCode === 200) {
                 let tempResponse = [];
@@ -137,17 +144,24 @@ const DoTheTestContainer = () => {
     };
 
     const getPersonalDetails = (data) => {
-        setPersonalDetails(data);
-        console.log("data", data);
+        setPersonalDetails(data)
     };
 
     const submitResponse = () => {
+        setLoading(true);
         let data = {
             questionnaireData,
             personalDetails,
+            clinicianEmail: user.name,
         };
-        console.log("RESPONSE: ", data);
-        setWizardStep(3);
+
+        completeQuestionnaire(data).then( res => {
+            console.log("complete question", res)
+            setWizardStep(3);
+            setLoading(false);
+        })
+
+
     };
     console.log("wizardStep", wizardStep);
     if (wizardStep === 0) {
@@ -202,11 +216,10 @@ const DoTheTestContainer = () => {
                     </button>
                 </div>
 
-                <ParentReviewSubmission
-                    questionnaire={selectedQuestionnaire}
-                    personalDetails={personalDetails}
-                    questionnaireData={questionnaireData}
-                />
+                {loading ? <Loading /> : null}
+
+                <ParentReviewSubmission questionnaire={selectedQuestionnaire} personalDetails={personalDetails} questionnaireData={questionnaireData} />
+
             </div>
         );
     } else if (wizardStep === 3) {
