@@ -49,8 +49,9 @@ const completeQuestionnaire = function (req, res) {
     let questionnaireData  = req.body.questionnaireData;
     let clinicianEmail  = req.body.clinicianEmail;
     let personalDetails  = req.body.personalDetails;
+    let questionnaireId  = req.body.questionnaireId;
 
-    sendResultsEmail(questionnaireData, clinicianEmail, personalDetails)
+    sendResultsEmail(questionnaireId, questionnaireData, clinicianEmail, personalDetails)
         .then(emailRes => res.send(emailRes))
         .catch(emailRej => res.send(emailRej))
 }
