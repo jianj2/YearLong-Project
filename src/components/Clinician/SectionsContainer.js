@@ -186,7 +186,7 @@ const Section = ({
                             addScenario(sectionIndex);
                         }}
                     >
-                        ADD NEW SCENARIO
+                        ADD NEW LISTENING SCENARIO
                     </button>
                 </div>
             </div>

@@ -12,14 +12,37 @@
  *
  */
 
-import React from "react";
+
+import React, { useState, useEffect } from "react";
+import * as API from "../../utils/api";
 
 // handles rendering of QuestionnaireContainer in the Clinician Page
 const InstructionsContainer = () => {
+    const [instruction, setInstruction] = useState({
+        title: "",
+        content: ""
+    });
+
+    const getInstruction = () => {
+        API.getInstructions().then((res) =>{
+            setInstruction({
+                title: res["title"],
+                content: res["content"]
+            })   
+        })
+    };
+    useEffect(() => {  getInstruction();},[]);
+  
 
     return (
         <div className="instructions-container">
-           instructions
+        <h1>I N S T R U C T I O N S</h1>
+ 
+                        <div>
+                            <h2>{instruction.title}</h2>
+                            <p>{instruction.content}</p>
+                        </div>
+                
         </div>
     );
 };
