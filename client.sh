@@ -34,7 +34,7 @@ create_docker_network()
 # Remove container
 remove_docker_container()
 {
-    docker rm $(docker ps -aq -f name=react-app)
+    docker rm -f $(docker ps -aq -f name=react-app)
 }
 
 # Stop already running container
@@ -147,17 +147,26 @@ local_build()
 
 echo "Deploying application ..."
 
-# Stopping and removing containers
-stop_docker_container && remove_docker_container
+# Stopping containers
+stop_docker_container 
 
-# Removing local and registry images
-remove_local_docker_image && remove_registry_docker_image
+# Removing containers
+remove_docker_container
+
+# Removing local images
+remove_local_docker_image
+
+# Removing registry images
+remove_registry_docker_image
 
 # Removing docker network
 remove_docker_network
 
 # Reinstalling docker
-remove_old_docker && install_docker
+remove_old_docker
+
+# Install docker
+install_docker
 
 # Creating docker network
 create_docker_network
