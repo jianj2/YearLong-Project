@@ -145,7 +145,7 @@ const deleteShare = function (req, res) {
 // Send questionnaire link through email.
 const sendInvitationEmail = function (req, res, createdShare) {
     let patientEmail = createdShare.patientEmail;
-    let link = "http://52.65.44.7:3000/parent/" + createdShare.shareId + "" ;
+    let link = "https://paediatricsssq.sytes.net/parent/" + createdShare.shareId + "" ;
     let message = "";
     if (createdShare.message != undefined){
         message = "Message from the clinician: " + createdShare.message + "";
