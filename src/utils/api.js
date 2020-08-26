@@ -1,4 +1,4 @@
-const api = "http://localhost:3001";
+const api = "http://52.65.44.7:3001";
 
 let header = {
     authorization: "fill in l8er",
