@@ -49,22 +49,20 @@ const shareQuestionnaire = function (req, res) {
             sendInvitationEmail(createdShare)
                 .then(emailRes => {
                     if (emailRes.success) {
-                        console.log("SEND SHAREEEEE");
-                        console.log("SEND SHAREEEEE");
+                        console.log("SEND SHARE");
                         res.send(emailRes);
                     }
                 })
                 .catch(emailRej => {
                     if (emailRej.success) {
-                        console.log("FAIL SHAREEEEE");
-                        console.log("FAIL SHAREEEEE");
+                        console.log("FAIL SHARE");
                         res.send(emailRej);
                     }
                 })
 
         } else {
-            console.log("err SHAREEEEE", err);
-            console.log("err SHAREEEEE");
+            console.log("err SHARE", err);
+            console.log("err SHARE");
             res.send(err);
         }
     })
@@ -95,7 +93,7 @@ const completeShare = function (req, res) {
 
     sendResultsEmail(questionnaireId, questionnaireData, clinicianEmail, personalDetails)
         .then(emailRes => {
-            deleteShare(req, res);
+            //deleteShare(req, res);
             res.send(emailRes)
         })
         .catch(emailRej => res.send(emailRej))
