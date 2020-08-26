@@ -38,28 +38,19 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     
-    - name: Set up Python 3.8 for Linting
-      uses: actions/setup-python@v2
+    - name: Set up Node.js 14.x for testing
+      uses: actions/setup-node@v1
       with:
-        python-version: 3.8
-    
-    - name: Install dependencies
-      run: |
-        cd src/Sprint1
-        python -m pip install --upgrade pip
-        pip install flake8
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    
-    - name: Lint with flake8
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-        cd ../../
+        node-version: 14.8
 
+    - name: Install dependencies    
+      run: npm ci
+
+    - name: Test with Chai
+      run: npm test
+    
   Docker_build_cache_publish:
-    needs: Python_test
+    needs: npm_test
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -75,13 +66,13 @@ jobs:
         username: mayankshar21
         password: "${{ secrets.GITHUB_TOKEN }}"
         registry: docker.pkg.github.com
-        image_name: paediatrics-ssq-client
+        image_name: paediatrics-ssq-server
         image_tag: latest
         dockerfile: Dockerfile
         push_git_tag: true
   
   SCP:
-    needs: Python_test
+    needs: npm_test
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -100,7 +91,7 @@ jobs:
         port: ${{ secrets.SERVER_PORT }}
         rm: true
         source: ./
-        target: ~/client      
+        target: ~/server   
   
   Deploy:
     needs: ["SCP","Docker_build_cache_publish"]
@@ -110,7 +101,7 @@ jobs:
         os: [ubuntu-latest]
     name: Deploy
     steps:              
-    - name: Deploy react app to EC2 
+    - name: Deploy node app to EC2 
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST_NAME }}
@@ -118,6 +109,6 @@ jobs:
         key: ${{ secrets.SERVER_KEY }}
         port: ${{ secrets.SERVER_PORT }}
         script: |
-          cd client
-          chmod u+x client.sh
-          ./client.sh
+          cd server
+          chmod u+x server.sh
+          ./server.sh
