@@ -39,7 +39,7 @@ const HomeClinician = (props) => {
         }
         const fn = async () => {
             await loginWithRedirect({
-                redirect_uri: "http://52.65.44.7:3000/", //TODO: figure out why window.location.pathname doesn't work
+                redirect_uri: "http://localhost:3000/clinician", //TODO: figure out why window.location.pathname doesn't work
                 //appState: { targetUrl: window.location.pathname},
             });
         };
