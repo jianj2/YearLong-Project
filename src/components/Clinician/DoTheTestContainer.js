@@ -27,12 +27,13 @@ import  { getClinicianQuestionnaires, getQuestionnaire, completeQuestionnaire } 
 
 // Import Styles
 import "../../styles/clinicianDoTheTest.css";
+import Loading from "../Loading";
 
 // handles rendering of QuestionnaireContainer in the Clinician Page
 const DoTheTestContainer = () => {
     const { user } = useAuth0();
     const [wizardStep, setWizardStep] = useState(-1);
-
+    const [loading, setLoading] = useState(false);
     const [personalDetails, setPersonalDetails] = useState({
         name: "",
         date: "",
@@ -123,20 +124,20 @@ const DoTheTestContainer = () => {
 
     const getPersonalDetails = (data) => {
         setPersonalDetails(data)
-        console.log("data", data)
     };
 
-
     const submitResponse = () => {
+        setLoading(true);
         let data = {
             questionnaireData,
             personalDetails,
             clinicianEmail: user.name,
         };
-        console.log("RESPONSE: ", data);
+
         completeQuestionnaire(data).then( res => {
             console.log("complete question", res)
             setWizardStep(3);
+            setLoading(false);
         })
 
 
@@ -189,6 +190,8 @@ const DoTheTestContainer = () => {
                         S U B M I T
                     </button>
                 </div>
+
+                {loading ? <Loading /> : null}
 
                 <ParentReviewSubmission questionnaire={selectedQuestionnaire} personalDetails={personalDetails} questionnaireData={questionnaireData} />
             </div>
