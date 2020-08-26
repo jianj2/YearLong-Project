@@ -12,7 +12,7 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { Modal, Backdrop, Fade, FormControl, InputLabel, Input, FormHelperText, FormControlLabel, Checkbox } from "@material-ui/core";
+import { Modal, Backdrop, Fade, FormControl, InputLabel, Input, FormHelperText, FormControlLabel, Checkbox, Chip } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 // Import Utils.
@@ -150,6 +150,7 @@ const ManageQuestionnaires = (props) => {
             description: "Please click edit to begin with this questionnaire.",
             sections: [],
             isStandard: false,
+            isSSQ_Ch: true,
         };
         setCustomisedQuestionnaires([newQuestionnaire, ...customisedQuestionnaires]);
         setLoading(false);
@@ -358,8 +359,7 @@ const ManageQuestionnaires = (props) => {
                 canShare={false}
                 onClickShare={shareQuestionnaire}
                 />
-                {/* {standardisedQuestionnaireGenerator("SSQ-P", "SSQ for parents", "17/05/2020")}
-                {standardisedQuestionnaireGenerator("SSQ-CH", "SSQ for children ", "17/05/2020")} */}
+
             </div>
 
             <div className="CQ-header">

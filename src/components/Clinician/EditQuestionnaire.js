@@ -41,11 +41,13 @@ const EditQuestionnaire = ({
                                addQuestion,
                                addScenario,removeScenario,
                                handleQuestionnaireTitleChange,
+                               handleQuestionnaireTypeChange,
                                handleQuestionnaireDesChange,
                                handleQuestionDesChange,
                                handleQuestionOptsChange,
                                handleSecTitleChange,
-                               handleSceDesChange
+                               handleSceDesChange,
+                               redirectURL
                            } ) => {
 
     const [saveDialogOpen, setSaveDialogOpen] = React.useState(false);
@@ -70,7 +72,7 @@ const EditQuestionnaire = ({
     };
 
 
-    const manage_questionnaire_url = "/clinician";
+    const manage_questionnaire_url = redirectURL;
 
     if (!Questionnaire) {
         return <Loading />;
@@ -170,6 +172,7 @@ const EditQuestionnaire = ({
                         handleQuestionnaireTitleChange
                     }
                     handleQuestionnaireDesChange={handleQuestionnaireDesChange}
+                    handleQuestionnaireTypeChange = {handleQuestionnaireTypeChange}
                 />
 
                 <SectionsContainer

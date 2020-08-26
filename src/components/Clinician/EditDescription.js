@@ -20,6 +20,10 @@ import {
     FormHelperText,
     InputAdornment,
     IconButton,
+    FormLabel,
+    RadioGroup,
+    FormControlLabel,
+    Radio,
 } from "@material-ui/core";
 
 
@@ -34,7 +38,10 @@ const EditDescription = (props, { Questionnaire }) => {
     const handleQuestionnaireDescriptionChange = (event) => {
         props.handleQuestionnaireDesChange(event);
     };
-
+    // to modify the questionnaire type change in real time
+    const handleQuestionnaireTypeChange = (event) => {
+        props.handleQuestionnaireTypeChange(event);
+    };
     return (
         <div className="edit-description">
             <h2>Edit Questionnaire</h2>
@@ -63,6 +70,19 @@ const EditDescription = (props, { Questionnaire }) => {
                     <FormHelperText>
                         Write the description of the questionnaire
                     </FormHelperText>
+                </FormControl>
+
+                <FormControl component="fieldset">
+                <FormLabel component="legend">SSQ Type</FormLabel>
+                <RadioGroup 
+                    defaultValue={props.Questionnaire.isSSQ_Ch? "children":"parents"} 
+                    aria-label="SSQtype" 
+                    name="customized-radios"
+                    onChange = {handleQuestionnaireTypeChange}
+                >
+                    <FormControlLabel value="children" control={<Radio />} label="Children" />
+                    <FormControlLabel value="parents" control={<Radio />} label="Parents" />
+                </RadioGroup>
                 </FormControl>
             </div>
         </div>

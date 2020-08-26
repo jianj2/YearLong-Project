@@ -44,6 +44,7 @@ const ContentPanel = (props) => {
             <div className="content-container">
                 <QuestionnaireContainer
                     questionnaireID={props.questionnaireID}
+                    redirectURL = "/clinician"
                 />
             </div>
         );
