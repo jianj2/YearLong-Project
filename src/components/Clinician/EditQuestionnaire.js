@@ -45,7 +45,8 @@ const EditQuestionnaire = ({
                                handleQuestionDesChange,
                                handleQuestionOptsChange,
                                handleSecTitleChange,
-                               handleSceDesChange
+                               handleSceDesChange,
+                               redirectURL
                            } ) => {
 
     const [saveDialogOpen, setSaveDialogOpen] = React.useState(false);
@@ -70,7 +71,7 @@ const EditQuestionnaire = ({
     };
 
 
-    const manage_questionnaire_url = "/clinician";
+    const manage_questionnaire_url = redirectURL;
 
     if (!Questionnaire) {
         return <Loading />;

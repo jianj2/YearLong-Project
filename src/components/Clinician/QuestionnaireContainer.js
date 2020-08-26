@@ -180,7 +180,8 @@ const QuestionnaireContainer = (props) => {
                                        handleSecTitleChange={handleSecTitleChange}
                                        handleSceDesChange={handleSceDesChange}
                                        handleQuestionDesChange={handleQuestionDesChange}
-                                       handleQuestionOptsChange={handleQuestionOptsChange}/>
+                                       handleQuestionOptsChange={handleQuestionOptsChange}
+                                       redirectURL = {props.redirectURL}/>
                 </form>
                 {/*<BottomContainer addQuestion={addQuestion} />*/}
             </div>
