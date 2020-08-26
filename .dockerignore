@@ -1,0 +1,6 @@
+# ignore files and folders
+.git
+.cache
+*.md
+node_modules
+build
