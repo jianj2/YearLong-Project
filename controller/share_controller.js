@@ -3,7 +3,7 @@
  * DEFINING SHARE API CALLS CONTROLLER
  * ========================================
  * @date created: 31 May 2020
- * @authors: Uvin, Waqas
+ * @authors: Uvin
  *
  * The share_controller is used for defining the functionality of api calls related to share.
  *
@@ -11,7 +11,7 @@
 
 const mongoose = require("mongoose");
 const Share = mongoose.model("share");
-const {v1: uuidv1} = require("uuid");
+const { v1: uuidv1 } = require("uuid");
 const nodemailer = require('nodemailer');
 const path = require("path");
 const Readable = require('stream').Readable
@@ -19,15 +19,13 @@ const PDFDocument = require('pdfkit');
 const Questionnaire = mongoose.model("questionnaire");
 var fs = require('fs');
 
-const {sendInvitationEmail, sendResultsEmail} = require('./email_controller');
-
 
 // Create a new share.
-const shareQuestionnaire = function (req, res) {
+const shareQuestionnaire = function (req,res) {
 
     // convert to a list of objects
     let visibleSection = []
-    Object.entries(req.body.shareSection).map((k, v) => {
+    Object.entries(req.body.shareSection).map((k,v) =>{
         visibleSection.push({title: k[0], isVisible: k[1]});
     })
 
@@ -38,37 +36,21 @@ const shareQuestionnaire = function (req, res) {
         clinicianEmail: req.body.clinicianEmail,
         patientEmail: req.body.patientEmail,
         questionnaireId: req.body.questionnaireId,
-        readOnly: req.body.readOnly,
-        message: req.body.message,
-        shareSection: visibleSection,
+        readOnly:req.body.readOnly,
+        message:req.body.message,
+        shareSection:visibleSection,
     });
 
-    console.log("newShare", newShare)
+    console.log(req.body)
 
-    newShare.save(function (err, createdShare) {
-        console.log("Share created");
-
-        if (!err) {
-            sendInvitationEmail(createdShare)
-                .then(emailRes => {
-                    if (emailRes.success) {
-                        console.log("SEND SHAREEEEE");
-                        console.log("SEND SHAREEEEE");
-                        res.send(emailRes);
-                    }
-                })
-                .catch(emailRej => {
-                    if (emailRej.success) {
-
-                        console.log("FAIL SHAREEEEE");
-                        console.log("FAIL SHAREEEEE");
-                        res.send(emailRej);
-                    }
-                })
-
+    newShare.save(function(err, createdShare) {
+        if (!err){
+            // Only send the email if the patient email is defined.
+            if(createdShare.patientEmail != undefined){
+                sendInvitationEmail(req,res,createdShare);
+            }
+            res.send(createdShare);
         } else {
-            console.log("err SHAREEEEE", err);
-            console.log("err SHAREEEEE");
             res.send(err);
         }
     })
@@ -78,33 +60,54 @@ const shareQuestionnaire = function (req, res) {
 const getShareDetails = function (req, res) {
     let shareId = req.params.shareId;
 
-    Share.findOne({shareId}, function (
+    Share.findOne({ shareId }, function (
         err,
         share
     ) {
         if (!err && share != null) {
-            res.send({statusCode: 200, message: "Valid ShareId", data: share});
+            res.send({statusCode:200, message:"Valid ShareId", data:share});
         } else {
-            res.send({statusCode: 400, message: "Invalid ShareId", data: err})
+            res.send({statusCode:400, message:"Invalid ShareId", data:err})
         }
     });
 };
 
-// Method called when share response is completed.
-const completeShare = function (req, res) {
+
+const completeShare = function (req,res) {
+    sendResultsEmail(req,res);
+    deleteShare(req,res);
+}
+
+// Sending the results in an email.
+const sendResultsEmail = function (req, res) {
+
     let questionnaireData = req.body.questionnaireData;
     let clinicianEmail = req.body.clinicianEmail;
     let personalDetails = req.body.personalDetails;
+    var total_score=0;
+    var section_score=new Array();
+    var total_q=0;
+    var section_num=0;
+    for(var i=0;i<questionnaireData.length;i++){
+        var section_q=0;
+        var score=0;
+        for (var j=0; j<questionnaireData[i].length;j++) {
+            for (var z = 0; z < questionnaireData[i][j].length; z++) {
+                if (!questionnaireData[i][j][z].isMCQ) {
+                    if (questionnaireData[i][j][z].value != '') {
+                        score += questionnaireData[i][j][z].value;
+                    }
+                    section_q += 1;
+                }
+            }
+        }
+        section_score[section_num] = score / section_q;
+        total_score += score;
+        section_num += 1;
+        total_q += section_q;
+    };
+    var average_score=total_score/total_q;
 
-    sendResultsEmail(questionnaireData, clinicianEmail, personalDetails)
-        .then(emailRes => {
-            console.log("COMPLETE SHAREEEEE");
-            console.log("COMPLETE SHAREEEEE");
-            deleteShare(req, res);
-            res.send(emailRes)
-        })
-        .catch(emailRej => res.send(emailRej))
-};
     // Used to create the email
     const transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -334,7 +337,7 @@ const completeShare = function (req, res) {
 // Delete the share from our database.
 const deleteShare = function (req, res) {
     const shareId = req.params.shareId;
-    Share.deleteOne({shareId: shareId}, function (
+    Share.deleteOne({ shareId: shareId }, function (
         err,
         result
     ) {
