@@ -86,10 +86,10 @@ const SSQInstructionsContainer = () => {
                     <div className = "share-modal-container">
                         <h3 class = "center-text">Are you sure you want to cancel the editing?</h3>
                         <div className = "buttons-container">
-                            <button className="button" id = "margin-button-yes" onClick={CancelInstruction} >
+                            <button className="button" id = "margin-button" onClick={CancelInstruction} >
                                 YES
                             </button>
-                            <button className="button" id = "margin-button-no" onClick={closeCancelConfirmation}>
+                            <button className="button" id = "margin-button" onClick={closeCancelConfirmation}>
                                 NO
                             </button>
                         </div>
