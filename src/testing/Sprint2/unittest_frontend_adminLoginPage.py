@@ -71,6 +71,29 @@ class unittest_frontend_adminLoginPage(unittest.TestCase):
         enter.click()
         time.sleep(2)
 
+    def test_login_success(self):
+            username = self.driver.find_element_by_name("username")
+            username.send_keys("AdminUser1")
+            password = self.driver.find_element_by_name("password")
+            password.send_keys("pw1234")
+            enter = self.driver.find_element_by_class_name("button")
+            enter.click()
+            time.sleep(2)
+            assert ("http://http://localhost:3000/admin/Questionnaires" in self.driver.current_url)
+
+    def test_logout(self):
+        username = self.driver.find_element_by_name("username")
+        username.send_keys("AdminUser1")
+        password = self.driver.find_element_by_name("password")
+        password.send_keys("pw1234")
+        enter = self.driver.find_element_by_class_name("button")
+        enter.click()
+        time.sleep(2)
+        logout = self.driver.find_element_by_class_name("button")
+        logout.click()
+        time.sleep(2)
+        assert ("http://localhost:3000" in self.driver.current_url)
+
     def test_navbar_left(self):
         navbar_left = self.driver.find_element_by_class_name("navbar-left")
         navbar_left.click()
