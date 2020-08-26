@@ -79,7 +79,7 @@ class unittest_frontend_adminLoginPage(unittest.TestCase):
             enter = self.driver.find_element_by_class_name("button")
             enter.click()
             time.sleep(2)
-            assert ("http://http://localhost:3000/admin/Questionnaires" in self.driver.current_url)
+            assert ("http://localhost:3000/admin/Questionnaires" in self.driver.current_url)
 
     def test_logout(self):
         username = self.driver.find_element_by_name("username")
