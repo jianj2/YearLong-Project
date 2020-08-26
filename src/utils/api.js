@@ -1,4 +1,4 @@
-const api = "http://ssq-paediatrics:3001";
+const api = "http://hostip:3001";
 
 let header = {
     authorization: "fill in l8er",
