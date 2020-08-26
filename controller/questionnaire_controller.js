@@ -50,10 +50,10 @@ const getQuestionnaireAsync = function (req, res) {
     Questionnaire.findOne({ questionnaireId }, function (err, questionnaire) {
         if (!err && questionnaire != null) {
 
-            res.send(questionnaire)
+            res.send(questionnaire);
 
         } else {
-            res.send(err)
+            res.send("null");
         }
     });
 };
