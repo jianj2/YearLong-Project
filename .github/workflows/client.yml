@@ -12,14 +12,15 @@
 ---
 name: client-CI/CD
 
-#
 on:
+  # Pipeline trigger on push
   push:
     branches: 
     - deployment-client 
     - development-client 
     tags:
       - v*
+  # Pipeline trigger on pull request    
   pull_request:
     branches:
     - development-client 
@@ -27,6 +28,7 @@ on:
       - v*
 
 jobs:
+  # Linting client code with flake8
   Python_test:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -57,6 +59,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
         cd ../../
 
+  # Build cache and publish images      
   Docker_build_cache_publish:
     needs: Python_test
     runs-on: ${{ matrix.os }}
@@ -79,6 +82,7 @@ jobs:
         dockerfile: Dockerfile
         push_git_tag: true
   
+  # SCP files to web server
   SCP:
     needs: Python_test
     runs-on: ${{ matrix.os }}
@@ -101,6 +105,7 @@ jobs:
         source: ./
         target: ~/client      
   
+  # Deploy app to the server
   Deploy:
     needs: ["SCP","Docker_build_cache_publish"]
     runs-on: ${{ matrix.os }}
