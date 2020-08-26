@@ -332,23 +332,6 @@ const sendResultsEmail = function (req, res) {
                 });
             }
         });
-
-    //console.table(JSON.stringify(questionnaireData))
-
-
-
-
-     //doc.fontSize(15)
-     //.pipe(JSON.stringify(questionnaireData));
-
-
-
-//    doc
-//    .fontSize(25)
-//    .text(JSON.stringify(questionnaireData), 100, 100)
-//    .text("test here");
-
-
 }
 
 // Delete the share from our database.
