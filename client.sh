@@ -6,7 +6,7 @@
 #
 # This shell script installs docker, creates a docker network
 # and either runs the docker container from the registry image
-# or from local build.
+# or from local build for frontend.
 
 # Removing old docker version
 remove_old_docker()

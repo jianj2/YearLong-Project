@@ -7,7 +7,7 @@
 # This YAML file runs a pipeline in GitHub Actions containing a number of jobs.
 # Jobs include testing the code, building the image, caching the image, publishing
 # the image to GitHub registry, transfering the files to the production server and 
-# deploying the application on the server.
+# deploying the frontend on the server.
 
 ---
 name: client-CI/CD
