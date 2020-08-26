@@ -19,15 +19,38 @@ const mongoose = require("mongoose");
 
 const Questionnaire = mongoose.model("questionnaire");
 
+
+const getTimeStamp = function (){
+    let date_ob = new Date();
+    // adjust 0 before single digit date
+    let date = ("0" + date_ob.getDate()).slice(-2);
+    // current month
+    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+    // current year
+    let year = date_ob.getFullYear();
+    // current hours
+    let hours = date_ob.getHours();
+    // current minutes
+    let minutes = date_ob.getMinutes();
+    // current seconds
+    let seconds = date_ob.getSeconds();
+    // prints date & time in YYYY-MM-DD HH:MM:SS format
+    return(year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds);
+}
+
 // Sending the results in an email.
-const generateReport = function (questionnaireId, personalDetails, questionnaireData) {
+const generateReport = function (questionnaireId, personalDetails, questionnaireData, scores) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
-        console.log("Enter Generate Report");
+        //needs to merge
         //needs to merge
         const doc = new PDFDocument();
+        let ts = getTimeStamp();
+        doc.font('Helvetica').fontSize(10).text(ts, 10, 10);
 
-        doc.font('Helvetica-Bold').fontSize(14).text("Patient Details", 80);
+        doc.image('assets/logo_complete.png', 400, 30, {width: 100})
+
+        doc.font('Helvetica-Bold').fontSize(14).text("Patient Details", 80, 80);
 
         // purple overlay for patient information
         doc.fillOpacity(0.1).rect(80, 100, 420, 180).fill('purple');
@@ -51,6 +74,8 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
 
         // prints out title for questionnaire response
         doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire Response", 80, 310);
+        doc.font('Helvetica').fontSize(12).text("Questionnaire average: " + scores.averageScore, 280, 310);
+
         doc.lineCap('butt')
             .moveTo(80, 330)
             .lineTo(500, 330)
@@ -65,7 +90,6 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
         let docHeight = 700
 
 
-        console.log("Enter Generate Report 2");
 
         Questionnaire.findOne({questionnaireId}, function (err, questionnaire) {
             if (!err) {
@@ -80,6 +104,7 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
                     }
                     // title for each section
                     doc.font('Helvetica-Bold').fontSize(14).text(section.title, 80, spacing);
+                    doc.font('Helvetica').fontSize(12).text("Section average: "+ scores.sectionScores[sectionIndex], 280, spacing);
                     spacing = spacing + 30;
                     //                  console.log("1",section.title)
 
@@ -113,22 +138,42 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
                             console.log("3", question)
                             console.log("answer:", questionnaireData[sectionIndex][scenarioIndex][questionIndex])
 
+                            let questionAnswer = questionnaireData[sectionIndex][scenarioIndex][questionIndex]
+
                             // if the question is range type then the print out both value and supplementary value
                             if (!question.isMCQ) {
 
-                                if (questionnaireData[sectionIndex][scenarioIndex][questionIndex].value == '') {
-                                    doc.font('Helvetica-Bold')
-                                        .text("Answer: ", 80, spacing);
-                                    doc.font('Helvetica')
-                                        .text(questionnaireData[sectionIndex][scenarioIndex][questionIndex].supplementaryValue, 280, spacing);
+                                console.log("questionAnswer.value",questionAnswer.value);
+                                if ((questionAnswer.value === "" || questionAnswer.value === undefined)
+                                    && (questionAnswer.supplementaryValue === '' ||  questionAnswer.supplementaryValue === undefined)){
 
-                                } else {
                                     doc.font('Helvetica-Bold')
                                         .text("Answer: ", 80, spacing)
-
+                                    questionAnswer.value = "Unanswered"
                                     doc.font('Helvetica')
-                                        .text(questionnaireData[sectionIndex][scenarioIndex][questionIndex].value, 280, spacing)
+                                        .text(questionAnswer.value, 280, spacing)
+
+                                }else{
+
+                                    if (questionAnswer.supplementaryValue === '') {
+
+                                        doc.font('Helvetica-Bold')
+                                            .text("Answer: ", 80, spacing)
+
+                                        doc.font('Helvetica')
+                                            .text(questionAnswer.value, 280, spacing)
+
+                                    } else {
+
+                                        doc.font('Helvetica-Bold')
+                                            .text("Answer: ", 80, spacing);
+                                        doc.font('Helvetica')
+                                            .text(questionAnswer.supplementaryValue, 280, spacing);
+
+                                    }
+
                                 }
+
 
                                 spacing = spacing + 35;
 
@@ -154,10 +199,16 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
                                 }
 
                                 doc.text("Answer: ", 80, spacing)
+                                if (questionAnswer.value === "" || questionAnswer.value === undefined ){
+                                    doc.font('Helvetica')
+                                        .text("Unanswered", 280, spacing);
+                                    spacing = spacing + 35;
+                                }else{
+                                    doc.font('Helvetica')
+                                        .text(questionAnswer.value, 280, spacing);
+                                    spacing = spacing + 35;
+                                }
 
-                                doc.font('Helvetica')
-                                    .text(questionnaireData[sectionIndex][scenarioIndex][questionIndex].value, 280, spacing);
-                                spacing = spacing + 35;
                             }
                         })
 

@@ -84,7 +84,6 @@ const sendInvitationEmail = function (createdShare) {
 const sendResultsEmail = function (questionnaireId, questionnaireData, clinicianEmail, personalDetails) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
-        console.log("Enter Send Result");
 
         var total_score = 0;
         var section_score = new Array();
@@ -96,7 +95,8 @@ const sendResultsEmail = function (questionnaireId, questionnaireData, clinician
             var score = 0;
             for (var j = 0; j < questionnaireData[i].length; j++) {
                 for (var z = 0; z < questionnaireData[i][j].length; z++) {
-                    if (!questionnaireData[i][j][z].isMCQ) {
+                    console.log(questionnaireData[i][j][z])
+                    if (!isNaN(questionnaireData[i][j][z].value)) {
                         if (questionnaireData[i][j][z].value != '') {
                             score += questionnaireData[i][j][z].value;
                         }
@@ -104,16 +104,25 @@ const sendResultsEmail = function (questionnaireId, questionnaireData, clinician
                     }
                 }
             }
-            section_score[section_num] = score / section_q;
+            if (score === 0 ){
+                section_score[section_num]="N/A";
+            }else{
+                section_score[section_num] = score / section_q;
+            }
             total_score += score;
             section_num += 1;
             total_q += section_q;
+        };
+        var average_score = Math.round((total_score / total_q) * 100) / 100;
+
+        // object created to pass through.
+        var scores = {
+            averageScore:average_score, sectionScores: section_score
         }
-        ;
-        var average_score = total_score / total_q;
+        // debugging
+        //console.log("total_score:",total_score,"section_score:",section_score,"total_q:",total_q,"section_num:",section_num,"average_score:", average_score );
 
 
-        console.log("average_score Send Result");
 
         let mailOptions = {
             from: "SSQ Paediatric",
@@ -132,16 +141,15 @@ const sendResultsEmail = function (questionnaireId, questionnaireData, clinician
                 "        <p>Thank you,</p>\n" +
                 "        <p>" +
                 "</p>\n" +
-                "<div> <h2>Personal Details</h2>" + jsonToTableHtmlString(personalDetails, {}) + "</div>" +
-                "<div> <h2>Questionnaire Data</h2>" + jsonToTableHtmlString(questionnaireData, {}) + "</div>" +
-                "<div> <h2>Average score</h2>" + average_score + "</div>" +
-                "<div> <h2>Section score</h2>" + section_score + "</div>" +
-                "<div> <h2>Question number</h2>" + total_q + "</div>" +
+                // "<div> <h2>Personal Details</h2>" + jsonToTableHtmlString(personalDetails, {}) + "</div>" +
+                // "<div> <h2>Questionnaire Data</h2>" + jsonToTableHtmlString(questionnaireData, {}) + "</div>" +
+                // "<div> <h2>Average score</h2>" + average_score + "</div>" +
+                // "<div> <h2>Section score</h2>" + section_score + "</div>" +
+                // "<div> <h2>Question number</h2>" + total_q + "</div>" +
                 "    </div>",
         }
 
-        console.log("email generation start");
-        generateReport(questionnaireId, personalDetails, questionnaireData)
+        generateReport(questionnaireId, personalDetails, questionnaireData, scores)
             .then((reportResolved) => {
                 mailOptions.attachments = [{   // stream as an attachment
                     filename: reportResolved.fileName,
