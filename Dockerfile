@@ -19,4 +19,4 @@ RUN npm run build --production
 
 EXPOSE 3000
 
-CMD ["serve","-s","build","-l","3000"]
+CMD ["serve","-s","build","-l","3000","--ssl-cert","letsencrypt/89532081_paediatricsssq.sytes.net.cert","--ssl-key","letsencrypt/89532081_paediatricsssq.sytes.net.key"]
