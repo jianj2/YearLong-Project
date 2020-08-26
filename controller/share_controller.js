@@ -91,11 +91,10 @@ const completeShare = function (req, res) {
     let questionnaireData = req.body.questionnaireData;
     let clinicianEmail = req.body.clinicianEmail;
     let personalDetails = req.body.personalDetails;
+    let questionnaireId = req.body.questionnaireId;
 
-    sendResultsEmail(questionnaireData, clinicianEmail, personalDetails)
+    sendResultsEmail(questionnaireId, questionnaireData, clinicianEmail, personalDetails)
         .then(emailRes => {
-            console.log("COMPLETE SHAREEEEE");
-            console.log("COMPLETE SHAREEEEE");
             deleteShare(req, res);
             res.send(emailRes)
         })
