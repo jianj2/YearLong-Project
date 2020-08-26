@@ -50,10 +50,10 @@ const getQuestionnaireAsync = function (req, res) {
     Questionnaire.findOne({ questionnaireId }, function (err, questionnaire) {
         if (!err && questionnaire != null) {
 
-            res.send(questionnaire)
+            res.send(questionnaire);
 
         } else {
-            res.send(err)
+            res.send("null");
         }
     });
 };
@@ -83,9 +83,10 @@ const addEmptyQuestionnaire = function (req, res) {
         questionnaireId: uuid,
         title: "New Questionnaire",
         description: "Please click edit to begin with this questionnaire.",
+        isSSQ_Ch: true,
         sections: [
             {
-                title: "Speech",
+                title: "Section 1 - Speech",
                 scenarios: [
                     {
                         description: "You are at Melbourne Uni...",
@@ -108,8 +109,8 @@ const addEmptyQuestionnaire = function (req, res) {
                     },
                 ],
             },
-            { title: "Spatial", scenarios: [] },
-            { title: "Quality", scenarios: [] },
+            { title: "Section 2 - Spatial", scenarios: [] },
+            { title: "Section 3 - Quality", scenarios: [] },
         ],
         isStandard: req.body.isStandard,
     });
@@ -189,6 +190,26 @@ const deleteQuestionnaire = function (req, res) {
     });
 };
 
+
+// gets all standardised questionnaires 
+const getStandardisedQuestionnaires = function (req, res){
+
+        Questionnaire.find({isStandard: true}, function (err, questionnaires) {
+
+            if (!err && questionnaires != null) {
+                
+    
+                res.send({statusCode:200, message:"Valid", data:questionnaires});
+    
+            } else {
+                res.send({statusCode:400, message:"Invalid", data:err});
+            }
+        });
+    
+
+};
+
+
 module.exports.getAllQuestionnaire = getAllQuestionnaire;
 module.exports.getQuestionnaireSync = getQuestionnaireSync;
 module.exports.addEmptyQuestionnaire = addEmptyQuestionnaire;
@@ -196,4 +217,5 @@ module.exports.deleteQuestionnaire = deleteQuestionnaire;
 module.exports.editQuestionnaire = editQuestionnaire;
 module.exports.getClinicianQuestionnaires = getClinicianQuestionnaires;
 module.exports.getQuestionnaireAsync = getQuestionnaireAsync;
+module.exports.getStandardisedQuestionnaires = getStandardisedQuestionnaires;
 

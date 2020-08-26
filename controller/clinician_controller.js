@@ -13,10 +13,12 @@ const mongoose = require('mongoose');
 
 const Clinician = mongoose.model('clinician');
 
+const { sendResultsEmail } = require('./email_controller')
+
 // Get all clinician details.
 const getAllClinician = function (req, res) {
-    Clinician.find(function(err, allClinician){
-        if(!err){
+    Clinician.find(function (err, allClinician) {
+        if (!err) {
             res.send(allClinician);
         } else {
             res.send(err);
@@ -25,7 +27,7 @@ const getAllClinician = function (req, res) {
 };
 
 // Create a new clinician.
-const createClinician = function (req,res) {
+const createClinician = function (req, res) {
     const newClinician = new Clinician({
         clinicianId: 'id1',
         name: "Uvin Abeysinghe",
@@ -33,8 +35,8 @@ const createClinician = function (req,res) {
         questionnaires: ['questionnaireId1', 'questionnaireId2'],
     });
 
-    newClinician.save(function(err, createdClinician) {
-        if (!err){
+    newClinician.save(function (err, createdClinician) {
+        if (!err) {
             res.send(createdClinician);
         } else {
             res.send(err);
@@ -42,6 +44,19 @@ const createClinician = function (req,res) {
     })
 }
 
+// Clinician completes the questionnaire
+const completeQuestionnaire = function (req, res) {
+    let questionnaireData  = req.body.questionnaireData;
+    let clinicianEmail  = req.body.clinicianEmail;
+    let personalDetails  = req.body.personalDetails;
+    let questionnaireId  = req.body.questionnaireId;
+
+    sendResultsEmail(questionnaireId, questionnaireData, clinicianEmail, personalDetails)
+        .then(emailRes => res.send(emailRes))
+        .catch(emailRej => res.send(emailRej))
+}
+
 
 module.exports.getAllClinician = getAllClinician;
 module.exports.createClinician = createClinician;
+module.exports.completeQuestionnaire = completeQuestionnaire;
