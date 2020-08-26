@@ -19,4 +19,4 @@ RUN npm run build --production
 
 EXPOSE 3000
 
-CMD ["serve","-s","build"]
+CMD ["serve","-s","build","-l","3000"]

@@ -8,22 +8,6 @@
 # and either runs the docker container from the registry image
 # or from local build.
 
-echo "Deploying application ..."
-
-stop_docker_container && remove_docker_container
-
-remove_local_docker_image && remove_registry_docker_image
-
-remove_docker_network
-
-remove_old_docker && install_docker
-
-create_docker_network
-
-registry_build || local_build
-
-echo "Application deployed ..."
-
 # Removing old docker version
 remove_old_docker()
 {   
@@ -69,21 +53,6 @@ remove_local_docker_image()
 remove_registry_docker_image() 
 {
     docker rmi $(docker images docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client -q)
-}
-
-# Run only from registry
-registry_build()
-{
-    docker_login && \
-    docker_pull_image && \
-    docker_run_registry_container
-}
-
-# Run only local build
-local_build()
-{
-    docker_build_image && \
-    docker_run_local_container
 }
 
 # Login to the GitHub registry
@@ -160,4 +129,42 @@ install_docker()
     docker-ce-cli \
     containerd.io -y
 }
-EOF
+
+# Run only from registry
+registry_build()
+{
+    docker_login && \
+    docker_pull_image && \
+    docker_run_registry_container
+}
+
+# Run only local build
+local_build()
+{
+    docker_build_image && \
+    docker_run_local_container
+}
+
+echo "Deploying application ..."
+
+# Stopping and removing containers
+stop_docker_container && remove_docker_container
+
+# Removing local and registry images
+remove_local_docker_image && remove_registry_docker_image
+
+# Removing docker network
+remove_docker_network
+
+# Reinstalling docker
+remove_old_docker && install_docker
+
+# Creating docker network
+create_docker_network
+
+# Running react-app
+registry_build || local_build
+
+echo "Application deployed ..."
+
+# EOF

@@ -75,7 +75,16 @@ jobs:
 
     - name: Run selenium tests
       run: |
-        dir
+        cd src\Sprint1
+        Python unittest_frontend_adminLoginPage.py
+        Python unittest_frontend_clinicianAfterLoginPage.py
+        Python unittest_frontend_clinicianHomePage.py
+        Python unittest_frontend_clinicianLoginPage.py
+        Python unittest_frontend_loginPage.py
+        Python unittest_frontend_parentPage1.py
+        Python unittest_frontend_parentPage2.py
+        Python unittest_frontend_parentPage3.py
+        Python unittest_frontend_parentPage4.py
 
   Docker_build_cache_publish:
     needs: Python_test
