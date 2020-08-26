@@ -1,3 +1,14 @@
+#!/bin/bash
+# ====================================================================
+# PIPELINE YAML FILE
+# ====================================================================
+# Mayank Sharma - 22th August 2020
+#
+# This YAML file runs a pipeline in GitHub Actions containing a number of jobs.
+# Jobs include testing the code, building the image, caching the image, publishing
+# the image to GitHub registry, transfering the files to the production server and 
+# deploying the application on the server.
+
 ---
 name: client-CI/CD
 
@@ -46,7 +57,26 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
         cd ../../
-    
+  
+  Selenium_test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest]
+    name: Selenium test
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3.8 for selenium testing
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Run selenium tests
+      run: |
+        dir
+
   Docker_build_cache_publish:
     needs: Python_test
     runs-on: ${{ matrix.os }}
