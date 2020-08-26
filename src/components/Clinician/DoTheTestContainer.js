@@ -36,8 +36,11 @@ const DoTheTestContainer = () => {
         leftDeviceType: "",
     });
 
-
     const [questionnaires, setQuestionnaires] = useState([]);
+    const [
+        standardisedQuestionnaires,
+        setStandardisedQuestionnaires,
+    ] = useState([]);
     const [questionnaireData, setQuestionnaireData] = useState([]);
 
     const [selectedQuestionnaire, setSelectedQuestionnaire] = useState({
@@ -49,10 +52,21 @@ const DoTheTestContainer = () => {
     });
 
     useEffect(() => {
-        API.getClinicianQuestionnaires(user.name).then((res) => {
-            console.log(res);
-            setQuestionnaires(res);
-        });
+        async function retrieveStandardisedQuestionnaires() {
+            const response = await API.getStandardisedQuestionnaires();
+            if (response.statusCode === 200) {
+                setStandardisedQuestionnaires(response.data);
+            }
+        }
+        async function retrieveCustomisedQuestionnaires() {
+            API.getClinicianQuestionnaires(user.name).then((res) => {
+                console.log(res);
+                setQuestionnaires(res);
+            });
+        }
+
+        retrieveCustomisedQuestionnaires();
+        retrieveStandardisedQuestionnaires();
     }, [user]);
 
     // Method called to go to the next page in the wizard.
@@ -76,11 +90,16 @@ const DoTheTestContainer = () => {
     };
     // Method called when we submit the questionnaire.
     const submitQuestionnaire = (data) => {
-        nextStep(); 
+        nextStep();
     };
 
     // Method called to update questionnaire data when a question is updated.
-    const handleQuestionnaireChange = (sectionIndex, scenarioIndex, questionIndex, data) => {
+    const handleQuestionnaireChange = (
+        sectionIndex,
+        scenarioIndex,
+        questionIndex,
+        data
+    ) => {
         let temp = [...questionnaireData];
         temp[sectionIndex][scenarioIndex][questionIndex] = data;
         setQuestionnaireData(temp);
@@ -91,36 +110,36 @@ const DoTheTestContainer = () => {
         setWizardStep(0);
         API.getQuestionnaire(questionnaireId).then((res) => {
             // check if the questionnaire is available.
-            if(res.statusCode === 200 ){
-
+            if (res.statusCode === 200) {
                 let tempResponse = [];
                 res.data.sections.forEach((section, sectionIndex) => {
                     tempResponse[sectionIndex] = [];
                     section.scenarios.forEach((scenario, scenarioIndex) => {
                         tempResponse[sectionIndex][scenarioIndex] = [];
-                        scenario.questions.forEach((question, questionIndex) => {
-                            tempResponse[sectionIndex][scenarioIndex][questionIndex] = {
-                                value: "",
-                                supplementaryValue: "",
-                            };
-                        });
+                        scenario.questions.forEach(
+                            (question, questionIndex) => {
+                                tempResponse[sectionIndex][scenarioIndex][
+                                    questionIndex
+                                ] = {
+                                    value: "",
+                                    supplementaryValue: "",
+                                };
+                            }
+                        );
                     });
                 });
                 // Updating the state using the initial data and the questionnaire
                 // retrieved from the server.
                 setQuestionnaireData(tempResponse);
                 setSelectedQuestionnaire(res.data);
-
             }
-
         });
     };
 
     const getPersonalDetails = (data) => {
-        setPersonalDetails(data)
-        console.log("data", data)
+        setPersonalDetails(data);
+        console.log("data", data);
     };
-
 
     const submitResponse = () => {
         let data = {
@@ -143,8 +162,12 @@ const DoTheTestContainer = () => {
                     </button>
                 </div>
 
-                <FormParentDetails submitDetails={submitDetails} clinicianAccess={true} defaultValue={personalDetails}
-                                   getPersonalDetails={getPersonalDetails} />
+                <FormParentDetails
+                    submitDetails={submitDetails}
+                    clinicianAccess={true}
+                    defaultValue={personalDetails}
+                    getPersonalDetails={getPersonalDetails}
+                />
             </div>
         );
     } else if (wizardStep === 1) {
@@ -179,7 +202,11 @@ const DoTheTestContainer = () => {
                     </button>
                 </div>
 
-                <ParentReviewSubmission questionnaire={selectedQuestionnaire} personalDetails={personalDetails} questionnaireData={questionnaireData} />
+                <ParentReviewSubmission
+                    questionnaire={selectedQuestionnaire}
+                    personalDetails={personalDetails}
+                    questionnaireData={questionnaireData}
+                />
             </div>
         );
     } else if (wizardStep === 3) {
@@ -187,7 +214,9 @@ const DoTheTestContainer = () => {
             <div className="dothetest-container">
                 <div className="dothetest-submit">
                     <h1>Questionnaire Completed!</h1>
-                    <p>A report will be sent to your registered email address.</p>
+                    <p>
+                        A report will be sent to your registered email address.
+                    </p>
                     <button className="button" onClick={resetStep}>
                         G O &nbsp; B A C K
                     </button>
@@ -197,6 +226,17 @@ const DoTheTestContainer = () => {
     } else {
         return (
             <div className="dothetest-container">
+                <QuestionnaireList
+                    questionnaires={standardisedQuestionnaires}
+                    listTitle={"Standard Questionnaires"}
+                    isSelectable={true}
+                    onClickQuestion={onClickQuestion}
+                    canEdit={false}
+                    onClickEdit={() => {}}
+                    canDelete={false}
+                    onClickDelete={() => {}}
+                />
+
                 <QuestionnaireList
                     questionnaires={questionnaires}
                     listTitle={"My Questionnaires"}

@@ -359,8 +359,7 @@ const ManageQuestionnaires = (props) => {
                 canShare={false}
                 onClickShare={shareQuestionnaire}
                 />
-                {/* {standardisedQuestionnaireGenerator("SSQ-P", "SSQ for parents", "17/05/2020")}
-                {standardisedQuestionnaireGenerator("SSQ-CH", "SSQ for children ", "17/05/2020")} */}
+
             </div>
 
             <div className="CQ-header">
