@@ -34,6 +34,7 @@ export default function Questionnaire({
     const { register, handleSubmit, errors } = useForm();
     const [loading, setLoading] = useState(true);
 
+
     // Method: Called when we submit the questionnaire
     const onSubmit = (e) => {
         e.preventDefault();
@@ -57,36 +58,42 @@ export default function Questionnaire({
 
     //////////// Share section update /////////////////////////////
     // get a list of the visible sections
-    const getVisibleSections = (sections, visibilityInfoList) => {
-        const filteredSections = sections.filter((section) => {
-            const foundVisibilityInfo = visibilityInfoList.find(
-                (visibilityInfo) => {
-                    return visibilityInfo.title === section.title;
-                }
-            );
-            if (foundVisibilityInfo != undefined) {
-                return foundVisibilityInfo.isVisible;
-            } else {
-                return null;
-            }
-        });
-        return filteredSections;
-    };
+    // const getVisibleSections = (sections, visibilityInfoList) => {
+    //     const filteredSections = sections.filter((section) => {
+    //         const foundVisibilityInfo = visibilityInfoList.find(
+    //             (visibilityInfo) => {
+    //                 return visibilityInfo.title === section.title;
+    //             }
+    //         );
+    //         if (foundVisibilityInfo != undefined) {
+    //             return foundVisibilityInfo.isVisible;
+    //         } else {
+    //             return null;
+    //         }
+    //     });
+    //     return filteredSections;
+    // };
+    //
+    // // set the updates questionnaire sections.
+    // const updateSections = (questionnaire, sectionVisibility) => {
+    //     console.log(sectionVisibility);
+    //     if (sectionVisibility != undefined) {
+    //         // questionnaire.sections = getVisibleSections(
+    //         //     questionnaire.sections,
+    //         //     sectionVisibility
+    //         // );
+    //         //
+    //         setFilteredSections(getVisibleSections(
+    //             questionnaire.sections,
+    //             sectionVisibility
+    //         ))
+    //     }
+    // };
 
-    // set the updates questionnaire sections.
-    const updateSections = (questionnaire, sectionVisibility) => {
-        console.log(sectionVisibility);
-        if (sectionVisibility != undefined) {
-            questionnaire.sections = getVisibleSections(
-                questionnaire.sections,
-                sectionVisibility
-            );
-        }
-    };
 
-    updateSections(questionnaire, sectionVisibility);
-    setLoading(false);
     //////////////////////////////////////////////////////////////
+
+    console.log('questionaire in Questionnaire component ', questionnaire)
     if (loading) {
         return <Loading />;
     } else {

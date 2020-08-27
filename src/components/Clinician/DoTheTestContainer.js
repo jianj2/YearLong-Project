@@ -163,9 +163,8 @@ const DoTheTestContainer = () => {
             setWizardStep(3);
             setLoading(false);
         })
-
-
     };
+
     console.log("wizardStep", wizardStep);
     if (wizardStep === 0) {
         return (
