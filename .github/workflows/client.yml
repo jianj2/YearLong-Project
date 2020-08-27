@@ -59,72 +59,39 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
         cd ../../
 
-  # Build cache and publish images      
-  Docker_build_cache_publish:
-    needs: Python_test
+  # Build react and deploy to s3    
+  Npm_build_deploy:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest]
-    name: Docker build cache publish
+        node-version: [14.x]
+    name: Npm_build_deploy
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    
-    - name: Build, cache and publish docker image
-      uses: whoan/docker-build-with-cache-action@v5
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
       with:
-        username: mayankshar21
-        password: "${{ secrets.GITHUB_TOKEN }}"
-        registry: docker.pkg.github.com
-        image_name: paediatrics-ssq-client
-        image_tag: latest
-        dockerfile: Dockerfile
-        push_git_tag: true
+        node-version: ${{ matrix.node-version }} 
+    - name: Npm install
+      run: npm ci
+    - name: Npm build
+      run: npm run build
+      env:
+        CI: ""
+    - name: Deploy to S3
+      uses: jakejarvis/s3-sync-action@master
+      with:
+        args: --acl public-read --delete
+      env:
+        AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+        SOURCE_DIR: "build"
+
   
-  # SCP files to web server
-  SCP:
-    needs: Python_test
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-    name: SCP
-    steps:  
-    - name: Checkout
-      uses: actions/checkout@v2
-    
-    - name: SCP files to server
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.HOST_NAME }}
-        username: ${{ secrets.USER_NAME }}
-        key: ${{ secrets.SERVER_KEY }}
-        port: ${{ secrets.SERVER_PORT }}
-        rm: true
-        source: ./
-        target: ~/client      
-  
-  # Deploy app to the server
-  Deploy:
-    needs: ["SCP","Docker_build_cache_publish"]
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-    name: Deploy
-    steps:              
-    - name: Deploy react app to EC2 
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST_NAME }}
-        username: ${{ secrets.USER_NAME }}
-        key: ${{ secrets.SERVER_KEY }}
-        port: ${{ secrets.SERVER_PORT }}
-        script: |
-          cd client
-          chmod u+x client.sh
-          ./client.sh
 
 
 

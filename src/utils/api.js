@@ -1,5 +1,8 @@
-// const api = "http://52.65.44.7:3001";
+
 const api = "http://localhost:3001";
+
+//const api = "https://d1iiwjsw1v8g79.cloudfront.net/";
+
 
 let header = {
     authorization: "fill in l8er",

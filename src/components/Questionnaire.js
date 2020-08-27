@@ -23,15 +23,15 @@ import Question from "./Question";
 import "../styles/questionnaire.css";
 import "../styles/main.css";
 
-export default function Questionnaire({
-      readOnly,
-      questionnaire,
-      submitQuestionnaire,
-      questionnaireData,
-      handleQuestionnaireChange,
-      sectionVisibility,
-  }) {
-    const {register, handleSubmit, errors} = useForm();
+export default function Questionnaire({ 
+    readOnly,
+    questionnaire,
+    submitQuestionnaire,
+    questionnaireData,
+    handleQuestionnaireChange,
+    sectionVisibility,
+}) {
+    const { register, handleSubmit, errors } = useForm();  
 
 
     // Method: Called when we submit the questionnaire
@@ -54,10 +54,43 @@ export default function Questionnaire({
             data
         );
     };
+ 
+    //////////// Share section update /////////////////////////////
+    // get a list of the visible sections
+    const getVisibleSections = (sections, visibilityInfoList) => {
+        const filteredSections = sections.filter((section) => {
+            const foundVisibilityInfo = visibilityInfoList.find(
+                (visibilityInfo) => {
+                    return visibilityInfo.title === section.title;
+                }
+            );
+            if (foundVisibilityInfo != undefined) {
+                return foundVisibilityInfo.isVisible;
+            } else {
+                return null;
+            }
+        });
+        return filteredSections;
+    };
 
-    return (
-        <form onSubmit={onSubmit} className="questionaire-container">
-            <h1>{questionnaire.title}</h1>
+    // set the updates questionnaire sections.
+    const updateSections = (questionnaire, sectionVisibility) => {
+        console.log(sectionVisibility);
+        if (sectionVisibility != undefined) {
+            questionnaire.sections = getVisibleSections(
+                questionnaire.sections,
+                sectionVisibility
+            );
+        }
+    };
+
+    updateSections(questionnaire, sectionVisibility);
+
+    //////////////////////////////////////////////////////////////
+
+        return (
+            <form onSubmit={onSubmit} className="questionaire-container">
+                <h1>{questionnaire.title}</h1>
 
             {questionnaire.sections.map((section, sectionIndex) => (
                 <div key={sectionIndex} className="section-container">
@@ -92,21 +125,8 @@ export default function Questionnaire({
                             )}
                         </div>
                     ))}
-                </div>
-            ))}
-
-            <div className="questionaire-submit-button">
-                {readOnly ? null : (
-                    <button
-                        id="review"
-                        className={
-                            errors.code ? "button-disabled" : "button"
-                        }
-                    >
-                        R E V I E W
-                    </button>
-                )}
-            </div>
-        </form>
-    );
+                </div> 
+            </form>
+        );
+     
 }
