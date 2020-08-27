@@ -1,4 +1,4 @@
-const api = "https://paediatricsssq.sytes.net/";
+const api = "https://d1iiwjsw1v8g79.cloudfront.net/";
 
 let header = {
     authorization: "fill in l8er",
