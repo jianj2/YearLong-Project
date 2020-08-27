@@ -19,4 +19,4 @@ RUN npm run build --production
 
 EXPOSE 3000
 
-CMD ["serve","-s","build","-l","3000","--ssl-cert","letsencrypt/live/paediatricsssq.sytes.net/fullchain.pem","--ssl-key","letsencrypt/live/paediatricsssq.sytes.net/privkey.pem"]
+CMD ["serve","-s","build","-l","3000","--ssl-cert","/etc/letsencrypt/live/paediatricsssq.sytes.net/fullchain.pem","--ssl-key","/etc/letsencrypt/live/paediatricsssq.sytes.net/privkey.pem"]
