@@ -39,7 +39,7 @@ const HomeClinician = (props) => {
         }
         const fn = async () => {
             await loginWithRedirect({
-                redirect_uri: "https://paediatricsssq.sytes.net/clinician", //TODO: figure out why window.location.pathname doesn't work
+                redirect_uri: "http://paediatrics-ssq-react-app.s3-website-ap-southeast-2.amazonaws.com/clinician", //TODO: figure out why window.location.pathname doesn't work
                 //appState: { targetUrl: window.location.pathname},
             });
         };
