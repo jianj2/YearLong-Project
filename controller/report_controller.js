@@ -10,7 +10,6 @@
  *
  */
 
-r');
 const path = require("path");
 const Readable = require('stream').Readable
 const PDFDocument = require('pdfkit');
@@ -19,6 +18,12 @@ const mongoose = require("mongoose");
 
 const Questionnaire = mongoose.model("questionnaire");
 
+const HELPER_IMPORTANCE = {
+    "Very important": 4,
+    "Important": 3,
+    "Only a little bit important": 2,
+    "Not important": 1,
+}
 
 const getTimeStamp = function (){
     let date_ob = new Date();
@@ -201,7 +206,15 @@ const getQuestionnaireResponseJoin = function (questionnaire, questionnaireData,
 // This function is used to sort the questions by the importance
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const sortByImportance = function (questionnaire) {
-    o
+    let sortedResult = questionnaire;
+
+    sortedResult.sections.forEach(section => {
+        section.scenarios.sort((a,b) =>
+            HELPER_IMPORTANCE[b.questions[2].response.value] - HELPER_IMPORTANCE[a.questions[2].response.value]
+        )
+    })
+
+    return sortedResult;
 
 }
 
