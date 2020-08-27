@@ -85,43 +85,6 @@ const sendResultsEmail = function (questionnaireId, questionnaireData, clinician
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
 
-        var total_score = 0;
-        var section_score = new Array();
-        var total_q = 0;
-        var section_num = 0;
-
-        for (var i = 0; i < questionnaireData.length; i++) {
-            var section_q = 0;
-            var score = 0;
-            for (var j = 0; j < questionnaireData[i].length; j++) {
-                for (var z = 0; z < questionnaireData[i][j].length; z++) {
-                    console.log(questionnaireData[i][j][z])
-                    if (!isNaN(questionnaireData[i][j][z].value)) {
-                        if (questionnaireData[i][j][z].value != '') {
-                            score += questionnaireData[i][j][z].value;
-                        }
-                        section_q += 1;
-                    }
-                }
-            }
-            if (score === 0 ){
-                section_score[section_num]="N/A";
-            }else{
-                section_score[section_num] = score / section_q;
-            }
-            total_score += score;
-            section_num += 1;
-            total_q += section_q;
-        };
-        let average_score = Math.round((total_score / total_q) * 100) / 100;
-
-        // object created to pass through.
-        let scores = {
-            averageScore: average_score,
-            sectionScores: section_score
-        }
-        // debugging
-        //console.log("total_score:",total_score,"section_score:",section_score,"total_q:",total_q,"section_num:",section_num,"average_score:", average_score );
 
 
 
@@ -150,7 +113,7 @@ const sendResultsEmail = function (questionnaireId, questionnaireData, clinician
                 "    </div>",
         }
 
-        generateReport(questionnaireId, personalDetails, questionnaireData, scores)
+        generateReport(questionnaireId, personalDetails, questionnaireData)
             .then((reportResolved) => {
                 mailOptions.attachments = [{   // stream as an attachment
                     filename: reportResolved.fileName,
