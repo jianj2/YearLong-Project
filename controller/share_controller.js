@@ -9,17 +9,17 @@
  *
  */
 
+// Import Libraries
 const mongoose = require("mongoose");
 const Share = mongoose.model("share");
 const {v1: uuidv1} = require("uuid");
-const nodemailer = require('nodemailer');
-const path = require("path");
-const Readable = require('stream').Readable
 
 const {sendInvitationEmail, sendResultsEmail} = require('./email_controller');
 
 
-// Create a new share.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to create a new share.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const shareQuestionnaire = function (req, res) {
 
     // convert to a list of objects
@@ -27,7 +27,6 @@ const shareQuestionnaire = function (req, res) {
     Object.entries(req.body.shareSection).map((k, v) => {
         visibleSection.push({title: k[0], isVisible: k[1]});
     })
-
 
     const uuid = uuidv1();
     let newShare = new Share({
@@ -40,35 +39,29 @@ const shareQuestionnaire = function (req, res) {
         shareSection: visibleSection,
     });
 
-    console.log("newShare", newShare)
-
     newShare.save(function (err, createdShare) {
-        console.log("Share created");
-
         if (!err) {
             sendInvitationEmail(createdShare)
                 .then(emailRes => {
                     if (emailRes.success) {
-                        console.log("SEND SHARE");
                         res.send(emailRes);
                     }
                 })
                 .catch(emailRej => {
                     if (emailRej.success) {
-                        console.log("FAIL SHARE");
                         res.send(emailRej);
                     }
                 })
 
         } else {
-            console.log("err SHARE", err);
-            console.log("err SHARE");
             res.send(err);
         }
     })
 };
 
-// Get ShareDetails using ShareId
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to get ShareDetails using ShareId
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const getShareDetails = function (req, res) {
     let shareId = req.params.shareId;
 
@@ -84,7 +77,9 @@ const getShareDetails = function (req, res) {
     });
 };
 
-// Method called when share response is completed.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is called when share response is completed.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const completeShare = function (req, res) {
     let questionnaireData = req.body.questionnaireData;
     let clinicianEmail = req.body.clinicianEmail;
@@ -99,15 +94,12 @@ const completeShare = function (req, res) {
         .catch(emailRej => res.send(emailRej))
 };
 
-// Delete the share from our database.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to delete the share from our database.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const deleteShare = function (req, res) {
     const shareId = req.params.shareId;
-    Share.deleteOne({shareId: shareId}, function (
-        err,
-        result
-    ) {
-        console.log("Share Deleted:: " + shareId);
-    });
+    Share.deleteOne({shareId: shareId});
 };
 
 
