@@ -45,7 +45,7 @@ const getTimeStamp = function (){
 
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-// This function is print the results on the document
+// This function is used to print the results on the document
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const printQuestionnaireResults  = function(doc, resultToPrint) {
 

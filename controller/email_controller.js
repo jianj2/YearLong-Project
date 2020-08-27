@@ -10,14 +10,12 @@
  *
  */
 
-const { jsonToTableHtmlString } = require('json-table-converter')
+// Import Libraries
 const nodemailer = require('nodemailer');
 const path = require("path");
-const Readable = require('stream').Readable
-const PDFDocument = require('pdfkit');
-
-
 const { generateReport } = require('./report_controller')
+
+// Define Transporter
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -26,7 +24,9 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-// Send questionnaire link through email.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to send questionnaire link through email.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const sendInvitationEmail = function (createdShare) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
@@ -79,15 +79,12 @@ const sendInvitationEmail = function (createdShare) {
 
 };
 
-
-
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to send the results PDF report through email.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const sendResultsEmail = function (questionnaireId, questionnaireData, clinicianEmail, personalDetails) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
-
-
-
-
         let mailOptions = {
             from: "SSQ Paediatric",
             to: clinicianEmail,
@@ -105,11 +102,6 @@ const sendResultsEmail = function (questionnaireId, questionnaireData, clinician
                 "        <p>Thank you,</p>\n" +
                 "        <p>" +
                 "</p>\n" +
-                // "<div> <h2>Personal Details</h2>" + jsonToTableHtmlString(personalDetails, {}) + "</div>" +
-                // "<div> <h2>Questionnaire Data</h2>" + jsonToTableHtmlString(questionnaireData, {}) + "</div>" +
-                // "<div> <h2>Average score</h2>" + average_score + "</div>" +
-                // "<div> <h2>Section score</h2>" + section_score + "</div>" +
-                // "<div> <h2>Question number</h2>" + total_q + "</div>" +
                 "    </div>",
         }
 
@@ -121,10 +113,6 @@ const sendResultsEmail = function (questionnaireId, questionnaireData, clinician
                 }];
                 // Resolves this promise if sendEmail promise is resolved.
                 // Rejects this promise if sendEmail promise is rejected.
-
-                console.log(" ");
-                console.log("RESPONSE FROM GENERATE REPORT" );
-                console.log(" ");
                 sendEmail(mailOptions)
                     .then(res => resolve(res))
                     .catch(rej => reject(rej))
@@ -137,11 +125,11 @@ const sendResultsEmail = function (questionnaireId, questionnaireData, clinician
         // Parameters for the email.
 
     });
-
 }
 
-
-// Modularise sendEmail function since it is being used multiple times.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to send the email.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const sendEmail = function (mailOptions) {
     return new Promise((resolve, reject) => {
         transporter.sendMail(mailOptions, function (error, info) {
