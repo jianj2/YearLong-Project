@@ -156,16 +156,13 @@ const DoTheTestContainer = () => {
             questionnaireId: selectedQuestionnaire.questionnaireId,
         };
 
-        // console.log("DATATATA", data);
-
         completeQuestionnaire(data).then( res => {
             console.log("complete question", res)
             setWizardStep(3);
             setLoading(false);
         })
-
-
     };
+
     console.log("wizardStep", wizardStep);
     if (wizardStep === 0) {
         return (

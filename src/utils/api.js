@@ -1,4 +1,8 @@
-const api = "https://d1iiwjsw1v8g79.cloudfront.net/";
+
+const api = "http://localhost:3001";
+
+//const api = "https://d1iiwjsw1v8g79.cloudfront.net/";
+
 
 let header = {
     authorization: "fill in l8er",

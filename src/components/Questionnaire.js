@@ -11,9 +11,9 @@
  *
  */
 
-import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { Slider } from "@material-ui/core";
+import React, {useState, useEffect} from "react";
+import {useForm} from "react-hook-form";
+import {Slider} from "@material-ui/core";
 import Loading from "./Loading";
 
 // Import components.
@@ -23,7 +23,7 @@ import Question from "./Question";
 import "../styles/questionnaire.css";
 import "../styles/main.css";
 
-export default function Questionnaire({
+export default function Questionnaire({ 
     readOnly,
     questionnaire,
     submitQuestionnaire,
@@ -31,7 +31,7 @@ export default function Questionnaire({
     handleQuestionnaireChange,
     sectionVisibility,
 }) {
-    const { register, handleSubmit, errors } = useForm();
+    const { register, handleSubmit, errors } = useForm();  
 
 
     // Method: Called when we submit the questionnaire
@@ -54,7 +54,7 @@ export default function Questionnaire({
             data
         );
     };
-
+ 
     //////////// Share section update /////////////////////////////
     // get a list of the visible sections
     const getVisibleSections = (sections, visibilityInfoList) => {
@@ -92,55 +92,41 @@ export default function Questionnaire({
             <form onSubmit={onSubmit} className="questionaire-container">
                 <h1>{questionnaire.title}</h1>
 
-                {questionnaire.sections.map((section, sectionIndex) => (
-                    <div key={sectionIndex} className="section-container">
-                        <h2>{section.title}</h2>
-                        {section.scenarios.map((scenario, scenarioIndex) => (
-                            <div
-                                key={scenarioIndex}
-                                className="scenario-container"
-                            >
-                                <p>{scenario.description}</p>
-                                {scenario.questions.map(
-                                    (question, questionIndex) => (
-                                        <Question
-                                            readOnly={readOnly}
-                                            error={true}
-                                            key={questionIndex}
-                                            questionIndex={questionIndex}
-                                            sectionIndex={sectionIndex}
-                                            scenarioIndex={scenarioIndex}
-                                            description={question.description}
-                                            isMCQ={question.isMCQ}
-                                            MCQOptions={question.MCQOptions}
-                                            rangeOptions={question.rangeOptions}
-                                            onQuestionChange={onQuestionChange}
-                                            data={
-                                                questionnaireData[sectionIndex][
-                                                    scenarioIndex
-                                                ][questionIndex]
-                                            }
-                                        />
-                                    )
-                                )}
-                            </div>
-                        ))}
-                    </div>
-                ))}
-
-                <div className="questionaire-submit-button">
-                    {readOnly ? null : (
-                        <button
-                            id="review"
-                            className={
-                                errors.code ? "button-disabled" : "button"
-                            }
+            {questionnaire.sections.map((section, sectionIndex) => (
+                <div key={sectionIndex} className="section-container">
+                    <h2>{section.title}</h2>
+                    {section.scenarios.map((scenario, scenarioIndex) => (
+                        <div
+                            key={scenarioIndex}
+                            className="scenario-container"
                         >
-                            R E V I E W
-                        </button>
-                    )}
-                </div>
+                            <p>{scenario.description}</p>
+                            {scenario.questions.map(
+                                (question, questionIndex) => (
+                                    <Question
+                                        readOnly={readOnly}
+                                        error={true}
+                                        key={questionIndex}
+                                        questionIndex={questionIndex}
+                                        sectionIndex={sectionIndex}
+                                        scenarioIndex={scenarioIndex}
+                                        description={question.description}
+                                        isMCQ={question.isMCQ}
+                                        MCQOptions={question.MCQOptions}
+                                        rangeOptions={question.rangeOptions}
+                                        onQuestionChange={onQuestionChange}
+                                        data={
+                                            questionnaireData[sectionIndex][
+                                                scenarioIndex
+                                                ][questionIndex]
+                                        }
+                                    />
+                                )
+                            )}
+                        </div>
+                    ))}
+                </div> 
             </form>
         );
-    
+     
 }
