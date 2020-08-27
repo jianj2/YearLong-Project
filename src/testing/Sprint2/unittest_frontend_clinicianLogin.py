@@ -13,6 +13,12 @@ class unittest_frontend_clinicianLogin(unittest.TestCase):
         self.driver = webdriver.Chrome("chromedriver.exe")
         self.driver.get("http://localhost:3000/clinician")
 
+    def test_navbar_left(self):
+        navbar_left = self.driver.find_element_by_class_name("navbar-left")
+        navbar_left.click()
+        time.sleep(2)
+        assert ("http://localhost:3000" in self.driver.current_url)
+
     def test_select_loginTab(self):
         button = self.driver.find_element_by_link_text("Login")
         button.click()
