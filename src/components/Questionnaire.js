@@ -125,7 +125,8 @@ export default function Questionnaire({
                             )}
                         </div>
                     ))}
-                </div> 
+                </div>
+                ))}
             </form>
         );
      
