@@ -77,8 +77,8 @@ docker_build_image()
 docker_run_registry_container()
 {
     docker run -d \
-    -p 3000:3000 \
-    -v /etc/letsencrypt/live/paediatricsssq.sytes.net:/etc/letsencrypt/live/paediatricsssq.sytes.net \
+    -p 80:3000 \
+    -p 443:443 \
     --name react-app \
     --network ssq-paediatrics \
     docker.pkg.github.com/mayankshar21/swen90013-2020-ps/paediatrics-ssq-client
@@ -88,8 +88,8 @@ docker_run_registry_container()
 docker_run_local_container() 
 {
     docker run -d \
-    -p 3000:3000 \
-    -v /etc/letsencrypt/live/paediatricsssq.sytes.net:/etc/letsencrypt/live/paediatricsssq.sytes.net \
+    -p 80:3000 \
+    -p 443:443 \
     --name react-app \
     --network ssq-paediatrics \
     paediatrics-ssq-client
