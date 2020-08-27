@@ -1,6 +1,6 @@
 /**
  * ========================================
- * DEFINING SHARE API CALLS CONTROLLER
+ * DEFINING EMAIL CONTROLLER
  * ========================================
  * @date created: 26 August 2020
  * @authors: Waqas
@@ -10,14 +10,12 @@
  *
  */
 
-const { jsonToTableHtmlString } = require('json-table-converter')
+// Import Libraries
 const nodemailer = require('nodemailer');
 const path = require("path");
-const Readable = require('stream').Readable
-const PDFDocument = require('pdfkit');
-
-
 const { generateReport } = require('./report_controller')
+
+// Define Transporter
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -26,7 +24,9 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-// Send questionnaire link through email.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to send questionnaire link through email.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const sendInvitationEmail = function (createdShare) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
@@ -79,51 +79,12 @@ const sendInvitationEmail = function (createdShare) {
 
 };
 
-
-
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to send the results PDF report through email.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const sendResultsEmail = function (questionnaireId, questionnaireData, clinicianEmail, personalDetails) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
-
-        var total_score = 0;
-        var section_score = new Array();
-        var total_q = 0;
-        var section_num = 0;
-
-        for (var i = 0; i < questionnaireData.length; i++) {
-            var section_q = 0;
-            var score = 0;
-            for (var j = 0; j < questionnaireData[i].length; j++) {
-                for (var z = 0; z < questionnaireData[i][j].length; z++) {
-                    console.log(questionnaireData[i][j][z])
-                    if (!isNaN(questionnaireData[i][j][z].value)) {
-                        if (questionnaireData[i][j][z].value != '') {
-                            score += questionnaireData[i][j][z].value;
-                        }
-                        section_q += 1;
-                    }
-                }
-            }
-            if (score === 0 ){
-                section_score[section_num]="N/A";
-            }else{
-                section_score[section_num] = score / section_q;
-            }
-            total_score += score;
-            section_num += 1;
-            total_q += section_q;
-        };
-        var average_score = Math.round((total_score / total_q) * 100) / 100;
-
-        // object created to pass through.
-        var scores = {
-            averageScore:average_score, sectionScores: section_score
-        }
-        // debugging
-        //console.log("total_score:",total_score,"section_score:",section_score,"total_q:",total_q,"section_num:",section_num,"average_score:", average_score );
-
-
-
         let mailOptions = {
             from: "SSQ Paediatric",
             to: clinicianEmail,
@@ -141,15 +102,10 @@ const sendResultsEmail = function (questionnaireId, questionnaireData, clinician
                 "        <p>Thank you,</p>\n" +
                 "        <p>" +
                 "</p>\n" +
-                // "<div> <h2>Personal Details</h2>" + jsonToTableHtmlString(personalDetails, {}) + "</div>" +
-                // "<div> <h2>Questionnaire Data</h2>" + jsonToTableHtmlString(questionnaireData, {}) + "</div>" +
-                // "<div> <h2>Average score</h2>" + average_score + "</div>" +
-                // "<div> <h2>Section score</h2>" + section_score + "</div>" +
-                // "<div> <h2>Question number</h2>" + total_q + "</div>" +
                 "    </div>",
         }
 
-        generateReport(questionnaireId, personalDetails, questionnaireData, scores)
+        generateReport(questionnaireId, personalDetails, questionnaireData)
             .then((reportResolved) => {
                 mailOptions.attachments = [{   // stream as an attachment
                     filename: reportResolved.fileName,
@@ -157,7 +113,6 @@ const sendResultsEmail = function (questionnaireId, questionnaireData, clinician
                 }];
                 // Resolves this promise if sendEmail promise is resolved.
                 // Rejects this promise if sendEmail promise is rejected.
-
                 sendEmail(mailOptions)
                     .then(res => resolve(res))
                     .catch(rej => reject(rej))
@@ -170,11 +125,11 @@ const sendResultsEmail = function (questionnaireId, questionnaireData, clinician
         // Parameters for the email.
 
     });
-
 }
 
-
-// Modularise sendEmail function since it is being used multiple times.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to send the email.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const sendEmail = function (mailOptions) {
     return new Promise((resolve, reject) => {
         transporter.sendMail(mailOptions, function (error, info) {
