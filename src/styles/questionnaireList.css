@@ -83,3 +83,12 @@
 .questionnaire-list-button-container button{
      margin: 0 0 0 1rem;
 }
+
+.admin-standard-questionnaireList-footer{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+#SSQtype{
+    margin-right: 10px;
+}

@@ -12,7 +12,7 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { Modal, Backdrop, Fade, FormControl, InputLabel, Input, FormHelperText, FormControlLabel, Checkbox } from "@material-ui/core";
+import { Modal, Backdrop, Fade, FormControl, InputLabel, Input, FormHelperText, FormControlLabel, Checkbox, Chip } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 // Import Utils.
@@ -45,7 +45,9 @@ const ManageQuestionnaires = (props) => {
     const { isAuthenticated, loginWithRedirect, user } = useAuth0();
     // console.log("user.name", user.name); //TODO: change that when we have actual clincianId
 
-    const [questionnaires, setQuestionnaires] = useState([]);
+    const [customisedQuestionnaires, setCustomisedQuestionnaires] = useState([]);
+    const [standardisedQuestionnaires, setStandardisedQuestionnaires] = useState([]);
+
     const [loading, setLoading] = useState(false);
 
     const [isShareModalVisible, setIsShareModalVisible] = useState(false);
@@ -56,7 +58,7 @@ const ManageQuestionnaires = (props) => {
         questionnaireId: "",
         clinicianEmail: user.name,
         message: "",
-        readOnly: false
+        readOnly: false,
     });
 
     const [deleteQuestionnaireData, setdeleteQuestionnaireData] = useState({
@@ -64,9 +66,11 @@ const ManageQuestionnaires = (props) => {
         deleteQuestionnaireName: ""
     });
 
+    const [shareSection, setShareSection] = useState({});
+
     useEffect(() => {
         setLoading(true);
-        async function retrieveQuestionnaires() {
+        async function retrieveCustomisedQuestionnaires() {
             const customisedQuestionnaires = await API.getClinicianQuestionnaires(user.name);
             console.log(customisedQuestionnaires);
             const today = formatDate();
@@ -74,28 +78,30 @@ const ManageQuestionnaires = (props) => {
                 return { QID: q.questionnaireId, Qname: q.title, Qdescription: q.description, date: today };
             });
             // setQuestionnaires({ customized_Questionnaire: customisedQuestionnairesElement });
-            setQuestionnaires(customisedQuestionnaires);
+            setCustomisedQuestionnaires(customisedQuestionnaires);
             setLoading(false);
         }
+        async function retrieveStandardisedQuestionnaires(){
 
-        retrieveQuestionnaires();
+            const response = await API.getStandardisedQuestionnaires();
+            if (response.statusCode === 200){
+                setStandardisedQuestionnaires(response.data);
+            }
+        }
+        retrieveStandardisedQuestionnaires();
+        retrieveCustomisedQuestionnaires();
     }, [user]);
-
-    function standardisedQuestionnaireGenerator(Qname, Qdescription, date) {
-        return (
-            <div className="q-frame">
-                <div className="q-name">{Qname}</div>
-                <div className="q-description">{Qdescription}</div>
-                <div className="date">{date}</div>
-            </div>
-        );
-    }
-
 
     // Function called when Edit is clicked on the QuestionnaireList
     const editQuestionnaire = (questionnaireID) => {
-        let edit_url = "/clinician/" + questionnaireID + "/edit";
+        const edit_url = "/clinician/" + questionnaireID + "/edit";
         window.location.href = edit_url;
+    };
+
+    const viewQuestionnaire = (questionnaireID) =>{
+        const view_url = "/standard/" + questionnaireID + "/view";
+        window.location.href = view_url;
+
     };
 
     // Function called when Delete is clicked on the QuestionnaireList
@@ -109,18 +115,25 @@ const ManageQuestionnaires = (props) => {
             }
         )
         openDeleteConfirmation();
-        // const arrayCopy = questionnaires.filter((q) => q.questionnaireId !== questionnaireId);
-        // setQuestionnaires(arrayCopy);
-        // API.deleteQuestionnaire(questionnaireId, user.name);
     };
 
     // Function called when Share is clicked on the QuestionnaireList
-    const shareQuestionnaire = (questionnaireId) => {
+    const shareQuestionnaire = (questionnaireId, sections) => {
         console.log("share Questionnaire ", questionnaireId);
+
+
+        var temp = {}
+        sections.map((index) => {
+            temp = ({ ...temp,[(index.title).toString()]:false });
+        })
+
+        setShareSection(temp);
+
         setShareModalData({
             ...shareModalData,
-            questionnaireId,
+            questionnaireId,shareSection
         });
+
         openModal();
     };
 
@@ -130,15 +143,16 @@ const ManageQuestionnaires = (props) => {
         const uuid = await API.addQuestionnaire(user.name);
 
         // const today = formatDate();
-        const AddedArray = questionnaires;
+        const AddedArray = customisedQuestionnaires;
         let newQuestionnaire = {
             questionnaireId: uuid,
             title: "New Questionnaire",
             description: "Please click edit to begin with this questionnaire.",
             sections: [],
             isStandard: false,
+            isSSQ_Ch: true,
         };
-        setQuestionnaires([newQuestionnaire, ...questionnaires]);
+        setCustomisedQuestionnaires([newQuestionnaire, ...customisedQuestionnaires]);
         setLoading(false);
         // let edit_url = "/clinician/" + uuid + "/edit";
         // window.location.href = edit_url;
@@ -150,9 +164,17 @@ const ManageQuestionnaires = (props) => {
     const openModal = () => setIsShareModalVisible(true);
     const closeModal = () => setIsShareModalVisible(false);
 
+
     const handleShareSubmit = (e) => {
         e.preventDefault();
-        setLoading(true); 
+        setLoading(true);
+
+        //sharesection is {section:isVisible}
+        setShareModalData({
+            ...shareModalData,
+            shareSection,
+        });
+
         API.shareQuestionnaire(shareModalData).then( res => {
             console.log("printing the res: ", res);
             setLoading(false); 
@@ -176,7 +198,7 @@ const ManageQuestionnaires = (props) => {
                     <form className="share-modal-container" onSubmit={handleShareSubmit}>
                         <h2>Share Details</h2>
                         <FormControl margin="dense">
-                            <InputLabel>Patient's Email</InputLabel>
+                            <InputLabel>Email</InputLabel>
                             <Input
                                 onChange={(e) => {
                                     setShareModalData({
@@ -206,6 +228,39 @@ const ManageQuestionnaires = (props) => {
                             />
                             <FormHelperText>Please enter a personalised Message that you want to send to the patient (optional).</FormHelperText>
                         </FormControl>
+
+
+                        {/* list of all the sections with check boxes*/}
+                        <FormControl margin="dense" style={{border: '1px inset #56577d'}}>
+                        {Object.entries(shareSection).map((k,v)=>
+                            (
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            checked={k[1]}
+
+                                            onChange={(e) => { shareSection[k[0]]=e.target.checked;
+                                                setShareModalData({
+                                                    ...shareModalData,
+                                                    shareSection
+                                                });
+                                            }
+
+
+                                            }
+                                            name="section selection"
+                                        />
+                                    }
+                                    label={k[0]}
+                                />
+                            )
+
+                        )}
+
+                        <FormHelperText>Please select the sections you want to share.</FormHelperText>
+                    </FormControl>
+
+
 
                         <FormControl>
                             <FormControlLabel
@@ -243,8 +298,8 @@ const ManageQuestionnaires = (props) => {
 
     const deleteSelecctedQuestionnaire = () => {
         let questionnaireId = deleteQuestionnaireData.deleteQuestionnaireID
-        const arrayCopy = questionnaires.filter((q) => q.questionnaireId !== questionnaireId);
-        setQuestionnaires(arrayCopy);
+        const arrayCopy = customisedQuestionnaires.filter((q) => q.questionnaireId !== questionnaireId);
+        setCustomisedQuestionnaires(arrayCopy);
         API.deleteQuestionnaire(questionnaireId, user.name);
         closeDeleteConfirmation();
     }
@@ -290,10 +345,21 @@ const ManageQuestionnaires = (props) => {
 
             <div className="standard-questionnaire-container">
                 <div className="SQ-header">
-                    <h1>Standard questionnaires</h1>
+                    <h1>Standard Questionnaires</h1>
                 </div>
-                {standardisedQuestionnaireGenerator("SSQ-P", "SSQ for parents", "17/05/2020")}
-                {standardisedQuestionnaireGenerator("SSQ-C", "SSQ for children ", "17/05/2020")}
+                <QuestionnaireList
+                questionnaires={standardisedQuestionnaires}
+                listTitle={""}
+                isSelectable={true}
+                onClickQuestion={viewQuestionnaire}
+                canEdit={false}
+                onClickEdit={editQuestionnaire}
+                canDelete={false}
+                onClickDelete={deleteQuestionnaire}
+                canShare={false}
+                onClickShare={shareQuestionnaire}
+                />
+
             </div>
 
             <div className="CQ-header">
@@ -304,15 +370,15 @@ const ManageQuestionnaires = (props) => {
             </div>
 
             <QuestionnaireList
-                questionnaires={questionnaires}
+                questionnaires={customisedQuestionnaires}
                 listTitle={""}
-                isSelectable={false}
-                onClickQuestion={() => {}}
+                isSelectable={true}
+                onClickQuestion={viewQuestionnaire}
                 canEdit={true}
                 onClickEdit={editQuestionnaire}
                 canDelete={true}
                 onClickDelete={deleteQuestionnaire}
-                canShare={true}
+                canShare={false}
                 onClickShare={shareQuestionnaire}
             />
         </div>

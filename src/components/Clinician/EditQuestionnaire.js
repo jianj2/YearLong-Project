@@ -23,11 +23,13 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 // Import components.
 import EditDescription from "./EditDescription";
 import Loading from "../Loading";
-
+import SectionsContainer from "./SectionsContainer";
+//style
 import "../../styles/clinician.css";
 
+//utils
 import * as API from "../../utils/api";
-import SectionsContainer from "./SectionsContainer";
+
 // handles rendering of TopContainer in the Clinician page
 const EditQuestionnaire = ({
                                Questionnaire,
@@ -39,11 +41,13 @@ const EditQuestionnaire = ({
                                addQuestion,
                                addScenario,removeScenario,
                                handleQuestionnaireTitleChange,
+                               handleQuestionnaireTypeChange,
                                handleQuestionnaireDesChange,
                                handleQuestionDesChange,
                                handleQuestionOptsChange,
                                handleSecTitleChange,
-                               handleSceDesChange
+                               handleSceDesChange,
+                               redirectURL
                            } ) => {
 
     const [saveDialogOpen, setSaveDialogOpen] = React.useState(false);
@@ -68,7 +72,7 @@ const EditQuestionnaire = ({
     };
 
 
-    const manage_questionnaire_url = "/clinician";
+    const manage_questionnaire_url = redirectURL;
 
     if (!Questionnaire) {
         return <Loading />;
@@ -168,6 +172,7 @@ const EditQuestionnaire = ({
                         handleQuestionnaireTitleChange
                     }
                     handleQuestionnaireDesChange={handleQuestionnaireDesChange}
+                    handleQuestionnaireTypeChange = {handleQuestionnaireTypeChange}
                 />
 
                 <SectionsContainer

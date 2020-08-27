@@ -90,6 +90,8 @@
 }
 
 .share-modal-container {
+    /*position: fixed;*/
+
     width: 40vw;
     /* background-color: rgba(200,200,200); */
     background-color: rgba(18,19,58,1);
@@ -98,8 +100,11 @@
     display: flex;
     flex-flow: column wrap;
     padding: 2rem;
+    position: absolute;
+    z-index: -1 !important;
 
 }
+
 .share-modal-container button {
     margin: 1rem 0;
     align-self: center;

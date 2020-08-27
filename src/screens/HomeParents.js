@@ -62,6 +62,27 @@ const HomeParents = ({ match }) => {
     const [questionnaireData, setQuestionnaireData] = useState([]);
     const [readOnly, setReadOnly] = useState(false);
     const [loading, setLoading] = useState(false);
+  
+    const [instruction, setInstruction] = useState({
+        title: "",
+        content: ""
+    });
+    const [isInit, setIsInit] = useState(true);
+    const getInstruction = () => {
+        API.getInstructions().then((res) =>{
+            setInstruction({
+                title: res["title"],
+                content: res["content"]
+            })   
+        })
+    };
+
+    if(isInit){
+        getInstruction();
+        setIsInit(false);
+    }
+
+    const [sectionVisibility, setSectionVisibility] = useState([]);
 
     const getPersonalDetails = (data) => {
         setPersonalDetails(data)
@@ -77,6 +98,7 @@ const HomeParents = ({ match }) => {
             // Server call to get the questionnaire.
             setClinicianEmail(response.data.clinicianEmail);
             setReadOnly(response.data.readOnly);
+            setSectionVisibility(response.data.shareSection);
             API.getQuestionnaire(response.data.questionnaireId).then((res) => {
                 // Define initial values for the Questionnaire
                 if (res.statusCode === 200 ){
@@ -151,6 +173,7 @@ const HomeParents = ({ match }) => {
             questionnaireData,
             personalDetails,
             clinicianEmail: clinicianEmail,
+            questionnaireId: questionnaire.questionnaireId,
         };
         console.log(data);
 
@@ -198,7 +221,10 @@ const HomeParents = ({ match }) => {
                     {readOnly ? (
                         <p>{INSTRUCTIONS_READ_ONLY}</p>
                     ) : (
-                        <p>{INSTRUCTIONS}</p>
+                        <div>
+                            <h2>{instruction.title}</h2>
+                            <p>{instruction.content}</p>
+                        </div>
                     )}
                 </div>
             </div>
@@ -211,6 +237,9 @@ const HomeParents = ({ match }) => {
         return (
             <div className="parents-home">
                 <div className="subheader-container">
+                    <button id="instructions" className="button" onClick={goToInstructions}>
+                        I N S T R U C T I O N S
+                    </button>
                     <button id="back" className="button" onClick={prevStep}>
                         B A C K
                     </button>
@@ -251,6 +280,7 @@ const HomeParents = ({ match }) => {
                         submitQuestionnaire={submitQuestionnaire}
                         questionnaireData={questionnaireData}
                         handleQuestionnaireChange={handleQuestionnaireChange}
+                        sectionVisibility={sectionVisibility}
                     />
                 </div>
             </div>
@@ -266,6 +296,9 @@ const HomeParents = ({ match }) => {
                     : null
                 } 
                 <div className="subheader-container">
+                    <button id="instructions" className="button" onClick={goToInstructions}>
+                        I N S T R U C T I O N S
+                    </button>
                     <button id="back" className="button" onClick={prevStep}>
                         B A C K
                     </button>

@@ -61,7 +61,8 @@ import React from "react";
 
 // Import Utils
 import { formatDate } from "../utils/formatter";
-
+import Chip from '@material-ui/core/Chip';
+import { Avatar } from '@material-ui/core';
 // Import Styles
 import "../styles/questionnaireList.css";
 import { DialogTitle } from "@material-ui/core";
@@ -78,12 +79,11 @@ const QuestionnaireList = ({
     canShare,
     onClickShare,
 }) => {
-
-
     const ListItem = ({
         questionnaireId,
         title,
         description,
+        isSSQ_Ch,
         date,
         isSelectable,
         onClickQuestion,
@@ -93,35 +93,81 @@ const QuestionnaireList = ({
         onClickDelete,
         canShare,
         onClickShare,
+        sections,
     }) => {
         // var edit_url = "/clinician/" + QID + "/edit";
         return (
             <div
-                className={isSelectable ? "questionnaire-list-item questionnaire-list-item-selectable" : "questionnaire-list-item"}
+                className={
+                    isSelectable
+                        ? "questionnaire-list-item questionnaire-list-item-selectable"
+                        : "questionnaire-list-item"
+                }
                 onClick={() => {
                     if (isSelectable) onClickQuestion(questionnaireId);
                 }}
             >
-                <div className="q-name">{title}</div>
+                <div className="q-name">
+                    {canDelete ? 
+                        isSSQ_Ch? 
+                            (<Chip
+                            id = "SSQtype"
+                            variant="outlined"
+                            size="small"
+                            avatar={<Avatar>Ch</Avatar>}
+                            label="SSQ-FOR-CHILDERN"
+                            /> )
+                            : 
+                                (<Chip
+                                id = "SSQtype"
+                                variant="outlined"
+                                size="small"
+                                avatar={<Avatar>P</Avatar>}
+                                label="SSQ-FOR-PARENTS"
+                                /> )
+                        : null
+                    }
+
+                    {title} 
+                </div>
+
                 <div className="q-description">{description}</div>
 
                 <div className="list-item-footer">
                     <div className="list-item-date">{formatDate()}</div>
                     <div className="questionnaire-list-button-container">
                         {canShare ? (
-                            <button className="button" onClick={() => onClickShare(questionnaireId)}>
+                            <button
+                                className="button"
+                                onClick={(event) => {
+                                    event.stopPropagation();
+                                    onClickShare(questionnaireId, sections);
+                                }}
+                            >
                                 S H A R E
                             </button>
                         ) : null}
 
                         {canEdit ? (
-                            <button className="button" onClick={() => onClickEdit(questionnaireId)}>
+                            <button
+                                className="button"
+                                onClick={(event) => {
+                                    event.stopPropagation();
+                                    onClickEdit(questionnaireId);
+                                }}
+                            >
                                 E D I T
                             </button>
                         ) : null}
 
                         {canDelete ? (
-                            <button className="button" onClick={() => onClickDelete(questionnaireId, title)}>
+                            <button
+                                className="button"
+                                onClick={(event) => {
+                                    event.stopPropagation();
+                                    onClickDelete(questionnaireId, title);
+                                }}
+                            >
                                 D E L E T E
                             </button>
                         ) : null}
@@ -139,6 +185,7 @@ const QuestionnaireList = ({
                     questionnaireId={question.questionnaireId}
                     title={question.title}
                     description={question.description}
+                    isSSQ_Ch = {question.isSSQ_Ch}
                     isSelectable={isSelectable}
                     onClickQuestion={onClickQuestion}
                     canEdit={canEdit}
@@ -147,6 +194,7 @@ const QuestionnaireList = ({
                     onClickDelete={onClickDelete}
                     canShare={canShare}
                     onClickShare={onClickShare}
+                    sections={question.sections}
                 />
             ))}
         </div>
