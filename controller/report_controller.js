@@ -10,21 +10,21 @@
  *
  */
 
-const path = require("path");
+// Import Libraries
 const Readable = require('stream').Readable
 const PDFDocument = require('pdfkit');
-
 const mongoose = require("mongoose");
-
 const Questionnaire = mongoose.model("questionnaire");
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// HELPERS
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const HELPER_IMPORTANCE = {
     "Very important": 4,
     "Important": 3,
     "Only a little bit important": 2,
     "Not important": 1,
 }
-
 const getTimeStamp = function (){
     let date_ob = new Date();
     // adjust 0 before single digit date
@@ -57,16 +57,14 @@ const printQuestionnaireResults  = function(doc, resultToPrint) {
             doc.addPage();
             spacing = 80;
         }
-        // title for each section
+        // Writing the title for each scenario.
         doc.font('Helvetica-Bold').fontSize(14).text(section.title, 80, spacing);
         doc.font('Helvetica').fontSize(12).text("Section average: "+ section.score, 280, spacing);
         spacing = spacing + 30;
-        //                  console.log("1",section.title)
+
 
         section.scenarios.map((scenario, scenarioIndex) => {
-
-            //                  console.log("2",scenario.description)
-            //description for each scenario
+            // Writing the description for each scenario.
             if (spacing > docHeight) {
                 doc.addPage();
                 spacing = 80;
@@ -87,15 +85,10 @@ const printQuestionnaireResults  = function(doc, resultToPrint) {
                     spacing = 80;
                 }
 
-                // console.log("3", question)
-                // console.log("answer:", questionnaireData[sectionIndex][scenarioIndex][questionIndex])
-
                 let questionAnswer = question.response;
 
-                // if the question is range type then the print out both value and supplementary value
+                // If the question is range type then the print out both value and supplementary value.
                 if (!question.isMCQ) {
-
-                    // console.log("questionAnswer.value",questionAnswer.value);
                     if ((questionAnswer.value === "" || questionAnswer.value === undefined)
                         && (questionAnswer.supplementaryValue === '' ||  questionAnswer.supplementaryValue === undefined)){
 
@@ -134,7 +127,7 @@ const printQuestionnaireResults  = function(doc, resultToPrint) {
                     }
                 }
 
-                // mcq questions will have the question and answer printed on pdf
+                // MCQ questions will have the question and answer printed on pdf.
                 else {
                     doc.font('Helvetica-Bold')
                         .text(question.description, 80, spacing, {
@@ -165,7 +158,7 @@ const printQuestionnaireResults  = function(doc, resultToPrint) {
 
         })
 
-        // adds separation line
+        // Add a separation line.
         spacing = spacing + 10;
         doc.lineCap('butt')
             .moveTo(80, spacing)
@@ -237,7 +230,6 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
                     var score = 0;
                     for (var j = 0; j < questionnaireData[i].length; j++) {
                         for (var z = 0; z < questionnaireData[i][j].length; z++) {
-                            console.log(questionnaireData[i][j][z])
                             if (!isNaN(questionnaireData[i][j][z].value)) {
                                 if (questionnaireData[i][j][z].value != '') {
                                     score += questionnaireData[i][j][z].value;
@@ -265,15 +257,6 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
 
                 const resultToPrint = getQuestionnaireResponseJoin(questionnaire, questionnaireData, section_score);
 
-                console.log(" ");
-                console.log(" ");
-                console.log("resultToPrint", resultToPrint);
-                console.log(" ");
-                console.log(" ");
-                // debugging
-                //console.log("total_score:",total_score,"section_score:",section_score,"total_q:",total_q,"section_num:",section_num,"average_score:", average_score );
-
-                //needs to merge
                 //needs to merge
                 const doc = new PDFDocument();
                 let ts = getTimeStamp();
@@ -317,14 +300,13 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
                 // MAKE THIS BETTER
                 const sortedResults = sortByImportance(resultToPrint);
 
+                // THIS LINE PRINTS THE QUESTIONNAIRE RESULT IN THE DOC FILE
                 printQuestionnaireResults(doc, sortedResults)
 
-
+                // CLOSE THE DOCUMENT,
                 doc.end();
-                // Creating the file to send.
 
-
-
+                // CREATE THE PDF
                 const s = new Readable()
                 s.push(JSON.stringify(personalDetails))    // the string you want
                 s.push(JSON.stringify(questionnaireData))
