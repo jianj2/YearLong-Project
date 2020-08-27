@@ -113,11 +113,12 @@ const sendResultsEmail = function (questionnaireId, questionnaireData, clinician
             section_num += 1;
             total_q += section_q;
         };
-        var average_score = Math.round((total_score / total_q) * 100) / 100;
+        let average_score = Math.round((total_score / total_q) * 100) / 100;
 
         // object created to pass through.
-        var scores = {
-            averageScore:average_score, sectionScores: section_score
+        let scores = {
+            averageScore: average_score,
+            sectionScores: section_score
         }
         // debugging
         //console.log("total_score:",total_score,"section_score:",section_score,"total_q:",total_q,"section_num:",section_num,"average_score:", average_score );
@@ -158,6 +159,9 @@ const sendResultsEmail = function (questionnaireId, questionnaireData, clinician
                 // Resolves this promise if sendEmail promise is resolved.
                 // Rejects this promise if sendEmail promise is rejected.
 
+                console.log(" ");
+                console.log("RESPONSE FROM GENERATE REPORT" );
+                console.log(" ");
                 sendEmail(mailOptions)
                     .then(res => resolve(res))
                     .catch(rej => reject(rej))

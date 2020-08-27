@@ -38,6 +38,162 @@ const getTimeStamp = function (){
     return(year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds);
 }
 
+const printQuestionnaireResults = function(doc, questionnaire, questionnaireData, scores) {
+    let questionIndex = -1;
+    let sectionIndex = -1;
+    let scenarioIndex = -1;
+
+
+
+    let spacing = 340
+    // actual page is 792 but setting it to 700 helps to prevent overflow problems
+    let docHeight = 700
+    questionnaire.sections.map((section) => {
+        sectionIndex++
+        scenarioIndex = -1
+        questionIndex = -1
+
+        if (spacing > docHeight) {
+            doc.addPage();
+            spacing = 80;
+        }
+        // title for each section
+        doc.font('Helvetica-Bold').fontSize(14).text(section.title, 80, spacing);
+        doc.font('Helvetica').fontSize(12).text("Section average: "+ scores.sectionScores[sectionIndex], 280, spacing);
+        spacing = spacing + 30;
+        //                  console.log("1",section.title)
+
+        section.scenarios.map((scenario) => {
+            scenarioIndex++
+            questionIndex = -1
+
+            //                  console.log("2",scenario.description)
+            //description for each scenario
+            if (spacing > docHeight) {
+                doc.addPage();
+                spacing = 80;
+            }
+
+            doc.font('Helvetica-Bold').fontSize(12).text("Scenario: ", 80, spacing);
+            spacing = spacing + 20;
+
+            doc.font('Helvetica').fontSize(12).text(scenario.description, 80, spacing, {
+                width: 420,
+                align: 'justify'
+            });
+            spacing = spacing + Math.ceil(doc.heightOfString(scenario.description) / 10) * 10 + 15;
+
+            scenario.questions.map((question) => {
+                questionIndex++
+                if (spacing > docHeight) {
+                    doc.addPage();
+                    spacing = 80;
+                }
+
+                console.log("3", question)
+                console.log("answer:", questionnaireData[sectionIndex][scenarioIndex][questionIndex])
+
+                let questionAnswer = questionnaireData[sectionIndex][scenarioIndex][questionIndex]
+
+                // if the question is range type then the print out both value and supplementary value
+                if (!question.isMCQ) {
+
+                    console.log("questionAnswer.value",questionAnswer.value);
+                    if ((questionAnswer.value === "" || questionAnswer.value === undefined)
+                        && (questionAnswer.supplementaryValue === '' ||  questionAnswer.supplementaryValue === undefined)){
+
+                        doc.font('Helvetica-Bold')
+                            .text("Answer: ", 80, spacing)
+                        questionAnswer.value = "Unanswered"
+                        doc.font('Helvetica')
+                            .text(questionAnswer.value, 280, spacing)
+
+                    }else{
+
+                        if (questionAnswer.supplementaryValue === '') {
+
+                            doc.font('Helvetica-Bold')
+                                .text("Answer: ", 80, spacing)
+
+                            doc.font('Helvetica')
+                                .text(questionAnswer.value, 280, spacing)
+
+                        } else {
+
+                            doc.font('Helvetica-Bold')
+                                .text("Answer: ", 80, spacing);
+                            doc.font('Helvetica')
+                                .text(questionAnswer.supplementaryValue, 280, spacing);
+
+                        }
+
+                    }
+
+
+                    spacing = spacing + 35;
+
+                    if (spacing > docHeight) {
+                        doc.addPage();
+                        spacing = 80;
+                    }
+                }
+
+                // mcq questions will have the question and answer printed on pdf
+                else {
+                    doc.font('Helvetica-Bold')
+                        .text(question.description, 80, spacing, {
+                            width: 420,
+                            align: 'justify'
+                        });
+
+                    spacing = spacing + Math.ceil(doc.heightOfString(question.description) / 10) * 10 + 10;
+
+                    if (spacing > docHeight) {
+                        doc.addPage();
+                        spacing = 80;
+                    }
+
+                    doc.text("Answer: ", 80, spacing)
+                    if (questionAnswer.value === "" || questionAnswer.value === undefined ){
+                        doc.font('Helvetica')
+                            .text("Unanswered", 280, spacing);
+                        spacing = spacing + 35;
+                    }else{
+                        doc.font('Helvetica')
+                            .text(questionAnswer.value, 280, spacing);
+                        spacing = spacing + 35;
+                    }
+
+                }
+            })
+
+        })
+
+        // adds separation line
+        spacing = spacing + 10;
+        doc.lineCap('butt')
+            .moveTo(80, spacing)
+            .lineTo(500, spacing)
+            .stroke();
+        spacing = spacing + 20;
+
+        if (spacing > docHeight) {
+            doc.addPage();
+            spacing = 80;
+        }
+    });
+
+
+}
+
+const getSortedResponsesByImportance = function(list) {
+
+}
+
+const getSortedResponsesByFrequency = function(list) {
+
+}
+
 // Sending the results in an email.
 const generateReport = function (questionnaireId, personalDetails, questionnaireData, scores) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
@@ -81,155 +237,21 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
             .lineTo(500, 330)
             .stroke();
 
-        let questionIndex = -1
-        let sectionIndex = -1
-        let scenarioIndex = -1
 
-        let spacing = 340
-        // actual page is 792 but setting it to 700 helps to prevent overflow problems
-        let docHeight = 700
 
 
 
         Questionnaire.findOne({questionnaireId}, function (err, questionnaire) {
             if (!err) {
-                questionnaire.sections.map((section) => {
-                    sectionIndex++
-                    scenarioIndex = -1
-                    questionIndex = -1
 
-                    if (spacing > docHeight) {
-                        doc.addPage();
-                        spacing = 80;
-                    }
-                    // title for each section
-                    doc.font('Helvetica-Bold').fontSize(14).text(section.title, 80, spacing);
-                    doc.font('Helvetica').fontSize(12).text("Section average: "+ scores.sectionScores[sectionIndex], 280, spacing);
-                    spacing = spacing + 30;
-                    //                  console.log("1",section.title)
+                printQuestionnaireResults(doc, questionnaire, questionnaireData, scores)
 
-                    section.scenarios.map((scenario) => {
-                        scenarioIndex++
-                        questionIndex = -1
-
-                        //                  console.log("2",scenario.description)
-                        //description for each scenario
-                        if (spacing > docHeight) {
-                            doc.addPage();
-                            spacing = 80;
-                        }
-
-                        doc.font('Helvetica-Bold').fontSize(12).text("Scenario: ", 80, spacing);
-                        spacing = spacing + 20;
-
-                        doc.font('Helvetica').fontSize(12).text(scenario.description, 80, spacing, {
-                            width: 420,
-                            align: 'justify'
-                        });
-                        spacing = spacing + Math.ceil(doc.heightOfString(scenario.description) / 10) * 10 + 15;
-
-                        scenario.questions.map((question) => {
-                            questionIndex++
-                            if (spacing > docHeight) {
-                                doc.addPage();
-                                spacing = 80;
-                            }
-
-                            console.log("3", question)
-                            console.log("answer:", questionnaireData[sectionIndex][scenarioIndex][questionIndex])
-
-                            let questionAnswer = questionnaireData[sectionIndex][scenarioIndex][questionIndex]
-
-                            // if the question is range type then the print out both value and supplementary value
-                            if (!question.isMCQ) {
-
-                                console.log("questionAnswer.value",questionAnswer.value);
-                                if ((questionAnswer.value === "" || questionAnswer.value === undefined)
-                                    && (questionAnswer.supplementaryValue === '' ||  questionAnswer.supplementaryValue === undefined)){
-
-                                    doc.font('Helvetica-Bold')
-                                        .text("Answer: ", 80, spacing)
-                                    questionAnswer.value = "Unanswered"
-                                    doc.font('Helvetica')
-                                        .text(questionAnswer.value, 280, spacing)
-
-                                }else{
-
-                                    if (questionAnswer.supplementaryValue === '') {
-
-                                        doc.font('Helvetica-Bold')
-                                            .text("Answer: ", 80, spacing)
-
-                                        doc.font('Helvetica')
-                                            .text(questionAnswer.value, 280, spacing)
-
-                                    } else {
-
-                                        doc.font('Helvetica-Bold')
-                                            .text("Answer: ", 80, spacing);
-                                        doc.font('Helvetica')
-                                            .text(questionAnswer.supplementaryValue, 280, spacing);
-
-                                    }
-
-                                }
-
-
-                                spacing = spacing + 35;
-
-                                if (spacing > docHeight) {
-                                    doc.addPage();
-                                    spacing = 80;
-                                }
-                            }
-
-                            // mcq questions will have the question and answer printed on pdf
-                            else {
-                                doc.font('Helvetica-Bold')
-                                    .text(question.description, 80, spacing, {
-                                        width: 420,
-                                        align: 'justify'
-                                    });
-
-                                spacing = spacing + Math.ceil(doc.heightOfString(question.description) / 10) * 10 + 10;
-
-                                if (spacing > docHeight) {
-                                    doc.addPage();
-                                    spacing = 80;
-                                }
-
-                                doc.text("Answer: ", 80, spacing)
-                                if (questionAnswer.value === "" || questionAnswer.value === undefined ){
-                                    doc.font('Helvetica')
-                                        .text("Unanswered", 280, spacing);
-                                    spacing = spacing + 35;
-                                }else{
-                                    doc.font('Helvetica')
-                                        .text(questionAnswer.value, 280, spacing);
-                                    spacing = spacing + 35;
-                                }
-
-                            }
-                        })
-
-                    })
-
-                    // adds separation line
-                    spacing = spacing + 10;
-                    doc.lineCap('butt')
-                        .moveTo(80, spacing)
-                        .lineTo(500, spacing)
-                        .stroke();
-                    spacing = spacing + 20;
-
-                    if (spacing > docHeight) {
-                        doc.addPage();
-                        spacing = 80;
-                    }
-                });
 
                 doc.end();
                 // Creating the file to send.
+
+
+
                 const s = new Readable()
                 s.push(JSON.stringify(personalDetails))    // the string you want
                 s.push(JSON.stringify(questionnaireData))
