@@ -113,8 +113,6 @@ const deleteShare = function (req, res) {
 
 
 
-
-
 module.exports.sendInvitationEmail = sendInvitationEmail;
 module.exports.sendResultsEmail = sendResultsEmail;
 module.exports.deleteShare = deleteShare;
