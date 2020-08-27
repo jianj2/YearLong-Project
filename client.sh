@@ -77,7 +77,7 @@ docker_build_image()
 docker_run_registry_container()
 {
     docker run -d \
-    -p 80:3000 \
+    -p 3000:3000 \
     -p 443:443 \
     --name react-app \
     --network ssq-paediatrics \
@@ -88,7 +88,7 @@ docker_run_registry_container()
 docker_run_local_container() 
 {
     docker run -d \
-    -p 80:3000 \
+    -p 3000:3000 \
     -p 443:443 \
     --name react-app \
     --network ssq-paediatrics \

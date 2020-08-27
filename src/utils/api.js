@@ -1,4 +1,4 @@
-const api = "http://52.65.44.7:3001";
+const api = "https://paediatricsssq.sytes.net/";
 
 let header = {
     authorization: "fill in l8er",
