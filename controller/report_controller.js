@@ -53,6 +53,9 @@ const printQuestionnaireResults = function(doc, questionnaire, questionnaireData
     // actual page is 792 but setting it to 700 helps to prevent overflow problems
     let docHeight = 700
     questionnaire.sections.map((section) => {
+
+
+
         sectionIndex++
         scenarioIndex = -1
         questionIndex = -1
@@ -113,7 +116,6 @@ const printQuestionnaireResults = function(doc, questionnaire, questionnaireData
                             .text(questionAnswer.value, 280, spacing)
 
                     }else{
-
                         if (questionAnswer.supplementaryValue === '') {
 
                             doc.font('Helvetica-Bold')
@@ -191,92 +193,127 @@ const printQuestionnaireResults = function(doc, questionnaire, questionnaireData
 }
 
 
+const getQuestionnaireResponseJoin = function (questionnaire, questionnaireData, sectionScores) {
+
+    let result = [];
+    questionnaire.sections.forEach((section, sectionIndex) => {
+        console.log("questionnaire", section);
+        console.log("questionnaireData", questionnaireData[sectionIndex]);
+        result[sectionIndex] = [];
+        section.scenarios.forEach((scenario, scenarioIndex) => {
+            result[sectionIndex][scenarioIndex] = [];
+            scenario.questions.forEach((question, questionIndex) => {
+                result[sectionIndex][scenarioIndex][questionIndex] = {
+                    question: question,
+                    response: questionnaireData[sectionIndex][scenarioIndex][questionIndex],
+                    sectionScore: sectionScores[sectionIndex],
+                };
+            })
+        });
+    });
+
+
+    return result
+}
+
 // Sending the results in an email.
 const generateReport = function (questionnaireId, personalDetails, questionnaireData) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
 
 
-        var total_score = 0;
-        var section_score = new Array();
-        var total_q = 0;
-        var section_num = 0;
-
-        for (var i = 0; i < questionnaireData.length; i++) {
-            var section_q = 0;
-            var score = 0;
-            for (var j = 0; j < questionnaireData[i].length; j++) {
-                for (var z = 0; z < questionnaireData[i][j].length; z++) {
-                    console.log(questionnaireData[i][j][z])
-                    if (!isNaN(questionnaireData[i][j][z].value)) {
-                        if (questionnaireData[i][j][z].value != '') {
-                            score += questionnaireData[i][j][z].value;
-                        }
-                        section_q += 1;
-                    }
-                }
-            }
-            if (score === 0 ){
-                section_score[section_num]="N/A";
-            }else{
-                section_score[section_num] = score / section_q;
-            }
-            total_score += score;
-            section_num += 1;
-            total_q += section_q;
-        };
-        let average_score = Math.round((total_score / total_q) * 100) / 100;
-
-        // object created to pass through.
-        let scores = {
-            averageScore: average_score,
-            sectionScores: section_score
-        }
-        // debugging
-        //console.log("total_score:",total_score,"section_score:",section_score,"total_q:",total_q,"section_num:",section_num,"average_score:", average_score );
-
-        //needs to merge
-        //needs to merge
-        const doc = new PDFDocument();
-        let ts = getTimeStamp();
-        doc.font('Helvetica').fontSize(10).text(ts, 10, 10);
-
-        doc.image('assets/logo_complete.png', 400, 30, {width: 100})
-
-        doc.font('Helvetica-Bold').fontSize(14).text("Patient Details", 80, 80);
-
-        // purple overlay for patient information
-        doc.fillOpacity(0.1).rect(80, 100, 420, 180).fill('purple');
-        doc.fillOpacity(1).fill('black');
-
-        // prints out patient information
-        doc.font('Helvetica-Bold').fontSize(12)
-            .text('Patient Name', 100, 120)
-            .text('Right Device Type', 100, 170)
-            .text('Left Device Type', 100, 220)
-            .text('Date of Birth', 300, 120)
-            .text('Completed By', 300, 170);
-
-        doc.font('Helvetica').fontSize(12)
-            .text(personalDetails.name, 100, 140)
-            .text(personalDetails.date, 300, 140)
-            .text(personalDetails.rightDeviceType, 100, 190)
-            .text(personalDetails.leftDeviceType, 100, 240)
-            .text(personalDetails.completedBy, 300, 190);
-
-
-        // prints out title for questionnaire response
-        doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire Response", 80, 310);
-        doc.font('Helvetica').fontSize(12).text("Questionnaire average: " + scores.averageScore, 280, 310);
-
-        doc.lineCap('butt')
-            .moveTo(80, 330)
-            .lineTo(500, 330)
-            .stroke();
-
 
         Questionnaire.findOne({questionnaireId}, function (err, questionnaire) {
             if (!err) {
+
+
+
+                var total_score = 0;
+                var section_score = new Array();
+                var total_q = 0;
+                var section_num = 0;
+
+                for (var i = 0; i < questionnaireData.length; i++) {
+                    var section_q = 0;
+                    var score = 0;
+                    for (var j = 0; j < questionnaireData[i].length; j++) {
+                        for (var z = 0; z < questionnaireData[i][j].length; z++) {
+                            console.log(questionnaireData[i][j][z])
+                            if (!isNaN(questionnaireData[i][j][z].value)) {
+                                if (questionnaireData[i][j][z].value != '') {
+                                    score += questionnaireData[i][j][z].value;
+                                }
+                                section_q += 1;
+                            }
+                        }
+                    }
+                    if (score === 0 ){
+                        section_score[section_num]="N/A";
+                    }else{
+                        section_score[section_num] = score / section_q;
+                    }
+                    total_score += score;
+                    section_num += 1;
+                    total_q += section_q;
+                };
+                let average_score = Math.round((total_score / total_q) * 100) / 100;
+
+                // object created to pass through.
+                let scores = {
+                    averageScore: average_score,
+                    sectionScores: section_score
+                }
+
+                const resultToPrint = getQuestionnaireResponseJoin(questionnaire, questionnaireData, section_score);
+
+                console.log(" ");
+                console.log(" ");
+                console.log("resultToPrint", resultToPrint);
+                console.log(" ");
+                console.log(" ");
+                // debugging
+                //console.log("total_score:",total_score,"section_score:",section_score,"total_q:",total_q,"section_num:",section_num,"average_score:", average_score );
+
+                //needs to merge
+                //needs to merge
+                const doc = new PDFDocument();
+                let ts = getTimeStamp();
+                doc.font('Helvetica').fontSize(10).text(ts, 10, 10);
+
+                doc.image('assets/logo_complete.png', 400, 30, {width: 100})
+
+                doc.font('Helvetica-Bold').fontSize(14).text("Patient Details", 80, 80);
+
+                // purple overlay for patient information
+                doc.fillOpacity(0.1).rect(80, 100, 420, 180).fill('purple');
+                doc.fillOpacity(1).fill('black');
+
+                // prints out patient information
+                doc.font('Helvetica-Bold').fontSize(12)
+                    .text('Patient Name', 100, 120)
+                    .text('Right Device Type', 100, 170)
+                    .text('Left Device Type', 100, 220)
+                    .text('Date of Birth', 300, 120)
+                    .text('Completed By', 300, 170);
+
+                doc.font('Helvetica').fontSize(12)
+                    .text(personalDetails.name, 100, 140)
+                    .text(personalDetails.date, 300, 140)
+                    .text(personalDetails.rightDeviceType, 100, 190)
+                    .text(personalDetails.leftDeviceType, 100, 240)
+                    .text(personalDetails.completedBy, 300, 190);
+
+
+                // prints out title for questionnaire response
+                doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire Response", 80, 310);
+                doc.font('Helvetica').fontSize(12).text("Questionnaire average: " + scores.averageScore, 280, 310);
+
+                doc.lineCap('butt')
+                    .moveTo(80, 330)
+                    .lineTo(500, 330)
+                    .stroke();
+
+
 
                 printQuestionnaireResults(doc, questionnaire, questionnaireData, scores)
 
