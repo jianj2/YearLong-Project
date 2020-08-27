@@ -11,9 +11,9 @@
  *
  */
 
-import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { Slider } from "@material-ui/core";
+import React, {useState, useEffect} from "react";
+import {useForm} from "react-hook-form";
+import {Slider} from "@material-ui/core";
 import Loading from "./Loading";
 
 // Import components.
@@ -24,15 +24,14 @@ import "../styles/questionnaire.css";
 import "../styles/main.css";
 
 export default function Questionnaire({
-    readOnly,
-    questionnaire,
-    submitQuestionnaire,
-    questionnaireData,
-    handleQuestionnaireChange,
-    sectionVisibility,
-}) {
-    const { register, handleSubmit, errors } = useForm();
-    const [loading, setLoading] = useState(true);
+      readOnly,
+      questionnaire,
+      submitQuestionnaire,
+      questionnaireData,
+      handleQuestionnaireChange,
+      sectionVisibility,
+  }) {
+    const {register, handleSubmit, errors} = useForm();
 
 
     // Method: Called when we submit the questionnaire
@@ -56,100 +55,58 @@ export default function Questionnaire({
         );
     };
 
-    //////////// Share section update /////////////////////////////
-    // get a list of the visible sections
-    // const getVisibleSections = (sections, visibilityInfoList) => {
-    //     const filteredSections = sections.filter((section) => {
-    //         const foundVisibilityInfo = visibilityInfoList.find(
-    //             (visibilityInfo) => {
-    //                 return visibilityInfo.title === section.title;
-    //             }
-    //         );
-    //         if (foundVisibilityInfo != undefined) {
-    //             return foundVisibilityInfo.isVisible;
-    //         } else {
-    //             return null;
-    //         }
-    //     });
-    //     return filteredSections;
-    // };
-    //
-    // // set the updates questionnaire sections.
-    // const updateSections = (questionnaire, sectionVisibility) => {
-    //     console.log(sectionVisibility);
-    //     if (sectionVisibility != undefined) {
-    //         // questionnaire.sections = getVisibleSections(
-    //         //     questionnaire.sections,
-    //         //     sectionVisibility
-    //         // );
-    //         //
-    //         setFilteredSections(getVisibleSections(
-    //             questionnaire.sections,
-    //             sectionVisibility
-    //         ))
-    //     }
-    // };
+    return (
+        <form onSubmit={onSubmit} className="questionaire-container">
+            <h1>{questionnaire.title}</h1>
 
-
-    //////////////////////////////////////////////////////////////
-
-    console.log('questionaire in Questionnaire component ', questionnaire)
-    if (loading) {
-        return <Loading />;
-    } else {
-        return (
-            <form onSubmit={onSubmit} className="questionaire-container">
-                <h1>{questionnaire.title}</h1>
-
-                {questionnaire.sections.map((section, sectionIndex) => (
-                    <div key={sectionIndex} className="section-container">
-                        <h2>{section.title}</h2>
-                        {section.scenarios.map((scenario, scenarioIndex) => (
-                            <div
-                                key={scenarioIndex}
-                                className="scenario-container"
-                            >
-                                <p>{scenario.description}</p>
-                                {scenario.questions.map(
-                                    (question, questionIndex) => (
-                                        <Question
-                                            readOnly={readOnly}
-                                            error={true}
-                                            key={questionIndex}
-                                            questionIndex={questionIndex}
-                                            sectionIndex={sectionIndex}
-                                            scenarioIndex={scenarioIndex}
-                                            description={question.description}
-                                            isMCQ={question.isMCQ}
-                                            MCQOptions={question.MCQOptions}
-                                            rangeOptions={question.rangeOptions}
-                                            onQuestionChange={onQuestionChange}
-                                            data={
-                                                questionnaireData[sectionIndex][
-                                                    scenarioIndex
-                                                ][questionIndex]
-                                            }
-                                        />
-                                    )
-                                )}
-                            </div>
-                        ))}
-                    </div>
-                ))}
-
-                <div className="questionaire-submit-button">
-                    {readOnly ? null : (
-                        <button
-                            id="review"
-                            className={
-                                errors.code ? "button-disabled" : "button"
-                            }
+            {questionnaire.sections.map((section, sectionIndex) => (
+                <div key={sectionIndex} className="section-container">
+                    <h2>{section.title}</h2>
+                    {section.scenarios.map((scenario, scenarioIndex) => (
+                        <div
+                            key={scenarioIndex}
+                            className="scenario-container"
                         >
-                            R E V I E W
-                        </button>
-                    )}
+                            <p>{scenario.description}</p>
+                            {scenario.questions.map(
+                                (question, questionIndex) => (
+                                    <Question
+                                        readOnly={readOnly}
+                                        error={true}
+                                        key={questionIndex}
+                                        questionIndex={questionIndex}
+                                        sectionIndex={sectionIndex}
+                                        scenarioIndex={scenarioIndex}
+                                        description={question.description}
+                                        isMCQ={question.isMCQ}
+                                        MCQOptions={question.MCQOptions}
+                                        rangeOptions={question.rangeOptions}
+                                        onQuestionChange={onQuestionChange}
+                                        data={
+                                            questionnaireData[sectionIndex][
+                                                scenarioIndex
+                                                ][questionIndex]
+                                        }
+                                    />
+                                )
+                            )}
+                        </div>
+                    ))}
                 </div>
-            </form>
-        );
-    }
+            ))}
+
+            <div className="questionaire-submit-button">
+                {readOnly ? null : (
+                    <button
+                        id="review"
+                        className={
+                            errors.code ? "button-disabled" : "button"
+                        }
+                    >
+                        R E V I E W
+                    </button>
+                )}
+            </div>
+        </form>
+    );
 }
