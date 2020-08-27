@@ -32,7 +32,7 @@ export default function Questionnaire({
     sectionVisibility,
 }) {
     const { register, handleSubmit, errors } = useForm();
-    const [loading, setLoading] = useState(true);
+
 
     // Method: Called when we submit the questionnaire
     const onSubmit = (e) => {
@@ -85,11 +85,9 @@ export default function Questionnaire({
     };
 
     updateSections(questionnaire, sectionVisibility);
-    setLoading(false);
+
     //////////////////////////////////////////////////////////////
-    if (loading) {
-        return <Loading />;
-    } else {
+
         return (
             <form onSubmit={onSubmit} className="questionaire-container">
                 <h1>{questionnaire.title}</h1>
@@ -144,5 +142,5 @@ export default function Questionnaire({
                 </div>
             </form>
         );
-    }
+    
 }
