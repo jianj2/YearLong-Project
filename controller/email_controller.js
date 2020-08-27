@@ -1,6 +1,6 @@
 /**
  * ========================================
- * DEFINING SHARE API CALLS CONTROLLER
+ * DEFINING EMAIL CONTROLLER
  * ========================================
  * @date created: 26 August 2020
  * @authors: Waqas

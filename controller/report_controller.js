@@ -1,6 +1,6 @@
 /**
  * ========================================
- * DEFINING SHARE API CALLS CONTROLLER
+ * DEFINING REPORT CONTROLLER
  * ========================================
  * @date created: 26 August 2020
  * @authors: Waqas
@@ -10,7 +10,7 @@
  *
  */
 
-const nodemailer = require('nodemailer');
+r');
 const path = require("path");
 const Readable = require('stream').Readable
 const PDFDocument = require('pdfkit');
@@ -18,10 +18,6 @@ const PDFDocument = require('pdfkit');
 const mongoose = require("mongoose");
 
 const Questionnaire = mongoose.model("questionnaire");
-
-const FREQUENCY_SELECTOR = {
-    "": 1
-}
 
 
 const getTimeStamp = function (){
@@ -42,19 +38,16 @@ const getTimeStamp = function (){
     return(year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds);
 }
 
-const printQuestionnaireResults  = function(doc, questionnaire, resultToPrint, sectionScores) {
-    // let questionIndex = -1;
-    // let sectionIndex = -1;
-    // let scenarioIndex = -1;
 
-
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is print the results on the document
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+const printQuestionnaireResults  = function(doc, resultToPrint) {
 
     let spacing = 340
     // actual page is 792 but setting it to 700 helps to prevent overflow problems
     let docHeight = 700
-    resultToPrint.sections.map((section, sectionIndex) => {
-
-
+    resultToPrint.sections.map((section) => {
         if (spacing > docHeight) {
             doc.addPage();
             spacing = 80;
@@ -83,7 +76,7 @@ const printQuestionnaireResults  = function(doc, questionnaire, resultToPrint, s
             });
             spacing = spacing + Math.ceil(doc.heightOfString(scenario.description) / 10) * 10 + 15;
 
-            scenario.questions.map((question, questionIndex) => {
+            scenario.questions.map((question) => {
                 if (spacing > docHeight) {
                     doc.addPage();
                     spacing = 80;
@@ -183,43 +176,44 @@ const printQuestionnaireResults  = function(doc, questionnaire, resultToPrint, s
 
 }
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to compile the responses with the questionnaire
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const getQuestionnaireResponseJoin = function (questionnaire, questionnaireData, sectionScores) {
-
+    // MAKE A COPY OF THE ORIGINAL QUESTIONNAIRE
     let result = questionnaire;
-
-
-    // let result = [];
     questionnaire.sections.forEach((section, sectionIndex) => {
+        // ADD SCORE TO THE SECTION
         result.sections[sectionIndex].score = sectionScores[sectionIndex]
         section.scenarios.forEach((scenario, scenarioIndex) => {
             scenario.questions.forEach((question, questionIndex) => {
-                // result[sectionIndex][scenarioIndex][questionIndex] = {
-                //     question: question,
-                //     response: questionnaireData[sectionIndex][scenarioIndex][questionIndex],
-                // };
-
+                // ADD RESPONSE TO THE QUESTION
                 result.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].response =
                     questionnaireData[sectionIndex][scenarioIndex][questionIndex];
             })
         });
     });
-
-
     return result
 }
 
-// Sending the results in an email.
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to sort the questions by the importance
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+const sortByImportance = function (questionnaire) {
+    o
+
+}
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used generate the pdf report.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const generateReport = function (questionnaireId, personalDetails, questionnaireData) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
 
-
-
         Questionnaire.findOne({questionnaireId}, function (err, questionnaire) {
             if (!err) {
-
-
-
                 var total_score = 0;
                 var section_score = new Array();
                 var total_q = 0;
@@ -306,9 +300,11 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
                     .stroke();
 
 
+                // -------  TO DO  --------
+                // MAKE THIS BETTER
+                const sortedResults = sortByImportance(resultToPrint);
 
-                // printQuestionnaireResults(doc, questionnaire, questionnaireData, scores)
-                printQuestionnaireResults(doc, questionnaire, resultToPrint, section_score)
+                printQuestionnaireResults(doc, sortedResults)
 
 
                 doc.end();
