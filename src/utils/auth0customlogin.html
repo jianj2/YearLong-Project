@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Client Log In: Pediatric SSQ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<style>
+    body,
+    html {
+        background-color: #151641;
+        color: #eee;
+    }
+
+    h1 {
+        font-weight: 100;
+        text-align: center;
+        margin: 1em 0
+    }
+
+    label {
+        font-weight: 400;
+        opacity: 0.6;
+        margin: 0;
+        text-align: center;
+    }
+
+
+    #error-message-signup, #error-message-login {
+        display: none;
+        background: rgba(240, 240, 240, 0.2);
+        border: 1px solid rgba(240, 240, 240, 0.4);
+        color: #eee;
+        border-radius: 15px;
+    }
+
+    input {
+        width: 100%;
+        padding: 0.7vh 1.5vh;
+        font-size: 1.5vh;
+        border: 2px solid #eee;
+        border-radius: 5px;
+        background: #eee;
+        outline: none;
+        color: #555;
+        transition: all 0.2s;
+        opacity: 0.8;
+        text-align: center;
+        margin: 1rem 0;
+    }
+
+    input:focus {
+        border: 2px solid #DB3D94;
+        opacity: 1;
+    }
+
+    button {
+        cursor: pointer;
+        padding: 0.8vh 2.5vh;
+        font-size: 1.3vh;
+        font-weight: 100;
+        border: 1px solid #DB3D94;
+        background-color: #DB3D94;
+        border-radius: 2vh;
+        outline: 0;
+        color: #eee;
+        text-decoration: none;
+        transition: all 0.2s;
+        min-width: 50%;
+    }
+
+    button:hover {
+        background-color: #5AC0CC;
+        border-color: #5AC0CC;
+    }
+
+    #btn-login {
+        margin: 1rem 0;
+    }
+
+    #btn-signup {
+        margin: 1rem 0;
+    }
+
+    #btn-google {
+        background: 0;
+        visibility: hidden;
+    }
+
+    #btn-google:hover {
+        background-color: #5AC0CC;
+        visibility: hidden;
+
+    }
+
+
+    .landing {
+        /* margin-top: 5vh; */
+        width: 100vw;
+        height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr 1fr 3fr 1fr 1fr;
+        grid-template-rows: 2vh 3fr 4fr 2vh;
+        grid-template-areas:
+            ".  .   	.    	.  		."
+            ".  .	    form	.	    ."
+            ".  .  		form 	.   	."
+            ".  .    	.   	.    	."
+
+        ;
+        grid-gap: 2vh;
+    }
+
+    .landing-logo {
+        grid-area: logo;
+        display: flex;
+        justify-content: center;
+        align-self: center;
+    }
+
+    .landing-logo img {
+        /* width: 40%; */
+        height: 11vh;
+        margin: 2vh;
+    }
+
+    .login-box {
+        grid-area: form;
+    }
+
+    .landing-form {
+        display: flex;
+        flex-flow: column wrap;
+        align-items: center;
+    }
+
+	.nav-tabs {
+		width: 100%;
+		padding: 0 0 1px;
+		border-bottom: 1px solid rgba(255,255,255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nav-tab-item {
+        cursor: pointer;
+        /* padding: 10px; */
+        flex: 1;
+        text-align: center;
+        color: #eee;
+        border-radius: 5px 5px 0 0;
+        transition: all 0.2s;
+        text-decoration: none;
+        list-style-type: none;
+
+    }
+    .nav-tab-item a{
+        cursor: pointer;
+        display: block;
+        width: 100%;
+        padding: 10px;
+        color: #eee;
+        background-color: none;
+        text-decoration: none;
+    }
+    .nav-tab-item a:hover{
+        border: none;
+    }
+    .nav-tab-item:hover {
+        color: black;
+        background-color: #5AC0CC;
+    }
+
+    .tab-active {
+        color: #eee;
+        cursor: pointer;
+        background-color: #DB3D94;
+        /* border-bottom: 1px solid #ddd; */
+        border-bottom-color: transparent;
+    }
+    .tab-active:focus {
+        background-color: none;
+    }
+
+    .tab-active:hover {
+        background-color: none;
+    }
+
+
+    .tab-pane-disable {
+        display: none
+    }
+
+    .tab-pane-active {
+        display: block !important ;
+    }
+
+
+
+
+</style>
+
+<body>
+    <div class="landing">
+
+        <div class=" login-box ">
+            <div class="landing-logo">
+                <img src="https://pediatric-scale.s3-ap-southeast-2.amazonaws.com/logo_complete.png" />
+            </div>
+
+            <section class="row">
+                <ul class="nav-tabs">
+                    <li class="tab-active nav-tab-item"><a href="#tab-1">Login</a></li>
+                    <li class="nav-tab-item"><a href="#tab-2">Signup</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane tab-pane-active">
+                        <h1>Clinician Log In</h1>
+                        <div id="error-message-login" class="alert alert-danger"></div>
+                        <form onsubmit="return false;" method="post" class="landing-form">
+
+                            <label for="name">Email</label>
+                            <input required type="email" id="email" placeholder="Enter your email">
+
+                            <label for="name">Password</label>
+                            <input required type="password" id="password" placeholder="Enter your password">
+
+                            <button type="submit" id="btn-login">
+                                L O G &nbsp; I N
+                            </button>
+
+                            <hr>
+                            <button type="button" id="btn-google">
+                                Log In with Google
+                            </button>
+                        </form>
+                    </div>
+                    <div id="tab-2" class="tab-pane tab-pane-disable">
+                        <h1>Clinician Sign Up</h1>
+                        <div id="error-message-signup" class="alert alert-danger"></div>
+                        <form onsubmit="return false;" method="post" class="landing-form">
+
+                            <label for="name">First Name</label>
+                            <input required id="fname" placeholder="Enter your first name">
+
+                            <label for="name">Last Name</label>
+                            <input required id="lname" placeholder="Enter your family name">
+
+                            <label for="name">Organisation</label>
+                            <input required id="organisation" placeholder="Enter your organisation name">
+
+                            <label for="name">Email</label>
+                            <input required type="email" id="signup-email" placeholder="Enter your email">
+
+                            <label for="name">Password</label>
+                            <input required type="password" id="signup-password" placeholder="Enter your password">
+
+                            <label for="name">Confirm Password</label>
+                            <input required type="password" id="cpassword" placeholder="Retype your password">
+
+                            <button type="button" id="btn-signup">
+                                S I G N &nbsp; U P
+                            </button>
+                            <hr>
+
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+
+    <!--[if IE 8]>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/ie8/0.2.5/ie8.js"></script>
+  <![endif]-->
+
+    <!--[if lte IE 9]>
+  <script src="https://cdn.auth0.com/js/polyfills/1.0/base64.min.js"></script>
+  <script src="https://cdn.auth0.com/js/polyfills/1.0/es5-shim.min.js"></script>
+  <![endif]-->
+
+    <script src="https://cdn.auth0.com/js/auth0/9.13/auth0.min.js"></script>
+    <script src="https://cdn.auth0.com/js/polyfills/1.0/object-assign.min.js"></script>
+    <script>
+        window.addEventListener('load', function () {
+
+            var myTabs = document.querySelectorAll("ul.nav-tabs > li");
+            function myTabClicks(tabClickEvent) {
+                for (var i = 0; i < myTabs.length; i++) {
+                    myTabs[i].classList.remove("tab-active");
+                }
+                var clickedTab = tabClickEvent.currentTarget;
+                clickedTab.classList.add("tab-active");
+                tabClickEvent.preventDefault();
+                var myContentPanes = document.querySelectorAll(".tab-pane");
+                for (i = 0; i < myContentPanes.length; i++) {
+                    myContentPanes[i].classList.remove("tab-pane-active");
+                    myContentPanes[i].classList.add("tab-pane-disable");
+                }
+                var anchorReference = tabClickEvent.target;
+                var activePaneId = anchorReference.getAttribute("href");
+                var activePane = document.querySelector(activePaneId);
+                activePane.classList.add("tab-pane-active");
+                activePane.classList.remove("tab-pane-disable");
+            }
+            for (i = 0; i < myTabs.length; i++) {
+                myTabs[i].addEventListener("click", myTabClicks)
+            }
+
+
+
+
+
+            var config = JSON.parse(
+                decodeURIComponent(escape(window.atob('@@config@@')))
+            );
+
+            var params = Object.assign({
+                /* additional configuration needed for use of custom domains
+                overrides: {
+                  __tenant: config.auth0Tenant,
+                  __token_issuer: 'YOUR_CUSTOM_DOMAIN'
+                }, */
+                domain: config.auth0Domain,
+                clientID: config.clientID,
+                redirectUri: config.callbackURL,
+                responseType: 'code'
+            }, config.internalOptions);
+
+            var webAuth = new auth0.WebAuth(params);
+
+            var databaseConnection = 'Username-Password-Authentication';
+
+            function login(e) {
+                e.preventDefault();
+                var username = document.getElementById('email').value;
+                var password = document.getElementById('password').value;
+                webAuth.login({
+                    realm: databaseConnection,
+                    username: username,
+                    password: password
+                }, function (err) {
+                    if (err) displayErrorLogin(err);
+                });
+            }
+
+            function signup() {
+                var firstName = document.getElementById('fname').value;
+                var lastName = document.getElementById('lname').value;
+                var organisation = document.getElementById('organisation').value;
+                var email = document.getElementById('signup-email').value;
+                var password = document.getElementById('signup-password').value;
+                var cpassword = document.getElementById('cpassword').value;
+
+                if ( password !== cpassword ) {
+                    displayErrorSignUp({ description:"Passwords do not match!"})
+                } else {
+                    webAuth.redirect.signupAndLogin({
+                        connection: databaseConnection,
+                        email: email,
+                        password: password,
+                        user_metadata: {
+                            firstName,
+                            lastName,
+                            organisation,
+                        }
+                    }, function (err) {
+                        if (err) displayErrorSignUp(err);
+                    });
+                }
+            }
+
+            function loginWithGoogle() {
+                webAuth.authorize({
+                    connection: 'google-oauth2'
+                }, function (err) {
+                    if (err) displayError(err);
+                });
+            }
+
+            function displayErrorLogin(err) {
+                var errorMessage = document.getElementById('error-message-login');
+                errorMessage.innerHTML = err.description;
+                errorMessage.style.display = 'block';
+            }
+
+            function displayErrorSignUp(err) {
+                var errorMessage = document.getElementById('error-message-signup');
+                errorMessage.innerHTML = err.description;
+                errorMessage.style.display = 'block';
+            }
+
+            document.getElementById('btn-login').addEventListener('click', login);
+            document.getElementById('btn-google').addEventListener('click', loginWithGoogle);
+            document.getElementById('btn-signup').addEventListener('click', signup);
+        });
+    </script>
+</body>
+
+</html>

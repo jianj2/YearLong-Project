@@ -1,0 +1,29 @@
+/**
+ * ====================================================================
+ * CSS FILE TO STYLE the 'Login' Component 
+ * ====================================================================
+ * @date created: 10th May 2020
+ * @authors: Waqas Rehmani
+ *
+ * This file contains all the CSS classes related to the Login screen
+ * to style the component.
+ *
+ */
+
+ .loading {
+    position: fixed;
+    width: 100vw;
+    z-index: 10 !important;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.6);
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ }
+
+ .loading svg {
+    width: 80px;
+    opacity: 0.8;
+ }

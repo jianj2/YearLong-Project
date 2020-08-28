@@ -1,0 +1,70 @@
+/**
+ * ====================================================================
+ * CSS FILE TO STYLE the 'Sidebar' Component
+ * ====================================================================
+ * @date created: 14th May 2020
+ * @authors: Jin Chen, Guang Yang
+ *
+ * This file contains all the CSS classes related to the Sidebar
+ * component to style the component.
+ *
+ */
+
+@media all and (max-width: 800px) {
+    .sidebar-container {
+        /* flex: none; */
+        width: 100vw !important;
+        /* height: 9rem; */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        background-color: #101132;
+    }
+    .sidebar-container a {
+        font-size: 1rem;
+        height: 3rem;
+    }
+}
+
+.sidebar-container {
+    flex: 1;
+    /* min-height: 100vh; */
+    /* height: 100%; */
+    width: 25vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: #101132;
+}
+
+.sidebar-share,
+.sidebar-questionnaires,
+.sidebar-do-the-test,
+.sidebar-instructions,
+.sidebar-ssq-instructions,
+.sidebar-ssq-introduction  {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 6rem;
+    background-color: rgba(0,0,0,0.2);
+    text-align: center;
+    font-family: Raleway; 
+    font-size: 1.5em;
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+    transition: all 0.2;
+}
+.sidebar-container a {
+    transition: all 0.2;
+}
+
+.sidebar-container a:hover {
+    background-color: #af8bc0;
+}
+
+.active {
+    background-color: #db3d94;
+    cursor: pointer;
+}
