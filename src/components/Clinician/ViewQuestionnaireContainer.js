@@ -28,37 +28,41 @@ const ViewQuestionnaireContainer = (props) => {
 
     const [questionnaireData, setQuestionnaireData] = useState([]);
     const [loaded, setLoaded] = useState(false);
+    const [message, setMessage] = useState("");
    
     // get the questionnaire content from API
     useEffect(() =>{
     
         const prepareQuestionnaire = async () => {
             const questionnaire = await API.getAndSetSpecificQuestionnaire(props.questionnaireID,setSelectedQuestionnaire);
-            setSelectedQuestionnaire(questionnaire);
-            let emptyResponse = [];
-            console.log(`current q: ${questionnaire.title}`);
-            if (questionnaire.questionnaireId !== ""){
-            
-                questionnaire.sections.forEach((section, sectionIndex) => {
-                emptyResponse[sectionIndex] = [];
-                section.scenarios.forEach((scenario, scenarioIndex) => {
-                    emptyResponse[sectionIndex][scenarioIndex] = [];
-                    scenario.questions.forEach(
-                        (question, questionIndex) => {
-                            emptyResponse[sectionIndex][scenarioIndex][questionIndex] = {
-                                value: "",
-                                supplementaryValue: "",
-                            };
-                        }
-                    );
+            if (questionnaire != null){
+                setSelectedQuestionnaire(questionnaire);
+                let emptyResponse = [];
+                console.log(`current q: ${questionnaire.title}`);
+               
+                
+                    questionnaire.sections.forEach((section, sectionIndex) => {
+                    emptyResponse[sectionIndex] = [];
+                    section.scenarios.forEach((scenario, scenarioIndex) => {
+                        emptyResponse[sectionIndex][scenarioIndex] = [];
+                        scenario.questions.forEach(
+                            (question, questionIndex) => {
+                                emptyResponse[sectionIndex][scenarioIndex][questionIndex] = {
+                                    value: "",
+                                    supplementaryValue: "",
+                                };
+                            }
+                        );
+                    });
+                
                 });
             
-            });
-            
-            setQuestionnaireData(emptyResponse);
-            setLoaded(true);
-            } else {
-                console.log("An error has occured when setting empty response for questionnaire");
+                setQuestionnaireData(emptyResponse);
+                setLoaded(true);
+                
+            }else{
+                console.log("An error has occured when retrieving questionnaire.");
+                    setMessage("Oops! No Questionnaire Available!");
             }
         }
         prepareQuestionnaire();
@@ -72,7 +76,7 @@ const ViewQuestionnaireContainer = (props) => {
                     submitQuestionnaire={()=>{}}
                     questionnaireData={questionnaireData}
                     handleQuestionnaireChange={()=>{}}
-                />:<div>Oops! No Questionnaire Available!</div>
+                />:<div>{message}</div>
     );
 
 }

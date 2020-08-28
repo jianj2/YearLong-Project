@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Backdrop, Fade, FormControl, InputLabel, Input, FormHelperText, FormControlLabel, Checkbox } from "@material-ui/core";
+import {
+    Modal,
+    Backdrop,
+    Fade,
+    FormControl,
+    InputLabel,
+    Input,
+    FormHelperText,
+    FormControlLabel,
+    Checkbox,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 // Import Utils.
@@ -32,10 +42,15 @@ const ShareQuestionnaire = (props) => {
     const { isAuthenticated, loginWithRedirect, user } = useAuth0();
     // console.log("user.name", user.name); //TODO: change that when we have actual clincianId
 
-    const [customisedQuestionnaires, setCustomisedQuestionnaires] = useState([]);
-    const [standardisedQuestionnaires, setStandardisedQuestionnaires] = useState([]);
+    const [customisedQuestionnaires, setCustomisedQuestionnaires] = useState(
+        []
+    );
+    const [
+        standardisedQuestionnaires,
+        setStandardisedQuestionnaires,
+    ] = useState([]);
 
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const [isShareModalVisible, setIsShareModalVisible] = useState(false);
 
@@ -52,20 +67,27 @@ const ShareQuestionnaire = (props) => {
     useEffect(() => {
         setLoading(true);
         async function retrieveCustomisedQuestionnaires() {
-            const customisedQuestionnaires = await API.getClinicianQuestionnaires(user.name);
-            console.log(customisedQuestionnaires);
+            const customisedQuestionnaires = await API.getClinicianQuestionnaires(
+                user.name
+            );
             const today = formatDate();
-            const customisedQuestionnairesElement = customisedQuestionnaires.map((q) => {
-                return { QID: q.questionnaireId, Qname: q.title, Qdescription: q.description, date: today };
-            });
+            const customisedQuestionnairesElement = customisedQuestionnaires.map(
+                (q) => {
+                    return {
+                        QID: q.questionnaireId,
+                        Qname: q.title,
+                        Qdescription: q.description,
+                        date: today,
+                    };
+                }
+            );
             // setQuestionnaires({ customized_Questionnaire: customisedQuestionnairesElement });
             setCustomisedQuestionnaires(customisedQuestionnaires);
             setLoading(false);
         }
-        async function retrieveStandardisedQuestionnaires(){
-
+        async function retrieveStandardisedQuestionnaires() {
             const response = await API.getStandardisedQuestionnaires();
-            if (response.statusCode === 200){
+            if (response.statusCode === 200) {
                 setStandardisedQuestionnaires(response.data);
             }
         }
@@ -73,27 +95,25 @@ const ShareQuestionnaire = (props) => {
         retrieveCustomisedQuestionnaires();
     }, [user]);
 
-
     // Function called when Share is clicked on the QuestionnaireList
     const shareQuestionnaire = (questionnaireId, sections) => {
         console.log("share Questionnaire ", questionnaireId);
 
-
-        var temp = {}
+        var temp = {};
         sections.map((index) => {
-            temp = ({ ...temp,[(index.title).toString()]:false });
-        })
+            temp = { ...temp, [index.title.toString()]: false };
+        });
 
         setShareSection(temp);
 
         setShareModalData({
             ...shareModalData,
-            questionnaireId,shareSection
+            questionnaireId,
+            shareSection,
         });
 
         openModal();
     };
-
 
     // ========================================================================
     // Share Modal Functions
@@ -101,23 +121,21 @@ const ShareQuestionnaire = (props) => {
     const openModal = () => setIsShareModalVisible(true);
     const closeModal = () => setIsShareModalVisible(false);
 
-
     const handleShareSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
 
-        //sharesection is {section:isVisible}
+        //share section is {section:isVisible}
         setShareModalData({
             ...shareModalData,
             shareSection,
         });
 
         API.shareQuestionnaire(shareModalData).then( res => {
-            console.log("printing the res: ", res);
             setLoading(false);
             closeModal();
-        })
-    }
+        });
+    };
 
     const renderShareModal = () => {
         return (
@@ -132,7 +150,10 @@ const ShareQuestionnaire = (props) => {
                 }}
             >
                 <Fade in={isShareModalVisible}>
-                    <form className="share-modal-container" onSubmit={handleShareSubmit}>
+                    <form
+                        className="share-modal-container"
+                        onSubmit={handleShareSubmit}
+                    >
                         <h2>Share Details</h2>
                         <FormControl margin="dense">
                             <InputLabel>Email</InputLabel>
@@ -147,7 +168,9 @@ const ShareQuestionnaire = (props) => {
                                 type="email"
                                 required
                             />
-                            <FormHelperText>Please enter patient's email.</FormHelperText>
+                            <FormHelperText>
+                                Please enter patient's email.
+                            </FormHelperText>
                         </FormControl>
 
                         <FormControl margin="dense">
@@ -163,41 +186,41 @@ const ShareQuestionnaire = (props) => {
                                 name="message"
                                 type="text"
                             />
-                            <FormHelperText>Please enter a personalised Message that you want to send to the patient (optional).</FormHelperText>
+                            <FormHelperText>
+                                Please enter a personalised Message that you
+                                want to send to the patient (optional).
+                            </FormHelperText>
                         </FormControl>
-
 
                         {/* list of all the sections with check boxes*/}
-                        <FormControl margin="dense" style={{border: '1px inset #56577d'}}>
-                            {Object.entries(shareSection).map((k,v)=>
-                                (
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                checked={k[1]}
+                        <FormControl
+                            margin="dense"
+                            style={{ border: "1px inset #56577d" }}
+                        >
+                            {Object.entries(shareSection).map((k, v) => (
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            checked={k[1]}
+                                            onChange={(e) => {
+                                                shareSection[k[0]] =
+                                                    e.target.checked;
+                                                setShareModalData({
+                                                    ...shareModalData,
+                                                    shareSection,
+                                                });
+                                            }}
+                                            name="section selection"
+                                        />
+                                    }
+                                    label={k[0]}
+                                />
+                            ))}
 
-                                                onChange={(e) => { shareSection[k[0]]=e.target.checked;
-                                                    setShareModalData({
-                                                        ...shareModalData,
-                                                        shareSection
-                                                    });
-                                                }
-
-
-                                                }
-                                                name="section selection"
-                                            />
-                                        }
-                                        label={k[0]}
-                                    />
-                                )
-
-                            )}
-
-                            <FormHelperText>Please select the sections you want to share.</FormHelperText>
+                            <FormHelperText>
+                                Please select the sections you want to share.
+                            </FormHelperText>
                         </FormControl>
-
-
 
                         <FormControl>
                             <FormControlLabel
@@ -215,7 +238,9 @@ const ShareQuestionnaire = (props) => {
                                 label="Allow parent to complete the questionnaire"
                             />
                             <FormHelperText>
-                                If this option is checked, patients can independently complete the questionnaire and the report would be sent to you.
+                                If this option is checked, patients can
+                                independently complete the questionnaire and the
+                                report would be sent to you.
                             </FormHelperText>
                         </FormControl>
                         <button className="button">S H A R E</button>
@@ -225,14 +250,10 @@ const ShareQuestionnaire = (props) => {
         );
     };
 
-
-
-
-
     return (
         <div>
-            {loading ? <Loading /> : null}
             {renderShareModal()}
+            {loading ? <Loading /> : null}
 
             <div className="standard-questionnaire-container">
                 <div className="SQ-header">
@@ -244,8 +265,6 @@ const ShareQuestionnaire = (props) => {
                     canShare={true}
                     onClickShare={shareQuestionnaire}
                 />
-                {/* {standardisedQuestionnaireGenerator("SSQ-P", "SSQ for parents", "17/05/2020")}
-                {standardisedQuestionnaireGenerator("SSQ-CH", "SSQ for children ", "17/05/2020")} */}
             </div>
 
             <div className="CQ-header">
