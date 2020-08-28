@@ -191,7 +191,6 @@ const updateInstruction = function (req, res) {
     (err, raw) => {
         if (!err) {
         res.send("successfully edit");
-        console.log(req.body);
         // console.log('here')
         } else {
             res.send(err);
