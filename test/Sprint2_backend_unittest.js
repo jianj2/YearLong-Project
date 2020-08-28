@@ -7,7 +7,7 @@ chai.use(chaiHttp);
 let delete_id = uuidv1();
 let share_id = uuidv1();
 
-describe('Sprint1 Backend unit-test',function(){
+describe('Sprint2 Backend unit-test',function(){
 
 
     describe('Test the admin.js router',function(){
@@ -81,6 +81,51 @@ describe('Sprint1 Backend unit-test',function(){
                     }
                 });
         });
+        it('Test admin update the instruction',function(done){
+            chai.request('http://localhost:3001/admin')
+                .post('/instruction')
+                .send({'title':'Sample instruction','content':'This is the sample instruction'})
+                .end(function(err,res){
+                    if(!err){
+                        done();
+                    }else{
+                        done(err);
+                    }
+                });
+        });
+        it('Test admin get the instruction',function(done){
+            chai.request('http://localhost:3001/admin')
+                .get('/instruction')
+                .end(function(err,res){
+                    if(!err){
+                        done();
+                    }else{
+                        done(err);
+                    }
+                });
+        });
+        it('Test admin get the questionnaire',function(done){
+            chai.request('http://localhost:3001/admin')
+                .get('/getStandardisedQuestionnaire')
+                .end(function(err,res){
+                    if(!err){
+                        done();
+                    }else{
+                        done(err);
+                    }
+                });
+        });
+        it('Test admin verify login',function(done){
+            chai.request('http://localhost:3001/admin')
+                .get('/verifylogin/:token')
+                .end(function(err,res){
+                    if(!err){
+                        done();
+                    }else{
+                        done(err);
+                    }
+                });
+        });
     });
 
 
@@ -92,12 +137,11 @@ describe('Sprint1 Backend unit-test',function(){
                 .end(function(err,res){
                     if(!err){
                         res.should.have.property('body');
-                        res.body.should.have.lengthOf(7);
                         done();
                     }else{
                         done(err);
                     }
-                });
+                }).timeout(5000);
         });
 
         it('Test clinician shares the questionnaire',function(done){
@@ -106,28 +150,34 @@ describe('Sprint1 Backend unit-test',function(){
                 .send({
                     'clinicianEmail': 'jiaojian1996@gmail.com',
                     'patientEmail': 'jiaojian1996@gmail.com',
-                    'questionnaireId': 'c93d2b90-a682-11ea-963d-d72d9d1c93cb',
+                    'questionnaireId': '0d59c9d0-e6c7-11ea-a7af-355badb8db84',
                     'readOnly': false,
-                    'message': 'test',})
+                    'message': 'test',
+                    'shareSection':[{'title':'Section 1 - Speech','isVisible':true},{'title':'Section 2 - Spatial','isVisible':true},{'title':'Section 3 - Quality','isVisible':true}],})
                 .end(function(err,res){
                     if(!err){
-                        res.body.should.have.property('shareId');
-                        res.body.should.have.property('clinicianEmail');
-                        res.body.should.have.property('patientEmail');
-                        res.body.should.have.property('questionnaireId');
-                        res.body.should.have.property('readOnly');
-                        res.body.should.have.property('message');
-                        share_id = res.body.shareId;
-                        res.body.clinicianEmail.should.equal('jiaojian1996@gmail.com');
-                        res.body.patientEmail.should.equal('jiaojian1996@gmail.com');
-                        res.body.questionnaireId.should.equal('c93d2b90-a682-11ea-963d-d72d9d1c93cb');
-                        res.body.readOnly.should.equal(false);
-                        res.body.message.should.equal('test');
                         done();
                     }else{
                         done(err);
                     }
-                });
+                }).timeout(5000);
+        });
+        it('Test clinician complete the questionnaire',function(done){
+            chai.request('http://localhost:3001/clinician')
+                .post('/complete-questionnaire')
+                .send({
+                    'clinicianEmail':'unittest2@gmail.com',
+                    'questionnaireData':[[[{'value':'1','supplumentaryValue':''}]],[],[]],
+                    'personalDetails':{'name':'','date':'', 'rightDeviceType':'','leftDeviceType':'','completedBy':'clinician'},
+                    'questionnaireId': '6b2b75d0-e92a-11ea-a345-17af331cb519'
+                })
+                .end(function(err,res){
+                    if(!err){
+                        done();
+                    }else{
+                        done(err);
+                    }
+                }).timeout(5000);
         });
     });
 
@@ -154,80 +204,57 @@ describe('Sprint1 Backend unit-test',function(){
 
         it('Test the first shareId',function(done){
             chai.request('http://localhost:3001/share')
-                .get('/4f3bf7a0-a686-11ea-963d-d72d9d1c93cb')
+                .get('/7c2f0710-e507-11ea-920a-af9fa6f10364')
                 .end(function(err,res){
                     if(!err){
-                        res.body.shareId.should.equal('4f3bf7a0-a686-11ea-963d-d72d9d1c93cb');
-                        res.body.clinicianEmail.should.equal('donuvin@gmail.com');
-                        res.body.patientEmail.should.equal('wrehmani@student.unimelb.edu.au');
-                        res.body.questionnaireId.should.equal('c93d2b80-a682-11ea-963d-d72d9d1c93cb');
-                        res.body.readOnly.should.equal(false);
+                        res.body.statusCode.should.equal(200);
+                        res.body.message.should.equal("Valid ShareId");
                         done();
                     }else{
                         done(err);
                     }
                 });
-        });
+        }).timeout(5000);
 
         it('Test the second shareId',function(done){
             chai.request('http://localhost:3001/share')
-                .get('/64a9d1d0-a68a-11ea-9b09-53ae67cb454d')
+                .get('/6a45e2b0-e928-11ea-aab1-bbbcd6ea9818')
                 .end(function(err,res){
                     if(!err){
-                        res.body.shareId.should.equal('64a9d1d0-a68a-11ea-9b09-53ae67cb454d');
-                        res.body.clinicianEmail.should.equal('wrehmani@student.unimelb.edu.au');
-                        res.body.patientEmail.should.equal('donuvin@gmail.com');
-                        res.body.questionnaireId.should.equal('5c757050-a67b-11ea-a416-756fbdf3f4a8');
-                        res.body.readOnly.should.equal(true);
+                        res.body.statusCode.should.equal(200);
+                        res.body.message.should.equal("Valid ShareId");
                         done();
                     }else{
                         done(err);
                     }
                 });
-        });
+        }).timeout(5000);
 
         it('Test the shareId does not exist',function(done){
             chai.request('http://localhost:3001/share')
                 .get('/testerId')
                 .end(function(err,res){
                     if(!err){
-                        res.should.have.status(500);
+                        res.body.statusCode.should.equal(400);
+                        res.body.message.should.equal("Invalid ShareId");
                         done();
                     }else{
                         done(err);
                     }
                 });
-        });
+        }).timeout(5000);
 
         it('Test the completeShare',function(done){
             chai.request('http://localhost:3001/share')
-                .post('/submit/'+share_id)
-                .send({'questionnaireData':'',
-                    'clinicianEmail':'jiaojian1996@gmail.com',
-                    'personalDetails':{'name': 'Daniel', 'date': '2020-06-02', 'completedBy': 'parent',
-                        'rightDeviceType': 'deviceA', 'leftDeviceType': 'deviceA'}})
+                .post('/submit/6a45e2b0-e928-11ea-aab1-bbbcd6ea9818')
+                .send({
+                    'clinicianEmail':'unittest2@gmail.com',
+                    'questionnaireData':[[[{'value':'1','supplumentaryValue':''}]],[],[]],
+                    'personalDetails':{'name':'','date':'', 'rightDeviceType':'','leftDeviceType':'','completedBy':'clinician'},
+                    'questionnaireId': '6b2b75d0-e92a-11ea-a345-17af331cb519'
+                })
                 .end(function(err,res){
                     if(!err){
-                        res.should.have.status(200);
-                        res.body.should.equal(true);
-                        res.text.should.equal('true');
-                        done();
-                    }else {
-                        done(err);
-                    }
-                });
-        }).timeout(5000);
-
-        it('Test the completeShare with a expire shareId',function(done){
-            chai.request('http://localhost:3001/share')
-                .post('/submit/'+share_id)
-                .send({'questionnaireData':'',
-                    'clinicianEmail':'jiaojian1996@gmail.com',
-                    'personalDetails':{'name': 'Daniel', 'date': '2020-06-02', 'completedBy': 'parent',
-                        'rightDeviceType': 'deviceA', 'leftDeviceType': 'deviceA'}})
-                .end(function(err,res){
-                    if(!err){
-                        res.should.have.status(500);
                         done();
                     }else {
                         done(err);
@@ -244,30 +271,7 @@ describe('Sprint1 Backend unit-test',function(){
                 .end(function(err,res){
                     if(!err){
                         res.should.have.status(200);
-                        res.body.should.have.lengthOf(9);
-                        done();
-                    }else{
-                        done(err);
-                    }
-                });
-        });
-
-        it('Test get first Questionnaire by /getQuestionnaire/:questionnaireId',function(done){
-            chai.request('http://localhost:3001/questionnaire/getQuestionnaire')
-                .get('/5c757050-a67b-11ea-a416-756fbdf3f4a8')
-                .end(function(err,res){
-                    if(!err){
-                        res.should.have.status(200);
-                        res.body.should.have.property('questionnaireId');
-                        res.body.should.have.property('title');
-                        res.body.should.have.property('description');
-                        res.body.should.have.property('sections');
-                        res.body.should.have.property('isStandard');
-                        res.body.questionnaireId.should.equal('5c757050-a67b-11ea-a416-756fbdf3f4a8');
-                        res.body.title.should.equal('My First Questionnaire');
-                        res.body.description.should.equal('This is a questionnaire taken from the sample.');
-                        res.body.isStandard.should.equal(false);
-                        res.body.sections.should.have.lengthOf(3);
+                        res.body.should.have.lengthOf(36);
                         done();
                     }else{
                         done(err);
@@ -277,20 +281,38 @@ describe('Sprint1 Backend unit-test',function(){
 
         it('Test get first Questionnaire by /:questionnaireId',function(done){
             chai.request('http://localhost:3001/questionnaire')
-                .get('/5c757050-a67b-11ea-a416-756fbdf3f4a8')
+                .get('/2b79c750-e535-11ea-920a-af9fa6f10364')
+                .end(function(err,res){
+                    if(!err){
+                        res.body.statusCode.should.equal(200);
+                        res.body.message.should.equal('Valid');
+                        done();
+                    }else{
+                        done(err);
+                    }
+                });
+        });
+        it('Test get invalid Questionnaire by /:questionnaireId',function(done){
+            chai.request('http://localhost:3001/questionnaire')
+                .get('/testid')
+                .end(function(err,res){
+                    if(!err){
+                        res.body.statusCode.should.equal(400);
+                        res.body.message.should.equal('Invalid');
+                        done();
+                    }else{
+                        done(err);
+                    }
+                });
+        });
+
+        it('Test get first Questionnaire by /getQuestionnaire/:questionnaireId',function(done){
+            chai.request('http://localhost:3001/questionnaire/getQuestionnaire')
+                .get('/2b79c750-e535-11ea-920a-af9fa6f10364')
+                .send({'params':{'questionnaireId':'2b79c750-e535-11ea-920a-af9fa6f10364'}})
                 .end(function(err,res){
                     if(!err){
                         res.should.have.status(200);
-                        res.body.should.have.property('questionnaireId');
-                        res.body.should.have.property('title');
-                        res.body.should.have.property('description');
-                        res.body.should.have.property('sections');
-                        res.body.should.have.property('isStandard');
-                        res.body.questionnaireId.should.equal('5c757050-a67b-11ea-a416-756fbdf3f4a8');
-                        res.body.title.should.equal('My First Questionnaire');
-                        res.body.description.should.equal('This is a questionnaire taken from the sample.');
-                        res.body.isStandard.should.equal(false);
-                        res.body.sections.should.have.lengthOf(3);
                         done();
                     }else{
                         done(err);
@@ -304,16 +326,31 @@ describe('Sprint1 Backend unit-test',function(){
                 .query({clinicianId:'unittest2@gmail.com'})
                 .end(function(err,res){
                     if(!err){
-                        res.body.should.have.lengthOf(1);
+                        res.body.should.have.lengthOf(2);
                         res.body[0].should.have.property('questionnaireId');
                         res.body[0].should.have.property('title');
                         res.body[0].should.have.property('description');
                         res.body[0].should.have.property('sections');
                         res.body[0].should.have.property('isStandard');
-                        res.body[0].questionnaireId.should.equal('28c6fb70-a7c0-11ea-97ef-23fd8b2a64b6');
-                        res.body[0].title.should.equal('Unit Test Edit');
-                        res.body[0].description.should.equal('Please click edit to begin with this questionnaire.');
+                        res.body[0].questionnaireId.should.equal('6b2b75d0-e92a-11ea-a345-17af331cb519');
+                        res.body[0].title.should.equal('T1');
+                        res.body[0].description.should.equal('test');
                         res.body[0].isStandard.should.equal(false);
+                        done();
+                    }else{
+                        done(err);
+                    }
+                });
+        });
+
+        it('Test getClinicianQuestionnaires',function(done){
+            chai.request('http://localhost:3001/questionnaire')
+                .get('/standardised')
+                .query({clinicianId:'unittest2@gmail.com'})
+                .end(function(err,res){
+                    if(!err){
+                        res.body.statusCode.should.equal(200);
+                        res.body.message.should.equal('Valid');
                         done();
                     }else{
                         done(err);
