@@ -1,0 +1,115 @@
+#!/bin/bash
+# ####################################################################
+# PIPELINE YAML FILE
+# ####################################################################
+# Mayank Sharma - 22th August 2020
+#
+# This YAML file runs a pipeline in GitHub Actions containing a number of jobs.
+# Jobs include testing the code, building the image, caching the image, publishing
+# the image to GitHub registry, transfering the files to the production server and 
+# deploying the backend on the server.
+
+---
+name: server-CI/CD
+
+on:
+  # Pipeline trigger on push
+  push:
+    branches: 
+    - deployment-server 
+    - development-server 
+    tags:
+      - v*
+  # Pipeline trigger on pull request
+  pull_request:
+    branches:
+    - development-server
+    tags:
+      - v*
+
+jobs:
+  # Test server code with mocha
+  npm_test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    name: npm test
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - name: Set up Node.js 14.x for testing
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.8
+
+    - name: Install dependencies    
+      run: npm ci
+
+  # Build cache and publish images  
+  Docker_build_cache_publish:
+    needs: npm_test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    name: Docker build cache publish
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - name: Build, cache and publish docker image
+      uses: whoan/docker-build-with-cache-action@v5
+      with:
+        username: mayankshar21
+        password: "${{ secrets.GITHUB_TOKEN }}"
+        registry: docker.pkg.github.com
+        image_name: paediatrics-ssq-server
+        image_tag: latest
+        dockerfile: Dockerfile
+        push_git_tag: true
+  
+  # SCP files to web server
+  SCP:
+    needs: npm_test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    name: SCP
+    steps:  
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - name: SCP files to server
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST_NAME }}
+        username: ${{ secrets.USER_NAME }}
+        key: ${{ secrets.SERVER_KEY }}
+        port: ${{ secrets.SERVER_PORT }}
+        rm: true
+        source: ./
+        target: ~/server   
+  
+  # Deploy app to the server
+  Deploy:
+    needs: ["SCP","Docker_build_cache_publish"]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    name: Deploy
+    steps:              
+    - name: Deploy node app to EC2 
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST_NAME }}
+        username: ${{ secrets.USER_NAME }}
+        key: ${{ secrets.SERVER_KEY }}
+        port: ${{ secrets.SERVER_PORT }}
+        script: |
+          cd server
+          chmod u+x server.sh
+          ./server.sh
