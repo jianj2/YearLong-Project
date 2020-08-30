@@ -3,24 +3,29 @@ import * as API from "./api";
 
 export const AdminAuthContext = React.createContext();
 export const useAdminAuth = () => useContext(AdminAuthContext);
-export const AdminAuthProvider = ({children}) => {
+export const AdminAuthProvider = ({ children }) => {
     const [isAdminAuthenticated, setAuthenticated] = useState(false);
     const [adminToken, setAdminToken] = useState("");
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        let previousAuth = JSON.parse(
-            localStorage.getItem("adminAuthentication")
-        );
-        console.log("previousAuth", previousAuth);
-        if (previousAuth){
-            API.verifyAdminLogin(previousAuth.token).then((res) => {
-                console.log("VERYIFY LOGIN in CUSTOM HOOK", res);
-                if (res.auth) {
-                    setAuthenticated(true);
-                    setAdminToken(previousAuth.token);
-                }
-            });
-        }
+        const initAdmin = async () => {
+            let previousAuth = JSON.parse(
+                localStorage.getItem("adminAuthentication")
+            );
+            console.log("previousAuth", previousAuth);
+            if (previousAuth) {
+                await API.verifyAdminLogin(previousAuth.token).then((res) => {
+                    console.log("VERYIFY LOGIN in CUSTOM HOOK", res);
+                    if (res.auth) {
+                        setAuthenticated(true);
+                        setAdminToken(previousAuth.token);
+                    }
+                });
+            }
+            setLoading(false);
+        };
+        initAdmin();
     }, []);
 
     const adminLogin = (loginData) => {
@@ -50,12 +55,13 @@ export const AdminAuthProvider = ({children}) => {
         setAdminToken("");
         console.log("logout admin");
     };
-    
+
     return (
         <AdminAuthContext.Provider
             value={{
                 isAdminAuthenticated,
                 adminToken,
+                loading,
                 adminLogin,
                 adminLogout,
             }}
