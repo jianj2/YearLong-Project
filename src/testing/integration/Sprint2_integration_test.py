@@ -268,6 +268,7 @@ class Sprint2_integration_test(unittest.TestCase):
         time.sleep(2)
         share = self.driver.find_element_by_class_name("sidebar-share")
         share.click()
+        time.sleep(2)
         shareB = self.driver.find_elements_by_class_name("button")[2]
         shareB.click()
         time.sleep(2)
@@ -289,6 +290,7 @@ class Sprint2_integration_test(unittest.TestCase):
         time.sleep(2)
         share = self.driver.find_element_by_class_name("sidebar-share")
         share.click()
+        time.sleep(2)
         shareB = self.driver.find_elements_by_class_name("button")[2]
         shareB.click()
         time.sleep(2)
@@ -319,6 +321,7 @@ class Sprint2_integration_test(unittest.TestCase):
         time.sleep(2)
         share = self.driver.find_element_by_class_name("sidebar-share")
         share.click()
+        time.sleep(2)
         shareB = self.driver.find_elements_by_class_name("button")[2]
         shareB.click()
         time.sleep(2)
@@ -343,6 +346,7 @@ class Sprint2_integration_test(unittest.TestCase):
         time.sleep(2)
         share = self.driver.find_element_by_class_name("sidebar-share")
         share.click()
+        time.sleep(2)
         shareB = self.driver.find_elements_by_class_name("button")[2]
         shareB.click()
         time.sleep(2)
@@ -355,7 +359,7 @@ class Sprint2_integration_test(unittest.TestCase):
         button = self.driver.find_elements_by_class_name("button")[5]
         button.click()
         time.sleep(5)
-        assert self.driver.find_element_by_class_name("share-modal-container")
+        assert "http://localhost:3000/clinician/Share" in self.driver.current_url
 
     def test_share_with_twoSection_clinician(self):
         clinician_login = self.driver.find_element_by_link_text("Clinician")
@@ -370,6 +374,7 @@ class Sprint2_integration_test(unittest.TestCase):
         time.sleep(2)
         share = self.driver.find_element_by_class_name("sidebar-share")
         share.click()
+        time.sleep(2)
         shareB = self.driver.find_elements_by_class_name("button")[2]
         shareB.click()
         time.sleep(2)
@@ -385,7 +390,7 @@ class Sprint2_integration_test(unittest.TestCase):
         button = self.driver.find_elements_by_class_name("button")[5]
         button.click()
         time.sleep(5)
-        assert self.driver.find_element_by_class_name("share-modal-container")
+        assert "http://localhost:3000/clinician/Share" in self.driver.current_url
 
     def test_share_with_allSection_clinician(self):
         clinician_login = self.driver.find_element_by_link_text("Clinician")
@@ -400,6 +405,7 @@ class Sprint2_integration_test(unittest.TestCase):
         time.sleep(2)
         share = self.driver.find_element_by_class_name("sidebar-share")
         share.click()
+        time.sleep(2)
         shareB = self.driver.find_elements_by_class_name("button")[2]
         shareB.click()
         time.sleep(2)
@@ -418,7 +424,7 @@ class Sprint2_integration_test(unittest.TestCase):
         button = self.driver.find_elements_by_class_name("button")[5]
         button.click()
         time.sleep(5)
-        assert self.driver.find_element_by_class_name("share-modal-container")
+        assert "http://localhost:3000/clinician/Share" in self.driver.current_url
 
     def test_complete_enterPersonalDetails(self):
         clinician_login = self.driver.find_element_by_link_text("Clinician")
@@ -606,7 +612,7 @@ class Sprint2_integration_test(unittest.TestCase):
         time.sleep(2)
         assert self.driver.find_element_by_class_name("questionaire-container")
 
-    def test_complete_SubmitOnPage2(self):
+    def test_complete_SubmitOnPage3(self):
         clinician_login = self.driver.find_element_by_link_text("Clinician")
         clinician_login.click()
         time.sleep(2)
@@ -631,7 +637,7 @@ class Sprint2_integration_test(unittest.TestCase):
         time.sleep(2)
         submit = self.driver.find_elements_by_class_name("button")[2]
         submit.click()
-        time.sleep(2)
+        time.sleep(10)
         assert self.driver.find_element_by_class_name("dothetest-submit")
 
     def test_enterButton_without_input_admin(self):
@@ -667,7 +673,7 @@ class Sprint2_integration_test(unittest.TestCase):
         enter = self.driver.find_element_by_class_name("button")
         enter.click()
         time.sleep(2)
-        assert ("http://localhost:3000/admin/Questionnaires" in self.driver.current_url)
+        assert ("http://localhost:3000/admin" in self.driver.current_url)
 
     def test_logout(self):
         admin_login = self.driver.find_element_by_link_text("Admin")
@@ -760,7 +766,7 @@ class Sprint2_integration_test(unittest.TestCase):
         time.sleep(2)
         assert "Are you sure you want to cancel the editing?" in self.driver.find_element_by_class_name(
             "center-text").text
-        yes = self.driver.find_elements_by_id("margin-button-yes")[0]
+        yes = self.driver.find_element_by_class_name("buttons-container").find_elements_by_id("margin-button-no")[0]
         yes.click()
         time.sleep(2)
         assert ("http://localhost:3000/admin/SSQ_Instructions" in self.driver.current_url)
@@ -784,7 +790,7 @@ class Sprint2_integration_test(unittest.TestCase):
         time.sleep(2)
         assert "Are you sure you want to cancel the editing?" in self.driver.find_element_by_class_name(
             "center-text").text
-        no = self.driver.find_elements_by_id("margin-button-no")[1]
+        no = self.driver.find_element_by_class_name("buttons-container").find_elements_by_id("margin-button-no")[1]
         no.click()
         time.sleep(2)
         assert ("http://localhost:3000/admin/SSQ_Instructions" in self.driver.current_url)
