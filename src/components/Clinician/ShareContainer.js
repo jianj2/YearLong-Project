@@ -9,6 +9,7 @@ import {
     FormHelperText,
     FormControlLabel,
     Checkbox,
+    FormLabel,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -53,6 +54,9 @@ const ShareQuestionnaire = (props) => {
     const [loading, setLoading] = useState(true);
 
     const [isShareModalVisible, setIsShareModalVisible] = useState(false);
+
+    const [isSectionsEmpty, setIsSectionsEmpty] = useState(false);
+
 
     const [shareModalData, setShareModalData] = useState({
         patientEmail: "",
@@ -99,9 +103,12 @@ const ShareQuestionnaire = (props) => {
     const shareQuestionnaire = (questionnaireId, sections) => {
         console.log("share Questionnaire ", questionnaireId);
 
+        //making sure the state get reset once the modal is reloaded.
+        setIsSectionsEmpty(false);
+
         var temp = {};
         sections.map((index) => {
-            temp = { ...temp, [index.title.toString()]: false };
+            temp = { ...temp, [index.title.toString()]: true };
         });
 
         setShareSection(temp);
@@ -115,6 +122,20 @@ const ShareQuestionnaire = (props) => {
         openModal();
     };
 
+    // Function called when selection selections are changed
+    const sectionSelectionCheck = () => {
+
+        let isEmpty = true;
+        Object.entries(shareSection).map((k, v) => {
+            if(k[1]){
+                isEmpty = false;
+            }
+        })
+
+        setIsSectionsEmpty(isEmpty);
+
+    };
+
     // ========================================================================
     // Share Modal Functions
     // ========================================================================
@@ -123,18 +144,21 @@ const ShareQuestionnaire = (props) => {
 
     const handleShareSubmit = (e) => {
         e.preventDefault();
-        setLoading(true);
 
-        //share section is {section:isVisible}
-        setShareModalData({
-            ...shareModalData,
-            shareSection,
-        });
+        if( !isSectionsEmpty ){
+            setLoading(true);
 
-        API.shareQuestionnaire(shareModalData).then( res => {
-            setLoading(false);
-            closeModal();
-        });
+            //share section is {section:isVisible}
+            setShareModalData({
+                ...shareModalData,
+                shareSection,
+            });
+
+            API.shareQuestionnaire(shareModalData).then( res => {
+                setLoading(false);
+                closeModal();
+            });
+        }
     };
 
     const renderShareModal = () => {
@@ -149,7 +173,7 @@ const ShareQuestionnaire = (props) => {
                     timeout: 500,
                 }}
             >
-                <Fade in={isShareModalVisible}>
+                <Fade in={isShareModalVisible && !loading}>
                     <form
                         className="share-modal-container"
                         onSubmit={handleShareSubmit}
@@ -193,10 +217,11 @@ const ShareQuestionnaire = (props) => {
                         </FormControl>
 
                         {/* list of all the sections with check boxes*/}
-                        <FormControl
+                        <FormControl error={isSectionsEmpty}
                             margin="dense"
-                            style={{ border: "1px inset #56577d" }}
+                            style={{ border: "1px groove #56577d" }}
                         >
+                            {isSectionsEmpty?(<FormLabel component="legend">Pick at least one section</FormLabel>):(null)}
                             {Object.entries(shareSection).map((k, v) => (
                                 <FormControlLabel
                                     control={
@@ -208,7 +233,7 @@ const ShareQuestionnaire = (props) => {
                                                 setShareModalData({
                                                     ...shareModalData,
                                                     shareSection,
-                                                });
+                                                }); sectionSelectionCheck();
                                             }}
                                             name="section selection"
                                         />
