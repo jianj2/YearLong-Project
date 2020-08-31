@@ -91,6 +91,8 @@ const DoTheTestContainer = () => {
 
     // Method called to go to the instructions page in the wizard.
     const submitDetails = (data) => {
+        // to make sure field is not empty.
+        data["completedBy"] = "clinician"
         setPersonalDetails(data);
         console.log("details submitted", data);
         nextStep();
@@ -171,7 +173,7 @@ const DoTheTestContainer = () => {
                     <button className="button" onClick={prevStep}>
                         B A C K
                     </button>
-                    <button className="button" onClick={nextStep}>
+                    <button className="button" form='parents-detail-form' type="submit">
                         N E X T
                     </button>
                 </div>

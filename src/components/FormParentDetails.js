@@ -69,7 +69,7 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
     };
 
     return (
-        <form onSubmit={handleSubmit(handleButtonPress)} className="parents-detail-form">
+        <form onSubmit={handleSubmit(handleButtonPress)} className="parents-detail-form" id="parents-detail-form">
             <div className="parents-detail-form-column">
                 <FormControl margin="dense">
                     <InputLabel>Child's Name</InputLabel>
