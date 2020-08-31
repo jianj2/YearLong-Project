@@ -159,7 +159,6 @@ const ShareQuestionnaire = (props) => {
                 closeModal();
             });
         }
-
     };
 
     const renderShareModal = () => {
@@ -174,7 +173,7 @@ const ShareQuestionnaire = (props) => {
                     timeout: 500,
                 }}
             >
-                <Fade in={isShareModalVisible}>
+                <Fade in={isShareModalVisible && !loading}>
                     <form
                         className="share-modal-container"
                         onSubmit={handleShareSubmit}
