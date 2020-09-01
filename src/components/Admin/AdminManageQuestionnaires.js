@@ -8,12 +8,12 @@
  *
  */
 
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
 // Components
 import Loading from "../Loading";
 import QuestionnaireList from "../QuestionnaireList";
-import { Modal, Backdrop, Fade }  from "@material-ui/core";
+import { Modal, Backdrop, Fade } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 //style
@@ -21,7 +21,11 @@ import "../../styles/questionnaireList.css";
 
 // utils
 
-import {addStandardQuestionnaire, getStandardisedQuestionnaireForAdmin, deleteStandardQuestionnaire} from "../../utils/api";
+import {
+    addStandardQuestionnaire,
+    getStandardisedQuestionnaireForAdmin,
+    deleteStandardQuestionnaire,
+} from "../../utils/api";
 
 //Styling
 const useStyles = makeStyles((theme) => ({
@@ -42,19 +46,19 @@ const useStyles = makeStyles((theme) => ({
 const AdminManageQuestionnaires = () => {
     const classes = useStyles();
     const [loading, setLoading] = useState(false);
-    const [standardisedQuestionnaires, setStandardisedQuestionnaires] = useState([]);
+    const [
+        standardisedQuestionnaires,
+        setStandardisedQuestionnaires,
+    ] = useState([]);
     const [deleteQuestionnaireData, setdeleteQuestionnaireData] = useState({
         deleteQuestionnaireID: "",
-        deleteQuestionnaireName: ""
+        deleteQuestionnaireName: "",
     });
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
 
-
-
-    const viewQuestionnaire = (questionnaireID) =>{
+    const viewQuestionnaire = (questionnaireID) => {
         const view_url = "/admin/standard/" + questionnaireID + "/view";
         window.location.href = view_url;
-
     };
 
     const editQuestionnaire = (questionnaireID) => {
@@ -63,30 +67,26 @@ const AdminManageQuestionnaires = () => {
     };
 
     const deleteQuestionnaire = (questionnaireId, title) => {
-        setdeleteQuestionnaireData(
-            {
-                deleteQuestionnaireID: questionnaireId,
-                deleteQuestionnaireName: title
-            }
-        )
+        setdeleteQuestionnaireData({
+            deleteQuestionnaireID: questionnaireId,
+            deleteQuestionnaireName: title,
+        });
         openDeleteConfirmation();
-        
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         setLoading(true);
-        async function retrieveStandardisedQuestionnaires(){
+        async function retrieveStandardisedQuestionnaires() {
             const response = await getStandardisedQuestionnaireForAdmin();
             console.log(response);
             setStandardisedQuestionnaires(response); // cause the structure is not the same with cary's
             setLoading(false);
         }
         retrieveStandardisedQuestionnaires();
-    },[])
+    }, []);
 
-
-     // function for adding new standardised questionnaire
-     async function AddNew() {
+    // function for adding new standardised questionnaire
+    async function AddNew() {
         setLoading(true);
         const uuid = await addStandardQuestionnaire();
 
@@ -99,11 +99,12 @@ const AdminManageQuestionnaires = () => {
             isStandard: true,
             isSSQ_Ch: true,
         };
-        setStandardisedQuestionnaires([newQuestionnaire, ...standardisedQuestionnaires]);
+        setStandardisedQuestionnaires([
+            newQuestionnaire,
+            ...standardisedQuestionnaires,
+        ]);
         setLoading(false);
-        
     }
-
 
     // ========================================================================
     // Delete Modal Functions
@@ -112,12 +113,14 @@ const AdminManageQuestionnaires = () => {
     const closeDeleteConfirmation = () => setIsDeleteModalVisible(false);
 
     const deleteSelecctedQuestionnaire = () => {
-        let questionnaireId = deleteQuestionnaireData.deleteQuestionnaireID
-        const filteredQuestionnaires = standardisedQuestionnaires.filter((q) => q.questionnaireId !== questionnaireId);
+        let questionnaireId = deleteQuestionnaireData.deleteQuestionnaireID;
+        const filteredQuestionnaires = standardisedQuestionnaires.filter(
+            (q) => q.questionnaireId !== questionnaireId
+        );
         setStandardisedQuestionnaires(filteredQuestionnaires);
         deleteStandardQuestionnaire(questionnaireId);
         closeDeleteConfirmation();
-    }
+    };
 
     const renderDeleteModal = () => {
         return (
@@ -132,13 +135,24 @@ const AdminManageQuestionnaires = () => {
                 }}
             >
                 <Fade in={isDeleteModalVisible}>
-                    <div className = "share-modal-container">
-                        <h3 class = "center-text">Are you sure you want to delete {deleteQuestionnaireData.deleteQuestionnaireName}?</h3>
-                        <div className = "buttons-container">
-                            <button className="button" id = "margin-button" onClick={deleteSelecctedQuestionnaire} >
+                    <div className="share-modal-container">
+                        <h3 class="center-text">
+                            Are you sure you want to delete{" "}
+                            {deleteQuestionnaireData.deleteQuestionnaireName}?
+                        </h3>
+                        <div className="buttons-container">
+                            <button
+                                className="button"
+                                id="margin-button"
+                                onClick={deleteSelecctedQuestionnaire}
+                            >
                                 CONFIRM
                             </button>
-                            <button className="button" id = "margin-button" onClick={closeDeleteConfirmation}>
+                            <button
+                                className="button"
+                                id="margin-button"
+                                onClick={closeDeleteConfirmation}
+                            >
                                 CANCEL
                             </button>
                         </div>
@@ -148,35 +162,32 @@ const AdminManageQuestionnaires = () => {
         );
     };
 
-
-
     return (
         <div className="admin-manage-questionnaires">
-            {loading ? <Loading/> : null}
+            {loading ? <Loading /> : null}
 
-                {renderDeleteModal()}
-                <button className="button" onClick={AddNew}>
-                    A D D &nbsp; N E W
-                </button>
-                <div className="standard-questionnaire-container">
-                    <div className="SQ-header">
-                        <h1>Standard questionnaires</h1>
-                    </div>
-                    <QuestionnaireList
-                        questionnaires={standardisedQuestionnaires}
-                        listTitle={""}
-                        isSelectable={true}
-                        onClickQuestion={viewQuestionnaire}
-                        canEdit={true}
-                        onClickEdit={editQuestionnaire}
-                        canDelete = {true}
-                        onClickDelete = {deleteQuestionnaire}
-                    />
+            {renderDeleteModal()}
+
+            <div className="standard-questionnaire-container">
+                <div className="SQ-header">
+                    <h1>Standard questionnaires</h1>
+                    <button className="button" onClick={AddNew}>
+                        A D D &nbsp; N E W
+                    </button>
                 </div>
-            
+                <QuestionnaireList
+                    questionnaires={standardisedQuestionnaires}
+                    listTitle={""}
+                    isSelectable={true}
+                    onClickQuestion={viewQuestionnaire}
+                    canEdit={true}
+                    onClickEdit={editQuestionnaire}
+                    canDelete={true}
+                    onClickDelete={deleteQuestionnaire}
+                />
+            </div>
         </div>
     );
 };
-
 
 export default AdminManageQuestionnaires;
