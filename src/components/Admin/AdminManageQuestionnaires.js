@@ -21,7 +21,7 @@ import "../../styles/questionnaireList.css";
 
 // utils
 
-import {getStandardisedQuestionnaireForAdmin, deleteStandardQuestionnaire} from "../../utils/api";
+import {addStandardQuestionnaire, getStandardisedQuestionnaireForAdmin, deleteStandardQuestionnaire} from "../../utils/api";
 
 //Styling
 const useStyles = makeStyles((theme) => ({
@@ -88,11 +88,11 @@ const AdminManageQuestionnaires = () => {
      // function for adding new standardised questionnaire
      async function AddNew() {
         setLoading(true);
-        //const uuid = await API.addStandardQuestionnaire();
+        const uuid = await addStandardQuestionnaire();
 
         const AddedArray = standardisedQuestionnaires;
         let newQuestionnaire = {
-            //questionnaireId: uuid,
+            questionnaireId: uuid,
             title: "New Standard Questionnaire",
             description: "Please click edit to begin with this questionnaire.",
             sections: [],
@@ -101,8 +101,7 @@ const AdminManageQuestionnaires = () => {
         };
         setStandardisedQuestionnaires([newQuestionnaire, ...standardisedQuestionnaires]);
         setLoading(false);
-        // let edit_url = "/clinician/" + uuid + "/edit";
-        // window.location.href = edit_url;
+        
     }
 
 

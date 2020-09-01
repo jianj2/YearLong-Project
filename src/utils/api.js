@@ -94,6 +94,35 @@ export const addQuestionnaire = async (clinicianId) => {
     });
 };
 
+
+
+export const addStandardQuestionnaire = async () => {
+    const url = api + "/questionnaire/addStandard";
+
+    const headers = {
+        ...header,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+    };
+ 
+    return new Promise(async (resolve) => {
+        try {
+            let response = await fetch(url, {
+                method: "POST",
+                headers: headers,
+                
+            });
+            let json = await response.json();
+            resolve(json.uuid);
+        } catch (e) {
+            console.error(
+                "An error has occurred while adding questionnaire",
+                e
+            );
+        }
+    });
+};
+
 // delete customised questionnaire
 export const deleteQuestionnaire = (CQid, clinicianId) => {
     // console.log(CQid, clinicianId);
