@@ -112,13 +112,14 @@ const AdminManageQuestionnaires = () => {
     const openDeleteConfirmation = () => setIsDeleteModalVisible(true);
     const closeDeleteConfirmation = () => setIsDeleteModalVisible(false);
 
-    const deleteSelecctedQuestionnaire = () => {
+    const deleteSelecctedQuestionnaire = async () => {
         let questionnaireId = deleteQuestionnaireData.deleteQuestionnaireID;
         const filteredQuestionnaires = standardisedQuestionnaires.filter(
             (q) => q.questionnaireId !== questionnaireId
         );
         setStandardisedQuestionnaires(filteredQuestionnaires);
-        deleteStandardQuestionnaire(questionnaireId);
+        const message = await deleteStandardQuestionnaire(questionnaireId);
+        console.log(message);
         closeDeleteConfirmation();
     };
 
