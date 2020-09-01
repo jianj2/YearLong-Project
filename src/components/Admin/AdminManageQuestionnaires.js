@@ -13,6 +13,8 @@ import React, {useEffect, useState} from "react";
 // Components
 import Loading from "../Loading";
 import QuestionnaireList from "../QuestionnaireList";
+import { Modal, Backdrop, Fade }  from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 //style
 import "../../styles/questionnaireList.css";
@@ -21,10 +23,33 @@ import "../../styles/questionnaireList.css";
 
 import * as API from "../../utils/api";
 
+//Styling
+const useStyles = makeStyles((theme) => ({
+    modal: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    paper: {
+        backgroundColor: theme.palette.background.paper,
+        border: "2px solid #000",
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+    },
+}));
+
 // handles rendering of SSQInstructionsContainer in the Admin Page
 const AdminManageQuestionnaires = () => {
+    const classes = useStyles();
     const [loading, setLoading] = useState(false);
     const [standardisedQuestionnaires, setStandardisedQuestionnaires] = useState([]);
+    const [deleteQuestionnaireData, setdeleteQuestionnaireData] = useState({
+        deleteQuestionnaireID: "",
+        deleteQuestionnaireName: ""
+    });
+    const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+
+
 
     const viewQuestionnaire = (questionnaireID) =>{
         const view_url = "/admin/standard/" + questionnaireID + "/view";
@@ -35,6 +60,17 @@ const AdminManageQuestionnaires = () => {
     const editQuestionnaire = (questionnaireID) => {
         const edit_url = "/admin/" + questionnaireID + "/edit";
         window.location.href = edit_url;
+    };
+
+    const deleteQuestionnaire = (questionnaireId, title) => {
+        setdeleteQuestionnaireData(
+            {
+                deleteQuestionnaireID: questionnaireId,
+                deleteQuestionnaireName: title
+            }
+        )
+        openDeleteConfirmation();
+        
     };
 
     useEffect(()=>{
@@ -64,9 +100,57 @@ const AdminManageQuestionnaires = () => {
         );
     }
 
+    // ========================================================================
+    // Delete Modal Functions
+    // ========================================================================
+    const openDeleteConfirmation = () => setIsDeleteModalVisible(true);
+    const closeDeleteConfirmation = () => setIsDeleteModalVisible(false);
+
+    const deleteSelecctedQuestionnaire = () => {
+        let questionnaireId = deleteQuestionnaireData.deleteQuestionnaireID
+        const filteredQuestionnaires = standardisedQuestionnaires.filter((q) => q.questionnaireId !== questionnaireId);
+        setStandardisedQuestionnaires(filteredQuestionnaires);
+        //TODO use correct API 
+        //API.deleteQuestionnaire(questionnaireId, user.name);
+        closeDeleteConfirmation();
+    }
+
+    const renderDeleteModal = () => {
+        return (
+            <Modal
+                open={isDeleteModalVisible}
+                onClose={closeDeleteConfirmation}
+                closeAfterTransition
+                className={classes.modal}
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Fade in={isDeleteModalVisible}>
+                    <div className = "share-modal-container">
+                        <h3 class = "center-text">Are you sure you want to delete {deleteQuestionnaireData.deleteQuestionnaireName}?</h3>
+                        <div className = "buttons-container">
+                            <button className="button" id = "margin-button" onClick={deleteSelecctedQuestionnaire} >
+                                CONFIRM
+                            </button>
+                            <button className="button" id = "margin-button" onClick={closeDeleteConfirmation}>
+                                CANCEL
+                            </button>
+                        </div>
+                    </div>
+                </Fade>
+            </Modal>
+        );
+    };
+
+
+
     return (
         <div className="admin-manage-questionnaires">
-            {loading ? <Loading/> :
+            {loading ? <Loading/> : null}
+
+                {renderDeleteModal()}
                 <div className="standard-questionnaire-container">
                     <div className="SQ-header">
                         <h1>Standard questionnaires</h1>
@@ -78,9 +162,11 @@ const AdminManageQuestionnaires = () => {
                         onClickQuestion={viewQuestionnaire}
                         canEdit={true}
                         onClickEdit={editQuestionnaire}
+                        canDelete = {true}
+                        onClickDelete = {deleteQuestionnaire}
                     />
                 </div>
-            }
+            
         </div>
     );
 };

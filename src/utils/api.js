@@ -99,7 +99,7 @@ export const addQuestionnaire = async (clinicianId) => {
 };
 
 
-// delete questionnaire
+// delete customised questionnaire
 export const deleteQuestionnaire = (CQid, clinicianId) => {
     // console.log(CQid, clinicianId);
     const data = {
@@ -117,6 +117,8 @@ export const deleteQuestionnaire = (CQid, clinicianId) => {
         body: JSON.stringify(data),
     }).then((res) => res.json());
 };
+
+
 
 //edit questionnaire
 // TODO: get CQid and entire edited questionnaire from UI
