@@ -85,6 +85,27 @@ const AdminManageQuestionnaires = () => {
     },[])
 
 
+     // function for adding new standardised questionnaire
+     async function AddNew() {
+        setLoading(true);
+        //const uuid = await API.addStandardQuestionnaire();
+
+        const AddedArray = standardisedQuestionnaires;
+        let newQuestionnaire = {
+            //questionnaireId: uuid,
+            title: "New Standard Questionnaire",
+            description: "Please click edit to begin with this questionnaire.",
+            sections: [],
+            isStandard: true,
+            isSSQ_Ch: true,
+        };
+        setStandardisedQuestionnaires([newQuestionnaire, ...standardisedQuestionnaires]);
+        setLoading(false);
+        // let edit_url = "/clinician/" + uuid + "/edit";
+        // window.location.href = edit_url;
+    }
+
+
     // ========================================================================
     // Delete Modal Functions
     // ========================================================================
@@ -135,6 +156,9 @@ const AdminManageQuestionnaires = () => {
             {loading ? <Loading/> : null}
 
                 {renderDeleteModal()}
+                <button className="button" onClick={AddNew}>
+                    A D D &nbsp; N E W
+                </button>
                 <div className="standard-questionnaire-container">
                     <div className="SQ-header">
                         <h1>Standard questionnaires</h1>
