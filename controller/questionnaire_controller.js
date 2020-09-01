@@ -147,8 +147,39 @@ const addEmptyQuestionnaire = function (req, res) {
     );
 };
 
+// add a standardised questionnaire
+
+const addStandardisedQuestionnaire = (req, res) => {
+    const uuid = uuidv1();
+
+    let newQuestionnaire = new Questionnaire({
+        questionnaireId: uuid,
+        title: "New Standard Questionnaire",
+        description: "Please click edit to begin with this questionnaire.",
+        isSSQ_Ch: true,
+        sections: [
+            { title: "Section 1 - Speech", scenarios: [] },
+            { title: "Section 2 - Spatial", scenarios: [] },
+            { title: "Section 3 - Quality", scenarios: [] },
+        ],
+        isStandard: true,
+    });
+
+    newQuestionnaire.save(function (err, createdQuestionnaire) {
+        console.log(
+            "added standardised questionnaire:",
+            uuid,
+        );
+
+        res.send({
+            code: 200,
+            message: "successfully add new questionnaire!",
+            uuid: uuid,
+        });
+    });
+};
+
 // edit a questionnaire
-// TODO: Receive an actual questionnaire from req.body, rather than creating a boiler plate.
 const editQuestionnaire = function (req, res) {
     const questionnaireId = req.body.questionnaire.questionnaireId;
     const editedQuestionnaire = req.body.questionnaire;
@@ -260,6 +291,7 @@ const getStandardisedQuestionnaires = function (req, res) {
 module.exports.getAllQuestionnaire = getAllQuestionnaire;
 module.exports.getQuestionnaireSync = getQuestionnaireSync;
 module.exports.addEmptyQuestionnaire = addEmptyQuestionnaire;
+module.exports.addStandardisedQuestionnaire = addStandardisedQuestionnaire;
 module.exports.deleteQuestionnaire = deleteQuestionnaire;
 module.exports.deleteStandardisedQuestionnaire = deleteStandardisedQuestionnaire;
 module.exports.editQuestionnaire = editQuestionnaire;

@@ -25,6 +25,7 @@ router.get("/:questionnaireId", questionnaire_controller.getQuestionnaireSync);
 router.post('/deleteStandard', questionnaire_controller.deleteStandardisedQuestionnaire);
 router.post('/delete', questionnaire_controller.deleteQuestionnaire);
 router.post('/add', questionnaire_controller.addEmptyQuestionnaire);
+router.post('/addStandard', questionnaire_controller.addStandardisedQuestionnaire);
 router.post('/edit', questionnaire_controller.editQuestionnaire);
 
 module.exports = router;
