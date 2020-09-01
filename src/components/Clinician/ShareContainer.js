@@ -147,13 +147,7 @@ const ShareQuestionnaire = (props) => {
 
         if( !isSectionsEmpty ){
             setLoading(true);
-
-            //share section is {section:isVisible}
-            setShareModalData({
-                ...shareModalData,
-                shareSection,
-            });
-
+            shareModalData["shareSection"] = shareSection;
             API.shareQuestionnaire(shareModalData).then( res => {
                 setLoading(false);
                 closeModal();
