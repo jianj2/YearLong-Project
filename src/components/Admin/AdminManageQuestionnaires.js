@@ -84,21 +84,6 @@ const AdminManageQuestionnaires = () => {
         retrieveStandardisedQuestionnaires();
     },[])
 
-    function standardisedQuestionnaireGenerator(Qname, Qdescription, date) {
-        return (
-            <div className="q-frame">
-                <div className="q-name">{Qname}</div>
-                <div className="q-description">{Qdescription}</div>
-                <div className="date">{date}</div>
-                <div className="admin-standard-questionnaireList-footer">
-                    <div className="questionnaire-list-button-container">
-                        <button className="button">View</button>
-                        <button className="button">Edit</button>
-                    </div>
-                </div>
-            </div>
-        );
-    }
 
     // ========================================================================
     // Delete Modal Functions
