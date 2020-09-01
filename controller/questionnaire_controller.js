@@ -21,7 +21,7 @@ const getAllQuestionnaire = function (req, res) {
         if (!err) {
             res.send(allQuestionnaires);
         } else {
-            res.send(err);
+            res.send(JSON.stringify(err));
         }
     });
 };
@@ -53,7 +53,7 @@ const getQuestionnaireAsync = function (req, res) {
         if (!err && questionnaire != null) {
             res.send(questionnaire);
         } else {
-            res.send("null");
+            res.send(JSON.stringify(err));
         }
     });
 };
@@ -75,7 +75,7 @@ const getClinicianQuestionnaires = function (req, res) {
                 .exec();
             res.send(questionnaires);
         } else {
-            res.send(err);
+            res.send(JSON.stringify(err));
         }
     });
 };
@@ -188,10 +188,10 @@ const editQuestionnaire = function (req, res) {
         editedQuestionnaire,
         (err, raw) => {
             if (!err) {
-                res.send("successfully edit");
+                res.send(JSON.stringify("successfully edited"));
                 // console.log('here')
             } else {
-                res.send(err);
+                res.send(JSON.stringify(err));
             }
         }
     );
@@ -215,10 +215,9 @@ const editQuestionnaireQuestion = function (req, res) {
         },
         (err, raw) => {
             if (!err) {
-                res.send("successfully edit");
-                // console.log('here')
+                res.send(JSON.stringify("successfully edited"));
             } else {
-                res.send(err);
+                res.send(JSON.stringify(err));
             }
         }
     );
@@ -234,10 +233,9 @@ const deleteQuestionnaire = function (req, res) {
     ) {
         console.log("deleted customised questionnaire: " + questionnaireID);
         if (!err) {
-            res.send("successfully delete");
-            // console.log('here')
+            res.send(JSON.stringify("successfully deleted"));
         } else {
-            res.send(err);
+            res.send(JSON.stringify(err));
         }
     });
 
@@ -263,12 +261,10 @@ const deleteStandardisedQuestionnaire = (req, res) => {
     ) {
         console.log("deleted customised questionnaire: " + questionnaireID);
         if (!err) {
-            res.send(
-                `successfully deleted standard questionnaire ${questionnaireID}`
-            );
-            // console.log('here')
+            let message = JSON.stringify(`successfully deleted standard questionnaire ${questionnaireID}`);
+            res.send(message);
         } else {
-            res.send(err);
+            res.send(JSON.stringify(err));
         }
     });
 };
