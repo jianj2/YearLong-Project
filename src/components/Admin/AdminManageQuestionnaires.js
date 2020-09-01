@@ -21,7 +21,7 @@ import "../../styles/questionnaireList.css";
 
 // utils
 
-import * as API from "../../utils/api";
+import {getStandardisedQuestionnaireForAdmin, deleteStandardQuestionnaire} from "../../utils/api";
 
 //Styling
 const useStyles = makeStyles((theme) => ({
@@ -76,7 +76,7 @@ const AdminManageQuestionnaires = () => {
     useEffect(()=>{
         setLoading(true);
         async function retrieveStandardisedQuestionnaires(){
-            const response = await API.getStandardisedQuestionnaireForAdmin();
+            const response = await getStandardisedQuestionnaireForAdmin();
             console.log(response);
             setStandardisedQuestionnaires(response); // cause the structure is not the same with cary's
             setLoading(false);
@@ -95,8 +95,7 @@ const AdminManageQuestionnaires = () => {
         let questionnaireId = deleteQuestionnaireData.deleteQuestionnaireID
         const filteredQuestionnaires = standardisedQuestionnaires.filter((q) => q.questionnaireId !== questionnaireId);
         setStandardisedQuestionnaires(filteredQuestionnaires);
-        //TODO use correct API 
-        //API.deleteQuestionnaire(questionnaireId, user.name);
+        deleteStandardQuestionnaire(questionnaireId);
         closeDeleteConfirmation();
     }
 
