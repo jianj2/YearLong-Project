@@ -12,6 +12,7 @@ const mongoose = require('mongoose');
 
 const instructionSchema = mongoose.Schema({
     title:{type: String, required:true},
+    type:{type: String, required:false},
     content:{type: String, required:true},
 });
 

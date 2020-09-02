@@ -141,7 +141,8 @@ const addInstruction = function (req, res) {
 
     let newInstruction = new Instruction({
         title: "Hello world",
-        content: "How are you?"
+        content: "How are you?",
+        type: "RP"
     });
 
     newInstruction.save(function (err, createdQuestionnaire) {
@@ -176,6 +177,18 @@ const getInstruction = function (req, res) {
     }) 
 }
 
+//Get all instructions
+const getSpecificInstruction = function (req, res) {
+    console.log("me", req.params.instructionType);
+    Instruction.findOne({type: req.params.instructionType}, function(err, instruction){
+        if (!err && instruction != null) {
+            res.send(JSON.stringify(instruction));
+        } else {
+            res.send(JSON.stringify(err));
+        }
+    }) 
+}
+
 //Update the Instruction
 const updateInstruction = function (req, res) {
     console.log(req.body);
@@ -203,5 +216,6 @@ module.exports.verifyLogin = verifyLogin;
 module.exports.addStandardisedQuestionnaire = addStandardisedQuestionnaire;
 module.exports.getStandardisedQuestionnaire = getStandardisedQuestionnaire;
 module.exports.getInstruction = getInstruction;
+module.exports.getSpecificInstruction = getSpecificInstruction;
 module.exports.updateInstruction = updateInstruction;
 module.exports.addInstruction = addInstruction
