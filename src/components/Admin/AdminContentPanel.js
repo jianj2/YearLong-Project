@@ -15,7 +15,7 @@ import React from "react";
 
 // Import components.
 import AdminManageQuestionnaires from "./AdminManageQuestionnaires";
-import SSQInstructionsContainer from "./SSQInstructionsContainer";
+import SSQInstructionsList from "./SSQInstructionsList";
 import SSQIntroductionContainer from "./SSQIntroductionContainer";
 
 //import style
@@ -29,7 +29,7 @@ const AdminContentPanel = (props) => {
     if (props.active === 2) {
         return (
             <div className="content-container">
-                <SSQInstructionsContainer />
+                <SSQInstructionsList />
             </div>
         );
     } else if (props.active === 3) {

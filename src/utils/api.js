@@ -259,14 +259,25 @@ export const shareQuestionnaire = (data) =>
         body: JSON.stringify(data),
     }).then((res) => res.json());
 
-// get Instructions
-export const getInstructions = async () => {
+// get Instruction
+export const getInstruction = async () => {
     const url = `${api}/admin/instruction`;
     let response = await fetch(url, {
         headers: header,
     });
     let json = await response.json();
 
+    return json;
+};
+
+// get instructions
+export const getSpecificInstruction = async (instructionType) => {
+    const url = `${api}/admin/specificInstruction/${instructionType}`;
+    let response = await fetch(url, {
+        headers: header
+    });
+    let json = await response.json();
+    console.log("inss", json);
     return json;
 };
 

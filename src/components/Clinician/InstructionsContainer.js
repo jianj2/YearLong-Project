@@ -24,7 +24,7 @@ const InstructionsContainer = () => {
     });
 
     const getInstruction = () => {
-        API.getInstructions().then((res) =>{
+        API.getInstruction().then((res) =>{
             setInstruction({
                 title: res["title"],
                 content: res["content"]
