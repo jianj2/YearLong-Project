@@ -23,6 +23,8 @@ router.get('/instruction', admin_controller.getInstruction);
 router.get('/specificInstruction/:instructionType', admin_controller.getSpecificInstruction);
 router.get("/verifylogin/:token", admin_controller.verifyLogin);
 router.get('/getStandardisedQuestionnaire', admin_controller.getStandardisedQuestionnaire);
+router.get("/instructionsSummary", admin_controller.getInstructionsSummary);
+
 
 
 module.exports = router;
