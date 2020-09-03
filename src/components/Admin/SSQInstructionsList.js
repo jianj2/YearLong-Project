@@ -18,17 +18,57 @@ const [instructionsSummary, setInstructionsSummary] = useState([]);
 const setup = async ()  => {
     const summary = await getInstructionsSummary();
     setInstructionsSummary(summary);
-
-
 };
+
+
+
+const InstructionItem = ({
+    title,
+    type
+}) => {
+    // var edit_url = "/clinician/" + QID + "/edit";
+    return (
+        <div
+            className={
+                     "questionnaire-list-item questionnaire-list-item-selectable"
+            }
+            onClick={() => {
+                const url = "/admin/instruction/" + type + "/edit";
+                window.location.href = url;
+            }}
+        >
+            <div className="q-name">
+                {title} 
+            </div>
+
+        </div>
+    );
+};
+
+
 useEffect(()=>{
     setup();
 },[]);
 
 
+
+
 console.log(instructionsSummary);
-return (<SSQInstructionContainer 
-instructionType = "CC"/>);
+return (
+    <div className="instruction-list-container">
+        <h1>SSQ Instructions</h1>
+        {instructionsSummary.map((instruction, index) => (
+            <InstructionItem
+                key={index}
+                title={instruction.title}
+                type = {instruction.type}
+
+            />
+        ))}
+    </div>
+);
+// return (<SSQInstructionContainer 
+// instructionType = "CC"/>);
 
 }
 

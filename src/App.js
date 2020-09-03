@@ -78,11 +78,20 @@ function App() {
                         render={({match}) => (<HomeAdmin active = {4} questionnaireID={match.params.id}/>)}
                     />
 
+
                     <Route
                         path="/admin/standard/:id/view"
                         exact
                         render={({match}) => <HomeAdmin active = {5} questionnaireID={match.params.id}/> }
                     />
+                    
+                    <Route
+                        path="/admin/instruction/:type/edit"
+                        exact
+                        render={({match}) => <HomeAdmin active = {6} 
+                                    instructionType = {match.params.type}/> }
+                    />
+
 
                     <Route
                         path="/clinician"

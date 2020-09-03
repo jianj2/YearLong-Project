@@ -49,6 +49,7 @@ const HomeAdmin = (props) => {
                 <AdminContentPanel
                     active={props.active}
                     questionnaireID={props.questionnaireID}
+                    instructionType = {props.instructionType}
                 />
             </div>
         );

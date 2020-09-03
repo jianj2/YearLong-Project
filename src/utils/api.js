@@ -277,6 +277,17 @@ export const getSpecificInstruction = async (instructionType) => {
         headers: header
     });
     let json = await response.json();
+    return json;
+};
+
+// get instructions summary including title and type
+
+export const getInstructionsSummary = async () => {
+    const url = `${api}/admin/instructionsSummary`;
+    let response = await fetch(url, {
+        headers: header
+    });
+    let json = await response.json();
     console.log("inss", json);
     return json;
 };

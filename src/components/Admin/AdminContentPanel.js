@@ -24,6 +24,7 @@ import "../../styles/main.css";
 import ViewQuestionnaireContainer from "../Clinician/ViewQuestionnaireContainer";
 import QuestionnaireContainer from "../Clinician/QuestionnaireContainer";
 import AdminViewStandardQuestionnaire from "./AdminViewStandardQuestionnaire";
+import InstructionContainer from "./SSQInstructionContainer";
 
 const AdminContentPanel = (props) => {
     if (props.active === 2) {
@@ -55,7 +56,17 @@ const AdminContentPanel = (props) => {
                 />
             </div>
         );
-    } else {
+    } else if (props.active === 6){
+        return (
+            <div className="content-container">
+                <InstructionContainer
+                     instructionType={props.instructionType}
+                />
+            </div>
+        );
+    }
+    
+    else {
         return (
             <div className="content-container">
                 <AdminManageQuestionnaires />
