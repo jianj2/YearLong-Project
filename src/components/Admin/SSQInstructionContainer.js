@@ -39,7 +39,8 @@ const SSQInstructionsContainer = ({instructionType}) => {
     const classes = useStyles();
     const [instruction, setInstruction] = useState({
         title: "",
-        content: ""
+        content: "",
+        type: instructionType
     });
 
 
@@ -136,7 +137,7 @@ const SSQInstructionsContainer = ({instructionType}) => {
     const saveInstruction = (e) =>{
         setLoading(true);
         //TODO send collated instructions
-        API.sendInstructions({}).then( res =>{
+        API.updateInstruction(instructionType, {instruction}).then( res =>{
                 setLoading(false);
                 if (res.status === 200){
                     setsaveSuccess(true);

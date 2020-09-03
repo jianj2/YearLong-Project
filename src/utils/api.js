@@ -302,3 +302,14 @@ export const sendInstructions = (data) =>
         },
         body: JSON.stringify(data),
     }).then((res) => res);
+
+// update instruction by type
+export const updateInstruction = (type, data) =>
+fetch(`${api}/admin/instruction/${type}`, {
+    method: "POST",
+    headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+}).then((res) => res);
