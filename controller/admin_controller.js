@@ -172,7 +172,7 @@ const getInstruction = function (req, res) {
 
 //Get all instructions
 const getSpecificInstruction = function (req, res) {
-    console.log("me", req.params.instructionType);
+
     Instruction.findOne({ type: req.params.instructionType }, function (
         err,
         instruction
@@ -231,6 +231,30 @@ const updateInstruction = function (req, res) {
     );
 };
 
+
+//Update the instruction based on type
+const updateInstructionByType = function (req, res) {
+    console.log("updated", req.body);
+
+    let type = req.body.instruction.type;
+    
+
+    Instruction.replaceOne(
+        {type: type},
+        req.body.instruction,
+        (err, raw) => {
+            if (!err) {
+
+                res.send("successfully edit");
+                
+              
+            } else {
+                res.send(err);
+            }
+        }
+    );
+};
+
 module.exports.loginAdmin = loginAdmin;
 module.exports.verifyLogin = verifyLogin;
 module.exports.addStandardisedQuestionnaire = addStandardisedQuestionnaire;
@@ -239,4 +263,5 @@ module.exports.getInstruction = getInstruction;
 module.exports.getSpecificInstruction = getSpecificInstruction;
 module.exports.getInstructionsSummary = getInstructionsSummary;
 module.exports.updateInstruction = updateInstruction;
+module.exports.updateInstructionByType = updateInstructionByType;
 module.exports.addInstruction = addInstruction;
