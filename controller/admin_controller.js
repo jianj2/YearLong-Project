@@ -206,32 +206,6 @@ const getInstructionsSummary = function (req, res) {
     });
 };
 
-//Update the Instruction
-const updateInstruction = function (req, res) {
-    console.log(req.body);
-    let title = req.body.title;
-    let content = req.body.content;
-
-    Instruction.update(
-        {},
-        {
-            $set: {
-                title: title,
-                content: content,
-            },
-        },
-        (err, raw) => {
-            if (!err) {
-                res.send("successfully edit");
-                // console.log('here')
-            } else {
-                res.send(err);
-            }
-        }
-    );
-};
-
-
 //Update the instruction based on type
 const updateInstructionByType = function (req, res) {
     console.log("updated", req.body);
