@@ -9,23 +9,20 @@ export const AdminAuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const initAdmin = async () => {
-            let previousAuth = JSON.parse(
-                localStorage.getItem("adminAuthentication")
-            );
-            console.log("previousAuth", previousAuth);
-            if (previousAuth) {
-                await API.verifyAdminLogin(previousAuth.token).then((res) => {
-                    console.log("VERYIFY LOGIN in CUSTOM HOOK", res);
-                    if (res.auth) {
-                        setAuthenticated(true);
-                        setAdminToken(previousAuth.token);
-                    }
-                });
-            }
-            setLoading(false);
-        };
-        initAdmin();
+        let previousAuth = JSON.parse(
+            localStorage.getItem("adminAuthentication")
+        );
+        console.log("previousAuth", previousAuth);
+        if (previousAuth) {
+            API.verifyAdminLogin(previousAuth.token).then((res) => {
+                console.log("VERYIFY LOGIN in CUSTOM HOOK", res);
+                if (res.auth) {
+                    setAuthenticated(true);
+                    setAdminToken(previousAuth.token);
+                }
+            });
+        }
+        setLoading(false);
     }, []);
 
     const adminLogin = (loginData) => {
