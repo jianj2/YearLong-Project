@@ -31,7 +31,10 @@ export default function Questionnaire({
     handleQuestionnaireChange,
     sectionVisibility,
 }) {
-    const { register, handleSubmit, errors } = useForm();  
+    const { register, handleSubmit, errors } = useForm();
+
+
+    const [sliderMcqReadOnlyToogle, setSliderMcqReadOnlyToogle] = useState(undefined);
 
 
     // Method: Called when we submit the questionnaire
@@ -120,6 +123,8 @@ export default function Questionnaire({
                                                 scenarioIndex
                                                 ][questionIndex]
                                         }
+                                        isNotApplicable={questionnaireData[sectionIndex][scenarioIndex][0].supplementaryValue === "" ? false : true}
+
                                     />
                                 )
                             )}

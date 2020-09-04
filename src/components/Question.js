@@ -40,6 +40,47 @@ const SliderWithTicks = withStyles({
     }
 })(Slider);
 
+
+const marks = [
+    {
+        value: 0,
+        label: '0',
+    }, {
+        value: 1,
+        label: '1',
+    },{
+        value: 2,
+        label: '2',
+    },{
+        value: 3,
+        label: '3',
+    },{
+        value: 4,
+        label: '4',
+    },{
+        value: 5,
+        label: '5',
+    },{
+        value: 6,
+        label: '6',
+    },{
+        value: 7,
+        label: '7',
+    },{
+        value: 8,
+        label: '8',
+    },{
+        value: 9,
+        label: '9',
+    },
+    ,{
+        value: 10,
+        label: '10',
+    },
+];
+
+
+
 export default function Question({
     readOnly,
     questionIndex,
@@ -52,6 +93,7 @@ export default function Question({
     description,
     onQuestionChange,
     data,
+    isNotApplicable,
 }) {
 
     const [extraQuestion, setExtraQuestion] = useState(data.extraQuestion);
@@ -64,46 +106,8 @@ export default function Question({
         supplementaryValue: "",
     });
 
-    let sliderMcqReadOnlyToogle = undefined; // true if slider, false if mcq, undefined if neither.
 
-    const marks = [
-        {
-            value: 0,
-            label: '0',
-        }, {
-            value: 1,
-            label: '1',
-        },{
-            value: 2,
-            label: '2',
-        },{
-            value: 3,
-            label: '3',
-        },{
-            value: 4,
-            label: '4',
-        },{
-            value: 5,
-            label: '5',
-        },{
-            value: 6,
-            label: '6',
-        },{
-            value: 7,
-            label: '7',
-        },{
-            value: 8,
-            label: '8',
-        },{
-            value: 9,
-            label: '9',
-        },
-        ,{
-            value: 10,
-            label: '10',
-        },
-    ];
-    
+
 
     // useEffect(() => {
     //     let quesionResponseData = {
@@ -136,7 +140,7 @@ export default function Question({
                                 key={index}
                                 value={item}
                                 control={
-                                    <Radio disabled={readOnly} onClick={() => setAnswered(
+                                    <Radio disabled={readOnly || isNotApplicable} onClick={() => setAnswered(
                                         {   
                                             ...answered, 
                                             value: item 
@@ -163,13 +167,12 @@ export default function Question({
                                 value: val,
                                 supplementaryValue: "",
                             })
-                            sliderMcqReadOnlyToogle = true
                             }
                         }
                         marks={marks}
                         min={0}
                         max={10}
-                        disabled={readOnly || sliderMcqReadOnlyToogle === false}
+                        disabled={readOnly}
                         valueLabelDisplay="auto"
                         name="slider"
                     />
@@ -184,14 +187,13 @@ export default function Question({
                                 value="Would not hear it."
                                 control={
                                     <Radio
-                                        disabled={readOnly || sliderMcqReadOnlyToogle === true}
+                                        disabled={readOnly}
                                         onClick={() =>{
                                             setAnswered({
                                                 ...answered,
                                                 supplementaryValue: "Would not hear it.",
                                                 value:""
                                             });
-                                            sliderMcqReadOnlyToogle = false
                                         }
                                         }
                                     />
@@ -202,14 +204,13 @@ export default function Question({
                                 value="Do not know."
                                 control={
                                     <Radio
-                                        disabled={readOnly || sliderMcqReadOnlyToogle === true}
+                                        disabled={readOnly}
                                         onClick={() => {
                                             setAnswered({
                                                 ...answered,
                                                 supplementaryValue: "Do not know.",
                                                 value: ""
-                                            })
-                                            sliderMcqReadOnlyToogle = false
+                                            });
                                         }
                                         }
                                     />
@@ -220,14 +221,13 @@ export default function Question({
                                 value="Not applicable."
                                 control={
                                     <Radio
-                                        disabled={readOnly || sliderMcqReadOnlyToogle === true}
+                                        disabled={readOnly}
                                         onClick={() =>{
                                             setAnswered({
                                                 ...answered,
                                                 supplementaryValue: "Not applicable.",
                                                 value:""
                                             });
-                                            sliderMcqReadOnlyToogle = false
                                         }
                                         }
                                     />
