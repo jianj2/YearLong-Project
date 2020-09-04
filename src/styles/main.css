@@ -5,7 +5,7 @@
   * @date created: 10th May 2020
   * @authors: Waqas Rehmani
   *
-  * This file contains all the CSS classes related to the App to style 
+  * This file contains all the CSS classes related to the App to style
   * the component.
   *
 */
@@ -53,7 +53,7 @@ h1 {
 
 button:hover {
   background-color: #5AC0CC;
-  border-color: #5AC0CC; 
+  border-color: #5AC0CC;
 } */
 
 .button {
@@ -72,7 +72,7 @@ button:hover {
 
 .button:hover {
   background-color: #5AC0CC;
-  border-color: #5AC0CC; 
+  border-color: #5AC0CC;
 }
 
 .button-disabled {

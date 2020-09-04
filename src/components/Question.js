@@ -23,11 +23,22 @@
 import React, { useState, useEffect } from "react";
 
 // Import Material-UI components.
-import { Slider, FormControl, FormLabel, FormControlLabel, Radio, RadioGroup, Checkbox, FormGroup, FormHelperText } from "@material-ui/core";
+import { Slider, FormControl, FormLabel, FormControlLabel, Radio, RadioGroup, Checkbox, FormGroup, FormHelperText, withStyles } from "@material-ui/core";
 
 // Import styles.
 import "../styles/questionnaire.css";
 import "../styles/main.css";
+
+
+const SliderWithTicks = withStyles({
+    mark: {
+        backgroundColor: "rgba(245, 0, 87, 0.7)",
+        height: 15,
+        width: 1.5,
+        marginTop: -3,
+        marginLeft:-1
+    }
+})(Slider);
 
 export default function Question({
     readOnly,
@@ -139,10 +150,11 @@ export default function Question({
         );
     } else {
         if(data.value != undefined){
+            console.log("data from q",data);
             return (
                 <div classes="question-container">
                     <p>{description}</p>
-                    <Slider
+                    <SliderWithTicks
                         value={data.value}
                         color="secondary"
                         step={0.1}
@@ -161,7 +173,7 @@ export default function Question({
                     />
                     <div className="slider-labels">
                         <label>{rangeOptions[0]}</label>
-                        <label className="slider-value">{data.value}</label>
+                        <label className="slider-value">{data.value === "" || data.value === undefined? "0" : data.value }</label>
                         <label>{rangeOptions[1]}</label>
                     </div>
                     <FormControl color="secondary" margin="dense">
@@ -222,7 +234,7 @@ export default function Question({
             return (
                 <div className="question-container">
                     <p>{description}</p>
-                    <Slider
+                    <SliderWithTicks
                         value={data.value}
                         color="secondary"
                         step={0.1}
@@ -241,7 +253,7 @@ export default function Question({
                     />
                     <div className="slider-labels">
                         <label>{rangeOptions[0]}</label>
-                        <label className="slider-value">{data.value}</label>
+                        <label className="slider-value">{data.value === "" || data.value === undefined? "0" : data.value }</label>
                         <label>{rangeOptions[1]}</label>
                     </div>
                     <FormControl color="secondary" margin="dense">
