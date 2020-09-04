@@ -69,7 +69,7 @@ const HomeParents = ({ match }) => {
     });
     const [isInit, setIsInit] = useState(true);
     const getInstruction = () => {
-        API.getInstructions().then((res) =>{
+        API.getInstruction().then((res) =>{
             setInstruction({
                 title: res["title"],
                 content: res["content"]
