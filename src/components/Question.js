@@ -139,9 +139,11 @@ export default function Question({
     } else {
         if(data.value != undefined){
             return (
-                <div className="question-container">
+                <div classes="question-container">
                     <p>{description}</p>
-                    <Slider
+                    <Slider classes={{
+                        mark: 'slider-marks'
+                    }}
                         value={data.value}
                         color="secondary"
                         step={0.1}
