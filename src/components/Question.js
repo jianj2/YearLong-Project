@@ -53,6 +53,7 @@ export default function Question({
         supplementaryValue: "",
     });
 
+
     const marks = [
         {
             value: 0,
@@ -141,9 +142,7 @@ export default function Question({
             return (
                 <div classes="question-container">
                     <p>{description}</p>
-                    <Slider classes={{
-                        mark: 'slider-marks'
-                    }}
+                    <Slider
                         value={data.value}
                         color="secondary"
                         step={0.1}

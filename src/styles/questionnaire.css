@@ -54,12 +54,14 @@
     align-items: center;
 }
 
-.slider-marks {
-    backgroundColor: '#bfbfbf';
-    height: 80px;
-    width: 100px;
-    marginTop: -3;
-}
+
+/*.MuiSlider-mark{*/
+/*    backgroundColor: '#bfbfbf';*/
+/*    height: 80px;*/
+/*    width: 100px;*/
+/*    marginTop: -3;*/
+/*}*/
+
 
 .slider-value {
     background-color: rgba(245, 0, 87, 0.7);
