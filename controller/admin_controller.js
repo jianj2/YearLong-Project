@@ -236,6 +236,5 @@ module.exports.getStandardisedQuestionnaire = getStandardisedQuestionnaire;
 module.exports.getInstruction = getInstruction;
 module.exports.getSpecificInstruction = getSpecificInstruction;
 module.exports.getInstructionsSummary = getInstructionsSummary;
-module.exports.updateInstruction = updateInstruction;
 module.exports.updateInstructionByType = updateInstructionByType;
 module.exports.addInstruction = addInstruction;
