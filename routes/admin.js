@@ -14,15 +14,17 @@ const admin_controller = require('../controller/admin_controller.js');
 
 
 // CRUD Routes for Posts
-//admin_controller.addStandardisedQuestionnaire()
-//admin_controller.addInstruction()
+//admin_controller.addInstruction();
 
 router.post('/login', admin_controller.loginAdmin);
-router.post('/instruction', admin_controller.updateInstruction);
+router.post('/instruction/:type', admin_controller.updateInstructionByType);
 
 router.get('/instruction', admin_controller.getInstruction);
+router.get('/specificInstruction/:instructionType', admin_controller.getSpecificInstruction);
 router.get("/verifylogin/:token", admin_controller.verifyLogin);
 router.get('/getStandardisedQuestionnaire', admin_controller.getStandardisedQuestionnaire);
+router.get("/instructionsSummary", admin_controller.getInstructionsSummary);
+
 
 
 module.exports = router;

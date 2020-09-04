@@ -47,17 +47,16 @@ const loginAdmin = function (req, res) {
         return;
     }
     if (username === _username && password === _password) {
-
         const token = jwt.sign({ username: username }, "secretLOL", {
             // expiresIn: 86400, // expires in 24 hours
             expiresIn: 100, // expires in 100 seconds FOR TESTING
         });
-        res.send({ 
+        res.send({
             code: 3,
             message: {
-                auth: true, 
+                auth: true,
                 token: token,
-            }
+            },
         });
 
         // res.send({
@@ -72,13 +71,11 @@ const loginAdmin = function (req, res) {
     }
 };
 
-
-
 const verifyLogin = (req, res) => {
     let token = req.params.token;
 
     jwt.verify(token, "secretLOL", function (err, decoded) {
-        if (!err){
+        if (!err) {
             res.send({
                 auth: true,
                 decoded: decoded.username,
@@ -88,9 +85,9 @@ const verifyLogin = (req, res) => {
                 auth: false,
                 decoded: "",
             });
-        }   
+        }
     });
-}
+};
 
 // add a standardised questionnaires
 const addStandardisedQuestionnaire = function (req, res) {
@@ -112,7 +109,8 @@ const addStandardisedQuestionnaire = function (req, res) {
                                 rangeOptions: ["Zero", "Ten"],
                             },
                             {
-                                description: "If only one option can be true, which of the following is correct?",
+                                description:
+                                    "If only one option can be true, which of the following is correct?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "All of the above is true",
@@ -138,10 +136,10 @@ const addStandardisedQuestionnaire = function (req, res) {
 
 //add an instruction
 const addInstruction = function (req, res) {
-
     let newInstruction = new Instruction({
         title: "Hello world",
-        content: "How are you?"
+        content: "How are you?",
+        type: "RP",
     });
 
     newInstruction.save(function (err, createdQuestionnaire) {
@@ -149,59 +147,95 @@ const addInstruction = function (req, res) {
     });
 };
 
-
 // Get all standardised questionnaires for admin
 const getStandardisedQuestionnaire = function (req, res) {
-
-    Questionnaire.find({ isStandard:true}, function (err, questionnaire) {
+    Questionnaire.find({ isStandard: true }, function (err, questionnaire) {
         if (!err && questionnaire != null) {
-            console.log('successful');
-            res.send(questionnaire)
-
+            console.log("successful");
+            res.send(questionnaire);
         } else {
-            res.send(err)
+            res.send(err);
         }
     });
 };
 
 //Get the title and content of the Instruction
 const getInstruction = function (req, res) {
-
-    Instruction.findOne({}, function(err, Instruction){
+    Instruction.findOne({}, function (err, Instruction) {
         if (!err && Instruction != null) {
-            res.send(Instruction)
-        } else {
-            res.send(err)
-        }
-    }) 
-}
-
-//Update the Instruction
-const updateInstruction = function (req, res) {
-    console.log(req.body);
-    let title = req.body.title;
-    let content = req.body.content;
-
-    Instruction.update({}, {
-        $set: {
-            title: title,
-            content: content
-        }
-    },
-    (err, raw) => {
-        if (!err) {
-        res.send("successfully edit");
-        // console.log('here')
+            res.send(Instruction);
         } else {
             res.send(err);
         }
-    })
-} 
+    });
+};
+
+//Get all instructions
+const getSpecificInstruction = function (req, res) {
+
+    Instruction.findOne({ type: req.params.instructionType }, function (
+        err,
+        instruction
+    ) {
+        if (!err && instruction != null) {
+            res.send(JSON.stringify(instruction));
+        } else {
+            res.send(JSON.stringify(err));
+        }
+    });
+};
+
+//get summary for all instructions including type and title
+
+const getInstructionsSummary = function (req, res) {
+    Instruction.find({}, function (err, instructions) {
+        if (!err && instructions != null) {
+            const filteredInstructions = instructions.filter(
+                (instruction) => instruction.type != null
+            );
+            const summary = filteredInstructions.map((instruction) => {
+                return {
+                    title: instruction.title,
+                    type: instruction.type,
+                };
+            });
+            res.send(JSON.stringify(summary));
+        } else {
+            res.send(JSON.stringify(err));
+        }
+    });
+};
+
+//Update the instruction based on type
+const updateInstructionByType = function (req, res) {
+    console.log("updated", req.body);
+
+    let type = req.body.instruction.type;
+    
+
+    Instruction.replaceOne(
+        {type: type},
+        req.body.instruction,
+        (err, raw) => {
+            if (!err) {
+
+                res.send("successfully edit");
+                
+              
+            } else {
+                res.send(err);
+            }
+        }
+    );
+};
 
 module.exports.loginAdmin = loginAdmin;
 module.exports.verifyLogin = verifyLogin;
 module.exports.addStandardisedQuestionnaire = addStandardisedQuestionnaire;
 module.exports.getStandardisedQuestionnaire = getStandardisedQuestionnaire;
 module.exports.getInstruction = getInstruction;
+module.exports.getSpecificInstruction = getSpecificInstruction;
+module.exports.getInstructionsSummary = getInstructionsSummary;
 module.exports.updateInstruction = updateInstruction;
-module.exports.addInstruction = addInstruction
+module.exports.updateInstructionByType = updateInstructionByType;
+module.exports.addInstruction = addInstruction;
