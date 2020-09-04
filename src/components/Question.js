@@ -55,6 +55,9 @@ export default function Question({
 
     const marks = [
         {
+            value: 0,
+            label: '0',
+        }, {
             value: 1,
             label: '1',
         },{
@@ -81,6 +84,10 @@ export default function Question({
         },{
             value: 9,
             label: '9',
+        },
+        ,{
+            value: 10,
+            label: '10',
         },
     ];
     
