@@ -64,6 +64,7 @@ export default function Question({
         supplementaryValue: "",
     });
 
+    let sliderMcqReadOnlyToogle = undefined; // true if slider, false if mcq, undefined if neither.
 
     const marks = [
         {
@@ -156,16 +157,19 @@ export default function Question({
                         value={data.value}
                         color="secondary"
                         step={0.1}
-                        onChange={(e, val) =>
+                        onChange={(e, val) => {
                             setAnswered({
                                 ...answered,
                                 value: val,
+                                supplementaryValue: "",
                             })
+                            sliderMcqReadOnlyToogle = true
+                            }
                         }
                         marks={marks}
                         min={0}
                         max={10}
-                        disabled={readOnly}
+                        disabled={readOnly || sliderMcqReadOnlyToogle === false}
                         valueLabelDisplay="auto"
                         name="slider"
                     />
@@ -180,12 +184,15 @@ export default function Question({
                                 value="Would not hear it."
                                 control={
                                     <Radio
-                                        disabled={readOnly}
-                                        onClick={() =>
+                                        disabled={readOnly || sliderMcqReadOnlyToogle === true}
+                                        onClick={() =>{
                                             setAnswered({
                                                 ...answered,
                                                 supplementaryValue: "Would not hear it.",
-                                            })
+                                                value:""
+                                            });
+                                            sliderMcqReadOnlyToogle = false
+                                        }
                                         }
                                     />
                                 }
@@ -195,12 +202,15 @@ export default function Question({
                                 value="Do not know."
                                 control={
                                     <Radio
-                                        disabled={readOnly}
-                                        onClick={() =>
+                                        disabled={readOnly || sliderMcqReadOnlyToogle === true}
+                                        onClick={() => {
                                             setAnswered({
                                                 ...answered,
                                                 supplementaryValue: "Do not know.",
+                                                value: ""
                                             })
+                                            sliderMcqReadOnlyToogle = false
+                                        }
                                         }
                                     />
                                 }
@@ -210,12 +220,15 @@ export default function Question({
                                 value="Not applicable."
                                 control={
                                     <Radio
-                                        disabled={readOnly}
-                                        onClick={() =>
+                                        disabled={readOnly || sliderMcqReadOnlyToogle === true}
+                                        onClick={() =>{
                                             setAnswered({
                                                 ...answered,
                                                 supplementaryValue: "Not applicable.",
-                                            })
+                                                value:""
+                                            });
+                                            sliderMcqReadOnlyToogle = false
+                                        }
                                         }
                                     />
                                 }
