@@ -15,6 +15,7 @@ const Readable = require('stream').Readable
 const PDFDocument = require('pdfkit');
 const mongoose = require("mongoose");
 const Questionnaire = mongoose.model("questionnaire");
+const Share = mongoose.model("share");
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // HELPERS
@@ -25,7 +26,7 @@ const HELPER_IMPORTANCE = {
     "Only a little bit important": 2,
     "Not important": 1,
 }
-const getTimeStamp = function (){
+const getTimeStamp = function () {
     let date_ob = new Date();
     // adjust 0 before single digit date
     let date = ("0" + date_ob.getDate()).slice(-2);
@@ -40,136 +41,143 @@ const getTimeStamp = function (){
     // current seconds
     let seconds = date_ob.getSeconds();
     // prints date & time in YYYY-MM-DD HH:MM:SS format
-    return(year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds);
+    return (year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds);
 }
 
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to print the results on the document
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const printQuestionnaireResults  = function(doc, resultToPrint) {
-
+const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
     let spacing = 340
     // actual page is 792 but setting it to 700 helps to prevent overflow problems
     let docHeight = 700
+    let index = 0
     resultToPrint.sections.map((section) => {
-        if (spacing > docHeight) {
-            doc.addPage();
-            spacing = 80;
-        }
-        // Writing the title for each scenario.
-        doc.font('Helvetica-Bold').fontSize(14).text(section.title, 80, spacing);
-        doc.font('Helvetica').fontSize(12).text("Section average: "+ section.score, 280, spacing);
-        spacing = spacing + 30;
 
-
-        section.scenarios.map((scenario, scenarioIndex) => {
-            // Writing the description for each scenario.
+        if (sharedSection[index].isVisible) {
             if (spacing > docHeight) {
                 doc.addPage();
                 spacing = 80;
             }
+            // Writing the title for each scenario.
+            doc.font('Helvetica-Bold').fontSize(14).text(section.title, 80, spacing);
+            doc.font('Helvetica').fontSize(12).text("Section average: " + section.score, 280, spacing);
+            spacing = spacing + 30;
 
-            doc.font('Helvetica-Bold').fontSize(12).text("Scenario: ", 80, spacing);
-            spacing = spacing + 20;
 
-            doc.font('Helvetica').fontSize(12).text(scenario.description, 80, spacing, {
-                width: 420,
-                align: 'justify'
-            });
-            spacing = spacing + Math.ceil(doc.heightOfString(scenario.description) / 10) * 10 + 15;
-
-            scenario.questions.map((question) => {
+            section.scenarios.map((scenario, scenarioIndex) => {
+                // Writing the description for each scenario.
                 if (spacing > docHeight) {
                     doc.addPage();
                     spacing = 80;
                 }
 
-                let questionAnswer = question.response;
+                doc.font('Helvetica-Bold').fontSize(12).text("Scenario: ", 80, spacing);
+                spacing = spacing + 20;
 
-                // If the question is range type then the print out both value and supplementary value.
-                if (!question.isMCQ) {
-                    if ((questionAnswer.value === "" || questionAnswer.value === undefined)
-                        && (questionAnswer.supplementaryValue === '' ||  questionAnswer.supplementaryValue === undefined)){
+                doc.font('Helvetica').fontSize(12).text(scenario.description, 80, spacing, {
+                    width: 420,
+                    align: 'justify'
+                });
+                spacing = spacing + Math.ceil(doc.heightOfString(scenario.description) / 10) * 10 + 15;
 
-                        doc.font('Helvetica-Bold')
-                            .text("Answer: ", 80, spacing)
-                        questionAnswer.value = "Unanswered"
-                        doc.font('Helvetica')
-                            .text(questionAnswer.value, 280, spacing)
+                scenario.questions.map((question) => {
+                    if (spacing > docHeight) {
+                        doc.addPage();
+                        spacing = 80;
+                    }
 
-                    }else{
-                        if (questionAnswer.supplementaryValue === '') {
+                    let questionAnswer = question.response;
+
+                    // If the question is range type then the print out both value and supplementary value.
+                    if (!question.isMCQ) {
+                        if ((questionAnswer.value === "" || questionAnswer.value === undefined)
+                            && (questionAnswer.supplementaryValue === '' || questionAnswer.supplementaryValue === undefined)) {
 
                             doc.font('Helvetica-Bold')
                                 .text("Answer: ", 80, spacing)
-
+                            questionAnswer.value = "Unanswered"
                             doc.font('Helvetica')
                                 .text(questionAnswer.value, 280, spacing)
 
                         } else {
+                            if (questionAnswer.supplementaryValue === '') {
 
-                            doc.font('Helvetica-Bold')
-                                .text("Answer: ", 80, spacing);
-                            doc.font('Helvetica')
-                                .text(questionAnswer.supplementaryValue, 280, spacing);
+                                doc.font('Helvetica-Bold')
+                                    .text("Answer: ", 80, spacing)
+
+                                doc.font('Helvetica')
+                                    .text(questionAnswer.value, 280, spacing)
+
+                            } else {
+
+                                doc.font('Helvetica-Bold')
+                                    .text("Answer: ", 80, spacing);
+                                doc.font('Helvetica')
+                                    .text(questionAnswer.supplementaryValue, 280, spacing);
+
+                            }
 
                         }
 
-                    }
 
-
-                    spacing = spacing + 35;
-
-                    if (spacing > docHeight) {
-                        doc.addPage();
-                        spacing = 80;
-                    }
-                }
-
-                // MCQ questions will have the question and answer printed on pdf.
-                else {
-                    doc.font('Helvetica-Bold')
-                        .text(question.description, 80, spacing, {
-                            width: 420,
-                            align: 'justify'
-                        });
-
-                    spacing = spacing + Math.ceil(doc.heightOfString(question.description) / 10) * 10 + 10;
-
-                    if (spacing > docHeight) {
-                        doc.addPage();
-                        spacing = 80;
-                    }
-
-                    doc.text("Answer: ", 80, spacing)
-                    if (questionAnswer.value === "" || questionAnswer.value === undefined ){
-                        doc.font('Helvetica')
-                            .text("Unanswered", 280, spacing);
                         spacing = spacing + 35;
-                    }else{
-                        doc.font('Helvetica')
-                            .text(questionAnswer.value, 280, spacing);
-                        spacing = spacing + 35;
+
+                        if (spacing > docHeight) {
+                            doc.addPage();
+                            spacing = 80;
+                        }
                     }
 
-                }
+                    // MCQ questions will have the question and answer printed on pdf.
+                    else {
+                        doc.font('Helvetica-Bold')
+                            .text(question.description, 80, spacing, {
+                                width: 420,
+                                align: 'justify'
+                            });
+
+                        spacing = spacing + Math.ceil(doc.heightOfString(question.description) / 10) * 10 + 10;
+
+                        if (spacing > docHeight) {
+                            doc.addPage();
+                            spacing = 80;
+                        }
+
+                        doc.text("Answer: ", 80, spacing)
+                        if (questionAnswer.value === "" || questionAnswer.value === undefined) {
+                            doc.font('Helvetica')
+                                .text("Unanswered", 280, spacing);
+                            spacing = spacing + 35;
+                        } else {
+                            doc.font('Helvetica')
+                                .text(questionAnswer.value, 280, spacing);
+                            spacing = spacing + 35;
+                        }
+
+                    }
+                })
+
             })
 
-        })
+            // Add a separation line.
+            spacing = spacing + 10;
+            doc.lineCap('butt')
+                .moveTo(80, spacing)
+                .lineTo(500, spacing)
+                .stroke();
+            spacing = spacing + 20;
 
-        // Add a separation line.
-        spacing = spacing + 10;
-        doc.lineCap('butt')
-            .moveTo(80, spacing)
-            .lineTo(500, spacing)
-            .stroke();
-        spacing = spacing + 20;
+            if (spacing > docHeight) {
+                doc.addPage();
+                spacing = 80;
+            }
 
-        if (spacing > docHeight) {
-            doc.addPage();
-            spacing = 80;
         }
+
+        index += 1;
+
     });
 
 }
@@ -202,7 +210,7 @@ const sortByImportance = function (questionnaire) {
     let sortedResult = questionnaire;
 
     sortedResult.sections.forEach(section => {
-        section.scenarios.sort((a,b) =>
+        section.scenarios.sort((a, b) =>
             HELPER_IMPORTANCE[b.questions[2].response.value] - HELPER_IMPORTANCE[a.questions[2].response.value]
         )
     })
@@ -214,7 +222,7 @@ const sortByImportance = function (questionnaire) {
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used generate the pdf report.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const generateReport = function (questionnaireId, personalDetails, questionnaireData) {
+const generateReport = function (questionnaireId, personalDetails, questionnaireData, shareId) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
 
@@ -238,15 +246,16 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
                             }
                         }
                     }
-                    if (score === 0 ){
-                        section_score[section_num]="N/A";
-                    }else{
-                        section_score[section_num] = Math.round((score / section_q) * 100)/100 ;
+                    if (score === 0) {
+                        section_score[section_num] = "N/A";
+                    } else {
+                        section_score[section_num] = Math.round((score / section_q) * 100) / 100;
                     }
                     total_score += score;
                     section_num += 1;
                     total_q += section_q;
-                };
+                }
+
                 let average_score = Math.round((total_score / total_q) * 100) / 100;
 
                 // object created to pass through.
@@ -257,7 +266,7 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
 
                 const resultToPrint = getQuestionnaireResponseJoin(questionnaire, questionnaireData, section_score);
 
-                //needs to merge
+                //creating pdf document
                 const doc = new PDFDocument();
                 let ts = getTimeStamp();
                 doc.font('Helvetica').fontSize(10).text(ts, 10, 10);
@@ -301,24 +310,32 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
                 const sortedResults = sortByImportance(resultToPrint);
 
                 // THIS LINE PRINTS THE QUESTIONNAIRE RESULT IN THE DOC FILE
-                printQuestionnaireResults(doc, sortedResults)
+                Share.findOne({shareId}, function (err, share
+                ) {
+                    let sharedSections = new Array();
+                    if (!err && share != null) {
+                        sharedSections = share.shareSection
 
-                // CLOSE THE DOCUMENT,
-                doc.end();
+                    }
+                    printQuestionnaireResults(doc, sortedResults, sharedSections)
 
-                // CREATE THE PDF
-                const s = new Readable()
-                s.push(JSON.stringify(personalDetails))    // the string you want
-                s.push(JSON.stringify(questionnaireData))
-                s.push(null);     // indicates end-of-file basically - the end of the stream
+                    // CLOSE THE DOCUMENT,
+                    doc.end();
 
-                // Used to display as a table in the email
-                const {jsonToTableHtmlString} = require('json-table-converter')
+                    // CREATE THE PDF
+                    const s = new Readable()
+                    s.push(JSON.stringify(personalDetails))    // the string you want
+                    s.push(JSON.stringify(questionnaireData))
+                    s.push(null);     // indicates end-of-file basically - the end of the stream
 
-                resolve({
-                    fileName: "Report.pdf",
-                    content: doc,
-                })
+                    // Used to display as a table in the email
+                    const {jsonToTableHtmlString} = require('json-table-converter')
+
+                    resolve({
+                        fileName: "Report.pdf",
+                        content: doc,
+                    })
+                });
             } else {
                 reject({
                     error: err,

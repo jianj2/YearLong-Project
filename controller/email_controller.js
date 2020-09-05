@@ -82,7 +82,7 @@ const sendInvitationEmail = function (createdShare) {
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to send the results PDF report through email.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const sendResultsEmail = function (questionnaireId, questionnaireData, clinicianEmail, personalDetails) {
+const sendResultsEmail = function (questionnaireId, questionnaireData, clinicianEmail, personalDetails, shareId) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
         let mailOptions = {
@@ -105,7 +105,7 @@ const sendResultsEmail = function (questionnaireId, questionnaireData, clinician
                 "    </div>",
         }
 
-        generateReport(questionnaireId, personalDetails, questionnaireData)
+        generateReport(questionnaireId, personalDetails, questionnaireData, shareId)
             .then((reportResolved) => {
                 mailOptions.attachments = [{   // stream as an attachment
                     filename: reportResolved.fileName,
