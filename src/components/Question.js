@@ -89,8 +89,10 @@ const createMarks = function (){
     ];
     let i;
     for ( i = 0; i<=10; i+=0.1 ){
-        let temp = {value: i, style:{color:'blue'}}
-        mymarks.push(temp)
+        if ( i % 1 != 0){
+            let temp = {value: i, style:{color:'blue'}}
+            mymarks.push(temp)
+        }
     }
     return mymarks;
 }
@@ -147,7 +149,6 @@ export default function Question({
             setAnswered({...answered, value: ""});
             data.value = "";
         }
-        console.log("uvin", answered);
     },[isNotApplicable])
 
     const handleChangeSlider = () => {
