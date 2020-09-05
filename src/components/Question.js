@@ -29,7 +29,7 @@ import { Slider, FormControl, FormLabel, FormControlLabel, Radio, RadioGroup, Ch
 import "../styles/questionnaire.css";
 import "../styles/main.css";
 
-
+// Create a new slider with a custom style.
 const SliderWithTicks = withStyles({
     mark: {
         backgroundColor: "rgba(245, 0, 87, 0.7)",
@@ -49,6 +49,7 @@ const SliderWithTicks = withStyles({
 })(Slider);
 
 
+// create marks on the slider.
 const createMarks = function (){
     let mymarks = [
         {
@@ -141,6 +142,7 @@ export default function Question({
         onQuestionChange(sectionIndex, scenarioIndex, questionIndex, answered);
     }, [answered]);
 
+    // if it becomes not applicable, disable the next mcq question.
     useEffect(() => {
         if (isNotApplicable == true && isMCQ ){
             setAnswered({...answered, value: ""});

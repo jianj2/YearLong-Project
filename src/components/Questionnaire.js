@@ -122,6 +122,7 @@ export default function Questionnaire({
                                                 scenarioIndex
                                                 ][questionIndex]
                                         }
+                                        // is not applicable selected for slider question
                                         isNotApplicable={questionnaireData[sectionIndex][scenarioIndex][0].supplementaryValue === "" ? false : true}
 
                                     />
