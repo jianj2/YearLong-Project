@@ -78,7 +78,6 @@ export default function Questionnaire({
 
     // set the updates questionnaire sections.
     const updateSections = (questionnaire, sectionVisibility) => {
-        console.log(sectionVisibility);
         if (sectionVisibility != undefined) {
             questionnaire.sections = getVisibleSections(
                 questionnaire.sections,

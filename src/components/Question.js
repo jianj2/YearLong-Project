@@ -125,10 +125,7 @@ export default function Question({
         value: undefined,
         supplementaryValue: "",
     });
-
-
-
-
+    
     // useEffect(() => {
     //     let quesionResponseData = {
     //         sliderValue,
@@ -151,11 +148,8 @@ export default function Question({
         }
     },[isNotApplicable])
 
-    const handleChangeSlider = () => {
 
-    }
-
-    // If it is an MCQ question.
+// If it is an MCQ question.
     if (isMCQ) {
         return (
             <div className="question-container">
