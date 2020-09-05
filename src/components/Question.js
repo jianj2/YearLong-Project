@@ -142,6 +142,14 @@ export default function Question({
         onQuestionChange(sectionIndex, scenarioIndex, questionIndex, answered);
     }, [answered]);
 
+    useEffect(() => {
+        if (isNotApplicable == true && isMCQ ){
+            setAnswered({...answered, value: ""});
+            data.value = "";
+        }
+        console.log("uvin", answered);
+    },[isNotApplicable])
+
     const handleChangeSlider = () => {
 
     }
