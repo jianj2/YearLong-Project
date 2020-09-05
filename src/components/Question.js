@@ -125,7 +125,7 @@ export default function Question({
         value: undefined,
         supplementaryValue: "",
     });
-    
+
     // useEffect(() => {
     //     let quesionResponseData = {
     //         sliderValue,
