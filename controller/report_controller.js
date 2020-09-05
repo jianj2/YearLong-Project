@@ -241,7 +241,7 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
                     if (score === 0 ){
                         section_score[section_num]="N/A";
                     }else{
-                        section_score[section_num] = score / section_q;
+                        section_score[section_num] = Math.round((score / section_q) * 100)/100 ;
                     }
                     total_score += score;
                     section_num += 1;
