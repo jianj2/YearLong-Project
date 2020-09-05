@@ -31,7 +31,10 @@ export default function Questionnaire({
     handleQuestionnaireChange,
     sectionVisibility,
 }) {
-    const { register, handleSubmit, errors } = useForm();  
+    const { register, handleSubmit, errors } = useForm();
+
+
+    const [sliderMcqReadOnlyToogle, setSliderMcqReadOnlyToogle] = useState(undefined);
 
 
     // Method: Called when we submit the questionnaire
@@ -75,7 +78,6 @@ export default function Questionnaire({
 
     // set the updates questionnaire sections.
     const updateSections = (questionnaire, sectionVisibility) => {
-        console.log(sectionVisibility);
         if (sectionVisibility != undefined) {
             questionnaire.sections = getVisibleSections(
                 questionnaire.sections,
@@ -120,6 +122,9 @@ export default function Questionnaire({
                                                 scenarioIndex
                                                 ][questionIndex]
                                         }
+                                        // is not applicable selected for slider question
+                                        isNotApplicable={questionnaireData[sectionIndex][scenarioIndex][0].supplementaryValue === "" ? false : true}
+
                                     />
                                 )
                             )}
