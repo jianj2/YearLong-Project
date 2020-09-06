@@ -14,6 +14,7 @@
  */
 
 import React, { useEffect, useState } from "react";
+import { useAuth0 } from "../utils/react-auth0-spa";
 import { useForm } from "react-hook-form";
 import {
     Input,
@@ -31,11 +32,17 @@ import "../styles/admin.css";
 export default function FormLoginAdmin({ adminLogin }) {
     const { register, handleSubmit, errors } = useForm();
     const [ showPassword, setShowPassword ] = useState(false);
+    const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
     const onSubmit = (data) => {
         console.log(data);
-
-        adminLogin(data);
+        if(isAuthenticated){
+            logout();
+        }
+        else{
+            adminLogin(data);
+        }
+        
     };
 
     return (
