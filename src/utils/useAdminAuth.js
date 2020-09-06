@@ -40,6 +40,10 @@ export const AdminAuthProvider = ({ children }) => {
                         token: res.message.token,
                     })
                 );
+            }else if (res.code===4){
+                var errorMessage = document.getElementById('error-message-login');
+                errorMessage.innerHTML = "Login information is wrong";
+                errorMessage.style.display = 'block';
             }
         });
     };
