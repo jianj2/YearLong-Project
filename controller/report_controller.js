@@ -93,35 +93,20 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
 
                     // If the question is range type then the print out both value and supplementary value.
                     if (!question.isMCQ) {
-                        if ((questionAnswer.value === "" || questionAnswer.value === undefined)
-                            && (questionAnswer.supplementaryValue === '' || questionAnswer.supplementaryValue === undefined)) {
-
+                        if ((questionAnswer === "" || questionAnswer === undefined)) {
                             doc.font('Helvetica-Bold')
                                 .text("Answer: ", 80, spacing)
-                            questionAnswer.value = "Unanswered"
+                            questionAnswer = "Unanswered"
                             doc.font('Helvetica')
                                 .text(questionAnswer.value, 280, spacing)
 
                         } else {
-                            if (questionAnswer.supplementaryValue === '') {
-
                                 doc.font('Helvetica-Bold')
                                     .text("Answer: ", 80, spacing)
 
                                 doc.font('Helvetica')
-                                    .text(questionAnswer.value, 280, spacing)
-
-                            } else {
-
-                                doc.font('Helvetica-Bold')
-                                    .text("Answer: ", 80, spacing);
-                                doc.font('Helvetica')
-                                    .text(questionAnswer.supplementaryValue, 280, spacing);
-
-                            }
-
+                                    .text(questionAnswer, 280, spacing);
                         }
-
 
                         spacing = spacing + 35;
 
@@ -147,13 +132,13 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
                         }
 
                         doc.text("Answer: ", 80, spacing)
-                        if (questionAnswer.value === "" || questionAnswer.value === undefined) {
+                        if (questionAnswer === "" || questionAnswer === undefined) {
                             doc.font('Helvetica')
                                 .text("Unanswered", 280, spacing);
                             spacing = spacing + 35;
                         } else {
                             doc.font('Helvetica')
-                                .text(questionAnswer.value, 280, spacing);
+                                .text(questionAnswer, 280, spacing);
                             spacing = spacing + 35;
                         }
 
