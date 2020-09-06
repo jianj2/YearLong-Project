@@ -25,6 +25,7 @@ import "../../styles/main.css";
 // Import Components.
 import QuestionnaireList from "../QuestionnaireList";
 import Loading from "../Loading";
+import { useAdminAuth } from "../../utils/useAdminAuth";
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -67,8 +68,11 @@ const ManageQuestionnaires = (props) => {
     });
 
     const [shareSection, setShareSection] = useState({});
-
+    const { isAdminAuthenticated, adminLogout } = useAdminAuth();
     useEffect(() => {
+        if(isAdminAuthenticated){
+            adminLogout();
+        }
         setLoading(true);
         async function retrieveCustomisedQuestionnaires() {
             const customisedQuestionnaires = await API.getClinicianQuestionnaires(user.name);
@@ -90,6 +94,8 @@ const ManageQuestionnaires = (props) => {
         }
         retrieveStandardisedQuestionnaires();
         retrieveCustomisedQuestionnaires();
+        
+        
     }, [user]);
 
     // Function called when Edit is clicked on the QuestionnaireList

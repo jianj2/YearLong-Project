@@ -1,31 +1,30 @@
 import React, { useState, useEffect, useContext } from "react";
 import * as API from "./api";
 
+
 export const AdminAuthContext = React.createContext();
 export const useAdminAuth = () => useContext(AdminAuthContext);
 export const AdminAuthProvider = ({ children }) => {
+    
     const [isAdminAuthenticated, setAuthenticated] = useState(false);
     const [adminToken, setAdminToken] = useState("");
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const initAdmin = async () => {
-            let previousAuth = JSON.parse(
-                localStorage.getItem("adminAuthentication")
-            );
-            console.log("previousAuth", previousAuth);
-            if (previousAuth) {
-                await API.verifyAdminLogin(previousAuth.token).then((res) => {
-                    console.log("VERYIFY LOGIN in CUSTOM HOOK", res);
-                    if (res.auth) {
-                        setAuthenticated(true);
-                        setAdminToken(previousAuth.token);
-                    }
-                });
-            }
-            setLoading(false);
-        };
-        initAdmin();
+        let previousAuth = JSON.parse(
+            localStorage.getItem("adminAuthentication")
+        );
+        console.log("previousAuth", previousAuth);
+        if (previousAuth) {
+            API.verifyAdminLogin(previousAuth.token).then((res) => {
+                console.log("VERYIFY LOGIN in CUSTOM HOOK", res);
+                if (res.auth) {
+                    setAuthenticated(true);
+                    setAdminToken(previousAuth.token);
+                }
+            });
+        }
+        setLoading(false);
     }, []);
 
     const adminLogin = (loginData) => {
