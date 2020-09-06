@@ -49,13 +49,14 @@ const getTimeStamp = function () {
 // This function is used to print the results on the document
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
+    // initial document spacing after patient information
     let spacing = 340
     // actual page is 792 but setting it to 700 helps to prevent overflow problems
     let docHeight = 700
     let index = 0
-    resultToPrint.sections.map((section) => {
+    resultToPrint.sections.forEach((section, sectionIndex) => {
 
-        if (sharedSection[index].isVisible) {
+        if (sharedSection[sectionIndex].isVisible) {
             if (spacing > docHeight) {
                 doc.addPage();
                 spacing = 80;
@@ -173,10 +174,7 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
                 doc.addPage();
                 spacing = 80;
             }
-
         }
-
-        index += 1;
 
     });
 
@@ -185,19 +183,24 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to compile the responses with the questionnaire
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const getQuestionnaireResponseJoin = function (questionnaire, questionnaireData, sectionScores) {
+const getQuestionnaireResponseJoin = function (questionnaire, questionnaireData, sectionScores, sharedSections) {
     // MAKE A COPY OF THE ORIGINAL QUESTIONNAIRE
     let result = questionnaire;
+
     questionnaire.sections.forEach((section, sectionIndex) => {
         // ADD SCORE TO THE SECTION
         result.sections[sectionIndex].score = sectionScores[sectionIndex]
-        section.scenarios.forEach((scenario, scenarioIndex) => {
-            scenario.questions.forEach((question, questionIndex) => {
-                // ADD RESPONSE TO THE QUESTION
-                result.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].response =
-                    questionnaireData[sectionIndex][scenarioIndex][questionIndex];
-            })
-        });
+
+        if (sharedSections[sectionIndex].isVisible) {
+            section.scenarios.forEach((scenario, scenarioIndex) => {
+                scenario.questions.forEach((question, questionIndex) => {
+                    // ADD RESPONSE TO THE QUESTION
+                    result.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].response =
+                        questionnaireData[sectionIndex][scenarioIndex][questionIndex].value;
+
+                })
+            });
+        }
     });
     return result
 }
@@ -264,7 +267,6 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
                     sectionScores: section_score
                 }
 
-                const resultToPrint = getQuestionnaireResponseJoin(questionnaire, questionnaireData, section_score);
 
                 //creating pdf document
                 const doc = new PDFDocument();
@@ -304,11 +306,6 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
                     .lineTo(500, 330)
                     .stroke();
 
-
-                // -------  TO DO  --------
-                // MAKE THIS BETTER
-                const sortedResults = sortByImportance(resultToPrint);
-
                 // THIS LINE PRINTS THE QUESTIONNAIRE RESULT IN THE DOC FILE
                 Share.findOne({shareId}, function (err, share
                 ) {
@@ -317,8 +314,14 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
                         sharedSections = share.shareSection
 
                     }
-                    printQuestionnaireResults(doc, sortedResults, sharedSections)
 
+                    const resultToPrint = getQuestionnaireResponseJoin(questionnaire, questionnaireData, section_score, sharedSections);
+
+                    // -------  TO DO  --------
+                    // MAKE THIS BETTER
+                    const sortedResults = sortByImportance(resultToPrint)
+
+                    printQuestionnaireResults(doc, sortedResults, sharedSections)
                     // CLOSE THE DOCUMENT,
                     doc.end();
 
