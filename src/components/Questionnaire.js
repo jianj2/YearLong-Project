@@ -29,7 +29,6 @@ export default function Questionnaire({
     submitQuestionnaire,
     questionnaireData,
     handleQuestionnaireChange,
-    sectionVisibility,
 }) {
     const { register, handleSubmit, errors } = useForm();
 
@@ -57,38 +56,7 @@ export default function Questionnaire({
             data
         );
     };
- 
-    //////////// Share section update /////////////////////////////
-    // get a list of the visible sections
-    const getVisibleSections = (sections, visibilityInfoList) => {
-        const filteredSections = sections.filter((section) => {
-            const foundVisibilityInfo = visibilityInfoList.find(
-                (visibilityInfo) => {
-                    return visibilityInfo.title === section.title;
-                }
-            );
-            if (foundVisibilityInfo != undefined) {
-                return foundVisibilityInfo.isVisible;
-            } else {
-                return null;
-            }
-        });
-        return filteredSections;
-    };
 
-    // set the updates questionnaire sections.
-    const updateSections = (questionnaire, sectionVisibility) => {
-        if (sectionVisibility != undefined) {
-            questionnaire.sections = getVisibleSections(
-                questionnaire.sections,
-                sectionVisibility
-            );
-        }
-    };
-
-    updateSections(questionnaire, sectionVisibility);
-
-    //////////////////////////////////////////////////////////////
 
         return (
             <form onSubmit={onSubmit} className="questionaire-container">
