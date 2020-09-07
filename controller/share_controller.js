@@ -86,7 +86,7 @@ const completeShare = function (req, res) {
     let personalDetails = req.body.personalDetails;
     let questionnaireId = req.body.questionnaireId;
 
-    sendResultsEmail(questionnaireId, questionnaireData, clinicianEmail, personalDetails)
+    sendResultsEmail(questionnaireId, questionnaireData, clinicianEmail, personalDetails, req.params.shareId)
         .then(emailRes => {
             deleteShare(req, res);
             res.send(emailRes)
