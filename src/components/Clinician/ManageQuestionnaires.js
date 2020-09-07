@@ -369,7 +369,7 @@ const ManageQuestionnaires = (props) => {
             </div>
 
             <div className="CQ-header">
-                <h1>My Questionnaires</h1>
+                <h1>My Customised Questionnaires</h1>
                 <button className="button" onClick={AddNew}>
                     A D D &nbsp; N E W
                 </button>

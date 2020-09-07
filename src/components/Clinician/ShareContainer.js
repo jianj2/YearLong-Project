@@ -287,7 +287,7 @@ const ShareQuestionnaire = (props) => {
             </div>
 
             <div className="CQ-header">
-                <h1>My Questionnaires</h1>
+                <h1>My Customised Questionnaires</h1>
             </div>
 
             <QuestionnaireList
