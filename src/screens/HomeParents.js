@@ -353,7 +353,7 @@ const HomeParents = ({ match }) => {
             </div>
 
             <div className="form-completed">
-                <h1>Response Sent</h1>
+                <h1>Questionnaire response sent to your clinician!</h1>
                 <h2>Thank you!</h2>
             </div>
         </div>

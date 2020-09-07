@@ -281,10 +281,10 @@ const ManageQuestionnaires = (props) => {
                                         }}
                                     />
                                 }
-                                label="Allow parent to complete the questionnaire"
+                                label="Allow recipient to complete the questionnaire"
                             />
                             <FormHelperText>
-                                If this option is checked, patients can independently complete the questionnaire and the report would be sent to you.
+                            If this option is checked, the recipient can complete the questionnaire. The report will be sent to you.
                             </FormHelperText>
                         </FormControl>
                         <button className="button">S H A R E</button>

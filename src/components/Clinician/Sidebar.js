@@ -31,9 +31,9 @@ const SideBar = (props) => {
             ${(pathname === "clinician" || pathname === "Questionnaires" || pathname === "edit")? "active" : ""}`}
                   to = "/clinician/Questionnaires">Questionnaires</Link>
             <Link className={`sidebar-do-the-test ${(pathname === "DoTheTest")? "active" : ""}`}
-                  to = "/clinician/DoTheTest">Complete the Questionnaire</Link>
+                  to = "/clinician/DoTheTest">Start a Questionnaire</Link>
             <Link className={`sidebar-share ${(pathname === "Share")? "active" : ""}`}
-                  to = "/clinician/Share">Share</Link>
+                  to = "/clinician/Share">Share a Questionnaire</Link>
             <Link className={`sidebar-instructions ${(pathname === "Instructions")? "active" : ""}`}
                   to = "/clinician/Instructions">Instructions</Link>
         </div>
