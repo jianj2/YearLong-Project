@@ -122,10 +122,16 @@ export default function Question({
     const [frequencyValue, setFrequencyValue] = useState(data.frequencyValue);
     const [importanceValue, setImportanceValue] = useState(data.importanceValue);
 
-    const [answered, setAnswered] = useState({
-        value: undefined,
-        supplementaryValue: "",
-    });
+    // const [answered, setAnswered] = useState({
+    //     value: undefined,
+    //     supplementaryValue: "",
+    // });
+    console.log(data);
+    if(data.value === "" && data.supplementaryValue === ""){
+        data.value = undefined;
+    }
+    //change to data, in order to make the data reload to the page, when click the back button from the viewSubmission
+    const [answered, setAnswered] = useState(data);
 
     // useEffect(() => {
     //     let quesionResponseData = {

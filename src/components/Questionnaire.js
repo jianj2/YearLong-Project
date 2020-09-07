@@ -15,6 +15,8 @@ import React, {useState, useEffect} from "react";
 import {useForm} from "react-hook-form";
 import {Slider} from "@material-ui/core";
 import Loading from "./Loading";
+import {Snackbar} from "@material-ui/core";
+import MuiAlert from '@material-ui/lab/Alert';
 
 // Import components.
 import Question from "./Question";
@@ -22,6 +24,10 @@ import Question from "./Question";
 // Import styles.
 import "../styles/questionnaire.css";
 import "../styles/main.css";
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 export default function Questionnaire({ 
     readOnly,
@@ -32,14 +38,39 @@ export default function Questionnaire({
 }) {
     const { register, handleSubmit, errors } = useForm();
 
+    const [open, setOpen] = React.useState(false);
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
+
 
     const [sliderMcqReadOnlyToogle, setSliderMcqReadOnlyToogle] = useState(undefined);
 
-
     // Method: Called when we submit the questionnaire
     const onSubmit = (e) => {
+        let flag = true;
         e.preventDefault();
-        submitQuestionnaire();
+        for ( let section of questionnaireData) {
+            for(let scenario of section){
+                if(scenario[0].supplementaryValue === ""){ //if supplementaryValue is "", it means all the question's value should be filled
+                    for(let question of scenario){
+                        if(question.value === undefined){
+                            flag = false;
+                            break;
+                        } // if supplementaryValue is not "", others question is not applicable, we don't have to check
+                    }
+                }
+            }
+        }
+        if (flag === true){
+            submitQuestionnaire();
+        } else {
+            setOpen(true);
+        }
     };
 
     // Method: Called when we something in the questionnaire changes.
@@ -56,7 +87,6 @@ export default function Questionnaire({
             data
         );
     };
-
 
         return (
             <form onSubmit={onSubmit} className="questionaire-container">
@@ -113,6 +143,11 @@ export default function Questionnaire({
                     </button>
                 )}
             </div>
+                <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center'}}open={open} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="error">
+                        Please Complete All The Questions!
+                    </Alert>
+                </Snackbar>
             </form>
         );
      
