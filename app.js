@@ -27,13 +27,9 @@ const checkJwt = jwt({
     issuer: `https://pediatric-scale.au.auth0.com/`,
     algorithms: ['RS256']
   });
-  const checkScopes = jwtAuthz([ 'read:messages' ]);
+
   
-  app.get('/admin/secret', checkJwt, checkScopes, function(req, res) {
-    res.json({
-      message: 'Hello from a private endpoint! You need to be authenticated and have a scope of read:messages to see this.'
-    });
-  });
+
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -44,8 +40,14 @@ require('./models/db.js');
 
 // CORS
 const cors = require('cors');
+
 app.use(cors());
 
+app.get('/admin/secret', checkJwt, function(req, res) {
+    res.json({
+      message: 'Hello from a private endpoint! You need to be authenticated and have a scope of read:messages to see this.'
+    });
+  });
 // defining routes
 const indexRouter = require('./routes');
 const clinicianRouter = require('./routes/clinician');
