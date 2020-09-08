@@ -26,6 +26,7 @@ import "../../styles/main.css";
 import QuestionnaireList from "../QuestionnaireList";
 import Loading from "../Loading";
 import { useAdminAuth } from "../../utils/useAdminAuth";
+import { Cookies } from 'react-cookie';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -44,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ManageQuestionnaires = (props) => {
     const classes = useStyles();
-    const { isAuthenticated, loginWithRedirect, user } = useAuth0();
+    const { isAuthenticated, loginWithRedirect, user, hasToken } = useAuth0();
     // console.log("user.name", user.name); //TODO: change that when we have actual clincianId
 
     const [customisedQuestionnaires, setCustomisedQuestionnaires] = useState([]);
@@ -70,18 +71,23 @@ const ManageQuestionnaires = (props) => {
 
     const [shareSection, setShareSection] = useState({});
     const { isAdminAuthenticated, adminLogout } = useAdminAuth();
+
     useEffect(() => {
         if(isAdminAuthenticated){
             adminLogout();
         }
         setLoading(true);
-        const getMessage = async () =>{
-         
-            const message = await API.getSecret();
-            if(message )
-            console.log(message);
-        }
-        if(isAuthenticated){
+        
+       
+        if(isAuthenticated && hasToken){
+            const getMessage = async () =>{
+                const cookies = new Cookies();
+                let authToken = cookies.get("accessToken");
+             
+                const message = await API.getSecret(authToken);
+                if(message )
+                console.log(message);
+            }
             getMessage();
         }
 
@@ -108,7 +114,7 @@ const ManageQuestionnaires = (props) => {
         
         
         
-    }, [isAuthenticated]);
+    }, [isAuthenticated, hasToken]);
 
     // Function called when Edit is clicked on the QuestionnaireList
     const editQuestionnaire = (questionnaireID) => {

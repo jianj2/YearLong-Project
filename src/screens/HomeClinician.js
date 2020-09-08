@@ -32,7 +32,7 @@ import { Cookies } from 'react-cookie';
 // This function defines the Clinician Home screen.
 // ---------------------------------------------------------------
 const HomeClinician = (props) => {
-    const { loading, isAuthenticated, loginWithRedirect, user, getTokenSilently} = useAuth0();
+    const { loading, isAuthenticated, loginWithRedirect, user, getTokenSilently, setHasToken} = useAuth0();
     
     const domain = "http://localhost:3001";
     
@@ -58,6 +58,7 @@ const HomeClinician = (props) => {
                 cookies.set("accessToken", accessToken, {
                     maxAge: 3600 // Will expire after 1hr (value is in number of sec.)
                  });
+                setHasToken(true);
                  
                 
                 }catch(e){
