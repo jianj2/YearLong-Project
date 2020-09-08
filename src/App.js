@@ -31,8 +31,8 @@ import NavBar from "./components/Navbar";
 
 function App() {
 
-    console.log("This is server domain",process.env.SERVER_DOMAIN);
-    console.log("This is redirect link",process.env.REDIRECT_LINK);
+    console.log("This is server domain",process.env);
+    console.log("This is redirect link",process.env);
     // const { loading } = useAuth0();
 
     // if (loading) {
