@@ -1,4 +1,3 @@
-import { Cookies } from 'react-cookie';
 
 
 const api = "http://localhost:3001";
@@ -8,13 +7,18 @@ const api = "http://localhost:3001";
 
 
 
-const cookies = new Cookies();
-let authToken = cookies.get("accessToken");
+
+
+
 let header = {
 
-    "Authorization": `Bearer ${authToken}`
 }
 console.log("here is the header", header);
+let createHeader = (accessToken) =>{
+    return {
+        "Authorization": `Bearer ${accessToken}`
+    };
+}
 
 
 // ================================================
@@ -325,13 +329,11 @@ fetch(`${api}/admin/instruction/${type}`, {
     body: JSON.stringify(data),
 }).then((res) => res);
 
-export const getSecret = async () =>{
-  
+export const getSecret = async (accessToken) =>{
+    
     let response = await fetch(`${api}/admin/secret/`, {
         method: "GET",
-        headers: header
-          
-        
+        headers: createHeader(accessToken)
     });
     let json = await response.json();
     return json;
