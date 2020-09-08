@@ -30,6 +30,9 @@ import HomeAdmin from "./screens/HomeAdmin";
 import NavBar from "./components/Navbar";
 
 function App() {
+
+    console.log("This is server domain",process.env.SERVER_DOMAIN);
+    console.log("This is redirect link",process.env.REDIRECT_LINK);
     // const { loading } = useAuth0();
 
     // if (loading) {
