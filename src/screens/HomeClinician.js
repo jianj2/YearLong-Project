@@ -26,38 +26,45 @@ import "../styles/main.css";
 import SideBar from "../components/Clinician/Sidebar";
 
 import ContentPanel from "../components/Clinician/ContentPanel";
-
+import { Cookies } from 'react-cookie';
 
 // ---------------------------------------------------------------
 // This function defines the Clinician Home screen.
 // ---------------------------------------------------------------
 const HomeClinician = (props) => {
     const { loading, isAuthenticated, loginWithRedirect, user, getTokenSilently} = useAuth0();
+    
     const domain = "http://localhost:3001";
-    const getUserMetadata = async ()=>{
-        console.log("getting token");
-        try {
-        const accessToken = await getTokenSilently({
-            audience: `${domain}/admin/secret`,
-            scope: "read:current_user",
-          });
-        console.log(`Access Token: ${accessToken}`);
-        const message = await getSecret(accessToken);
-        console.log(message);
-          
-        }catch (e) {
-            console.log(e.message);
-
-        }
+    
+     
+    
        
-    }
+    
     useEffect(() => {
         if (loading ) {
             return;
         }
         if (!loading && isAuthenticated){
-            getUserMetadata();
-        
+            console.log("setting cookie");
+            const setCookie = async ()=>{
+                console.log("getting token");
+                try {
+                const accessToken = await getTokenSilently({
+                    audience: `${domain}/admin/secret`,
+                    scope: "read:current_user",
+                  });
+                  
+                const cookies = new Cookies();
+                cookies.set("accessToken", accessToken, {
+                    maxAge: 3600 // Will expire after 1hr (value is in number of sec.)
+                 });
+                 
+                
+                }catch(e){
+                    console.log("error:", e);
+                }
+            }
+            setCookie();
             return;
         }
 
@@ -75,7 +82,7 @@ const HomeClinician = (props) => {
         };
 
         fn();
-    }, [loading, isAuthenticated, loginWithRedirect]);
+    }, [isAuthenticated, loading, user, loginWithRedirect]);
 
     // const { loading, user } = useAuth0();
 

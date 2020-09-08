@@ -1,10 +1,21 @@
+import { Cookies } from 'react-cookie';
+
+
 const api = "http://localhost:3001";
 
 //const api = "https://d1iiwjsw1v8g79.cloudfront.net/";
 
+
+
+
+const cookies = new Cookies();
+let authToken = cookies.get("accessToken");
 let header = {
-    authorization: "fill in l8er",
-};
+
+    "Authorization": `Bearer ${authToken}`
+}
+console.log("here is the header", header);
+
 
 // ================================================
 // Admin server calls
@@ -314,15 +325,13 @@ fetch(`${api}/admin/instruction/${type}`, {
     body: JSON.stringify(data),
 }).then((res) => res);
 
-export const getSecret = async (accessToken) =>{
-    console.log("Here is the token:", `Bearer  ${accessToken}`);
+export const getSecret = async () =>{
+  
     let response = await fetch(`${api}/admin/secret/`, {
         method: "GET",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${accessToken}`
-        }
+        headers: header
+          
+        
     });
     let json = await response.json();
     return json;

@@ -27,6 +27,7 @@ import QuestionnaireList from "../QuestionnaireList";
 import Loading from "../Loading";
 import { useAdminAuth } from "../../utils/useAdminAuth";
 
+
 const useStyles = makeStyles((theme) => ({
     modal: {
         display: "flex",
@@ -74,6 +75,16 @@ const ManageQuestionnaires = (props) => {
             adminLogout();
         }
         setLoading(true);
+        const getMessage = async () =>{
+         
+            const message = await API.getSecret();
+            if(message )
+            console.log(message);
+        }
+        if(isAuthenticated){
+            getMessage();
+        }
+
         async function retrieveCustomisedQuestionnaires() {
             const customisedQuestionnaires = await API.getClinicianQuestionnaires(user.name);
             console.log(customisedQuestionnaires);
@@ -96,7 +107,8 @@ const ManageQuestionnaires = (props) => {
         retrieveCustomisedQuestionnaires();
         
         
-    }, [user]);
+        
+    }, [isAuthenticated]);
 
     // Function called when Edit is clicked on the QuestionnaireList
     const editQuestionnaire = (questionnaireID) => {
@@ -105,8 +117,10 @@ const ManageQuestionnaires = (props) => {
     };
 
     const viewQuestionnaire = (questionnaireID) =>{
+
         const view_url = "/standard/" + questionnaireID + "/view";
         window.location.href = view_url;
+        
 
     };
 
