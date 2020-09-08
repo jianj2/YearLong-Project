@@ -38,11 +38,15 @@ const HomeClinician = (props) => {
             return;
         }
 
+        console.log("The link is accessed", process.env.REDIRECT_LINK)
+
         const fn = async () => {
 
             await loginWithRedirect({
 
-                redirect_uri: process.env.REDIRECT_LINK || "http://localhost:3000/clinician", //TODO: figure out why window.location.pathname doesn't work
+                redirect_uri: process.env.REDIRECT_LINK,
+                
+                //"http://localhost:3000/clinician", //TODO: figure out why window.location.pathname doesn't work
 
                 //redirect_uri: "https://d1hg2pgsuj0kio.cloudfront.net/clinician", //TODO: figure out why window.location.pathname doesn't work
 
