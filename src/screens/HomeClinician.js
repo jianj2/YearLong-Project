@@ -32,20 +32,29 @@ import ContentPanel from "../components/Clinician/ContentPanel";
 // ---------------------------------------------------------------
 const HomeClinician = (props) => {
     const { loading, isAuthenticated, loginWithRedirect, user, getTokenSilently} = useAuth0();
-    const domain = "pediatric-scale.au.auth0.com";
+    const domain = "http://localhost:3001";
     const getUserMetadata = async ()=>{
+        console.log("getting token");
+        try {
         const accessToken = await getTokenSilently({
-            audience: `https://${domain}/api/v2/`,
+            audience: `${domain}/admin/secret`,
             scope: "read:current_user",
           });
         console.log(`Access Token: ${accessToken}`);
+          
+        }catch (e) {
+            console.log(e.message);
+
+        }
+       
     }
     useEffect(() => {
         if (loading ) {
             return;
         }
-        if (isAuthenticated){
+        if (!loading && isAuthenticated){
             getUserMetadata();
+        
             return;
         }
 
