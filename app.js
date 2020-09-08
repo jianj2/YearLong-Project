@@ -1,7 +1,40 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const jwt = require('express-jwt');
+const jwtAuthz = require('express-jwt-authz');
+const jwksRsa = require('jwks-rsa');
+
 
 const app = express();
+
+
+// Authentication middleware. When used, the
+// Access Token must exist and be verified against
+// the Auth0 JSON Web Key Set
+const checkJwt = jwt({
+    // Dynamically provide a signing key
+    // based on the kid in the header and 
+    // the signing keys provided by the JWKS endpoint.
+    secret: jwksRsa.expressJwtSecret({
+      cache: true,
+      rateLimit: true,
+      jwksRequestsPerMinute: 5,
+      jwksUri: `https://pediatric-scale.au.auth0.com/.well-known/jwks.json`
+    }),
+  
+    // Validate the audience and the issuer.
+    audience: 'http://localhost:3001/admin/secret',
+    issuer: `https://pediatric-scale.au.auth0.com/`,
+    algorithms: ['RS256']
+  });
+  const checkScopes = jwtAuthz([ 'read:messages' ]);
+  
+  app.get('/admin/secret', checkJwt, checkScopes, function(req, res) {
+    res.json({
+      message: 'Hello from a private endpoint! You need to be authenticated and have a scope of read:messages to see this.'
+    });
+  });
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -29,6 +62,7 @@ app.use('/clinician/', clinicianRouter);
 app.use('/questionnaire/', questionnaireRouter);
 app.use('/admin/', adminRouter);
 app.use('/share/', shareRouter);
+
 
 
 
