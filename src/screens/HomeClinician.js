@@ -18,6 +18,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth0 } from "../utils/react-auth0-spa";
 
 import Loading from "../components/Loading";
+import {getSecret} from "../utils/api";
 
 // Import styles.
 import "../styles/clinician.css";
@@ -41,6 +42,8 @@ const HomeClinician = (props) => {
             scope: "read:current_user",
           });
         console.log(`Access Token: ${accessToken}`);
+        const message = await getSecret(accessToken);
+        console.log(message);
           
         }catch (e) {
             console.log(e.message);

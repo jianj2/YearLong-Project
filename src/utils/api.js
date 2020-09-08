@@ -314,14 +314,17 @@ fetch(`${api}/admin/instruction/${type}`, {
     body: JSON.stringify(data),
 }).then((res) => res);
 
-export const getSecret = (accessToken) =>{
-    fetch(`${api}/admin/secret/`, {
+export const getSecret = async (accessToken) =>{
+    console.log("Here is the token:", `Bearer  ${accessToken}`);
+    let response = await fetch(`${api}/admin/secret/`, {
         method: "GET",
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            Authorization: `Bearer  ${accessToken}`
+            "Authorization": `Bearer ${accessToken}`
         }
-    }).then((res) => res);
+    });
+    let json = await response.json();
+    return json;
 
 }
