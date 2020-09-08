@@ -31,12 +31,25 @@ import ContentPanel from "../components/Clinician/ContentPanel";
 // This function defines the Clinician Home screen.
 // ---------------------------------------------------------------
 const HomeClinician = (props) => {
-    const { loading, isAuthenticated, loginWithRedirect, user } = useAuth0();
-
+    const { loading, isAuthenticated, loginWithRedirect, user, getTokenSilently} = useAuth0();
+    const domain = "pediatric-scale.au.auth0.com";
+    const getUserMetadata = async ()=>{
+        const accessToken = await getTokenSilently({
+            audience: `https://${domain}/api/v2/`,
+            scope: "read:current_user",
+          });
+        console.log(`Access Token: ${accessToken}`);
+    }
     useEffect(() => {
-        if (loading || isAuthenticated) {
+        if (loading ) {
             return;
         }
+        if (isAuthenticated){
+            getUserMetadata();
+            return;
+        }
+
+
         const fn = async () => {
             await loginWithRedirect({
                 redirect_uri: "http://localhost:3000/clinician", //TODO: figure out why window.location.pathname doesn't work
@@ -45,6 +58,8 @@ const HomeClinician = (props) => {
 
                 //appState: { targetUrl: window.location.pathname},
             });
+            
+  
         };
 
         fn();
@@ -54,9 +69,16 @@ const HomeClinician = (props) => {
 
     if (loading || !user) {
         return <Loading />;
+    }else{
+        
     }
 
+
+  
+    
+
     return (
+     
         <div className="HomeClinician">
             <SideBar />
 

@@ -313,3 +313,15 @@ fetch(`${api}/admin/instruction/${type}`, {
     },
     body: JSON.stringify(data),
 }).then((res) => res);
+
+export const getSecret = (accessToken) =>{
+    fetch(`${api}/admin/secret/`, {
+        method: "GET",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer  ${accessToken}`
+        }
+    }).then((res) => res);
+
+}
