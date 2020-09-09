@@ -5,15 +5,10 @@ const api = "http://localhost:3001";
 //const api = "https://d1iiwjsw1v8g79.cloudfront.net/";
 
 
-
-
-
-
-
 let header = {
 
 }
-console.log("here is the header", header);
+
 let createHeader = (accessToken) =>{
     return {
         "Authorization": `Bearer ${accessToken}`
@@ -329,13 +324,3 @@ fetch(`${api}/admin/instruction/${type}`, {
     body: JSON.stringify(data),
 }).then((res) => res);
 
-export const getSecret = async (accessToken) =>{
-    
-    let response = await fetch(`${api}/admin/secret2/`, {
-        method: "GET",
-        headers: createHeader(accessToken)
-    });
-    let json = await response.json();
-    return json;
-
-}

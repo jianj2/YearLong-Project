@@ -79,17 +79,6 @@ const ManageQuestionnaires = (props) => {
         
        
         if(isAuthenticated && token !== ""){
-      
-            const getMessage = async () =>{
-           
-                
-                
-                const message = await API.getSecret(token);
-                if(message )
-                console.log(message);
-            }
-            getMessage();
-        
 
         async function retrieveCustomisedQuestionnaires() {
             const customisedQuestionnaires = await API.getClinicianQuestionnaires(token, user.name);
