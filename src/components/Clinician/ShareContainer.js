@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ShareQuestionnaire = (props) => {
     const classes = useStyles();
-    const { isAuthenticated, loginWithRedirect, user, token } = useAuth0();
+    const { user, token } = useAuth0();
     // console.log("user.name", user.name); //TODO: change that when we have actual clincianId
 
     const [customisedQuestionnaires, setCustomisedQuestionnaires] = useState(

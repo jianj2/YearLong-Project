@@ -70,11 +70,12 @@ export const completeQuestionnaire = (data) =>
 // Managing Questionnaire server calls
 // ================================================
 // add new questionnaire
-export const addQuestionnaire = async (clinicianId) => {
+export const addQuestionnaire = async (token, clinicianId) => {
     const url = api + "/questionnaire/add";
 
     const headers = {
-        ...header
+        ... header,
+        ...createHeader(token)
     };
 
     const data = {
@@ -127,17 +128,20 @@ export const addStandardQuestionnaire = async () => {
 };
 
 // delete customised questionnaire
-export const deleteQuestionnaire = (CQid, clinicianId) => {
+export const deleteQuestionnaire = (token, CQid, clinicianId) => {
     // console.log(CQid, clinicianId);
     const data = {
         CQid,
         clinicianId,
     };
+    const headers = {
+        ... header,
+        ...createHeader(token)
+    };
+
     fetch(`${api}/questionnaire/delete`, {
         method: "POST",
-        headers: {
-            ...header,
-        },
+        headers: headers,
         body: JSON.stringify(data),
     }).then((res) => res.json());
 };

@@ -30,6 +30,9 @@ import "../../styles/clinician.css";
 //utils
 import * as API from "../../utils/api";
 
+//Auth0
+import { useAuth0 } from "../../utils/react-auth0-spa";
+
 // handles rendering of TopContainer in the Clinician page
 const EditQuestionnaire = ({
                                Questionnaire,
@@ -54,6 +57,8 @@ const EditQuestionnaire = ({
     
     const [cancelDialogOpen, setCancelDialogOpen] = React.useState(false);
 
+    const {token } = useAuth0();
+
     const handleSaveOpen = () => {
         setSaveDialogOpen(true);
     };
@@ -71,6 +76,18 @@ const EditQuestionnaire = ({
         setCancelDialogOpen(false);
     };
 
+    const  handleSaveQuestionnaire = async() =>{
+        handleSaveClose();
+     
+        if(manage_questionnaire_url === "/clinician"){
+            await API.editQuestionnaire(token, Questionnaire);
+        }else{
+            await API.editStandardQuestionnaire(Questionnaire);
+        }
+        
+    
+        window.location.href = manage_questionnaire_url;
+    }
 
     const manage_questionnaire_url = redirectURL;
 
@@ -119,15 +136,8 @@ const EditQuestionnaire = ({
                     <DialogActions>
                     <Button
                             onClick={() => {
-                                handleSaveClose();
-                                if(manage_questionnaire_url === "/clinician"){
-                                    API.editQuestionnaire(Questionnaire);
-                                }else{
-                                    API.editStandardQuestionnaire(Questionnaire);
-                                }
+                                handleSaveQuestionnaire();
                                 
-                           
-                                window.location.href = manage_questionnaire_url;
                             }}
                             color="primary"
                             autoFocus

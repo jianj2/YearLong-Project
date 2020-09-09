@@ -155,7 +155,7 @@ const ManageQuestionnaires = (props) => {
     // Function called when Add New Button is clicked
     async function AddNew() {
         setLoading(true);
-        const uuid = await API.addQuestionnaire(user.name);
+        const uuid = await API.addQuestionnaire(token, user.name);
 
         // const today = formatDate();
         const AddedArray = customisedQuestionnaires;
@@ -315,7 +315,7 @@ const ManageQuestionnaires = (props) => {
         let questionnaireId = deleteQuestionnaireData.deleteQuestionnaireID
         const arrayCopy = customisedQuestionnaires.filter((q) => q.questionnaireId !== questionnaireId);
         setCustomisedQuestionnaires(arrayCopy);
-        API.deleteQuestionnaire(questionnaireId, user.name);
+        API.deleteQuestionnaire(token, questionnaireId, user.name);
         closeDeleteConfirmation();
     }
 
