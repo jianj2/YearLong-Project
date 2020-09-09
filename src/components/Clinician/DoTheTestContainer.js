@@ -28,11 +28,10 @@ import  { getClinicianQuestionnaires, getQuestionnaire, completeQuestionnaire, g
 // Import Styles
 import "../../styles/clinicianDoTheTest.css";
 import Loading from "../Loading";
-import { Cookies } from 'react-cookie';
 
 // handles rendering of QuestionnaireContainer in the Clinician Page
 const DoTheTestContainer = () => {
-    const { user, hasToken } = useAuth0();
+    const { user, token } = useAuth0();
     const [wizardStep, setWizardStep] = useState(-1);
     const [loading, setLoading] = useState(false);
     const [personalDetails, setPersonalDetails] = useState({
@@ -67,18 +66,17 @@ const DoTheTestContainer = () => {
             }
         }
         async function retrieveCustomisedQuestionnaires() {
-            const cookies = new Cookies();
-            let authToken = cookies.get("accessToken");
-            getClinicianQuestionnaires(authToken, user.name).then((res) => {
+
+            getClinicianQuestionnaires(token, user.name).then((res) => {
                 console.log(res);
                 setQuestionnaires(res);
             });
         }
-        if(user && hasToken){
+        if(user && token !== ""){
             retrieveCustomisedQuestionnaires();
             retrieveStandardisedQuestionnaires();
         }
-    }, [user, hasToken]);
+    }, [user, token]);
 
     // Method called to go to the next page in the wizard.
     const nextStep = () => {

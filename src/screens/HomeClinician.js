@@ -18,21 +18,18 @@ import React, { useEffect, useState } from "react";
 import { useAuth0 } from "../utils/react-auth0-spa";
 
 import Loading from "../components/Loading";
-import {getSecret} from "../utils/api";
 
 // Import styles.
 import "../styles/clinician.css";
 import "../styles/main.css";
 import SideBar from "../components/Clinician/Sidebar";
-
 import ContentPanel from "../components/Clinician/ContentPanel";
-import { Cookies } from 'react-cookie';
 
 // ---------------------------------------------------------------
 // This function defines the Clinician Home screen.
 // ---------------------------------------------------------------
 const HomeClinician = (props) => {
-    const { loading, isAuthenticated, loginWithRedirect, user, getTokenSilently, setHasToken} = useAuth0();
+    const { loading, isAuthenticated, loginWithRedirect, user, getTokenSilently, setHasToken, setToken} = useAuth0();
     
     const domain = "http://localhost:3001";
     
@@ -53,13 +50,7 @@ const HomeClinician = (props) => {
                     audience: `${domain}/clinician`,
                     scope: "read:current_user",
                   });
-                  
-                const cookies = new Cookies();
-                cookies.set("accessToken", accessToken, {
-                    maxAge: 3600 // Will expire after 1hr (value is in number of sec.)
-                 });
-                setHasToken(true);
-                 
+                setToken(accessToken);
                 
                 }catch(e){
                     console.log("error:", e);

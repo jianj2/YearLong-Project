@@ -23,7 +23,6 @@ import "../../styles/main.css";
 // Import Components.
 import QuestionnaireList from "../QuestionnaireList";
 import Loading from "../Loading";
-import { Cookies } from 'react-cookie';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -41,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ShareQuestionnaire = (props) => {
     const classes = useStyles();
-    const { isAuthenticated, loginWithRedirect, user, hasToken } = useAuth0();
+    const { isAuthenticated, loginWithRedirect, user, token } = useAuth0();
     // console.log("user.name", user.name); //TODO: change that when we have actual clincianId
 
     const [customisedQuestionnaires, setCustomisedQuestionnaires] = useState(
@@ -72,23 +71,11 @@ const ShareQuestionnaire = (props) => {
     useEffect(() => {
         setLoading(true);
         async function retrieveCustomisedQuestionnaires() {
-            const cookies = new Cookies();
-            let authToken = cookies.get("accessToken");
-            const customisedQuestionnaires = await API.getClinicianQuestionnaires(authToken,
+           
+            const customisedQuestionnaires = await API.getClinicianQuestionnaires(token,
                 user.name
             );
             const today = formatDate();
-            const customisedQuestionnairesElement = customisedQuestionnaires.map(
-                (q) => {
-                    return {
-                        QID: q.questionnaireId,
-                        Qname: q.title,
-                        Qdescription: q.description,
-                        date: today,
-                    };
-                }
-            );
-            // setQuestionnaires({ customized_Questionnaire: customisedQuestionnairesElement });
             setCustomisedQuestionnaires(customisedQuestionnaires);
             setLoading(false);
         }
@@ -98,11 +85,11 @@ const ShareQuestionnaire = (props) => {
                 setStandardisedQuestionnaires(response.data);
             }
         }
-        if(user && hasToken){
+        if(user && token !== ""){
             retrieveStandardisedQuestionnaires();
             retrieveCustomisedQuestionnaires();
         }
-    }, [user, hasToken]);
+    }, [user, token]);
 
     // Function called when Share is clicked on the QuestionnaireList
     const shareQuestionnaire = (questionnaireId, sections) => {

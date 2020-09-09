@@ -26,7 +26,6 @@ import "../../styles/main.css";
 import QuestionnaireList from "../QuestionnaireList";
 import Loading from "../Loading";
 import { useAdminAuth } from "../../utils/useAdminAuth";
-import { Cookies } from 'react-cookie';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ManageQuestionnaires = (props) => {
     const classes = useStyles();
-    const { isAuthenticated, loginWithRedirect, user, hasToken } = useAuth0();
+    const { isAuthenticated, loginWithRedirect, user, token } = useAuth0();
     // console.log("user.name", user.name); //TODO: change that when we have actual clincianId
 
     const [customisedQuestionnaires, setCustomisedQuestionnaires] = useState([]);
@@ -79,13 +78,13 @@ const ManageQuestionnaires = (props) => {
         setLoading(true);
         
        
-        if(isAuthenticated && hasToken){
-            let authToken = "";
+        if(isAuthenticated && token !== ""){
+      
             const getMessage = async () =>{
-                const cookies = new Cookies();
-                authToken = cookies.get("accessToken");
-             
-                const message = await API.getSecret(authToken);
+           
+                
+                
+                const message = await API.getSecret(token);
                 if(message )
                 console.log(message);
             }
@@ -93,7 +92,7 @@ const ManageQuestionnaires = (props) => {
         
 
         async function retrieveCustomisedQuestionnaires() {
-            const customisedQuestionnaires = await API.getClinicianQuestionnaires(authToken, user.name);
+            const customisedQuestionnaires = await API.getClinicianQuestionnaires(token, user.name);
             console.log(customisedQuestionnaires);
             const today = formatDate();
             const customisedQuestionnairesElement = customisedQuestionnaires.map((q) => {
@@ -115,7 +114,7 @@ const ManageQuestionnaires = (props) => {
     }
         
         
-    }, [isAuthenticated, hasToken]);
+    }, [isAuthenticated, token]);
 
     // Function called when Edit is clicked on the QuestionnaireList
     const editQuestionnaire = (questionnaireID) => {
