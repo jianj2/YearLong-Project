@@ -331,7 +331,7 @@ fetch(`${api}/admin/instruction/${type}`, {
 
 export const getSecret = async (accessToken) =>{
     
-    let response = await fetch(`${api}/admin/secret/`, {
+    let response = await fetch(`${api}/admin/secret2/`, {
         method: "GET",
         headers: createHeader(accessToken)
     });

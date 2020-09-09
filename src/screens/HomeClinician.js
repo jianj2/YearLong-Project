@@ -50,7 +50,7 @@ const HomeClinician = (props) => {
                 console.log("getting token");
                 try {
                 const accessToken = await getTokenSilently({
-                    audience: `${domain}/admin/secret`,
+                    audience: `${domain}/clinician`,
                     scope: "read:current_user",
                   });
                   
