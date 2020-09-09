@@ -13,7 +13,9 @@ const mongoose = require('mongoose');
 
 const Clinician = mongoose.model('clinician');
 
-const { sendResultsEmail } = require('./email_controller')
+const { sendResultsEmail } = require('./email_controller');
+
+
 
 // Get all clinician details.
 const getAllClinician = function (req, res) {
