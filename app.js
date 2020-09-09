@@ -6,7 +6,7 @@ const jwksRsa = require('jwks-rsa');
 
 
 const app = express();
-
+const domain = "http://localhost:3001";
 
 // Authentication middleware. When used, the
 // Access Token must exist and be verified against
@@ -23,7 +23,7 @@ const checkJwt = jwt({
     }),
   
     // Validate the audience and the issuer.
-    audience: 'http://localhost:3001/admin/secret',
+    audience: `${domain}/clinician`,
     issuer: `https://pediatric-scale.au.auth0.com/`,
     algorithms: ['RS256']
   });
@@ -43,7 +43,7 @@ const cors = require('cors');
 
 app.use(cors());
 
-app.get('/admin/secret', checkJwt, function(req, res) {
+app.get('/admin/secret2', checkJwt, function(req, res) {
     res.json({
       message: 'Hello from a private endpoint! You need to be authenticated and have a scope of read:messages to see this.'
     });
