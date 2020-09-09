@@ -203,10 +203,11 @@ export const getAndSetSpecificQuestionnaire = async (CQid, setState) => {
 
 // get clinician questionnaire list
 
-export const getClinicianQuestionnaires = async (clinicianId) => {
+export const getClinicianQuestionnaires = async (accessToken, clinicianId) => {
     const url = `${api}/questionnaire/clinician?clinicianId=${clinicianId}`;
+    
     let response = await fetch(url, {
-        headers: header,
+        headers: createHeader(accessToken)
     });
     let json = await response.json();
 
@@ -303,7 +304,6 @@ export const getInstructionsSummary = async () => {
         headers: header
     });
     let json = await response.json();
-    console.log("inss", json);
     return json;
 };
 

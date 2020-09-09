@@ -23,6 +23,7 @@ import "../../styles/main.css";
 // Import Components.
 import QuestionnaireList from "../QuestionnaireList";
 import Loading from "../Loading";
+import { Cookies } from 'react-cookie';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ShareQuestionnaire = (props) => {
     const classes = useStyles();
-    const { isAuthenticated, loginWithRedirect, user } = useAuth0();
+    const { isAuthenticated, loginWithRedirect, user, hasToken } = useAuth0();
     // console.log("user.name", user.name); //TODO: change that when we have actual clincianId
 
     const [customisedQuestionnaires, setCustomisedQuestionnaires] = useState(
@@ -71,7 +72,9 @@ const ShareQuestionnaire = (props) => {
     useEffect(() => {
         setLoading(true);
         async function retrieveCustomisedQuestionnaires() {
-            const customisedQuestionnaires = await API.getClinicianQuestionnaires(
+            const cookies = new Cookies();
+            let authToken = cookies.get("accessToken");
+            const customisedQuestionnaires = await API.getClinicianQuestionnaires(authToken,
                 user.name
             );
             const today = formatDate();
@@ -95,9 +98,11 @@ const ShareQuestionnaire = (props) => {
                 setStandardisedQuestionnaires(response.data);
             }
         }
-        retrieveStandardisedQuestionnaires();
-        retrieveCustomisedQuestionnaires();
-    }, [user]);
+        if(user && hasToken){
+            retrieveStandardisedQuestionnaires();
+            retrieveCustomisedQuestionnaires();
+        }
+    }, [user, hasToken]);
 
     // Function called when Share is clicked on the QuestionnaireList
     const shareQuestionnaire = (questionnaireId, sections) => {

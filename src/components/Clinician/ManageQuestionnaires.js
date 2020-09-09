@@ -80,19 +80,20 @@ const ManageQuestionnaires = (props) => {
         
        
         if(isAuthenticated && hasToken){
+            let authToken = "";
             const getMessage = async () =>{
                 const cookies = new Cookies();
-                let authToken = cookies.get("accessToken");
+                authToken = cookies.get("accessToken");
              
                 const message = await API.getSecret(authToken);
                 if(message )
                 console.log(message);
             }
             getMessage();
-        }
+        
 
         async function retrieveCustomisedQuestionnaires() {
-            const customisedQuestionnaires = await API.getClinicianQuestionnaires(user.name);
+            const customisedQuestionnaires = await API.getClinicianQuestionnaires(authToken, user.name);
             console.log(customisedQuestionnaires);
             const today = formatDate();
             const customisedQuestionnairesElement = customisedQuestionnaires.map((q) => {
@@ -111,7 +112,7 @@ const ManageQuestionnaires = (props) => {
         }
         retrieveStandardisedQuestionnaires();
         retrieveCustomisedQuestionnaires();
-        
+    }
         
         
     }, [isAuthenticated, hasToken]);
