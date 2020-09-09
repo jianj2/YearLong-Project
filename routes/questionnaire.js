@@ -52,6 +52,7 @@ router.post('/delete', questionnaire_controller.deleteQuestionnaire);
 router.post('/add', questionnaire_controller.addEmptyQuestionnaire);
 router.post('/addStandard', questionnaire_controller.addStandardisedQuestionnaire);
 router.post('/edit', questionnaire_controller.editQuestionnaire);
+router.post('/editStandard', questionnaire_controller.editStandardQuestionnaire);
 
 //Backdoor
 //router.get('/', questionnaire_controller.getAllQuestionnaire);
