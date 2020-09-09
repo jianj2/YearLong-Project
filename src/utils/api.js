@@ -152,7 +152,7 @@ export const deleteQuestionnaire = (CQid, clinicianId) => {
 };
 
 //edit questionnaire
-// TODO: get CQid and entire edited questionnaire from UI
+
 export const editQuestionnaire = async (questionnaire) => {
     const url = api + "/questionnaire/edit";
     const headers = {
@@ -180,8 +180,37 @@ export const editQuestionnaire = async (questionnaire) => {
     }
 };
 
+//edit standard questionnaire
+
+export const editStandardQuestionnaire = async (questionnaire) => {
+    const url = api + "/questionnaire/editStandard";
+    const headers = {
+        ...header,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+    };
+
+    const data = {
+        questionnaire,
+    };
+
+    try {
+        let response = await fetch(url, {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(data),
+        });
+        let json = await response.json();
+    } catch (e) {
+        console.error(
+            "An error has occurred while saving the edited questionnaire",
+            e
+        );
+    }
+};
+
 // get specific questionnaire
-// TODO: get CQid and entire edited questionnaire from UI
+
 export const getAndSetSpecificQuestionnaire = async (CQid, setState) => {
     let res = await fetch(`${api}/questionnaire/getQuestionnaire/${CQid}`, {
         method: "GET",

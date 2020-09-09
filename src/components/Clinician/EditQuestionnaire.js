@@ -120,7 +120,13 @@ const EditQuestionnaire = ({
                     <Button
                             onClick={() => {
                                 handleSaveClose();
-                                API.editQuestionnaire(Questionnaire);
+                                if(manage_questionnaire_url === "/clinician"){
+                                    API.editQuestionnaire(Questionnaire);
+                                }else{
+                                    API.editStandardQuestionnaire(Questionnaire);
+                                }
+                                
+                           
                                 window.location.href = manage_questionnaire_url;
                             }}
                             color="primary"
