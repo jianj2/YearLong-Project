@@ -29,7 +29,7 @@ import ContentPanel from "../components/Clinician/ContentPanel";
 // This function defines the Clinician Home screen.
 // ---------------------------------------------------------------
 const HomeClinician = (props) => {
-    const { loading, isAuthenticated, loginWithRedirect, user, getTokenSilently, setHasToken, setToken} = useAuth0();
+    const { loading, isAuthenticated, loginWithRedirect, user, getTokenSilently, setToken} = useAuth0();
     
     const domain = "http://localhost:3001";
     
@@ -42,9 +42,7 @@ const HomeClinician = (props) => {
             return;
         }
         if (!loading && isAuthenticated){
-            console.log("setting cookie");
-            const setCookie = async ()=>{
-                console.log("getting token");
+            const setAuth0Token = async ()=>{
                 try {
                 const accessToken = await getTokenSilently({
                     audience: `${domain}/clinician`,
@@ -56,7 +54,7 @@ const HomeClinician = (props) => {
                     console.log("error:", e);
                 }
             }
-            setCookie();
+            setAuth0Token();
             return;
         }
 
