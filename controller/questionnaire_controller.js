@@ -312,7 +312,7 @@ const copyQuestionnaire = function (req, res) {
         {
             ...copiedQuestionnaire,
             questionnaireId: uuid,
-            isStandard: copyToCustomisedQuestionnaire,
+            isStandard: ! copyToCustomisedQuestionnaire,
             title: copiedQuestionnaire.title + " - Copy",
         }    
     );
