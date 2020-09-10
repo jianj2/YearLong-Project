@@ -1,4 +1,8 @@
 /**
+ * Copy the following code into an Auth0 webhook for post registration.
+ */
+
+/**
 @param {object} user - The user being created
 @param {string} user.id - user id
 @param {string} user.tenant - Auth0 tenant name
