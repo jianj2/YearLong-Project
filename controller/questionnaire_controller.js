@@ -11,11 +11,10 @@
 
 const mongoose = require("mongoose");
 const { v1: uuidv1 } = require("uuid");
-const {getUserEmail} = require("../utils/jwtUtils");
+const { getUserEmail } = require("../utils/jwtUtils");
 
 const Questionnaire = mongoose.model("questionnaire");
 const Clinician = mongoose.model("clinician");
-
 
 // Get all questionnaires
 const getAllQuestionnaire = function (req, res) {
@@ -64,7 +63,7 @@ const getQuestionnaireAsync = function (req, res) {
 
 const getClinicianQuestionnaires = function (req, res) {
     let clinicianId = req.query.clinicianId;
-   if(getUserEmail(req) === clinicianId){
+    if (getUserEmail(req) === clinicianId) {
         Clinician.findOne({ clinicianId: clinicianId }, async function (
             err,
             clinician
@@ -80,8 +79,10 @@ const getClinicianQuestionnaires = function (req, res) {
                 res.send(JSON.stringify(err));
             }
         });
-    }else{
-        res.send(JSON.stringify("You do not have access to the clinician account"));
+    } else {
+        res.send(
+            JSON.stringify("You do not have access to the clinician account")
+        );
     }
 };
 
@@ -171,10 +172,7 @@ const addStandardisedQuestionnaire = (req, res) => {
     });
 
     newQuestionnaire.save(function (err, createdQuestionnaire) {
-        console.log(
-            "added standardised questionnaire:",
-            uuid,
-        );
+        console.log("added standardised questionnaire:", uuid);
 
         res.send({
             code: 200,
@@ -186,34 +184,53 @@ const addStandardisedQuestionnaire = (req, res) => {
 
 // edit a questionnaire
 const editQuestionnaire = function (req, res) {
+    const userEmail = getUserEmail(req);
     const questionnaireId = req.body.questionnaire.questionnaireId;
     const editedQuestionnaire = req.body.questionnaire;
-    Questionnaire.replaceOne(
-        { questionnaireId: questionnaireId },
-        editedQuestionnaire,
-        (err, raw) => {
-            if (!err) {
-                res.send(JSON.stringify("successfully edited"));
-                // console.log('here')
+    const validateAndUpdate = (err, clinician) => {
+        if (!err) {
+            const questionnaireIds = clinician.questionnaires;
+            if (questionnaireIds.includes(questionnaireId)) {
+                updateQuestionnaire(questionnaireId, editedQuestionnaire);
             } else {
-                res.send(JSON.stringify(err));
+                res.send(
+                    JSON.stringify(
+                        "The edited questionnaire does not belong to the clinician."
+                    )
+                );
             }
+        } else {
+            res.send(JSON.stringify(err));
         }
-    );
+    };
+    const updateQuestionnaire = (questionnaireId, editedQuestionnaire) => {
+        Questionnaire.replaceOne(
+            { questionnaireId: questionnaireId },
+            editedQuestionnaire,
+            (err, raw) => {
+                if (!err) {
+                    res.send(JSON.stringify("successfully edited"));
+                } else {
+                    res.send(JSON.stringify(err));
+                }
+            }
+        );
+    };
+
+    Clinician.findOne({ clinicianId: userEmail }, validateAndUpdate);
 };
 
 // edit a questionnaire
 const editStandardQuestionnaire = function (req, res) {
     const questionnaireId = req.body.questionnaire.questionnaireId;
     const editedQuestionnaire = req.body.questionnaire;
-    
+
     Questionnaire.replaceOne(
         { questionnaireId: questionnaireId },
         editedQuestionnaire,
         (err, raw) => {
             if (!err) {
                 res.send(JSON.stringify("successfully edited"));
-                // console.log('here')
             } else {
                 res.send(JSON.stringify(err));
             }
@@ -285,7 +302,9 @@ const deleteStandardisedQuestionnaire = (req, res) => {
     ) {
         console.log("deleted customised questionnaire: " + questionnaireID);
         if (!err) {
-            let message = JSON.stringify(`successfully deleted standard questionnaire ${questionnaireID}`);
+            let message = JSON.stringify(
+                `successfully deleted standard questionnaire ${questionnaireID}`
+            );
             res.send(message);
         } else {
             res.send(JSON.stringify(err));
