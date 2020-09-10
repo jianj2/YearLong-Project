@@ -30,6 +30,9 @@ import HomeAdmin from "./screens/HomeAdmin";
 import NavBar from "./components/Navbar";
 
 function App() {
+
+    console.log("This is server domain",process.env);
+    console.log("This is redirect link",process.env);
     // const { loading } = useAuth0();
 
     // if (loading) {
@@ -78,11 +81,20 @@ function App() {
                         render={({match}) => (<HomeAdmin active = {4} questionnaireID={match.params.id}/>)}
                     />
 
+
                     <Route
                         path="/admin/standard/:id/view"
                         exact
                         render={({match}) => <HomeAdmin active = {5} questionnaireID={match.params.id}/> }
                     />
+                    
+                    <Route
+                        path="/admin/instruction/:type/edit"
+                        exact
+                        render={({match}) => <HomeAdmin active = {6} 
+                                    instructionType = {match.params.type}/> }
+                    />
+
 
                     <Route
                         path="/clinician"

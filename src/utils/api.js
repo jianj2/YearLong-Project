@@ -1,12 +1,21 @@
-
-const api = "http://localhost:3001";
+const api = process.env.SERVER_DOMAIN || "http://localhost:3001";
 
 //const api = "https://d1iiwjsw1v8g79.cloudfront.net/";
 
 
-let header = {
-    authorization: "fill in l8er",
+const header = {
+    
+    "Content-Type": "application/json",
+    Accept: "application/json",
 };
+
+
+let createHeader = (accessToken) =>{
+    return {
+        "Authorization": `Bearer ${accessToken}`
+    };
+}
+
 
 // ================================================
 // Admin server calls
@@ -15,9 +24,8 @@ export const adminLogin = (loginData) =>
     fetch(`${api}/admin/login`, {
         method: "POST",
         headers: {
-            ...header,
-            Accept: "application/json",
-            "Content-Type": "application/json",
+            ...header
+            
         },
         body: JSON.stringify(loginData),
     }).then((res) => res.json());
@@ -39,14 +47,10 @@ export const sendQuestionnaireData = (data, shareId) =>
     fetch(`${api}/share/submit/${shareId}`, {
         method: "POST",
         headers: {
-            ...header,
-
-            Accept: "application/json",
-            "Content-Type": "application/json",
+            ...header
         },
         body: JSON.stringify(data),
     }).then((res) => res.json());
-
 
 // ================================================
 // Clinician server calls
@@ -55,25 +59,21 @@ export const completeQuestionnaire = (data) =>
     fetch(`${api}/clinician/complete-questionnaire/`, {
         method: "POST",
         headers: {
-            ...header,
-            Accept: "application/json",
-            "Content-Type": "application/json",
+            ...header
         },
         body: JSON.stringify(data),
     }).then((res) => res.json());
-
 
 // ================================================
 // Managing Questionnaire server calls
 // ================================================
 // add new questionnaire
-export const addQuestionnaire = async (clinicianId) => {
+export const addQuestionnaire = async (token, clinicianId) => {
     const url = api + "/questionnaire/add";
 
     const headers = {
-        ...header,
-        "Content-Type": "application/json",
-        Accept: "application/json",
+        ... header,
+        ...createHeader(token)
     };
 
     const data = {
@@ -99,50 +99,100 @@ export const addQuestionnaire = async (clinicianId) => {
 };
 
 
-// delete questionnaire
-export const deleteQuestionnaire = (CQid, clinicianId) => {
+
+export const addStandardQuestionnaire = async () => {
+    const url = api + "/questionnaire/addStandard";
+
+    const headers = {
+        ...header
+    };
+ 
+    return new Promise(async (resolve) => {
+        try {
+            let response = await fetch(url, {
+                method: "POST",
+                headers: headers,
+                
+            });
+            let json = await response.json();
+            resolve(json.uuid);
+        } catch (e) {
+            console.error(
+                "An error has occurred while adding questionnaire",
+                e
+            );
+        }
+    });
+};
+
+// delete customised questionnaire
+export const deleteQuestionnaire = (token, CQid, clinicianId) => {
     // console.log(CQid, clinicianId);
     const data = {
         CQid,
         clinicianId,
     };
+    const headers = {
+        ... header,
+        ...createHeader(token)
+    };
+
     fetch(`${api}/questionnaire/delete`, {
         method: "POST",
-        headers: {
-            ...header,
-            Accept: "application/json",
-            "Content-Type": "application/json",
-
-        },
+        headers: headers,
         body: JSON.stringify(data),
     }).then((res) => res.json());
 };
 
 //edit questionnaire
-// TODO: get CQid and entire edited questionnaire from UI
-export const editQuestionnaire = async (questionnaire) => {
-    const url = api + "/questionnaire/edit";
-    const headers = {
-        ...header,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-    };
 
+export const editQuestionnaire = async (token, questionnaire) => {
+   
+    const url = api + "/questionnaire/edit";
     const data = {
-        questionnaire
+        questionnaire,
+    };
+    const headers = {
+        ... header,
+        ...createHeader(token)
     };
 
 
     try {
+        let response = await fetch(url, {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(data)
+        });
+        let json = await response.json();
+    } catch (e) {
+        console.error(
+            "An error has occurred while saving the edited questionnaire",
+            e
+        );
+    }
+};
 
+//edit standard questionnaire
+
+export const editStandardQuestionnaire = async (questionnaire) => {
+    const url = api + "/questionnaire/editStandard";
+    const headers = {
+        ...header,
+       
+    };
+
+    const data = {
+        questionnaire,
+    };
+
+    try {
         let response = await fetch(url, {
             method: "POST",
             headers: headers,
             body: JSON.stringify(data),
         });
         let json = await response.json();
-
-
     } catch (e) {
         console.error(
             "An error has occurred while saving the edited questionnaire",
@@ -217,44 +267,40 @@ export const adminCopyQuestionnaire = async (questionnaire) => {
     }
 }
 
+};
+
 // get specific questionnaire
-// TODO: get CQid and entire edited questionnaire from UI
+
 export const getAndSetSpecificQuestionnaire = async (CQid, setState) => {
     let res = await fetch(`${api}/questionnaire/getQuestionnaire/${CQid}`, {
         method: "GET",
         headers: {
-            ...header,
-            Accept: "application/json",
-            "Content-Type": "application/json",
+            ...header
         },
     });
     let json = await res.json();
     setState(json);
-    return json
+    return json;
 };
-
-
-
 
 // get clinician questionnaire list
 
-export const getClinicianQuestionnaires = async (clinicianId) => {
-    const url = `${api}/questionnaire/clinician?clinicianId=${clinicianId}` ;
+export const getClinicianQuestionnaires = async (accessToken, clinicianId) => {
+    const url = `${api}/questionnaire/clinician?clinicianId=${clinicianId}`;
+    
     let response = await fetch(url, {
-        headers: header
-
+        headers: createHeader(accessToken)
     });
     let json = await response.json();
 
     return json;
 };
 
-// get standardised questionnaires 
+// get standardised questionnaires
 export const getStandardisedQuestionnaires = async () => {
-
-    const url = `${api}/questionnaire/standardised` ;
+    const url = `${api}/questionnaire/standardised`;
     let response = await fetch(url, {
-        headers: header
+        headers: header,
     });
     let json = await response.json();
 
@@ -265,13 +311,27 @@ export const getStandardisedQuestionnaires = async () => {
 export const getStandardisedQuestionnaireForAdmin = async () => {
     const url = `${api}/admin/getStandardisedQuestionnaire`;
     let response = await fetch(url, {
-        headers: header
+        headers: header,
     });
     let json = await response.json();
     return json;
-}
+};
 
+export const deleteStandardQuestionnaire = async (questionnaireID) => {
+    const data = {
+        questionnaireID,
+    };
 
+    let response = await fetch(`${api}/questionnaire/deleteStandard`, {
+        method: "POST",
+        headers: {
+            ...header
+        },
+        body: JSON.stringify(data),
+    });
+    let json = await response.json();
+    return json;
+};
 
 // ================================================
 // Managing Share server calls
@@ -288,23 +348,39 @@ export const shareQuestionnaire = (data) =>
         method: "POST",
         headers: {
             ...header,
-
-            Accept: "application/json",
-            "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
     }).then((res) => res.json());
 
+// get Instruction
+export const getInstruction = async () => {
+    const url = `${api}/admin/instruction`;
+    let response = await fetch(url, {
+        headers: header,
+    });
+    let json = await response.json();
 
-// get Instructions
-export const getInstructions = async () => {
+    return json;
+};
 
-    const url = `${api}/admin/instruction` ;
+// get instructions
+export const getSpecificInstruction = async (instructionType) => {
+    const url = `${api}/admin/specificInstruction/${instructionType}`;
     let response = await fetch(url, {
         headers: header
     });
     let json = await response.json();
+    return json;
+};
 
+// get instructions summary including title and type
+
+export const getInstructionsSummary = async () => {
+    const url = `${api}/admin/instructionsSummary`;
+    let response = await fetch(url, {
+        headers: header
+    });
+    let json = await response.json();
     return json;
 };
 
@@ -312,10 +388,15 @@ export const getInstructions = async () => {
 export const sendInstructions = (data) =>
     fetch(`${api}/admin/instruction`, {
         method: "POST",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-        },
+        headers:header,
         body: JSON.stringify(data),
     }).then((res) => res);
+
+// update instruction by type
+export const updateInstruction = (type, data) =>
+fetch(`${api}/admin/instruction/${type}`, {
+    method: "POST",
+    headers: header,
+    body: JSON.stringify(data),
+}).then((res) => res);
 

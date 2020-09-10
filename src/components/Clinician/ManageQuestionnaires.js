@@ -27,6 +27,7 @@ import QuestionnaireList from "../QuestionnaireList";
 import Loading from "../Loading";
 import { useAdminAuth } from "../../utils/useAdminAuth";
 
+
 const useStyles = makeStyles((theme) => ({
     modal: {
         display: "flex",
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ManageQuestionnaires = (props) => {
     const classes = useStyles();
-    const { isAuthenticated, loginWithRedirect, user } = useAuth0();
+    const { isAuthenticated, loginWithRedirect, user, token } = useAuth0();
     // console.log("user.name", user.name); //TODO: change that when we have actual clincianId
 
     const [customisedQuestionnaires, setCustomisedQuestionnaires] = useState([]);
@@ -69,13 +70,18 @@ const ManageQuestionnaires = (props) => {
 
     const [shareSection, setShareSection] = useState({});
     const { isAdminAuthenticated, adminLogout } = useAdminAuth();
+
     useEffect(() => {
         if(isAdminAuthenticated){
             adminLogout();
         }
         setLoading(true);
+        
+       
+        if(isAuthenticated && token !== ""){
+
         async function retrieveCustomisedQuestionnaires() {
-            const customisedQuestionnaires = await API.getClinicianQuestionnaires(user.name);
+            const customisedQuestionnaires = await API.getClinicianQuestionnaires(token, user.name);
             console.log(customisedQuestionnaires);
             const today = formatDate();
             const customisedQuestionnairesElement = customisedQuestionnaires.map((q) => {
@@ -94,9 +100,10 @@ const ManageQuestionnaires = (props) => {
         }
         retrieveStandardisedQuestionnaires();
         retrieveCustomisedQuestionnaires();
+    }
         
         
-    }, [user]);
+    }, [isAuthenticated, token]);
 
     // Function called when Edit is clicked on the QuestionnaireList
     const editQuestionnaire = (questionnaireID) => {
@@ -112,8 +119,10 @@ const ManageQuestionnaires = (props) => {
     };
 
     const viewQuestionnaire = (questionnaireID) =>{
+
         const view_url = "/standard/" + questionnaireID + "/view";
         window.location.href = view_url;
+        
 
     };
 
@@ -153,7 +162,7 @@ const ManageQuestionnaires = (props) => {
     // Function called when Add New Button is clicked
     async function AddNew() {
         setLoading(true);
-        const uuid = await API.addQuestionnaire(user.name);
+        const uuid = await API.addQuestionnaire(token, user.name);
 
         // const today = formatDate();
         const AddedArray = customisedQuestionnaires;
@@ -313,7 +322,7 @@ const ManageQuestionnaires = (props) => {
         let questionnaireId = deleteQuestionnaireData.deleteQuestionnaireID
         const arrayCopy = customisedQuestionnaires.filter((q) => q.questionnaireId !== questionnaireId);
         setCustomisedQuestionnaires(arrayCopy);
-        API.deleteQuestionnaire(questionnaireId, user.name);
+        API.deleteQuestionnaire(token, questionnaireId, user.name);
         closeDeleteConfirmation();
     }
 

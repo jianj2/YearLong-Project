@@ -19,6 +19,18 @@
   }
 }
 
+#error-message-login {
+  display: none;
+  background: rgba(240, 240, 240, 0.2);
+  border: 1px solid rgba(240, 240, 240, 0.4);
+  color: #eee;
+  border-radius: 120px;
+  flex-flow: column;
+  height: 5vh;
+  text-align: center;
+  padding-top: 2vh;
+}
+
 .HomeAdmin{
   height: 95vh;
   display: flex;

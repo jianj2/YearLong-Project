@@ -31,7 +31,7 @@ import Loading from "../Loading";
 
 // handles rendering of QuestionnaireContainer in the Clinician Page
 const DoTheTestContainer = () => {
-    const { user } = useAuth0();
+    const { user, token } = useAuth0();
     const [wizardStep, setWizardStep] = useState(-1);
     const [loading, setLoading] = useState(false);
     const [personalDetails, setPersonalDetails] = useState({
@@ -66,15 +66,17 @@ const DoTheTestContainer = () => {
             }
         }
         async function retrieveCustomisedQuestionnaires() {
-            getClinicianQuestionnaires(user.name).then((res) => {
+
+            getClinicianQuestionnaires(token, user.name).then((res) => {
                 console.log(res);
                 setQuestionnaires(res);
             });
         }
-
-        retrieveCustomisedQuestionnaires();
-        retrieveStandardisedQuestionnaires();
-    }, [user]);
+        if(user && token !== ""){
+            retrieveCustomisedQuestionnaires();
+            retrieveStandardisedQuestionnaires();
+        }
+    }, [user, token]);
 
     // Method called to go to the next page in the wizard.
     const nextStep = () => {

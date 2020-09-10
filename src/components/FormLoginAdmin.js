@@ -46,7 +46,9 @@ export default function FormLoginAdmin({ adminLogin }) {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="admin-form">
+        <div>
+            <div id="error-message-login" className="alert alert-danger"></div>
+            <form onSubmit={handleSubmit(onSubmit)} className="admin-form">
             <FormControl margin="dense">
                 <InputLabel>Username</InputLabel>
                 <Input
@@ -103,5 +105,6 @@ export default function FormLoginAdmin({ adminLogin }) {
             </button>
             {errors.code && <span>{errors.code.message}</span>}
         </form>
+        </div>
     );
 }

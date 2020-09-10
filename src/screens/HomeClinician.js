@@ -23,40 +23,75 @@ import Loading from "../components/Loading";
 import "../styles/clinician.css";
 import "../styles/main.css";
 import SideBar from "../components/Clinician/Sidebar";
-
 import ContentPanel from "../components/Clinician/ContentPanel";
-
 
 // ---------------------------------------------------------------
 // This function defines the Clinician Home screen.
 // ---------------------------------------------------------------
 const HomeClinician = (props) => {
-    const { loading, isAuthenticated, loginWithRedirect, user } = useAuth0();
-
+    const { loading, isAuthenticated, loginWithRedirect, user, getTokenSilently, setToken} = useAuth0();
+    
+    const domain = "http://localhost:3001";
+    
+     
+    
+       
+    
     useEffect(() => {
-        if (loading || isAuthenticated) {
+        if (loading ) {
             return;
         }
+        if (!loading && isAuthenticated){
+            const setAuth0Token = async ()=>{
+                try {
+                const accessToken = await getTokenSilently({
+                    audience: `${domain}/clinician`,
+                    scope: "read:current_user",
+                  });
+                setToken(accessToken);
+                
+                }catch(e){
+                    console.log("error:", e);
+                }
+            }
+            setAuth0Token();
+            return;
+        }
+
+
         const fn = async () => {
+
             await loginWithRedirect({
-                redirect_uri: "http://localhost:3000/clinician", //TODO: figure out why window.location.pathname doesn't work
+
+                redirect_uri: process.env.REDIRECT_LINK,
+                
+                //"http://localhost:3000/clinician", //TODO: figure out why window.location.pathname doesn't work
 
                 //redirect_uri: "https://d1hg2pgsuj0kio.cloudfront.net/clinician", //TODO: figure out why window.location.pathname doesn't work
 
                 //appState: { targetUrl: window.location.pathname},
             });
+            
+  
         };
 
         fn();
-    }, [loading, isAuthenticated, loginWithRedirect]);
+    }, [isAuthenticated, loading, user, loginWithRedirect]);
 
     // const { loading, user } = useAuth0();
 
     if (loading || !user) {
         return <Loading />;
+    }else{
+        
     }
 
+
+  
+    
+
     return (
+     
         <div className="HomeClinician">
             <SideBar />
 

@@ -58,6 +58,11 @@
 /* ==================================================== */
 .parents-detail-form {
     display: flex;
+    flex-direction: column;
+}
+
+.parents-detail-container{
+    display: flex;
 }
  
 .parents-detail-form-column{

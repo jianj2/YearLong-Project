@@ -69,7 +69,7 @@ const HomeParents = ({ match }) => {
     });
     const [isInit, setIsInit] = useState(true);
     const getInstruction = () => {
-        API.getInstructions().then((res) =>{
+        API.getInstruction().then((res) =>{
             setInstruction({
                 title: res["title"],
                 content: res["content"]
@@ -82,12 +82,42 @@ const HomeParents = ({ match }) => {
         setIsInit(false);
     }
 
-    const [sectionVisibility, setSectionVisibility] = useState([]);
 
     const getPersonalDetails = (data) => {
         setPersonalDetails(data)
         console.log("data", data)
     };
+
+    //////////// Share section update /////////////////////////////
+    // get a list of the visible sections
+    const getVisibleSections = (sections, visibilityInfoList) => {
+        const filteredSections = sections.filter((section) => {
+            const foundVisibilityInfo = visibilityInfoList.find(
+                (visibilityInfo) => {
+                    return visibilityInfo.title === section.title;
+                }
+            );
+            if (foundVisibilityInfo != undefined) {
+                return foundVisibilityInfo.isVisible;
+            } else {
+                return null;
+            }
+        });
+        return filteredSections;
+    };
+
+    // set the updates questionnaire sections.
+    const updateSections = (questionnaire, sectionVisibility) => {
+        if (sectionVisibility != undefined) {
+            questionnaire.sections = getVisibleSections(
+                questionnaire.sections,
+                sectionVisibility
+            );
+        }
+    };
+
+
+    //////////////////////////////////////////////////////////////
 
     // This is called when the component first mounts.
     useEffect(() => {
@@ -98,11 +128,10 @@ const HomeParents = ({ match }) => {
             // Server call to get the questionnaire.
             setClinicianEmail(response.data.clinicianEmail);
             setReadOnly(response.data.readOnly);
-            setSectionVisibility(response.data.shareSection);
             API.getQuestionnaire(response.data.questionnaireId).then((res) => {
                 // Define initial values for the Questionnaire
                 if (res.statusCode === 200 ){
-
+                    updateSections(res.data, response.data.shareSection);
                     let tempResponse = [];
                     res.data.sections.forEach((section, sectionIndex) => {
                         tempResponse[sectionIndex] = [];
@@ -280,7 +309,6 @@ const HomeParents = ({ match }) => {
                         submitQuestionnaire={submitQuestionnaire}
                         questionnaireData={questionnaireData}
                         handleQuestionnaireChange={handleQuestionnaireChange}
-                        sectionVisibility={sectionVisibility}
                     />
                 </div>
             </div>
