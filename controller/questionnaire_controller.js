@@ -172,7 +172,6 @@ const addEmptyQuestionnaire = function (req, res) {
 };
 
 // add a standardised questionnaire
-
 const addStandardisedQuestionnaire = (req, res) => {
     const uuid = uuidv1();
 
@@ -238,7 +237,7 @@ const editQuestionnaire = function (req, res) {
     Clinician.findOne({ clinicianId: userEmail }, validateAndUpdate);
 };
 
-// edit a questionnaire
+// edit a standardised questionnaire
 const editStandardQuestionnaire = function (req, res) {
     const questionnaireId = req.body.questionnaire.questionnaireId;
     const editedQuestionnaire = req.body.questionnaire;
