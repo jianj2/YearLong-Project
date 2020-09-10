@@ -188,8 +188,7 @@ const HomeParents = ({ match }) => {
         setWizardStep(0);
     };
     // Method called to go to the instructions page in the wizard.
-    const submitDetails = (data) => {
-        setPersonalDetails(data);
+    const submitDetails = () => {
         nextStep();
     };
     // Method called when we submit the questionnaire.
@@ -280,6 +279,7 @@ const HomeParents = ({ match }) => {
                         clinicianAccess={false} 
                         defaultValue={personalDetails}
                         getPersonalDetails={getPersonalDetails}
+                        isSSQ_Ch={questionnaire.isSSQ_Ch}
                     />
                 </div>
             </div>
