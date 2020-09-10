@@ -151,6 +151,71 @@ export const editQuestionnaire = async (questionnaire) => {
     }
 }
 
+//COPY questionnaire
+export const copyQuestionnaire = async (questionnaire, clinicianId) => {
+    const url = api + "/questionnaire/copy";
+    const headers = {
+        ...header,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+    };
+
+    const data = {
+        clinicianId: clinicianId,
+        copyToCustomisedQuestionnaire: true,   
+        questionnaire
+    };
+
+
+    try {
+
+        let response = await fetch(url, {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(data),
+        });
+        let json = await response.json();
+        console.log(json)
+
+    } catch (e) {
+        console.error(
+            "An error has occurred while saving the edited questionnaire",
+            e
+        );
+    }
+}
+
+//admin COPY questionnaire
+export const adminCopyQuestionnaire = async (questionnaire) => {
+    const url = api + "/questionnaire/copy";
+    const headers = {
+        ...header,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+    };
+
+    const data = {
+        copyToCustomisedQuestionnaire: true,   
+        questionnaire
+    };
+
+
+    try {
+        let response = await fetch(url, {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(data),
+        });
+        let json = await response.json();
+        console.log(json)
+
+    } catch (e) {
+        console.error(
+            "An error has occurred while saving the edited questionnaire",
+            e
+        );
+    }
+}
 
 // get specific questionnaire
 // TODO: get CQid and entire edited questionnaire from UI

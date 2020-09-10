@@ -18,7 +18,6 @@ import QuestionnaireList from "../QuestionnaireList";
 import "../../styles/questionnaireList.css";
 
 // utils
-
 import * as API from "../../utils/api";
 
 // handles rendering of SSQInstructionsContainer in the Admin Page
@@ -35,6 +34,11 @@ const AdminManageQuestionnaires = () => {
     const editQuestionnaire = (questionnaireID) => {
         const edit_url = "/admin/" + questionnaireID + "/edit";
         window.location.href = edit_url;
+    };
+
+    const copyQuestionnaire = (questionnaire) => {
+        API.adminCopyQuestionnaire(questionnaire);
+        window.location.reload(false);
     };
 
     useEffect(()=>{
@@ -78,6 +82,7 @@ const AdminManageQuestionnaires = () => {
                         onClickQuestion={viewQuestionnaire}
                         canEdit={true}
                         onClickEdit={editQuestionnaire}
+                        onClickCopy = {copyQuestionnaire}
                     />
                 </div>
             }

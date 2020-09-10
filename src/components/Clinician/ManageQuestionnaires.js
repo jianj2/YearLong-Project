@@ -104,6 +104,13 @@ const ManageQuestionnaires = (props) => {
         window.location.href = edit_url;
     };
 
+    // Function called when Copy is clicked on the QuestionnaireList
+    const copyQuestionnaire = (questionnaire) => {
+        console.log(questionnaire);
+        API.copyQuestionnaire(questionnaire, user.name)
+        window.location.reload(false);
+    };
+
     const viewQuestionnaire = (questionnaireID) =>{
         const view_url = "/standard/" + questionnaireID + "/view";
         window.location.href = view_url;
@@ -360,6 +367,7 @@ const ManageQuestionnaires = (props) => {
                 onClickQuestion={viewQuestionnaire}
                 canEdit={false}
                 onClickEdit={editQuestionnaire}
+                onClickCopy = {copyQuestionnaire}
                 canDelete={false}
                 onClickDelete={deleteQuestionnaire}
                 canShare={false}
@@ -382,6 +390,7 @@ const ManageQuestionnaires = (props) => {
                 onClickQuestion={viewQuestionnaire}
                 canEdit={true}
                 onClickEdit={editQuestionnaire}
+                onClickCopy = {copyQuestionnaire}
                 canDelete={true}
                 onClickDelete={deleteQuestionnaire}
                 canShare={false}
