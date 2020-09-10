@@ -245,7 +245,7 @@ export const adminCopyQuestionnaire = async (questionnaire) => {
     };
 
     const data = {
-        copyToCustomisedQuestionnaire: true,   
+        copyToCustomisedQuestionnaire: false,   
         questionnaire
     };
 
@@ -267,7 +267,6 @@ export const adminCopyQuestionnaire = async (questionnaire) => {
     }
 }
 
-};
 
 // get specific questionnaire
 
