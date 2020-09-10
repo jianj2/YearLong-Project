@@ -266,30 +266,55 @@ const editQuestionnaireQuestion = function (req, res) {
 
 // Delete questionnaire
 const deleteQuestionnaire = function (req, res) {
-    let questionnaireID = req.body.CQid;
-    // console.log(result)
-    Questionnaire.deleteOne({ questionnaireId: questionnaireID }, function (
-        err,
-        result
-    ) {
-        console.log("deleted customised questionnaire: " + questionnaireID);
+    let questionnaireId = req.body.CQid;
+    const userEmail = getUserEmail(req);
+    const validateAndDelete = (err, clinician) => {
         if (!err) {
-            res.send(JSON.stringify("successfully deleted"));
+            const questionnaireIds = clinician.questionnaires;
+            if (questionnaireIds.includes(questionnaireId)) {
+                deleteQuestionnaire(questionnaireId);
+            } else {
+                res.send(
+                    JSON.stringify(
+                        "The edited questionnaire does not belong to the clinician."
+                    )
+                );
+            }
         } else {
             res.send(JSON.stringify(err));
         }
-    });
+    };
+    
+    const deleteQuestionnaire = (questionnaireId) =>{
+        Questionnaire.deleteOne({ questionnaireId }, function (
+            err,
+            result
+        ) {
+            console.log("deleted customised questionnaire: " + questionnaireId);
+            if (!err) {
+                let clinicianId = req.body.clinicianId;
+                detachQuestionnaireFromClinician(questionnaireId, clinicianId);
+                res.send(JSON.stringify("successfully deleted"));
+            } else {
+                res.send(JSON.stringify(err));
+            }
+        });
+    }
 
-    // update specific clinician questionnaire
-    let clinicianId = req.body.clinicianId;
-    console.log(clinicianId);
+    const detachQuestionnaireFromClinician = (questionnaireId, clinicianId) =>{
     Clinician.updateOne(
-        { clinicianId: clinicianId },
-        { $pull: { questionnaires: questionnaireID } },
+        { clinicianId},
+        { $pull: { questionnaires: questionnaireId } },
         (err, raw) => {
             return;
         }
     );
+    }
+
+    Clinician.findOne({ clinicianId: userEmail }, validateAndDelete);
+   
+
+   
 };
 
 //Delete standardised questionnaire
