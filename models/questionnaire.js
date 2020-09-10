@@ -16,13 +16,26 @@ const questionSchema = mongoose.Schema({
     isMCQ: Boolean,
     MCQOptions: [String],
     rangeOptions: [String]
-});
+}, );
 
+questionSchema.set('toJSON', {
+    virtuals: true,
+    transform: function(doc, ret) {
+        delete ret._id;
+    }
+})
 
 const scenarioSchema = mongoose.Schema({
     description: {type: String, required:true} ,
     questions: [questionSchema]
 
+})
+
+scenarioSchema.set('toJSON', {
+    virtuals: true,
+    transform: function(doc, ret) {
+        delete ret._id;
+    }
 })
 
 const sectionSchema = mongoose.Schema({
@@ -31,7 +44,12 @@ const sectionSchema = mongoose.Schema({
     scenarios: [scenarioSchema]
 });
 
-
+sectionSchema.set('toJSON', {
+    virtuals: true,
+    transform: function(doc, ret) {
+        delete ret._id;
+    }
+})
 
 const questionnaireSchema = mongoose.Schema({
     questionnaireId: { type: String, required:true, lowercase:true, unique:true, trim:true},
@@ -41,5 +59,12 @@ const questionnaireSchema = mongoose.Schema({
     isStandard: Boolean,
     isSSQ_Ch: {type: Boolean, required: false},
 });
+
+questionnaireSchema.set('toJSON', {
+    virtuals: true,
+    transform: function(doc, ret) {
+        delete ret._id;
+    }
+})
 
 module.exports = mongoose.model('questionnaire', questionnaireSchema);
