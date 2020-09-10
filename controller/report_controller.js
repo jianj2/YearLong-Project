@@ -56,7 +56,7 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
     let index = 0
     resultToPrint.sections.forEach((section, sectionIndex) => {
 
-        if (sharedSection[sectionIndex].isVisible) {
+        if (sharedSection === null || sharedSection[sectionIndex].isVisible) {
             if (spacing > docHeight) {
                 doc.addPage();
                 spacing = 80;
@@ -101,11 +101,11 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
                                 .text(questionAnswer.value, 280, spacing)
 
                         } else {
-                                doc.font('Helvetica-Bold')
-                                    .text("Answer: ", 80, spacing)
+                            doc.font('Helvetica-Bold')
+                                .text("Answer: ", 80, spacing)
 
-                                doc.font('Helvetica')
-                                    .text(questionAnswer, 280, spacing);
+                            doc.font('Helvetica')
+                                .text(questionAnswer, 280, spacing);
                         }
 
                         spacing = spacing + 35;
@@ -171,20 +171,20 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
 const getQuestionnaireResponseJoin = function (questionnaire, questionnaireData, sectionScores, sharedSections) {
     // MAKE A COPY OF THE ORIGINAL QUESTIONNAIRE
     let result = questionnaire;
-
+    let realSectionIndex = 0
     questionnaire.sections.forEach((section, sectionIndex) => {
         // ADD SCORE TO THE SECTION
         result.sections[sectionIndex].score = sectionScores[sectionIndex]
 
-        if (sharedSections[sectionIndex].isVisible) {
+        if ( sharedSections === null || sharedSections[sectionIndex].isVisible ) {
             section.scenarios.forEach((scenario, scenarioIndex) => {
                 scenario.questions.forEach((question, questionIndex) => {
                     // ADD RESPONSE TO THE QUESTION
                     result.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].response =
-                        questionnaireData[sectionIndex][scenarioIndex][questionIndex].value;
-
+                        questionnaireData[realSectionIndex][scenarioIndex][questionIndex].value;
                 })
             });
+            realSectionIndex++;
         }
     });
     return result
@@ -281,7 +281,6 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
                     .text(personalDetails.leftDeviceType, 100, 240)
                     .text(personalDetails.completedBy, 300, 190);
 
-
                 // prints out title for questionnaire response
                 doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire Response", 80, 310);
                 doc.font('Helvetica').fontSize(12).text("Questionnaire average: " + scores.averageScore, 280, 310);
@@ -294,7 +293,7 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
                 // THIS LINE PRINTS THE QUESTIONNAIRE RESULT IN THE DOC FILE
                 Share.findOne({shareId}, function (err, share
                 ) {
-                    let sharedSections = new Array();
+                    let sharedSections = null;
                     if (!err && share != null) {
                         sharedSections = share.shareSection
 
