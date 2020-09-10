@@ -11,7 +11,7 @@
 
 const mongoose = require("mongoose");
 const { v1: uuidv1 } = require("uuid");
-const { getUserEmail } = require("../utils/jwtUtils");
+const { extractUserEmail } = require("../utils/jwtUtils");
 
 const Questionnaire = mongoose.model("questionnaire");
 const Clinician = mongoose.model("clinician");
@@ -63,7 +63,7 @@ const getQuestionnaireAsync = function (req, res) {
 
 const getClinicianQuestionnaires = function (req, res) {
     let clinicianId = req.query.clinicianId;
-    if (getUserEmail(req) === clinicianId) {
+    if (extractUserEmail(req) === clinicianId) {
         Clinician.findOne({ clinicianId: clinicianId }, async function (
             err,
             clinician
@@ -88,7 +88,7 @@ const getClinicianQuestionnaires = function (req, res) {
 
 // add an empty questionnaire
 const addEmptyQuestionnaire = function (req, res) {
-    const userEmail = getUserEmail(req);
+    const userEmail = extractUserEmail(req);
     const clinicianId = req.body.clinicianId;
     
     const uuid = uuidv1();
@@ -202,7 +202,7 @@ const addStandardisedQuestionnaire = (req, res) => {
 
 // edit a questionnaire
 const editQuestionnaire = function (req, res) {
-    const userEmail = getUserEmail(req);
+    const userEmail = extractUserEmail(req);
     const questionnaireId = req.body.questionnaire.questionnaireId;
     const editedQuestionnaire = req.body.questionnaire;
     const validateAndUpdate = (err, clinician) => {
@@ -285,7 +285,7 @@ const editQuestionnaireQuestion = function (req, res) {
 // Delete questionnaire
 const deleteQuestionnaire = function (req, res) {
     let questionnaireId = req.body.CQid;
-    const userEmail = getUserEmail(req);
+    const userEmail = extractUserEmail(req);
     const validateAndDelete = (err, clinician) => {
         if (!err) {
             const questionnaireIds = clinician.questionnaires;
