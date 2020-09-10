@@ -11,6 +11,7 @@
 
 const mongoose = require("mongoose");
 const { v1: uuidv1 } = require("uuid");
+const {getUserEmail} = require("../utils/jwtUtils");
 
 const Questionnaire = mongoose.model("questionnaire");
 const Clinician = mongoose.model("clinician");
@@ -63,22 +64,25 @@ const getQuestionnaireAsync = function (req, res) {
 
 const getClinicianQuestionnaires = function (req, res) {
     let clinicianId = req.query.clinicianId;
-
-    Clinician.findOne({ clinicianId: clinicianId }, async function (
-        err,
-        clinician
-    ) {
-        if (!err) {
-            const questionnaireIds = clinician.questionnaires;
-            const questionnaires = await Questionnaire.find()
-                .where("questionnaireId")
-                .in(questionnaireIds)
-                .exec();
-            res.send(questionnaires);
-        } else {
-            res.send(JSON.stringify(err));
-        }
-    });
+   if(getUserEmail(req) === clinicianId){
+        Clinician.findOne({ clinicianId: clinicianId }, async function (
+            err,
+            clinician
+        ) {
+            if (!err) {
+                const questionnaireIds = clinician.questionnaires;
+                const questionnaires = await Questionnaire.find()
+                    .where("questionnaireId")
+                    .in(questionnaireIds)
+                    .exec();
+                res.send(questionnaires);
+            } else {
+                res.send(JSON.stringify(err));
+            }
+        });
+    }else{
+        res.send(JSON.stringify("You do not have access to the clinician account"));
+    }
 };
 
 // add an empty questionnaire
