@@ -55,14 +55,16 @@ export const sendQuestionnaireData = (data, shareId) =>
 // ================================================
 // Clinician server calls
 // ================================================
-export const completeQuestionnaire = (data) =>
+export const completeQuestionnaire = (token, data) =>{
+    const headers = {
+        ... header,
+        ...createHeader(token)
+    };
     fetch(`${api}/clinician/complete-questionnaire/`, {
         method: "POST",
-        headers: {
-            ...header
-        },
+        headers: headers,
         body: JSON.stringify(data),
-    }).then((res) => res.json());
+    }).then((res) => res.json());}
 
 // ================================================
 // Managing Questionnaire server calls
@@ -275,11 +277,12 @@ export const getShareDetails = (shareId) =>
     }).then((res) => res.json());
 
 // Used to share a questionnaire.
-export const shareQuestionnaire = (data) =>
+export const shareQuestionnaire = (token, data) =>
     fetch(`${api}/clinician/share/`, {
         method: "POST",
         headers: {
-            ...header,
+            ... header,
+            ...createHeader(token)
         },
         body: JSON.stringify(data),
     }).then((res) => res.json());
