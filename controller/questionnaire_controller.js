@@ -15,6 +15,7 @@ const { v1: uuidv1 } = require("uuid");
 const Questionnaire = mongoose.model("questionnaire");
 const Clinician = mongoose.model("clinician");
 
+
 // Get all questionnaires
 const getAllQuestionnaire = function (req, res) {
     Questionnaire.find(function (err, allQuestionnaires) {
@@ -197,6 +198,25 @@ const editQuestionnaire = function (req, res) {
     );
 };
 
+// edit a questionnaire
+const editStandardQuestionnaire = function (req, res) {
+    const questionnaireId = req.body.questionnaire.questionnaireId;
+    const editedQuestionnaire = req.body.questionnaire;
+    
+    Questionnaire.replaceOne(
+        { questionnaireId: questionnaireId },
+        editedQuestionnaire,
+        (err, raw) => {
+            if (!err) {
+                res.send(JSON.stringify("successfully edited"));
+                // console.log('here')
+            } else {
+                res.send(JSON.stringify(err));
+            }
+        }
+    );
+};
+
 // Maybe used later for making incremental changes in db.
 const editQuestionnaireQuestion = function (req, res) {
     console.log("editing questionnaire");
@@ -291,6 +311,7 @@ module.exports.addStandardisedQuestionnaire = addStandardisedQuestionnaire;
 module.exports.deleteQuestionnaire = deleteQuestionnaire;
 module.exports.deleteStandardisedQuestionnaire = deleteStandardisedQuestionnaire;
 module.exports.editQuestionnaire = editQuestionnaire;
+module.exports.editStandardQuestionnaire = editStandardQuestionnaire;
 module.exports.getClinicianQuestionnaires = getClinicianQuestionnaires;
 module.exports.getQuestionnaireAsync = getQuestionnaireAsync;
 module.exports.getStandardisedQuestionnaires = getStandardisedQuestionnaires;
