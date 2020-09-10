@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ShareQuestionnaire = (props) => {
     const classes = useStyles();
-    const { isAuthenticated, loginWithRedirect, user } = useAuth0();
+    const { user, token } = useAuth0();
     // console.log("user.name", user.name); //TODO: change that when we have actual clincianId
 
     const [customisedQuestionnaires, setCustomisedQuestionnaires] = useState(
@@ -71,21 +71,11 @@ const ShareQuestionnaire = (props) => {
     useEffect(() => {
         setLoading(true);
         async function retrieveCustomisedQuestionnaires() {
-            const customisedQuestionnaires = await API.getClinicianQuestionnaires(
+           
+            const customisedQuestionnaires = await API.getClinicianQuestionnaires(token,
                 user.name
             );
             const today = formatDate();
-            const customisedQuestionnairesElement = customisedQuestionnaires.map(
-                (q) => {
-                    return {
-                        QID: q.questionnaireId,
-                        Qname: q.title,
-                        Qdescription: q.description,
-                        date: today,
-                    };
-                }
-            );
-            // setQuestionnaires({ customized_Questionnaire: customisedQuestionnairesElement });
             setCustomisedQuestionnaires(customisedQuestionnaires);
             setLoading(false);
         }
@@ -95,9 +85,11 @@ const ShareQuestionnaire = (props) => {
                 setStandardisedQuestionnaires(response.data);
             }
         }
-        retrieveStandardisedQuestionnaires();
-        retrieveCustomisedQuestionnaires();
-    }, [user]);
+        if(user && token !== ""){
+            retrieveStandardisedQuestionnaires();
+            retrieveCustomisedQuestionnaires();
+        }
+    }, [user, token]);
 
     // Function called when Share is clicked on the QuestionnaireList
     const shareQuestionnaire = (questionnaireId, sections) => {

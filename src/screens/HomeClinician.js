@@ -23,22 +23,41 @@ import Loading from "../components/Loading";
 import "../styles/clinician.css";
 import "../styles/main.css";
 import SideBar from "../components/Clinician/Sidebar";
-
 import ContentPanel from "../components/Clinician/ContentPanel";
-
 
 // ---------------------------------------------------------------
 // This function defines the Clinician Home screen.
 // ---------------------------------------------------------------
 const HomeClinician = (props) => {
-    const { loading, isAuthenticated, loginWithRedirect, user } = useAuth0();
-
+    const { loading, isAuthenticated, loginWithRedirect, user, getTokenSilently, setToken} = useAuth0();
+    
+    const domain = "http://localhost:3001";
+    
+     
+    
+       
+    
     useEffect(() => {
-        if (loading || isAuthenticated) {
+        if (loading ) {
+            return;
+        }
+        if (!loading && isAuthenticated){
+            const setAuth0Token = async ()=>{
+                try {
+                const accessToken = await getTokenSilently({
+                    audience: `${domain}/clinician`,
+                    scope: "read:current_user",
+                  });
+                setToken(accessToken);
+                
+                }catch(e){
+                    console.log("error:", e);
+                }
+            }
+            setAuth0Token();
             return;
         }
 
-        console.log("The link is accessed", process.env.REDIRECT_LINK)
 
         const fn = async () => {
 
@@ -52,18 +71,27 @@ const HomeClinician = (props) => {
 
                 //appState: { targetUrl: window.location.pathname},
             });
+            
+  
         };
 
         fn();
-    }, [loading, isAuthenticated, loginWithRedirect]);
+    }, [isAuthenticated, loading, user, loginWithRedirect]);
 
     // const { loading, user } = useAuth0();
 
     if (loading || !user) {
         return <Loading />;
+    }else{
+        
     }
 
+
+  
+    
+
     return (
+     
         <div className="HomeClinician">
             <SideBar />
 
