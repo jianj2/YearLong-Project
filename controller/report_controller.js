@@ -174,9 +174,10 @@ const getQuestionnaireResponseJoin = function (questionnaire, questionnaireData,
     let realSectionIndex = 0
     questionnaire.sections.forEach((section, sectionIndex) => {
         // ADD SCORE TO THE SECTION
-        result.sections[sectionIndex].score = sectionScores[sectionIndex]
 
-        if ( sharedSections === null || sharedSections[sectionIndex].isVisible ) {
+        if (sharedSections === null || sharedSections[sectionIndex].isVisible) {
+            result.sections[sectionIndex].score = sectionScores[realSectionIndex]
+
             section.scenarios.forEach((scenario, scenarioIndex) => {
                 scenario.questions.forEach((question, questionIndex) => {
                     // ADD RESPONSE TO THE QUESTION
@@ -207,6 +208,43 @@ const sortByImportance = function (questionnaire) {
 
 }
 
+const calculateScore = function (questionnaireData, calculateAverage, section_score) {
+    let total_score = 0;
+    let total_q = 0;
+    let section_num = 0;
+
+    for (let i = 0; i < questionnaireData.length; i++) {
+        let section_q = 0;
+        let score = 0;
+        for (let j = 0; j < questionnaireData[i].length; j++) {
+            for (let z = 0; z < questionnaireData[i][j].length; z++) {
+                if (!isNaN(questionnaireData[i][j][z].value)) {
+                    if (questionnaireData[i][j][z].value !== '') {
+                        score += questionnaireData[i][j][z].value;
+                    }
+                    section_q += 1;
+                }
+            }
+        }
+
+        if (score === 0) {
+            section_score[section_num] = "N/A";
+        } else {
+            section_score[section_num] = Math.round((score / section_q) * 100) / 100;
+        }
+
+        total_score += score;
+        section_num += 1;
+        total_q += section_q;
+    }
+
+    if (calculateAverage) {
+        return Math.round((total_score / total_q) * 100) / 100;
+    } else {
+        return section_score
+    }
+}
+
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used generate the pdf report.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -216,42 +254,17 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
 
         Questionnaire.findOne({questionnaireId}, function (err, questionnaire) {
             if (!err) {
-                var total_score = 0;
-                var section_score = new Array();
-                var total_q = 0;
-                var section_num = 0;
+                let section_score = [];
 
-                for (var i = 0; i < questionnaireData.length; i++) {
-                    var section_q = 0;
-                    var score = 0;
-                    for (var j = 0; j < questionnaireData[i].length; j++) {
-                        for (var z = 0; z < questionnaireData[i][j].length; z++) {
-                            if (!isNaN(questionnaireData[i][j][z].value)) {
-                                if (questionnaireData[i][j][z].value != '') {
-                                    score += questionnaireData[i][j][z].value;
-                                }
-                                section_q += 1;
-                            }
-                        }
-                    }
-                    if (score === 0) {
-                        section_score[section_num] = "N/A";
-                    } else {
-                        section_score[section_num] = Math.round((score / section_q) * 100) / 100;
-                    }
-                    total_score += score;
-                    section_num += 1;
-                    total_q += section_q;
-                }
 
-                let average_score = Math.round((total_score / total_q) * 100) / 100;
+                section_score = calculateScore(questionnaire, false, section_score)
+                let average_score = calculateScore(questionnaireData, true, section_score);
 
-                // object created to pass through.
+                // object created to pass through
                 let scores = {
                     averageScore: average_score,
                     sectionScores: section_score
                 }
-
 
                 //creating pdf document
                 const doc = new PDFDocument();
