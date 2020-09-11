@@ -160,7 +160,7 @@ const DoTheTestContainer = () => {
             questionnaireId: selectedQuestionnaire.questionnaireId,
         };
 
-        completeQuestionnaire(data).then( res => {
+        completeQuestionnaire(token, data).then( res => {
             console.log("complete question", res)
             setWizardStep(3);
             setLoading(false);

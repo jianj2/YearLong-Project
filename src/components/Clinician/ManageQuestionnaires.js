@@ -190,7 +190,7 @@ const ManageQuestionnaires = (props) => {
             shareSection,
         });
 
-        API.shareQuestionnaire(shareModalData).then( res => {
+        API.shareQuestionnaire(token, shareModalData).then( res => {
             console.log("printing the res: ", res);
             setLoading(false); 
             closeModal();
