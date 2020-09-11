@@ -30,28 +30,35 @@ import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 // Import styles.
 // import "../styles/parents.css";
 
-export default function FormParentDetails({ submitDetails, clinicianAccess, defaultValue, getPersonalDetails }) {
+export default function FormParentDetails({ submitDetails, clinicianAccess, defaultValue, getPersonalDetails, isSSQ_Ch }) {
     const { register, handleSubmit, errors } = useForm();
 
     const [date, setDate] = useState(defaultValue.date);
     const [name, setName] = useState(defaultValue.name);
     const [rightDeviceType, setRightDeviceType] = useState(defaultValue.rightDeviceType);
     const [leftDeviceType, setLeftDeviceType] = useState(defaultValue.leftDeviceType);
-    const [completedBy, setCompletedBy] = useState(defaultValue.completedBy);
+    // const [completedBy, setCompletedBy] = useState(defaultValue.completedBy);
 
 
     useEffect(() => {
+
+        let completedBy
+        if (clinicianAccess){
+            completedBy = "clinician"
+        }else{
+            completedBy = isSSQ_Ch ? "Child" : "Parent"
+        }
 
         const personalData = {
             name,
             date,
             rightDeviceType,
             leftDeviceType,
-            completedBy : clinicianAccess ? "clinician" : completedBy
+            completedBy
         }
 
         getPersonalDetails(personalData);
-    }, [name,date,rightDeviceType,leftDeviceType,completedBy])
+    }, [name,date,rightDeviceType,leftDeviceType])
 
 
 
