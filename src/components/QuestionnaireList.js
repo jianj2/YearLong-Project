@@ -162,16 +162,19 @@ const QuestionnaireList = ({
                                 E D I T
                             </button>
                         ) : null}
-
-                        <button
+                        
+                        {canDelete? (
+                            <button
                             className="button"
                             onClick={(event) => {
                                 event.stopPropagation();
                                 onClickCopy(questionnaire);
                             }}
-                        >
-                            C O P Y
-                        </button>
+                            >
+                                C O P Y
+                            </button>
+                        ) : null}
+                        
 
                         {canDelete ? (
                             <button
