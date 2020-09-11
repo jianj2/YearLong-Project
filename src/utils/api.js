@@ -344,7 +344,7 @@ export const getShareDetails = (shareId) =>
     }).then((res) => res.json());
 
 // Used to share a questionnaire.
-export const shareQuestionnaire = (token, data) =>
+export const shareQuestionnaire = async (token, data) =>
     fetch(`${api}/clinician/share/`, {
         method: "POST",
         headers: {
