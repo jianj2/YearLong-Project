@@ -11,10 +11,10 @@
 
 const mongoose = require("mongoose");
 const { v1: uuidv1 } = require("uuid");
+const { extractUserEmail } = require("../utils/jwtUtils");
 
 const Questionnaire = mongoose.model("questionnaire");
 const Clinician = mongoose.model("clinician");
-
 
 // Get all questionnaires
 const getAllQuestionnaire = function (req, res) {
@@ -63,28 +63,35 @@ const getQuestionnaireAsync = function (req, res) {
 
 const getClinicianQuestionnaires = function (req, res) {
     let clinicianId = req.query.clinicianId;
-
-    Clinician.findOne({ clinicianId: clinicianId }, async function (
-        err,
-        clinician
-    ) {
-        if (!err) {
-            const questionnaireIds = clinician.questionnaires;
-            const questionnaires = await Questionnaire.find()
-                .where("questionnaireId")
-                .in(questionnaireIds)
-                .exec();
-            res.send(questionnaires);
-        } else {
-            res.send(JSON.stringify(err));
-        }
-    });
+    if (extractUserEmail(req) === clinicianId) {
+        Clinician.findOne({ clinicianId: clinicianId }, async function (
+            err,
+            clinician
+        ) {
+            if (!err) {
+                const questionnaireIds = clinician.questionnaires;
+                const questionnaires = await Questionnaire.find()
+                    .where("questionnaireId")
+                    .in(questionnaireIds)
+                    .exec();
+                res.send(questionnaires);
+            } else {
+                res.send(JSON.stringify(err));
+            }
+        });
+    } else {
+        res.send(
+            JSON.stringify("You do not have access to the clinician account")
+        );
+    }
 };
 
 // add an empty questionnaire
 const addEmptyQuestionnaire = function (req, res) {
+    const userEmail = extractUserEmail(req);
+    const clinicianId = req.body.clinicianId;
+    
     const uuid = uuidv1();
-
     let newQuestionnaire = new Questionnaire({
         questionnaireId: uuid,
         title: "New Questionnaire",
@@ -122,34 +129,49 @@ const addEmptyQuestionnaire = function (req, res) {
         isStandard: req.body.isStandard,
     });
 
-    newQuestionnaire.save(function (err, createdQuestionnaire) {
-        console.log(
-            "added customised questionnaire:",
-            uuid,
-            JSON.stringify(req.body)
-        );
 
-        res.send({
-            code: 200,
-            message: "successfully add new questionnaire!",
-            uuid: uuid,
+    if(userEmail === clinicianId){
+        newQuestionnaire.save(function (err, createdQuestionnaire) {
+            if(!err){
+                attachQuestionnaireToClinician(
+                    uuid, clinicianId
+                );
+            }else{
+                res.send(JSON.stringify("Customised Questionnaire cannot be created. "));
+            }
         });
-    });
+    }
 
     // update specific clinician questionnaire
-    let clinicianId = req.body.clinicianId;
+    const attachQuestionnaireToClinician = (uuid, clinicianId) => {
+        Clinician.updateOne(
+            { clinicianId: clinicianId },
+            { $push: { questionnaires: uuid } },
+            (err, raw) => {
+                if(!err){
+                    console.log(
+                        "added customised questionnaire:",
+                        uuid,
+                        JSON.stringify(req.body)
+                    );
+        
+                    res.send({
+                        code: 200,
+                        message: "successfully add new questionnaire!",
+                        uuid: uuid,
+                    });
+                }else{
+                    res.send(JSON.stringify("Customised Questionnaire cannot be created."));
+                }
+                
+            }
+        );
+    }
 
-    Clinician.updateOne(
-        { clinicianId: clinicianId },
-        { $push: { questionnaires: uuid } },
-        (err, raw) => {
-            return;
-        }
-    );
+    
 };
 
 // add a standardised questionnaire
-
 const addStandardisedQuestionnaire = (req, res) => {
     const uuid = uuidv1();
 
@@ -167,10 +189,7 @@ const addStandardisedQuestionnaire = (req, res) => {
     });
 
     newQuestionnaire.save(function (err, createdQuestionnaire) {
-        console.log(
-            "added standardised questionnaire:",
-            uuid,
-        );
+        console.log("added standardised questionnaire:", uuid);
 
         res.send({
             code: 200,
@@ -182,34 +201,53 @@ const addStandardisedQuestionnaire = (req, res) => {
 
 // edit a questionnaire
 const editQuestionnaire = function (req, res) {
+    const userEmail = extractUserEmail(req);
     const questionnaireId = req.body.questionnaire.questionnaireId;
     const editedQuestionnaire = req.body.questionnaire;
-    Questionnaire.replaceOne(
-        { questionnaireId: questionnaireId },
-        editedQuestionnaire,
-        (err, raw) => {
-            if (!err) {
-                res.send(JSON.stringify("successfully edited"));
-                // console.log('here')
+    const validateAndUpdate = (err, clinician) => {
+        if (!err) {
+            const questionnaireIds = clinician.questionnaires;
+            if (questionnaireIds.includes(questionnaireId)) {
+                updateQuestionnaire(questionnaireId, editedQuestionnaire);
             } else {
-                res.send(JSON.stringify(err));
+                res.send(
+                    JSON.stringify(
+                        "The edited questionnaire does not belong to the clinician."
+                    )
+                );
             }
+        } else {
+            res.send(JSON.stringify(err));
         }
-    );
+    };
+    const updateQuestionnaire = (questionnaireId, editedQuestionnaire) => {
+        Questionnaire.replaceOne(
+            { questionnaireId: questionnaireId },
+            editedQuestionnaire,
+            (err, raw) => {
+                if (!err) {
+                    res.send(JSON.stringify("successfully edited"));
+                } else {
+                    res.send(JSON.stringify(err));
+                }
+            }
+        );
+    };
+
+    Clinician.findOne({ clinicianId: userEmail }, validateAndUpdate);
 };
 
-// edit a questionnaire
+// edit a standardised questionnaire
 const editStandardQuestionnaire = function (req, res) {
     const questionnaireId = req.body.questionnaire.questionnaireId;
     const editedQuestionnaire = req.body.questionnaire;
-    
+
     Questionnaire.replaceOne(
         { questionnaireId: questionnaireId },
         editedQuestionnaire,
         (err, raw) => {
             if (!err) {
                 res.send(JSON.stringify("successfully edited"));
-                // console.log('here')
             } else {
                 res.send(JSON.stringify(err));
             }
@@ -245,30 +283,55 @@ const editQuestionnaireQuestion = function (req, res) {
 
 // Delete questionnaire
 const deleteQuestionnaire = function (req, res) {
-    let questionnaireID = req.body.CQid;
-    // console.log(result)
-    Questionnaire.deleteOne({ questionnaireId: questionnaireID }, function (
-        err,
-        result
-    ) {
-        console.log("deleted customised questionnaire: " + questionnaireID);
+    let questionnaireId = req.body.CQid;
+    const userEmail = extractUserEmail(req);
+    const validateAndDelete = (err, clinician) => {
         if (!err) {
-            res.send(JSON.stringify("successfully deleted"));
+            const questionnaireIds = clinician.questionnaires;
+            if (questionnaireIds.includes(questionnaireId)) {
+                deleteQuestionnaireFromDatabase(questionnaireId);
+            } else {
+                res.send(
+                    JSON.stringify(
+                        "The edited questionnaire does not belong to the clinician."
+                    )
+                );
+            }
         } else {
             res.send(JSON.stringify(err));
         }
-    });
+    };
+    
+    const deleteQuestionnaireFromDatabase = (questionnaireId) =>{
+        Questionnaire.deleteOne({ questionnaireId }, function (
+            err,
+            result
+        ) {
+            console.log("deleted customised questionnaire: " + questionnaireId);
+            if (!err) {
+                let clinicianId = req.body.clinicianId;
+                detachQuestionnaireFromClinician(questionnaireId, clinicianId);
+                res.send(JSON.stringify("successfully deleted"));
+            } else {
+                res.send(JSON.stringify(err));
+            }
+        });
+    }
 
-    // update specific clinician questionnaire
-    let clinicianId = req.body.clinicianId;
-    console.log(clinicianId);
+    const detachQuestionnaireFromClinician = (questionnaireId, clinicianId) =>{
     Clinician.updateOne(
-        { clinicianId: clinicianId },
-        { $pull: { questionnaires: questionnaireID } },
+        { clinicianId},
+        { $pull: { questionnaires: questionnaireId } },
         (err, raw) => {
             return;
         }
     );
+    }
+
+    Clinician.findOne({ clinicianId: userEmail }, validateAndDelete);
+   
+
+   
 };
 
 //Delete standardised questionnaire
@@ -281,7 +344,9 @@ const deleteStandardisedQuestionnaire = (req, res) => {
     ) {
         console.log("deleted customised questionnaire: " + questionnaireID);
         if (!err) {
-            let message = JSON.stringify(`successfully deleted standard questionnaire ${questionnaireID}`);
+            let message = JSON.stringify(
+                `successfully deleted standard questionnaire ${questionnaireID}`
+            );
             res.send(message);
         } else {
             res.send(JSON.stringify(err));
