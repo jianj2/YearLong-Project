@@ -201,7 +201,74 @@ export const editStandardQuestionnaire = async (questionnaire) => {
             e
         );
     }
-};
+}
+
+//COPY questionnaire
+export const copyQuestionnaire = async (questionnaire, clinicianId) => {
+    const url = api + "/questionnaire/copy";
+    const headers = {
+        ...header,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+    };
+
+    const data = {
+        clinicianId: clinicianId,
+        copyToCustomisedQuestionnaire: true,   
+        questionnaire
+    };
+
+
+    try {
+
+        let response = await fetch(url, {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(data),
+        });
+        let json = await response.json();
+        console.log(json)
+
+    } catch (e) {
+        console.error(
+            "An error has occurred while saving the edited questionnaire",
+            e
+        );
+    }
+}
+
+//admin COPY questionnaire
+export const adminCopyQuestionnaire = async (questionnaire) => {
+    const url = api + "/questionnaire/copy";
+    const headers = {
+        ...header,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+    };
+
+    const data = {
+        copyToCustomisedQuestionnaire: false,   
+        questionnaire
+    };
+
+
+    try {
+        let response = await fetch(url, {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(data),
+        });
+        let json = await response.json();
+        console.log(json)
+
+    } catch (e) {
+        console.error(
+            "An error has occurred while saving the edited questionnaire",
+            e
+        );
+    }
+}
+
 
 // get specific questionnaire
 

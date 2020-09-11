@@ -20,6 +20,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import "../../styles/questionnaireList.css";
 
 // utils
+import * as API from "../../utils/api";
+
 
 import {
     addStandardQuestionnaire,
@@ -41,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2, 4, 3),
     },
 }));
+
 
 // handles rendering of SSQInstructionsContainer in the Admin Page
 const AdminManageQuestionnaires = () => {
@@ -65,6 +68,12 @@ const AdminManageQuestionnaires = () => {
         const edit_url = "/admin/" + questionnaireID + "/edit";
         window.location.href = edit_url;
     };
+
+    const copyQuestionnaire = (questionnaire) => {
+        API.adminCopyQuestionnaire(questionnaire);
+        window.location.reload(false);
+    };
+
 
     const deleteQuestionnaire = (questionnaireId, title) => {
         setdeleteQuestionnaireData({
@@ -165,6 +174,7 @@ const AdminManageQuestionnaires = () => {
 
     return (
         <div className="admin-manage-questionnaires">
+
             {loading ? <Loading /> : null}
 
             {renderDeleteModal()}
@@ -183,6 +193,7 @@ const AdminManageQuestionnaires = () => {
                     onClickQuestion={viewQuestionnaire}
                     canEdit={true}
                     onClickEdit={editQuestionnaire}
+                    onClickCopy = {copyQuestionnaire}
                     canDelete={true}
                     onClickDelete={deleteQuestionnaire}
                 />
