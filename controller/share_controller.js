@@ -22,6 +22,8 @@ const { sendInvitationEmail, sendResultsEmail } = require("./email_controller");
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const shareQuestionnaire = function (req, res) {
     const userEmail = extractUserEmail(req);
+    const clinicianEmail = req.body.clinicianEmail
+
     if (clinicianEmail === userEmail) {
         // convert to a list of objects
         let visibleSection = [];
