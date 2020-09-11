@@ -369,6 +369,66 @@ const getStandardisedQuestionnaires = function (req, res) {
     });
 };
 
+// // edit a questionnaire
+// const editQuestionnaire = function (req, res) {
+//     const questionnaireId = req.body.questionnaire.questionnaireId;
+//     const editedQuestionnaire = req.body.questionnaire;
+//     Questionnaire.replaceOne(
+//         { questionnaireId: questionnaireId },
+//         editedQuestionnaire,
+//         (err, raw) => {
+//             if (!err) {
+//                 res.send(JSON.stringify("successfully edited"));
+//                 // console.log('here')
+//             } else {
+//                 res.send(JSON.stringify(err));
+//             }
+//         }
+//     );
+// };
+
+//Copy a questionnaire
+const copyQuestionnaire = function (req, res) {
+    const uuid = uuidv1();
+    const copiedQuestionnaire = req.body.questionnaire;
+    const copyToCustomisedQuestionnaire = req.body.copyToCustomisedQuestionnaire;
+
+    let newQuestionnaire = new Questionnaire(
+        {
+            ...copiedQuestionnaire,
+            questionnaireId: uuid,
+            isStandard: ! copyToCustomisedQuestionnaire,
+            title: copiedQuestionnaire.title + " - Copy",
+        }    
+    );
+
+    newQuestionnaire.save(function (err, createdQuestionnaire) {
+        console.log(
+            "added customised questionnaire:",
+            uuid,
+            JSON.stringify(newQuestionnaire)
+        );
+
+        res.send({
+            code: 200,
+            message: "successfully add new questionnaire!",
+            uuid: uuid,
+        });
+    });
+
+    // update specific clinician questionnaire
+    let clinicianId = req.body.clinicianId;
+
+    Clinician.updateOne(
+        { clinicianId: clinicianId },
+        { $push: { questionnaires: uuid } },
+        (err, raw) => {
+            return;
+        }
+    );
+};
+
+module.exports.copyQuestionnaire= copyQuestionnaire;
 module.exports.getAllQuestionnaire = getAllQuestionnaire;
 module.exports.getQuestionnaireSync = getQuestionnaireSync;
 module.exports.addEmptyQuestionnaire = addEmptyQuestionnaire;

@@ -54,6 +54,7 @@ router.post('/addStandard', questionnaire_controller.addStandardisedQuestionnair
 router.post('/edit', checkJwt, questionnaire_controller.editQuestionnaire);
 router.post('/editStandard', questionnaire_controller.editStandardQuestionnaire);
 
+router.post('/copy', questionnaire_controller.copyQuestionnaire);
 //Backdoor
 //router.get('/', questionnaire_controller.getAllQuestionnaire);
 
