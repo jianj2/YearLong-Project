@@ -44,6 +44,14 @@ const getTimeStamp = function () {
     return (year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds);
 }
 
+const addPage = function(doc, spacing, docHeight) {
+    if (spacing > docHeight) {
+        doc.addPage();
+        spacing = 80;
+    }
+    return spacing;
+}
+
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to print the results on the document
@@ -53,14 +61,11 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
     let spacing = 340
     // actual page is 792 but setting it to 700 helps to prevent overflow problems
     let docHeight = 700
-    let index = 0
+
     resultToPrint.sections.forEach((section, sectionIndex) => {
 
         if (sharedSection === null || sharedSection[sectionIndex].isVisible) {
-            if (spacing > docHeight) {
-                doc.addPage();
-                spacing = 80;
-            }
+            spacing = addPage(doc, spacing, docHeight)
             // Writing the title for each scenario.
             doc.font('Helvetica-Bold').fontSize(14).text(section.title, 80, spacing);
             doc.font('Helvetica').fontSize(12).text("Section average: " + section.score, 280, spacing);
@@ -69,10 +74,7 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
 
             section.scenarios.map((scenario, scenarioIndex) => {
                 // Writing the description for each scenario.
-                if (spacing > docHeight) {
-                    doc.addPage();
-                    spacing = 80;
-                }
+                spacing = addPage(doc, spacing, docHeight)
 
                 doc.font('Helvetica-Bold').fontSize(12).text("Scenario: ", 80, spacing);
                 spacing = spacing + 20;
@@ -84,11 +86,7 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
                 spacing = spacing + Math.ceil(doc.heightOfString(scenario.description) / 10) * 10 + 15;
 
                 scenario.questions.map((question) => {
-                    if (spacing > docHeight) {
-                        doc.addPage();
-                        spacing = 80;
-                    }
-
+                    spacing = addPage(doc, spacing, docHeight)
                     let questionAnswer = question.response;
 
                     // If the question is range type then the print out both value and supplementary value.
@@ -109,11 +107,7 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
                         }
 
                         spacing = spacing + 35;
-
-                        if (spacing > docHeight) {
-                            doc.addPage();
-                            spacing = 80;
-                        }
+                        spacing = addPage(doc, spacing, docHeight)
                     }
 
                     // MCQ questions will have the question and answer printed on pdf.
@@ -126,10 +120,7 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
 
                         spacing = spacing + Math.ceil(doc.heightOfString(question.description) / 10) * 10 + 10;
 
-                        if (spacing > docHeight) {
-                            doc.addPage();
-                            spacing = 80;
-                        }
+                        spacing = addPage(doc, spacing, docHeight)
 
                         doc.text("Answer: ", 80, spacing)
                         if (questionAnswer === "" || questionAnswer === undefined) {
@@ -154,11 +145,7 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
                 .lineTo(500, spacing)
                 .stroke();
             spacing = spacing + 20;
-
-            if (spacing > docHeight) {
-                doc.addPage();
-                spacing = 80;
-            }
+            spacing = addPage(doc, spacing, docHeight)
         }
 
     });
@@ -208,6 +195,9 @@ const sortByImportance = function (questionnaire) {
 
 }
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to calculate both the average and section scores
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const calculateScore = function (questionnaireData, calculateAverage, section_score) {
     let total_score = 0;
     let total_q = 0;
@@ -269,17 +259,18 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
                 //creating pdf document
                 const doc = new PDFDocument();
                 let ts = getTimeStamp();
+                // prints time stamp
                 doc.font('Helvetica').fontSize(10).text(ts, 10, 10);
-
+                // insert logo
                 doc.image('assets/logo_complete.png', 400, 30, {width: 100})
-
+                // prints heading for patient details
                 doc.font('Helvetica-Bold').fontSize(14).text("Patient Details", 80, 80);
 
                 // purple overlay for patient information
                 doc.fillOpacity(0.1).rect(80, 100, 420, 180).fill('purple');
                 doc.fillOpacity(1).fill('black');
 
-                // prints out patient information
+                // prints out patient information headings
                 doc.font('Helvetica-Bold').fontSize(12)
                     .text('Patient Name', 100, 120)
                     .text('Right Device Type', 100, 170)
@@ -287,6 +278,7 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
                     .text('Date of Birth', 300, 120)
                     .text('Completed By', 300, 170);
 
+                // prints out patient information
                 doc.font('Helvetica').fontSize(12)
                     .text(personalDetails.name, 100, 140)
                     .text(personalDetails.date, 300, 140)
