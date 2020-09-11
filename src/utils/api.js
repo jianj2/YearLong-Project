@@ -55,7 +55,7 @@ export const sendQuestionnaireData = (data, shareId) =>
 // ================================================
 // Clinician server calls
 // ================================================
-export const completeQuestionnaire = (token, data) =>{
+export const completeQuestionnaire = async (token, data) =>{
     const headers = {
         ... header,
         ...createHeader(token)
@@ -64,7 +64,7 @@ export const completeQuestionnaire = (token, data) =>{
         method: "POST",
         headers: headers,
         body: JSON.stringify(data),
-    }).then((res) => res.json());}
+    }).then((res) => res.json() );}
 
 // ================================================
 // Managing Questionnaire server calls
