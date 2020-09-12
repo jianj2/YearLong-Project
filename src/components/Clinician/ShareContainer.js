@@ -179,7 +179,7 @@ const ShareQuestionnaire = (props) => {
                                 required
                             />
                             <FormHelperText>
-                                Please enter patient's email.
+                                Please enter recipient's email.
                             </FormHelperText>
                         </FormControl>
 
@@ -198,7 +198,7 @@ const ShareQuestionnaire = (props) => {
                             />
                             <FormHelperText>
                                 Please enter a personalised Message that you
-                                want to send to the patient (optional).
+                                want to send to the recipient (optional).
                             </FormHelperText>
                         </FormControl>
 
@@ -246,12 +246,12 @@ const ShareQuestionnaire = (props) => {
                                         }}
                                     />
                                 }
-                                label="Allow parent to complete the questionnaire"
+                                label="Allow recipient to complete the questionnaire"
                             />
                             <FormHelperText>
-                                If this option is checked, patients can
-                                independently complete the questionnaire and the
-                                report would be sent to you.
+                                If this option is checked, the recipient can
+                                complete the questionnaire. The
+                                report will be sent to you.
                             </FormHelperText>
                         </FormControl>
                         <button className="button">S H A R E</button>
@@ -279,7 +279,7 @@ const ShareQuestionnaire = (props) => {
             </div>
 
             <div className="CQ-header">
-                <h1>My Questionnaires</h1>
+                <h1>My Customised Questionnaires</h1>
             </div>
 
             <QuestionnaireList
