@@ -44,12 +44,38 @@ const getTimeStamp = function () {
     return (year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds);
 }
 
-const addPage = function(doc, spacing, docHeight) {
+const addPage = function (doc, spacing, docHeight) {
     if (spacing > docHeight) {
         doc.addPage();
         spacing = 80;
     }
     return spacing;
+}
+
+//print MCQ
+//print range
+const printRQAnswer = function (doc, questionAnswer, startMargin, midMargin, spacing) {
+    doc.font('Helvetica-Bold')
+        .text("Answer: ", startMargin, spacing)
+    if ((questionAnswer === "" || questionAnswer === undefined)) {
+        questionAnswer = "Unanswered"
+        doc.font('Helvetica')
+            .text(questionAnswer.value, midMargin, spacing)
+    } else {
+        doc.font('Helvetica')
+            .text(questionAnswer, midMargin, spacing);
+    }
+}
+
+const printMCQAnswer = function (doc, questionAnswer, startMargin, midMargin, spacing) {
+    doc.text("Answer: ", startMargin, spacing)
+    if (questionAnswer === "" || questionAnswer === undefined) {
+        doc.font('Helvetica')
+            .text("Unanswered", midMargin, spacing);
+    } else {
+        doc.font('Helvetica')
+            .text(questionAnswer, midMargin, spacing);
+    }
 }
 
 
@@ -61,25 +87,26 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
     let spacing = 340
     // actual page is 792 but setting it to 700 helps to prevent overflow problems
     let docHeight = 700
+    let startMargin = 80
+    let midMargin = 280
 
     resultToPrint.sections.forEach((section, sectionIndex) => {
 
         if (sharedSection === null || sharedSection[sectionIndex].isVisible) {
             spacing = addPage(doc, spacing, docHeight)
             // Writing the title for each scenario.
-            doc.font('Helvetica-Bold').fontSize(14).text(section.title, 80, spacing);
-            doc.font('Helvetica').fontSize(12).text("Section average: " + section.score, 280, spacing);
+            doc.font('Helvetica-Bold').fontSize(14).text(section.title, startMargin, spacing);
+            doc.font('Helvetica').fontSize(12).text("Section average: " + section.score, midMargin, spacing);
             spacing = spacing + 30;
 
-
             section.scenarios.map((scenario, scenarioIndex) => {
-                // Writing the description for each scenario.
                 spacing = addPage(doc, spacing, docHeight)
 
-                doc.font('Helvetica-Bold').fontSize(12).text("Scenario: ", 80, spacing);
+                // Writing the description for each scenario.
+                doc.font('Helvetica-Bold').fontSize(12).text("Scenario: ", startMargin, spacing);
                 spacing = spacing + 20;
 
-                doc.font('Helvetica').fontSize(12).text(scenario.description, 80, spacing, {
+                doc.font('Helvetica').fontSize(12).text(scenario.description, startMargin, spacing, {
                     width: 420,
                     align: 'justify'
                 });
@@ -87,24 +114,11 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
 
                 scenario.questions.map((question) => {
                     spacing = addPage(doc, spacing, docHeight)
-                    let questionAnswer = question.response;
 
+                    let questionAnswer = question.response;
                     // If the question is range type then the print out both value and supplementary value.
                     if (!question.isMCQ) {
-                        if ((questionAnswer === "" || questionAnswer === undefined)) {
-                            doc.font('Helvetica-Bold')
-                                .text("Answer: ", 80, spacing)
-                            questionAnswer = "Unanswered"
-                            doc.font('Helvetica')
-                                .text(questionAnswer.value, 280, spacing)
-
-                        } else {
-                            doc.font('Helvetica-Bold')
-                                .text("Answer: ", 80, spacing)
-
-                            doc.font('Helvetica')
-                                .text(questionAnswer, 280, spacing);
-                        }
+                        printRQAnswer(doc, questionAnswer, startMargin, midMargin, spacing)
 
                         spacing = spacing + 35;
                         spacing = addPage(doc, spacing, docHeight)
@@ -113,7 +127,7 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
                     // MCQ questions will have the question and answer printed on pdf.
                     else {
                         doc.font('Helvetica-Bold')
-                            .text(question.description, 80, spacing, {
+                            .text(question.description, startMargin, spacing, {
                                 width: 420,
                                 align: 'justify'
                             });
@@ -122,16 +136,8 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
 
                         spacing = addPage(doc, spacing, docHeight)
 
-                        doc.text("Answer: ", 80, spacing)
-                        if (questionAnswer === "" || questionAnswer === undefined) {
-                            doc.font('Helvetica')
-                                .text("Unanswered", 280, spacing);
-                            spacing = spacing + 35;
-                        } else {
-                            doc.font('Helvetica')
-                                .text(questionAnswer, 280, spacing);
-                            spacing = spacing + 35;
-                        }
+                        printMCQAnswer(doc, questionAnswer, startMargin, midMargin, spacing)
+                        spacing = spacing + 35;
 
                     }
                 })
@@ -141,7 +147,7 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
             // Add a separation line.
             spacing = spacing + 10;
             doc.lineCap('butt')
-                .moveTo(80, spacing)
+                .moveTo(startMargin, spacing)
                 .lineTo(500, spacing)
                 .stroke();
             spacing = spacing + 20;
@@ -192,7 +198,6 @@ const sortByImportance = function (questionnaire) {
     })
 
     return sortedResult;
-
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
