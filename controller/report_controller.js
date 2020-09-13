@@ -25,6 +25,7 @@ const HELPER_IMPORTANCE = {
     "Important": 3,
     "Only a little bit important": 2,
     "Not important": 1,
+    "Not Applicable.": 0 
 }
 const getTimeStamp = function () {
     let date_ob = new Date();
