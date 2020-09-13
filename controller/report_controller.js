@@ -172,16 +172,26 @@ const getQuestionnaireResponseJoin = function (questionnaire, questionnaireData,
     // MAKE A COPY OF THE ORIGINAL QUESTIONNAIRE
     let result = questionnaire;
     let realSectionIndex = 0
+
     questionnaire.sections.forEach((section, sectionIndex) => {
         // ADD SCORE TO THE SECTION
         result.sections[sectionIndex].score = sectionScores[sectionIndex]
-
         if ( sharedSections === null || sharedSections[sectionIndex].isVisible ) {
             section.scenarios.forEach((scenario, scenarioIndex) => {
                 scenario.questions.forEach((question, questionIndex) => {
                     // ADD RESPONSE TO THE QUESTION
+                    let valueToSet = questionnaireData[realSectionIndex][scenarioIndex][questionIndex].value;
+
+                    if (!valueToSet) {
+                        if (question.isMCQ){
+                            valueToSet = "Not Applicable."
+                        } else {
+                            valueToSet = questionnaireData[realSectionIndex][scenarioIndex][questionIndex].supplementaryValue;
+                        }
+
+                    }
                     result.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].response =
-                        questionnaireData[realSectionIndex][scenarioIndex][questionIndex].value;
+                        valueToSet;
                 })
             });
             realSectionIndex++;
@@ -194,8 +204,8 @@ const getQuestionnaireResponseJoin = function (questionnaire, questionnaireData,
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to sort the questions by the importance
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const sortByImportance = function (questionnaire) {
-    let sortedResult = questionnaire;
+const sortByImportance = function (response) {
+    let sortedResult = response;
 
     sortedResult.sections.forEach(section => {
         section.scenarios.sort((a, b) =>
