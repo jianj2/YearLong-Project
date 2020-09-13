@@ -11,7 +11,16 @@
 
 const mongoose = require("mongoose");
 const { v1: uuidv1 } = require("uuid");
+
 const { extractUserEmail } = require("../utils/jwtUtils");
+const{attachQuestionnaireToClinician, findQuestionnaireForClinician , generateNewCustomisedQuestionnaire,
+    generateNewStandardisedQuestionnaire} = require("../service/questionnaireService");
+
+const sendAuthroisationError = (res) => {
+    res.send(
+        JSON.stringify("You do not have access to the clinician account.")
+    );
+}
 
 const Questionnaire = mongoose.model("questionnaire");
 const Clinician = mongoose.model("clinician");
@@ -64,25 +73,9 @@ const getQuestionnaireAsync = function (req, res) {
 const getClinicianQuestionnaires = function (req, res) {
     let clinicianId = req.query.clinicianId;
     if (extractUserEmail(req) === clinicianId) {
-        Clinician.findOne({ clinicianId: clinicianId }, async function (
-            err,
-            clinician
-        ) {
-            if (!err) {
-                const questionnaireIds = clinician.questionnaires;
-                const questionnaires = await Questionnaire.find()
-                    .where("questionnaireId")
-                    .in(questionnaireIds)
-                    .exec();
-                res.send(questionnaires);
-            } else {
-                res.send(JSON.stringify(err));
-            }
-        });
+        findQuestionnaireForClinician(clinicianId , res);
     } else {
-        res.send(
-            JSON.stringify("You do not have access to the clinician account")
-        );
+        sendAuthroisationError(res);
     }
 };
 
@@ -90,47 +83,10 @@ const getClinicianQuestionnaires = function (req, res) {
 const addEmptyQuestionnaire = function (req, res) {
     const userEmail = extractUserEmail(req);
     const clinicianId = req.body.clinicianId;
-    
     const uuid = uuidv1();
-    let newQuestionnaire = new Questionnaire({
-        questionnaireId: uuid,
-        title: "New Questionnaire",
-        description: "Please click edit to begin with this questionnaire.",
-        isSSQ_Ch: true,
-        sections: [
-            {
-                title: "Section 1 - Speech",
-                scenarios: [
-                    {
-                        description: "You are at Melbourne Uni...",
-                        questions: [
-                            {
-                                isMCQ: false,
-                                rangeOptions: ["Zero", "Ten"],
-                            },
-                            {
-                                description:
-                                    "If only one option can be true, which of the following is correct?",
-                                isMCQ: true,
-                                MCQOptions: [
-                                    "All of the above is true",
-                                    " Those below the below is true",
-                                    "None of the above is true",
-                                    "Those above the above is true",
-                                ],
-                            },
-                        ],
-                    },
-                ],
-            },
-            { title: "Section 2 - Spatial", scenarios: [] },
-            { title: "Section 3 - Quality", scenarios: [] },
-        ],
-        isStandard: req.body.isStandard,
-    });
-
 
     if(userEmail === clinicianId){
+        let newQuestionnaire = generateNewCustomisedQuestionnaire(uuid);
         newQuestionnaire.save(function (err, createdQuestionnaire) {
             if(!err){
                 attachQuestionnaireToClinician(
@@ -140,33 +96,11 @@ const addEmptyQuestionnaire = function (req, res) {
                 res.send(JSON.stringify("Customised Questionnaire cannot be created. "));
             }
         });
+    }else{
+        sendAuthroisationError();
     }
 
-    // update specific clinician questionnaire
-    const attachQuestionnaireToClinician = (uuid, clinicianId) => {
-        Clinician.updateOne(
-            { clinicianId: clinicianId },
-            { $push: { questionnaires: uuid } },
-            (err, raw) => {
-                if(!err){
-                    console.log(
-                        "added customised questionnaire:",
-                        uuid,
-                        JSON.stringify(req.body)
-                    );
-        
-                    res.send({
-                        code: 200,
-                        message: "successfully add new questionnaire!",
-                        uuid: uuid,
-                    });
-                }else{
-                    res.send(JSON.stringify("Customised Questionnaire cannot be created."));
-                }
-                
-            }
-        );
-    }
+    
 
     
 };
@@ -175,18 +109,7 @@ const addEmptyQuestionnaire = function (req, res) {
 const addStandardisedQuestionnaire = (req, res) => {
     const uuid = uuidv1();
 
-    let newQuestionnaire = new Questionnaire({
-        questionnaireId: uuid,
-        title: "New Standard Questionnaire",
-        description: "Please click edit to begin with this questionnaire.",
-        isSSQ_Ch: true,
-        sections: [
-            { title: "Section 1 - Speech", scenarios: [] },
-            { title: "Section 2 - Spatial", scenarios: [] },
-            { title: "Section 3 - Quality", scenarios: [] },
-        ],
-        isStandard: true,
-    });
+    let newQuestionnaire = generateNewStandardisedQuestionnaire(uuid);
 
     newQuestionnaire.save(function (err, createdQuestionnaire) {
         console.log("added standardised questionnaire:", uuid);
@@ -368,24 +291,6 @@ const getStandardisedQuestionnaires = function (req, res) {
         }
     });
 };
-
-// // edit a questionnaire
-// const editQuestionnaire = function (req, res) {
-//     const questionnaireId = req.body.questionnaire.questionnaireId;
-//     const editedQuestionnaire = req.body.questionnaire;
-//     Questionnaire.replaceOne(
-//         { questionnaireId: questionnaireId },
-//         editedQuestionnaire,
-//         (err, raw) => {
-//             if (!err) {
-//                 res.send(JSON.stringify("successfully edited"));
-//                 // console.log('here')
-//             } else {
-//                 res.send(JSON.stringify(err));
-//             }
-//         }
-//     );
-// };
 
 //Copy a questionnaire
 const copyQuestionnaire = function (req, res) {
