@@ -29,7 +29,13 @@
 
 .landing-logo {
     grid-area: logo;
-    display: flex;
+    /* flexbox */ 
+    -webkit-flex:1;
+    -webkit-box-flex:1;
+    -moz-flex:1;
+    -moz-box-flex:1;
+    -ms-flex:1;
+    flex:1;
     justify-content: center;
     align-self: center;
 }
@@ -41,7 +47,13 @@
 
 .landing-buttons {
     grid-area: buttons;
-    display: flex;
+    /* flexbox */ 
+    -webkit-flex:1;
+    -webkit-box-flex:1;
+    -moz-flex:1;
+    -moz-box-flex:1;
+    -ms-flex:1;
+    flex:1;
     justify-content: space-evenly;
 }
 
@@ -49,7 +61,13 @@
     width: 25vh;
     height: 25vh;
     background: rgba(255,255,255,0.02);
-    display: flex;
+    /* flexbox */ 
+    -webkit-flex:1;
+    -webkit-box-flex:1;
+    -moz-flex:1;
+    -moz-box-flex:1;
+    -ms-flex:1;
+    flex:1;
     justify-content: center;
     align-items: center;
     text-decoration: none;

@@ -15,7 +15,13 @@
     margin: 0 0 2rem 0;
     /* padding: 20px; */
     border-radius: 10px; 
-    display: flex;
+    /* flexbox */ 
+    -webkit-flex:1;
+    -webkit-box-flex:1;
+    -moz-flex:1;
+    -moz-box-flex:1;
+    -ms-flex:1;
+    flex:1;
     flex-flow: column wrap;
     align-items: stretch;
 }
@@ -25,12 +31,24 @@
 /*}*/
 
 .section-container{
-    display: flex;
+    /* flexbox */ 
+    -webkit-flex:1;
+    -webkit-box-flex:1;
+    -moz-flex:1;
+    -moz-box-flex:1;
+    -ms-flex:1;
+    flex:1;
     flex-flow: column wrap;
     align-items: stretch;   
 }
 .scenario-container{
-    display: flex;
+    /* flexbox */ 
+    -webkit-flex:1;
+    -webkit-box-flex:1;
+    -moz-flex:1;
+    -moz-box-flex:1;
+    -ms-flex:1;
+    flex:1;
     flex-flow: column wrap;
     align-items: stretch; 
     border: 1px solid rgba(255,255,255,0.05);
@@ -38,18 +56,36 @@
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 10px; 
-    display: flex; 
+    /* flexbox */ 
+    -webkit-flex:1;
+    -webkit-box-flex:1;
+    -moz-flex:1;
+    -moz-box-flex:1;
+    -ms-flex:1;
+    flex:1; 
     flex-flow: column nowrap; 
 } 
 .question-container { 
-    display: flex; 
+    /* flexbox */ 
+    -webkit-flex:1;
+    -webkit-box-flex:1;
+    -moz-flex:1;
+    -moz-box-flex:1;
+    -ms-flex:1;
+    flex:1; 
     flex-flow: column nowrap; 
     border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 
 .slider-labels {
-    display: flex;
+    /* flexbox */ 
+    -webkit-flex:1;
+    -webkit-box-flex:1;
+    -moz-flex:1;
+    -moz-box-flex:1;
+    -ms-flex:1;
+    flex:1;
     justify-content: space-between;
     align-items: center;
 }
@@ -70,7 +106,13 @@
     width: 40px;
     height: 40px;
     border-radius: 100px;
-    display: flex;
+    /* flexbox */ 
+    -webkit-flex:1;
+    -webkit-box-flex:1;
+    -moz-flex:1;
+    -moz-box-flex:1;
+    -ms-flex:1;
+    flex:1;
     justify-content: center;
     align-items: center;
     font-family: 'Gill Sans';
@@ -83,12 +125,24 @@
 }
 
 .slider-checkboxes {
-    display: flex;
+    /* flexbox */ 
+    -webkit-flex:1;
+    -webkit-box-flex:1;
+    -moz-flex:1;
+    -moz-box-flex:1;
+    -ms-flex:1;
+    flex:1;
     flex-direction: row !important;
 }
 
 .questionaire-submit-button {
-    display: flex;
+    /* flexbox */ 
+    -webkit-flex:1;
+    -webkit-box-flex:1;
+    -moz-flex:1;
+    -moz-box-flex:1;
+    -ms-flex:1;
+    flex:1;
     justify-content: center;
     padding: 1rem 0 0;
 }

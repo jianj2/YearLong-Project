@@ -27,7 +27,13 @@
     background-color: rgba(100,100,100,0.1);
     position: relative;
     transition: all 0.2s;
-    display: flex;
+    /* flexbox */ 
+    -webkit-flex:1;
+    -webkit-box-flex:1;
+    -moz-flex:1;
+    -moz-box-flex:1;
+    -ms-flex:1;
+    flex:1;
     flex-flow: column;
 }
 
@@ -71,7 +77,13 @@
 }
 
 .list-item-footer {
-    display: flex;
+    /* flexbox */ 
+    -webkit-flex:1;
+    -webkit-box-flex:1;
+    -moz-flex:1;
+    -moz-box-flex:1;
+    -ms-flex:1;
+    flex:1;
     justify-content: space-between;
     align-items: center;
 }
@@ -81,7 +93,13 @@
 }
 
 .admin-standard-questionnaireList-footer{
-    display: flex;
+    /* flexbox */ 
+    -webkit-flex:1;
+    -webkit-box-flex:1;
+    -moz-flex:1;
+    -moz-box-flex:1;
+    -ms-flex:1;
+    flex:1;
     flex-direction: row-reverse;
 }
 

@@ -1,7 +1,13 @@
 
 
 .dothetest-container {
-    display: flex;
+    /* flexbox */ 
+    -webkit-flex:1;
+    -webkit-box-flex:1;
+    -moz-flex:1;
+    -moz-box-flex:1;
+    -ms-flex:1;
+    flex:1;
     flex-direction: column;
     height: 95vh;
     
@@ -9,7 +15,13 @@
 
 .dothetest-submit {
     height: 90vh;
-    display: flex;
+    /* flexbox */ 
+    -webkit-flex:1;
+    -webkit-box-flex:1;
+    -moz-flex:1;
+    -moz-box-flex:1;
+    -ms-flex:1;
+    flex:1;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -22,7 +34,13 @@
 
 .dothetest-subheader-container {
     padding: 1rem 0;
-    display: flex;
+    /* flexbox */ 
+    -webkit-flex:1;
+    -webkit-box-flex:1;
+    -moz-flex:1;
+    -moz-box-flex:1;
+    -ms-flex:1;
+    flex:1;
     justify-content: flex-end;
 }
 
