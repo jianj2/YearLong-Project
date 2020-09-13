@@ -13,14 +13,20 @@ const mongoose = require("mongoose");
 const { v1: uuidv1 } = require("uuid");
 
 const { extractUserEmail } = require("../utils/jwtUtils");
-const{attachQuestionnaireToClinician, findQuestionnaireForClinician , generateNewCustomisedQuestionnaire,
-    generateNewStandardisedQuestionnaire, updateQuestionnaireOnDatabase, deleteQuestionnaireFromDatabase} = require("../service/questionnaireService");
+const {
+    attachQuestionnaireToClinician,
+    findQuestionnaireForClinician,
+    generateNewCustomisedQuestionnaire,
+    generateNewStandardisedQuestionnaire,
+    updateQuestionnaireOnDatabase,
+    deleteQuestionnaireFromDatabase,
+} = require("../service/questionnaireService");
 
 const sendAuthroisationError = (res) => {
     res.send(
         JSON.stringify("You do not have access to the clinician account.")
     );
-}
+};
 
 const Questionnaire = mongoose.model("questionnaire");
 const Clinician = mongoose.model("clinician");
@@ -73,7 +79,7 @@ const getQuestionnaireAsync = function (req, res) {
 const getClinicianQuestionnaires = function (req, res) {
     let clinicianId = req.query.clinicianId;
     if (extractUserEmail(req) === clinicianId) {
-        findQuestionnaireForClinician(clinicianId , res);
+        findQuestionnaireForClinician(clinicianId, res);
     } else {
         sendAuthroisationError(res);
     }
@@ -85,24 +91,22 @@ const addEmptyQuestionnaire = async (req, res) => {
     const clinicianId = req.body.clinicianId;
     const uuid = uuidv1();
 
-    if(userEmail === clinicianId){
+    if (userEmail === clinicianId) {
         let newQuestionnaire = generateNewCustomisedQuestionnaire(uuid);
         newQuestionnaire.save(function (err, createdQuestionnaire) {
-            if(!err){
-                attachQuestionnaireToClinician(
-                    uuid, clinicianId
+            if (!err) {
+                attachQuestionnaireToClinician(uuid, clinicianId, res);
+            } else {
+                res.send(
+                    JSON.stringify(
+                        "Customised Questionnaire cannot be created. "
+                    )
                 );
-            }else{
-                res.send(JSON.stringify("Customised Questionnaire cannot be created. "));
             }
         });
-    }else{
+    } else {
         sendAuthroisationError(res);
     }
-
-    
-
-    
 };
 
 // add a standardised questionnaire
@@ -132,10 +136,16 @@ const editQuestionnaire = function (req, res) {
         if (!err) {
             const questionnaireIds = clinician.questionnaires;
             if (questionnaireIds.includes(questionnaireId)) {
-                updateQuestionnaireOnDatabase(questionnaireId, editedQuestionnaire, res);
+                updateQuestionnaireOnDatabase(
+                    questionnaireId,
+                    editedQuestionnaire,
+                    res
+                );
             } else {
                 res.send(
-                    JSON.stringify("The edited questionnaire does not belong to the clinician.")
+                    JSON.stringify(
+                        "The edited questionnaire does not belong to the clinician."
+                    )
                 );
             }
         } else {
@@ -150,7 +160,6 @@ const editStandardQuestionnaire = function (req, res) {
     const questionnaireId = req.body.questionnaire.questionnaireId;
     const editedQuestionnaire = req.body.questionnaire;
     updateQuestionnaireOnDatabase(questionnaireId, editedQuestionnaire, res);
-    
 };
 
 // Maybe used later for making incremental changes in db.
@@ -188,7 +197,11 @@ const deleteQuestionnaire = function (req, res) {
         if (!err) {
             const questionnaireIds = clinician.questionnaires;
             if (questionnaireIds.includes(questionnaireId)) {
-                deleteQuestionnaireFromDatabase(questionnaireId, clinicianId, res);
+                deleteQuestionnaireFromDatabase(
+                    questionnaireId,
+                    clinicianId,
+                    res
+                );
             } else {
                 res.send(
                     JSON.stringify(
@@ -200,16 +213,14 @@ const deleteQuestionnaire = function (req, res) {
             res.send(JSON.stringify(err));
         }
     };
-    
+
     Clinician.findOne({ clinicianId: userEmail }, validateAndDelete);
-   
 };
 
 //Delete standardised questionnaire
 const deleteStandardisedQuestionnaire = (req, res) => {
     let questionnaireId = req.body.questionnaireID;
     deleteQuestionnaireFromDatabase(questionnaireId, "", res);
-    
 };
 
 // gets all standardised questionnaires
@@ -217,7 +228,9 @@ const getStandardisedQuestionnaires = function (req, res) {
     Questionnaire.find({ isStandard: true }, function (err, questionnaires) {
         if (!err && questionnaires != null) {
             res.send({
-                statusCode: 200, message: "Valid", data: questionnaires,
+                statusCode: 200,
+                message: "Valid",
+                data: questionnaires,
             });
         } else {
             res.send({ statusCode: 400, message: "Invalid", data: err });
@@ -229,15 +242,13 @@ const getStandardisedQuestionnaires = function (req, res) {
 const copyQuestionnaire = function (req, res) {
     const uuid = uuidv1();
     const copiedQuestionnaire = req.body.questionnaire;
-    const copyToCustomisedQuestionnaire = req.body.copyToCustomisedQuestionnaire;
+    const copyToCustomisedQuestionnaire =
+        req.body.copyToCustomisedQuestionnaire;
 
-    let newQuestionnaire = new Questionnaire(
-        {
-            ...copiedQuestionnaire,
-            questionnaireId: uuid,
-            isStandard: ! copyToCustomisedQuestionnaire,
-            title: copiedQuestionnaire.title + " - Copy",
-        }    
+    const newQuestionnaire = generateCopy(
+        copiedQuestionnaire,
+        uuid,
+        !copyToCustomisedQuestionnaire
     );
 
     newQuestionnaire.save(function (err, createdQuestionnaire) {
@@ -246,27 +257,13 @@ const copyQuestionnaire = function (req, res) {
             uuid,
             JSON.stringify(newQuestionnaire)
         );
-
-        res.send({
-            code: 200,
-            message: "successfully add new questionnaire!",
-            uuid: uuid,
-        });
     });
 
-    // update specific clinician questionnaire
     let clinicianId = req.body.clinicianId;
-
-    Clinician.updateOne(
-        { clinicianId: clinicianId },
-        { $push: { questionnaires: uuid } },
-        (err, raw) => {
-            return;
-        }
-    );
+    attachQuestionnaireToClinician(uuid, clinicianId, res);
 };
 
-module.exports.copyQuestionnaire= copyQuestionnaire;
+module.exports.copyQuestionnaire = copyQuestionnaire;
 module.exports.getAllQuestionnaire = getAllQuestionnaire;
 module.exports.getQuestionnaireSync = getQuestionnaireSync;
 module.exports.addEmptyQuestionnaire = addEmptyQuestionnaire;

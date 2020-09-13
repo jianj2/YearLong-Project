@@ -74,8 +74,19 @@ const generateNewStandardisedQuestionnaire = (uuid) => {
     });
 };
 
+const generateCopy = (copiedQuestionnaire, questionnaireId, isStandard )=>{
+    return new Questionnaire(
+        {
+            ...copiedQuestionnaire,
+            questionnaireId,
+            isStandard,
+            title: copiedQuestionnaire.title + " - Copy",
+        }    
+    );
+}
+
 // update specific clinician questionnaire
-const attachQuestionnaireToClinician = (uuid, clinicianId) => {
+const attachQuestionnaireToClinician = (uuid, clinicianId, res) => {
     Clinician.updateOne(
         { clinicianId: clinicianId },
         { $push: { questionnaires: uuid } },
@@ -83,8 +94,8 @@ const attachQuestionnaireToClinician = (uuid, clinicianId) => {
             if (!err) {
                 console.log(
                     "added customised questionnaire:",
-                    uuid,
-                    JSON.stringify(req.body)
+                    uuid
+            
                 );
 
                 res.send({
@@ -151,7 +162,8 @@ const deleteQuestionnaireFromDatabase = (questionnaireId, clinicianId, res) =>{
 
 module.exports.findQuestionnaireForClinician = findQuestionnaireForClinician;
 module.exports.generateNewCustomisedQuestionnaire = generateNewCustomisedQuestionnaire;
-module.exports.attachQuestionnaireToClinician = attachQuestionnaireToClinician;
 module.exports.generateNewStandardisedQuestionnaire = generateNewStandardisedQuestionnaire;
+module.exports.generateCopy = generateCopy;
+module.exports.attachQuestionnaireToClinician = attachQuestionnaireToClinician;
 module.exports.updateQuestionnaireOnDatabase = updateQuestionnaireOnDatabase;
 module.exports.deleteQuestionnaireFromDatabase = deleteQuestionnaireFromDatabase;
