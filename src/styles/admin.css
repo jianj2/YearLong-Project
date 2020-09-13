@@ -13,13 +13,7 @@
 @media all and (max-width: 800px) {
   .HomeAdmin{
     height: 100vh;
-    /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+    display: flex;
     flex-flow: row wrap;
     flex-direction: row;
   }
@@ -39,62 +33,32 @@
 
 .HomeAdmin{
   height: 95vh;
-  /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+  display: flex;
 }
 
 .admin-form {
   /* width: 50vw; */
   min-width: 400px;
-  /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+  display: flex;
   flex-flow: column;
 }
 
 .Instruction-title{
   /* margin-top: 5em; */
   min-width: 400px;
-  /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+  display: flex;
   flex-flow: column;
 }
 
 .Instruction-contents{
   /* margin-top: 3em; */
   min-width: 400px;
-  /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+  display: flex;
   flex-flow: column;
 }
 
 .Instruction-button-group{
-  /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+  display: flex;
   flex-direction: row-reverse;
   padding-top: 2vh;
   padding-right: 2vw;
