@@ -20,6 +20,24 @@ let createHeader = (accessToken) =>{
 // ================================================
 // Admin server calls
 // ================================================
+
+export const findPassword = (email) => {
+    fetch(`https://pediatric-scale.au.auth0.com/dbconnections/change_password`, {
+        method: "POST",
+        headers: {
+            ...header
+        },
+        body: JSON.stringify({
+            client_id: 'ko5IIugoRXQf2uCpqRclocwbhrbqAYx4',
+            email: email,
+            connection: 'Username-Password-Authentication'
+        }),
+        json: true
+    }).then((res) => res.json());
+}
+
+
+
 export const adminLogin = (loginData) =>
     fetch(`${api}/admin/login`, {
         method: "POST",
