@@ -20,7 +20,7 @@ const findQuestionnaireForClinician = (clinicianId, res) => {
     });
 };
 
-const generateNewCustomisedQuestionnaire = (uuid) =>{
+const generateNewCustomisedQuestionnaire = (uuid) => {
     return new Questionnaire({
         questionnaireId: uuid,
         title: "New Questionnaire",
@@ -57,7 +57,7 @@ const generateNewCustomisedQuestionnaire = (uuid) =>{
         ],
         isStandard: false,
     });
-} 
+};
 
 const generateNewStandardisedQuestionnaire = (uuid) => {
     return new Questionnaire({
@@ -72,7 +72,7 @@ const generateNewStandardisedQuestionnaire = (uuid) => {
         ],
         isStandard: true,
     });
-}
+};
 
 // update specific clinician questionnaire
 const attachQuestionnaireToClinician = (uuid, clinicianId) => {
@@ -80,28 +80,78 @@ const attachQuestionnaireToClinician = (uuid, clinicianId) => {
         { clinicianId: clinicianId },
         { $push: { questionnaires: uuid } },
         (err, raw) => {
-            if(!err){
+            if (!err) {
                 console.log(
                     "added customised questionnaire:",
                     uuid,
                     JSON.stringify(req.body)
                 );
-    
+
                 res.send({
                     code: 200,
                     message: "successfully add new questionnaire!",
                     uuid: uuid,
                 });
-            }else{
-                res.send(JSON.stringify("Customised Questionnaire cannot be created."));
+            } else {
+                res.send(
+                    JSON.stringify(
+                        "Customised Questionnaire cannot be created."
+                    )
+                );
             }
-            
         }
     );
+};
+
+const updateQuestionnaireOnDatabase = (questionnaireId, editedQuestionnaire, res) => {
+    Questionnaire.replaceOne(
+        { questionnaireId: questionnaireId },
+        editedQuestionnaire,
+        (err, raw) => {
+            if (!err) {
+                res.send(JSON.stringify("successfully edited"));
+            } else {
+                res.send(JSON.stringify(err));
+            }
+        }
+    );
+};
+
+const detachQuestionnaireFromClinician = (questionnaireId, clinicianId) =>{
+    Clinician.updateOne(
+        { clinicianId},
+        { $pull: { questionnaires: questionnaireId } },
+        (err, raw) => {
+            return;
+        }
+    );
+    }
+
+const deleteQuestionnaireFromDatabase = (questionnaireId, clinicianId, res) =>{
+    Questionnaire.deleteOne({ questionnaireId }, function (
+        err,
+        result
+    ) {
+        console.log("deleted questionnaire: " + questionnaireId);
+        if (!err) {
+            if (clinicianId!==""){
+                detachQuestionnaireFromClinician(questionnaireId, clinicianId);
+            }
+            let message = JSON.stringify(
+                `successfully deleted standard questionnaire ${questionnaireId}`
+            );
+            res.send(message);
+        } else {
+            res.send(JSON.stringify(err));
+        }
+    });
 }
+
 
 
 module.exports.findQuestionnaireForClinician = findQuestionnaireForClinician;
 module.exports.generateNewCustomisedQuestionnaire = generateNewCustomisedQuestionnaire;
 module.exports.attachQuestionnaireToClinician = attachQuestionnaireToClinician;
 module.exports.generateNewStandardisedQuestionnaire = generateNewStandardisedQuestionnaire;
+module.exports.updateQuestionnaireOnDatabase = updateQuestionnaireOnDatabase;
+module.exports.deleteQuestionnaireFromDatabase = deleteQuestionnaireFromDatabase;
