@@ -3,7 +3,7 @@
  * DEFINING QUESTIONNAIRE API CALLS CONTROLLER
  * ============================================
  * @date created: 10 May 2020
- * @authors: Uvin Abeysinghe
+ * @authors: Uvin Abeysinghe, Cary
  *
  * The questionnaire_controller is used for defining the functionality of api calls related to questionnaires.
  *
@@ -20,6 +20,7 @@ const {
     generateNewStandardisedQuestionnaire,
     updateQuestionnaireOnDatabase,
     deleteQuestionnaireFromDatabase,
+    generateCopy
 } = require("../service/questionnaireService");
 
 const sendAuthroisationError = (res) => {
@@ -74,8 +75,7 @@ const getQuestionnaireAsync = function (req, res) {
     });
 };
 
-// given ClinicianId, gets the list of the clinician's customised questionnaires
-
+// given ClinicianId, gets the list of the clinician's customised questionnaire
 const getClinicianQuestionnaires = function (req, res) {
     let clinicianId = req.query.clinicianId;
     if (extractUserEmail(req) === clinicianId) {
@@ -85,7 +85,7 @@ const getClinicianQuestionnaires = function (req, res) {
     }
 };
 
-// add an empty questionnaire
+// add an empty customised questionnaire for clincians
 const addEmptyQuestionnaire = async (req, res) => {
     const userEmail = extractUserEmail(req);
     const clinicianId = req.body.clinicianId;
@@ -126,7 +126,7 @@ const addStandardisedQuestionnaire = (req, res) => {
     });
 };
 
-// edit a questionnaire
+// edit a customised questionnaire
 const editQuestionnaire = function (req, res) {
     const userEmail = extractUserEmail(req);
     const questionnaireId = req.body.questionnaire.questionnaireId;
@@ -188,7 +188,7 @@ const editQuestionnaireQuestion = function (req, res) {
     );
 };
 
-// Delete questionnaire
+// Delete customised questionnaire
 const deleteQuestionnaire = function (req, res) {
     let questionnaireId = req.body.CQid;
     const userEmail = extractUserEmail(req);
@@ -205,7 +205,7 @@ const deleteQuestionnaire = function (req, res) {
             } else {
                 res.send(
                     JSON.stringify(
-                        "The edited questionnaire does not belong to the clinician."
+                        "The questionnaire to be deleted does not belong to the clinician."
                     )
                 );
             }

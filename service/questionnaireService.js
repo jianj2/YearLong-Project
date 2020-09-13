@@ -1,7 +1,20 @@
+/**
+ * ============================================
+ * DEFINING QUESTIONNAIRE SERVICE
+ * ============================================
+ * @date created: 13 Sep 2020
+ * @authors: Cary Jin
+ *
+ * The questionnaire service handles the domain logic
+ *  related to adding/removing/updating questionnaires
+ *
+ */
+
 const mongoose = require("mongoose");
 const Questionnaire = mongoose.model("questionnaire");
 const Clinician = mongoose.model("clinician");
 
+// find all questiionnaires that belong to the clinician with clinicianId
 const findQuestionnaireForClinician = (clinicianId, res) => {
     Clinician.findOne({ clinicianId: clinicianId }, async function (
         err,
@@ -20,6 +33,7 @@ const findQuestionnaireForClinician = (clinicianId, res) => {
     });
 };
 
+// generate an almost empty questionnaire with uuid.
 const generateNewCustomisedQuestionnaire = (uuid) => {
     return new Questionnaire({
         questionnaireId: uuid,
@@ -59,6 +73,7 @@ const generateNewCustomisedQuestionnaire = (uuid) => {
     });
 };
 
+//generates a questionnaire template for a standard one with uuid.
 const generateNewStandardisedQuestionnaire = (uuid) => {
     return new Questionnaire({
         questionnaireId: uuid,
@@ -74,29 +89,24 @@ const generateNewStandardisedQuestionnaire = (uuid) => {
     });
 };
 
-const generateCopy = (copiedQuestionnaire, questionnaireId, isStandard )=>{
-    return new Questionnaire(
-        {
-            ...copiedQuestionnaire,
-            questionnaireId,
-            isStandard,
-            title: copiedQuestionnaire.title + " - Copy",
-        }    
-    );
-}
+// generates a new questionnaire with given content and fields
+const generateCopy = (copiedQuestionnaire, questionnaireId, isStandard) => {
+    return new Questionnaire({
+        ...copiedQuestionnaire,
+        questionnaireId,
+        isStandard,
+        title: copiedQuestionnaire.title + " - Copy",
+    });
+};
 
-// update specific clinician questionnaire
+// insert a questionnaireId to the clincian's list of customised questionnaires
 const attachQuestionnaireToClinician = (uuid, clinicianId, res) => {
     Clinician.updateOne(
         { clinicianId: clinicianId },
         { $push: { questionnaires: uuid } },
         (err, raw) => {
             if (!err) {
-                console.log(
-                    "added customised questionnaire:",
-                    uuid
-            
-                );
+                console.log("added customised questionnaire:", uuid);
 
                 res.send({
                     code: 200,
@@ -114,7 +124,12 @@ const attachQuestionnaireToClinician = (uuid, clinicianId, res) => {
     );
 };
 
-const updateQuestionnaireOnDatabase = (questionnaireId, editedQuestionnaire, res) => {
+// update a questionnaire with the id and content provided.
+const updateQuestionnaireOnDatabase = (
+    questionnaireId,
+    editedQuestionnaire,
+    res
+) => {
     Questionnaire.replaceOne(
         { questionnaireId: questionnaireId },
         editedQuestionnaire,
@@ -128,24 +143,24 @@ const updateQuestionnaireOnDatabase = (questionnaireId, editedQuestionnaire, res
     );
 };
 
-const detachQuestionnaireFromClinician = (questionnaireId, clinicianId) =>{
+// remove a questionnaire id from the clincian's list of customised questionnaires
+const detachQuestionnaireFromClinician = (questionnaireId, clinicianId) => {
     Clinician.updateOne(
-        { clinicianId},
+        { clinicianId },
         { $pull: { questionnaires: questionnaireId } },
         (err, raw) => {
             return;
         }
     );
-    }
+};
 
-const deleteQuestionnaireFromDatabase = (questionnaireId, clinicianId, res) =>{
-    Questionnaire.deleteOne({ questionnaireId }, function (
-        err,
-        result
-    ) {
+// delete a questionnaire with given id, and remove it from the clinician's list, if it is customised.
+const deleteQuestionnaireFromDatabase = (questionnaireId, clinicianId, res) => {
+    Questionnaire.deleteOne({ questionnaireId }, function (err, result) {
         console.log("deleted questionnaire: " + questionnaireId);
         if (!err) {
-            if (clinicianId!==""){
+            // questionnaire is customised
+            if (clinicianId !== "") {
                 detachQuestionnaireFromClinician(questionnaireId, clinicianId);
             }
             let message = JSON.stringify(
@@ -156,9 +171,7 @@ const deleteQuestionnaireFromDatabase = (questionnaireId, clinicianId, res) =>{
             res.send(JSON.stringify(err));
         }
     });
-}
-
-
+};
 
 module.exports.findQuestionnaireForClinician = findQuestionnaireForClinician;
 module.exports.generateNewCustomisedQuestionnaire = generateNewCustomisedQuestionnaire;
