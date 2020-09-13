@@ -16,6 +16,7 @@ const PDFDocument = require('pdfkit');
 const mongoose = require("mongoose");
 const Questionnaire = mongoose.model("questionnaire");
 const Share = mongoose.model("share");
+const fs = require('fs');
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // HELPERS
@@ -241,9 +242,36 @@ const calculateScore = function (questionnaireData, calculateAverage, section_sc
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used generate the csv report.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+const createcsv = function (questionnaireData, personalDetails, sharedSections) {
+    let toWrite = "name, date, right_device_type, left_device_type, completed_by, " +
+        "section_title, question, slider_value, mcq_value_1, mcq_value_2,\n"
+    let toUpload = Buffer.from(toWrite, 'utf8');
+
+    let result = questionnaireData;
+    let realSectionIndex = 0
+    questionnaireData.sections.forEach((section, sectionIndex) => {
+        // ADD SCORE TO THE SECTION
+
+        if (sharedSections === null || sharedSections[sectionIndex].isVisible) {
+            section.scenarios.forEach((scenario, scenarioIndex) => {
+                scenario.questions.forEach((question, questionIndex) => {
+                    // ADD RESPONSE TO THE QUESTION
+                    result.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].response =
+                        questionnaireData[realSectionIndex][scenarioIndex][questionIndex].value;
+                })
+            });
+            realSectionIndex++;
+        }
+    });
+    return toUpload
+}
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used generate the pdf report.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const generateReport = function (questionnaireId, personalDetails, questionnaireData, shareId) {
+const generateAttachments = function (questionnaireId, personalDetails, questionnaireData, shareId) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
 
@@ -311,6 +339,8 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
 
                     const resultToPrint = getQuestionnaireResponseJoin(questionnaire, questionnaireData, section_score, sharedSections);
 
+                    const csvResult = createcsv(resultToPrint, personalDetails, sharedSections);
+
                     // -------  TO DO  --------
                     // MAKE THIS BETTER
                     const sortedResults = sortByImportance(resultToPrint)
@@ -328,10 +358,13 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
                     // Used to display as a table in the email
                     const {jsonToTableHtmlString} = require('json-table-converter')
 
-                    resolve({
-                        fileName: "Report.pdf",
+                    resolve([{
+                        filename: "Report.pdf",
                         content: doc,
-                    })
+                    }, {
+                        filename: "Report.csv",
+                        content: csvResult,
+                    }])
                 });
             } else {
                 reject({
@@ -343,4 +376,4 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
 }
 
 
-module.exports.generateReport = generateReport;
+module.exports.generateAttachments = generateAttachments;
