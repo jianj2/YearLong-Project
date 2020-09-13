@@ -14,13 +14,7 @@
 @media all and (max-width: 800px) {
   .HomeClinician{
     height: 100vh;
-    /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1; 
+    display: flex; 
     flex-flow: row wrap;
     flex-direction: row;
   }
@@ -29,13 +23,7 @@
 
 .HomeClinician{
   height: 95vh;
-  /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1; 
+  display: flex; 
 }
 
 
@@ -43,13 +31,7 @@
   /*margin-left: 16vw;*/
   flex: 1;
   width: 100%;
-  /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+  display: flex;
   flex-direction: column;
   overflow: auto;
 }
@@ -59,26 +41,14 @@
   /* width: 100%; */
   /* height: 100%; */
   background-color: #151641;
-  /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+  display: flex;
   flex-direction: column;
   overflow: hidden;
   padding-bottom: 2vh;
 }
 
 .edit-questionnaire-description-form {
-  /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+  display: flex;
   flex-direction: column;
 }
 
@@ -110,13 +80,7 @@ width: 65%;
 
 .questionTable-button-group {
   width: 100%;
-  /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+  display: flex;
   height: 2rem;
 }
 
@@ -170,13 +134,7 @@ width: 65%;
 
 .questionTable-form {
   padding: 1rem;
-  /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+  display: flex;
   flex-flow: column;
 }  
 .questionTable-form h3{
@@ -185,13 +143,7 @@ width: 65%;
   text-align: center;
 } 
 .questionTable-answer {
-  /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+  display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
@@ -200,13 +152,7 @@ width: 65%;
 .questionTable-answer div{
   /* width: 1,/ */
   flex: 1;
-  /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+  display: flex;
   flex-flow: column;
   align-items: stretch;
 
@@ -244,13 +190,7 @@ width: 65%;
   border: 1px solid #DB3D94;
   background-color: #DB3D94;
   outline: 0;
-  /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+  display: flex;
   justify-content: center;
   align-items: center;
   color: #eee;
@@ -289,13 +229,7 @@ width: 65%;
 }
 
 .edit-questionnaire-header{
-  /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+  display: flex;
   flex-direction: row-reverse;
   padding-top: 2vh;
   padding-right: 2vw;
@@ -303,23 +237,11 @@ width: 65%;
 
 .bottom-container{
   align-items: center;
-  /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+  display: flex;
 }
 
 .add-delete-button-div{
-  /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+  display: flex;
   flex-direction: row;
   justify-content: center;
 }
@@ -334,13 +256,7 @@ width: 65%;
   border-radius: 5px;
   margin-right: 2vw;
   font-size: 1.1rem;
-  /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -350,39 +266,21 @@ width: 65%;
 }
 
 .section-title,.scenario-description{
-  /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+  display: flex;
   justify-content: center;
   padding: 0 1rem 1rem;
   flex-flow: column;
 }
 
 .scenarios-container{
-  /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+  display: flex;
   flex-direction: column;
   align-items: center; 
 
 }
 
 .sections-container{
-  /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+  display: flex;
   flex-direction: column;
   align-items: center;
   margin: 1rem -1rem;  

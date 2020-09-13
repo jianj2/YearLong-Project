@@ -18,13 +18,7 @@
     background-color: rgba(0,0,0,0.6);
     top: 0;
     left: 0;
-    /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+    display: flex;
     justify-content: center;
     align-items: center;
  }

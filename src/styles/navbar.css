@@ -14,13 +14,7 @@
     width: 96vw;
     height: 5vh;
     padding: 0 2vw;
-    /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+    display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #151641;
@@ -48,13 +42,7 @@
     outline: 0;
     border: 0;
     margin: 0 5px;
-    /* flexbox */ 
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+    display: flex;
     align-items: center;
     font-size: 0.8rem;
     font-weight: 200;
