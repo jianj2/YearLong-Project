@@ -2,22 +2,38 @@ import React, {Component, useState} from 'react';
 import {adminLogin, findPassword} from "../utils/api";
 
 import logoComplete from "../assets/logo_complete.png";
-import {Input, InputLabel} from "@material-ui/core";
-import Button from "@material-ui/core/Button";
+import {
+    Input,
+    InputLabel,
+    Button,
+    FormControl,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogContentText,
+    DialogActions
+} from "@material-ui/core";
 import {useForm} from "react-hook-form";
-import FormControl from "@material-ui/core/FormControl";
 
 import "../styles/clinician.css"
 
 const FindPassword = () => {
     const { register, handleSubmit, errors } = useForm();
 
+    const [open, setOpen] = useState(false);
+
     const [email, setEmail] = useState();
 
     const findEmail = (email)=>{
         findPassword(email);
-        alert(email);
+        setOpen(true);
     }
+
+    const handleClose = () => {
+        setOpen(false);
+        // window.location.href = 'https://pediatric-scale.au.auth0.com/login/';
+    };
+
         return (
             <div className="find-password">
                 <div className="landing-logo">
@@ -43,6 +59,25 @@ const FindPassword = () => {
                         </FormControl>
                     </div>
                 </div>
+
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">{"Prompt"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Request sent successfully!
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose} color="primary" autoFocus>
+                            OK
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </div>
         );
     }
