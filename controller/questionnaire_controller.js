@@ -44,9 +44,9 @@ const getAllQuestionnaire = function (req, res) {
 };
 
 // Get questionnaires in sync
-const getQuestionnaireSync = function (req, res) {
+const getQuestionnaire = function (req, res) {
     let questionnaireId = req.params.questionnaireId;
-    console.log("get questionnaire sync:", questionnaireId);
+    console.log("get questionnaire:", questionnaireId);
 
     Questionnaire.findOne({ questionnaireId }, function (err, questionnaire) {
         if (!err && questionnaire != null) {
@@ -57,20 +57,6 @@ const getQuestionnaireSync = function (req, res) {
             });
         } else {
             res.send({ statusCode: 400, message: "Invalid", data: err });
-        }
-    });
-};
-
-// Get questionnaires in async
-const getQuestionnaireAsync = function (req, res) {
-    let questionnaireId = req.params.questionnaireId;
-    console.log("get questionnaire async:", questionnaireId);
-
-    Questionnaire.findOne({ questionnaireId }, function (err, questionnaire) {
-        if (!err && questionnaire != null) {
-            res.send(questionnaire);
-        } else {
-            res.send(JSON.stringify(err));
         }
     });
 };
@@ -265,7 +251,7 @@ const copyQuestionnaire = function (req, res) {
 
 module.exports.copyQuestionnaire = copyQuestionnaire;
 module.exports.getAllQuestionnaire = getAllQuestionnaire;
-module.exports.getQuestionnaireSync = getQuestionnaireSync;
+module.exports.getQuestionnaire = getQuestionnaire;
 module.exports.addEmptyQuestionnaire = addEmptyQuestionnaire;
 module.exports.addStandardisedQuestionnaire = addStandardisedQuestionnaire;
 module.exports.deleteQuestionnaire = deleteQuestionnaire;
@@ -273,5 +259,4 @@ module.exports.deleteStandardisedQuestionnaire = deleteStandardisedQuestionnaire
 module.exports.editQuestionnaire = editQuestionnaire;
 module.exports.editStandardQuestionnaire = editStandardQuestionnaire;
 module.exports.getClinicianQuestionnaires = getClinicianQuestionnaires;
-module.exports.getQuestionnaireAsync = getQuestionnaireAsync;
 module.exports.getStandardisedQuestionnaires = getStandardisedQuestionnaires;

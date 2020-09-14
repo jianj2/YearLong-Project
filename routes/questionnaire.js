@@ -41,11 +41,10 @@ const checkJwt = jwt({
 
 // CRUD Routes for Posts
 
-router.get('/getQuestionnaire/:questionnaireId', questionnaire_controller.getQuestionnaireAsync);
 router.get('/clinician/', checkJwt, questionnaire_controller.getClinicianQuestionnaires);
 router.get("/standardised",questionnaire_controller.getStandardisedQuestionnaires);
 
-router.get("/:questionnaireId", questionnaire_controller.getQuestionnaireSync);
+router.get("/:questionnaireId", questionnaire_controller.getQuestionnaire);
 
 router.post('/deleteStandard', questionnaire_controller.deleteStandardisedQuestionnaire);
 router.post('/delete', checkJwt, questionnaire_controller.deleteQuestionnaire);
