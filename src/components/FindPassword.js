@@ -11,7 +11,7 @@ import {
     DialogTitle,
     DialogContent,
     DialogContentText,
-    DialogActions
+    DialogActions, FormHelperText
 } from "@material-ui/core";
 import {useForm} from "react-hook-form";
 
@@ -26,6 +26,7 @@ const FindPassword = () => {
 
     const findEmail = (email)=>{
         findPassword(email);
+        // alert(email);
         setOpen(true);
     }
 
@@ -48,7 +49,13 @@ const FindPassword = () => {
                                 name="email"
                                 placeholder="Write the admin username"
                                 onChange={(event)=>{setEmail(event.target.value)}}
+                                required={true}
                             />
+                            <FormHelperText>
+                                {errors.username
+                                    ? errors.username.message
+                                    : "Please enter the admin username."}
+                            </FormHelperText>
                             <br />
                             <button
                                 className={errors.code ? "button-disabled" : "button"}
