@@ -28,6 +28,8 @@ const AdminSideBar = (props) =>{
                   to = "/admin/Questionnaires">Questionnaires</Link>
             <Link className={`sidebar-ssq-instructions ${(pathname === "SSQ_Instructions")? "active" : ""}`}
                   to = "/admin/SSQ_Instructions">SSQ Instructions</Link>
+            <Link className={`sidebar-organisation ${(pathname === "Organisation")? "active" : ""}`}
+                  to = "/admin/Organisation">Organisation</Link>
         </div>
     )
 }

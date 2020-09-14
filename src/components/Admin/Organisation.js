@@ -10,15 +10,15 @@
 
 import React from "react";
 
-// handles rendering of SSQIntroductionContainer in the Admin Page
-const SSQIntroductionContainer = () => {
+// handles rendering of Organisation in the Admin Page
+const Organisation = () => {
 
     return (
-        <div className="ssq-introduction-container">
-            ssq-introduction
+        <div className="organisation-container">
+            <h1>Organisation</h1>
         </div>
     );
 };
 
 
-export default SSQIntroductionContainer;
+export default Organisation;

@@ -70,7 +70,7 @@ function App() {
                         render={() => <HomeAdmin active = {2} />}
                     />
                     <Route
-                        path="/admin/SSQ_Introduction"
+                        path="/admin/Organisation"
                         exact
                         render={() => <HomeAdmin active = {3} />}
                     />
