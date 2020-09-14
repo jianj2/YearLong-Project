@@ -14,24 +14,36 @@ const mongoose = require("mongoose");
 const Questionnaire = mongoose.model("questionnaire");
 const Clinician = mongoose.model("clinician");
 
+const findQuestionnairebyId = (questionnaireId) => {
+    Questionnaire.findOne({ questionnaireId }, function (err, questionnaire) {
+        return {err, questionnaire};
+    });
+}
+
 // find all questiionnaires that belong to the clinician with clinicianId
-const findQuestionnaireForClinician = (clinicianId, res) => {
+const findQuestionnaireForClinician = (clinicianId) => {
     Clinician.findOne({ clinicianId: clinicianId }, async function (
         err,
         clinician
     ) {
+        let questionnaires = null;
         if (!err) {
             const questionnaireIds = clinician.questionnaires;
-            const questionnaires = await Questionnaire.find()
+            questionnaires = await Questionnaire.find()
                 .where("questionnaireId")
                 .in(questionnaireIds)
                 .exec();
-            res.send(questionnaires);
-        } else {
-            res.send(JSON.stringify(err));
+           
         }
+        return {err, questionnaires};
     });
 };
+
+const findStandardisedQuestionnaires = () => { 
+    Questionnaire.find({ isStandard: true }, function (err, questionnaires) {
+        return {err, questionnaires};
+    });
+}
 
 // generate an almost empty questionnaire with uuid.
 const generateNewCustomisedQuestionnaire = (uuid) => {
@@ -100,48 +112,84 @@ const generateCopy = (copiedQuestionnaire, questionnaireId, isStandard) => {
 };
 
 // insert a questionnaireId to the clincian's list of customised questionnaires
-const attachQuestionnaireToClinician = (uuid, clinicianId, res) => {
+const attachQuestionnaireToClinician = (uuid, clinicianId) => {
     Clinician.updateOne(
         { clinicianId: clinicianId },
         { $push: { questionnaires: uuid } },
         (err, raw) => {
             if (!err) {
                 console.log("added customised questionnaire:", uuid);
-
-                res.send({
-                    code: 200,
-                    message: "successfully add new questionnaire!",
-                    uuid: uuid,
-                });
+                    return ("successfully add new questionnaire!");
+                
             } else {
-                res.send(
-                    JSON.stringify(
-                        "Customised Questionnaire cannot be created."
-                    )
-                );
+              return err;
             }
         }
     );
 };
 
+// Save a new customised questionnaire belonging to clincianId and return a message
+const saveNewCustomisedQuestionnaire = async (newQuestionnaire, clinicianId) => {
+    newQuestionnaire.save(function (err, createdQuestionnaire) {
+        if (!err) {
+            return attachQuestionnaireToClinician(newQuestionnaire.questionnaireId, clinicianId);
+        } else {
+           return  ("Customised Questionnaire cannot be created. ");
+        }
+    });
+}
+
+// Save a new standardised questionnaire belonging to admin
+const saveNewStandardisedQuestionnaire = async (newQuestionnaire) => {
+    newQuestionnaire.save(function (err, createdQuestionnaire) {
+        if (!err) {
+           return ("Added standardised questionnaire.");
+        } else {
+           return  ("Unable to add standardised questionnaire.");
+        }
+    });
+}
+
+
 // update a questionnaire with the id and content provided.
 const updateQuestionnaireOnDatabase = (
     questionnaireId,
     editedQuestionnaire,
-    res
 ) => {
     Questionnaire.replaceOne(
         { questionnaireId: questionnaireId },
         editedQuestionnaire,
         (err, raw) => {
             if (!err) {
-                res.send(JSON.stringify("successfully edited"));
+                return ("successfully edited");
             } else {
-                res.send(JSON.stringify(err));
+                return err;
             }
         }
     );
 };
+
+const editCustomisedQuestionnaire = (userEmail, questionnaireId, editedQuestionnaire) => {
+    
+    const validateAndUpdate = (err, clinician) => {
+        if (!err) {
+            const questionnaireIds = clinician.questionnaires;
+            if (questionnaireIds.includes(questionnaireId)) {
+                return updateQuestionnaireOnDatabase(
+                    questionnaireId,
+                    editedQuestionnaire,
+                );
+            } else {
+                    return(
+                        "The edited questionnaire does not belong to the clinician."
+                    );
+            }
+        } else {
+          return err;
+        }
+    };
+    Clinician.findOne({ clinicianId: userEmail }, validateAndUpdate);
+}
 
 // remove a questionnaire id from the clincian's list of customised questionnaires
 const detachQuestionnaireFromClinician = (questionnaireId, clinicianId) => {
@@ -149,34 +197,86 @@ const detachQuestionnaireFromClinician = (questionnaireId, clinicianId) => {
         { clinicianId },
         { $pull: { questionnaires: questionnaireId } },
         (err, raw) => {
-            return;
+            if (!err){
+               return "";
+            }else{
+                return err;
+            }
+         
         }
     );
 };
 
+const deleteCustomisedQuestionnaireFromDatabase = async (questionnaireId, userEmail, clinicianId)=>{
+    const validateAndDelete = (err, clinician) => {
+        if (!err) {
+            const questionnaireIds = clinician.questionnaires;
+            if (questionnaireIds.includes(questionnaireId)) {
+                const message = await deleteQuestionnaireFromDatabase(
+                    questionnaireId, clinicianId);
+                return message;
+            } else {
+                return ("The questionnaire to be deleted does not belong to the clinician.");
+            }
+        } else {
+            return err;
+        }
+    };
+
+    Clinician.findOne({ clinicianId: userEmail }, validateAndDelete);
+}
+
 // delete a questionnaire with given id, and remove it from the clinician's list, if it is customised.
-const deleteQuestionnaireFromDatabase = (questionnaireId, clinicianId, res) => {
+const deleteQuestionnaireFromDatabase = async (questionnaireId, clinicianId) => {
     Questionnaire.deleteOne({ questionnaireId }, function (err, result) {
         console.log("deleted questionnaire: " + questionnaireId);
         if (!err) {
             // questionnaire is customised
             if (clinicianId !== "") {
-                detachQuestionnaireFromClinician(questionnaireId, clinicianId);
+                const detachmentMessage = await detachQuestionnaireFromClinician(questionnaireId, clinicianId);
+                if (detachmentMessage !== ""){
+                    return detachmentMessage;
+                }
             }
-            let message = JSON.stringify(
-                `successfully deleted standard questionnaire ${questionnaireId}`
-            );
-            res.send(message);
+            const message = `successfully deleted questionnaire ${questionnaireId}`;
+            
+            return message;
         } else {
-            res.send(JSON.stringify(err));
+            return err;
         }
     });
 };
 
+const copyQuestionnaireToDatabase = async () => {
+    const newQuestionnaire = generateCopy(
+        copiedQuestionnaire,
+        uuid,
+        !copyToCustomisedQuestionnaire
+    );
+
+    newQuestionnaire.save(function (err, createdQuestionnaire) {
+        if(clincianId){
+            return attachQuestionnaireToClinician(uuid, clinicianId);
+          }
+       else{
+           return "successfully coppiedQuestionnaire";
+       }
+    });
+
+  
+}
+
+module.exports.findQuestionnairebyId = findQuestionnairebyId;
 module.exports.findQuestionnaireForClinician = findQuestionnaireForClinician;
+modules.exports.findStandardisedQuestionnaires = findStandardisedQuestionnaires;
 module.exports.generateNewCustomisedQuestionnaire = generateNewCustomisedQuestionnaire;
 module.exports.generateNewStandardisedQuestionnaire = generateNewStandardisedQuestionnaire;
 module.exports.generateCopy = generateCopy;
+module.exports.copyQuestionnaireToDatabase = copyQuestionnaireToDatabase;
 module.exports.attachQuestionnaireToClinician = attachQuestionnaireToClinician;
+module.exports.saveNewCustomisedQuestionnaire  = saveNewCustomisedQuestionnaire;
+module.exports.saveNewStandardisedQuestionnaire = saveNewStandardisedQuestionnaire;
 module.exports.updateQuestionnaireOnDatabase = updateQuestionnaireOnDatabase;
+module.exports.editCustomisedQuestionnaire = editCustomisedQuestionnaire;
+module.exports.deleteCustomisedQuestionnaireFromDatabase = deleteCustomisedQuestionnaireFromDatabase;
 module.exports.deleteQuestionnaireFromDatabase = deleteQuestionnaireFromDatabase;
