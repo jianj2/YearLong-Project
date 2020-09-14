@@ -53,17 +53,13 @@ const getQuestionnaire = async (req, res) => {
 const getClinicianQuestionnaires = async (req, res) => {
     const clinicianId = req.query.clinicianId;
     if (extractUserEmail(req) === clinicianId) {
-        const foundQuestionnaires = await findQuestionnaireForClinician(
+        const [err, foundQuestionnaires] = await findQuestionnaireForClinician(
             clinicianId
         );
-        if (foundQuestionnaires != null) {
-            res.send(JSON.stringify(foundQuestionnaires));
+        if (foundQuestionnaires != null && !err) {
+            res.status(200).send(JSON.stringify(foundQuestionnaires));
         } else {
-            res.send(
-                JSON.stringify(
-                    "an error occurred while getting customised questionnaires"
-                )
-            );
+            res.status(400).send(JSON.stringify(err.message));
         }
     } else {
         sendAuthroisationError(res);
@@ -142,15 +138,15 @@ const deleteStandardisedQuestionnaire = async (req, res) => {
 
 // gets all standardised questionnaires
 const getStandardisedQuestionnaires = async (req, res) => {
-    const questionnaires = await findStandardisedQuestionnaires();
-    if (questionnaires != null) {
-        res.send({
+    const [err, questionnaires] = await findStandardisedQuestionnaires();
+    if (questionnaires != null && !err) {
+        res.status(200).send({
             statusCode: 200,
             message: "Valid",
             data: questionnaires,
         });
     } else {
-        res.send({ statusCode: 400, message: "Invalid", data: "" });
+        res.status(400).send({ message: err.message, data: undefined });
     }
 };
 

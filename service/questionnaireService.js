@@ -17,14 +17,12 @@ const Clinician = mongoose.model("clinician");
 const findQuestionnaireById = async (questionnaireId) => {
     try {
         const questionnaire = await Questionnaire.findOne({ questionnaireId });
-        throw Error("My Error");
-        let promise = await new Promise((resolve, reject) => {
+        // throw Error("My Error");
+        const result = await new Promise((resolve, reject) => {
             resolve([undefined, questionnaire]);
         });
-
-        return promise;
+        return result;
     } catch (error) {
-        console.log("e: ", error);
         return Promise.resolve([error, undefined]);
     }
 };
@@ -38,28 +36,27 @@ const findQuestionnaireForClinician = async (clinicianId) => {
             .where("questionnaireId")
             .in(questionnaireIds)
             .exec();
+        const result = await new Promise((resolve, reject) => {
+            resolve([undefined, questionnaires]);
+        });
 
-        return questionnaires;
+        return result;
     } catch (error) {
-        return null;
+        return Promise.resolve([error, undefined]);
     }
 };
 
 const findStandardisedQuestionnaires = async () => {
     try {
         const questionnaires = await Questionnaire.find({ isStandard: true });
-        return questionnaires;
+        const result = await new Promise((resolve, reject) => {
+            resolve([undefined, questionnaires]);
+        });
+        return result;
     } catch (error) {
-        return null;
+        return Promise.resolve([error, undefined]);
     }
 };
-
-// const findStandardisedQuestionnaires = () => {
-//     Questionnaire.find({ isStandard: true },  function (err, questionnaires) {
-//         console.log("to be re:", err, questionnaires);
-//         return new Promise({err, questionnaires});
-//     });
-// }
 
 // generate an almost empty questionnaire with uuid.
 const generateNewCustomisedQuestionnaire = (uuid) => {
@@ -128,19 +125,16 @@ const generateCopy = (copiedQuestionnaire, questionnaireId, isStandard) => {
 };
 
 // insert a questionnaireId to the clincian's list of customised questionnaires
-const attachQuestionnaireToClinician = (uuid, clinicianId) => {
-    Clinician.updateOne(
-        { clinicianId: clinicianId },
-        { $push: { questionnaires: uuid } },
-        (err, raw) => {
-            if (!err) {
-                console.log("added customised questionnaire:", uuid);
-                return "successfully add new questionnaire!";
-            } else {
-                return err;
-            }
-        }
-    );
+const attachQuestionnaireToClinician = async (uuid, clinicianId) => {
+    try {
+        await Clinician.updateOne(
+            { clinicianId: clinicianId },
+            { $push: { questionnaires: uuid } }
+        );
+        return Promise.resolve([err, "successfully add new questionnaire!"]);
+    } catch (error) {
+        return Promise.resolve([error, undefined]);
+    }
 };
 
 // Save a new customised questionnaire belonging to clincianId and return a message
@@ -148,45 +142,41 @@ const saveNewCustomisedQuestionnaire = async (
     newQuestionnaire,
     clinicianId
 ) => {
-    newQuestionnaire.save(function (err, createdQuestionnaire) {
-        if (!err) {
-            return attachQuestionnaireToClinician(
-                newQuestionnaire.questionnaireId,
-                clinicianId
-            );
-        } else {
-            return "Customised Questionnaire cannot be created. ";
-        }
-    });
+    try {
+        await newQuestionnaire.save();
+        return await attachQuestionnaireToClinician(
+            newQuestionnaire.questionnaireId,
+            clinicianId
+        );
+    } catch (error) {
+        return Promise.resolve([error, undefined]);
+    }
 };
 
 // Save a new standardised questionnaire belonging to admin
 const saveNewStandardisedQuestionnaire = async (newQuestionnaire) => {
-    newQuestionnaire.save(function (err, createdQuestionnaire) {
-        if (!err) {
-            return "Added standardised questionnaire.";
-        } else {
-            return "Unable to add standardised questionnaire.";
-        }
-    });
+    try{
+        await newQuestionnaire.save();
+        return Promise.resolve([undefined, "Added standardised questionnaire."]);
+
+    }catch(error){
+        return Promise.resolve([error, undefined]);
+    }
 };
 
 // update a questionnaire with the id and content provided.
-const updateQuestionnaireOnDatabase = (
+const updateQuestionnaireOnDatabase = async (
     questionnaireId,
     editedQuestionnaire
 ) => {
-    Questionnaire.replaceOne(
-        { questionnaireId: questionnaireId },
-        editedQuestionnaire,
-        (err, raw) => {
-            if (!err) {
-                return "successfully edited";
-            } else {
-                return err;
-            }
-        }
-    );
+    try{
+        await Questionnaire.replaceOne({ questionnaireId: questionnaireId },
+        editedQuestionnaire);
+        return Promise.resolve([undefined, "Updated questionnaire."]);
+    }catch(error){
+        return Promise.resolve([error, undefined]);    
+    }
+    
 };
 
 const editCustomisedQuestionnaire = (
@@ -194,37 +184,38 @@ const editCustomisedQuestionnaire = (
     questionnaireId,
     editedQuestionnaire
 ) => {
-    const validateAndUpdate = (err, clinician) => {
-        if (!err) {
-            const questionnaireIds = clinician.questionnaires;
+
+    try{ 
+        const clinician = await Clinician.findOne({ clinicianId: userEmail });
+        const questionnaireIds = clinician.questionnaires;
             if (questionnaireIds.includes(questionnaireId)) {
-                return updateQuestionnaireOnDatabase(
+                return await updateQuestionnaireOnDatabase(
                     questionnaireId,
                     editedQuestionnaire
                 );
-            } else {
-                return "The edited questionnaire does not belong to the clinician.";
+            }  else {
+                throw Error("The edited questionnaire does not belong to the clinician.");
             }
-        } else {
-            return err;
-        }
-    };
-    Clinician.findOne({ clinicianId: userEmail }, validateAndUpdate);
+    }
+        catch(error){
+            return Promise.resolve([error, undefined]); 
+    }
+
+
 };
 
 // remove a questionnaire id from the clincian's list of customised questionnaires
 const detachQuestionnaireFromClinician = (questionnaireId, clinicianId) => {
-    Clinician.updateOne(
+    try{
+   await Clinician.updateOne(
         { clinicianId },
-        { $pull: { questionnaires: questionnaireId } },
-        (err, raw) => {
-            if (!err) {
-                return "";
-            } else {
-                return err;
-            }
-        }
-    );
+        { $pull: { questionnaires: questionnaireId } });
+    return Promise.resolve([undefined, "Successfully deleted questionnaire"]);
+   }catch(error){
+        return Promise.resolve([error, undefined]); 
+
+   }      
+  
 };
 
 const deleteCustomisedQuestionnaireFromDatabase = async (
@@ -232,24 +223,24 @@ const deleteCustomisedQuestionnaireFromDatabase = async (
     userEmail,
     clinicianId
 ) => {
-    const validateAndDelete = async (err, clinician) => {
-        if (!err) {
-            const questionnaireIds = clinician.questionnaires;
-            if (questionnaireIds.includes(questionnaireId)) {
-                const message = await deleteQuestionnaireFromDatabase(
-                    questionnaireId,
-                    clinicianId
-                );
-                return message;
-            } else {
-                return "The questionnaire to be deleted does not belong to the clinician.";
-            }
-        } else {
-            return err;
-        }
-    };
 
-    Clinician.findOne({ clinicianId: userEmail }, validateAndDelete);
+    try{
+        const clinician = await Clinician.findOne({ clinicianId: userEmail });
+        const questionnaireIds = clinician.questionnaires;
+        if (questionnaireIds.includes(questionnaireId)) {
+            return await deleteQuestionnaireFromDatabase(
+                questionnaireId,
+                clinicianId
+            );
+           
+        } else {
+            throw Error("The questionnaire to be deleted does not belong to the clinician.");
+        }
+    }catch{
+        return Promise.resolve([error, undefined]); 
+    }
+ 
+    
 };
 
 // delete a questionnaire with given id, and remove it from the clinician's list, if it is customised.
@@ -257,42 +248,36 @@ const deleteQuestionnaireFromDatabase = async (
     questionnaireId,
     clinicianId
 ) => {
-    Questionnaire.deleteOne({ questionnaireId }, async function (err, result) {
-        console.log("deleted questionnaire: " + questionnaireId);
-        if (!err) {
-            // questionnaire is customised
-            if (clinicianId !== "") {
-                const detachmentMessage = await detachQuestionnaireFromClinician(
-                    questionnaireId,
-                    clinicianId
-                );
-                if (detachmentMessage !== "") {
-                    return detachmentMessage;
-                }
-            }
-            const message = `successfully deleted questionnaire ${questionnaireId}`;
-
-            return message;
-        } else {
-            return err;
-        }
-    });
+    try{
+        await Questionnaire.deleteOne({ questionnaireId });
+    if (clinicianId !== "") {
+        return await detachQuestionnaireFromClinician(
+            questionnaireId,
+            clinicianId
+        );
+    }else{
+        return Promise.resolve([undefined, "Successfully deleted questionnaire"]);
+    }}catch(error){
+        return Promise.resolve([error, undefined]); 
+    }
 };
 
 const copyQuestionnaireToDatabase = async () => {
+    try{
     const newQuestionnaire = generateCopy(
         copiedQuestionnaire,
         uuid,
         !copyToCustomisedQuestionnaire
     );
-
-    newQuestionnaire.save(function (err, createdQuestionnaire) {
-        if (clincianId) {
+    await newQuestionnaire.save();
+    if (clincianId) {
             return attachQuestionnaireToClinician(uuid, clinicianId);
-        } else {
-            return "successfully coppiedQuestionnaire";
-        }
-    });
+    } else {
+        return Promise.resolve([undefined, "Successfully copied questionnaire"]);
+    }
+}catch(error){
+    return Promise.resolve([error, undefined]);
+}
 };
 
 module.exports.findQuestionnaireById = findQuestionnaireById;
