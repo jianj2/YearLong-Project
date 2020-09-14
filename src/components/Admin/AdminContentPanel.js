@@ -16,7 +16,7 @@ import React from "react";
 // Import components.
 import AdminManageQuestionnaires from "./AdminManageQuestionnaires";
 import SSQInstructionsList from "./SSQInstructionsList";
-import Organisation from "./Organisation";
+import OrganisationList from "./OrganisationList";
 
 //import style
 import "../../styles/contentpanel.css";
@@ -36,7 +36,7 @@ const AdminContentPanel = (props) => {
     } else if (props.active === 3) {
         return (
             <div className="content-container">
-                <Organisation />
+                <OrganisationList />
             </div>
         );
     } else if (props.active === 4) {
