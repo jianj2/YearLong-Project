@@ -272,15 +272,15 @@ export const adminCopyQuestionnaire = async (questionnaire) => {
 
 // get specific questionnaire
 
-export const getAndSetSpecificQuestionnaire = async (CQid, setState) => {
-    let res = await fetch(`${api}/questionnaire/getQuestionnaire/${CQid}`, {
+export const getQuestionnaireById = async (Id) => {
+    let res = await fetch(`${api}/questionnaire/${Id}`, {
         method: "GET",
         headers: {
             ...header
         },
     });
     let json = await res.json();
-    setState(json);
+
     return json;
 };
 

@@ -23,7 +23,7 @@ import ParentReviewSubmission from "../ParentReviewSubmission";
 import FormParentDetails from "../FormParentDetails";
 
 // Import Utils
-import  { getClinicianQuestionnaires, getQuestionnaire, completeQuestionnaire, getStandardisedQuestionnaires }  from "../../utils/api";
+import  { getClinicianQuestionnaires, getQuestionnaireById, completeQuestionnaire, getStandardisedQuestionnaires }  from "../../utils/api";
 
 // Import Styles
 import "../../styles/clinicianDoTheTest.css";
@@ -116,14 +116,15 @@ const DoTheTestContainer = () => {
         setQuestionnaireData(temp);
     };
 
-    const onClickQuestion = (questionnaireId) => {
+    const onClickQuestion = async (questionnaireId) => {
         console.log("questionnaire clicked", questionnaireId);
         setWizardStep(0);
-        getQuestionnaire(questionnaireId).then((res) => {
+        const response = await getQuestionnaireById(questionnaireId);
             // check if the questionnaire is available.
-            if (res.statusCode === 200) {
+            if (response.statusCode === 200) {
+                const questionnaire = response.data;
                 let tempResponse = [];
-                res.data.sections.forEach((section, sectionIndex) => {
+                questionnaire.sections.forEach((section, sectionIndex) => {
                     tempResponse[sectionIndex] = [];
                     section.scenarios.forEach((scenario, scenarioIndex) => {
                         tempResponse[sectionIndex][scenarioIndex] = [];
@@ -142,9 +143,11 @@ const DoTheTestContainer = () => {
                 // Updating the state using the initial data and the questionnaire
                 // retrieved from the server.
                 setQuestionnaireData(tempResponse);
-                setSelectedQuestionnaire(res.data);
+                setSelectedQuestionnaire(questionnaire);
+            }else{
+                console.log("Questionnaire is not available");
             }
-        });
+    
     };
 
     const getPersonalDetails = (data) => {

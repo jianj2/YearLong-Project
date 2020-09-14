@@ -29,8 +29,9 @@ const AdminViewStandardQuestionnaire = (props)=>{
     useEffect(()=>{
 
         const prepareQuestionnaire = async () => {
-            const questionnaire = await API.getAndSetSpecificQuestionnaire(props.questionnaireID,setSelectedQuestionnaire);
-            if (questionnaire != null){
+            const response = await API.getQuestionnaireById(props.questionnaireID,setSelectedQuestionnaire);
+            if (response.statusCode === 200){
+                let questionnaire = response.data;
                 setSelectedQuestionnaire(questionnaire);
                 let emptyResponse = [];
                 console.log(`current q: ${questionnaire.title}`);

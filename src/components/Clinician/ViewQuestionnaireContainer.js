@@ -34,8 +34,9 @@ const ViewQuestionnaireContainer = (props) => {
     useEffect(() =>{
     
         const prepareQuestionnaire = async () => {
-            const questionnaire = await API.getAndSetSpecificQuestionnaire(props.questionnaireID,setSelectedQuestionnaire);
-            if (questionnaire != null){
+            const response = await API.getQuestionnaireById(props.questionnaireID);
+            if (response.statusCode === 200){
+                const questionnaire = response.data;
                 setSelectedQuestionnaire(questionnaire);
                 let emptyResponse = [];
                 console.log(`current q: ${questionnaire.title}`);
