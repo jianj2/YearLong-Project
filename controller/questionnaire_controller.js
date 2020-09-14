@@ -14,16 +14,18 @@ const { v1: uuidv1 } = require("uuid");
 
 const { extractUserEmail } = require("../utils/jwtUtils");
 const {
-    attachQuestionnaireToClinician,
+    findQuestionnaireById,
     findQuestionnaireForClinician,
+    findStandardisedQuestionnaires,
     generateNewCustomisedQuestionnaire,
     generateNewStandardisedQuestionnaire,
     saveNewStandardisedQuestionnaire,
+    saveNewCustomisedQuestionnaire,
     updateQuestionnaireOnDatabase,
     editCustomisedQuestionnaire,
     deleteQuestionnaireFromDatabase,
-    generateCopy,
-
+    deleteCustomisedQuestionnaireFromDatabase,
+    copyQuestionnaireToDatabase,
 } = require("../service/questionnaireService");
 
 const sendAuthroisationError = (res) => {
@@ -32,30 +34,18 @@ const sendAuthroisationError = (res) => {
     );
 };
 
-const Questionnaire = mongoose.model("questionnaire");
-const Clinician = mongoose.model("clinician");
-
-// Get all questionnaires
-const getAllQuestionnaire = function (req, res) {
-    Questionnaire.find(function (err, allQuestionnaires) {
-        if (!err) {
-            res.send(allQuestionnaires);
-        } else {
-            res.send(JSON.stringify(err));
-        }
-    });
-};
-
-// Get questionnaires
+// Get a questionnaire by ID from request
 const getQuestionnaire = async (req, res) => {
     const questionnaireId = req.params.questionnaireId;
     console.log("get questionnaire:", questionnaireId);
-    const {err, foundQuestionnaire} = await findQuestionnaireById(questionnaireId);
+    const [err, foundQuestionnaire] = await findQuestionnaireById(
+        questionnaireId
+    );
 
-    if (foundQuestionnaire != null){
-        res.send({ statusCode: 200, message: "Valid", data: questionnaire });
-    }else{
-        res.send({ statusCode: 400, message: "Invalid", data: err });
+    if (foundQuestionnaire != null && !err) {
+        res.status(200).send({ message: "Valid", data: foundQuestionnaire });
+    } else {
+        res.status(400).send({ message: err.message, data: undefined });
     }
 };
 
@@ -63,11 +53,17 @@ const getQuestionnaire = async (req, res) => {
 const getClinicianQuestionnaires = async (req, res) => {
     const clinicianId = req.query.clinicianId;
     if (extractUserEmail(req) === clinicianId) {
-        const {err, foundQuestionnaires} = await findQuestionnaireForClinician(clinicianId);
-        if (foundQuestionnaires != null){
-            res.send(foundQuestionnaires);
-        }else{
-            res.send(JSON.stringify(err));
+        const foundQuestionnaires = await findQuestionnaireForClinician(
+            clinicianId
+        );
+        if (foundQuestionnaires != null) {
+            res.send(JSON.stringify(foundQuestionnaires));
+        } else {
+            res.send(
+                JSON.stringify(
+                    "an error occurred while getting customised questionnaires"
+                )
+            );
         }
     } else {
         sendAuthroisationError(res);
@@ -78,11 +74,13 @@ const getClinicianQuestionnaires = async (req, res) => {
 const addEmptyQuestionnaire = async (req, res) => {
     const userEmail = extractUserEmail(req);
     const clinicianId = req.body.clinicianId;
-    const uuid = uuidv1();
-
     if (userEmail === clinicianId) {
+        const uuid = uuidv1();
         let newQuestionnaire = generateNewCustomisedQuestionnaire(uuid);
-        const message = await saveNewCustomisedQuestionnaire(newQuestionnaire, clinicianId);
+        const message = await saveNewCustomisedQuestionnaire(
+            newQuestionnaire,
+            clinicianId
+        );
         res.send(JSON.stringify(message));
     } else {
         sendAuthroisationError(res);
@@ -94,15 +92,19 @@ const addStandardisedQuestionnaire = async (req, res) => {
     const uuid = uuidv1();
     const newQuestionnaire = generateNewStandardisedQuestionnaire(uuid);
     const message = await saveNewStandardisedQuestionnaire(newQuestionnaire);
-   res.send(JSON.stringify(message));
+    res.send(JSON.stringify(message));
 };
 
 // edit a customised questionnaire
-const editQuestionnaire = async (req, res) =>  {
+const editQuestionnaire = async (req, res) => {
     const userEmail = extractUserEmail(req);
     const questionnaireId = req.body.questionnaire.questionnaireId;
     const editedQuestionnaire = req.body.questionnaire;
-    const message = await editCustomisedQuestionnaire(userEmail, questionnaireId, editedQuestionnaire);
+    const message = await editCustomisedQuestionnaire(
+        userEmail,
+        questionnaireId,
+        editedQuestionnaire
+    );
     res.send(JSON.stringify(message));
 };
 
@@ -110,7 +112,11 @@ const editQuestionnaire = async (req, res) =>  {
 const editStandardQuestionnaire = async (req, res) => {
     const questionnaireId = req.body.questionnaire.questionnaireId;
     const editedQuestionnaire = req.body.questionnaire;
-    const message = await updateQuestionnaireOnDatabase(questionnaireId, editedQuestionnaire, res);
+    const message = await updateQuestionnaireOnDatabase(
+        questionnaireId,
+        editedQuestionnaire,
+        res
+    );
     res.send(JSON.stringify(message));
 };
 
@@ -119,7 +125,11 @@ const deleteQuestionnaire = async (req, res) => {
     const questionnaireId = req.body.CQid;
     const userEmail = extractUserEmail(req);
     const clinicianId = req.body.clinicianId;
-    const message = await deleteCustomisedQuestionnaireFromDatabase(questionnaireId, userEmail, clinicianId); 
+    const message = await deleteCustomisedQuestionnaireFromDatabase(
+        questionnaireId,
+        userEmail,
+        clinicianId
+    );
     res.send(JSON.stringify(message));
 };
 
@@ -131,16 +141,18 @@ const deleteStandardisedQuestionnaire = async (req, res) => {
 };
 
 // gets all standardised questionnaires
-const getStandardisedQuestionnaires = function (req, res) {
-   const {err, questionnaires} = await findStandardisedQuestionnaires();
-   if (!err && questionnaires != null) {
-    res.send({
-        statusCode: 200, message: "Valid", data: questionnaires });
-} else {
-    res.send({ statusCode: 400, message: "Invalid", data: err });
-}
-}
-  
+const getStandardisedQuestionnaires = async (req, res) => {
+    const questionnaires = await findStandardisedQuestionnaires();
+    if (questionnaires != null) {
+        res.send({
+            statusCode: 200,
+            message: "Valid",
+            data: questionnaires,
+        });
+    } else {
+        res.send({ statusCode: 400, message: "Invalid", data: "" });
+    }
+};
 
 //Copy a questionnaire
 const copyQuestionnaire = async (req, res) => {
@@ -151,15 +163,16 @@ const copyQuestionnaire = async (req, res) => {
     const clinicianId = req.body.clinicianId;
 
     const message = await copyQuestionnaireToDatabase(
-        uuid, copiedQuestionnaire, copyToCustomisedQuestionnaire, clinicianId
+        uuid,
+        copiedQuestionnaire,
+        copyToCustomisedQuestionnaire,
+        clinicianId
     );
 
     res.send(JSON.stringify(message));
-   
 };
 
 module.exports.copyQuestionnaire = copyQuestionnaire;
-module.exports.getAllQuestionnaire = getAllQuestionnaire;
 module.exports.getQuestionnaire = getQuestionnaire;
 module.exports.addEmptyQuestionnaire = addEmptyQuestionnaire;
 module.exports.addStandardisedQuestionnaire = addStandardisedQuestionnaire;

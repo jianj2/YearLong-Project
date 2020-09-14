@@ -52,9 +52,7 @@ router.post('/add', checkJwt, questionnaire_controller.addEmptyQuestionnaire);
 router.post('/addStandard', questionnaire_controller.addStandardisedQuestionnaire);
 router.post('/edit', checkJwt, questionnaire_controller.editQuestionnaire);
 router.post('/editStandard', questionnaire_controller.editStandardQuestionnaire);
-
 router.post('/copy', questionnaire_controller.copyQuestionnaire);
-//Backdoor
-//router.get('/', questionnaire_controller.getAllQuestionnaire);
+
 
 module.exports = router;
