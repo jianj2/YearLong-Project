@@ -13,7 +13,7 @@
 // Import Libraries
 const nodemailer = require('nodemailer');
 const path = require("path");
-const { generateReport } = require('../controller/report_controller')
+const { generateReport } = require('./reportService')
 
 // Define Transporter
 const transporter = nodemailer.createTransport({
