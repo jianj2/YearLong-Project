@@ -13,6 +13,7 @@ const mongoose = require('mongoose');
 const clinicianSchema = mongoose.Schema({
     clinicianId: { type: String, required:true, lowercase:true, unique:true, trim:true},
     name: { type: String, required:true, trim:true},
+    organisation : {type:String},
     email: {type: String, required:true, unique:true },
     questionnaires: [String],
 });
