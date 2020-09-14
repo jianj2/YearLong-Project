@@ -228,7 +228,6 @@ const updateInstructionByType = function (req, res) {
         }
     );
 };
-
 const getOrganisations = function (req, res) {
     Clinician.find({}, function (err, clinicians) {
         if (!err && clinicians != null) {
@@ -248,15 +247,22 @@ const getOrganisations = function (req, res) {
     });
 };
 const getOrganisationClinicians = function (req, res) {
-    console.log("1");
+    console.log("test for getOrganisationClinicians");
     Clinician.find({organisation: req.params.organisationName}, function (err, clinicians) {
         if (!err && clinicians != null) {
-            res.send(JSON.stringify(clinicians));
+            const summary = clinicians.map((clinician) => {
+                return {
+                    organisation: clinician.organisation,
+                    clinicianId: clinician.clinicianId,
+                };
+            });
+            res.send(JSON.stringify(summary));
         } else {
             res.send(JSON.stringify(err));
         }
     });
 };
+
 
 
 module.exports.loginAdmin = loginAdmin;
