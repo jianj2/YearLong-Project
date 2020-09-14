@@ -179,7 +179,7 @@ const updateQuestionnaireOnDatabase = async (
     
 };
 
-const editCustomisedQuestionnaire = (
+const editCustomisedQuestionnaire = async (
     userEmail,
     questionnaireId,
     editedQuestionnaire
@@ -205,7 +205,7 @@ const editCustomisedQuestionnaire = (
 };
 
 // remove a questionnaire id from the clincian's list of customised questionnaires
-const detachQuestionnaireFromClinician = (questionnaireId, clinicianId) => {
+const detachQuestionnaireFromClinician = async (questionnaireId, clinicianId) => {
     try{
    await Clinician.updateOne(
         { clinicianId },

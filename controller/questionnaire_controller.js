@@ -34,6 +34,14 @@ const sendAuthroisationError = (res) => {
     );
 };
 
+const sendJSONResponse = (res, data, error, errorCode) => {
+    if (data != null && !err) {
+        res.status(200).send(JSON.stringify(data));
+    } else {
+        res.status(errorCode).send(JSON.stringify(error.message));
+    }
+};
+
 // Get a questionnaire by ID from request
 const getQuestionnaire = async (req, res) => {
     const questionnaireId = req.params.questionnaireId;
@@ -45,7 +53,7 @@ const getQuestionnaire = async (req, res) => {
     if (foundQuestionnaire != null && !err) {
         res.status(200).send({ message: "Valid", data: foundQuestionnaire });
     } else {
-        res.status(400).send({ message: err.message, data: undefined });
+        res.status(404).send({ message: err.message, data: undefined });
     }
 };
 
@@ -56,11 +64,7 @@ const getClinicianQuestionnaires = async (req, res) => {
         const [err, foundQuestionnaires] = await findQuestionnaireForClinician(
             clinicianId
         );
-        if (foundQuestionnaires != null && !err) {
-            res.status(200).send(JSON.stringify(foundQuestionnaires));
-        } else {
-            res.status(400).send(JSON.stringify(err.message));
-        }
+        sendJSONResponse(res, foundQuestionnaires, err, 404);
     } else {
         sendAuthroisationError(res);
     }
@@ -73,11 +77,11 @@ const addEmptyQuestionnaire = async (req, res) => {
     if (userEmail === clinicianId) {
         const uuid = uuidv1();
         let newQuestionnaire = generateNewCustomisedQuestionnaire(uuid);
-        const message = await saveNewCustomisedQuestionnaire(
+        const [err, message] = await saveNewCustomisedQuestionnaire(
             newQuestionnaire,
             clinicianId
         );
-        res.send(JSON.stringify(message));
+        sendJSONResponse(res, message, err, 500);
     } else {
         sendAuthroisationError(res);
     }
@@ -87,8 +91,10 @@ const addEmptyQuestionnaire = async (req, res) => {
 const addStandardisedQuestionnaire = async (req, res) => {
     const uuid = uuidv1();
     const newQuestionnaire = generateNewStandardisedQuestionnaire(uuid);
-    const message = await saveNewStandardisedQuestionnaire(newQuestionnaire);
-    res.send(JSON.stringify(message));
+    const [err, message] = await saveNewStandardisedQuestionnaire(
+        newQuestionnaire
+    );
+    sendJSONResponse(res, message, err, 500);
 };
 
 // edit a customised questionnaire
@@ -96,24 +102,24 @@ const editQuestionnaire = async (req, res) => {
     const userEmail = extractUserEmail(req);
     const questionnaireId = req.body.questionnaire.questionnaireId;
     const editedQuestionnaire = req.body.questionnaire;
-    const message = await editCustomisedQuestionnaire(
+    const [err, message] = await editCustomisedQuestionnaire(
         userEmail,
         questionnaireId,
         editedQuestionnaire
     );
-    res.send(JSON.stringify(message));
+
+    sendJSONResponse(res, message, err, 500);
 };
 
 // edit a standardised questionnaire
 const editStandardQuestionnaire = async (req, res) => {
     const questionnaireId = req.body.questionnaire.questionnaireId;
     const editedQuestionnaire = req.body.questionnaire;
-    const message = await updateQuestionnaireOnDatabase(
+    const [err, message] = await updateQuestionnaireOnDatabase(
         questionnaireId,
-        editedQuestionnaire,
-        res
+        editedQuestionnaire
     );
-    res.send(JSON.stringify(message));
+    sendJSONResponse(res, message, err, 500);
 };
 
 // Delete customised questionnaire
@@ -121,33 +127,28 @@ const deleteQuestionnaire = async (req, res) => {
     const questionnaireId = req.body.CQid;
     const userEmail = extractUserEmail(req);
     const clinicianId = req.body.clinicianId;
-    const message = await deleteCustomisedQuestionnaireFromDatabase(
+    const [err, message] = await deleteCustomisedQuestionnaireFromDatabase(
         questionnaireId,
         userEmail,
         clinicianId
     );
-    res.send(JSON.stringify(message));
+    sendJSONResponse(res, message, err, 500);
 };
 
 //Delete standardised questionnaire
 const deleteStandardisedQuestionnaire = async (req, res) => {
     const questionnaireId = req.body.questionnaireID;
-    const message = await deleteQuestionnaireFromDatabase(questionnaireId, "");
-    res.send(JSON.stringify(message));
+    const [err, message] = await deleteQuestionnaireFromDatabase(
+        questionnaireId,
+        ""
+    );
+    sendJSONResponse(res, message, err, 500);
 };
 
 // gets all standardised questionnaires
 const getStandardisedQuestionnaires = async (req, res) => {
     const [err, questionnaires] = await findStandardisedQuestionnaires();
-    if (questionnaires != null && !err) {
-        res.status(200).send({
-            statusCode: 200,
-            message: "Valid",
-            data: questionnaires,
-        });
-    } else {
-        res.status(400).send({ message: err.message, data: undefined });
-    }
+    sendJSONResponse(res, questionnaires, err, 404);
 };
 
 //Copy a questionnaire
@@ -158,14 +159,14 @@ const copyQuestionnaire = async (req, res) => {
         req.body.copyToCustomisedQuestionnaire;
     const clinicianId = req.body.clinicianId;
 
-    const message = await copyQuestionnaireToDatabase(
+    const [err, message] = await copyQuestionnaireToDatabase(
         uuid,
         copiedQuestionnaire,
         copyToCustomisedQuestionnaire,
         clinicianId
     );
 
-    res.send(JSON.stringify(message));
+    sendJSONResponse(res, message, err, 500);
 };
 
 module.exports.copyQuestionnaire = copyQuestionnaire;
