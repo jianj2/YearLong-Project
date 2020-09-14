@@ -1,6 +1,6 @@
 import React, {Component, useState} from 'react';
 import {adminLogin, findPassword} from "../utils/api";
-
+import { useAuth0 } from "../utils/react-auth0-spa";
 import logoComplete from "../assets/logo_complete.png";
 import {
     Input,
@@ -19,7 +19,7 @@ import "../styles/clinician.css"
 
 const FindPassword = () => {
     const { register, handleSubmit, errors } = useForm();
-
+    const {loginWithRedirect} = useAuth0();
     const [open, setOpen] = useState(false);
 
     const [email, setEmail] = useState();
@@ -30,9 +30,14 @@ const FindPassword = () => {
         setOpen(true);
     }
 
-    const handleClose = () => {
+    const handleClose = async () => {
         setOpen(false);
-        // window.location.href = 'https://pediatric-scale.au.auth0.com/login/';
+        await loginWithRedirect({
+
+            redirect_uri: process.env.REDIRECT_LINK,
+
+        });
+
     };
 
         return (
@@ -47,20 +52,20 @@ const FindPassword = () => {
                             <InputLabel>Email</InputLabel>
                             <Input
                                 name="email"
-                                placeholder="Write the admin username"
+                                placeholder="Enter your email"
                                 onChange={(event)=>{setEmail(event.target.value)}}
                                 required={true}
                             />
                             <FormHelperText>
                                 {errors.username
                                     ? errors.username.message
-                                    : "Please enter the admin username."}
+                                    : "Please enter the registered email ."}
                             </FormHelperText>
                             <br />
                             <button
                                 className={errors.code ? "button-disabled" : "button"}
                                 onClick={() => {findEmail(email)}}>
-                                E N T E R
+                                S U B M I T
                             </button>
                             {errors.code && <span>{errors.code.message}</span>}
                         </FormControl>
