@@ -100,7 +100,7 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
             doc.font('Helvetica').fontSize(12).text("Section average: " + section.score, midMargin, spacing);
             spacing = spacing + 30;
 
-            section.scenarios.map((scenario, scenarioIndex) => {
+            section.scenarios.map((scenario) => {
                 spacing = addPage(doc, spacing, docHeight)
 
                 // Writing the description for each scenario.
@@ -170,7 +170,7 @@ const getQuestionnaireResponseJoin = function (questionnaire, questionnaireData,
     questionnaire.sections.forEach((section, sectionIndex) => {
         // ADD SCORE TO THE SECTION
 
-        if ( sharedSections === null || sharedSections[sectionIndex].isVisible ) {
+        if (sharedSections === null || sharedSections[sectionIndex].isVisible) {
             result.sections[sectionIndex].score = sectionScores[sectionIndex]
 
             section.scenarios.forEach((scenario, scenarioIndex) => {
@@ -179,7 +179,7 @@ const getQuestionnaireResponseJoin = function (questionnaire, questionnaireData,
                     let valueToSet = questionnaireData[realSectionIndex][scenarioIndex][questionIndex].value;
 
                     if (!valueToSet) {
-                        if (question.isMCQ){
+                        if (question.isMCQ) {
                             valueToSet = "Not Applicable."
                         } else {
                             valueToSet = questionnaireData[realSectionIndex][scenarioIndex][questionIndex].supplementaryValue;
@@ -256,26 +256,25 @@ const calculateScore = function (questionnaireData, calculateAverage, section_sc
 // This function is used generate the csv report.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const createcsv = function (questionnaireData, personalDetails, sharedSections) {
-    let toWrite = "name, date, right_device_type, left_device_type, completed_by, " +
-        "section_title, question, slider_value, mcq_value_1, mcq_value_2,\n"
-    let toUpload = Buffer.from(toWrite, 'utf8');
-
-    let result = questionnaireData;
-    let realSectionIndex = 0
+    let toWrite = `name,date,right_device_type,left_device_type,completed_by,` +
+        `section,question,response\n`
+    let realSectionIndex = 0;
+    console.log(JSON.stringify(questionnaireData))
     questionnaireData.sections.forEach((section, sectionIndex) => {
         // ADD SCORE TO THE SECTION
-
+        //questionnaireData[realSectionIndex][scenarioIndex][questionIndex].value;
         if (sharedSections === null || sharedSections[sectionIndex].isVisible) {
-            section.scenarios.forEach((scenario, scenarioIndex) => {
-                scenario.questions.forEach((question, questionIndex) => {
-                    // ADD RESPONSE TO THE QUESTION
-                    result.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].response =
-                        questionnaireData[realSectionIndex][scenarioIndex][questionIndex].value;
+            section.scenarios.forEach((scenario , scenarioIndex)=> {
+                scenario.questions.forEach(question => {
+                    toWrite += `${personalDetails.name},${personalDetails.date},${personalDetails.rightDeviceType},${personalDetails.leftDeviceType},${personalDetails.completedBy},` +
+                        `${section.title},${scenario.description},${question.response}\n`
                 })
             });
             realSectionIndex++;
         }
     });
+    console.log("Towrite", toWrite)
+    let toUpload = Buffer.from(toWrite, 'utf8');
     return toUpload
 }
 
