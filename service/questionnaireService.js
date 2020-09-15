@@ -5,10 +5,11 @@
  * @date created: 13 Sep 2020
  * @authors: Cary Jin
  *
- * The questionnaire service handles the domain logic
- *  related to adding/removing/updating questionnaires
+ * The questionnaire service handles the domain and datasource
+ * logic related to adding/removing/updating questionnaires. 
  *
  */
+const { v1: uuidv1 } = require("uuid");
 
 const mongoose = require("mongoose");
 const Questionnaire = mongoose.model("questionnaire");
@@ -50,6 +51,7 @@ const findQuestionnaireForClinician = async (clinicianId) => {
     }
 };
 
+// find all standardised questionnaires
 const findStandardisedQuestionnaires = async () => {
     try {
         const questionnaires = await Questionnaire.find({ isStandard: true });
@@ -285,7 +287,7 @@ const copyQuestionnaireToDatabase = async (copiedQuestionnaire,
             !copyToCustomisedQuestionnaire
         );
         await newQuestionnaire.save();
-        if (clincianId) {
+        if (clinicianId) {
             return attachQuestionnaireToClinician(uuid, clinicianId);
         } else {
             return Promise.resolve([

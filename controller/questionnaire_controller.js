@@ -5,11 +5,11 @@
  * @date created: 10 May 2020
  * @authors: Uvin Abeysinghe, Cary
  *
- * The questionnaire_controller is used for defining the functionality of api calls related to questionnaires.
+ * The questionnaire controller is used for defining 
+ * the functionality of API calls related to questionnaires.
  *
  */
 
-const mongoose = require("mongoose");
 const { v1: uuidv1 } = require("uuid");
 
 const { extractUserEmail } = require("../utils/jwtUtils");
