@@ -122,17 +122,18 @@ const HomeParents = ({ match }) => {
     // This is called when the component first mounts.
     useEffect(() => {
         // Server call to get the questionnaireId
-        API.getShareDetails(match.params.shareId).then((response) => {
-            if (response.statusCode === 200) {
+        API.getShareDetails(match.params.shareId).then((shareResponse) => {
+            if (shareResponse.statusCode === 200) {
 
             // Server call to get the questionnaire.
-            setClinicianEmail(response.data.clinicianEmail);
-            setReadOnly(response.data.readOnly);
-            API.getQuestionnaireById(response.data.questionnaireId).then((res) => {
+            setClinicianEmail(shareResponse.data.clinicianEmail);
+            setReadOnly(shareResponse.data.readOnly);
+            API.getQuestionnaireById(shareResponse.data.questionnaireId).then((res) => {
                 const [statusCode, data] = res;
                 // Define initial values for the Questionnaire
                 if (statusCode === 200 ){
-                    updateSections(data, data.shareSection);
+                    updateSections(data, shareResponse.data.shareSection);
+
                     let tempResponse = [];
                     data.sections.forEach((section, sectionIndex) => {
                         tempResponse[sectionIndex] = [];
