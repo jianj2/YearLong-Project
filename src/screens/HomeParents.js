@@ -270,9 +270,6 @@ const HomeParents = ({ match }) => {
                     <button id="instructions" className="button" onClick={goToInstructions}>
                         I N S T R U C T I O N S
                     </button>
-                    <button id="back" className="button" onClick={prevStep}>
-                        B A C K
-                    </button>
                 </div>
 
                 <div className="parents-container">
