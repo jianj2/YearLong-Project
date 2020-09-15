@@ -311,25 +311,16 @@ export const getQuestionnaireById = async (Id) => {
 // get clinician questionnaire list
 
 export const getClinicianQuestionnaires = async (accessToken, clinicianId) => {
-    const url = `${api}/questionnaire/clinician?clinicianId=${clinicianId}`;
-    
-    let response = await fetch(url, {
-        headers: createHeader(accessToken)
-    });
-    let json = await response.json();
+    const url = `questionnaire/clinician?clinicianId=${clinicianId}`;    
+    return await sendRequest("GET", url, undefined, accessToken);
 
-    return json;
 };
 
 // get standardised questionnaires
 export const getStandardisedQuestionnaires = async () => {
-    const url = `${api}/questionnaire/standardised`;
-    let response = await fetch(url, {
-        headers: header,
-    });
-    let json = await response.json();
+    const url = `questionnaire/standardised`;
+    return await sendRequest("GET", url);
 
-    return json;
 };
 
 //get standardised questionnaires(admin)

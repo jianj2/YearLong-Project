@@ -81,7 +81,7 @@ const ManageQuestionnaires = (props) => {
         if(isAuthenticated && token !== ""){
 
         async function retrieveCustomisedQuestionnaires() {
-            const customisedQuestionnaires = await API.getClinicianQuestionnaires(token, user.name);
+            const [statusCode, customisedQuestionnaires] = await API.getClinicianQuestionnaires(token, user.name);
             console.log(customisedQuestionnaires);
             const today = formatDate();
             const customisedQuestionnairesElement = customisedQuestionnaires.map((q) => {
@@ -93,9 +93,11 @@ const ManageQuestionnaires = (props) => {
         }
         async function retrieveStandardisedQuestionnaires(){
 
-            const response = await API.getStandardisedQuestionnaires();
-            if (response.statusCode === 200){
-                setStandardisedQuestionnaires(response.data);
+            const [statusCode, data] = await API.getStandardisedQuestionnaires();
+            if (statusCode === 200){
+                setStandardisedQuestionnaires(data);
+            }else{
+                console.error(data);
             }
         }
         retrieveStandardisedQuestionnaires();

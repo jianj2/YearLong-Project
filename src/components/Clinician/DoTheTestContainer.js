@@ -65,16 +65,20 @@ const DoTheTestContainer = () => {
     // This is called whenever "user" changes
     useEffect(() => {
         async function retrieveStandardisedQuestionnaires() {
-            const response = await getStandardisedQuestionnaires();
-            if (response.statusCode === 200) {
-                setStandardisedQuestionnaires(response.data);
+            const [statusCode, data] = await getStandardisedQuestionnaires();
+            if (statusCode === 200) {
+                setStandardisedQuestionnaires(data);
+            }else{
+                console.error(data);
             }
         }
         async function retrieveCustomisedQuestionnaires() {
-            getClinicianQuestionnaires(token, user.name).then((res) => {
-                console.log(res);
-                setQuestionnaires(res);
-            });
+            const [statusCode, data] = await getClinicianQuestionnaires(token, user.name);
+            if (statusCode === 200){
+                setQuestionnaires(data);
+            }else{
+                console.error(data);
+            }
         }
         if (user && token !== "") {
             retrieveCustomisedQuestionnaires();
