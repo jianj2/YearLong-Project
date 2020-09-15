@@ -259,23 +259,21 @@ const createcsv = function (questionnaireData, personalDetails, sharedSections) 
     let toWrite = `name,date,right_device_type,left_device_type,completed_by,` +
         `section,question,response\n`
     let realSectionIndex = 0;
-    console.log(JSON.stringify(questionnaireData))
     questionnaireData.sections.forEach((section, sectionIndex) => {
         // ADD SCORE TO THE SECTION
         //questionnaireData[realSectionIndex][scenarioIndex][questionIndex].value;
         if (sharedSections === null || sharedSections[sectionIndex].isVisible) {
             section.scenarios.forEach((scenario , scenarioIndex)=> {
                 scenario.questions.forEach(question => {
+                    let questionDescription = (scenario.description).replace(/,/g, "")
                     toWrite += `${personalDetails.name},${personalDetails.date},${personalDetails.rightDeviceType},${personalDetails.leftDeviceType},${personalDetails.completedBy},` +
-                        `${section.title},${scenario.description},${question.response}\n`
+                        `${section.title},${questionDescription},${question.response}\n`
                 })
             });
             realSectionIndex++;
         }
     });
-    console.log("Towrite", toWrite)
-    let toUpload = Buffer.from(toWrite, 'utf8');
-    return toUpload
+    return Buffer.from(toWrite, 'utf8')
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
