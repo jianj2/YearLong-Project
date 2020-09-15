@@ -5,7 +5,7 @@
  * @date created: 26 August 2020
  * @authors: Waqas
  *
- * The email_controller is used for handling all of email
+ * The email service is used for handling all of email
  * requests.
  *
  */
@@ -13,7 +13,7 @@
 // Import Libraries
 const nodemailer = require('nodemailer');
 const path = require("path");
-const { generateReport } = require('./report_controller')
+const { generateReport } = require('./reportService')
 
 // Define Transporter
 const transporter = nodemailer.createTransport({

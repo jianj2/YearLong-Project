@@ -41,11 +41,10 @@ const checkJwt = jwt({
 
 // CRUD Routes for Posts
 
-router.get('/getQuestionnaire/:questionnaireId', questionnaire_controller.getQuestionnaireAsync);
 router.get('/clinician/', checkJwt, questionnaire_controller.getClinicianQuestionnaires);
 router.get("/standardised",questionnaire_controller.getStandardisedQuestionnaires);
 
-router.get("/:questionnaireId", questionnaire_controller.getQuestionnaireSync);
+router.get("/:questionnaireId", questionnaire_controller.getQuestionnaire);
 
 router.post('/deleteStandard', questionnaire_controller.deleteStandardisedQuestionnaire);
 router.post('/delete', checkJwt, questionnaire_controller.deleteQuestionnaire);
@@ -53,9 +52,7 @@ router.post('/add', checkJwt, questionnaire_controller.addEmptyQuestionnaire);
 router.post('/addStandard', questionnaire_controller.addStandardisedQuestionnaire);
 router.post('/edit', checkJwt, questionnaire_controller.editQuestionnaire);
 router.post('/editStandard', questionnaire_controller.editStandardQuestionnaire);
-
 router.post('/copy', questionnaire_controller.copyQuestionnaire);
-//Backdoor
-//router.get('/', questionnaire_controller.getAllQuestionnaire);
+
 
 module.exports = router;

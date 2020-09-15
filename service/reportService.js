@@ -5,8 +5,8 @@
  * @date created: 26 August 2020
  * @authors: Waqas
  *
- * The email_controller is used for handling all of email
- * requests.
+ * The report service is used for handling the generation
+ * of reports from questionnaire responses.
  *
  */
 
