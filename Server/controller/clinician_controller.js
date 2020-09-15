@@ -13,7 +13,11 @@ const mongoose = require('mongoose');
 
 const Clinician = mongoose.model('clinician');
 
-const { sendResultsEmail } = require('./email_controller')
+const { sendResultsEmail } = require('../service/emailService');
+
+const { extractUserEmail } = require("../utils/jwtUtils");
+
+
 
 // Get all clinician details.
 const getAllClinician = function (req, res) {
@@ -50,10 +54,16 @@ const completeQuestionnaire = function (req, res) {
     let clinicianEmail  = req.body.clinicianEmail;
     let personalDetails  = req.body.personalDetails;
     let questionnaireId  = req.body.questionnaireId;
-
-    sendResultsEmail(questionnaireId, questionnaireData, clinicianEmail, personalDetails)
+    const userEmail = extractUserEmail(req);
+    if(userEmail === clinicianEmail){
+        sendResultsEmail(questionnaireId, questionnaireData, clinicianEmail, personalDetails)
         .then(emailRes => res.send(emailRes))
-        .catch(emailRej => res.send(emailRej))
+        .catch(emailRej => res.send(emailRej));
+    }else{
+        res.send(JSON.stringify("Authorisation failed."));
+    }
+
+   
 }
 
 

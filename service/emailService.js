@@ -5,7 +5,7 @@
  * @date created: 26 August 2020
  * @authors: Waqas
  *
- * The email_controller is used for handling all of email
+ * The email service is used for handling all of email
  * requests.
  *
  */
@@ -13,7 +13,9 @@
 // Import Libraries
 const nodemailer = require('nodemailer');
 const path = require("path");
-const { generateReport } = require('./report_controller')
+
+const {generateAttachments} = require('./reportService')
+
 
 // Define Transporter
 const transporter = nodemailer.createTransport({
@@ -68,7 +70,6 @@ const sendInvitationEmail = function (createdShare) {
         };
 
 
-
         // Resolves this promise if sendEmail promise is resolved.
         // Rejects this promise if sendEmail promise is rejected.
         sendEmail(mailOptions)
@@ -82,7 +83,7 @@ const sendInvitationEmail = function (createdShare) {
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to send the results PDF report through email.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const sendResultsEmail = function (questionnaireId, questionnaireData, clinicianEmail, personalDetails) {
+const sendResultsEmail = function (questionnaireId, questionnaireData, clinicianEmail, personalDetails, shareId) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
         let mailOptions = {
@@ -105,12 +106,9 @@ const sendResultsEmail = function (questionnaireId, questionnaireData, clinician
                 "    </div>",
         }
 
-        generateReport(questionnaireId, personalDetails, questionnaireData)
-            .then((reportResolved) => {
-                mailOptions.attachments = [{   // stream as an attachment
-                    filename: reportResolved.fileName,
-                    content: reportResolved.content,
-                }];
+        generateAttachments(questionnaireId, personalDetails, questionnaireData, shareId)
+            .then((attachments) => {
+                mailOptions.attachments = attachments;
                 // Resolves this promise if sendEmail promise is resolved.
                 // Rejects this promise if sendEmail promise is rejected.
                 sendEmail(mailOptions)

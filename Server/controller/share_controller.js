@@ -12,51 +12,56 @@
 // Import Libraries
 const mongoose = require("mongoose");
 const Share = mongoose.model("share");
-const {v1: uuidv1} = require("uuid");
+const { v1: uuidv1 } = require("uuid");
+const { extractUserEmail } = require("../utils/jwtUtils");
 
-const {sendInvitationEmail, sendResultsEmail} = require('./email_controller');
-
+const { sendInvitationEmail, sendResultsEmail } = require("../service/emailService");
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to create a new share.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const shareQuestionnaire = function (req, res) {
+    const userEmail = extractUserEmail(req);
+    const clinicianEmail = req.body.clinicianEmail
 
-    // convert to a list of objects
-    let visibleSection = []
-    Object.entries(req.body.shareSection).map((k, v) => {
-        visibleSection.push({title: k[0], isVisible: k[1]});
-    })
+    if (clinicianEmail === userEmail) {
+        // convert to a list of objects
+        let visibleSection = [];
+        Object.entries(req.body.shareSection).map((k, v) => {
+            visibleSection.push({ title: k[0], isVisible: k[1] });
+        });
 
-    const uuid = uuidv1();
-    let newShare = new Share({
-        shareId: uuid,
-        clinicianEmail: req.body.clinicianEmail,
-        patientEmail: req.body.patientEmail,
-        questionnaireId: req.body.questionnaireId,
-        readOnly: req.body.readOnly,
-        message: req.body.message,
-        shareSection: visibleSection,
-    });
+        const uuid = uuidv1();
+        let newShare = new Share({
+            shareId: uuid,
+            clinicianEmail: req.body.clinicianEmail,
+            patientEmail: req.body.patientEmail,
+            questionnaireId: req.body.questionnaireId,
+            readOnly: req.body.readOnly,
+            message: req.body.message,
+            shareSection: visibleSection,
+        });
 
-    newShare.save(function (err, createdShare) {
-        if (!err) {
-            sendInvitationEmail(createdShare)
-                .then(emailRes => {
-                    if (emailRes.success) {
-                        res.send(emailRes);
-                    }
-                })
-                .catch(emailRej => {
-                    if (emailRej.success) {
-                        res.send(emailRej);
-                    }
-                })
-
-        } else {
-            res.send(err);
-        }
-    })
+        newShare.save(function (err, createdShare) {
+            if (!err) {
+                sendInvitationEmail(createdShare)
+                    .then((emailRes) => {
+                        if (emailRes.success) {
+                            res.send(emailRes);
+                        }
+                    })
+                    .catch((emailRej) => {
+                        if (emailRej.success) {
+                            res.send(emailRej);
+                        }
+                    });
+            } else {
+                res.send(err);
+            }
+        });
+    }else{
+        res.send("Authroisation faiiled");
+    }
 };
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -65,14 +70,19 @@ const shareQuestionnaire = function (req, res) {
 const getShareDetails = function (req, res) {
     let shareId = req.params.shareId;
 
-    Share.findOne({shareId}, function (
-        err,
-        share
-    ) {
+    Share.findOne({ shareId }, function (err, share) {
         if (!err && share != null) {
-            res.send({statusCode: 200, message: "Valid ShareId", data: share});
+            res.send({
+                statusCode: 200,
+                message: "Valid ShareId",
+                data: share,
+            });
         } else {
-            res.send({statusCode: 400, message: "Invalid ShareId", data: err})
+            res.send({
+                statusCode: 400,
+                message: "Invalid ShareId",
+                data: err,
+            });
         }
     });
 };
@@ -86,12 +96,18 @@ const completeShare = function (req, res) {
     let personalDetails = req.body.personalDetails;
     let questionnaireId = req.body.questionnaireId;
 
-    sendResultsEmail(questionnaireId, questionnaireData, clinicianEmail, personalDetails)
-        .then(emailRes => {
+    sendResultsEmail(
+        questionnaireId,
+        questionnaireData,
+        clinicianEmail,
+        personalDetails,
+        req.params.shareId
+    )
+        .then((emailRes) => {
             deleteShare(req, res);
-            res.send(emailRes)
+            res.send(emailRes);
         })
-        .catch(emailRej => res.send(emailRej))
+        .catch((emailRej) => res.send(emailRej));
 };
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -99,9 +115,8 @@ const completeShare = function (req, res) {
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const deleteShare = function (req, res) {
     const shareId = req.params.shareId;
-    Share.deleteOne({shareId: shareId});
+    Share.deleteOne({ shareId: shareId });
 };
-
 
 module.exports.sendResultsEmail = sendResultsEmail;
 module.exports.deleteShare = deleteShare;

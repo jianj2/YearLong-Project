@@ -3,219 +3,173 @@
  * DEFINING QUESTIONNAIRE API CALLS CONTROLLER
  * ============================================
  * @date created: 10 May 2020
- * @authors: Uvin Abeysinghe
+ * @authors: Uvin Abeysinghe, Cary
  *
- * The questionnaire_controller is used for defining the functionality of api calls related to questionnaires.
+ * The questionnaire controller is used for defining 
+ * the functionality of API calls related to questionnaires.
  *
  */
 
-const mongoose = require("mongoose");
 const { v1: uuidv1 } = require("uuid");
 
-const Questionnaire = mongoose.model("questionnaire");
-const Clinician = mongoose.model("clinician");
+const { extractUserEmail } = require("../utils/jwtUtils");
+const {
+    findQuestionnaireById,
+    findQuestionnaireForClinician,
+    findStandardisedQuestionnaires,
+    generateNewCustomisedQuestionnaire,
+    generateNewStandardisedQuestionnaire,
+    saveNewStandardisedQuestionnaire,
+    saveNewCustomisedQuestionnaire,
+    updateQuestionnaireOnDatabase,
+    editCustomisedQuestionnaire,
+    deleteQuestionnaireFromDatabase,
+    deleteCustomisedQuestionnaireFromDatabase,
+    copyQuestionnaireToDatabase,
+} = require("../service/questionnaireService");
 
-// Get all questionnaires
-const getAllQuestionnaire = function (req, res) {
-    Questionnaire.find(function (err, allQuestionnaires) {
-        if (!err) {
-            res.send(allQuestionnaires);
-        } else {
-            res.send(err);
-        }
-    });
-};
-
-// Get questionnaires in sync
-const getQuestionnaireSync = function (req, res) {
-    let questionnaireId = req.params.questionnaireId;
-    console.log("get questionnaire sync:", questionnaireId);
-
-    Questionnaire.findOne({ questionnaireId }, function (err, questionnaire) {
-        if (!err && questionnaire != null) {
-
-            res.send({statusCode:200, message:"Valid", data:questionnaire});
-
-        } else {
-            res.send({statusCode:400, message:"Invalid", data:err})
-        }
-    });
-};
-
-// Get questionnaires in async
-const getQuestionnaireAsync = function (req, res) {
-    let questionnaireId = req.params.questionnaireId;
-    console.log("get questionnaire async:", questionnaireId);
-
-    Questionnaire.findOne({ questionnaireId }, function (err, questionnaire) {
-        if (!err && questionnaire != null) {
-
-            res.send(questionnaire);
-
-        } else {
-            res.send("null");
-        }
-    });
-};
-
-
-// given ClinicianId, gets the list of the clinician's customised questionnaires
-
-const getClinicianQuestionnaires = function (req, res) {
-    let clinicianId = req.query.clinicianId;
-
-    Clinician.findOne({ clinicianId: clinicianId }, async function (err, clinician) {
-        if (!err) {
-            const questionnaireIds = clinician.questionnaires;
-            const questionnaires = await Questionnaire.find().where("questionnaireId").in(questionnaireIds).exec();
-            res.send(questionnaires);
-        } else {
-            res.send(err);
-        }
-    });
-};
-
-// add an empty questionnaire
-const addEmptyQuestionnaire = function (req, res) {
-    const uuid = uuidv1();
-
-    let newQuestionnaire = new Questionnaire({
-        questionnaireId: uuid,
-        title: "New Questionnaire",
-        description: "Please click edit to begin with this questionnaire.",
-        isSSQ_Ch: true,
-        sections: [
-            {
-                title: "Section 1 - Speech",
-                scenarios: [
-                    {
-                        description: "You are at Melbourne Uni...",
-                        questions: [
-                            {
-                                isMCQ: false,
-                                rangeOptions: ["Zero", "Ten"],
-                            },
-                            {
-                                description: "If only one option can be true, which of the following is correct?",
-                                isMCQ: true,
-                                MCQOptions: [
-                                    "All of the above is true",
-                                    " Those below the below is true",
-                                    "None of the above is true",
-                                    "Those above the above is true",
-                                ],
-                            },
-                        ],
-                    },
-                ],
-            },
-            { title: "Section 2 - Spatial", scenarios: [] },
-            { title: "Section 3 - Quality", scenarios: [] },
-        ],
-        isStandard: req.body.isStandard,
-    });
-
-    newQuestionnaire.save(function (err, createdQuestionnaire) {
-        console.log("added customised questionnaire:", uuid, JSON.stringify(req.body));
-
-        res.send({
-            code: 200,
-            message: "successfully add new questionnaire!",
-            uuid: uuid,
-        });
-    });
-
-    // update specific clinician questionnaire
-    let clinicianId = req.body.clinicianId;
-
-    Clinician.updateOne({ clinicianId: clinicianId }, { $push: { questionnaires: uuid } }, (err, raw) => {
-        return;
-    });
-};
-
-// edit a questionnaire
-// TODO: Receive an actual questionnaire from req.body, rather than creating a boiler plate.
-const editQuestionnaire = function (req, res) {
-    const questionnaireId = req.body.questionnaire.questionnaireId;
-    const editedQuestionnaire = req.body.questionnaire;
-    Questionnaire.replaceOne({ questionnaireId: questionnaireId }, editedQuestionnaire, (err, raw) => {
-        if (!err) {
-            res.send("successfully edit");
-            // console.log('here')
-        } else {
-            res.send(err);
-        }
-    });
-};
-
-// Maybe used later for making incremental changes in db.
-const editQuestionnaireQuestion = function (req, res) {
-    console.log("editing questionnaire");
-
-    //   const writeResult = Questionnaire.updateOne({questionnaireId: req.body.questionnaireId}, {$addToSet: {"sections": {title: "new section 26",
-    //      scenarios: [] }} }, (err, raw) => {console.log(err, raw);});
-    Questionnaire.updateOne(
-        { questionnaireId: req.body.questionnaireId },
-        { $push: { "sections.0.scenarios.0.questions": { isMCQ: false, rangeOptions: ["Three", "Nine"] } } },
-        (err, raw) => {
-            if (!err) {
-            res.send("successfully edit");
-            // console.log('here')
-        } else {
-            res.send(err);
-        }
-        }
+const sendAuthroisationError = (res) => {
+    res.send(
+        JSON.stringify("You do not have access to the clinician account.")
     );
 };
 
-// Delete questionnaire
-const deleteQuestionnaire = function (req, res) {
-    let questionnaireID = req.body.CQid;
-    // console.log(result)
-    Questionnaire.deleteOne({ questionnaireId: questionnaireID }, function (err, result) {
-        console.log("deleted customised questionnaire: " + questionnaireID);
-        if (!err) {
-            res.send("successfully delete");
-            // console.log('here')
-        } else {
-            res.send(err);
-        }
-    });
-
-    // update specific clinician questionnaire
-    let clinicianId = req.body.clinicianId;
-    console.log(clinicianId);
-    Clinician.updateOne({ clinicianId: clinicianId }, { $pull: { questionnaires: questionnaireID } }, (err, raw) => {
-        return;
-    });
+const sendJSONResponse = (res, data, error, errorCode) => {
+    if (data != null && !error) {
+        res.status(200).json(data);
+    } else {
+        res.status(errorCode).json(error.message);
+        console.log(error.message);
+    }
 };
 
+// Get a questionnaire by ID from request
+const getQuestionnaire = async (req, res) => {
+    const questionnaireId = req.params.questionnaireId;
+    console.log("get questionnaire:", questionnaireId);
+    const [err, foundQuestionnaire] = await findQuestionnaireById(
+        questionnaireId
+    );
 
-// gets all standardised questionnaires 
-const getStandardisedQuestionnaires = function (req, res){
-
-        Questionnaire.find({isStandard: true}, function (err, questionnaires) {
-
-            if (!err && questionnaires != null) {
-                
-    
-                res.send({statusCode:200, message:"Valid", data:questionnaires});
-    
-            } else {
-                res.send({statusCode:400, message:"Invalid", data:err});
-            }
-        });
-    
-
+    sendJSONResponse(res, foundQuestionnaire, err, 404);
 };
 
+// given ClinicianId, gets the list of the clinician's customised questionnaire
+const getClinicianQuestionnaires = async (req, res) => {
+    const clinicianId = req.query.clinicianId;
+    if (extractUserEmail(req) === clinicianId) {
+        const [err, foundQuestionnaires] = await findQuestionnaireForClinician(
+            clinicianId
+        );
+        sendJSONResponse(res, foundQuestionnaires, err, 404);
+    } else {
+        sendAuthroisationError(res);
+    }
+};
 
-module.exports.getAllQuestionnaire = getAllQuestionnaire;
-module.exports.getQuestionnaireSync = getQuestionnaireSync;
+// add an empty customised questionnaire for clincians
+const addEmptyQuestionnaire = async (req, res) => {
+    const userEmail = extractUserEmail(req);
+    const clinicianId = req.body.clinicianId;
+    if (userEmail === clinicianId) {
+        const uuid = uuidv1();
+        let newQuestionnaire = generateNewCustomisedQuestionnaire(uuid);
+        const [err, message] = await saveNewCustomisedQuestionnaire(
+            newQuestionnaire,
+            clinicianId
+        );
+        sendJSONResponse(res, message, err, 500);
+    } else {
+        sendAuthroisationError(res);
+    }
+};
+
+// add a standardised questionnaire
+const addStandardisedQuestionnaire = async (req, res) => {
+    const uuid = uuidv1();
+    const newQuestionnaire = generateNewStandardisedQuestionnaire(uuid);
+    const [err, message] = await saveNewStandardisedQuestionnaire(
+        newQuestionnaire
+    );
+    sendJSONResponse(res, message, err, 500);
+};
+
+// edit a customised questionnaire
+const editQuestionnaire = async (req, res) => {
+    const userEmail = extractUserEmail(req);
+    const questionnaireId = req.body.questionnaire.questionnaireId;
+    const editedQuestionnaire = req.body.questionnaire;
+    const [err, message] = await editCustomisedQuestionnaire(
+        userEmail,
+        questionnaireId,
+        editedQuestionnaire
+    );
+
+    sendJSONResponse(res, message, err, 500);
+};
+
+// edit a standardised questionnaire
+const editStandardQuestionnaire = async (req, res) => {
+    const questionnaireId = req.body.questionnaire.questionnaireId;
+    const editedQuestionnaire = req.body.questionnaire;
+    const [err, message] = await updateQuestionnaireOnDatabase(
+        questionnaireId,
+        editedQuestionnaire
+    );
+    sendJSONResponse(res, message, err, 500);
+};
+
+// Delete customised questionnaire
+const deleteQuestionnaire = async (req, res) => {
+    const questionnaireId = req.body.CQid;
+    const userEmail = extractUserEmail(req);
+    const clinicianId = req.body.clinicianId;
+    const [err, message] = await deleteCustomisedQuestionnaireFromDatabase(
+        questionnaireId,
+        userEmail,
+        clinicianId
+    );
+    sendJSONResponse(res, message, err, 500);
+};
+
+//Delete standardised questionnaire
+const deleteStandardisedQuestionnaire = async (req, res) => {
+    const questionnaireId = req.body.questionnaireID;
+    const [err, message] = await deleteQuestionnaireFromDatabase(
+        questionnaireId,
+        ""
+    );
+    sendJSONResponse(res, message, err, 500);
+};
+
+// gets all standardised questionnaires
+const getStandardisedQuestionnaires = async (req, res) => {
+    const [err, questionnaires] = await findStandardisedQuestionnaires();
+    sendJSONResponse(res, questionnaires, err, 404);
+};
+
+//Copy a questionnaire
+const copyQuestionnaire = async (req, res) => {
+    const copiedQuestionnaire = req.body.questionnaire;
+    const copyToCustomisedQuestionnaire =
+        req.body.copyToCustomisedQuestionnaire;
+    const clinicianId = req.body.clinicianId;
+    const [err, message] = await copyQuestionnaireToDatabase(
+        copiedQuestionnaire,
+        copyToCustomisedQuestionnaire,
+        clinicianId
+    );
+
+    sendJSONResponse(res, message, err, 500);
+};
+
+module.exports.copyQuestionnaire = copyQuestionnaire;
+module.exports.getQuestionnaire = getQuestionnaire;
 module.exports.addEmptyQuestionnaire = addEmptyQuestionnaire;
+module.exports.addStandardisedQuestionnaire = addStandardisedQuestionnaire;
 module.exports.deleteQuestionnaire = deleteQuestionnaire;
+module.exports.deleteStandardisedQuestionnaire = deleteStandardisedQuestionnaire;
 module.exports.editQuestionnaire = editQuestionnaire;
+module.exports.editStandardQuestionnaire = editStandardQuestionnaire;
 module.exports.getClinicianQuestionnaires = getClinicianQuestionnaires;
-module.exports.getQuestionnaireAsync = getQuestionnaireAsync;
 module.exports.getStandardisedQuestionnaires = getStandardisedQuestionnaires;
-
