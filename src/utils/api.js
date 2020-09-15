@@ -16,6 +16,36 @@ let createHeader = (accessToken) =>{
     };
 }
 
+const sendRequest =  async (method, url, data = undefined, token = undefined) => {
+    let headers = header;
+    if (token){
+     headers  = {
+        ... header,
+        ...createHeader(token)
+        };
+    }
+    let fetchOptions ={
+        method,
+        headers
+    };
+    if (method === "POST"){
+        fetchOptions = {...fetchOptions,
+            body: JSON.stringify(data)};
+    }
+    try{
+    const response = await fetch(`${api}/${url}`, fetchOptions);
+    const status = response.status;
+    const data = await response.json();
+    const result = await new Promise((resolve, reject) => {
+        resolve([status, data]);
+    });
+    return result;
+
+    }catch(error){
+        console.error(error);
+    }
+} 
+
 
 // ================================================
 // Admin server calls
@@ -35,13 +65,6 @@ export const verifyAdminLogin = (token) =>
         ...header,
     }).then((res) => res.json());
 
-export const getQuestionnaires = () =>
-    fetch(`${api}/questionnaire/`, { header }).then((res) => res.json());
-
-export const getQuestionnaire = (questionnaireID) =>
-    fetch(`${api}/questionnaire/${questionnaireID}`, {
-        header,
-    }).then((res) => res.json());
 
 export const sendQuestionnaireData = (data, shareId) =>
     fetch(`${api}/share/submit/${shareId}`, {
@@ -56,6 +79,7 @@ export const sendQuestionnaireData = (data, shareId) =>
 // Clinician server calls
 // ================================================
 export const completeQuestionnaire = async (token, data) =>{
+
     const headers = {
         ... header,
         ...createHeader(token)
@@ -70,6 +94,13 @@ export const completeQuestionnaire = async (token, data) =>{
 // Managing Questionnaire server calls
 // ================================================
 // add new questionnaire
+
+// export const getQuestionnaire = async (questionnaireID) =>{
+//     const url = `questionnaire/${questionnaireID}`
+//     return await sendRequest("GET", url);
+// }
+    
+
 export const addQuestionnaire = async (token, clinicianId) => {
     const url = api + "/questionnaire/add";
 
@@ -273,15 +304,8 @@ export const adminCopyQuestionnaire = async (questionnaire) => {
 // get specific questionnaire
 
 export const getQuestionnaireById = async (Id) => {
-    let res = await fetch(`${api}/questionnaire/${Id}`, {
-        method: "GET",
-        headers: {
-            ...header
-        },
-    });
-    let json = await res.json();
-
-    return json;
+    const url = `questionnaire/${Id}`
+    return await sendRequest("GET", url);
 };
 
 // get clinician questionnaire list

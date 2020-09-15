@@ -29,11 +29,12 @@ const QuestionnaireContainer = (props) => {
     // get the questionnaire content from API
     useEffect(() =>{
         const setup = async () => {
-            const response = await API.getQuestionnaireById(props.questionnaireID);
-            if(response.statusCode === 200){
-                setQuestionnaire(response.data);
+            const [statusCode, data] = await API.getQuestionnaireById(props.questionnaireID);
+
+            if(statusCode === 200){
+                setQuestionnaire(data);
             }else{
-                console.log("No questionnaire available");
+                console.log(data);
             }
         };
         setup();

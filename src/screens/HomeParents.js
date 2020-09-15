@@ -128,12 +128,13 @@ const HomeParents = ({ match }) => {
             // Server call to get the questionnaire.
             setClinicianEmail(response.data.clinicianEmail);
             setReadOnly(response.data.readOnly);
-            API.getQuestionnaire(response.data.questionnaireId).then((res) => {
+            API.getQuestionnaireById(response.data.questionnaireId).then((res) => {
+                const [statusCode, data] = res;
                 // Define initial values for the Questionnaire
-                if (res.statusCode === 200 ){
-                    updateSections(res.data, response.data.shareSection);
+                if (statusCode === 200 ){
+                    updateSections(data, data.shareSection);
                     let tempResponse = [];
-                    res.data.sections.forEach((section, sectionIndex) => {
+                    data.sections.forEach((section, sectionIndex) => {
                         tempResponse[sectionIndex] = [];
                         section.scenarios.forEach((scenario, scenarioIndex) => {
                             tempResponse[sectionIndex][scenarioIndex] = [];
@@ -150,7 +151,7 @@ const HomeParents = ({ match }) => {
                     // Updating the state using the initial data and the questionnaire
                     // retrieved from the server.
                     setQuestionnaireData(tempResponse);
-                    setQuestionnaire(res.data);
+                    setQuestionnaire(data);
                     setWizardStep(0);
 
                 }else{

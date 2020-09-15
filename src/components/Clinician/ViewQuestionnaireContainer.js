@@ -34,9 +34,10 @@ const ViewQuestionnaireContainer = (props) => {
     useEffect(() =>{
     
         const prepareQuestionnaire = async () => {
-            const response = await API.getQuestionnaireById(props.questionnaireID);
-            if (response.statusCode === 200){
-                const questionnaire = response.data;
+            const [statusCode, data] = await API.getQuestionnaireById(props.questionnaireID);
+    
+            if (statusCode === 200 ){
+                const questionnaire = data;
                 setSelectedQuestionnaire(questionnaire);
                 let emptyResponse = [];
                 console.log(`current q: ${questionnaire.title}`);
@@ -62,7 +63,8 @@ const ViewQuestionnaireContainer = (props) => {
                 setLoaded(true);
                 
             }else{
-                console.log("An error has occured when retrieving questionnaire.");
+                console.log(data);
+          
                     setMessage("Oops! No Questionnaire Available!");
             }
         }
