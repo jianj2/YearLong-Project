@@ -72,7 +72,7 @@ const ShareQuestionnaire = (props) => {
         setLoading(true);
         async function retrieveCustomisedQuestionnaires() {
            
-            const customisedQuestionnaires = await API.getClinicianQuestionnaires(token,
+            const [statusCode, customisedQuestionnaires] = await API.getClinicianQuestionnaires(token,
                 user.name
             );
             const today = formatDate();
@@ -80,9 +80,11 @@ const ShareQuestionnaire = (props) => {
             setLoading(false);
         }
         async function retrieveStandardisedQuestionnaires() {
-            const response = await API.getStandardisedQuestionnaires();
-            if (response.statusCode === 200) {
-                setStandardisedQuestionnaires(response.data);
+            const [statusCode, data] = await API.getStandardisedQuestionnaires();
+            if (statusCode === 200) {
+                setStandardisedQuestionnaires(data);
+            }else{
+                console.error(data);
             }
         }
         if(user && token !== ""){
