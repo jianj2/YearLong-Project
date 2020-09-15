@@ -35,10 +35,11 @@ const sendAuthroisationError = (res) => {
 };
 
 const sendJSONResponse = (res, data, error, errorCode) => {
-    if (data != null && !err) {
-        res.status(200).send(JSON.stringify(data));
+    if (data != null && !error) {
+        res.status(200).json(data);
     } else {
-        res.status(errorCode).send(JSON.stringify(error.message));
+        res.status(errorCode).json(error.message);
+        console.log(error.message);
     }
 };
 
@@ -50,11 +51,7 @@ const getQuestionnaire = async (req, res) => {
         questionnaireId
     );
 
-    if (foundQuestionnaire != null && !err) {
-        res.status(200).send({ message: "Valid", data: foundQuestionnaire });
-    } else {
-        res.status(404).send({ message: err.message, data: undefined });
-    }
+    sendJSONResponse(res, foundQuestionnaire, err, 404);
 };
 
 // given ClinicianId, gets the list of the clinician's customised questionnaire
@@ -153,14 +150,11 @@ const getStandardisedQuestionnaires = async (req, res) => {
 
 //Copy a questionnaire
 const copyQuestionnaire = async (req, res) => {
-    const uuid = uuidv1();
     const copiedQuestionnaire = req.body.questionnaire;
     const copyToCustomisedQuestionnaire =
         req.body.copyToCustomisedQuestionnaire;
     const clinicianId = req.body.clinicianId;
-
     const [err, message] = await copyQuestionnaireToDatabase(
-        uuid,
         copiedQuestionnaire,
         copyToCustomisedQuestionnaire,
         clinicianId

@@ -18,10 +18,14 @@ const findQuestionnaireById = async (questionnaireId) => {
     try {
         const questionnaire = await Questionnaire.findOne({ questionnaireId });
         // throw Error("My Error");
-        const result = await new Promise((resolve, reject) => {
-            resolve([undefined, questionnaire]);
-        });
-        return result;
+        if (questionnaire != null ){
+            return await new Promise((resolve, reject) => {
+                resolve([undefined, questionnaire]);
+             });
+        }else{
+           throw Error("The questionnaire does not exist");
+        }
+        
     } catch (error) {
         return Promise.resolve([error, undefined]);
     }
@@ -155,11 +159,13 @@ const saveNewCustomisedQuestionnaire = async (
 
 // Save a new standardised questionnaire belonging to admin
 const saveNewStandardisedQuestionnaire = async (newQuestionnaire) => {
-    try{
+    try {
         await newQuestionnaire.save();
-        return Promise.resolve([undefined, "Added standardised questionnaire."]);
-
-    }catch(error){
+        return Promise.resolve([
+            undefined,
+            "Added standardised questionnaire.",
+        ]);
+    } catch (error) {
         return Promise.resolve([error, undefined]);
     }
 };
@@ -169,14 +175,15 @@ const updateQuestionnaireOnDatabase = async (
     questionnaireId,
     editedQuestionnaire
 ) => {
-    try{
-        await Questionnaire.replaceOne({ questionnaireId: questionnaireId },
-        editedQuestionnaire);
+    try {
+        await Questionnaire.replaceOne(
+            { questionnaireId: questionnaireId },
+            editedQuestionnaire
+        );
         return Promise.resolve([undefined, "Updated questionnaire."]);
-    }catch(error){
-        return Promise.resolve([error, undefined]);    
+    } catch (error) {
+        return Promise.resolve([error, undefined]);
     }
-    
 };
 
 const editCustomisedQuestionnaire = async (
@@ -184,38 +191,41 @@ const editCustomisedQuestionnaire = async (
     questionnaireId,
     editedQuestionnaire
 ) => {
-
-    try{ 
+    try {
         const clinician = await Clinician.findOne({ clinicianId: userEmail });
         const questionnaireIds = clinician.questionnaires;
-            if (questionnaireIds.includes(questionnaireId)) {
-                return await updateQuestionnaireOnDatabase(
-                    questionnaireId,
-                    editedQuestionnaire
-                );
-            }  else {
-                throw Error("The edited questionnaire does not belong to the clinician.");
-            }
+        if (questionnaireIds.includes(questionnaireId)) {
+            return await updateQuestionnaireOnDatabase(
+                questionnaireId,
+                editedQuestionnaire
+            );
+        } else {
+            throw Error(
+                "The edited questionnaire does not belong to the clinician."
+            );
+        }
+    } catch (error) {
+        return Promise.resolve([error, undefined]);
     }
-        catch(error){
-            return Promise.resolve([error, undefined]); 
-    }
-
-
 };
 
 // remove a questionnaire id from the clincian's list of customised questionnaires
-const detachQuestionnaireFromClinician = async (questionnaireId, clinicianId) => {
-    try{
-   await Clinician.updateOne(
-        { clinicianId },
-        { $pull: { questionnaires: questionnaireId } });
-    return Promise.resolve([undefined, "Successfully deleted questionnaire"]);
-   }catch(error){
-        return Promise.resolve([error, undefined]); 
-
-   }      
-  
+const detachQuestionnaireFromClinician = async (
+    questionnaireId,
+    clinicianId
+) => {
+    try {
+        await Clinician.updateOne(
+            { clinicianId },
+            { $pull: { questionnaires: questionnaireId } }
+        );
+        return Promise.resolve([
+            undefined,
+            "Successfully deleted questionnaire",
+        ]);
+    } catch (error) {
+        return Promise.resolve([error, undefined]);
+    }
 };
 
 const deleteCustomisedQuestionnaireFromDatabase = async (
@@ -223,8 +233,7 @@ const deleteCustomisedQuestionnaireFromDatabase = async (
     userEmail,
     clinicianId
 ) => {
-
-    try{
+    try {
         const clinician = await Clinician.findOne({ clinicianId: userEmail });
         const questionnaireIds = clinician.questionnaires;
         if (questionnaireIds.includes(questionnaireId)) {
@@ -232,15 +241,14 @@ const deleteCustomisedQuestionnaireFromDatabase = async (
                 questionnaireId,
                 clinicianId
             );
-           
         } else {
-            throw Error("The questionnaire to be deleted does not belong to the clinician.");
+            throw Error(
+                "The questionnaire to be deleted does not belong to the clinician."
+            );
         }
-    }catch{
-        return Promise.resolve([error, undefined]); 
+    } catch {
+        return Promise.resolve([error, undefined]);
     }
- 
-    
 };
 
 // delete a questionnaire with given id, and remove it from the clinician's list, if it is customised.
@@ -248,36 +256,46 @@ const deleteQuestionnaireFromDatabase = async (
     questionnaireId,
     clinicianId
 ) => {
-    try{
+    try {
         await Questionnaire.deleteOne({ questionnaireId });
-    if (clinicianId !== "") {
-        return await detachQuestionnaireFromClinician(
-            questionnaireId,
-            clinicianId
-        );
-    }else{
-        return Promise.resolve([undefined, "Successfully deleted questionnaire"]);
-    }}catch(error){
-        return Promise.resolve([error, undefined]); 
+        if (clinicianId !== "") {
+            return await detachQuestionnaireFromClinician(
+                questionnaireId,
+                clinicianId
+            );
+        } else {
+            return Promise.resolve([
+                undefined,
+                "Successfully deleted questionnaire",
+            ]);
+        }
+    } catch (error) {
+        return Promise.resolve([error, undefined]);
     }
 };
 
-const copyQuestionnaireToDatabase = async () => {
-    try{
-    const newQuestionnaire = generateCopy(
-        copiedQuestionnaire,
-        uuid,
-        !copyToCustomisedQuestionnaire
-    );
-    await newQuestionnaire.save();
-    if (clincianId) {
+const copyQuestionnaireToDatabase = async (copiedQuestionnaire,
+    copyToCustomisedQuestionnaire,
+    clinicianId) => {
+    const uuid = uuidv1();
+    try {
+        const newQuestionnaire = generateCopy(
+            copiedQuestionnaire,
+            uuid,
+            !copyToCustomisedQuestionnaire
+        );
+        await newQuestionnaire.save();
+        if (clincianId) {
             return attachQuestionnaireToClinician(uuid, clinicianId);
-    } else {
-        return Promise.resolve([undefined, "Successfully copied questionnaire"]);
+        } else {
+            return Promise.resolve([
+                undefined,
+                "Successfully copied questionnaire",
+            ]);
+        }
+    } catch (error) {
+        return Promise.resolve([error, undefined]);
     }
-}catch(error){
-    return Promise.resolve([error, undefined]);
-}
 };
 
 module.exports.findQuestionnaireById = findQuestionnaireById;
