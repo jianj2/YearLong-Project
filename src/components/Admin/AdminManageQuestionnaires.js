@@ -69,8 +69,8 @@ const AdminManageQuestionnaires = () => {
         window.location.href = edit_url;
     };
 
-    const copyQuestionnaire = (questionnaire) => {
-        API.adminCopyQuestionnaire(questionnaire);
+    const copyQuestionnaire = async (questionnaire) => {
+        await API.adminCopyQuestionnaire(questionnaire);
         window.location.reload(false);
     };
 

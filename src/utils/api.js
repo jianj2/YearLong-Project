@@ -134,67 +134,30 @@ export const deleteQuestionnaire = async (token, CQid, clinicianId) => {
 
 export const editQuestionnaire = async (token, questionnaire) => {
    
-    const url = api + "/questionnaire/edit";
+    const url = "questionnaire/edit";
     const data = {
-        questionnaire,
-    };
-    const headers = {
-        ... header,
-        ...createHeader(token)
+        questionnaire
     };
 
+    return await sendRequest("POST", url, data, token);
 
-    try {
-        let response = await fetch(url, {
-            method: "POST",
-            headers: headers,
-            body: JSON.stringify(data)
-        });
-        let json = await response.json();
-    } catch (e) {
-        console.error(
-            "An error has occurred while saving the edited questionnaire",
-            e
-        );
-    }
 };
 
 //edit standard questionnaire
 
 export const editStandardQuestionnaire = async (questionnaire) => {
-    const url = api + "/questionnaire/editStandard";
-    const headers = {
-        ...header,
-       
-    };
-
+    const url = "questionnaire/editStandard";
     const data = {
-        questionnaire,
+        questionnaire
     };
 
-    try {
-        let response = await fetch(url, {
-            method: "POST",
-            headers: headers,
-            body: JSON.stringify(data),
-        });
-        let json = await response.json();
-    } catch (e) {
-        console.error(
-            "An error has occurred while saving the edited questionnaire",
-            e
-        );
-    }
+    return await sendRequest("POST", url, data);
+
 }
 
 //COPY questionnaire
 export const copyQuestionnaire = async (questionnaire, clinicianId) => {
-    const url = api + "/questionnaire/copy";
-    const headers = {
-        ...header,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-    };
+    const url = "questionnaire/copy";
 
     const data = {
         clinicianId: clinicianId,
@@ -202,55 +165,20 @@ export const copyQuestionnaire = async (questionnaire, clinicianId) => {
         questionnaire
     };
 
+    return await sendRequest("POST", url, data);
 
-    try {
-
-        let response = await fetch(url, {
-            method: "POST",
-            headers: headers,
-            body: JSON.stringify(data),
-        });
-        let json = await response.json();
-        console.log(json)
-
-    } catch (e) {
-        console.error(
-            "An error has occurred while saving the edited questionnaire",
-            e
-        );
-    }
 }
 
 //admin COPY questionnaire
 export const adminCopyQuestionnaire = async (questionnaire) => {
-    const url = api + "/questionnaire/copy";
-    const headers = {
-        ...header,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-    };
+    const url = "questionnaire/copy";
 
     const data = {
         copyToCustomisedQuestionnaire: false,   
         questionnaire
     };
 
-
-    try {
-        let response = await fetch(url, {
-            method: "POST",
-            headers: headers,
-            body: JSON.stringify(data),
-        });
-        let json = await response.json();
-        console.log(json)
-
-    } catch (e) {
-        console.error(
-            "An error has occurred while saving the edited questionnaire",
-            e
-        );
-    }
+    return await sendRequest("POST", url, data);
 }
 
 
