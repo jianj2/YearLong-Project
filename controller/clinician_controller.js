@@ -13,7 +13,7 @@ const mongoose = require('mongoose');
 
 const Clinician = mongoose.model('clinician');
 
-const { sendResultsEmail } = require('./email_controller');
+const { sendResultsEmail } = require('../service/emailService');
 
 const { extractUserEmail } = require("../utils/jwtUtils");
 

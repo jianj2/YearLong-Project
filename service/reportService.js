@@ -5,8 +5,8 @@
  * @date created: 26 August 2020
  * @authors: Waqas
  *
- * The email_controller is used for handling all of email
- * requests.
+ * The report service is used for handling the generation
+ * of reports from questionnaire responses.
  *
  */
 
@@ -26,6 +26,7 @@ const HELPER_IMPORTANCE = {
     "Important": 3,
     "Only a little bit important": 2,
     "Not important": 1,
+    "Not Applicable.": 0 
 }
 const getTimeStamp = function () {
     let date_ob = new Date();
@@ -159,39 +160,69 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
 
 }
 
+const getVisibleSections = (sections, visibilityInfoList) => {
+    const filteredSections = sections.filter((section) => {
+        const foundVisibilityInfo = visibilityInfoList.find(
+            (visibilityInfo) => {
+                return visibilityInfo.title === section.title;
+            }
+        );
+        if (foundVisibilityInfo != undefined) {
+            return foundVisibilityInfo.isVisible;
+        } else {
+            return null;
+        }
+    });
+    return filteredSections;
+};
+
+// set the updates questionnaire sections.
+const updateSections = (questionnaire, sectionVisibility) => {
+    if (sectionVisibility != undefined) {
+        questionnaire.sections = getVisibleSections(
+            questionnaire.sections,
+            sectionVisibility
+        );
+    }
+};
+
+
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to compile the responses with the questionnaire
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const getQuestionnaireResponseJoin = function (questionnaire, questionnaireData, sectionScores, sharedSections) {
     // MAKE A COPY OF THE ORIGINAL QUESTIONNAIRE
+    updateSections(questionnaire, sharedSections);
     let result = questionnaire;
-    let realSectionIndex = 0
 
-    questionnaire.sections.forEach((section, sectionIndex) => {
+
+    let sectionIndex = 0;
+
+    questionnaire.sections.forEach((section) => {
         // ADD SCORE TO THE SECTION
-
-        if (sharedSections === null || sharedSections[sectionIndex].isVisible) {
-            result.sections[sectionIndex].score = sectionScores[sectionIndex]
-
+   
+            result.sections[sectionIndex].score = sectionScores[sectionIndex];
             section.scenarios.forEach((scenario, scenarioIndex) => {
                 scenario.questions.forEach((question, questionIndex) => {
                     // ADD RESPONSE TO THE QUESTION
-                    let valueToSet = questionnaireData[realSectionIndex][scenarioIndex][questionIndex].value;
+                    let valueToSet = questionnaireData[sectionIndex][scenarioIndex][questionIndex].value;
 
                     if (!valueToSet) {
                         if (question.isMCQ) {
                             valueToSet = "Not Applicable."
                         } else {
-                            valueToSet = questionnaireData[realSectionIndex][scenarioIndex][questionIndex].supplementaryValue;
+                            valueToSet = questionnaireData[sectionIndex][scenarioIndex][questionIndex].supplementaryValue;
                         }
 
                     }
+                 
                     result.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].response =
                         valueToSet;
                 })
             });
-            realSectionIndex++;
-        }
+            
+        
+        sectionIndex += 1;
     });
     return result
 }
