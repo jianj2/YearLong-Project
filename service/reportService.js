@@ -166,37 +166,69 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
 
 }
 
+const getVisibleSections = (sections, visibilityInfoList) => {
+    const filteredSections = sections.filter((section) => {
+        const foundVisibilityInfo = visibilityInfoList.find(
+            (visibilityInfo) => {
+                return visibilityInfo.title === section.title;
+            }
+        );
+        if (foundVisibilityInfo != undefined) {
+            return foundVisibilityInfo.isVisible;
+        } else {
+            return null;
+        }
+    });
+    return filteredSections;
+};
+
+// set the updates questionnaire sections.
+const updateSections = (questionnaire, sectionVisibility) => {
+    if (sectionVisibility != undefined) {
+        questionnaire.sections = getVisibleSections(
+            questionnaire.sections,
+            sectionVisibility
+        );
+    }
+};
+
+
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to compile the responses with the questionnaire
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const getQuestionnaireResponseJoin = function (questionnaire, questionnaireData, sectionScores, sharedSections) {
     // MAKE A COPY OF THE ORIGINAL QUESTIONNAIRE
+    updateSections(questionnaire, sharedSections);
     let result = questionnaire;
-    let realSectionIndex = 0
 
-    questionnaire.sections.forEach((section, sectionIndex) => {
+
+    let sectionIndex = 0;
+
+    questionnaire.sections.forEach((section) => {
         // ADD SCORE TO THE SECTION
-        result.sections[sectionIndex].score = sectionScores[sectionIndex]
-        if ( sharedSections === null || sharedSections[sectionIndex].isVisible ) {
+   
+            result.sections[sectionIndex].score = sectionScores[sectionIndex];
             section.scenarios.forEach((scenario, scenarioIndex) => {
                 scenario.questions.forEach((question, questionIndex) => {
                     // ADD RESPONSE TO THE QUESTION
-                    let valueToSet = questionnaireData[realSectionIndex][scenarioIndex][questionIndex].value;
+                    let valueToSet = questionnaireData[sectionIndex][scenarioIndex][questionIndex].value;
 
                     if (!valueToSet) {
                         if (question.isMCQ){
                             valueToSet = "Not Applicable."
                         } else {
-                            valueToSet = questionnaireData[realSectionIndex][scenarioIndex][questionIndex].supplementaryValue;
+                            valueToSet = questionnaireData[sectionIndex][scenarioIndex][questionIndex].supplementaryValue;
                         }
 
                     }
+                 
                     result.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].response =
                         valueToSet;
                 })
             });
-            realSectionIndex++;
-        }
+            
+        
+        sectionIndex += 1;
     });
     return result
 }
