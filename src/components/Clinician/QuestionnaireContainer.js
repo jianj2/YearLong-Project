@@ -127,7 +127,7 @@ const QuestionnaireContainer = (props) => {
         const questionnaireTemp = Object.assign({},questionnaire);
         questionnaireTemp.title = event.target.value;
         setQuestionnaire(questionnaireTemp);
-        console.log(questionnaire);
+ 
     }
 
       // to change the content of questionnaire title
@@ -140,7 +140,7 @@ const QuestionnaireContainer = (props) => {
             questionnaireTemp.isSSQ_Ch = false;
         }
         setQuestionnaire(questionnaireTemp);
-        console.log(questionnaire);
+       
     }
 
 
@@ -149,7 +149,7 @@ const QuestionnaireContainer = (props) => {
         const questionnaireTemp = Object.assign({},questionnaire);
         questionnaireTemp.description = event.target.value;
         setQuestionnaire(questionnaireTemp);
-        console.log(questionnaire);
+ 
     }
 
     // to change the content of section title
@@ -157,7 +157,7 @@ const QuestionnaireContainer = (props) => {
         const questionnaireTemp = Object.assign({},questionnaire);
         questionnaireTemp.sections[sectionIndex].title = event.target.value;
         setQuestionnaire(questionnaireTemp);
-        console.log(questionnaire);
+     
     }
 
     //to change the content of scenario description
@@ -165,7 +165,7 @@ const QuestionnaireContainer = (props) => {
         const questionnaireTemp = Object.assign({},questionnaire);
         questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].description = event.target.value;
         setQuestionnaire(questionnaireTemp);
-        console.log(questionnaire);
+ 
     }
 
     // to change the content of question description
@@ -173,7 +173,7 @@ const QuestionnaireContainer = (props) => {
         const questionnaireTemp = Object.assign({},questionnaire);
         questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].description = event.target.value;
         setQuestionnaire(questionnaireTemp);
-        console.log(questionnaire);
+ 
     }
 
     //tp change the content of question options
@@ -185,7 +185,7 @@ const QuestionnaireContainer = (props) => {
             questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].MCQOptions[answerIndex] = event.target.value;
         }
         setQuestionnaire(questionnaireTemp);
-        console.log(sectionIndex,scenarioIndex,questionIndex,answerIndex);
+    
     }
 
     return (

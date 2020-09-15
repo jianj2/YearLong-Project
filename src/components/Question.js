@@ -126,7 +126,7 @@ export default function Question({
     //     value: undefined,
     //     supplementaryValue: "",
     // });
-    console.log(data);
+
     if(data.value === "" && data.supplementaryValue === ""){
         data.value = undefined;
     }
@@ -144,7 +144,6 @@ export default function Question({
     // }, [sliderValue, extraQuestion, frequencyValue, importanceValue]);
 
     useEffect(() => {
-        console.log("answered:", answered);
         onQuestionChange(sectionIndex, scenarioIndex, questionIndex, answered);
     }, [answered]);
 

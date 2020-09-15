@@ -126,7 +126,7 @@ export const deleteQuestionnaire = async (token, CQid, clinicianId) => {
         CQid,
         clinicianId,
     };
-    return await sendRequest("POST", url, data);
+    return await sendRequest("POST", url, data, token);
  
 };
 
