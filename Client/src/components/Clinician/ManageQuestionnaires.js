@@ -25,6 +25,8 @@ import "../../styles/main.css";
 // Import Components.
 import QuestionnaireList from "../QuestionnaireList";
 import Loading from "../Loading";
+import { useAdminAuth } from "../../utils/useAdminAuth";
+
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -42,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ManageQuestionnaires = (props) => {
     const classes = useStyles();
-    const { isAuthenticated, loginWithRedirect, user } = useAuth0();
+    const { isAuthenticated, loginWithRedirect, user, token } = useAuth0();
     // console.log("user.name", user.name); //TODO: change that when we have actual clincianId
 
     const [customisedQuestionnaires, setCustomisedQuestionnaires] = useState([]);
@@ -67,11 +69,19 @@ const ManageQuestionnaires = (props) => {
     });
 
     const [shareSection, setShareSection] = useState({});
+    const { isAdminAuthenticated, adminLogout } = useAdminAuth();
 
     useEffect(() => {
+        if(isAdminAuthenticated){
+            adminLogout();
+        }
         setLoading(true);
+        
+       
+        if(isAuthenticated && token !== ""){
+
         async function retrieveCustomisedQuestionnaires() {
-            const customisedQuestionnaires = await API.getClinicianQuestionnaires(user.name);
+            const [statusCode, customisedQuestionnaires] = await API.getClinicianQuestionnaires(token, user.name);
             console.log(customisedQuestionnaires);
             const today = formatDate();
             const customisedQuestionnairesElement = customisedQuestionnaires.map((q) => {
@@ -83,14 +93,19 @@ const ManageQuestionnaires = (props) => {
         }
         async function retrieveStandardisedQuestionnaires(){
 
-            const response = await API.getStandardisedQuestionnaires();
-            if (response.statusCode === 200){
-                setStandardisedQuestionnaires(response.data);
+            const [statusCode, data] = await API.getStandardisedQuestionnaires();
+            if (statusCode === 200){
+                setStandardisedQuestionnaires(data);
+            }else{
+                console.error(data);
             }
         }
         retrieveStandardisedQuestionnaires();
         retrieveCustomisedQuestionnaires();
-    }, [user]);
+    }
+        
+        
+    }, [isAuthenticated, token]);
 
     // Function called when Edit is clicked on the QuestionnaireList
     const editQuestionnaire = (questionnaireID) => {
@@ -98,9 +113,18 @@ const ManageQuestionnaires = (props) => {
         window.location.href = edit_url;
     };
 
+    // Function called when Copy is clicked on the QuestionnaireList
+    const copyQuestionnaire = (questionnaire) => {
+        console.log(questionnaire);
+        API.copyQuestionnaire(questionnaire, user.name)
+        window.location.reload(false);
+    };
+
     const viewQuestionnaire = (questionnaireID) =>{
+
         const view_url = "/standard/" + questionnaireID + "/view";
         window.location.href = view_url;
+        
 
     };
 
@@ -140,7 +164,7 @@ const ManageQuestionnaires = (props) => {
     // Function called when Add New Button is clicked
     async function AddNew() {
         setLoading(true);
-        const uuid = await API.addQuestionnaire(user.name);
+        const [_,uuid] = await API.addQuestionnaire(token, user.name);
 
         // const today = formatDate();
         const AddedArray = customisedQuestionnaires;
@@ -175,7 +199,7 @@ const ManageQuestionnaires = (props) => {
             shareSection,
         });
 
-        API.shareQuestionnaire(shareModalData).then( res => {
+        API.shareQuestionnaire(token, shareModalData).then( res => {
             console.log("printing the res: ", res);
             setLoading(false); 
             closeModal();
@@ -275,10 +299,10 @@ const ManageQuestionnaires = (props) => {
                                         }}
                                     />
                                 }
-                                label="Allow parent to complete the questionnaire"
+                                label="Allow recipient to complete the questionnaire"
                             />
                             <FormHelperText>
-                                If this option is checked, patients can independently complete the questionnaire and the report would be sent to you.
+                            If this option is checked, the recipient can complete the questionnaire. The report will be sent to you.
                             </FormHelperText>
                         </FormControl>
                         <button className="button">S H A R E</button>
@@ -300,7 +324,7 @@ const ManageQuestionnaires = (props) => {
         let questionnaireId = deleteQuestionnaireData.deleteQuestionnaireID
         const arrayCopy = customisedQuestionnaires.filter((q) => q.questionnaireId !== questionnaireId);
         setCustomisedQuestionnaires(arrayCopy);
-        API.deleteQuestionnaire(questionnaireId, user.name);
+        API.deleteQuestionnaire(token, questionnaireId, user.name);
         closeDeleteConfirmation();
     }
 
@@ -354,6 +378,7 @@ const ManageQuestionnaires = (props) => {
                 onClickQuestion={viewQuestionnaire}
                 canEdit={false}
                 onClickEdit={editQuestionnaire}
+                onClickCopy = {copyQuestionnaire}
                 canDelete={false}
                 onClickDelete={deleteQuestionnaire}
                 canShare={false}
@@ -363,7 +388,7 @@ const ManageQuestionnaires = (props) => {
             </div>
 
             <div className="CQ-header">
-                <h1>My Questionnaires</h1>
+                <h1>My Customised Questionnaires</h1>
                 <button className="button" onClick={AddNew}>
                     A D D &nbsp; N E W
                 </button>
@@ -376,6 +401,7 @@ const ManageQuestionnaires = (props) => {
                 onClickQuestion={viewQuestionnaire}
                 canEdit={true}
                 onClickEdit={editQuestionnaire}
+                onClickCopy = {copyQuestionnaire}
                 canDelete={true}
                 onClickDelete={deleteQuestionnaire}
                 canShare={false}

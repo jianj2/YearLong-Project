@@ -23,38 +23,39 @@
 import React, { useState, useEffect } from "react";
 
 // Import Material-UI components.
-import { Slider, FormControl, FormLabel, FormControlLabel, Radio, RadioGroup, Checkbox, FormGroup, FormHelperText } from "@material-ui/core";
+import { Slider, FormControl, FormLabel, FormControlLabel, Radio, RadioGroup, Checkbox, FormGroup, FormHelperText, withStyles } from "@material-ui/core";
 
 // Import styles.
 import "../styles/questionnaire.css";
 import "../styles/main.css";
 
-export default function Question({
-    readOnly,
-    questionIndex,
-    sectionIndex,
-    scenarioIndex,
-    isMCQ,
-    isParentFilling,
-    rangeOptions,
-    MCQOptions,
-    description,
-    onQuestionChange,
-    data,
-}) {
+// Create a new slider with a custom style.
+const SliderWithTicks = withStyles({
+    mark: {
+        backgroundColor: "rgba(245, 0, 87, 0.7)",
+        height: 12,
+        width: 1.5,
+        marginTop: -3,
+        marginLeft:-1
+    },
+    markActive: {
+        opacity: 1,
+        backgroundColor: "rgba(255,255,255, 0.3)"
+    },
+    markLabelActive:{
+        opacity: 1,
+        color: "rgba(255,255,255, 0.3)"
+    }
+})(Slider);
 
-    const [extraQuestion, setExtraQuestion] = useState(data.extraQuestion);
-    const [sliderValue, setSliderValue] = useState(data.sliderValue);
-    const [frequencyValue, setFrequencyValue] = useState(data.frequencyValue);
-    const [importanceValue, setImportanceValue] = useState(data.importanceValue);
 
-    const [answered, setAnswered] = useState({
-        value: undefined,
-        supplementaryValue: "",
-    });
-
-    const marks = [
+// create marks on the slider.
+const createMarks = function (){
+    let mymarks = [
         {
+            value: 0,
+            label: '0',
+        }, {
             value: 1,
             label: '1',
         },{
@@ -82,8 +83,55 @@ export default function Question({
             value: 9,
             label: '9',
         },
+        ,{
+            value: 10,
+            label: '10',
+        },
     ];
-    
+    let i;
+    for ( i = 0; i<=10; i+=0.1 ){
+        if ( i % 1 != 0){
+            let temp = {value: i, style:{color:'blue'}}
+            mymarks.push(temp)
+        }
+    }
+    return mymarks;
+}
+
+const marks = createMarks();
+
+
+
+export default function Question({
+    readOnly,
+    questionIndex,
+    sectionIndex,
+    scenarioIndex,
+    isMCQ,
+    isParentFilling,
+    rangeOptions,
+    MCQOptions,
+    description,
+    onQuestionChange,
+    data,
+    isNotApplicable,
+}) {
+
+    const [extraQuestion, setExtraQuestion] = useState(data.extraQuestion);
+    const [sliderValue, setSliderValue] = useState(data.sliderValue);
+    const [frequencyValue, setFrequencyValue] = useState(data.frequencyValue);
+    const [importanceValue, setImportanceValue] = useState(data.importanceValue);
+
+    // const [answered, setAnswered] = useState({
+    //     value: undefined,
+    //     supplementaryValue: "",
+    // });
+
+    if(data.value === "" && data.supplementaryValue === ""){
+        data.value = undefined;
+    }
+    //change to data, in order to make the data reload to the page, when click the back button from the viewSubmission
+    const [answered, setAnswered] = useState(data);
 
     // useEffect(() => {
     //     let quesionResponseData = {
@@ -96,15 +144,19 @@ export default function Question({
     // }, [sliderValue, extraQuestion, frequencyValue, importanceValue]);
 
     useEffect(() => {
-        console.log("answered:", answered);
         onQuestionChange(sectionIndex, scenarioIndex, questionIndex, answered);
     }, [answered]);
 
-    const handleChangeSlider = () => {
+    // if it becomes not applicable, disable the next mcq question.
+    useEffect(() => {
+        if (isNotApplicable == true && isMCQ ){
+            setAnswered({...answered, value: ""});
+            data.value = "";
+        }
+    },[isNotApplicable])
 
-    }
 
-    // If it is an MCQ question.
+// If it is an MCQ question.
     if (isMCQ) {
         return (
             <div className="question-container">
@@ -116,7 +168,7 @@ export default function Question({
                                 key={index}
                                 value={item}
                                 control={
-                                    <Radio disabled={readOnly} onClick={() => setAnswered(
+                                    <Radio disabled={readOnly || isNotApplicable} onClick={() => setAnswered(
                                         {   
                                             ...answered, 
                                             value: item 
@@ -130,19 +182,20 @@ export default function Question({
             </div>
         );
     } else {
-        if(data.value != undefined){
             return (
                 <div className="question-container">
                     <p>{description}</p>
-                    <Slider
+                    <SliderWithTicks
                         value={data.value}
                         color="secondary"
                         step={0.1}
-                        onChange={(e, val) =>
+                        onChange={(e, val) => {
                             setAnswered({
                                 ...answered,
                                 value: val,
+                                supplementaryValue: "",
                             })
+                            }
                         }
                         marks={marks}
                         min={0}
@@ -153,87 +206,7 @@ export default function Question({
                     />
                     <div className="slider-labels">
                         <label>{rangeOptions[0]}</label>
-                        <label className="slider-value">{data.value}</label>
-                        <label>{rangeOptions[1]}</label>
-                    </div>
-                    <FormControl color="secondary" margin="dense">
-                        <RadioGroup name="frequency" value={data.supplementaryValue} className="slider-checkboxes">
-                            <FormControlLabel
-                                value="Would not hear it."
-                                control={
-                                    <Radio
-                                        value="disabled"
-                                        disabled
-                                        onClick={() =>
-                                            setAnswered({
-                                                ...answered,
-                                                supplementaryValue: "Would not hear it.",
-                                            })
-                                        }
-                                    />
-                                }
-                                label="Would not hear it."
-                            />
-                            <FormControlLabel
-                                value="Do not know."
-                                control={
-                                    <Radio
-                                        value="disabled"
-                                        disabled
-                                        onClick={() =>
-                                            setAnswered({
-                                                ...answered,
-                                                supplementaryValue: "Do not know.",
-                                            })
-                                        }
-                                    />
-                                }
-                                label="Do not know."
-                            />
-                            <FormControlLabel
-                                value="Not applicable."
-                                control={
-                                    <Radio
-                                        value="disabled"
-                                        disabled
-                                        onClick={() =>
-                                            setAnswered({
-                                                ...answered,
-                                                supplementaryValue: "Not applicable.",
-                                            })
-                                        }
-                                    />
-                                }
-                                label="Not applicable."
-                            />
-                        </RadioGroup>
-                    </FormControl>
-                </div>
-            );
-        } else{
-            return (
-                <div className="question-container">
-                    <p>{description}</p>
-                    <Slider
-                        value={data.value}
-                        color="secondary"
-                        step={0.1}
-                        onChange={(e, val) =>
-                            setAnswered({
-                                ...answered,
-                                value: val,
-                            })
-                        }
-                        marks={marks}
-                        min={0}
-                        max={10}
-                        disabled={readOnly}
-                        valueLabelDisplay="auto"
-                        name="slider"
-                    />
-                    <div className="slider-labels">
-                        <label>{rangeOptions[0]}</label>
-                        <label className="slider-value">{data.value}</label>
+                        <label className="slider-value">{data.value === "" || data.value === undefined? "Ø" : data.value }</label>
                         <label>{rangeOptions[1]}</label>
                     </div>
                     <FormControl color="secondary" margin="dense">
@@ -243,11 +216,13 @@ export default function Question({
                                 control={
                                     <Radio
                                         disabled={readOnly}
-                                        onClick={() =>
+                                        onClick={() =>{
                                             setAnswered({
                                                 ...answered,
                                                 supplementaryValue: "Would not hear it.",
-                                            })
+                                                value:""
+                                            });
+                                        }
                                         }
                                     />
                                 }
@@ -258,11 +233,13 @@ export default function Question({
                                 control={
                                     <Radio
                                         disabled={readOnly}
-                                        onClick={() =>
+                                        onClick={() => {
                                             setAnswered({
                                                 ...answered,
                                                 supplementaryValue: "Do not know.",
-                                            })
+                                                value: ""
+                                            });
+                                        }
                                         }
                                     />
                                 }
@@ -273,11 +250,13 @@ export default function Question({
                                 control={
                                     <Radio
                                         disabled={readOnly}
-                                        onClick={() =>
+                                        onClick={() =>{
                                             setAnswered({
                                                 ...answered,
                                                 supplementaryValue: "Not applicable.",
-                                            })
+                                                value:""
+                                            });
+                                        }
                                         }
                                     />
                                 }
@@ -288,5 +267,4 @@ export default function Question({
                 </div>
             );
         }
-    }
 }

@@ -32,32 +32,32 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // handles rendering of SSQInstructionsContainer in the Admin Page
-const SSQInstructionsContainer = () => {
+const SSQInstructionsContainer = ({instructionType}) => {
     const [loading, setLoading] = useState(false);
     const [saveSuccess, setsaveSuccess] = useState(false);
     const [isSaveModalVisible, setIsSaveModalVisible] = useState(false);
     const classes = useStyles();
     const [instruction, setInstruction] = useState({
         title: "",
-        content: ""
+        content: "",
+        type: instructionType
     });
 
+
+
+
     const [isCancelModalVisible, setIsCancelModalVisible] = useState(false);
-    const [isInit, setIsInit] = useState(true)
 
-    const getInstruction = () => {
-        API.getInstructions().then((res) =>{
-            setInstruction({
-                title: res["title"],
-                content: res["content"]
-            })
-        })
+    const getInstruction = (instructionType) => {
+        API.getSpecificInstruction(instructionType).then((instruction) =>{
+            setInstruction(instruction);
+
+            });
+        
     }
 
-    if(isInit){
-        getInstruction();
-        setIsInit(false)
-    }
+    
+    useEffect(()=>{getInstruction(instructionType)},[]);
 
     // ========================================================================
     // Cancel Modal Functions
@@ -66,7 +66,7 @@ const SSQInstructionsContainer = () => {
     const closeCancelConfirmation = () => setIsCancelModalVisible(false);
 
     const CancelInstruction = () => {
-        getInstruction();
+        //getInstruction();
         closeCancelConfirmation();
     }
 
@@ -136,7 +136,8 @@ const SSQInstructionsContainer = () => {
 
     const saveInstruction = (e) =>{
         setLoading(true);
-        API.sendInstructions(instruction).then( res =>{
+        //TODO send collated instructions
+        API.updateInstruction(instructionType, {instruction}).then( res =>{
                 setLoading(false);
                 if (res.status === 200){
                     setsaveSuccess(true);
@@ -150,6 +151,7 @@ const SSQInstructionsContainer = () => {
         )
 
     }
+
 
     return (
         <div className="ssq-instructions-container">
@@ -195,6 +197,7 @@ const SSQInstructionsContainer = () => {
                 rows = {20}
                 rowsMax = {20}
             />
+           
         </div>
 
     );

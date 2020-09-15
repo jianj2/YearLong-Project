@@ -286,6 +286,11 @@ width: 65%;
   margin: 1rem -1rem;  
 }
 
+.find-password-form{
+  min-width: 400px;
+  display: flex;
+  flex-flow: column;
+}
 
 html,body{
   overflow: auto;

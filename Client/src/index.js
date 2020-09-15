@@ -49,6 +49,8 @@ ReactDOM.render(
                     client_id={config.clientId}
                     redirect_uri={window.location.origin}
                     onRedirectCallback={onRedirectCallback}
+                    audience={"http://localhost:3001/clinician"}
+                    scope={"read:current_user"}
                 >
                     <App />
                 </Auth0Provider>

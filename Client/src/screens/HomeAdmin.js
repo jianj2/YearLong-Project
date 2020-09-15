@@ -19,8 +19,6 @@ import React, { useEffect, useState } from "react";
 
 import { useAdminAuth } from "../utils/useAdminAuth";
 
-
-
 // Import components
 import FormLoginAdmin from "../components/FormLoginAdmin";
 import AdminSideBar from "../components/Admin/AdminSideBar";
@@ -33,23 +31,26 @@ import "../styles/main.css";
 // Import assets.
 import logoComplete from "../assets/logo_complete.png";
 import ContentPanel from "../components/Clinician/ContentPanel";
+import Loading from "../components/Loading";
 
 // ---------------------------------------------------------------
 // This function defines the Admin's Home screen.
 // ---------------------------------------------------------------
 const HomeAdmin = (props) => {
-    const { isAdminAuthenticated, adminLogin } = useAdminAuth();
-
+    console.log("It exists",process.env.SERVER_DOMAIN);
+    const { isAdminAuthenticated, adminLogin, loading } = useAdminAuth();
+    if (loading == true) {
+        return <Loading />;
+    }
     if (isAdminAuthenticated) {
         return (
             <div className="HomeAdmin">
-
-
                 <AdminSideBar />
 
                 <AdminContentPanel
                     active={props.active}
                     questionnaireID={props.questionnaireID}
+                    instructionType = {props.instructionType}
                 />
             </div>
         );

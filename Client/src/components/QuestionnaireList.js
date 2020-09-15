@@ -61,8 +61,8 @@ import React from "react";
 
 // Import Utils
 import { formatDate } from "../utils/formatter";
-import Chip from '@material-ui/core/Chip';
-import { Avatar } from '@material-ui/core';
+import Chip from "@material-ui/core/Chip";
+import { Avatar } from "@material-ui/core";
 // Import Styles
 import "../styles/questionnaireList.css";
 import { DialogTitle } from "@material-ui/core";
@@ -73,6 +73,7 @@ const QuestionnaireList = ({
     isSelectable,
     onClickQuestion,
     canEdit,
+    onClickCopy,
     onClickEdit,
     canDelete,
     onClickDelete,
@@ -88,6 +89,8 @@ const QuestionnaireList = ({
         isSelectable,
         onClickQuestion,
         canEdit,
+        questionnaire,
+        onClickCopy,
         onClickEdit,
         canDelete,
         onClickDelete,
@@ -108,27 +111,27 @@ const QuestionnaireList = ({
                 }}
             >
                 <div className="q-name">
-                    {canDelete ? 
-                        isSSQ_Ch? 
-                            (<Chip
-                            id = "SSQtype"
-                            variant="outlined"
-                            size="small"
-                            avatar={<Avatar>Ch</Avatar>}
-                            label="SSQ-FOR-CHILDERN"
-                            /> )
-                            : 
-                                (<Chip
-                                id = "SSQtype"
+                    {canDelete ? (
+                        isSSQ_Ch ? (
+                            <Chip
+                                id="SSQtype"
                                 variant="outlined"
                                 size="small"
-                                avatar={<Avatar>P</Avatar>}
-                                label="SSQ-FOR-PARENTS"
-                                /> )
-                        : null
-                    }
+                                avatar={<Avatar>Ch</Avatar>}
+                                label="SSQ-FOR-CHILDERN"
+                            />
+                        ) : (
+                                <Chip
+                                    id="SSQtype"
+                                    variant="outlined"
+                                    size="small"
+                                    avatar={<Avatar>P</Avatar>}
+                                    label="SSQ-FOR-PARENTS"
+                                />
+                            )
+                    ) : null}
 
-                    {title} 
+                    {title}
                 </div>
 
                 <div className="q-description">{description}</div>
@@ -159,6 +162,19 @@ const QuestionnaireList = ({
                                 E D I T
                             </button>
                         ) : null}
+                        
+                        {canDelete? (
+                            <button
+                            className="button"
+                            onClick={(event) => {
+                                event.stopPropagation();
+                                onClickCopy(questionnaire);
+                            }}
+                            >
+                                C O P Y
+                            </button>
+                        ) : null}
+                        
 
                         {canDelete ? (
                             <button
@@ -185,16 +201,18 @@ const QuestionnaireList = ({
                     questionnaireId={question.questionnaireId}
                     title={question.title}
                     description={question.description}
-                    isSSQ_Ch = {question.isSSQ_Ch}
+                    isSSQ_Ch={question.isSSQ_Ch}
                     isSelectable={isSelectable}
                     onClickQuestion={onClickQuestion}
                     canEdit={canEdit}
+                    onClickCopy = {onClickCopy}
                     onClickEdit={onClickEdit}
                     canDelete={canDelete}
                     onClickDelete={onClickDelete}
                     canShare={canShare}
                     onClickShare={onClickShare}
                     sections={question.sections}
+                    questionnaire = {question}
                 />
             ))}
         </div>

@@ -23,7 +23,12 @@ import ParentReviewSubmission from "../ParentReviewSubmission";
 import FormParentDetails from "../FormParentDetails";
 
 // Import Utils
-import  { getClinicianQuestionnaires, getQuestionnaire, completeQuestionnaire, getStandardisedQuestionnaires }  from "../../utils/api";
+import {
+    getClinicianQuestionnaires,
+    getQuestionnaireById,
+    completeQuestionnaire,
+    getStandardisedQuestionnaires,
+} from "../../utils/api";
 
 // Import Styles
 import "../../styles/clinicianDoTheTest.css";
@@ -31,7 +36,7 @@ import Loading from "../Loading";
 
 // handles rendering of QuestionnaireContainer in the Clinician Page
 const DoTheTestContainer = () => {
-    const { user } = useAuth0();
+    const { user, token } = useAuth0();
     const [wizardStep, setWizardStep] = useState(-1);
     const [loading, setLoading] = useState(false);
     const [personalDetails, setPersonalDetails] = useState({
@@ -60,21 +65,26 @@ const DoTheTestContainer = () => {
     // This is called whenever "user" changes
     useEffect(() => {
         async function retrieveStandardisedQuestionnaires() {
-            const response = await getStandardisedQuestionnaires();
-            if (response.statusCode === 200) {
-                setStandardisedQuestionnaires(response.data);
+            const [statusCode, data] = await getStandardisedQuestionnaires();
+            if (statusCode === 200) {
+                setStandardisedQuestionnaires(data);
+            }else{
+                console.error(data);
             }
         }
         async function retrieveCustomisedQuestionnaires() {
-            getClinicianQuestionnaires(user.name).then((res) => {
-                console.log(res);
-                setQuestionnaires(res);
-            });
+            const [statusCode, data] = await getClinicianQuestionnaires(token, user.name);
+            if (statusCode === 200){
+                setQuestionnaires(data);
+            }else{
+                console.error(data);
+            }
         }
-
-        retrieveCustomisedQuestionnaires();
-        retrieveStandardisedQuestionnaires();
-    }, [user]);
+        if (user && token !== "") {
+            retrieveCustomisedQuestionnaires();
+            retrieveStandardisedQuestionnaires();
+        }
+    }, [user, token]);
 
     // Method called to go to the next page in the wizard.
     const nextStep = () => {
@@ -91,6 +101,8 @@ const DoTheTestContainer = () => {
 
     // Method called to go to the instructions page in the wizard.
     const submitDetails = (data) => {
+        // to make sure field is not empty.
+        data["completedBy"] = "clinician";
         setPersonalDetails(data);
         console.log("details submitted", data);
         nextStep();
@@ -112,39 +124,41 @@ const DoTheTestContainer = () => {
         setQuestionnaireData(temp);
     };
 
-    const onClickQuestion = (questionnaireId) => {
+    const onClickQuestion = async (questionnaireId) => {
         console.log("questionnaire clicked", questionnaireId);
         setWizardStep(0);
-        getQuestionnaire(questionnaireId).then((res) => {
-            // check if the questionnaire is available.
-            if (res.statusCode === 200) {
-                let tempResponse = [];
-                res.data.sections.forEach((section, sectionIndex) => {
-                    tempResponse[sectionIndex] = [];
-                    section.scenarios.forEach((scenario, scenarioIndex) => {
-                        tempResponse[sectionIndex][scenarioIndex] = [];
-                        scenario.questions.forEach(
-                            (question, questionIndex) => {
-                                tempResponse[sectionIndex][scenarioIndex][
-                                    questionIndex
-                                ] = {
-                                    value: "",
-                                    supplementaryValue: "",
-                                };
-                            }
-                        );
+        const [statusCode, data] = await getQuestionnaireById(
+            questionnaireId
+        );
+
+        if (statusCode === 200) {
+            const questionnaire = data;
+            let tempResponse = [];
+            questionnaire.sections.forEach((section, sectionIndex) => {
+                tempResponse[sectionIndex] = [];
+                section.scenarios.forEach((scenario, scenarioIndex) => {
+                    tempResponse[sectionIndex][scenarioIndex] = [];
+                    scenario.questions.forEach((question, questionIndex) => {
+                        tempResponse[sectionIndex][scenarioIndex][
+                            questionIndex
+                        ] = {
+                            value: "",
+                            supplementaryValue: "",
+                        };
                     });
                 });
-                // Updating the state using the initial data and the questionnaire
-                // retrieved from the server.
-                setQuestionnaireData(tempResponse);
-                setSelectedQuestionnaire(res.data);
-            }
-        });
+            });
+            // Updating the state using the initial data and the questionnaire
+            // retrieved from the server.
+            setQuestionnaireData(tempResponse);
+            setSelectedQuestionnaire(questionnaire);
+        } else {
+            console.log(data);
+        }
     };
 
     const getPersonalDetails = (data) => {
-        setPersonalDetails(data)
+        setPersonalDetails(data);
     };
 
     const submitResponse = () => {
@@ -156,11 +170,11 @@ const DoTheTestContainer = () => {
             questionnaireId: selectedQuestionnaire.questionnaireId,
         };
 
-        completeQuestionnaire(data).then( res => {
-            console.log("complete question", res)
+        completeQuestionnaire(token, data).then((res) => {
+            console.log("complete question", res);
             setWizardStep(3);
             setLoading(false);
-        })
+        });
     };
 
     console.log("wizardStep", wizardStep);
@@ -171,7 +185,11 @@ const DoTheTestContainer = () => {
                     <button className="button" onClick={prevStep}>
                         B A C K
                     </button>
-                    <button className="button" onClick={nextStep}>
+                    <button
+                        className="button"
+                        form="parents-detail-form"
+                        type="submit"
+                    >
                         N E X T
                     </button>
                 </div>
@@ -190,9 +208,6 @@ const DoTheTestContainer = () => {
                 <div className="dothetest-subheader-container">
                     <button className="button" onClick={prevStep}>
                         B A C K
-                    </button>
-                    <button className="button" onClick={nextStep}>
-                        R E V I E W
                     </button>
                 </div>
 
@@ -218,8 +233,11 @@ const DoTheTestContainer = () => {
 
                 {loading ? <Loading /> : null}
 
-                <ParentReviewSubmission questionnaire={selectedQuestionnaire} personalDetails={personalDetails} questionnaireData={questionnaireData} />
-
+                <ParentReviewSubmission
+                    questionnaire={selectedQuestionnaire}
+                    personalDetails={personalDetails}
+                    questionnaireData={questionnaireData}
+                />
             </div>
         );
     } else if (wizardStep === 3) {
@@ -252,7 +270,7 @@ const DoTheTestContainer = () => {
 
                 <QuestionnaireList
                     questionnaires={questionnaires}
-                    listTitle={"My Questionnaires"}
+                    listTitle={"My Customised Questionnaires"}
                     isSelectable={true}
                     onClickQuestion={onClickQuestion}
                     canEdit={false}

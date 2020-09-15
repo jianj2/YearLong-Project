@@ -69,7 +69,7 @@ const HomeParents = ({ match }) => {
     });
     const [isInit, setIsInit] = useState(true);
     const getInstruction = () => {
-        API.getInstructions().then((res) =>{
+        API.getInstruction().then((res) =>{
             setInstruction({
                 title: res["title"],
                 content: res["content"]
@@ -82,29 +82,60 @@ const HomeParents = ({ match }) => {
         setIsInit(false);
     }
 
-    const [sectionVisibility, setSectionVisibility] = useState([]);
 
     const getPersonalDetails = (data) => {
         setPersonalDetails(data)
         console.log("data", data)
     };
 
+    //////////// Share section update /////////////////////////////
+    // get a list of the visible sections
+    const getVisibleSections = (sections, visibilityInfoList) => {
+        const filteredSections = sections.filter((section) => {
+            const foundVisibilityInfo = visibilityInfoList.find(
+                (visibilityInfo) => {
+                    return visibilityInfo.title === section.title;
+                }
+            );
+            if (foundVisibilityInfo != undefined) {
+                return foundVisibilityInfo.isVisible;
+            } else {
+                return null;
+            }
+        });
+        return filteredSections;
+    };
+
+    // set the updates questionnaire sections.
+    const updateSections = (questionnaire, sectionVisibility) => {
+        if (sectionVisibility != undefined) {
+            questionnaire.sections = getVisibleSections(
+                questionnaire.sections,
+                sectionVisibility
+            );
+        }
+    };
+
+
+    //////////////////////////////////////////////////////////////
+
     // This is called when the component first mounts.
     useEffect(() => {
         // Server call to get the questionnaireId
-        API.getShareDetails(match.params.shareId).then((response) => {
-            if (response.statusCode === 200) {
+        API.getShareDetails(match.params.shareId).then((shareResponse) => {
+            if (shareResponse.statusCode === 200) {
 
             // Server call to get the questionnaire.
-            setClinicianEmail(response.data.clinicianEmail);
-            setReadOnly(response.data.readOnly);
-            setSectionVisibility(response.data.shareSection);
-            API.getQuestionnaire(response.data.questionnaireId).then((res) => {
+            setClinicianEmail(shareResponse.data.clinicianEmail);
+            setReadOnly(shareResponse.data.readOnly);
+            API.getQuestionnaireById(shareResponse.data.questionnaireId).then((res) => {
+                const [statusCode, data] = res;
                 // Define initial values for the Questionnaire
-                if (res.statusCode === 200 ){
+                if (statusCode === 200 ){
+                    updateSections(data, shareResponse.data.shareSection);
 
                     let tempResponse = [];
-                    res.data.sections.forEach((section, sectionIndex) => {
+                    data.sections.forEach((section, sectionIndex) => {
                         tempResponse[sectionIndex] = [];
                         section.scenarios.forEach((scenario, scenarioIndex) => {
                             tempResponse[sectionIndex][scenarioIndex] = [];
@@ -121,7 +152,7 @@ const HomeParents = ({ match }) => {
                     // Updating the state using the initial data and the questionnaire
                     // retrieved from the server.
                     setQuestionnaireData(tempResponse);
-                    setQuestionnaire(res.data);
+                    setQuestionnaire(data);
                     setWizardStep(0);
 
                 }else{
@@ -159,8 +190,7 @@ const HomeParents = ({ match }) => {
         setWizardStep(0);
     };
     // Method called to go to the instructions page in the wizard.
-    const submitDetails = (data) => {
-        setPersonalDetails(data);
+    const submitDetails = () => {
         nextStep();
     };
     // Method called when we submit the questionnaire.
@@ -251,6 +281,7 @@ const HomeParents = ({ match }) => {
                         clinicianAccess={false} 
                         defaultValue={personalDetails}
                         getPersonalDetails={getPersonalDetails}
+                        isSSQ_Ch={questionnaire.isSSQ_Ch}
                     />
                 </div>
             </div>
@@ -280,7 +311,6 @@ const HomeParents = ({ match }) => {
                         submitQuestionnaire={submitQuestionnaire}
                         questionnaireData={questionnaireData}
                         handleQuestionnaireChange={handleQuestionnaireChange}
-                        sectionVisibility={sectionVisibility}
                     />
                 </div>
             </div>
@@ -325,7 +355,7 @@ const HomeParents = ({ match }) => {
             </div>
 
             <div className="form-completed">
-                <h1>Response Sent</h1>
+                <h1>Questionnaire response sent to your clinician!</h1>
                 <h2>Thank you!</h2>
             </div>
         </div>

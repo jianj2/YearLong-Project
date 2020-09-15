@@ -1,18 +1,21 @@
 import React, { useState, useEffect, useContext } from "react";
 import * as API from "./api";
 
+
 export const AdminAuthContext = React.createContext();
 export const useAdminAuth = () => useContext(AdminAuthContext);
-export const AdminAuthProvider = ({children}) => {
+export const AdminAuthProvider = ({ children }) => {
+    
     const [isAdminAuthenticated, setAuthenticated] = useState(false);
     const [adminToken, setAdminToken] = useState("");
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         let previousAuth = JSON.parse(
             localStorage.getItem("adminAuthentication")
         );
         console.log("previousAuth", previousAuth);
-        if (previousAuth){
+        if (previousAuth) {
             API.verifyAdminLogin(previousAuth.token).then((res) => {
                 console.log("VERYIFY LOGIN in CUSTOM HOOK", res);
                 if (res.auth) {
@@ -21,6 +24,7 @@ export const AdminAuthProvider = ({children}) => {
                 }
             });
         }
+        setLoading(false);
     }, []);
 
     const adminLogin = (loginData) => {
@@ -35,6 +39,10 @@ export const AdminAuthProvider = ({children}) => {
                         token: res.message.token,
                     })
                 );
+            }else if (res.code===4){
+                var errorMessage = document.getElementById('error-message-login');
+                errorMessage.innerHTML = "Login information is wrong";
+                errorMessage.style.display = 'block';
             }
         });
     };
@@ -50,12 +58,13 @@ export const AdminAuthProvider = ({children}) => {
         setAdminToken("");
         console.log("logout admin");
     };
-    
+
     return (
         <AdminAuthContext.Provider
             value={{
                 isAdminAuthenticated,
                 adminToken,
+                loading,
                 adminLogin,
                 adminLogout,
             }}
