@@ -13,7 +13,9 @@
 // Import Libraries
 const nodemailer = require('nodemailer');
 const path = require("path");
-const { generateReport } = require('./reportService')
+
+const {generateAttachments} = require('./reportService')
+
 
 // Define Transporter
 const transporter = nodemailer.createTransport({
@@ -68,7 +70,6 @@ const sendInvitationEmail = function (createdShare) {
         };
 
 
-
         // Resolves this promise if sendEmail promise is resolved.
         // Rejects this promise if sendEmail promise is rejected.
         sendEmail(mailOptions)
@@ -105,12 +106,9 @@ const sendResultsEmail = function (questionnaireId, questionnaireData, clinician
                 "    </div>",
         }
 
-        generateReport(questionnaireId, personalDetails, questionnaireData, shareId)
-            .then((reportResolved) => {
-                mailOptions.attachments = [{   // stream as an attachment
-                    filename: reportResolved.fileName,
-                    content: reportResolved.content,
-                }];
+        generateAttachments(questionnaireId, personalDetails, questionnaireData, shareId)
+            .then((attachments) => {
+                mailOptions.attachments = attachments;
                 // Resolves this promise if sendEmail promise is resolved.
                 // Rejects this promise if sendEmail promise is rejected.
                 sendEmail(mailOptions)

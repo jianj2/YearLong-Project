@@ -16,6 +16,7 @@ const PDFDocument = require('pdfkit');
 const mongoose = require("mongoose");
 const Questionnaire = mongoose.model("questionnaire");
 const Share = mongoose.model("share");
+const fs = require('fs');
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // HELPERS
@@ -45,6 +46,40 @@ const getTimeStamp = function () {
     return (year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds);
 }
 
+const addPage = function (doc, spacing, docHeight) {
+    if (spacing > docHeight) {
+        doc.addPage();
+        spacing = 80;
+    }
+    return spacing;
+}
+
+//print MCQ
+//print range
+const printRQAnswer = function (doc, questionAnswer, startMargin, midMargin, spacing) {
+    doc.font('Helvetica-Bold')
+        .text("Answer: ", startMargin, spacing)
+    if ((questionAnswer === "" || questionAnswer === undefined)) {
+        questionAnswer = "Unanswered"
+        doc.font('Helvetica')
+            .text(questionAnswer.value, midMargin, spacing)
+    } else {
+        doc.font('Helvetica')
+            .text(questionAnswer, midMargin, spacing);
+    }
+}
+
+const printMCQAnswer = function (doc, questionAnswer, startMargin, midMargin, spacing) {
+    doc.text("Answer: ", startMargin, spacing)
+    if (questionAnswer === "" || questionAnswer === undefined) {
+        doc.font('Helvetica')
+            .text("Unanswered", midMargin, spacing);
+    } else {
+        doc.font('Helvetica')
+            .text(questionAnswer, midMargin, spacing);
+    }
+}
+
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to print the results on the document
@@ -54,94 +89,57 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
     let spacing = 340
     // actual page is 792 but setting it to 700 helps to prevent overflow problems
     let docHeight = 700
-    let index = 0
+    let startMargin = 80
+    let midMargin = 280
+
     resultToPrint.sections.forEach((section, sectionIndex) => {
 
         if (sharedSection === null || sharedSection[sectionIndex].isVisible) {
-            if (spacing > docHeight) {
-                doc.addPage();
-                spacing = 80;
-            }
+            spacing = addPage(doc, spacing, docHeight)
             // Writing the title for each scenario.
-            doc.font('Helvetica-Bold').fontSize(14).text(section.title, 80, spacing);
-            doc.font('Helvetica').fontSize(12).text("Section average: " + section.score, 280, spacing);
+            doc.font('Helvetica-Bold').fontSize(14).text(section.title, startMargin, spacing);
+            doc.font('Helvetica').fontSize(12).text("Section average: " + section.score, midMargin, spacing);
             spacing = spacing + 30;
 
+            section.scenarios.map((scenario) => {
+                spacing = addPage(doc, spacing, docHeight)
 
-            section.scenarios.map((scenario, scenarioIndex) => {
                 // Writing the description for each scenario.
-                if (spacing > docHeight) {
-                    doc.addPage();
-                    spacing = 80;
-                }
-
-                doc.font('Helvetica-Bold').fontSize(12).text("Scenario: ", 80, spacing);
+                doc.font('Helvetica-Bold').fontSize(12).text("Scenario: ", startMargin, spacing);
                 spacing = spacing + 20;
 
-                doc.font('Helvetica').fontSize(12).text(scenario.description, 80, spacing, {
+                doc.font('Helvetica').fontSize(12).text(scenario.description, startMargin, spacing, {
                     width: 420,
                     align: 'justify'
                 });
                 spacing = spacing + Math.ceil(doc.heightOfString(scenario.description) / 10) * 10 + 15;
 
                 scenario.questions.map((question) => {
-                    if (spacing > docHeight) {
-                        doc.addPage();
-                        spacing = 80;
-                    }
+                    spacing = addPage(doc, spacing, docHeight)
 
                     let questionAnswer = question.response;
-
                     // If the question is range type then the print out both value and supplementary value.
                     if (!question.isMCQ) {
-                        if ((questionAnswer === "" || questionAnswer === undefined)) {
-                            doc.font('Helvetica-Bold')
-                                .text("Answer: ", 80, spacing)
-                            questionAnswer = "Unanswered"
-                            doc.font('Helvetica')
-                                .text(questionAnswer.value, 280, spacing)
-
-                        } else {
-                            doc.font('Helvetica-Bold')
-                                .text("Answer: ", 80, spacing)
-
-                            doc.font('Helvetica')
-                                .text(questionAnswer, 280, spacing);
-                        }
+                        printRQAnswer(doc, questionAnswer, startMargin, midMargin, spacing)
 
                         spacing = spacing + 35;
-
-                        if (spacing > docHeight) {
-                            doc.addPage();
-                            spacing = 80;
-                        }
+                        spacing = addPage(doc, spacing, docHeight)
                     }
 
                     // MCQ questions will have the question and answer printed on pdf.
                     else {
                         doc.font('Helvetica-Bold')
-                            .text(question.description, 80, spacing, {
+                            .text(question.description, startMargin, spacing, {
                                 width: 420,
                                 align: 'justify'
                             });
 
                         spacing = spacing + Math.ceil(doc.heightOfString(question.description) / 10) * 10 + 10;
 
-                        if (spacing > docHeight) {
-                            doc.addPage();
-                            spacing = 80;
-                        }
+                        spacing = addPage(doc, spacing, docHeight)
 
-                        doc.text("Answer: ", 80, spacing)
-                        if (questionAnswer === "" || questionAnswer === undefined) {
-                            doc.font('Helvetica')
-                                .text("Unanswered", 280, spacing);
-                            spacing = spacing + 35;
-                        } else {
-                            doc.font('Helvetica')
-                                .text(questionAnswer, 280, spacing);
-                            spacing = spacing + 35;
-                        }
+                        printMCQAnswer(doc, questionAnswer, startMargin, midMargin, spacing)
+                        spacing = spacing + 35;
 
                     }
                 })
@@ -151,15 +149,11 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
             // Add a separation line.
             spacing = spacing + 10;
             doc.lineCap('butt')
-                .moveTo(80, spacing)
+                .moveTo(startMargin, spacing)
                 .lineTo(500, spacing)
                 .stroke();
             spacing = spacing + 20;
-
-            if (spacing > docHeight) {
-                doc.addPage();
-                spacing = 80;
-            }
+            spacing = addPage(doc, spacing, docHeight)
         }
 
     });
@@ -214,7 +208,7 @@ const getQuestionnaireResponseJoin = function (questionnaire, questionnaireData,
                     let valueToSet = questionnaireData[sectionIndex][scenarioIndex][questionIndex].value;
 
                     if (!valueToSet) {
-                        if (question.isMCQ){
+                        if (question.isMCQ) {
                             valueToSet = "Not Applicable."
                         } else {
                             valueToSet = questionnaireData[sectionIndex][scenarioIndex][questionIndex].supplementaryValue;
@@ -247,69 +241,108 @@ const sortByImportance = function (response) {
     })
 
     return sortedResult;
+}
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to calculate both the average and section scores
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+const calculateScore = function (questionnaireData, calculateAverage, section_score) {
+    let total_score = 0;
+    let total_q = 0;
+    let section_num = 0;
+
+    for (let i = 0; i < questionnaireData.length; i++) {
+        let section_q = 0;
+        let score = 0;
+        for (let j = 0; j < questionnaireData[i].length; j++) {
+            for (let z = 0; z < questionnaireData[i][j].length; z++) {
+                if (!isNaN(questionnaireData[i][j][z].value)) {
+                    if (questionnaireData[i][j][z].value !== '') {
+                        score += questionnaireData[i][j][z].value;
+                    }
+                    section_q += 1;
+                }
+            }
+        }
+
+        if (score === 0) {
+            section_score[section_num] = "N/A";
+        } else {
+            section_score[section_num] = Math.round((score / section_q) * 100) / 100;
+        }
+
+        total_score += score;
+        section_num += 1;
+        total_q += section_q;
+    }
+
+    if (calculateAverage) {
+        return Math.round((total_score / total_q) * 100) / 100;
+    } else {
+        return section_score
+    }
+}
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used generate the csv report.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+const createcsv = function (questionnaireData, personalDetails, sharedSections) {
+    let toWrite = `name,date,right_device_type,left_device_type,completed_by,` +
+        `section,question,response\n`
+    let realSectionIndex = 0;
+    questionnaireData.sections.forEach((section, sectionIndex) => {
+        // ADD SCORE TO THE SECTION
+        //questionnaireData[realSectionIndex][scenarioIndex][questionIndex].value;
+        if (sharedSections === null || sharedSections[sectionIndex].isVisible) {
+            section.scenarios.forEach((scenario , scenarioIndex)=> {
+                scenario.questions.forEach(question => {
+                    let questionDescription = (scenario.description).replace(/,/g, "")
+                    toWrite += `${personalDetails.name},${personalDetails.date},${personalDetails.rightDeviceType},${personalDetails.leftDeviceType},${personalDetails.completedBy},` +
+                        `${section.title},${questionDescription},${question.response}\n`
+                })
+            });
+            realSectionIndex++;
+        }
+    });
+    return Buffer.from(toWrite, 'utf8')
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used generate the pdf report.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const generateReport = function (questionnaireId, personalDetails, questionnaireData, shareId) {
+const generateAttachments = function (questionnaireId, personalDetails, questionnaireData, shareId) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
 
         Questionnaire.findOne({questionnaireId}, function (err, questionnaire) {
             if (!err) {
-                var total_score = 0;
-                var section_score = new Array();
-                var total_q = 0;
-                var section_num = 0;
+                let section_score = [];
 
-                for (var i = 0; i < questionnaireData.length; i++) {
-                    var section_q = 0;
-                    var score = 0;
-                    for (var j = 0; j < questionnaireData[i].length; j++) {
-                        for (var z = 0; z < questionnaireData[i][j].length; z++) {
-                            if (!isNaN(questionnaireData[i][j][z].value)) {
-                                if (questionnaireData[i][j][z].value != '') {
-                                    score += questionnaireData[i][j][z].value;
-                                }
-                                section_q += 1;
-                            }
-                        }
-                    }
-                    if (score === 0) {
-                        section_score[section_num] = "N/A";
-                    } else {
-                        section_score[section_num] = Math.round((score / section_q) * 100) / 100;
-                    }
-                    total_score += score;
-                    section_num += 1;
-                    total_q += section_q;
-                }
 
-                let average_score = Math.round((total_score / total_q) * 100) / 100;
+                section_score = calculateScore(questionnaire, false, section_score)
+                let average_score = calculateScore(questionnaireData, true, section_score);
 
-                // object created to pass through.
+                // object created to pass through
                 let scores = {
                     averageScore: average_score,
                     sectionScores: section_score
                 }
 
-
                 //creating pdf document
                 const doc = new PDFDocument();
                 let ts = getTimeStamp();
+                // prints time stamp
                 doc.font('Helvetica').fontSize(10).text(ts, 10, 10);
-
+                // insert logo
                 doc.image('assets/logo_complete.png', 400, 30, {width: 100})
-
+                // prints heading for patient details
                 doc.font('Helvetica-Bold').fontSize(14).text("Patient Details", 80, 80);
 
                 // purple overlay for patient information
                 doc.fillOpacity(0.1).rect(80, 100, 420, 180).fill('purple');
                 doc.fillOpacity(1).fill('black');
 
-                // prints out patient information
+                // prints out patient information headings
                 doc.font('Helvetica-Bold').fontSize(12)
                     .text('Patient Name', 100, 120)
                     .text('Right Device Type', 100, 170)
@@ -317,6 +350,7 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
                     .text('Date of Birth', 300, 120)
                     .text('Completed By', 300, 170);
 
+                // prints out patient information
                 doc.font('Helvetica').fontSize(12)
                     .text(personalDetails.name, 100, 140)
                     .text(personalDetails.date, 300, 140)
@@ -344,6 +378,8 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
 
                     const resultToPrint = getQuestionnaireResponseJoin(questionnaire, questionnaireData, section_score, sharedSections);
 
+                    const csvResult = createcsv(resultToPrint, personalDetails, sharedSections);
+
                     // -------  TO DO  --------
                     // MAKE THIS BETTER
                     const sortedResults = sortByImportance(resultToPrint)
@@ -361,10 +397,13 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
                     // Used to display as a table in the email
                     const {jsonToTableHtmlString} = require('json-table-converter')
 
-                    resolve({
-                        fileName: "Report.pdf",
+                    resolve([{
+                        filename: "Report.pdf",
                         content: doc,
-                    })
+                    }, {
+                        filename: "Report.csv",
+                        content: csvResult,
+                    }])
                 });
             } else {
                 reject({
@@ -376,4 +415,4 @@ const generateReport = function (questionnaireId, personalDetails, questionnaire
 }
 
 
-module.exports.generateReport = generateReport;
+module.exports.generateAttachments = generateAttachments;
