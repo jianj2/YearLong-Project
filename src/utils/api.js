@@ -102,79 +102,32 @@ export const completeQuestionnaire = async (token, data) =>{
     
 
 export const addQuestionnaire = async (token, clinicianId) => {
-    const url = api + "/questionnaire/add";
-
-    const headers = {
-        ... header,
-        ...createHeader(token)
-    };
-
+    const url = "questionnaire/add";
     const data = {
         clinicianId,
         isStandard: false,
     };
-    return new Promise(async (resolve) => {
-        try {
-            let response = await fetch(url, {
-                method: "POST",
-                headers: headers,
-                body: JSON.stringify(data),
-            });
-            let json = await response.json();
-            resolve(json.uuid);
-        } catch (e) {
-            console.error(
-                "An error has occurred while adding questionnaire",
-                e
-            );
-        }
-    });
+    return await sendRequest("POST", url, data, token);
+ 
 };
 
 
 
 export const addStandardQuestionnaire = async () => {
-    const url = api + "/questionnaire/addStandard";
-
-    const headers = {
-        ...header
-    };
- 
-    return new Promise(async (resolve) => {
-        try {
-            let response = await fetch(url, {
-                method: "POST",
-                headers: headers,
-                
-            });
-            let json = await response.json();
-            resolve(json.uuid);
-        } catch (e) {
-            console.error(
-                "An error has occurred while adding questionnaire",
-                e
-            );
-        }
-    });
+    const url = "questionnaire/addStandard";
+    return await sendRequest("POST", url);
 };
 
 // delete customised questionnaire
-export const deleteQuestionnaire = (token, CQid, clinicianId) => {
-    // console.log(CQid, clinicianId);
+export const deleteQuestionnaire = async (token, CQid, clinicianId) => {
+
+    const url = "questionnaire/delete";
     const data = {
         CQid,
         clinicianId,
     };
-    const headers = {
-        ... header,
-        ...createHeader(token)
-    };
-
-    fetch(`${api}/questionnaire/delete`, {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(data),
-    }).then((res) => res.json());
+    return await sendRequest("POST", url, data);
+ 
 };
 
 //edit questionnaire
@@ -334,19 +287,11 @@ export const getStandardisedQuestionnaireForAdmin = async () => {
 };
 
 export const deleteStandardQuestionnaire = async (questionnaireID) => {
+    const url = "questionnaire/deleteStandard";
     const data = {
-        questionnaireID,
+        questionnaireID
     };
-
-    let response = await fetch(`${api}/questionnaire/deleteStandard`, {
-        method: "POST",
-        headers: {
-            ...header
-        },
-        body: JSON.stringify(data),
-    });
-    let json = await response.json();
-    return json;
+    return await sendRequest("POST", url, data);
 };
 
 // ================================================

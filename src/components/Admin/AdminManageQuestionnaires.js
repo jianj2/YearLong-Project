@@ -97,7 +97,7 @@ const AdminManageQuestionnaires = () => {
     // function for adding new standardised questionnaire
     async function AddNew() {
         setLoading(true);
-        const uuid = await addStandardQuestionnaire();
+        const [_, uuid] = await addStandardQuestionnaire();
 
         const AddedArray = standardisedQuestionnaires;
         let newQuestionnaire = {
@@ -127,7 +127,7 @@ const AdminManageQuestionnaires = () => {
             (q) => q.questionnaireId !== questionnaireId
         );
         setStandardisedQuestionnaires(filteredQuestionnaires);
-        const message = await deleteStandardQuestionnaire(questionnaireId);
+        const [_,message] = await deleteStandardQuestionnaire(questionnaireId);
         console.log(message);
         closeDeleteConfirmation();
     };

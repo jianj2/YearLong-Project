@@ -164,7 +164,7 @@ const ManageQuestionnaires = (props) => {
     // Function called when Add New Button is clicked
     async function AddNew() {
         setLoading(true);
-        const uuid = await API.addQuestionnaire(token, user.name);
+        const [_,uuid] = await API.addQuestionnaire(token, user.name);
 
         // const today = formatDate();
         const AddedArray = customisedQuestionnaires;
