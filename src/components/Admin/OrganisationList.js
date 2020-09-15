@@ -8,13 +8,25 @@
  *
  */
 
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 //import style
 import "../../styles/organisationList.css";
+import {getOrganisations} from "../../utils/api";
 
 // handles rendering of OrganisationList in the Admin Page
 const OrganisationList = () => {
+
+    const [OrganisationSummary, setOrganisationSummary] = useState([]);
+
+    const getOrganisationList = async () => { //To handle the data from the API
+        const allOrganisation= await getOrganisations();
+        let OrganList = new Set(allOrganisation.map((item)=>{
+            return item.organisation.toLowerCase();
+        }));
+        setOrganisationSummary(Array.from(OrganList));
+
+    }
 
     const OrganisationItem = ({
                                   title,
@@ -26,7 +38,7 @@ const OrganisationList = () => {
                 }
             >
                 <div className="q-name">
-                    {/*{title}*/}
+                    {title}
                     test
                 </div>
 
@@ -34,11 +46,19 @@ const OrganisationList = () => {
         );
     };
 
+    useEffect(()=>{
+        getOrganisationList();
+    },[]);
 
     return (
         <div className="organisation-list-container">
             <h1>Organisation</h1>
-            <OrganisationItem />
+            {OrganisationSummary.map((organisations,index)=>
+                <OrganisationItem
+                    key={index}
+                    title={organisations}
+                />
+            )}
         </div>
     );
 };
