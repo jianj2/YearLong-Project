@@ -10,21 +10,33 @@ export const AdminAuthProvider = ({ children }) => {
     const [adminToken, setAdminToken] = useState("");
     const [loading, setLoading] = useState(true);
 
+    const verifyAdminLoginFun = async (previousAuth) => {  //this is for shortly redirect to the admin login page(bug)
+        await API.verifyAdminLogin(previousAuth.token).then((res) => {
+            console.log("VERYIFY LOGIN in CUSTOM HOOK", res);
+            if (res.auth) {
+                setAuthenticated(true);
+                setLoading(false);
+                setAdminToken(previousAuth.token);
+            } else {
+                setLoading(false);
+            }
+        }).catch(
+            ()=>{
+                setLoading(false);
+            }
+        );
+    }
+
     useEffect(() => {
         let previousAuth = JSON.parse(
             localStorage.getItem("adminAuthentication")
         );
-        console.log("previousAuth", previousAuth);
+        // console.log("previousAuth", previousAuth);
         if (previousAuth) {
-            API.verifyAdminLogin(previousAuth.token).then((res) => {
-                console.log("VERYIFY LOGIN in CUSTOM HOOK", res);
-                if (res.auth) {
-                    setAuthenticated(true);
-                    setAdminToken(previousAuth.token);
-                }
-            });
+            verifyAdminLoginFun(previousAuth);
+        } else { //if the previousAuth is null(not have previousAuth in localStorage, the loading will disappear)
+            setLoading(false);
         }
-        setLoading(false);
     }, []);
 
     const adminLogin = (loginData) => {
