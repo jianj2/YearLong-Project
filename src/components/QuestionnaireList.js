@@ -137,7 +137,7 @@ const QuestionnaireList = ({
                 <div className="q-description">{description}</div>
 
                 <div className="list-item-footer">
-                    <div className="list-item-date">{formatDate()}</div>
+                    <div className="list-item-date">{date}</div>
                     <div className="questionnaire-list-button-container">
                         {canShare ? (
                             <button
@@ -213,6 +213,7 @@ const QuestionnaireList = ({
                     onClickShare={onClickShare}
                     sections={question.sections}
                     questionnaire = {question}
+                    date = {question.updateDate}
                 />
             ))}
         </div>

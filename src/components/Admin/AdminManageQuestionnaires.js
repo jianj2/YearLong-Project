@@ -88,7 +88,11 @@ const AdminManageQuestionnaires = () => {
         async function retrieveStandardisedQuestionnaires() {
             const response = await getStandardisedQuestionnaireForAdmin();
             console.log(response);
-            setStandardisedQuestionnaires(response); // cause the structure is not the same with cary's
+            let sortedResponse = response.sort(function(a,b){
+                var dateA = new Date(a.updateDate), dateB = new Date(b.updateDate);
+                return dateB - dateA ;
+            })
+            setStandardisedQuestionnaires(sortedResponse); // cause the structure is not the same with cary's
             setLoading(false);
         }
         retrieveStandardisedQuestionnaires();
@@ -96,23 +100,10 @@ const AdminManageQuestionnaires = () => {
 
     // function for adding new standardised questionnaire
     async function AddNew() {
-        setLoading(true);
+        
         const [_, uuid] = await addStandardQuestionnaire();
-
-        const AddedArray = standardisedQuestionnaires;
-        let newQuestionnaire = {
-            questionnaireId: uuid,
-            title: "New Standard Questionnaire",
-            description: "Please click edit to begin with this questionnaire.",
-            sections: [],
-            isStandard: true,
-            isSSQ_Ch: true,
-        };
-        setStandardisedQuestionnaires([
-            newQuestionnaire,
-            ...standardisedQuestionnaires,
-        ]);
-        setLoading(false);
+        window.location.reload(false);
+        
     }
 
     // ========================================================================
