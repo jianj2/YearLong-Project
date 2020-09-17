@@ -66,11 +66,13 @@ const findStandardisedQuestionnaires = async () => {
 
 // generate an almost empty questionnaire with uuid.
 const generateNewCustomisedQuestionnaire = (uuid) => {
+    console.log((new Date()).toLocaleString())
     return new Questionnaire({
         questionnaireId: uuid,
         title: "New Questionnaire",
         description: "Please click edit to begin with this questionnaire.",
         isSSQ_Ch: true,
+        updateDate: (new Date()).toLocaleString(),
         sections: [
             {
                 title: "Section 1 - Speech",
@@ -111,6 +113,7 @@ const generateNewStandardisedQuestionnaire = (uuid) => {
         title: "New Standard Questionnaire",
         description: "Please click edit to begin with this questionnaire.",
         isSSQ_Ch: true,
+        updateDate: (new Date()).toLocaleString(),
         sections: [
             { title: "Section 1 - Speech", scenarios: [] },
             { title: "Section 2 - Spatial", scenarios: [] },
@@ -127,6 +130,7 @@ const generateCopy = (copiedQuestionnaire, questionnaireId, isStandard) => {
         questionnaireId,
         isStandard,
         title: copiedQuestionnaire.title + " - Copy",
+        updateDate: (new Date()).toLocaleString(),
     });
 };
 
@@ -177,10 +181,19 @@ const updateQuestionnaireOnDatabase = async (
     questionnaireId,
     editedQuestionnaire
 ) => {
+    // generates a new questionnaire with given content and fields
+    // const editedQuestionnaireWithDate = new Questionnaire({
+    //     ...editedQuestionnaire,
+    //     updateDate: (new Date()).toLocaleString(),
+    // });
+
     try {
         await Questionnaire.replaceOne(
             { questionnaireId: questionnaireId },
-            editedQuestionnaire
+            {
+                ...editedQuestionnaire,
+                updateDate: (new Date()).toLocaleString()
+            }
         );
         return Promise.resolve([undefined, "Updated questionnaire."]);
     } catch (error) {
@@ -199,7 +212,7 @@ const editCustomisedQuestionnaire = async (
         if (questionnaireIds.includes(questionnaireId)) {
             return await updateQuestionnaireOnDatabase(
                 questionnaireId,
-                editedQuestionnaire
+                editedQuestionnaire,
             );
         } else {
             throw Error(
