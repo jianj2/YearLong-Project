@@ -51,6 +51,7 @@ const HomeAdmin = (props) => {
                     active={props.active}
                     questionnaireID={props.questionnaireID}
                     instructionType = {props.instructionType}
+                    organName = {props.organName}
                 />
             </div>
         );

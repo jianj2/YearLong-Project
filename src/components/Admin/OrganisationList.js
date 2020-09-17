@@ -21,11 +21,11 @@ const OrganisationList = () => {
 
     const getOrganisationList = async () => { //To handle the data from the API
         const allOrganisation= await getOrganisations();
+        console.log(allOrganisation)
         let OrganList = new Set(allOrganisation.map((item)=>{
             return item.organisation.toLowerCase();
         }));
         setOrganisationSummary(Array.from(OrganList));
-
     }
 
     const OrganisationItem = ({
@@ -36,10 +36,13 @@ const OrganisationList = () => {
                 className={
                     "organisation-list-item organisation-list-item-selectable"
                 }
+                onClick={() => {
+                    const url = "/admin/Organisation/" + title;
+                    window.location.href = url;
+                }}
             >
                 <div className="q-name">
                     {title}
-                    test
                 </div>
 
             </div>
@@ -62,6 +65,5 @@ const OrganisationList = () => {
         </div>
     );
 };
-
 
 export default OrganisationList;

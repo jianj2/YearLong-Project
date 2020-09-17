@@ -76,6 +76,12 @@ function App() {
                     />
 
                     <Route
+                        path="/admin/Organisation/:name"
+                        exact
+                        render={({match})=>(<HomeAdmin active={7} organName={match.params.name}/>)}
+                    />
+
+                    <Route
                         path="/admin/:id/edit"
                         exact
                         render={({match}) => (<HomeAdmin active = {4} questionnaireID={match.params.id}/>)}

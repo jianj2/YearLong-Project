@@ -22,7 +22,6 @@ const AdminSideBar = (props) =>{
 
     return (
         <div className="sidebar-container">
-            {console.log(pathname)}
             <Link className={`sidebar-questionnaires
             ${(pathname === "admin" || pathname === "Questionnaires" || pathname === "edit")? "active" : ""}`}
                   to = "/admin/Questionnaires">Questionnaires</Link>
