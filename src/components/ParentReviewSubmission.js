@@ -37,11 +37,11 @@ export default function ParentReviewSubmission({
                 </div>
                 <div className="review-row">
                     <label>Right Device:</label>
-                    <span>{personalDetails.rightDeviceType}</span>
+                    <span>{personalDetails.rightDeviceType === 'Other' ? personalDetails.rightDeviceTypeOther : personalDetails.rightDeviceType}</span>
                 </div>
                 <div className="review-row">
                     <label>Left Device:</label>
-                    <span>{personalDetails.leftDeviceType}</span>
+                    <span>{personalDetails.leftDeviceType === 'Other' ? personalDetails.leftDeviceTypeOther : personalDetails.leftDeviceType}</span>
                 </div>
             </div>
 
