@@ -287,6 +287,8 @@ const calculateScore = function (questionnaireData, calculateAverage, section_sc
 // This function is used generate the csv report.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const createcsv = function (questionnaireData, personalDetails, sharedSections) {
+    const device_r = personalDetails.rightDeviceType === 'Other' ? personalDetails.rightDeviceTypeOther : personalDetails.rightDeviceType;
+    const device_l = personalDetails.leftDeviceType === 'Other' ? personalDetails.leftDeviceTypeOther : personalDetails.leftDeviceType
     let toWrite = `name,date,right_device_type,left_device_type,completed_by,` +
         `section,question,response\n`
     let realSectionIndex = 0;
@@ -297,7 +299,7 @@ const createcsv = function (questionnaireData, personalDetails, sharedSections) 
             section.scenarios.forEach((scenario , scenarioIndex)=> {
                 scenario.questions.forEach(question => {
                     let questionDescription = (scenario.description).replace(/,/g, "")
-                    toWrite += `${personalDetails.name},${personalDetails.date},${personalDetails.rightDeviceType},${personalDetails.leftDeviceType},${personalDetails.completedBy},` +
+                    toWrite += `${personalDetails.name},${personalDetails.date},${device_r},${device_l},${personalDetails.completedBy},` +
                         `${section.title},${questionDescription},${question.response}\n`
                 })
             });
@@ -351,11 +353,13 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     .text('Completed By', 300, 170);
 
                 // prints out patient information
+                const device_r = personalDetails.rightDeviceType === 'Other' ? personalDetails.rightDeviceTypeOther : personalDetails.rightDeviceType;
+                const device_l = personalDetails.leftDeviceType === 'Other' ? personalDetails.leftDeviceTypeOther : personalDetails.leftDeviceType
                 doc.font('Helvetica').fontSize(12)
                     .text(personalDetails.name, 100, 140)
                     .text(personalDetails.date, 300, 140)
-                    .text(personalDetails.rightDeviceType, 100, 190)
-                    .text(personalDetails.leftDeviceType, 100, 240)
+                    .text(device_r, 100, 190)
+                    .text(device_l, 100, 240)
                     .text(personalDetails.completedBy, 300, 190);
 
                 // prints out title for questionnaire response
