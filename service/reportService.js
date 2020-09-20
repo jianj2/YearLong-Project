@@ -292,6 +292,8 @@ const calculateScore = function (questionnaireData, calculateAverage, section_sc
 // This function is used generate the csv report.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const generateCSV = function (questionnaireData, personalDetails, scenarioResults) {
+    const device_r = personalDetails.rightDeviceType === 'Other' ? personalDetails.rightDeviceTypeOther : personalDetails.rightDeviceType;
+    const device_l = personalDetails.leftDeviceType === 'Other' ? personalDetails.leftDeviceTypeOther : personalDetails.leftDeviceType
     let toWrite = `Section,Item Number,Rating,Frequency,Importance,Listening Situation,` +
         `Completed By,Name,Date,Right Device Type, Left Device Type\n`
     let itemNumber = 1;
@@ -307,7 +309,7 @@ const generateCSV = function (questionnaireData, personalDetails, scenarioResult
             let questionDescription = (scenario.description).replace(/,/g, "")
             toWrite += `${section.title},${itemNumber},${response[0]},${response[1]},${response[2]},` +
                 `${questionDescription},${personalDetails.completedBy},${personalDetails.name},` +
-                `${personalDetails.date},${personalDetails.rightDeviceType},${personalDetails.leftDeviceType}\n`
+                `${personalDetails.date},${device_r},${device_l}\n`
             itemNumber += 1;
         });
     });
@@ -358,11 +360,13 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     .text('Completed By', 300, 170);
 
                 // prints out patient information
+                const device_r = personalDetails.rightDeviceType === 'Other' ? personalDetails.rightDeviceTypeOther : personalDetails.rightDeviceType;
+                const device_l = personalDetails.leftDeviceType === 'Other' ? personalDetails.leftDeviceTypeOther : personalDetails.leftDeviceType
                 doc.font('Helvetica').fontSize(12)
                     .text(personalDetails.name, 100, 140)
                     .text(personalDetails.date, 300, 140)
-                    .text(personalDetails.rightDeviceType, 100, 190)
-                    .text(personalDetails.leftDeviceType, 100, 240)
+                    .text(device_r, 100, 190)
+                    .text(device_l, 100, 240)
                     .text(personalDetails.completedBy, 300, 190);
 
                 // prints out title for questionnaire response
