@@ -194,7 +194,7 @@ const getQuestionnaireResponseJoin = function (questionnaire, questionnaireData,
     // MAKE A COPY OF THE ORIGINAL QUESTIONNAIRE
     updateSections(questionnaire, sharedSections);
     let result = questionnaire;
-
+    let scenarioResponseList = [];
 
     let sectionIndex = 0;
 
@@ -203,6 +203,8 @@ const getQuestionnaireResponseJoin = function (questionnaire, questionnaireData,
    
             result.sections[sectionIndex].score = sectionScores[sectionIndex];
             section.scenarios.forEach((scenario, scenarioIndex) => {
+                let currentScenarioResponse = [];
+                const numQuestions = scenario.questions.length;
                 scenario.questions.forEach((question, questionIndex) => {
                     // ADD RESPONSE TO THE QUESTION
                     let valueToSet = questionnaireData[sectionIndex][scenarioIndex][questionIndex].value;
@@ -215,16 +217,23 @@ const getQuestionnaireResponseJoin = function (questionnaire, questionnaireData,
                         }
 
                     }
-                 
+                    
+                   
                     result.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].response =
                         valueToSet;
+
+                    currentScenarioResponse.push(valueToSet);
+                    if(questionIndex == numQuestions-1){
+                        scenarioResponseList.push(currentScenarioResponse);
+                    }
+                    
                 })
             });
             
         
         sectionIndex += 1;
     });
-    return result
+    return [result, scenarioResponseList]
 }
 
 
@@ -376,7 +385,9 @@ const generateAttachments = function (questionnaireId, personalDetails, question
 
                     }
 
-                    const resultToPrint = getQuestionnaireResponseJoin(questionnaire, questionnaireData, section_score, sharedSections);
+                    const [resultToPrint, scenarioResults] = getQuestionnaireResponseJoin(questionnaire, questionnaireData, section_score, sharedSections);
+                    
+                    console.log("SR:", scenarioResults);
 
                     const csvResult = createcsv(resultToPrint, personalDetails, sharedSections);
 
