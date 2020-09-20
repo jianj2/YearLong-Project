@@ -17,6 +17,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 // Import Utils.
 import * as API from "../../utils/api";
+import CustomModal from "../../utils/modals"
 import { formatDate } from "../../utils/formatter";
 import { useAuth0 } from "../../utils/react-auth0-spa";
 // Import styles.
@@ -138,7 +139,7 @@ const ManageQuestionnaires = (props) => {
                 deleteQuestionnaireName: title
             }
         )
-        openDeleteConfirmation();
+       setIsDeleteModalVisible(true);
     };
 
     // Function called when Share is clicked on the QuestionnaireList
@@ -317,54 +318,52 @@ const ManageQuestionnaires = (props) => {
  // ========================================================================
     // Delete Modal Functions
     // ========================================================================
-    const openDeleteConfirmation = () => setIsDeleteModalVisible(true);
-    const closeDeleteConfirmation = () => setIsDeleteModalVisible(false);
+    //const openDeleteConfirmation = () => setIsDeleteModalVisible(true);
+    //const closeDeleteConfirmation = () => setIsDeleteModalVisible(false);
 
     const deleteSelecctedQuestionnaire = () => {
         let questionnaireId = deleteQuestionnaireData.deleteQuestionnaireID
         const arrayCopy = customisedQuestionnaires.filter((q) => q.questionnaireId !== questionnaireId);
         setCustomisedQuestionnaires(arrayCopy);
         API.deleteQuestionnaire(token, questionnaireId, user.name);
-        closeDeleteConfirmation();
+        //closeDeleteConfirmation();
     }
 
     const renderDeleteModal = () => {
+        const message = `Are you sure you want to delete ${deleteQuestionnaireData.deleteQuestionnaireName}?`;
+        // console.log("cary",isDeleteModalVisible );
         return (
-            <Modal
-                open={isDeleteModalVisible}
-                onClose={closeDeleteConfirmation}
-                closeAfterTransition
-                className={classes.modal}
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}
-            >
-                <Fade in={isDeleteModalVisible}>
-                    <div className = "share-modal-container">
-                        <h3 class = "center-text">Are you sure you want to delete {deleteQuestionnaireData.deleteQuestionnaireName}?</h3>
-                        <div className = "buttons-container">
-                            <button className="button" id = "margin-button" onClick={deleteSelecctedQuestionnaire} >
-                                CONFIRM
-                            </button>
-                            <button className="button" id = "margin-button" onClick={closeDeleteConfirmation}>
-                                CANCEL
-                            </button>
-                        </div>
-                    </div>
-                </Fade>
-            </Modal>
+            <CustomModal
+            isModalVisible ={isDeleteModalVisible}
+            setIsModalVisible = {setIsDeleteModalVisible}
+            message = {`Are you sure you want to delete ${deleteQuestionnaireData.deleteQuestionnaireName}?`}
+            onClickConfirm = {()=>{deleteSelecctedQuestionnaire();}}
+            onClickCancel = {()=>{}}
+           
+            />
+                
+           
         );
+        // return (
+        //     <CustomModal
+        //         isModalVisble = {true}
+        //         setIsModalVisible = {setIsDeleteModalVisible}
+        //         message = {`Are you sure you want to delete ${deleteQuestionnaireData.deleteQuestionnaireName}?`}
+        //         onClickConfirm = {deleteSelecctedQuestionnaire}
+        //         onClickCancel = {()=>{}}
+        //     >
+        //     </CustomModal>
+        // );
     };
 
-
+    
 
 
 
     return (
         <div>
             {loading ? <Loading /> : null}
-            {renderDeleteModal()}
+            {isDeleteModalVisible? renderDeleteModal():null}
             {renderShareModal()}
 
             <div className="standard-questionnaire-container">
