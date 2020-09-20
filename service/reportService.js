@@ -291,33 +291,25 @@ const calculateScore = function (questionnaireData, calculateAverage, section_sc
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used generate the csv report.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const createcsv = function (questionnaireData, personalDetails, sharedSections, scenarioResults) {
+const generateCSV = function (questionnaireData, personalDetails, scenarioResults) {
     let toWrite = `Section,Item Number,Rating,Frequency,Importance,Listening Situation,` +
         `Completed By,Name,Date,Right Device Type, Left Device Type\n`
-    let realSectionIndex = 0;
     let itemNumber = 1;
     questionnaireData.sections.forEach((section, sectionIndex) => {
         // ADD SCORE TO THE SECTION
-        //questionnaireData[realSectionIndex][scenarioIndex][questionIndex].value;
-        console.log(sectionIndex)
-            section.scenarios.forEach((scenario, scenarioIndex) => {
-                //scenario.questions.forEach(question => {
-                //scenarioResults.map((response) => {
-                    let response = scenarioResults[itemNumber-1]
-                    while(response.length < 3) {
-                        response.push("Not Applicable")
-                    }
-                    console.log(response)
+        section.scenarios.forEach((scenario, scenarioIndex) => {
+            let response = scenarioResults[itemNumber - 1]
+            while (response.length < 3) {
+                response.push("Not Applicable")
+            }
+            console.log(response)
 
-                    let questionDescription = (scenario.description).replace(/,/g, "")
-                    toWrite += `${section.title},${itemNumber},${response[0]},${response[1]},${response[2]},` +
-                        `${questionDescription},${personalDetails.completedBy},${personalDetails.name},` +
-                        `${personalDetails.date},${personalDetails.rightDeviceType},${personalDetails.leftDeviceType}\n`
-                    itemNumber += 1;
-                //})
-                //})
-            });
-            realSectionIndex++;
+            let questionDescription = (scenario.description).replace(/,/g, "")
+            toWrite += `${section.title},${itemNumber},${response[0]},${response[1]},${response[2]},` +
+                `${questionDescription},${personalDetails.completedBy},${personalDetails.name},` +
+                `${personalDetails.date},${personalDetails.rightDeviceType},${personalDetails.leftDeviceType}\n`
+            itemNumber += 1;
+        });
     });
     return Buffer.from(toWrite, 'utf8')
 }
@@ -393,9 +385,7 @@ const generateAttachments = function (questionnaireId, personalDetails, question
 
                     const [resultToPrint, scenarioResults] = getQuestionnaireResponseJoin(questionnaire, questionnaireData, section_score, sharedSections);
 
-                    console.log("SR:", scenarioResults);
-
-                    const csvResult = createcsv(resultToPrint, personalDetails, sharedSections, scenarioResults);
+                    const csvResult = generateCSV(resultToPrint, personalDetails, scenarioResults);
 
                     // -------  TO DO  --------
                     // MAKE THIS BETTER
