@@ -26,7 +26,7 @@ const HELPER_IMPORTANCE = {
     "Important": 3,
     "Only a little bit important": 2,
     "Not important": 1,
-    "Not Applicable.": 0 
+    "Not Applicable": 0
 }
 const getTimeStamp = function () {
     let date_ob = new Date();
@@ -200,37 +200,33 @@ const getQuestionnaireResponseJoin = function (questionnaire, questionnaireData,
 
     questionnaire.sections.forEach((section) => {
         // ADD SCORE TO THE SECTION
-   
-            result.sections[sectionIndex].score = sectionScores[sectionIndex];
-            section.scenarios.forEach((scenario, scenarioIndex) => {
-                let currentScenarioResponse = [];
-                const numQuestions = scenario.questions.length;
-                scenario.questions.forEach((question, questionIndex) => {
-                    // ADD RESPONSE TO THE QUESTION
-                    let valueToSet = questionnaireData[sectionIndex][scenarioIndex][questionIndex].value;
 
-                    if (!valueToSet) {
-                        if (question.isMCQ) {
-                            valueToSet = "Not Applicable."
-                        } else {
-                            valueToSet = questionnaireData[sectionIndex][scenarioIndex][questionIndex].supplementaryValue;
-                        }
+        result.sections[sectionIndex].score = sectionScores[sectionIndex];
+        section.scenarios.forEach((scenario, scenarioIndex) => {
+            let currentScenarioResponse = [];
+            const numQuestions = scenario.questions.length;
+            scenario.questions.forEach((question, questionIndex) => {
+                // ADD RESPONSE TO THE QUESTION
+                let valueToSet = questionnaireData[sectionIndex][scenarioIndex][questionIndex].value;
 
+                if (!valueToSet) {
+                    if (question.isMCQ) {
+                        valueToSet = "Not Applicable"
+                    } else {
+                        valueToSet = questionnaireData[sectionIndex][scenarioIndex][questionIndex].supplementaryValue;
                     }
-                    
-                   
-                    result.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].response =
-                        valueToSet;
+                }
 
-                    currentScenarioResponse.push(valueToSet);
-                    if(questionIndex == numQuestions-1){
-                        scenarioResponseList.push(currentScenarioResponse);
-                    }
-                    
-                })
-            });
-            
-        
+                result.sections[sectionIndex].scenarios[scenarioIndex].questions[questionIndex].response =
+                    valueToSet;
+
+                currentScenarioResponse.push(valueToSet);
+                if (questionIndex == numQuestions - 1) {
+                    scenarioResponseList.push(currentScenarioResponse);
+                }
+
+            })
+        });
         sectionIndex += 1;
     });
     return [result, scenarioResponseList]
@@ -295,20 +291,33 @@ const calculateScore = function (questionnaireData, calculateAverage, section_sc
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used generate the csv report.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const createcsv = function (questionnaireData, personalDetails, sharedSections) {
-    let toWrite = `name,date,right_device_type,left_device_type,completed_by,` +
-        `section,question,response\n`
+const createcsv = function (questionnaireData, personalDetails, sharedSections, scenarioResults) {
+    let toWrite = `Section,Item Number,Rating,Frequency,Importance,Listening Situation,` +
+        `Completed By,Name,Date,Right Device Type, Left Device Type\n`
     let realSectionIndex = 0;
+    let itemNumber = 1;
     questionnaireData.sections.forEach((section, sectionIndex) => {
         // ADD SCORE TO THE SECTION
         //questionnaireData[realSectionIndex][scenarioIndex][questionIndex].value;
+        console.log(sectionIndex)
         if (sharedSections === null || sharedSections[sectionIndex].isVisible) {
-            section.scenarios.forEach((scenario , scenarioIndex)=> {
-                scenario.questions.forEach(question => {
+
+            section.scenarios.forEach((scenario, scenarioIndex) => {
+                //scenario.questions.forEach(question => {
+                //scenarioResults.map((response) => {
+                    let response = scenarioResults[itemNumber-1]
+                    while(response.length < 3) {
+                        response.push("Not Applicable")
+                    }
+                    console.log(response)
+
                     let questionDescription = (scenario.description).replace(/,/g, "")
-                    toWrite += `${personalDetails.name},${personalDetails.date},${personalDetails.rightDeviceType},${personalDetails.leftDeviceType},${personalDetails.completedBy},` +
-                        `${section.title},${questionDescription},${question.response}\n`
-                })
+                    toWrite += `${section.title},${itemNumber},${response[0]},${response[1]},${response[2]},` +
+                        `${questionDescription},${personalDetails.completedBy},${personalDetails.name},` +
+                        `${personalDetails.date},${personalDetails.rightDeviceType},${personalDetails.leftDeviceType}\n`
+                    itemNumber += 1;
+                //})
+                //})
             });
             realSectionIndex++;
         }
@@ -386,10 +395,10 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     }
 
                     const [resultToPrint, scenarioResults] = getQuestionnaireResponseJoin(questionnaire, questionnaireData, section_score, sharedSections);
-                    
+
                     console.log("SR:", scenarioResults);
 
-                    const csvResult = createcsv(resultToPrint, personalDetails, sharedSections);
+                    const csvResult = createcsv(resultToPrint, personalDetails, sharedSections, scenarioResults);
 
                     // -------  TO DO  --------
                     // MAKE THIS BETTER
