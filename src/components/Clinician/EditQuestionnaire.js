@@ -56,18 +56,9 @@ const EditQuestionnaire = ({
 
     const [isSaveModalVisible, setIsSaveModalVisible] = useState(false);
     
-    const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
+    const [isCancelModalVisible, setIsCancelModalVisible] = useState(false);
 
     const {token } = useAuth0();
-
-    const handleCancelOpen = () => {
-        setCancelDialogOpen(true);
-    };
-
-    
-    const handleCancelClose = () => {
-        setCancelDialogOpen(false);
-    };
 
     const  handleSaveQuestionnaire = async() =>{
      
@@ -94,6 +85,20 @@ const EditQuestionnaire = ({
         );
     }
 
+    const renderCancelModal = () => {
+        const message = "Your changes will not be saved. Are you sure you want to cancel editing this questionnaire?";
+        return (
+            <CustomModal
+                isModalVisible={isCancelModalVisible}
+                setIsModalVisible={setIsCancelModalVisible}
+                message={message}
+                onClickConfirm={()=>{ window.location.href = manage_questionnaire_url;}}
+                onClickCancel={() => {}}
+            />
+        );
+
+    }
+
     const manage_questionnaire_url = redirectURL;
 
     if (!Questionnaire) {
@@ -107,7 +112,7 @@ const EditQuestionnaire = ({
                         className="button"
                         onClick={(event) => {
                             event.preventDefault();
-                            handleCancelOpen();
+                            setIsCancelModalVisible(true);
                             
                         }}
                     >
@@ -127,37 +132,8 @@ const EditQuestionnaire = ({
                 </div>
                 
                 {renderSaveModal()}
-                <Dialog
-                    open={cancelDialogOpen}
-                    onClose={handleCancelClose}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                >
-                    <DialogTitle id="alert-dialog-title">{"Save"}</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            Your changes will not be saved. Are you sure you want to cancel editing this questionnaire? 
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                    <Button
-                            onClick={() => {
-                                handleCancelClose();
-                                window.location.href = manage_questionnaire_url;
-                               
-                            }}
-                            color="primary"
-                            autoFocus
-                        >
-                            Yes
-                        </Button>
-                        <Button onClick={handleCancelClose} color="primary">
-                            No
-                        </Button>
-                        
-                    </DialogActions>
-                </Dialog>
-
+                {renderCancelModal()}
+               
                 <EditDescription
                     Questionnaire={Questionnaire}
                     handleQuestionnaireTitleChange={
