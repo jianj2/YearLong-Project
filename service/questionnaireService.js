@@ -115,9 +115,9 @@ const generateNewStandardisedQuestionnaire = (uuid) => {
         isSSQ_Ch: true,
         updateDate: (new Date()).toLocaleString(),
         sections: [
-            { title: "Section 1 - Speech", scenarios: [] },
-            { title: "Section 2 - Spatial", scenarios: [] },
-            { title: "Section 3 - Quality", scenarios: [] },
+            { title: "Section A - Speech", scenarios: [] },
+            { title: "Section B - Spatial", scenarios: [] },
+            { title: "Section C - Quality", scenarios: [] },
         ],
         isStandard: true,
     });
