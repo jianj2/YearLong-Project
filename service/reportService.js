@@ -304,8 +304,6 @@ const generateCSV = function (questionnaireData, personalDetails, scenarioResult
             while (response.length < 3) {
                 response.push("Not Applicable")
             }
-            console.log(response)
-
             let questionDescription = (scenario.description).replace(/,/g, "")
             toWrite += `${section.title},${itemNumber},${response[0]},${response[1]},${response[2]},` +
                 `${questionDescription},${personalDetails.completedBy},${personalDetails.name},` +
