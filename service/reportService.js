@@ -26,7 +26,7 @@ const HELPER_IMPORTANCE = {
     "Important": 3,
     "Only a little bit important": 2,
     "Not important": 1,
-    "Not Applicable": 0
+    "Not Applicable.": 0
 }
 const getTimeStamp = function () {
     let date_ob = new Date();
@@ -211,7 +211,7 @@ const getQuestionnaireResponseJoin = function (questionnaire, questionnaireData,
 
                 if (!valueToSet) {
                     if (question.isMCQ) {
-                        valueToSet = "Not Applicable"
+                        valueToSet = "Not Applicable."
                     } else {
                         valueToSet = questionnaireData[sectionIndex][scenarioIndex][questionIndex].supplementaryValue;
                     }
@@ -302,7 +302,7 @@ const generateCSV = function (questionnaireData, personalDetails, scenarioResult
         section.scenarios.forEach((scenario, scenarioIndex) => {
             let response = scenarioResults[itemNumber - 1]
             while (response.length < 3) {
-                response.push("Not Applicable")
+                response.push("Not Applicable.")
             }
             let questionDescription = (scenario.description).replace(/,/g, "")
             toWrite += `${section.title},${itemNumber},${response[0]},${response[1]},${response[2]},` +
