@@ -76,9 +76,12 @@ const ManageQuestionnaires = (props) => {
                     customisedQuestionnaires,
                 ] = await API.getClinicianQuestionnaires(token, user.name);
                 console.log(customisedQuestionnaires);
-
+                const sortedCustomisedQuestionnaires = customisedQuestionnaires.sort(function(a,b){
+                    let dateA = new Date(a.updateDate), dateB = new Date(b.updateDate);
+                    return dateB - dateA ;
+                })
                 // setQuestionnaires({ customized_Questionnaire: customisedQuestionnairesElement });
-                setCustomisedQuestionnaires(customisedQuestionnaires);
+                setCustomisedQuestionnaires(sortedCustomisedQuestionnaires);
                 setLoading(false);
             }
             async function retrieveStandardisedQuestionnaires() {
@@ -129,23 +132,9 @@ const ManageQuestionnaires = (props) => {
     // Function called when Add New Button is clicked
     async function AddNew() {
         setLoading(true);
-        const [_, uuid] = await API.addQuestionnaire(token, user.name);
-
-        // const today = formatDate();
-        const AddedArray = customisedQuestionnaires;
-        let newQuestionnaire = {
-            questionnaireId: uuid,
-            title: "New Questionnaire",
-            description: "Please click edit to begin with this questionnaire.",
-            sections: [],
-            isStandard: false,
-            isSSQ_Ch: true,
-        };
-        setCustomisedQuestionnaires([
-            newQuestionnaire,
-            ...customisedQuestionnaires,
-        ]);
+        const [_,uuid] = await API.addQuestionnaire(token, user.name);
         setLoading(false);
+        window.location.reload(false);
         // let edit_url = "/clinician/" + uuid + "/edit";
         // window.location.href = edit_url;
     }
