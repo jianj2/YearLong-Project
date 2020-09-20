@@ -261,7 +261,7 @@ const deleteCustomisedQuestionnaireFromDatabase = async (
                 "The questionnaire to be deleted does not belong to the clinician."
             );
         }
-    } catch {
+    } catch (error){
         return Promise.resolve([error, undefined]);
     }
 };
