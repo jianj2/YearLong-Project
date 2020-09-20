@@ -89,7 +89,7 @@ const AdminManageQuestionnaires = () => {
             const response = await getStandardisedQuestionnaireForAdmin();
             console.log(response);
             let sortedResponse = response.sort(function(a,b){
-                var dateA = new Date(a.updateDate), dateB = new Date(b.updateDate);
+                let dateA = new Date(a.updateDate), dateB = new Date(b.updateDate);
                 return dateB - dateA ;
             })
             setStandardisedQuestionnaires(sortedResponse); // cause the structure is not the same with cary's

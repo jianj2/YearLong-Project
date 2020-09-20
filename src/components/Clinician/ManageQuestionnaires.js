@@ -88,8 +88,8 @@ const ManageQuestionnaires = (props) => {
                 return { QID: q.questionnaireId, Qname: q.title, Qdescription: q.description, date: today };
             });
             // setQuestionnaires({ customized_Questionnaire: customisedQuestionnairesElement });
-            var sortedCustomisedQuestionnaires = customisedQuestionnaires.sort(function(a,b){
-                var dateA = new Date(a.updateDate), dateB = new Date(b.updateDate);
+            let sortedCustomisedQuestionnaires = customisedQuestionnaires.sort(function(a,b){
+                let dateA = new Date(a.updateDate), dateB = new Date(b.updateDate);
                 return dateB - dateA ;
             })
             setCustomisedQuestionnaires(sortedCustomisedQuestionnaires);
@@ -151,7 +151,7 @@ const ManageQuestionnaires = (props) => {
         console.log("share Questionnaire ", questionnaireId);
 
 
-        var temp = {}
+        let temp = {};
         sections.map((index) => {
             temp = ({ ...temp,[(index.title).toString()]:false });
         })

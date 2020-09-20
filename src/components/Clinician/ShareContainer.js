@@ -100,7 +100,7 @@ const ShareQuestionnaire = (props) => {
         //making sure the state get reset once the modal is reloaded.
         setIsSectionsEmpty(false);
 
-        var temp = {};
+        let temp = {};
         sections.map((index) => {
             temp = { ...temp, [index.title.toString()]: true };
         });

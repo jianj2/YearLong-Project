@@ -98,7 +98,6 @@ const QuestionnaireList = ({
         onClickShare,
         sections,
     }) => {
-        // var edit_url = "/clinician/" + QID + "/edit";
         return (
             <div
                 className={
