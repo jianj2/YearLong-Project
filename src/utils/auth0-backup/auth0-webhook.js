@@ -30,7 +30,7 @@ sendRegistrationInformation  =  (user, context) => {
   console.log("calling");
   const axios = require('axios');
 
-  var dataToPost = {
+  let dataToPost = {
     user: user.username,
     email: user.email,
     // The user_metadata has the following things:

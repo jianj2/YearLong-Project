@@ -88,8 +88,13 @@ const ManageQuestionnaires = (props) => {
                 return { QID: q.questionnaireId, Qname: q.title, Qdescription: q.description, date: today };
             });
             // setQuestionnaires({ customized_Questionnaire: customisedQuestionnairesElement });
-            setCustomisedQuestionnaires(customisedQuestionnaires);
+            let sortedCustomisedQuestionnaires = customisedQuestionnaires.sort(function(a,b){
+                let dateA = new Date(a.updateDate), dateB = new Date(b.updateDate);
+                return dateB - dateA ;
+            })
+            setCustomisedQuestionnaires(sortedCustomisedQuestionnaires);
             setLoading(false);
+        
         }
         async function retrieveStandardisedQuestionnaires(){
 
@@ -146,7 +151,7 @@ const ManageQuestionnaires = (props) => {
         console.log("share Questionnaire ", questionnaireId);
 
 
-        var temp = {}
+        let temp = {};
         sections.map((index) => {
             temp = ({ ...temp,[(index.title).toString()]:false });
         })
@@ -165,19 +170,8 @@ const ManageQuestionnaires = (props) => {
     async function AddNew() {
         setLoading(true);
         const [_,uuid] = await API.addQuestionnaire(token, user.name);
-
-        // const today = formatDate();
-        const AddedArray = customisedQuestionnaires;
-        let newQuestionnaire = {
-            questionnaireId: uuid,
-            title: "New Questionnaire",
-            description: "Please click edit to begin with this questionnaire.",
-            sections: [],
-            isStandard: false,
-            isSSQ_Ch: true,
-        };
-        setCustomisedQuestionnaires([newQuestionnaire, ...customisedQuestionnaires]);
         setLoading(false);
+        window.location.reload(false);
         // let edit_url = "/clinician/" + uuid + "/edit";
         // window.location.href = edit_url;
     }
