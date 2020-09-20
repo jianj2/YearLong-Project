@@ -12,24 +12,11 @@
  */
 
 import React, { useState, useEffect } from "react";
-import {
-    Modal,
-    Backdrop,
-    Fade,
-    FormControl,
-    InputLabel,
-    Input,
-    FormHelperText,
-    FormControlLabel,
-    Checkbox,
-    Chip,
-} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 // Import Utils.
 import * as API from "../../utils/api";
 import CustomModal from "../../utils/modals";
-import { formatDate } from "../../utils/formatter";
 import { useAuth0 } from "../../utils/react-auth0-spa";
 // Import styles.
 import "../../styles/managequestionnaires.css";
@@ -54,8 +41,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ManageQuestionnaires = (props) => {
-    const classes = useStyles();
-    const { isAuthenticated, loginWithRedirect, user, token } = useAuth0();
+    const { isAuthenticated, user, token } = useAuth0();
     // console.log("user.name", user.name); //TODO: change that when we have actual clincianId
 
     const [customisedQuestionnaires, setCustomisedQuestionnaires] = useState(
@@ -86,21 +72,12 @@ const ManageQuestionnaires = (props) => {
         if (isAuthenticated && token !== "") {
             async function retrieveCustomisedQuestionnaires() {
                 const [
-                    statusCode,
+                    _,
                     customisedQuestionnaires,
                 ] = await API.getClinicianQuestionnaires(token, user.name);
                 console.log(customisedQuestionnaires);
-                const today = formatDate();
-                const customisedQuestionnairesElement = customisedQuestionnaires.map(
-                    (q) => {
-                        return {
-                            QID: q.questionnaireId,
-                            Qname: q.title,
-                            Qdescription: q.description,
-                            date: today,
-                        };
-                    }
-                );
+         
+             
                 // setQuestionnaires({ customized_Questionnaire: customisedQuestionnairesElement });
                 setCustomisedQuestionnaires(customisedQuestionnaires);
                 setLoading(false);
