@@ -249,6 +249,35 @@ const sortByImportance = function (response) {
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// JSON structure to store sub-scale values
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+let subScaleScore = {
+    Speech:{
+        SpQ: 0.0,
+        SpN: 0.0,
+        SpSp: 0.0,
+        SpStrm: 0.0
+    },
+    Spatial:{
+        Localiz: 0.0,
+        Dist: 0.0
+    },
+    Qualities:{
+        Segreg: 0.0,
+        IDSound: 0.0,
+        ListEff: 0.0
+        // ,SoundQual: 0.0
+    }
+}
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to calculate the average score for each sub-scale 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+const calculateSubScaleScore = function (questionnaireData, subScaleScore) {
+
+}
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to calculate both the average and section scores
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const calculateScore = function (questionnaireData, calculateAverage, section_score) {
