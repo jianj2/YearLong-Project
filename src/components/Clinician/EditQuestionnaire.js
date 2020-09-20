@@ -12,13 +12,14 @@
  *
  */
 
-import React from "react";
+import React, {useState} from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import CustomModal from '../../utils/modals';
 
 // Import components.
 import EditDescription from "./EditDescription";
@@ -53,19 +54,11 @@ const EditQuestionnaire = ({
                                redirectURL
                            } ) => {
 
-    const [saveDialogOpen, setSaveDialogOpen] = React.useState(false);
+    const [isSaveModalVisible, setIsSaveModalVisible] = useState(false);
     
-    const [cancelDialogOpen, setCancelDialogOpen] = React.useState(false);
+    const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
 
     const {token } = useAuth0();
-
-    const handleSaveOpen = () => {
-        setSaveDialogOpen(true);
-    };
-
-    const handleSaveClose = () => {
-        setSaveDialogOpen(false);
-    };
 
     const handleCancelOpen = () => {
         setCancelDialogOpen(true);
@@ -77,7 +70,6 @@ const EditQuestionnaire = ({
     };
 
     const  handleSaveQuestionnaire = async() =>{
-        handleSaveClose();
      
         if(manage_questionnaire_url === "/clinician"){
             await API.editQuestionnaire(token, Questionnaire);
@@ -87,6 +79,19 @@ const EditQuestionnaire = ({
         
     
         window.location.href = manage_questionnaire_url;
+    }
+
+    const renderSaveModal = () => {
+        const message = "Are you sure you want to save your changes to this questionnaire?"
+        return (
+            <CustomModal
+                isModalVisible={isSaveModalVisible}
+                setIsModalVisible={setIsSaveModalVisible}
+                message={message}
+                onClickConfirm={handleSaveQuestionnaire}
+                onClickCancel={() => {}}
+            />
+        );
     }
 
     const manage_questionnaire_url = redirectURL;
@@ -114,43 +119,14 @@ const EditQuestionnaire = ({
                         className="button"
                         onClick={(event)=>{
                             event.preventDefault();
-                            handleSaveOpen();
+                             setIsSaveModalVisible(true);
                             }}
                     >
                         Save
                     </button>
                 </div>
-
-                <Dialog
-                    open={saveDialogOpen}
-                    onClose={handleSaveClose}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                >
-                    <DialogTitle id="alert-dialog-title">{"Save"}</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            Are you sure you want to save this questionnaire?
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                    <Button
-                            onClick={() => {
-                                handleSaveQuestionnaire();
-                                
-                            }}
-                            color="primary"
-                            autoFocus
-                        >
-                            Yes
-                        </Button>
-                        <Button onClick={handleSaveClose} color="primary">
-                            No
-                        </Button>
-                        
-                    </DialogActions>
-                </Dialog>
-
+                
+                {renderSaveModal()}
                 <Dialog
                     open={cancelDialogOpen}
                     onClose={handleCancelClose}
