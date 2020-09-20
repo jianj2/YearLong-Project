@@ -23,7 +23,7 @@ const CustomModal = (props) => {
     const [isVisible, setIsVisible] = useState(false);
     useEffect(()=>{
         setIsVisible(props.isModalVisible);
-        console.log("changed", props.isModalVisible);
+       
     },[props]);
 
        return (

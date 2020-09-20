@@ -13,7 +13,7 @@ import React, { useEffect, useState } from "react";
 // Components
 import Loading from "../Loading";
 import QuestionnaireList from "../QuestionnaireList";
-import { Modal, Backdrop, Fade } from "@material-ui/core";
+import CustomModal from "../../utils/modals";
 import { makeStyles } from "@material-ui/core/styles";
 
 //style
@@ -133,43 +133,19 @@ const AdminManageQuestionnaires = () => {
     };
 
     const renderDeleteModal = () => {
+        const message = `Are you sure you want to delete ${deleteQuestionnaireData.deleteQuestionnaireName}?`;
+       
         return (
-            <Modal
-                open={isDeleteModalVisible}
-                onClose={closeDeleteConfirmation}
-                closeAfterTransition
-                className={classes.modal}
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}
-            >
-                <Fade in={isDeleteModalVisible}>
-                    <div className="share-modal-container">
-                        <h3 class="center-text">
-                            Are you sure you want to delete{" "}
-                            {deleteQuestionnaireData.deleteQuestionnaireName}?
-                        </h3>
-                        <div className="buttons-container">
-                            <button
-                                className="button"
-                                id="margin-button"
-                                onClick={deleteSelecctedQuestionnaire}
-                            >
-                                CONFIRM
-                            </button>
-                            <button
-                                className="button"
-                                id="margin-button"
-                                onClick={closeDeleteConfirmation}
-                            >
-                                CANCEL
-                            </button>
-                        </div>
-                    </div>
-                </Fade>
-            </Modal>
+            <CustomModal
+            isModalVisible ={isDeleteModalVisible}
+            setIsModalVisible = {setIsDeleteModalVisible}
+            message = {message}
+            onClickConfirm = {deleteSelecctedQuestionnaire}
+            onClickCancel = {()=>{}}
+            />
+
         );
+       
     };
 
     return (

@@ -336,7 +336,7 @@ const ManageQuestionnaires = (props) => {
             <CustomModal
             isModalVisible ={isDeleteModalVisible}
             setIsModalVisible = {setIsDeleteModalVisible}
-            message = {`Are you sure you want to delete ${deleteQuestionnaireData.deleteQuestionnaireName}?`}
+            message = {message}
             onClickConfirm = {deleteSelecctedQuestionnaire}
             onClickCancel = {()=>{}}
             />
