@@ -76,8 +76,7 @@ const ManageQuestionnaires = (props) => {
                     customisedQuestionnaires,
                 ] = await API.getClinicianQuestionnaires(token, user.name);
                 console.log(customisedQuestionnaires);
-         
-             
+
                 // setQuestionnaires({ customized_Questionnaire: customisedQuestionnairesElement });
                 setCustomisedQuestionnaires(customisedQuestionnaires);
                 setLoading(false);
@@ -165,7 +164,8 @@ const ManageQuestionnaires = (props) => {
         setCustomisedQuestionnaires(arrayCopy);
         API.deleteQuestionnaire(token, questionnaireId, user.name);
     };
-
+    
+    // renders a modal when user chooses to delete a questionnaire
     const renderDeleteModal = () => {
         const message = `Are you sure you want to delete ${deleteQuestionnaireData.deleteQuestionnaireName}?`;
 

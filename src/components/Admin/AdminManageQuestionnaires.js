@@ -22,7 +22,6 @@ import "../../styles/questionnaireList.css";
 // utils
 import * as API from "../../utils/api";
 
-
 import {
     addStandardQuestionnaire,
     getStandardisedQuestionnaireForAdmin,
@@ -43,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2, 4, 3),
     },
 }));
-
 
 // handles rendering of SSQInstructionsContainer in the Admin Page
 const AdminManageQuestionnaires = () => {
@@ -73,7 +71,6 @@ const AdminManageQuestionnaires = () => {
         await API.adminCopyQuestionnaire(questionnaire);
         window.location.reload(false);
     };
-
 
     const deleteQuestionnaire = (questionnaireId, title) => {
         setdeleteQuestionnaireData({
@@ -127,30 +124,27 @@ const AdminManageQuestionnaires = () => {
             (q) => q.questionnaireId !== questionnaireId
         );
         setStandardisedQuestionnaires(filteredQuestionnaires);
-        const [_,message] = await deleteStandardQuestionnaire(questionnaireId);
+        const [_, message] = await deleteStandardQuestionnaire(questionnaireId);
         console.log(message);
         closeDeleteConfirmation();
     };
 
     const renderDeleteModal = () => {
         const message = `Are you sure you want to delete ${deleteQuestionnaireData.deleteQuestionnaireName}?`;
-       
+
         return (
             <CustomModal
-            isModalVisible ={isDeleteModalVisible}
-            setIsModalVisible = {setIsDeleteModalVisible}
-            message = {message}
-            onClickConfirm = {deleteSelecctedQuestionnaire}
-            onClickCancel = {()=>{}}
+                isModalVisible={isDeleteModalVisible}
+                setIsModalVisible={setIsDeleteModalVisible}
+                message={message}
+                onClickConfirm={deleteSelecctedQuestionnaire}
+                onClickCancel={() => {}}
             />
-
         );
-       
     };
 
     return (
         <div className="admin-manage-questionnaires">
-
             {loading ? <Loading /> : null}
 
             {renderDeleteModal()}
@@ -169,7 +163,7 @@ const AdminManageQuestionnaires = () => {
                     onClickQuestion={viewQuestionnaire}
                     canEdit={true}
                     onClickEdit={editQuestionnaire}
-                    onClickCopy = {copyQuestionnaire}
+                    onClickCopy={copyQuestionnaire}
                     canDelete={true}
                     onClickDelete={deleteQuestionnaire}
                 />
