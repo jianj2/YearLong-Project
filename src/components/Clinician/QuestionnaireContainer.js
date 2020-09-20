@@ -13,9 +13,7 @@
  */
 
 import React, {useState,useEffect} from "react";
-import TopContainer from "./TopContainer";
 import EditQuestionnaire from "./EditQuestionnaire";
-import BottomContainer from "./BottomContainer";
 import * as API from "../../utils/api";
 
 // import set from "react-hook-form/dist/utils/set";
@@ -191,8 +189,6 @@ const QuestionnaireContainer = (props) => {
     return (
         <div className="questionnaire-container-outer">
             <div className="questionnaire-container">
-
-                {/*<TopContainer />*/}
                 <form action="">
                     <EditQuestionnaire Questionnaire={questionnaire}
                                        addScenario={addScenario} removeScenario={removeScenario}
@@ -208,7 +204,6 @@ const QuestionnaireContainer = (props) => {
                                        handleQuestionOptsChange={handleQuestionOptsChange}
                                        redirectURL = {props.redirectURL}/>
                 </form>
-                {/*<BottomContainer addQuestion={addQuestion} />*/}
             </div>
         </div>
     );

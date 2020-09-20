@@ -33,7 +33,7 @@ import * as API from "../../utils/api";
 //Auth0
 import { useAuth0 } from "../../utils/react-auth0-spa";
 
-// handles rendering of TopContainer in the Clinician page
+// handles rendering of the edit questionnaire page for clinicians
 const EditQuestionnaire = ({
                                Questionnaire,
                                removeQuestion,
