@@ -300,8 +300,6 @@ const createcsv = function (questionnaireData, personalDetails, sharedSections, 
         // ADD SCORE TO THE SECTION
         //questionnaireData[realSectionIndex][scenarioIndex][questionIndex].value;
         console.log(sectionIndex)
-        if (sharedSections === null || sharedSections[sectionIndex].isVisible) {
-
             section.scenarios.forEach((scenario, scenarioIndex) => {
                 //scenario.questions.forEach(question => {
                 //scenarioResults.map((response) => {
@@ -320,7 +318,6 @@ const createcsv = function (questionnaireData, personalDetails, sharedSections, 
                 //})
             });
             realSectionIndex++;
-        }
     });
     return Buffer.from(toWrite, 'utf8')
 }
