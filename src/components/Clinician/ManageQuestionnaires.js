@@ -326,34 +326,22 @@ const ManageQuestionnaires = (props) => {
         const arrayCopy = customisedQuestionnaires.filter((q) => q.questionnaireId !== questionnaireId);
         setCustomisedQuestionnaires(arrayCopy);
         API.deleteQuestionnaire(token, questionnaireId, user.name);
-        //closeDeleteConfirmation();
+       
     }
 
     const renderDeleteModal = () => {
         const message = `Are you sure you want to delete ${deleteQuestionnaireData.deleteQuestionnaireName}?`;
-        // console.log("cary",isDeleteModalVisible );
+       
         return (
             <CustomModal
             isModalVisible ={isDeleteModalVisible}
             setIsModalVisible = {setIsDeleteModalVisible}
             message = {`Are you sure you want to delete ${deleteQuestionnaireData.deleteQuestionnaireName}?`}
-            onClickConfirm = {()=>{deleteSelecctedQuestionnaire();}}
+            onClickConfirm = {deleteSelecctedQuestionnaire}
             onClickCancel = {()=>{}}
-           
             />
-                
-           
+
         );
-        // return (
-        //     <CustomModal
-        //         isModalVisble = {true}
-        //         setIsModalVisible = {setIsDeleteModalVisible}
-        //         message = {`Are you sure you want to delete ${deleteQuestionnaireData.deleteQuestionnaireName}?`}
-        //         onClickConfirm = {deleteSelecctedQuestionnaire}
-        //         onClickCancel = {()=>{}}
-        //     >
-        //     </CustomModal>
-        // );
     };
 
     
