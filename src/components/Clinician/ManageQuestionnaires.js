@@ -183,7 +183,7 @@ const ManageQuestionnaires = (props) => {
     return (
         <div>
             {loading ? <Loading /> : null}
-            {isDeleteModalVisible ? renderDeleteModal() : null}
+            {renderDeleteModal()}
             <div className="standard-questionnaire-container">
                 <div className="SQ-header">
                     <h1>Standard Questionnaires</h1>

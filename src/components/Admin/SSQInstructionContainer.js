@@ -43,61 +43,14 @@ const SSQInstructionsContainer = ({instructionType}) => {
         type: instructionType
     });
 
-
-
-
-    const [isCancelModalVisible, setIsCancelModalVisible] = useState(false);
-
     const getInstruction = (instructionType) => {
         API.getSpecificInstruction(instructionType).then((instruction) =>{
             setInstruction(instruction);
-
             });
         
     }
-
     
     useEffect(()=>{getInstruction(instructionType)},[]);
-
-    // ========================================================================
-    // Cancel Modal Functions
-    // ========================================================================
-    const openCancelConfirmation = () => setIsCancelModalVisible(true);
-    const closeCancelConfirmation = () => setIsCancelModalVisible(false);
-
-    const CancelInstruction = () => {
-        //getInstruction();
-        closeCancelConfirmation();
-    }
-
-    const renderCancelModal = () => {
-        return (
-            <Modal
-                open={isCancelModalVisible}
-                onClose={closeCancelConfirmation}
-                closeAfterTransition
-                className={classes.modal}
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}
-            >
-                <Fade in={isCancelModalVisible}>
-                    <div className = "share-modal-container">
-                        <h3 class = "center-text">Are you sure you want to cancel the editing?</h3>
-                        <div className = "buttons-container">
-                            <button className="button" id = "margin-button" onClick={CancelInstruction} >
-                                YES
-                            </button>
-                            <button className="button" id = "margin-button" onClick={closeCancelConfirmation}>
-                                NO
-                            </button>
-                        </div>
-                    </div>
-                </Fade>
-            </Modal>
-        );
-    };
 
     // ========================================================================
     // Save Success/Failed Modal Functions
@@ -156,11 +109,9 @@ const SSQInstructionsContainer = ({instructionType}) => {
     return (
         <div className="ssq-instructions-container">
             {renderSaveModal()}
-            {renderCancelModal()}
+    
             {loading ? <Loading /> : null}
             <div className = "Instruction-button-group">
-                <button id="edit-cancel-button" className="button"
-                        onClick = {()=> openCancelConfirmation()}>Cancel</button>
                 <button id="edit-save-button" className="button"
                         onClick = {()=> saveInstruction()}>Save</button>
             </div>
