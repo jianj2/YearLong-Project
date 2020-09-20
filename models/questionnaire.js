@@ -58,6 +58,7 @@ const questionnaireSchema = mongoose.Schema({
     sections: [sectionSchema],
     isStandard: Boolean,
     isSSQ_Ch: {type: Boolean, required: false},
+    updateDate: {type: String, required: true}
 });
 
 questionnaireSchema.set('toJSON', {
