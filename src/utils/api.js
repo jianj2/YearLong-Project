@@ -286,7 +286,6 @@ export const sendInstructions = (data) =>
 
 // update instruction by type
 export const updateInstruction = (type, data) =>
-<<<<<<< HEAD
 fetch(`${api}/admin/instruction/${type}`, {
     method: "POST",
     headers: header,
@@ -313,10 +312,3 @@ export const getOrganisationClinicians = async (organisationName) => {
     let json = await response.json();
     return json;
 };
-=======
-    fetch(`${api}/admin/instruction/${type}`, {
-        method: "POST",
-        headers: header,
-        body: JSON.stringify(data),
-    }).then((res) => res);
->>>>>>> origin/development-client
