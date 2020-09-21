@@ -232,11 +232,11 @@ const getOrganisations = function (req, res) {
     Clinician.find({}, function (err, clinicians) {
         if (!err && clinicians != null) {
             const filteredClinicians = clinicians.filter(
-                (clinician) => clinician.organisation != null
+                (clinician) => clinician.organisation != null && clinician.organisation.trim() != ""
             );
             const summary = filteredClinicians.map((clinician) => {
                 return {
-                    organisation: clinician.organisation,
+                    organisation: clinician.organisation.toLowerCase(),
                     clinicianId: clinician.clinicianId,
                 };
             });
