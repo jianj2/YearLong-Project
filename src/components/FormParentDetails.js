@@ -82,20 +82,16 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
         if (rightDeviceTypeOtherVisible){
             rightDeviceSubmit = rightDeviceTypeOther
             setRightDeviceSubmit(rightDeviceTypeOther)
-            console.log("1", rightDeviceSubmit)
         } else {
             rightDeviceSubmit = rightDeviceType
             setRightDeviceSubmit(rightDeviceType)
-            console.log("2", rightDeviceSubmit)
         }
         if (leftDeviceTypeOtherVisible){
             leftDeviceSubmit = leftDeviceTypeOther
             setLeftDeviceSubmit(leftDeviceTypeOther)
-            console.log("3", leftDeviceSubmit)
         } else {
             leftDeviceSubmit = leftDeviceType
             setLeftDeviceSubmit(leftDeviceType)
-            console.log("4", leftDeviceSubmit)
         }
 
 
