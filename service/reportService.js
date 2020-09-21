@@ -53,7 +53,7 @@ const addPage = function (doc, spacing, docHeight) {
         doc.font('Helvetica').fontSize(10).text(getTimeStamp(), 10, 10);
         // insert logo
         doc.image('assets/logo_complete.png', 450, 30, {width: 100})
-        spacing = 70;
+        spacing = 100;
     }
     return spacing;
 }
@@ -64,12 +64,13 @@ const printRQAnswer = function (doc, questionAnswer, startMargin, midMargin, spa
     doc.font('Helvetica-Bold').fontSize(12).text("Answer: ", startMargin, spacing)
     if ((questionAnswer === "" || questionAnswer === undefined)) {
         questionAnswer = "Unanswered"
-        //change colour
         doc.font('Helvetica')
             .text(questionAnswer.value, midMargin, spacing)
     } else {
+        scoreColour(doc, questionAnswer)
         doc.font('Helvetica')
             .text(questionAnswer, midMargin, spacing);
+        doc.fillColor('black');
     }
 }
 
@@ -84,21 +85,35 @@ const printMCQAnswer = function (doc, questionAnswer, startMargin, midMargin, sp
     }
 }
 
+const scoreColour = function (doc, value) {
+    if (value < 4.0) {
+        doc.fillColor('red')
+    }
+    else if (value >= 4.0 && value < 7.0) {
+        doc.fillColor('orange')
+    }
+    else if (value >= 7.0 && value <= 10.0) {
+        doc.fillColor('green')
+    }
+}
+
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to print the results on the document
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const printQuestionnaireResults = function (doc, resultToPrint, sharedSection, startMargin) {
+const printCustomQuestionnaireResults = function (doc, resultToPrint, startSpacing) {
     // initial document spacing after patient information
-    let docHeight = Math.ceil(doc.page.height / 10) * 10 - 80;
-    let rightMargin = 30
-    let spacing = startMargin;
+    let docHeight = Math.ceil(doc.page.height / 10) * 10 - 100;
+    let rightMargin = 40
+    let startMargin = 30
+    let spacing = startSpacing;
     let midMargin = Math.ceil((doc.widthOfString("Answer: ") + rightMargin) / 10) * 10 + 5;
+    let paragraphWidth = 465;
 
     resultToPrint.sections.forEach((section, sectionIndex) => {
         spacing = addPage(doc, spacing, docHeight)
         // Writing the title for each scenario.
-        doc.font('Helvetica-Bold').fontSize(14).text(section.title, rightMargin, spacing);
+        doc.font('Helvetica-Bold').fontSize(14).text(section.title, startMargin, spacing);
         // doc.font('Helvetica').fontSize(12).text("Section average: " + section.score, midMargin, spacing);
         spacing = spacing + 30;
 
@@ -110,10 +125,11 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection, s
             let margin = Math.ceil((doc.widthOfString("Scenario: ") + rightMargin) / 10) * 10 + 5;
 
             doc.font('Helvetica').fontSize(12).text(scenario.description, margin, spacing, {
-                width: 550,
+                width: paragraphWidth,
                 align: 'justify'
             });
-            spacing = spacing + Math.ceil(doc.heightOfString(scenario.description, {width: 550}) / 10) * 10 + 15;
+
+            spacing = spacing + Math.ceil(doc.heightOfString(scenario.description, {width: paragraphWidth}) / 10) * 10 + 15;
 
             scenario.questions.map((question) => {
                 spacing = addPage(doc, spacing, docHeight)
@@ -131,11 +147,11 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection, s
                 else {
                     doc.font('Helvetica-Bold')
                         .text(question.description, rightMargin, spacing, {
-                            width: 550,
+                            width: paragraphWidth,
                             align: 'justify'
                         });
 
-                    spacing = spacing + Math.ceil(doc.heightOfString(question.description, {width: 550}) / 10) * 10 + 10;
+                    spacing = spacing + Math.ceil(doc.heightOfString(question.description, {width: paragraphWidth}) / 10) * 10 + 10;
 
                     spacing = addPage(doc, spacing, docHeight)
 
@@ -153,12 +169,120 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection, s
         });
         // Add a separation line.
         spacing = spacing + 10;
-        doc.lineCap('butt').moveTo(rightMargin, spacing).lineTo(doc.page.width - 30, spacing).stroke();
+        doc.lineCap('butt').moveTo(startMargin, spacing).lineTo(doc.page.width - 30, spacing).stroke();
         spacing = spacing + 20;
-        console.log(section.title)
-        console.log(spacing + " " + docHeight)
         spacing = addPage(doc, spacing, docHeight)
     });
+
+}
+
+const printStandardQuestionnaireResults = function (doc, resultToPrint, startSpacing) {
+    // initial document spacing after patient information
+    let docHeight = Math.ceil(doc.page.height / 10) * 10 - 100;
+    let rightMargin = 40
+    let startMargin = 30
+    let spacing = startSpacing;
+    let paragraphWidth = 465;
+    let questionHeading = ['Rating', 'Frequency', 'Importance']
+    let answerMargin = Math.ceil((doc.widthOfString("Importance: ") + rightMargin) / 10) * 10 + 5;
+    let frequencyKey = ['Very often (4 or more times in a week)',
+        'Often (1 to 3 times in a week)',
+        'Not often (1 to 2 times in a month)',
+        'Almost Never']
+    let otherOptions = ['Would Not Hear It', 'Do Not Know', 'Not Applicable']
+    let optionExplanation = ['(indicates cannot even hear voice/sound they need to understand or' +
+    'identify in the listening situation described)',
+        '(indicates the parent is not able to accurately access the listening situation described)',
+        '(indicates that the child does not experience therefore no further questions are asked' +
+        'about the listening situation described)']
+    let importanceKey = ['Very Important', 'Important', 'Only a bit Important', 'Not Important']
+
+    resultToPrint.sections.forEach((section, sectionIndex) => {
+        spacing = addPage(doc, spacing, docHeight)
+        // Writing the title for each scenario.
+        doc.font('Helvetica-Bold').fontSize(14).text(section.title, startMargin, spacing);
+        // doc.font('Helvetica').fontSize(12).text("Section average: " + section.score, midMargin, spacing);
+        spacing = spacing + 35;
+
+        section.scenarios.map((scenario) => {
+            spacing = addPage(doc, spacing, docHeight)
+            // Writing the description for each scenario.
+            doc.font('Helvetica-Bold').fontSize(12).text("Scenario: ", rightMargin, spacing);
+
+            let scenarioMargin = Math.ceil((doc.widthOfString("Scenario: ") + rightMargin) / 10) * 10 + 5;
+
+            doc.font('Helvetica').fontSize(12).text(scenario.description, scenarioMargin, spacing, {
+                width: paragraphWidth,
+                align: 'justify'
+            });
+
+            // adds purple overlay on top of scenario
+            doc.fillOpacity(0.1).rect(30, spacing - 10, 550, doc.heightOfString(scenario.description, {width: paragraphWidth}) + 15).fill('purple');
+            doc.fillOpacity(1).fill('black');
+            spacing = spacing + Math.ceil(doc.heightOfString(scenario.description, {width: paragraphWidth}) / 10) * 10 + 15;
+
+            scenario.questions.map((question, questionIndex) => {
+                spacing = addPage(doc, spacing, docHeight)
+                let questionAnswer = question.response;
+                doc.font('Helvetica-Bold').fontSize(12).text(questionHeading[questionIndex] + ": ", rightMargin, spacing)
+                scoreColour(doc, questionAnswer)
+                doc.font('Helvetica').fontSize(12).text(questionAnswer, answerMargin, spacing, {
+                    width: paragraphWidth,
+                    align: 'justify'
+                })
+                doc.fillColor('black')
+                spacing = spacing + Math.ceil(doc.heightOfString(questionAnswer, {width: paragraphWidth}) / 10) * 10 + 20;
+                // spacing = addPage(doc, spacing, docHeight)
+                // doc.font('Helvetica-Bold')
+                //     .text('Comments: ', rightMargin, spacing);
+                // spacing = spacing + 35;
+            });
+
+        });
+        // Add a separation line.
+        doc.lineCap('butt').moveTo(startMargin, spacing).lineTo(doc.page.width - 30, spacing).stroke();
+        spacing = spacing + 20;
+        spacing = addPage(doc, spacing, docHeight)
+    });
+    // scale key
+    doc.font('Helvetica-Bold').fontSize(14).text("Scale Ruler", startMargin, spacing);
+    spacing = spacing + 20;
+    spacing = addPage(doc, spacing, docHeight)
+    // slider image
+    doc.image('assets/slider.png', rightMargin, spacing, {width: 540, height: 50})
+    spacing = spacing + 70;
+    spacing = addPage(doc, spacing, docHeight)
+    //other options for slider
+    otherOptions.map((option, index) => {
+        doc.font('Helvetica-Bold').fontSize(12)
+        doc.list([option], rightMargin, spacing)
+        doc.font('Helvetica-Oblique').fontSize(12)
+        doc.text(optionExplanation[index], 170, spacing, {
+            width: 410,
+            align: 'justify'
+        });
+        spacing = spacing + doc.heightOfString(optionExplanation[index]) + 10;
+        spacing = addPage(doc, spacing, docHeight)
+    })
+
+    //frequency key
+    doc.font('Helvetica-Bold').fontSize(14).text("The Frequency of Situation Occurring", startMargin, spacing);
+    spacing = spacing + 30;
+    spacing = addPage(doc, spacing, docHeight)
+    doc.font('Helvetica').fontSize(12)
+    frequencyKey.map((frequency) => {
+        doc.list([frequency], rightMargin, spacing)
+        spacing = spacing + 20;
+        spacing = addPage(doc, spacing, docHeight)
+    })
+    spacing = spacing + 20;
+    spacing = addPage(doc, spacing, docHeight)
+
+    //importance key
+    importanceKey.map((importance) => {
+
+    })
+
 
 }
 
@@ -374,7 +498,6 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     let sharedSections = null;
                     if (!err && share != null) {
                         sharedSections = share.shareSection
-
                     }
 
                     const [resultToPrint, scenarioResults] = getQuestionnaireResponseJoin(questionnaire, questionnaireData, section_score, sharedSections);
@@ -412,7 +535,13 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     // MAKE THIS BETTER
                     const sortedResults = sortByImportance(resultToPrint)
 
-                    printQuestionnaireResults(doc, sortedResults, sharedSections, lineSpacing)
+
+                    if (sortedResults.isStandard) {
+                        printStandardQuestionnaireResults(doc, sortedResults, lineSpacing)
+                    } else {
+                        printCustomQuestionnaireResults(doc, sortedResults, lineSpacing)
+                    }
+
                     // CLOSE THE DOCUMENT,
                     doc.end();
 
