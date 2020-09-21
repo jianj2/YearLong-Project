@@ -250,47 +250,55 @@ const sortByImportance = function (response) {
 
 // Helper Functions
 
-const speechSection = function (speechScenarios, subScaleScore) {
-    for (let j = 1; j <= speechScenarios.length; j++) {     
-        if (!isNaN(speechScenarios[j][0].value)) {
-            if (speechScenarios[j][0].value !== '') {
-                switch(j){
-                    case 2: case 3:            
-                        subScaleScore.Speech.SpQ += speechScenarios[j][0].value
-                        break;
-                    case 1: case 4: case 5: case 6:
-                        subScaleScore.Speech.SpN += speechScenarios[j][0].value
-                        break;
-                    case 7: case 8:
-                        subScaleScore.Speech.SpSp += speechScenarios[j][0].value
-                        break;
-                    case 9:
-                        subScaleScore.Speech.SpStrm += speechScenarios[j][0].value
-                    default:
-                        console.log(`speechScenarios: ${j} is not included in any subscale`)
+const speechSection = function (speechScenarios) {
+    let scoreSpQ = 0;
+    let scoreSpN = 0;
+    let scoreSpSp = 0;
+    let scoreSpStrm = 0;
+    for (let j = 1; j <= speechScenarios.length; j++) {  
+        for (let z = 1; z <= speechScenarios.length[j]; j++) {  
+            if (!isNaN(speechScenarios[j][z].value)) {
+                if (speechScenarios[j][z].value !== '') {
+                    switch(j){
+                        case 2: case 3:            
+                            scoreSpQ += speechScenarios[j][z].value
+                            break;
+                        case 1: case 4: case 5: case 6:
+                            scoreSpN += speechScenarios[j][z].value
+                            break;
+                        case 7: case 8:
+                            scoreSpSp += speechScenarios[j][z].value
+                            break;
+                        case 9:
+                            scoreSpStrm += speechScenarios[j][z].value
+                        default:
+                            console.log(`speechScenario: ${j} is not included in any subscale`)
+                    }
                 }
             }
         }
     }
-    console.log(subScaleScore)
-    return subScaleScore;   
+    return [scoreSpQ, scoreSpN, scoreSpSp, scoreSpStrm]
 }
 
 const spatialSection = function (spatialScenarios, subScaleScore) {
-    for (let j = 1; j <= spatialScenarios.length; j++) {     
-        if (!isNaN(spatialScenarios[j][0].value)) {
-            if (spatialScenarios[j][0].value !== '') {
-                switch(j){
-                    case 1: case 2: case 3: case 4: case 5:
-                        subScaleScore.Spatial.Localiz += spatialScenarios[j][0].value
-                        break;
-                    case 6: case 7: case 8: case 9: case 10: case 11: case 12:
-                        subScaleScore.Spatial.Dist += spatialScenarios[j][0].value
-                        break;
-                    default:
-                        console.log(`spatialScenarios: ${j} is not included in any subscale`)
+    for (let j = 1; j <= spatialScenarios.length; j++) {
+        for (let z = 1; z <= spatialScenarios.length[j]; j++) {       
+            if (!isNaN(spatialScenarios[j][z].value)) {
+                if (spatialScenarios[j][z].value !== '') {
+                    switch(j){
+                        case 1: case 2: case 3: case 4: case 5:
+                            subScaleScore.Spatial.Localiz += spatialScenarios[j][z].value
+                            break;
+                        case 6: case 7: case 8: case 9: case 10: case 11: case 12:
+                            subScaleScore.Spatial.Dist += spatialScenarios[j][z].value
+                            break;
+                        default:
+                            console.log(`spatialScenario: ${j} is not included in any subscale`)
+                    }
                 }
-            }
+        
+            }    
         }
     }
     console.log(subScaleScore)
@@ -298,24 +306,26 @@ const spatialSection = function (spatialScenarios, subScaleScore) {
 }
 
 const qualitiesSection = function (qualitiesScenarios, subScaleScore) {
-    for (let j = 1; j <= qualitiesScenarios.length; j++) {     
-        if (!isNaN(qualitiesScenarios[j][0].value)) {
-            if (qualitiesScenarios[j][0].value !== '') {
-                switch(j){
-                    case 1: case 2:
-                        subScaleScore.Qualities.Segreg += qualitiesScenarios[j][0].value
-                        break; 
-                    case 3: case 4: case 5: case 6:
-                        subScaleScore.Qualities.IDSound += qualitiesScenarios[j][0].value
-                        break;
-                    case 7: case 9: case 10:
-                        subScaleScore.Qualities.ListEff += qualitiesScenarios[j][0].value
-                        break;
-                    default:
-                        console.log(`spatialScenarios: ${j} is not included in any subscale`)
+    for (let j = 1; j <= qualitiesScenarios.length; j++) { 
+        for (let z = 1; z <= qualitiesScenarios.length[j]; j++) { 
+            if (!isNaN(qualitiesScenarios[j][z].value)) {
+                if (qualitiesScenarios[j][z].value !== '') {
+                    switch(j){
+                        case 1: case 2:
+                            subScaleScore.Qualities.Segreg += qualitiesScenarios[j][z].value
+                            break; 
+                        case 3: case 4: case 5: case 6:
+                            subScaleScore.Qualities.IDSound += qualitiesScenarios[j][z].value
+                            break;
+                        case 7: case 9: case 10:
+                            subScaleScore.Qualities.ListEff += qualitiesScenarios[j][z].value
+                            break;
+                        default:
+                            console.log(`qualitiesScenario: ${j} is not included in any subscale`)
+                    }
                 }
             }
-        }
+        }    
     }
     console.log(subScaleScore)
     return subScaleScore; 
@@ -325,11 +335,12 @@ const qualitiesSection = function (qualitiesScenarios, subScaleScore) {
 // This function is used to calculate the average score for each sub-scale 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const calculateSubScaleScore = function (questionnaireData, subScaleScore) {
-
+    let speechScore = []
     for (let i = 0; i < questionnaireData.length; i++) {     
         switch(i) {
             case 0:
-                subScaleScore = speechSection(questionnaireData[i], subScaleScore)
+                speechScore = speechSection(questionnaireData[i], subScaleScore)
+                console.log(speechScore)
                 break;
             case 1:
                 subScaleScore = spatialSection(questionnaireData[i], subScaleScore)
