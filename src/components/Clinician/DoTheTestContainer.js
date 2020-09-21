@@ -102,8 +102,8 @@ const DoTheTestContainer = () => {
     // Method called to go to the instructions page in the wizard.
     const submitDetails = (data) => {
         // to make sure field is not empty.
-        data["completedBy"] = "clinician";
-        setPersonalDetails(data);
+        getPersonalDetails["completedBy"] = "clinician";
+        setPersonalDetails(getPersonalDetails);
         console.log("details submitted", data);
         nextStep();
     };

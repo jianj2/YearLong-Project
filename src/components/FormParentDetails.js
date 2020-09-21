@@ -46,7 +46,7 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
     let [rightDeviceSubmit, setRightDeviceSubmit] = useState("null");
     let [leftDeviceSubmit, setLeftDeviceSubmit] = useState(null);
 
-
+    let personalData = {}
     useEffect(() =>{
 
         if (rightDeviceType === "Other"){
@@ -99,22 +99,23 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
         }
 
 
-        let personalData = {
+        personalData = {
             name,
             date,
-            rightDeviceSubmit,
-            leftDeviceSubmit,
+            rightDeviceType:rightDeviceSubmit,
+            leftDeviceType:leftDeviceSubmit,
             completedBy
         }
+
+
 
         getPersonalDetails(personalData);
     }, [name,date,rightDeviceType,leftDeviceType, rightDeviceTypeOther, leftDeviceTypeOther])
 
 
 
-    const handleButtonPress = (data) => {
-        console.log(data);
-        submitDetails(data);
+    const handleButtonPress = () => {
+        submitDetails(personalData);
     };
 
     const maxDate = new Date(new Date().getTime());
