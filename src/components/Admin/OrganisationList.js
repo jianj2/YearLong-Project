@@ -21,7 +21,7 @@ const OrganisationList = () => {
 
     const getOrganisationList = async () => { //To handle the data from the API
         const allOrganisation= await getOrganisations();
-        console.log(allOrganisation)
+        console.log(allOrganisation);
         let OrganList = new Set(allOrganisation.map((item)=>{
             return item.organisation.toLowerCase();
         }));
