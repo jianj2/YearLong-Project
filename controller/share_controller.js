@@ -15,7 +15,7 @@ const Share = mongoose.model("share");
 const { v1: uuidv1 } = require("uuid");
 const { extractUserEmail } = require("../utils/jwtUtils");
 
-const { sendInvitationEmail, sendResultsEmail } = require("./email_controller");
+const { sendInvitationEmail, sendResultsEmail } = require("../service/emailService");
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to create a new share.
