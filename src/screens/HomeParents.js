@@ -85,7 +85,6 @@ const HomeParents = ({ match }) => {
 
     const getPersonalDetails = (data) => {
         setPersonalDetails(data)
-        console.log("data", data)
     };
 
     //////////// Share section update /////////////////////////////
@@ -205,7 +204,6 @@ const HomeParents = ({ match }) => {
             clinicianEmail: clinicianEmail,
             questionnaireId: questionnaire.questionnaireId,
         };
-        console.log(data);
 
         setLoading(true);
         API.sendQuestionnaireData(data, match.params.shareId).then((res) => {
