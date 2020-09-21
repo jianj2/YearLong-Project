@@ -17,6 +17,7 @@ const mongoose = require("mongoose");
 const Questionnaire = mongoose.model("questionnaire");
 const Share = mongoose.model("share");
 const fs = require('fs');
+const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require('constants');
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // HELPERS
@@ -251,22 +252,35 @@ const sortByImportance = function (response) {
 // Helper Functions
 
 const speechSection = function (speechScenarios, subScaleScore) {
+    let scoreSpQ = 0;
+    let spQCount = 0;
+    let scoreSpN = 0;
+    let spNCount = 0;
+    let scoreSpSp = 0;
+    let spSpCount = 0;
+    let scoreSpStrm = 0;
+    let spStrmCount = 0;
     for (let j = 0; j < speechScenarios.length; j++) {
         for (let z = 0; z < speechScenarios[j].length; z++) {
             if (!isNaN(speechScenarios[j][z].value)) {
                 if (speechScenarios[j][z].value !== '') {
                     switch(j){
                         case 1: case 2:            
-                        subScaleScore.Speech.SpQ += speechScenarios[j][z].value
+                            scoreSpQ += speechScenarios[j][z].value
+                            spQCount += 1;
                             break;
                         case 0: case 3: case 4: case 5:
-                            subScaleScore.Speech.SpN += speechScenarios[j][z].value
+                            scoreSpN += speechScenarios[j][z].value
+                            spNCount += 1;
                             break;
                         case 6: case 7:
-                            subScaleScore.Speech.SpSp += speechScenarios[j][z].value
+                            scoreSpSp += speechScenarios[j][z].value
+                            spSpCount += 1;
                             break;
                         case 8:
-                            subScaleScore.Speech.SpStrm += speechScenarios[j][z].value
+                            scoreSpStrm += speechScenarios[j][z].value
+                            spStrmCount += 1;
+                            break;
                         default:
                             console.log(`speechScenario: ${j} is not included in any subscale`)
                     }
@@ -274,20 +288,32 @@ const speechSection = function (speechScenarios, subScaleScore) {
             }
         }
     }
+
+    subScaleScore.Speech.SpQ = scoreSpQ / spQCount
+    subScaleScore.Speech.SpN = scoreSpN / spNCount
+    subScaleScore.Speech.SpSp = scoreSpSp / spSpCount
+    subScaleScore.Speech.SpStrm = scoreSpStrm / spSpCount
+
     return subScaleScore;
 }
 
 const spatialSection = function (spatialScenarios, subScaleScore) {
+    let scoreLocaliz = 0;
+    let localizCount = 0;
+    let scoreDist = 0;
+    let distCount = 0;
     for (let j = 0; j < spatialScenarios.length; j++) {
         for (let z = 0; z < spatialScenarios[j].length; z++) {       
             if (!isNaN(spatialScenarios[j][z].value)) {
                 if (spatialScenarios[j][z].value !== '') {
                     switch(j){
                         case 0: case 1: case 2: case 3: case 4:
-                            subScaleScore.Spatial.Localiz += spatialScenarios[j][z].value
+                            scoreLocaliz += spatialScenarios[j][z].value
+                            localizCount += 1;
                             break;
                         case 5: case 6: case 7: case 8: case 9: case 10: case 11:
-                            subScaleScore.Spatial.Dist += spatialScenarios[j][z].value
+                            scoreDist += spatialScenarios[j][z].value
+                            distCount += 1;
                             break;
                         default:
                             console.log(`spatialScenario: ${j} is not included in any subscale`)
@@ -296,23 +322,36 @@ const spatialSection = function (spatialScenarios, subScaleScore) {
             }    
         }
     }
+
+    subScaleScore.Spatial.Localiz = scoreLocaliz / localizCount
+    subScaleScore.Spatial.Dist = scoreDist / distCount
+
     return subScaleScore;   
 }
 
 const qualitiesSection = function (qualitiesScenarios, subScaleScore) {
+    let scoreSegreg = 0;
+    let segregCount = 0;
+    let scoreIDSound = 0;
+    let idSoundCount = 0;
+    let scoreListEff = 0;
+    let listEffCount = 0;
     for (let j = 0; j < qualitiesScenarios.length; j++) { 
         for (let z = 0; z < qualitiesScenarios[j].length; z++) { 
             if (!isNaN(qualitiesScenarios[j][z].value)) {
                 if (qualitiesScenarios[j][z].value !== '') {
                     switch(j){
                         case 0: case 1:
-                            subScaleScore.Qualities.Segreg += qualitiesScenarios[j][z].value
+                            scoreSegreg += qualitiesScenarios[j][z].value
+                            segregCount += 1;
                             break; 
                         case 2: case 3: case 4: case 5:
-                            subScaleScore.Qualities.IDSound += qualitiesScenarios[j][z].value
+                            scoreIDSound += qualitiesScenarios[j][z].value
+                            idSoundCount += 1;
                             break;
                         case 6: case 8: case 9:
-                            subScaleScore.Qualities.ListEff += qualitiesScenarios[j][z].value
+                            scoreListEff += qualitiesScenarios[j][z].value
+                            listEffCount += 1;
                             break;
                         default:
                             console.log(`qualitiesScenario: ${j} is not included in any subscale`)
@@ -321,6 +360,11 @@ const qualitiesSection = function (qualitiesScenarios, subScaleScore) {
             }
         }    
     }
+
+    subScaleScore.Qualities.Segreg = scoreSegreg / segregCount
+    subScaleScore.Qualities.IDSound = scoreIDSound / idSoundCount
+    subScaleScore.Qualities.ListEff = scoreListEff / listEffCount
+
     return subScaleScore; 
 }
 
@@ -341,6 +385,14 @@ const calculateSubScaleScore = function (questionnaireData, subScaleScore) {
                 break;
             default:
                 console.log(`Section does not exist`)
+        }
+    }
+
+    for (let i = 0; i < subScaleScore.length; i++) {
+        for (let j = 0; j < subScaleScore[i].length; j++) {
+            if (isNaN(subScaleScore[i][j])) {
+                subScaleScore[i][j] = "N/A";
+            }
         }
     }
 
@@ -424,23 +476,10 @@ const generateAttachments = function (questionnaireId, personalDetails, question
             if (!err) {
                 let section_score = [];
 
-                let subScaleScore = {
-                    Speech:{
-                        SpQ: 0.0,
-                        SpN: 0.0,
-                        SpSp: 0.0,
-                        SpStrm: 0.0
-                    },
-                    Spatial:{
-                        Localiz: 0.0,
-                        Dist: 0.0
-                    },
-                    Qualities:{
-                        Segreg: 0.0,
-                        IDSound: 0.0,
-                        ListEff: 0.0
-                        // ,SoundQual: 0.0
-                    }
+                let subScaleScore = { 
+                    Speech:{ SpQ: 0.0, SpN: 0.0, SpSp: 0.0, SpStrm: 0.0 },
+                    Spatial:{ Localiz: 0.0, Dist: 0.0 },
+                    Qualities:{ Segreg: 0.0, IDSound: 0.0, ListEff: 0.0 }
                 }
 
                 let newSubScaleScore = calculateSubScaleScore(questionnaireData,subScaleScore);
