@@ -255,18 +255,13 @@ const speechSection = function (speechScenarios, subScaleScore) {
         if (!isNaN(speechScenarios[j][0].value)) {
             if (speechScenarios[j][0].value !== '') {
                 switch(j){
-                    case 2:
-                    case 3:            
+                    case 2: case 3:            
                         subScaleScore.Speech.SpQ += speechScenarios[j][0].value
                         break;
-                    case 1:
-                    case 4:
-                    case 5:
-                    case 6:
+                    case 1: case 4: case 5: case 6:
                         subScaleScore.Speech.SpN += speechScenarios[j][0].value
                         break;
-                    case 7:
-                    case 8:
+                    case 7: case 8:
                         subScaleScore.Speech.SpSp += speechScenarios[j][0].value
                         break;
                     case 9:
@@ -281,38 +276,30 @@ const speechSection = function (speechScenarios, subScaleScore) {
     return subScaleScore;   
 }
 
-const spatialSection = function (spatialScenarios) {
+const spatialSection = function (spatialScenarios, subScaleScore) {
     for (let j = 0; j < spatialScenarios.length; j++) {     
-        if (!isNaN(speechScenarios[j][0].value)) {
-            if (speechScenarios[j][0].value !== '') {
+        if (!isNaN(spatialScenarios[j][0].value)) {
+            if (spatialScenarios[j][0].value !== '') {
                 switch(j){
-                    case 2:
-                    case 3:            
-                        subScaleScore.Speech.SpQ += speechScenarios[j][0].value
+                    case 0: case 1: case 2: case 3: case 4:
+                        subScaleScore.Spatial.Localiz += spatialScenarios[j][0].value
                         break;
-                    case 1:
-                    case 4:
-                    case 5:
-                    case 6:
-                        subScaleScore.Speech.SpN += speechScenarios[j][0].value
+                    case 5: case 6: case 7: case 8: case 9: case 10: case 11:
+                        subScaleScore.Spatial.Dist += spatialScenarios[j][0].value
                         break;
-                    case 7:
-                    case 8:
-                        subScaleScore.Speech.SpSp += speechScenarios[j][0].value
-                        break;
-                    case 9:
-                        subScaleScore.Speech.SpStrm += speechScenarios[j][0].value
                     default:
-                        console.log(`speechScenarios: ${j} is not included in any subscale`)
+                        console.log(`spatialScenarios: ${j} is not included in any subscale`)
                 }
             }
         }
     }
-    console.log(`Section: 1`)
+    console.log(subScaleScore)
+    return subScaleScore;   
 }
 
 const qualitiesSection = function () {
-    console.log(`Section: 2`)
+    console.log(subScaleScore)
+    return subScaleScore; 
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
