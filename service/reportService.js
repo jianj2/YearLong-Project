@@ -493,8 +493,8 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                 doc.font('Helvetica').fontSize(12)
                     .text(personalDetails.name, 50, 130)
                     .text(personalDetails.date, 250, 130)
-                    .text('device_r', 50, 170)
-                    .text('device_l', 250, 170)
+                    .text(device_r, 50, 170)
+                    .text(device_l, 250, 170)
                     .text(personalDetails.completedBy, 450, 130);
 
                 // THIS LINE PRINTS THE QUESTIONNAIRE RESULT IN THE DOC FILE
