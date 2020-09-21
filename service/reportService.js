@@ -53,7 +53,7 @@ const addPage = function (doc, spacing, docHeight) {
         doc.font('Helvetica').fontSize(10).text(getTimeStamp(), 10, 10);
         // insert logo
         doc.image('assets/logo_complete.png', 450, 30, {width: 100})
-        spacing = 100;
+        spacing = 90;
     }
     return spacing;
 }
@@ -152,12 +152,10 @@ const printCustomQuestionnaireResults = function (doc, resultToPrint, startSpaci
                         });
 
                     spacing = spacing + Math.ceil(doc.heightOfString(question.description, {width: paragraphWidth}) / 10) * 10 + 10;
-
                     spacing = addPage(doc, spacing, docHeight)
 
                     printMCQAnswer(doc, questionAnswer, rightMargin, midMargin, spacing)
                     spacing = spacing + 35;
-
                 }
                 spacing = addPage(doc, spacing, docHeight)
                 doc.font('Helvetica-Bold')
@@ -190,10 +188,10 @@ const printStandardQuestionnaireResults = function (doc, resultToPrint, startSpa
         'Not often (1 to 2 times in a month)',
         'Almost Never']
     let otherOptions = ['Would Not Hear It', 'Do Not Know', 'Not Applicable']
-    let optionExplanation = ['(indicates cannot even hear voice/sound they need to understand or' +
+    let optionExplanation = ['(indicates cannot even hear voice/sound they need to understand or ' +
     'identify in the listening situation described)',
         '(indicates the parent is not able to accurately access the listening situation described)',
-        '(indicates that the child does not experience therefore no further questions are asked' +
+        '(indicates that the child does not experience therefore no further questions are asked ' +
         'about the listening situation described)']
     let importanceKey = ['Very Important', 'Important', 'Only a bit Important', 'Not Important']
 
@@ -264,10 +262,12 @@ const printStandardQuestionnaireResults = function (doc, resultToPrint, startSpa
         spacing = spacing + doc.heightOfString(optionExplanation[index]) + 10;
         spacing = addPage(doc, spacing, docHeight)
     })
+    spacing = spacing + 10;
+    spacing = addPage(doc, spacing, docHeight)
 
     //frequency key
     doc.font('Helvetica-Bold').fontSize(14).text("The Frequency of Situation Occurring", startMargin, spacing);
-    spacing = spacing + 30;
+    spacing = spacing + 25;
     spacing = addPage(doc, spacing, docHeight)
     doc.font('Helvetica').fontSize(12)
     frequencyKey.map((frequency) => {
@@ -275,12 +275,17 @@ const printStandardQuestionnaireResults = function (doc, resultToPrint, startSpa
         spacing = spacing + 20;
         spacing = addPage(doc, spacing, docHeight)
     })
-    spacing = spacing + 20;
+    spacing = spacing + 10;
     spacing = addPage(doc, spacing, docHeight)
 
     //importance key
+    doc.font('Helvetica-Bold').fontSize(14).text("The Importance of Situation Occurring", startMargin, spacing);
+    spacing = spacing + 25;
+    doc.font('Helvetica').fontSize(12)
     importanceKey.map((importance) => {
-
+        doc.list([importance], rightMargin, spacing)
+        spacing = spacing + 20;
+        spacing = addPage(doc, spacing, docHeight)
     })
 
 
@@ -505,9 +510,7 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     const csvResult = generateCSV(resultToPrint, personalDetails, scenarioResults);
 
                     // prints out summary of section scores
-                    //doc.lineCap('butt').moveTo(30, 240).lineTo(doc.page.width - 30, 240).stroke();
                     doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire Score Summary", 30, 240);
-
 
                     let lineSpacing = 280;
                     let margin = 0;
