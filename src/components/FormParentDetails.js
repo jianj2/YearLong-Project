@@ -161,29 +161,6 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                         <FormHelperText>{errors.date ? errors.date.message : "Please enter the child's name."}</FormHelperText>
                     </FormControl>
 
-                    {/*    {clinicianAccess ? (*/}
-                    {/*        <div></div>*/}
-                    {/*    ) : (*/}
-                    {/*        <FormControl margin="dense">*/}
-                    {/*            <InputLabel>Completed By</InputLabel>*/}
-                    {/*            <Select*/}
-                    {/*                // defaultValue={defaultValue.completedBy}*/}
-                    {/*                value={completedBy}*/}
-                    {/*                onChange={(event) => setCompletedBy(event.target.value)}*/}
-                    {/*                name="completedBy"*/}
-                    {/*                error={errors.completedBy !== undefined}*/}
-                    {/*                native*/}
-                    {/*                inputRef={register({*/}
-                    {/*                    required: "This is required.",*/}
-                    {/*                })}*/}
-                    {/*            >*/}
-                    {/*                <option value="" disabled selected></option>*/}
-                    {/*                <option value="parent">Parent</option>*/}
-                    {/*                <option value="child">Child</option>*/}
-                    {/*            </Select>*/}
-                    {/*            <FormHelperText>{errors.completedBy ? errors.completedBy.message : "Please specify who is filling the form."}</FormHelperText>*/}
-                    {/*        </FormControl>*/}
-                    {/*    )}*/}
                 </div>
 
 
@@ -275,15 +252,6 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                     </FormControl>
                     ): (null)}
 
-                    {/*{clinicianAccess ? (*/}
-                    {/*    <div></div>*/}
-                    {/*) : (*/}
-                    {/*<div className="parents-detail-form-submit-button">*/}
-                    {/*    <button id="next" className="button">*/}
-                    {/*        N E X T*/}
-                    {/*    </button>*/}
-                    {/*</div>*/}
-                    {/*)}*/}
                 </div>
             </div>
 
