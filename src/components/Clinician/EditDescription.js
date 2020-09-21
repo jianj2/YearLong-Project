@@ -28,7 +28,7 @@ import {
 
 
 
-// handles rendering of TopContainer in the Clinician page
+// handles rendering of the edit questionnaire description box for clincians
 const EditDescription = (props, { Questionnaire }) => {
     // to modify the questionnaire title in real time.
     const handleQuestionnaireTitleChange = (event) => {

@@ -293,22 +293,22 @@
     <script>
         window.addEventListener('load', function () {
 
-            var myTabs = document.querySelectorAll("ul.nav-tabs > li");
+            let myTabs = document.querySelectorAll("ul.nav-tabs > li");
             function myTabClicks(tabClickEvent) {
-                for (var i = 0; i < myTabs.length; i++) {
+                for (let i = 0; i < myTabs.length; i++) {
                     myTabs[i].classList.remove("tab-active");
                 }
-                var clickedTab = tabClickEvent.currentTarget;
+                let clickedTab = tabClickEvent.currentTarget;
                 clickedTab.classList.add("tab-active");
                 tabClickEvent.preventDefault();
-                var myContentPanes = document.querySelectorAll(".tab-pane");
+                let myContentPanes = document.querySelectorAll(".tab-pane");
                 for (i = 0; i < myContentPanes.length; i++) {
                     myContentPanes[i].classList.remove("tab-pane-active");
                     myContentPanes[i].classList.add("tab-pane-disable");
                 }
-                var anchorReference = tabClickEvent.target;
-                var activePaneId = anchorReference.getAttribute("href");
-                var activePane = document.querySelector(activePaneId);
+                let anchorReference = tabClickEvent.target;
+                let activePaneId = anchorReference.getAttribute("href");
+                let activePane = document.querySelector(activePaneId);
                 activePane.classList.add("tab-pane-active");
                 activePane.classList.remove("tab-pane-disable");
             }
@@ -320,11 +320,11 @@
 
 
 
-            var config = JSON.parse(
+            let config = JSON.parse(
                 decodeURIComponent(escape(window.atob('@@config@@')))
             );
 
-            var params = Object.assign({
+            let params = Object.assign({
                 /* additional configuration needed for use of custom domains
                 overrides: {
                   __tenant: config.auth0Tenant,
@@ -336,14 +336,14 @@
                 responseType: 'code'
             }, config.internalOptions);
 
-            var webAuth = new auth0.WebAuth(params);
+            let webAuth = new auth0.WebAuth(params);
 
-            var databaseConnection = 'Username-Password-Authentication';
+            let databaseConnection = 'Username-Password-Authentication';
 
             function login(e) {
                 e.preventDefault();
-                var username = document.getElementById('email').value;
-                var password = document.getElementById('password').value;
+                let username = document.getElementById('email').value;
+                let password = document.getElementById('password').value;
                 webAuth.login({
                     realm: databaseConnection,
                     username: username,
@@ -354,12 +354,12 @@
             }
 
             function signup() {
-                var firstName = document.getElementById('fname').value;
-                var lastName = document.getElementById('lname').value;
-                var organisation = document.getElementById('organisation').value;
-                var email = document.getElementById('signup-email').value;
-                var password = document.getElementById('signup-password').value;
-                var cpassword = document.getElementById('cpassword').value;
+                let firstName = document.getElementById('fname').value;
+                let lastName = document.getElementById('lname').value;
+                let organisation = document.getElementById('organisation').value;
+                let email = document.getElementById('signup-email').value;
+                let password = document.getElementById('signup-password').value;
+                let cpassword = document.getElementById('cpassword').value;
 
                 if ( password !== cpassword ) {
                     displayErrorSignUp({ description:"Passwords do not match!"})
@@ -388,13 +388,13 @@
             }
 
             function displayErrorLogin(err) {
-                var errorMessage = document.getElementById('error-message-login');
+                let errorMessage = document.getElementById('error-message-login');
                 errorMessage.innerHTML = err.description;
                 errorMessage.style.display = 'block';
             }
 
             function displayErrorSignUp(err) {
-                var errorMessage = document.getElementById('error-message-signup');
+                let errorMessage = document.getElementById('error-message-signup');
                 errorMessage.innerHTML = err.description;
                 errorMessage.style.display = 'block';
             }

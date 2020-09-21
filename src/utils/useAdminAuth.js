@@ -52,7 +52,7 @@ export const AdminAuthProvider = ({ children }) => {
                     })
                 );
             }else if (res.code===4){
-                var errorMessage = document.getElementById('error-message-login');
+                let errorMessage = document.getElementById('error-message-login');
                 errorMessage.innerHTML = "Login information is wrong";
                 errorMessage.style.display = 'block';
             }

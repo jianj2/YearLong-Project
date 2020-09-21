@@ -28,6 +28,7 @@ import HomeAdmin from "./screens/HomeAdmin";
 
 // Import components.
 import NavBar from "./components/Navbar";
+import FindPassword from "./components/FindPassword";
 
 function App() {
 
@@ -137,6 +138,12 @@ function App() {
                         path="/standard/:id/view" 
                         exact 
                         render={({match}) => <HomeClinician active = {5} questionnaireID={match.params.id}/> }
+                    />
+
+                    <Route
+                        path="/findPassword"
+                        exact
+                        render={() => <FindPassword /> }
                     />
                 </Switch>
             </Router>
