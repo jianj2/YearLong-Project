@@ -13,7 +13,7 @@ import React, { useEffect, useState } from "react";
 // Components
 import Loading from "../Loading";
 import QuestionnaireList from "../QuestionnaireList";
-import { Modal, Backdrop, Fade } from "@material-ui/core";
+import CustomModal from "../../utils/modals";
 import { makeStyles } from "@material-ui/core/styles";
 
 //style
@@ -21,7 +21,6 @@ import "../../styles/questionnaireList.css";
 
 // utils
 import * as API from "../../utils/api";
-
 
 import {
     addStandardQuestionnaire,
@@ -43,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2, 4, 3),
     },
 }));
-
 
 // handles rendering of SSQInstructionsContainer in the Admin Page
 const AdminManageQuestionnaires = () => {
@@ -73,7 +71,6 @@ const AdminManageQuestionnaires = () => {
         await API.adminCopyQuestionnaire(questionnaire);
         window.location.reload(false);
     };
-
 
     const deleteQuestionnaire = (questionnaireId, title) => {
         setdeleteQuestionnaireData({
@@ -118,54 +115,27 @@ const AdminManageQuestionnaires = () => {
             (q) => q.questionnaireId !== questionnaireId
         );
         setStandardisedQuestionnaires(filteredQuestionnaires);
-        const [_,message] = await deleteStandardQuestionnaire(questionnaireId);
+        const [_, message] = await deleteStandardQuestionnaire(questionnaireId);
         console.log(message);
         closeDeleteConfirmation();
     };
 
     const renderDeleteModal = () => {
+        const message = `Are you sure you want to delete ${deleteQuestionnaireData.deleteQuestionnaireName}?`;
+
         return (
-            <Modal
-                open={isDeleteModalVisible}
-                onClose={closeDeleteConfirmation}
-                closeAfterTransition
-                className={classes.modal}
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}
-            >
-                <Fade in={isDeleteModalVisible}>
-                    <div className="share-modal-container">
-                        <h3 class="center-text">
-                            Are you sure you want to delete{" "}
-                            {deleteQuestionnaireData.deleteQuestionnaireName}?
-                        </h3>
-                        <div className="buttons-container">
-                            <button
-                                className="button"
-                                id="margin-button"
-                                onClick={deleteSelecctedQuestionnaire}
-                            >
-                                CONFIRM
-                            </button>
-                            <button
-                                className="button"
-                                id="margin-button"
-                                onClick={closeDeleteConfirmation}
-                            >
-                                CANCEL
-                            </button>
-                        </div>
-                    </div>
-                </Fade>
-            </Modal>
+            <CustomModal
+                isModalVisible={isDeleteModalVisible}
+                setIsModalVisible={setIsDeleteModalVisible}
+                message={message}
+                onClickConfirm={deleteSelecctedQuestionnaire}
+                onClickCancel={() => {}}
+            />
         );
     };
 
     return (
         <div className="admin-manage-questionnaires">
-
             {loading ? <Loading /> : null}
 
             {renderDeleteModal()}
@@ -184,7 +154,7 @@ const AdminManageQuestionnaires = () => {
                     onClickQuestion={viewQuestionnaire}
                     canEdit={true}
                     onClickEdit={editQuestionnaire}
-                    onClickCopy = {copyQuestionnaire}
+                    onClickCopy={copyQuestionnaire}
                     canDelete={true}
                     onClickDelete={deleteQuestionnaire}
                 />
