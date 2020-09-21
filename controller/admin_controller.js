@@ -248,9 +248,12 @@ const getOrganisations = function (req, res) {
 };
 const getOrganisationClinicians = function (req, res) {
     console.log("test for getOrganisationClinicians");
-    Clinician.find({organisation: req.params.organisationName}, function (err, clinicians) {
+    Clinician.find({}, function (err, clinicians) {
         if (!err && clinicians != null) {
-            const summary = clinicians.map((clinician) => {
+            const filteredClinicians = clinicians.filter(
+                (clinician) => clinician.organisation != null && clinician.organisation.toLowerCase() == req.params.organisationName
+            );
+            const summary = filteredClinicians.map((clinician) => {
                 return {
                     organisation: clinician.organisation,
                     clinicianId: clinician.clinicianId,
