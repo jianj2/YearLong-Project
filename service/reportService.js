@@ -47,9 +47,13 @@ const getTimeStamp = function () {
 }
 
 const addPage = function (doc, spacing, docHeight) {
-    if (spacing > docHeight) {
+    if (spacing >= docHeight) {
         doc.addPage();
-        spacing = 30;
+        // prints time stamp
+        doc.font('Helvetica').fontSize(10).text(getTimeStamp(), 10, 10);
+        // insert logo
+        doc.image('assets/logo_complete.png', 450, 30, {width: 100})
+        spacing = 70;
     }
     return spacing;
 }
@@ -57,8 +61,7 @@ const addPage = function (doc, spacing, docHeight) {
 //print MCQ
 //print range
 const printRQAnswer = function (doc, questionAnswer, startMargin, midMargin, spacing) {
-    doc.font('Helvetica-Bold')
-        .text("Answer: ", startMargin, spacing)
+    doc.font('Helvetica-Bold').fontSize(12).text("Answer: ", startMargin, spacing)
     if ((questionAnswer === "" || questionAnswer === undefined)) {
         questionAnswer = "Unanswered"
         doc.font('Helvetica')
@@ -70,7 +73,7 @@ const printRQAnswer = function (doc, questionAnswer, startMargin, midMargin, spa
 }
 
 const printMCQAnswer = function (doc, questionAnswer, startMargin, midMargin, spacing) {
-    doc.text("Answer: ", startMargin, spacing)
+    doc.font('Helvetica-Bold').fontSize(12).text("Answer: ", startMargin, spacing)
     if (questionAnswer === "" || questionAnswer === undefined) {
         doc.font('Helvetica')
             .text("Unanswered", midMargin, spacing);
@@ -84,184 +87,72 @@ const printMCQAnswer = function (doc, questionAnswer, startMargin, midMargin, sp
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to print the results on the document
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const printQuestionnaireResults = function (doc, resultToPrint, sharedSection) {
+const printQuestionnaireResults = function (doc, resultToPrint, sharedSection, startMargin) {
     // initial document spacing after patient information
-    let lineSpacing = 40
-    // actual page is 792 but setting it to 700 helps to prevent overflow problems
-    let docHeight = Math.ceil(doc.page.height / 10) * 10 - 30;
-    let tableMargin = 30
-    let startMargin = 40
-    let firstLine = 245
-    let secondLine = 375
-    let thirdLine = 505
-    let fourthLine = 635
-
-    let scenarioColumnWidth = 215;
-
-    let questionColumnWidth = 130;
-    let questionStartIndex = [firstLine, secondLine, thirdLine];
-
-    let endMargin = 760
-    let commentsColumnWidth = 215
-
-    let nextRow = 0;
+    let docHeight = Math.ceil(doc.page.height / 10) * 10 - 80;
+    let rightMargin = 30
+    let spacing = startMargin;
+    let midMargin = Math.ceil((doc.widthOfString("Answer: ") + rightMargin) / 10) * 10 + 5;
 
     resultToPrint.sections.forEach((section, sectionIndex) => {
-        doc.font('Helvetica-Bold').text(section.title, startMargin, lineSpacing,
-            {
-                align: 'center'
-            })
-        lineSpacing += Math.ceil(doc.heightOfString(section.title) / 10) * 10;
-
-        // lineSpacing += Math.ceil(doc.heightOfString(section.title, {
-        //     width: scenarioColumnWidth - 10,
-        //     align: 'justify'
-        // }) / 10) * 10;
-
-        // row separation line
-        doc.lineCap('butt').moveTo(tableMargin, lineSpacing).lineTo(endMargin, lineSpacing).stroke();
-        //prints out scenario description
-
+        spacing = addPage(doc, spacing, docHeight)
+        // Writing the title for each scenario.
+        doc.font('Helvetica-Bold').fontSize(14).text(section.title, rightMargin, spacing);
+        // doc.font('Helvetica').fontSize(12).text("Section average: " + section.score, midMargin, spacing);
+        spacing = spacing + 30;
 
         section.scenarios.map((scenario) => {
-            doc.font('Helvetica-Bold').text(scenario.description, startMargin, lineSpacing + 10,
-                {
-                    width: scenarioColumnWidth - 20,
-                    align: 'justify'
-                })
-            nextRow = Math.ceil(doc.heightOfString(scenario.description, {
-                     width: scenarioColumnWidth - 20,
-                     align: 'justify'
-                 }) / 10) * 10;
+            spacing = addPage(doc, spacing, docHeight)
+            // Writing the description for each scenario.
+            doc.font('Helvetica-Bold').fontSize(12).text("Scenario: ", rightMargin, spacing);
+            //spacing = spacing + 20;
+            let margin = Math.ceil((doc.widthOfString("Scenario: ") + rightMargin) / 10) * 10 + 5;
 
-            let index = 0;
-            scenario.questions.map((question, questionIndex) => {
+            doc.font('Helvetica').fontSize(12).text(scenario.description, margin, spacing, {
+                width: 550,
+                align: 'justify'
+            });
+            spacing = spacing + Math.ceil(doc.heightOfString(scenario.description, {width: 550}) / 10) * 10 + 15;
 
-                // adds the question
-                if (question.description !== undefined) {
-                    doc.font('Helvetica-Bold').text(question.description, questionStartIndex[index] + 10, lineSpacing + 10,
-                        {
-                            width: questionColumnWidth - 20,
-                            align: 'justify'
-                        })
-                    index += 1;
+            scenario.questions.map((question) => {
+                spacing = addPage(doc, spacing, docHeight)
+
+                let questionAnswer = question.response;
+                // If the question is range type then the print out both value and supplementary value.
+                if (!question.isMCQ) {
+                    printRQAnswer(doc, questionAnswer, rightMargin, midMargin, spacing)
+
+                    spacing = spacing + 35;
+                    spacing = addPage(doc, spacing, docHeight)
                 }
-                let tempSpace = Math.ceil(doc.heightOfString(question.description, {
-                    width: questionColumnWidth - 20,
-                    align: 'justify'
-                }) / 10) * 10;
 
-                // determine what is the line spacing
-                if (tempSpace > nextRow) {
-                    nextRow = tempSpace
+                // MCQ questions will have the question and answer printed on pdf.
+                else {
+                    doc.font('Helvetica-Bold')
+                        .text(question.description, rightMargin, spacing, {
+                            width: 550,
+                            align: 'justify'
+                        });
+
+                    spacing = spacing + Math.ceil(doc.heightOfString(question.description, {width: 550}) / 10) * 10 + 10;
+
+                    spacing = addPage(doc, spacing, docHeight)
+
+                    printMCQAnswer(doc, questionAnswer, rightMargin, midMargin, spacing)
+                    spacing = spacing + 35;
+
                 }
             });
-            // if the questions have not been filled then add N/A for remaining spaces
-            while (index < 3) {
-                doc.font('Helvetica-Bold').text('N/A', questionStartIndex[index] + 10, lineSpacing + 10,
-                    {
-                        width: questionColumnWidth - 10,
-                        align: 'justify'
-                    })
-                index += 1;
-            }
-
-            // adds comments column
-            doc.font('Helvetica-Bold').text('Comments', fourthLine + 10, lineSpacing + 10,
-                {
-                    width: commentsColumnWidth - 10,
-                    align: 'justify'
-                })
-
-            nextRow += lineSpacing + 10;
 
         });
-
-        //line at the top of table
-        doc.lineCap('butt').moveTo(tableMargin, tableMargin).lineTo(endMargin, tableMargin).stroke();
-        //left border of table
-        doc.lineCap('butt').moveTo(tableMargin, tableMargin).lineTo(tableMargin, nextRow).stroke();
-        //right border of table
-        doc.lineCap('butt').moveTo(endMargin, tableMargin).lineTo(endMargin, nextRow).stroke();
-        //line at bottom of table
-        //doc.lineCap('butt').moveTo(tableMargin, nextRow).lineTo(endMargin, nextRow).stroke();
-
-        // first column separation of table
-        doc.lineCap('butt').moveTo(firstLine, lineSpacing).lineTo(firstLine, nextRow).stroke();
-        // second column separation of table
-        doc.lineCap('butt').moveTo(secondLine, lineSpacing).lineTo(secondLine, nextRow).stroke();
-        // third column separation of table
-        doc.lineCap('butt').moveTo(thirdLine, lineSpacing).lineTo(thirdLine, nextRow).stroke();
-        // fourth column separation of table
-        doc.lineCap('butt').moveTo(fourthLine, lineSpacing).lineTo(fourthLine, nextRow).stroke();
-
-        // add new page for each new section
-        doc.addPage();
-        //reset lineSpacing to original
-        lineSpacing = 40
-        //
-        // spacing = addPage(doc, spacing, docHeight)
-        // // Writing the title for each scenario.
-        // doc.font('Helvetica-Bold').fontSize(14).text(section.title, startMargin, spacing);
-        // doc.font('Helvetica').fontSize(12).text("Section average: " + section.score, midMargin, spacing);
-        // spacing = spacing + 30;
-        //
-        // section.scenarios.map((scenario) => {
-        //     spacing = addPage(doc, spacing, docHeight)
-        //
-        //     // Writing the description for each scenario.
-        //     doc.font('Helvetica-Bold').fontSize(12).text("Scenario: ", startMargin, spacing);
-        //     spacing = spacing + 20;
-        //
-        //     doc.font('Helvetica').fontSize(12).text(scenario.description, startMargin, spacing, {
-        //         width: 420,
-        //         align: 'justify'
-        //     });
-        //     spacing = spacing + Math.ceil(doc.heightOfString(scenario.description) / 10) * 10 + 15;
-        //
-        //     scenario.questions.map((question) => {
-        //         spacing = addPage(doc, spacing, docHeight)
-        //
-        //         let questionAnswer = question.response;
-        //         // If the question is range type then the print out both value and supplementary value.
-        //         if (!question.isMCQ) {
-        //             printRQAnswer(doc, questionAnswer, startMargin, midMargin, spacing)
-        //
-        //             spacing = spacing + 35;
-        //             spacing = addPage(doc, spacing, docHeight)
-        //         }
-        //
-        //         // MCQ questions will have the question and answer printed on pdf.
-        //         else {
-        //             doc.font('Helvetica-Bold')
-        //                 .text(question.description, startMargin, spacing, {
-        //                     width: 420,
-        //                     align: 'justify'
-        //                 });
-        //
-        //             spacing = spacing + Math.ceil(doc.heightOfString(question.description) / 10) * 10 + 10;
-        //
-        //             spacing = addPage(doc, spacing, docHeight)
-        //
-        //             printMCQAnswer(doc, questionAnswer, startMargin, midMargin, spacing)
-        //             spacing = spacing + 35;
-        //
-        //         }
-        //     })
-
+        // Add a separation line.
+        spacing = spacing + 10;
+        doc.lineCap('butt').moveTo(rightMargin, spacing).lineTo(doc.page.width - 30, spacing).stroke();
+        spacing = spacing + 20;
+        console.log(section.title)
+        console.log(spacing + " " + docHeight)
+        spacing = addPage(doc, spacing, docHeight)
     });
-
-    // // Add a separation line.
-    // spacing = spacing + 10;
-    // doc.lineCap('butt')
-    //     .moveTo(startMargin, spacing)
-    //     .lineTo(500, spacing)
-    //     .stroke();
-    // spacing = spacing + 20;
-    // spacing = addPage(doc, spacing, docHeight)
-
-
-    // });
 
 }
 
@@ -441,35 +332,35 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                 }
 
                 //creating pdf document
-                const doc = new PDFDocument({layout: 'landscape'});
+                const doc = new PDFDocument();
                 let ts = getTimeStamp();
                 // prints time stamp
                 doc.font('Helvetica').fontSize(10).text(ts, 10, 10);
                 // insert logo
-                doc.image('assets/logo_complete.png', 670, 30, {width: 100})
+                doc.image('assets/logo_complete.png', 450, 30, {width: 100})
                 // prints heading for patient details
-                doc.font('Helvetica-Bold').fontSize(14).text("Patient Details", 30, 80);
+                doc.font('Helvetica-Bold').fontSize(14).text("Patient Details", 30, 70);
                 // purple overlay for patient information
-                doc.fillOpacity(0.1).rect(30, 100, 730, 120).fill('purple');
+                doc.fillOpacity(0.1).rect(30, 90, 550, 110).fill('purple');
                 doc.fillOpacity(1).fill('black');
 
                 // prints out patient information headings
                 doc.font('Helvetica-Bold').fontSize(12)
-                    .text('Name', 50, 120)
-                    .text('Right Device Type', 50, 170)
-                    .text('Left Device Type', 350, 170)
-                    .text('Date of Birth', 350, 120)
-                    .text('Completed By', 600, 120);
+                    .text('Name', 50, 110)
+                    .text('Date of Birth', 250, 110)
+                    .text('Right Device Type', 50, 150)
+                    .text('Left Device Type', 250, 150)
+                    .text('Completed By', 450, 110);
 
                 // prints out patient information
                 const device_r = personalDetails.rightDeviceType === 'Other' ? personalDetails.rightDeviceTypeOther : personalDetails.rightDeviceType;
                 const device_l = personalDetails.leftDeviceType === 'Other' ? personalDetails.leftDeviceTypeOther : personalDetails.leftDeviceType
                 doc.font('Helvetica').fontSize(12)
-                    .text(personalDetails.name, 50, 140)
-                    .text(personalDetails.date, 350, 140)
-                    .text(device_r, 50, 190)
-                    .text(device_l, 350, 190)
-                    .text(personalDetails.completedBy, 600, 140);
+                    .text(personalDetails.name, 50, 130)
+                    .text(personalDetails.date, 250, 130)
+                    .text('device_r', 50, 170)
+                    .text('device_l', 250, 170)
+                    .text(personalDetails.completedBy, 450, 130);
 
                 // THIS LINE PRINTS THE QUESTIONNAIRE RESULT IN THE DOC FILE
                 Share.findOne({shareId}, function (err, share
@@ -485,27 +376,37 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     const csvResult = generateCSV(resultToPrint, personalDetails, scenarioResults);
 
                     // prints out summary of section scores
-                    doc.lineCap('butt').moveTo(30, 240).lineTo(doc.page.width - 30, 240).stroke();
-                    doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire Score Summary", 30, 260);
-                    let lineSpacing = 290;
+                    //doc.lineCap('butt').moveTo(30, 240).lineTo(doc.page.width - 30, 240).stroke();
+                    doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire Score Summary", 30, 240);
+
+
+                    let lineSpacing = 280;
                     let margin = 0;
-                    doc.font('Helvetica-Bold').fontSize(12).text("Questionnaire Average: ", 40, lineSpacing);
+                    doc.font('Helvetica-Bold').fontSize(12).text("Questionnaire Average: ", 50, lineSpacing);
                     lineSpacing += 30;
                     resultToPrint.sections.forEach((section, sectionIndex) => {
-                        doc.font('Helvetica-Bold').fontSize(12).text(section.title + " Average: ", 40, lineSpacing);
+                        doc.font('Helvetica-Bold').fontSize(12).text(section.title + " Average: ", 50, lineSpacing);
                         margin = Math.ceil(doc.widthOfString(section.title + " Average: ") / 10) * 10 + 60;
                         doc.font('Helvetica').text(scores.sectionScores[sectionIndex].toFixed(2), margin, lineSpacing);
                         lineSpacing += 30;
                         lineSpacing = addPage(doc, lineSpacing, doc.page.height);
                     })
-                    doc.font('Helvetica').text(scores.averageScore, margin, 290);
-                    doc.addPage()
+
+                    doc.font('Helvetica').text(scores.averageScore, margin, 280);
+
+                    doc.fillOpacity(0.1).rect(30, 260, 550, lineSpacing - 260).fill('purple');
+                    doc.fillOpacity(1).fill('black');
+                    lineSpacing += 40
+                    doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire Response", 30, lineSpacing);
+                    lineSpacing += 30
+                    doc.lineCap('butt').moveTo(30, lineSpacing).lineTo(doc.page.width - 30, lineSpacing).stroke();
+                    lineSpacing += 20;
 
                     // -------  TO DO  --------
                     // MAKE THIS BETTER
                     const sortedResults = sortByImportance(resultToPrint)
 
-                    printQuestionnaireResults(doc, sortedResults, sharedSections)
+                    printQuestionnaireResults(doc, sortedResults, sharedSections, lineSpacing)
                     // CLOSE THE DOCUMENT,
                     doc.end();
 
