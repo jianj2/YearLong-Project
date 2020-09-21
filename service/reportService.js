@@ -372,7 +372,7 @@ const sortByImportance = function (response) {
 
     sortedResult.sections.forEach(section => {
         section.scenarios.sort((a, b) =>
-            HELPER_IMPORTANCE[b.questions[2].response.value] - HELPER_IMPORTANCE[a.questions[2].response.value]
+            HELPER_IMPORTANCE[b.questions[2].response] - HELPER_IMPORTANCE[a.questions[2].response]
         )
     })
 
