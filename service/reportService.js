@@ -249,9 +249,12 @@ const sortByImportance = function (response) {
     return sortedResult;
 }
 
-// Helper Functions
-
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// Helper function to obtain scores for speech sub-scales
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const speechSection = function (speechScenarios, subScaleScore) {
+    // counter and score variables to
+    // store the total score and total count
     let scoreSpQ = 0;
     let spQCount = 0;
     let scoreSpN = 0;
@@ -260,23 +263,32 @@ const speechSection = function (speechScenarios, subScaleScore) {
     let spSpCount = 0;
     let scoreSpStrm = 0;
     let spStrmCount = 0;
+
+    // The counting starts from zero
     for (let j = 0; j < speechScenarios.length; j++) {
         for (let z = 0; z < speechScenarios[j].length; z++) {
             if (!isNaN(speechScenarios[j][z].value)) {
                 if (speechScenarios[j][z].value !== '') {
+
+                    // switch case combination to calculate the average score
+                    // of sub-scale SpQ, SpN, SpSp, SpStrm
                     switch(j){
+                        // For SpQ A2 A3
                         case 1: case 2:            
                             scoreSpQ += speechScenarios[j][z].value
                             spQCount += 1;
                             break;
+                        // For SpN A1 A4 A5 A6
                         case 0: case 3: case 4: case 5:
                             scoreSpN += speechScenarios[j][z].value
                             spNCount += 1;
                             break;
+                        // For SpSp A7 A8
                         case 6: case 7:
                             scoreSpSp += speechScenarios[j][z].value
                             spSpCount += 1;
                             break;
+                        // For SpStrm A9
                         case 8:
                             scoreSpStrm += speechScenarios[j][z].value
                             spStrmCount += 1;
@@ -289,28 +301,41 @@ const speechSection = function (speechScenarios, subScaleScore) {
         }
     }
 
-    subScaleScore.Speech.SpQ = scoreSpQ / spQCount
-    subScaleScore.Speech.SpN = scoreSpN / spNCount
-    subScaleScore.Speech.SpSp = scoreSpSp / spSpCount
-    subScaleScore.Speech.SpStrm = scoreSpStrm / spSpCount
+    // Averaging the score for each subscale
+    subScaleScore.Speech.SpQ = (!isNaN(scoreSpQ / spQCount)) ? (scoreSpQ / spQCount) : "N/A"
+    subScaleScore.Speech.SpN = (!isNaN(scoreSpN / spNCount)) ? (scoreSpN / spNCount) : "N/A"
+    subScaleScore.Speech.SpSp = (!isNaN(scoreSpSp / spSpCount)) ? (scoreSpSp / spSpCount) : "N/A"
+    subScaleScore.Speech.SpStrm = (!isNaN(scoreSpStrm / spStrmCount)) ? (scoreSpStrm / spStrmCount) : "N/A"
 
     return subScaleScore;
 }
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// Helper function to obtain scores for spatial sub-scales
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const spatialSection = function (spatialScenarios, subScaleScore) {
+    // counter and score variables to
+    // store the total score and total count
     let scoreLocaliz = 0;
     let localizCount = 0;
     let scoreDist = 0;
     let distCount = 0;
+
+    // The counting starts from zero
     for (let j = 0; j < spatialScenarios.length; j++) {
         for (let z = 0; z < spatialScenarios[j].length; z++) {       
             if (!isNaN(spatialScenarios[j][z].value)) {
                 if (spatialScenarios[j][z].value !== '') {
+
+                    // switch case combination to calculate the average score
+                    // of sub-scale Localiz, Dist/Move
                     switch(j){
+                        // For Localiz B1 B2 B3 B4 B5
                         case 0: case 1: case 2: case 3: case 4:
                             scoreLocaliz += spatialScenarios[j][z].value
                             localizCount += 1;
                             break;
+                        // For Dist/Move B6 B7 B8 B9 B10 B11 B12
                         case 5: case 6: case 7: case 8: case 9: case 10: case 11:
                             scoreDist += spatialScenarios[j][z].value
                             distCount += 1;
@@ -323,32 +348,46 @@ const spatialSection = function (spatialScenarios, subScaleScore) {
         }
     }
 
-    subScaleScore.Spatial.Localiz = scoreLocaliz / localizCount
-    subScaleScore.Spatial.Dist = scoreDist / distCount
+    // Averaging the score for each subscale
+    subScaleScore.Spatial.Localiz = (!isNaN(scoreLocaliz / localizCount)) ? (scoreLocaliz / localizCount) : "N/A"
+    subScaleScore.Spatial.Dist = (!isNaN(scoreDist / distCount)) ? (scoreDist / distCount) : "N/A"
 
     return subScaleScore;   
 }
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// Helper function to obtain scores for qualities sub-scales
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const qualitiesSection = function (qualitiesScenarios, subScaleScore) {
+    // counter and score variables to
+    // store the total score and total count
     let scoreSegreg = 0;
     let segregCount = 0;
     let scoreIDSound = 0;
     let idSoundCount = 0;
     let scoreListEff = 0;
     let listEffCount = 0;
+
+    // The counting starts from zero
     for (let j = 0; j < qualitiesScenarios.length; j++) { 
         for (let z = 0; z < qualitiesScenarios[j].length; z++) { 
             if (!isNaN(qualitiesScenarios[j][z].value)) {
                 if (qualitiesScenarios[j][z].value !== '') {
+                    
+                    // switch case combination to calculate the average score
+                    // of sub-scale Segreg, ID Sound, ListEff
                     switch(j){
+                        // Segreg C1 C2
                         case 0: case 1:
                             scoreSegreg += qualitiesScenarios[j][z].value
                             segregCount += 1;
-                            break; 
+                            break;
+                        // ID Sound C3 C4 C5 C6
                         case 2: case 3: case 4: case 5:
                             scoreIDSound += qualitiesScenarios[j][z].value
                             idSoundCount += 1;
                             break;
+                        // ListEff C7 C9 C10
                         case 6: case 8: case 9:
                             scoreListEff += qualitiesScenarios[j][z].value
                             listEffCount += 1;
@@ -361,9 +400,10 @@ const qualitiesSection = function (qualitiesScenarios, subScaleScore) {
         }    
     }
 
-    subScaleScore.Qualities.Segreg = scoreSegreg / segregCount
-    subScaleScore.Qualities.IDSound = scoreIDSound / idSoundCount
-    subScaleScore.Qualities.ListEff = scoreListEff / listEffCount
+    // Averaging the score for each subscale
+    subScaleScore.Qualities.Segreg = (!isNaN(scoreSegreg / segregCount)) ? (scoreSegreg / segregCount) : "N/A"
+    subScaleScore.Qualities.IDSound = (!isNaN(scoreIDSound / idSoundCount)) ? (scoreIDSound / idSoundCount) : "N/A"
+    subScaleScore.Qualities.ListEff = (!isNaN(scoreListEff / listEffCount)) ? (scoreListEff / listEffCount) : "N/A"
 
     return subScaleScore; 
 }
@@ -385,14 +425,6 @@ const calculateSubScaleScore = function (questionnaireData, subScaleScore) {
                 break;
             default:
                 console.log(`Section does not exist`)
-        }
-    }
-
-    for (let i = 0; i < subScaleScore.length; i++) {
-        for (let j = 0; j < subScaleScore[i].length; j++) {
-            if (isNaN(subScaleScore[i][j])) {
-                subScaleScore[i][j] = "N/A";
-            }
         }
     }
 
