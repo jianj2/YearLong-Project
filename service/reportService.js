@@ -248,26 +248,71 @@ const sortByImportance = function (response) {
     return sortedResult;
 }
 
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-// JSON structure to store sub-scale values
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-let subScaleScore = {
-    Speech:{
-        SpQ: 0.0,
-        SpN: 0.0,
-        SpSp: 0.0,
-        SpStrm: 0.0
-    },
-    Spatial:{
-        Localiz: 0.0,
-        Dist: 0.0
-    },
-    Qualities:{
-        Segreg: 0.0,
-        IDSound: 0.0,
-        ListEff: 0.0
-        // ,SoundQual: 0.0
+// Helper Functions
+
+const speechSection = function (speechScenarios, subScaleScore) {
+    for (let j = 0; j < speechScenarios.length; j++) {     
+        if (!isNaN(speechScenarios[j][0].value)) {
+            if (speechScenarios[j][0].value !== '') {
+                switch(j){
+                    case 2:
+                    case 3:            
+                        subScaleScore.Speech.SpQ += speechScenarios[j][0].value
+                        break;
+                    case 1:
+                    case 4:
+                    case 5:
+                    case 6:
+                        subScaleScore.Speech.SpN += speechScenarios[j][0].value
+                        break;
+                    case 7:
+                    case 8:
+                        subScaleScore.Speech.SpSp += speechScenarios[j][0].value
+                        break;
+                    case 9:
+                        subScaleScore.Speech.SpStrm += speechScenarios[j][0].value
+                    default:
+                        console.log(`speechScenarios: ${j} is not included in any subscale`)
+                }
+            }
+        }
     }
+    console.log(subScaleScore)
+    return subScaleScore;   
+}
+
+const spatialSection = function (spatialScenarios) {
+    for (let j = 0; j < spatialScenarios.length; j++) {     
+        if (!isNaN(speechScenarios[j][0].value)) {
+            if (speechScenarios[j][0].value !== '') {
+                switch(j){
+                    case 2:
+                    case 3:            
+                        subScaleScore.Speech.SpQ += speechScenarios[j][0].value
+                        break;
+                    case 1:
+                    case 4:
+                    case 5:
+                    case 6:
+                        subScaleScore.Speech.SpN += speechScenarios[j][0].value
+                        break;
+                    case 7:
+                    case 8:
+                        subScaleScore.Speech.SpSp += speechScenarios[j][0].value
+                        break;
+                    case 9:
+                        subScaleScore.Speech.SpStrm += speechScenarios[j][0].value
+                    default:
+                        console.log(`speechScenarios: ${j} is not included in any subscale`)
+                }
+            }
+        }
+    }
+    console.log(`Section: 1`)
+}
+
+const qualitiesSection = function () {
+    console.log(`Section: 2`)
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -275,6 +320,23 @@ let subScaleScore = {
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const calculateSubScaleScore = function (questionnaireData, subScaleScore) {
 
+    for (let i = 0; i < questionnaireData.length; i++) {     
+        switch(i) {
+            case 0:
+                subScaleScore = speechSection(questionnaireData[i], subScaleScore)
+                break;
+            case 1:
+                subScaleScore = spatialSection(questionnaireData[i], subScaleScore)
+                break;
+            case 2:
+                subScaleScore = qualitiesSection(questionnaireData[i], subScaleScore)
+                break;
+            default:
+                console.log(`Section does not exist`)
+        }
+    }
+
+    return subScaleScore
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -354,7 +416,27 @@ const generateAttachments = function (questionnaireId, personalDetails, question
             if (!err) {
                 let section_score = [];
 
+                let subScaleScore = {
+                    Speech:{
+                        SpQ: 0.0,
+                        SpN: 0.0,
+                        SpSp: 0.0,
+                        SpStrm: 0.0
+                    },
+                    Spatial:{
+                        Localiz: 0.0,
+                        Dist: 0.0
+                    },
+                    Qualities:{
+                        Segreg: 0.0,
+                        IDSound: 0.0,
+                        ListEff: 0.0
+                        // ,SoundQual: 0.0
+                    }
+                }
 
+                let newSubScaleScore = calculateSubScaleScore(questionnaireData,subScaleScore);
+                console.log(newSubScaleScore)
                 section_score = calculateScore(questionnaire, false, section_score)
                 let average_score = calculateScore(questionnaireData, true, section_score);
 
