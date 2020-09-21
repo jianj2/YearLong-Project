@@ -64,6 +64,7 @@ const printRQAnswer = function (doc, questionAnswer, startMargin, midMargin, spa
     doc.font('Helvetica-Bold').fontSize(12).text("Answer: ", startMargin, spacing)
     if ((questionAnswer === "" || questionAnswer === undefined)) {
         questionAnswer = "Unanswered"
+        //change colour
         doc.font('Helvetica')
             .text(questionAnswer.value, midMargin, spacing)
     } else {
@@ -142,6 +143,11 @@ const printQuestionnaireResults = function (doc, resultToPrint, sharedSection, s
                     spacing = spacing + 35;
 
                 }
+                spacing = addPage(doc, spacing, docHeight)
+                doc.font('Helvetica-Bold')
+                    .text('Comments: ', rightMargin, spacing);
+                spacing = spacing + 35;
+
             });
 
         });
