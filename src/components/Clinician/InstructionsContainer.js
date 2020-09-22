@@ -12,7 +12,6 @@
  *
  */
 
-
 import React, { useState, useEffect } from "react";
 import * as API from "../../utils/api";
 
@@ -20,50 +19,50 @@ import * as API from "../../utils/api";
 const InstructionsContainer = () => {
     const [instructionCC, setInstructionCC] = useState({
         title: "",
-        content: ""
+        content: "",
     });
     const [instructionCP, setInstructionCP] = useState({
         title: "",
-        content: ""
+        content: "",
     });
 
     const getInstructions = () => {
-        API.getSpecificInstruction("CC").then((res) =>{
+        API.getSpecificInstruction("CC").then((res) => {
             setInstructionCC({
                 title: res["title"],
-                content: res["content"]
-            })   
-        })
-        API.getSpecificInstruction("CP").then((res) =>{
+                content: res["content"],
+            });
+        });
+        API.getSpecificInstruction("CP").then((res) => {
             setInstructionCP({
                 title: res["title"],
-                content: res["content"]
-            })   
-        })
+                content: res["content"],
+            });
+        });
     };
-    useEffect(() => {  getInstructions();},[]);
-  
+    useEffect(() => {
+        getInstructions();
+    }, []);
 
     return (
         <div className="instructions-container">
-        <h1>I N S T R U C T I O N S</h1>
- 
-                        <div>
-                            <h2>{instructionCC.title}</h2>
-                            <p>{instructionCC.content}</p>
-                        </div>
-                    
-                    <div><hr></hr></div>
+            <h1>I N S T R U C T I O N S</h1>
 
-                    
-                    <div>
-                            <h2>{instructionCP.title}</h2>
-                            <p>{instructionCP.content}</p>
-                    </div>
-                
+            <div>
+                <h2>{instructionCC.title}</h2>
+                <p>{instructionCC.content}</p>
+            </div>
+
+            <div>
+                <hr></hr>
+            </div>
+
+            <div>
+                <h2>{instructionCP.title}</h2>
+                <p>{instructionCP.content}</p>
+            </div>
         </div>
     );
 };
-
 
 export default InstructionsContainer;
