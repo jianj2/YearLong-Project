@@ -40,9 +40,10 @@ const HomeAdmin = (props) => {
     console.log("It exists",process.env.SERVER_DOMAIN);
     const { isAdminAuthenticated, adminLogin, loading } = useAdminAuth();
     if (loading == true) {
-        return <Loading />;
+        return <Loading />
     }
-    if (isAdminAuthenticated) {
+    // console.log(loading,isAdminAuthenticated);
+    if (isAdminAuthenticated === true) {
         return (
             <div className="HomeAdmin">
                 <AdminSideBar />
@@ -51,6 +52,7 @@ const HomeAdmin = (props) => {
                     active={props.active}
                     questionnaireID={props.questionnaireID}
                     instructionType = {props.instructionType}
+                    organName = {props.organName}
                 />
             </div>
         );

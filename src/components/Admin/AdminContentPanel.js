@@ -16,7 +16,7 @@ import React from "react";
 // Import components.
 import AdminManageQuestionnaires from "./AdminManageQuestionnaires";
 import SSQInstructionsList from "./SSQInstructionsList";
-import SSQIntroductionContainer from "./SSQIntroductionContainer";
+import OrganisationList from "./OrganisationList";
 
 //import style
 import "../../styles/contentpanel.css";
@@ -25,6 +25,7 @@ import ViewQuestionnaireContainer from "../Clinician/ViewQuestionnaireContainer"
 import QuestionnaireContainer from "../Clinician/QuestionnaireContainer";
 import AdminViewStandardQuestionnaire from "./AdminViewStandardQuestionnaire";
 import InstructionContainer from "./SSQInstructionContainer";
+import OrganisationContainer from "./OrganisationContainer";
 
 const AdminContentPanel = (props) => {
     if (props.active === 2) {
@@ -36,7 +37,7 @@ const AdminContentPanel = (props) => {
     } else if (props.active === 3) {
         return (
             <div className="content-container">
-                <SSQIntroductionContainer />
+                <OrganisationList />
             </div>
         );
     } else if (props.active === 4) {
@@ -64,8 +65,13 @@ const AdminContentPanel = (props) => {
                 />
             </div>
         );
+    } else if (props.active === 7){
+        return (
+            <div className="content-container">
+                <OrganisationContainer organName={props.organName}/>
+            </div>
+        )
     }
-    
     else {
         return (
             <div className="content-container">

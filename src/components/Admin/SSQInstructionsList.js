@@ -61,7 +61,6 @@ return (
                 key={index}
                 title={instruction.title}
                 type = {instruction.type}
-
             />
         ))}
     </div>

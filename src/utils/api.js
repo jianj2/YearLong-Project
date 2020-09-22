@@ -286,8 +286,29 @@ export const sendInstructions = (data) =>
 
 // update instruction by type
 export const updateInstruction = (type, data) =>
-    fetch(`${api}/admin/instruction/${type}`, {
-        method: "POST",
+fetch(`${api}/admin/instruction/${type}`, {
+    method: "POST",
+    headers: header,
+    body: JSON.stringify(data),
+}).then((res) => res);
+
+// get organisations
+export const getOrganisations = async () => {
+    const url = `${api}/admin/organisation`;
+    let response = await fetch(url, {
         headers: header,
-        body: JSON.stringify(data),
-    }).then((res) => res);
+    });
+    let json = await response.json();
+
+    return json;
+};
+
+// get organisation's clinicians
+export const getOrganisationClinicians = async (organisationName) => {
+    const url = `${api}/admin/organisation/${organisationName}`;
+    let response = await fetch(url, {
+        headers: header
+    });
+    let json = await response.json();
+    return json;
+};
