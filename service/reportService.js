@@ -709,7 +709,7 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     resultToPrint.sections.forEach((section, sectionIndex) => {
                         doc.font('Helvetica-Bold').fontSize(12).text(section.title + " Average: ", 50, lineSpacing);
                         margin = Math.ceil(doc.widthOfString(section.title + " Average: ") / 10) * 10 + 60;
-                        doc.font('Helvetica').text(scores.sectionScores[sectionIndex].toFixed(2), margin, lineSpacing);
+                        doc.font('Helvetica').text(scores.sectionScores[sectionIndex] == "N/A" ? "N/A": scores.sectionScores[sectionIndex].toFixed(2), margin, lineSpacing);
                         lineSpacing += 30;
                         lineSpacing = addPage(doc, lineSpacing, doc.page.height);
                     })
