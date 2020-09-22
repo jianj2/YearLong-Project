@@ -17,19 +17,17 @@ on:
   push:
     branches: 
     - deployment-server 
-    - development-server 
-    tags:
-      - v*
+    - development-server
+    - master-server 
   # Pipeline trigger on pull request
   pull_request:
     branches:
     - development-server
-    tags:
-      - v*
+    - master-server
 
 jobs:
   # Test server code with mocha
-  npm_test:
+  test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -37,19 +35,19 @@ jobs:
     name: npm test
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
-    
+      uses: actions/checkout@v2    
     - name: Set up Node.js 14.x for testing
       uses: actions/setup-node@v1
       with:
         node-version: 14.8
-
     - name: Install dependencies    
-      run: npm ci
+      run: npm install
+    #- name: Run mocha tests
+    #  run: npm test
 
   # Build nodejs and deploy to heroku
-  Npm_build_deploy:
-    needs: npm_test
+  deploy:
+    needs: test
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -63,7 +61,7 @@ jobs:
       uses: akhileshns/heroku-deploy@v3.5.6
       with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: "dev-server" #Must be unique in Heroku
+        heroku_app_name: "dev-server"
         heroku_email: ${{secrets.HEROKU_EMAIL}}
       env:
         HD_SERVER: ${{secrets.HEROKU_SERVER}}
