@@ -75,7 +75,7 @@ const generateNewCustomisedQuestionnaire = (uuid) => {
         updateDate: (new Date()).toLocaleString(),
         sections: [
             {
-                title: "Section 1 - Speech",
+                title: "Section A - Speech",
                 scenarios: [
                     {
                         description: "You are at Melbourne Uni...",
@@ -99,8 +99,8 @@ const generateNewCustomisedQuestionnaire = (uuid) => {
                     },
                 ],
             },
-            { title: "Section 2 - Spatial", scenarios: [] },
-            { title: "Section 3 - Quality", scenarios: [] },
+            { title: "Section B - Spatial", scenarios: [] },
+            { title: "Section C - Quality", scenarios: [] },
         ],
         isStandard: false,
     });
