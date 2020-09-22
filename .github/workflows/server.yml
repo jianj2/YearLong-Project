@@ -49,6 +49,7 @@ jobs:
 
   # Build nodejs and deploy to heroku
   Npm_build_deploy:
+    needs: npm_test
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
