@@ -104,7 +104,6 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
         }
 
 
-
         getPersonalDetails(personalData);
     }, [name,date,rightDeviceType,leftDeviceType, rightDeviceTypeOther, leftDeviceTypeOther])
 
@@ -142,30 +141,7 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                         <FormHelperText>{errors.name ? errors.name.message : "Please enter the child's name."}</FormHelperText>
                     </FormControl>
 
-                    <FormControl margin="dense">
-                        <InputLabel>Child's Date of Birth</InputLabel>
-                        <Input
-                            // defaultValue={defaultValue.date}
-                            value={date}
-                            onChange={(event) => setDate(event.target.value)}
-                            name="date"
-                            type="date"
-                            required
-                            onBlur={handleDateChange}
-                            inputProps={{ min: "1900-01-01", max: moment().format("YYYY-MM-DD")  }}
-                            error={errors.date !== undefined}
-                            inputRef={register({
-                                required: "You have not entered the date of birth.",
-                            })}
-                        />
-                        <FormHelperText>{errors.date ? errors.date.message : "Please enter the child's name."}</FormHelperText>
-                    </FormControl>
 
-                </div>
-
-
-
-                <div className="parents-detail-form-column">
                     <FormControl margin="dense">
                         <InputLabel>Right Device Type</InputLabel>
                         <Select id="DeviceOne"
@@ -191,22 +167,48 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
 
                     {rightDeviceTypeOtherVisible ? (
                         <FormControl margin="dense">
-                        <InputLabel>What sort of device (right)?</InputLabel>
+                            <InputLabel>What sort of device (right)?</InputLabel>
+                            <Input
+                                // defaultValue={defaultValue.date}
+                                value={rightDeviceTypeOther}
+                                onChange={(event) => setRightDeviceTypeOther(event.target.value)}
+                                name="rightDeviceTypeOther"
+                                placeholder="Other device type"
+                                required
+                                error={errors.name !== undefined}
+                                inputRef={register({
+                                    required: "You have not entered another device type.",
+                                })}
+                            />
+                            <FormHelperText>{errors.rightDeviceTypeOther ? errors.rightDeviceTypeOther.message : "Please enter the device type."}</FormHelperText>
+                        </FormControl>
+                    ): (<div></div>)}
+
+                </div>
+
+
+                <div className="parents-detail-form-column">
+
+
+                    <FormControl margin="dense">
+                        <InputLabel>Child's Date of Birth</InputLabel>
                         <Input
                             // defaultValue={defaultValue.date}
-                            value={rightDeviceTypeOther}
-                            onChange={(event) => setRightDeviceTypeOther(event.target.value)}
-                            name="rightDeviceTypeOther"
-                            placeholder="Other device type"
+                            value={date}
+                            onChange={(event) => setDate(event.target.value)}
+                            name="date"
+                            type="date"
                             required
-                            error={errors.name !== undefined}
+                            onBlur={handleDateChange}
+                            inputProps={{ min: "1900-01-01", max: moment().format("YYYY-MM-DD")  }}
+                            error={errors.date !== undefined}
                             inputRef={register({
-                                required: "You have not entered another device type.",
+                                required: "You have not entered the date of birth.",
                             })}
                         />
-                        <FormHelperText>{errors.rightDeviceTypeOther ? errors.rightDeviceTypeOther.message : "Please enter the device type."}</FormHelperText>
+                        <FormHelperText>{errors.date ? errors.date.message : "Please enter the child's name."}</FormHelperText>
                     </FormControl>
-                    ): (null)}
+
 
 
                     <FormControl margin="dense">
@@ -250,7 +252,7 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                         />
                         <FormHelperText>{errors.leftDeviceTypeOther ? errors.leftDeviceTypeOther.message : "Please enter the device type."}</FormHelperText>
                     </FormControl>
-                    ): (null)}
+                    ): (<div></div>)}
 
                 </div>
             </div>
