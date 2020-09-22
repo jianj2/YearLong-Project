@@ -63,6 +63,8 @@ jobs:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_app_name: "dev-server"
         heroku_email: ${{secrets.HEROKU_EMAIL}}
+        healthcheck: "https://dev-server.herokuapp.com/health"
+        checkstring: "ok"
       env:
         HD_SERVER: ${{secrets.HEROKU_SERVER}}
         HD_CLIENT: ${{secrets.HEROKU_CLIENT}}
