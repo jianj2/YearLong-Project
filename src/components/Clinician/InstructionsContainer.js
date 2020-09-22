@@ -18,20 +18,30 @@ import * as API from "../../utils/api";
 
 // handles rendering of QuestionnaireContainer in the Clinician Page
 const InstructionsContainer = () => {
-    const [instruction, setInstruction] = useState({
+    const [instructionCC, setInstructionCC] = useState({
+        title: "",
+        content: ""
+    });
+    const [instructionCP, setInstructionCP] = useState({
         title: "",
         content: ""
     });
 
-    const getInstruction = () => {
-        API.getInstruction().then((res) =>{
-            setInstruction({
+    const getInstructions = () => {
+        API.getSpecificInstruction("CC").then((res) =>{
+            setInstructionCC({
+                title: res["title"],
+                content: res["content"]
+            })   
+        })
+        API.getSpecificInstruction("CP").then((res) =>{
+            setInstructionCP({
                 title: res["title"],
                 content: res["content"]
             })   
         })
     };
-    useEffect(() => {  getInstruction();},[]);
+    useEffect(() => {  getInstructions();},[]);
   
 
     return (
@@ -39,9 +49,17 @@ const InstructionsContainer = () => {
         <h1>I N S T R U C T I O N S</h1>
  
                         <div>
-                            <h2>{instruction.title}</h2>
-                            <p>{instruction.content}</p>
+                            <h2>{instructionCC.title}</h2>
+                            <p>{instructionCC.content}</p>
                         </div>
+                    
+                    <div><hr></hr></div>
+
+                    
+                    <div>
+                            <h2>{instructionCP.title}</h2>
+                            <p>{instructionCP.content}</p>
+                    </div>
                 
         </div>
     );

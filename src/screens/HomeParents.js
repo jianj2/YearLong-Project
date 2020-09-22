@@ -67,20 +67,6 @@ const HomeParents = ({ match }) => {
         title: "",
         content: ""
     });
-    const [isInit, setIsInit] = useState(true);
-    const getInstruction = () => {
-        API.getInstruction().then((res) =>{
-            setInstruction({
-                title: res["title"],
-                content: res["content"]
-            })   
-        })
-    };
-
-    if(isInit){
-        getInstruction();
-        setIsInit(false);
-    }
 
 
     const getPersonalDetails = (data) => {
@@ -152,6 +138,19 @@ const HomeParents = ({ match }) => {
                     // retrieved from the server.
                     setQuestionnaireData(tempResponse);
                     setQuestionnaire(data);
+
+                    let instructionType;
+                    if (data.isSSQ_Ch){
+                        instructionType = "RC"
+                    }else{
+                        instructionType = "RP"
+                    }
+                    API.getSpecificInstruction(instructionType).then((res) =>{
+                        setInstruction({
+                            title: res["title"],
+                            content: res["content"]
+                        })   
+                    })
                     setWizardStep(0);
 
                 }else{
