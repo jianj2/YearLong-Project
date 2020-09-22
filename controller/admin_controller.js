@@ -228,6 +228,45 @@ const updateInstructionByType = function (req, res) {
         }
     );
 };
+const getOrganisations = function (req, res) {
+    Clinician.find({}, function (err, clinicians) {
+        if (!err && clinicians != null) {
+            const filteredClinicians = clinicians.filter(
+                (clinician) => clinician.organisation != null && clinician.organisation.trim() != ""
+            );
+            const summary = filteredClinicians.map((clinician) => {
+                return {
+                    organisation: clinician.organisation.toLowerCase(),
+                    clinicianId: clinician.clinicianId,
+                };
+            });
+            res.send(JSON.stringify(summary));
+        } else {
+            res.send(JSON.stringify(err));
+        }
+    });
+};
+const getOrganisationClinicians = function (req, res) {
+    console.log("test for getOrganisationClinicians");
+    Clinician.find({}, function (err, clinicians) {
+        if (!err && clinicians != null) {
+            const filteredClinicians = clinicians.filter(
+                (clinician) => clinician.organisation != null && clinician.organisation.toLowerCase() == req.params.organisationName
+            );
+            const summary = filteredClinicians.map((clinician) => {
+                return {
+                    organisation: clinician.organisation,
+                    clinicianId: clinician.clinicianId,
+                };
+            });
+            res.send(JSON.stringify(summary));
+        } else {
+            res.send(JSON.stringify(err));
+        }
+    });
+};
+
+
 
 module.exports.loginAdmin = loginAdmin;
 module.exports.verifyLogin = verifyLogin;
@@ -238,3 +277,5 @@ module.exports.getSpecificInstruction = getSpecificInstruction;
 module.exports.getInstructionsSummary = getInstructionsSummary;
 module.exports.updateInstructionByType = updateInstructionByType;
 module.exports.addInstruction = addInstruction;
+module.exports.getOrganisations = getOrganisations;
+module.exports.getOrganisationClinicians = getOrganisationClinicians;
