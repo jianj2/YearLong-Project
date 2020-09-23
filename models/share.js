@@ -22,7 +22,8 @@ const shareSchema = mongoose.Schema({
     questionnaireId: {type: String, required:true },
     readOnly:{type:Boolean, required:true},
     message:{type:String},
-    shareSection:[visibleSections]
+    shareSection:[visibleSections],
+    sortBy: {type:Boolean, required:true},
 });
 
 

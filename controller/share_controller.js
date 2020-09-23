@@ -40,6 +40,7 @@ const shareQuestionnaire = function (req, res) {
             readOnly: req.body.readOnly,
             message: req.body.message,
             shareSection: visibleSection,
+            sortBy: req.body.sortBy,
         });
 
         newShare.save(function (err, createdShare) {
