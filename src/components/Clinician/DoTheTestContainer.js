@@ -37,7 +37,7 @@ import Loading from "../Loading";
 // handles rendering of QuestionnaireContainer in the Clinician Page
 const DoTheTestContainer = () => {
     const { user, token } = useAuth0();
-    const [wizardStep, setWizardStep] = useState(2);
+    const [wizardStep, setWizardStep] = useState(-1);
     const [loading, setLoading] = useState(false);
     const [personalDetails, setPersonalDetails] = useState({
         name: "",
@@ -191,7 +191,7 @@ const DoTheTestContainer = () => {
         completeQuestionnaire(token, data)
             .then((res) => {
                 console.log("complete question", res);
-                setWizardStep(3);
+                // setWizardStep(3);
                 setLoading(false);
             });
     };
