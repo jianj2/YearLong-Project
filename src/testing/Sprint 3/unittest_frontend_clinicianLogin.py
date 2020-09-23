@@ -13,7 +13,7 @@ class unittest_frontend_clinicianLogin(unittest.TestCase):
         self.driver = webdriver.Chrome("chromedriver.exe")
         self.driver.get("http://localhost:3000/clinician")
 
-        def test_landingLogo_left(self):
+    def test_landingLogo_left(self):
         landingLogo = self.driver.find_element_by_class_name("landing-logo")
         landingLogo.click()
         time.sleep(2)
@@ -127,6 +127,65 @@ class unittest_frontend_clinicianLogin(unittest.TestCase):
         logout.click()
         time.sleep(2)
         assert "http://localhost:3000" in self.driver.current_url
+
+        def test_forgetPassword(self):
+        forget = self.driver.find_element_by_id("btn-password-find")
+        forget.click()
+        time.sleep(2)
+        assert ("http://localhost:3000/findPassword" in self.driver.current_url)
+
+    def test_forgetPassword_navbar(self):
+        self.driver.get("http://localhost:3000/findPassword")
+        navbar_left = self.driver.find_element_by_class_name("navbar-left")
+        navbar_left.click()
+        time.sleep(2)
+        assert ("http://localhost:3000" in self.driver.current_url)
+
+    def test_forgetPassword_selectEmail(self):
+        self.driver.get("http://localhost:3000/findPassword")
+        email = self.driver.find_element_by_class_name("MuiInputBase-root")
+        email.click()
+        time.sleep(2)
+
+    def test_forgetPassword_enterEmail(self):
+        self.driver.get("http://localhost:3000/findPassword")
+        time.sleep(2)
+        email = self.driver.find_element_by_class_name("MuiInputBase-input")
+        email.send_keys("test_email")
+        time.sleep(2)
+
+    def test_forgetPassword_submitWithoutInput(self):
+        self.driver.get("http://localhost:3000/findPassword")
+        time.sleep(2)
+        submit = self.driver.find_element_by_class_name("button")
+        submit.click()
+        time.sleep(2)
+        assert "error" in self.driver.find_elements_by_class_name("MuiTypography-root")[1].text
+
+    def test_forgetPassword_submitWithInput(self):
+        self.driver.get("http://localhost:3000/findPassword")
+        time.sleep(2)
+        submit = self.driver.find_element_by_class_name("button")
+        submit.click()
+        time.sleep(2)
+        email = self.driver.find_element_by_class_name("MuiInputBase-input")
+        email.send_keys("test_email")
+        time.sleep(2)
+        assert "Request sent successfully!" in self.driver.find_elements_by_class_name("MuiTypography-root")[1].text
+
+    def test_forgetPassword_submitOk(self):
+        self.driver.get("http://localhost:3000/findPassword")
+        time.sleep(2)
+        submit = self.driver.find_element_by_class_name("button")
+        submit.click()
+        time.sleep(2)
+        email = self.driver.find_element_by_class_name("MuiInputBase-input")
+        email.send_keys("test_email")
+        time.sleep(2)
+        ok = self.driver.find_element_by_class_name("MuiButtonBase-root")
+        ok.click()
+        time.sleep(2)
+        assert self.driver.find_element_by_class_name(" login-box ")
 
     def tearDown(self):
         self.driver.close()
