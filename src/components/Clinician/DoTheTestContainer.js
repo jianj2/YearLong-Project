@@ -197,7 +197,7 @@ const DoTheTestContainer = () => {
         });
     };
 
-    console.log("wizardStep", wizardStep);
+    console.log("commentDat in Do The Test Container", commentData);
     if (wizardStep === 0) {
         return (
             <div className="dothetest-container">
