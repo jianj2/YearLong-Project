@@ -60,8 +60,8 @@ const completeQuestionnaire = function (req, res) {
     const userEmail = extractUserEmail(req);
     if(userEmail === clinicianEmail){
         sendResultsEmail(questionnaireId, questionnaireData, clinicianEmail, personalDetails, sortBy)
-        // .then(emailRes => res.send(emailRes))
-        // .catch(emailRej => res.send(emailRej));
+        .then(emailRes => res.send(emailRes))
+        .catch(emailRej => res.send(emailRej));
     }else{
         res.send(JSON.stringify("Authorisation failed."));
     }
