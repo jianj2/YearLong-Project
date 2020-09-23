@@ -47,7 +47,7 @@ const HomeParents = ({ match }) => {
         title: "",
         description: "",
         sections: [],
-        isStandard: true,
+        isStandard: true
     });
     const [clinicianEmail, setClinicianEmail] = useState("");
     const [sortBy, setSortBy] = useState("PERFORMANCE");
@@ -57,16 +57,17 @@ const HomeParents = ({ match }) => {
         date: "",
         completedBy: "parent",
         rightDeviceType: "",
-        leftDeviceType: "",
+        leftDeviceType: ""
     });
 
     const [questionnaireData, setQuestionnaireData] = useState([]);
+    const [commentData, setCommentData] = useState([]);
     const [readOnly, setReadOnly] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const [instruction, setInstruction] = useState({
         title: "",
-        content: "",
+        content: ""
     });
 
     const getPersonalDetails = (data) => {
@@ -83,7 +84,7 @@ const HomeParents = ({ match }) => {
         API.getSpecificInstruction(instructionType).then((res) => {
             setInstruction({
                 title: res["title"],
-                content: res["content"],
+                content: res["content"]
             });
         });
     };
@@ -123,7 +124,7 @@ const HomeParents = ({ match }) => {
         // Server call to get the questionnaireId
         API.getShareDetails(match.params.shareId).then((shareResponse) => {
             if (shareResponse.statusCode === 200) {
-                console.log('shareResponse', shareResponse)
+                console.log("shareResponse", shareResponse);
                 // Server call to get the questionnaire.
                 setSortBy(shareResponse.data.sortBy);
                 setClinicianEmail(shareResponse.data.clinicianEmail);
@@ -135,22 +136,20 @@ const HomeParents = ({ match }) => {
                     // Define initial values for the Questionnaire
                     if (statusCode === 200) {
                         updateSections(data, shareResponse.data.shareSection);
-
                         let tempResponse = [];
+                        let tempComments = [];
                         data.sections.forEach((section, sectionIndex) => {
                             tempResponse[sectionIndex] = [];
+                            tempComments[sectionIndex] = [];
                             section.scenarios.forEach(
                                 (scenario, scenarioIndex) => {
-                                    tempResponse[sectionIndex][
-                                        scenarioIndex
-                                    ] = [];
+                                    tempResponse[sectionIndex][scenarioIndex] = [];
+                                    tempComments[sectionIndex][scenarioIndex] = "";
                                     scenario.questions.forEach(
                                         (question, questionIndex) => {
-                                            tempResponse[sectionIndex][
-                                                scenarioIndex
-                                            ][questionIndex] = {
+                                            tempResponse[sectionIndex][scenarioIndex][questionIndex] = {
                                                 value: "",
-                                                supplementaryValue: "",
+                                                supplementaryValue: ""
                                             };
                                         }
                                     );
@@ -159,6 +158,7 @@ const HomeParents = ({ match }) => {
                         });
                         // Updating the state using the initial data and the questionnaire
                         // retrieved from the server.
+                        setCommentData(tempComments);
                         setQuestionnaireData(tempResponse);
                         setQuestionnaire(data);
 
@@ -186,6 +186,12 @@ const HomeParents = ({ match }) => {
         temp[sectionIndex][scenarioIndex][questionIndex] = data;
         setQuestionnaireData(temp);
     };
+    // Method called to update comment data when a scenario comment is updated.
+    const handleCommentChange = (sectionIndex, scenarioIndex, data) => {
+        let temp = [...commentData];
+        temp[sectionIndex][scenarioIndex] = data;
+        setCommentData(temp);
+    };
 
     // Method called to go to the next page in the wizard.
     const nextStep = () => {
@@ -210,27 +216,28 @@ const HomeParents = ({ match }) => {
     const submitResponse = () => {
         let data = {
             questionnaireData,
+            comments: commentData,
             personalDetails,
             clinicianEmail: clinicianEmail,
             questionnaireId: questionnaire.questionnaireId,
-            sortBy,
+            sortBy
         };
 
-        console.log(data)
+        console.log(data);
         setLoading(true);
-        // API.sendQuestionnaireData(data, match.params.shareId).then((res) => {
-        //     if (res) {
-        //         setLoading(false);
-        //         nextStep();
-        //     }
-        //     console.log(res);
-        // });
+        API.sendQuestionnaireData(data, match.params.shareId).then((res) => {
+            if (res) {
+                setLoading(false);
+                nextStep();
+            }
+            console.log(res);
+        });
     };
 
     if (wizardStep === -2) {
         return (
             <div className="parents-home">
-                <Loading />
+                <Loading/>
             </div>
         );
     }
@@ -323,6 +330,8 @@ const HomeParents = ({ match }) => {
                         questionnaire={questionnaire}
                         submitQuestionnaire={submitQuestionnaire}
                         questionnaireData={questionnaireData}
+                        commentData={commentData}
+                        handleCommentChange={handleCommentChange}
                         handleQuestionnaireChange={handleQuestionnaireChange}
                     />
                 </div>
@@ -333,7 +342,7 @@ const HomeParents = ({ match }) => {
     if (wizardStep === 3) {
         return (
             <div className="parents-home">
-                {loading ? <Loading /> : null}
+                {loading ? <Loading/> : null}
                 <div className="subheader-container">
                     <button
                         id="instructions"
@@ -359,6 +368,7 @@ const HomeParents = ({ match }) => {
                         questionnaire={questionnaire}
                         personalDetails={personalDetails}
                         questionnaireData={questionnaireData}
+                        commentData={commentData}
                     />
                 </div>
             </div>
@@ -368,7 +378,7 @@ const HomeParents = ({ match }) => {
     return (
         <div className="landing">
             <div className="landing-logo">
-                <img src={logoComplete} />
+                <img src={logoComplete}/>
             </div>
 
             <div className="form-completed">

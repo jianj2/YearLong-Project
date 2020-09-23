@@ -154,9 +154,7 @@ const DoTheTestContainer = () => {
                     tempResponse[sectionIndex][scenarioIndex] = [];
                     tempComments[sectionIndex][scenarioIndex] = "";
                     scenario.questions.forEach((question, questionIndex) => {
-                        tempResponse[sectionIndex][scenarioIndex][
-                            questionIndex
-                        ] = {
+                        tempResponse[sectionIndex][scenarioIndex][questionIndex] = {
                             value: "",
                             supplementaryValue: "",
                         };
