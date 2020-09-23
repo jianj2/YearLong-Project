@@ -132,6 +132,7 @@ const DoTheTestContainer = () => {
         setQuestionnaireData(temp);
     };
 
+    // Method called to update comment data when a scenario comment is updated.
     const handleCommentChange = (sectionIndex, scenarioIndex, data) => {
         let temp = [...commentData];
         temp[sectionIndex][scenarioIndex] = data;
@@ -186,18 +187,17 @@ const DoTheTestContainer = () => {
             personalDetails,
             clinicianEmail: user.name,
             questionnaireId: selectedQuestionnaire.questionnaireId,
-           // TODO: ADD COMMENT DATA HERE
             comments:commentData
         };
 
-        completeQuestionnaire(token, data).then((res) => {
-            console.log("complete question", res);
-            setWizardStep(3);
-            setLoading(false);
-        });
+        completeQuestionnaire(token, data)
+            .then((res) => {
+                console.log("complete question", res);
+                setWizardStep(3);
+                setLoading(false);
+            });
     };
 
-    console.log("commentDat in Do The Test Container", commentData);
     if (wizardStep === 0) {
         return (
             <div className="dothetest-container">
@@ -290,7 +290,6 @@ const DoTheTestContainer = () => {
                     canDelete={false}
                     onClickDelete={() => {}}
                 />
-
                 <QuestionnaireList
                     questionnaires={questionnaires}
                     listTitle={"My Customised Questionnaires"}

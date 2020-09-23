@@ -88,8 +88,6 @@ export default function Questionnaire({
         );
     };
 
-    console.log("commentData ", commentData);
-
     return (
         <form onSubmit={onSubmit} className="questionaire-container">
             <h1>{questionnaire.title}</h1>
@@ -128,9 +126,6 @@ export default function Questionnaire({
                                     />
                                 )
                             )}
-
-                            {/* ====== ====== ====== ====== ====== */}
-                            {/* TODO: ADD INPUT FIELD HERE    */}
                             {
                                 readOnly
                                     ? null
@@ -148,9 +143,6 @@ export default function Questionnaire({
                                         />
                                     </div>
                             }
-
-
-                            {/* ====== ====== ====== ====== ====== */}
                         </div>
                     ))}
                 </div>
