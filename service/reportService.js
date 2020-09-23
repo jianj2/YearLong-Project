@@ -381,6 +381,22 @@ const sortByImportance = function (response) {
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to sort the questions by the importance
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+const sortByPerformance = function (response) {
+    let sortedResult = response;
+
+    sortedResult.sections.forEach(section => {
+        section.scenarios.sort((a, b) =>
+            b.questions[0].response - a.questions[0].response
+        )
+    })
+
+    return sortedResult;
+}
+
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // Helper function to obtain scores for speech sub-scales
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const speechSection = function (speechScenarios, subScaleScore) {
@@ -726,7 +742,8 @@ const generateAttachments = function (questionnaireId, personalDetails, question
 
                     // -------  TO DO  --------
                     // MAKE THIS BETTER
-                    const sortedResults = sortByImportance(resultToPrint)
+                    // const sortedResults = sortByImportance(resultToPrint)
+                    const sortedResults = sortByPerformance(resultToPrint)
 
 
                     if (sortedResults.isStandard) {
