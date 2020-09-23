@@ -16,7 +16,8 @@ import React from "react";
 export default function ParentReviewSubmission({ 
     questionnaire, 
     personalDetails, 
-    questionnaireData 
+    questionnaireData
+//    TODO: IMport commentData
 }) {
     console.log("questionnaire in review", questionnaire)
     return (
@@ -88,6 +89,8 @@ export default function ParentReviewSubmission({
                                         </div>
                                     </div>
                                 ))}
+                                {/* TODO: ADD THE SECTION's COMMENT */}
+
                             </div>
                         ))}
                     </div>
