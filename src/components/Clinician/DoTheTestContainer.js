@@ -37,7 +37,7 @@ import Loading from "../Loading";
 // handles rendering of QuestionnaireContainer in the Clinician Page
 const DoTheTestContainer = () => {
     const { user, token } = useAuth0();
-    const [wizardStep, setWizardStep] = useState(-1);
+    const [wizardStep, setWizardStep] = useState(2);
     const [loading, setLoading] = useState(false);
     const [personalDetails, setPersonalDetails] = useState({
         name: "",
@@ -54,13 +54,10 @@ const DoTheTestContainer = () => {
     ] = useState([]);
     const [questionnaireData, setQuestionnaireData] = useState([]);
 
-
     console.log("questionnaires", questionnaires)
     console.log("standardisedQuestionnaires", standardisedQuestionnaires)
-    // ==================================================================
-    // TODO: USE THIS VARIABLE TO STORE COMMENT DATA
+
     const [commentData, setCommentData] = useState([]);
-    // ==================================================================
 
     const [selectedQuestionnaire, setSelectedQuestionnaire] = useState({
         questionnaireId: "",
@@ -180,14 +177,15 @@ const DoTheTestContainer = () => {
         setPersonalDetails(data);
     };
 
-    const submitResponse = () => {
+    const emailResponse = (sortType) => {
         setLoading(true);
         let data = {
             questionnaireData,
             personalDetails,
             clinicianEmail: user.name,
             questionnaireId: selectedQuestionnaire.questionnaireId,
-            comments:commentData
+            comments:commentData,
+            sortBy: sortType
         };
 
         completeQuestionnaire(token, data)
@@ -197,6 +195,7 @@ const DoTheTestContainer = () => {
                 setLoading(false);
             });
     };
+
 
     if (wizardStep === 0) {
         return (
@@ -248,8 +247,14 @@ const DoTheTestContainer = () => {
                     <button className="button" onClick={prevStep}>
                         B A C K
                     </button>
-                    <button className="button" onClick={submitResponse}>
-                        S U B M I T
+                </div>
+                <div className="dothetest-subheader-container">
+                    <label>Email Report</label>
+                    <button className="button" onClick={() => emailResponse("PERFORMANCE")}>
+                        Sorted by Performance
+                    </button>
+                    <button className="button" onClick={() => emailResponse("IMPORTANCE")}>
+                        Sorted by Importance
                     </button>
                 </div>
 
