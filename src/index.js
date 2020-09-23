@@ -40,6 +40,8 @@ const onRedirectCallback = (appState) => {
     );
 };
 
+const link = `${process.env.REACT_APP_SERVER}/clinician` || "http://localhost:3001/clinician"
+
 ReactDOM.render(
     <React.StrictMode>
         <MuiThemeProvider theme={theme}>
@@ -49,7 +51,7 @@ ReactDOM.render(
                     client_id={config.clientId}
                     redirect_uri={window.location.origin}
                     onRedirectCallback={onRedirectCallback}
-                    audience={"http://localhost:3001/clinician"}
+                    audience={link}
                     scope={"read:current_user"}
                 >
                     <App />

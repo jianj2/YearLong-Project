@@ -37,7 +37,7 @@ import Loading from "../components/Loading";
 // This function defines the Admin's Home screen.
 // ---------------------------------------------------------------
 const HomeAdmin = (props) => {
-    console.log("It exists",process.env.SERVER_DOMAIN);
+    console.log("It exists",process.env.REACT_APP_SERVER);
     const { isAdminAuthenticated, adminLogin, loading } = useAdminAuth();
     if (loading == true) {
         return <Loading />

@@ -17,40 +17,35 @@ on:
   push:
     branches: 
     - deployment-client 
-    - development-client 
-    tags:
-      - v*
+    - development-client
+    - master-client 
   # Pipeline trigger on pull request    
   pull_request:
     branches:
-    - development-client 
-    tags:
-      - v*
+    - development-client
+    - master-client
 
 jobs:
   # Linting client code with flake8
-  Python_test:
+  test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest]
-    name: Python test
+    name: test
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
-    
+      uses: actions/checkout@v2  
     - name: Set up Python 3.8 for Linting
       uses: actions/setup-python@v2
       with:
         python-version: 3.8
-    
     - name: Install dependencies
       run: |
         cd src/testing/Sprint1
         python -m pip install --upgrade pip
         pip install flake8
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -59,37 +54,28 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
         cd ../../
 
-  # Build react and deploy to s3    
-  Npm_build_deploy:
+  # Deploy reactjs to heroku
+  deploy:
+    needs: test
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest]
         node-version: [14.x]
-    name: Npm_build_deploy
+    name: deploy
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Set up Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+    - name: Set up Heroku
+      uses: akhileshns/heroku-deploy@v3.5.6
       with:
-        node-version: ${{ matrix.node-version }} 
-    - name: Npm install
-      run: npm ci
-    - name: Npm build
-      run: npm run build
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_app_name: "dev-client"
+        heroku_email: ${{secrets.HEROKU_EMAIL}}
+        buildpack: "https://github.com/mars/create-react-app-buildpack.git"
       env:
-        CI: ""
-    - name: Deploy to S3
-      uses: jakejarvis/s3-sync-action@master
-      with:
-        args: --acl public-read --delete
-      env:
-        AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-        SOURCE_DIR: "build"
+        HD_REACT_APP_SERVER: ${{secrets.HEROKU_SERVER}}
+        HD_REACT_APP_CLIENT: ${{secrets.HEROKU_CLIENT}}
 
   
 
