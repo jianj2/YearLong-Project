@@ -40,6 +40,7 @@ const shareQuestionnaire = function (req, res) {
             readOnly: req.body.readOnly,
             message: req.body.message,
             shareSection: visibleSection,
+            sortBy: req.body.sortBy,
         });
 
         newShare.save(function (err, createdShare) {
@@ -95,12 +96,15 @@ const completeShare = function (req, res) {
     let clinicianEmail = req.body.clinicianEmail;
     let personalDetails = req.body.personalDetails;
     let questionnaireId = req.body.questionnaireId;
+    let comments = req.body.comments;
+    let sortBy  = req.body.sortBy;
 
     sendResultsEmail(
         questionnaireId,
         questionnaireData,
         clinicianEmail,
         personalDetails,
+        sortBy,
         req.params.shareId
     )
         .then((emailRes) => {

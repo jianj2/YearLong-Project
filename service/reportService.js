@@ -29,6 +29,10 @@ const HELPER_IMPORTANCE = {
     "Not important": 1,
     "Not Applicable.": 0
 }
+const HELPER_SORT = {
+    "PERFORMANCE": "PERFORMANCE",
+    "IMPORTANCE": "IMPORTANCE",
+}
 const getTimeStamp = function () {
     let date_ob = new Date();
     // adjust 0 before single digit date
@@ -381,6 +385,22 @@ const sortByImportance = function (response) {
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to sort the questions by the importance
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+const sortByPerformance = function (response) {
+    let sortedResult = response;
+
+    sortedResult.sections.forEach(section => {
+        section.scenarios.sort((a, b) =>
+            b.questions[0].response - a.questions[0].response
+        )
+    })
+
+    return sortedResult;
+}
+
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // Helper function to obtain scores for speech sub-scales
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const speechSection = function (speechScenarios, subScaleScore) {
@@ -631,7 +651,7 @@ const generateCSV = function (questionnaireData, personalDetails, scenarioResult
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used generate the pdf report.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const generateAttachments = function (questionnaireId, personalDetails, questionnaireData, shareId) {
+const generateAttachments = function (questionnaireId, personalDetails, questionnaireData, shareId, sortBy) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
 
@@ -726,7 +746,13 @@ const generateAttachments = function (questionnaireId, personalDetails, question
 
                     // -------  TO DO  --------
                     // MAKE THIS BETTER
-                    const sortedResults = sortByImportance(resultToPrint)
+                    // const sortedResults = sortByImportance(resultToPrint)
+                    let sortedResults = []
+                    if (sortBy === HELPER_SORT.PERFORMANCE){
+                        sortedResults = sortByPerformance(resultToPrint)
+                    } else {
+                        sortedResults = sortByImportance(resultToPrint)
+                    }
 
 
                     if (sortedResults.isStandard) {

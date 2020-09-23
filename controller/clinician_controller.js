@@ -54,9 +54,13 @@ const completeQuestionnaire = function (req, res) {
     let clinicianEmail  = req.body.clinicianEmail;
     let personalDetails  = req.body.personalDetails;
     let questionnaireId  = req.body.questionnaireId;
+    let comments = req.body.comments;
+    let sortBy  = req.body.sortBy;
+
+    console.log("sortBy ",sortBy);
     const userEmail = extractUserEmail(req);
     if(userEmail === clinicianEmail){
-        sendResultsEmail(questionnaireId, questionnaireData, clinicianEmail, personalDetails)
+        sendResultsEmail(questionnaireId, questionnaireData, clinicianEmail, personalDetails, sortBy)
         .then(emailRes => res.send(emailRes))
         .catch(emailRej => res.send(emailRej));
     }else{
