@@ -13,9 +13,9 @@ class unittest_frontend_clinicianLogin(unittest.TestCase):
         self.driver = webdriver.Chrome("chromedriver.exe")
         self.driver.get("http://localhost:3000/clinician")
 
-    def test_navbar_left(self):
-        navbar_left = self.driver.find_element_by_class_name("navbar-left")
-        navbar_left.click()
+        def test_landingLogo_left(self):
+        landingLogo = self.driver.find_element_by_class_name("landing-logo")
+        landingLogo.click()
         time.sleep(2)
         assert ("http://localhost:3000" in self.driver.current_url)
 
@@ -92,7 +92,7 @@ class unittest_frontend_clinicianLogin(unittest.TestCase):
         login.click()
         time.sleep(2)
         assert "Please enter your email address." \
-            in self.driver.find_element_by_id("error-message-login").text
+               in self.driver.find_element_by_id("error-message-login").text
 
     def test_login_with_invalid_input(self):
         email = self.driver.find_element_by_id("email")
@@ -103,7 +103,7 @@ class unittest_frontend_clinicianLogin(unittest.TestCase):
         login.click()
         time.sleep(2)
         assert "Wrong email or password." \
-            in self.driver.find_element_by_id("error-message-login").text
+               in self.driver.find_element_by_id("error-message-login").text
 
     def test_login_with_valid_input(self):
         email = self.driver.find_element_by_id("email")
@@ -113,7 +113,7 @@ class unittest_frontend_clinicianLogin(unittest.TestCase):
         login = self.driver.find_element_by_id("btn-login")
         login.click()
         time.sleep(2)
-        assert "http://localhost:3000/clinician" in self.driver.current_url
+        assert "http://localhost:3000" in self.driver.current_url
 
     def test_logout(self):
         email = self.driver.find_element_by_id("email")
@@ -123,7 +123,6 @@ class unittest_frontend_clinicianLogin(unittest.TestCase):
         login = self.driver.find_element_by_id("btn-login")
         login.click()
         time.sleep(2)
-        assert "http://localhost:3000/clinician" in self.driver.current_url
         logout = self.driver.find_element_by_class_name("button")
         logout.click()
         time.sleep(2)
