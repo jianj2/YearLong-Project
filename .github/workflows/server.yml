@@ -32,7 +32,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-    name: npm test
+    name: test
     steps:
     - name: Checkout
       uses: actions/checkout@v2    
@@ -45,7 +45,7 @@ jobs:
     #- name: Run mocha tests
     #  run: npm test
 
-  # Build nodejs and deploy to heroku
+  # Deploy nodejs to heroku
   deploy:
     needs: test
     runs-on: ${{ matrix.os }}
@@ -53,7 +53,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         node-version: [14.x]
-    name: Npm_build_deploy
+    name: deploy
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -63,8 +63,6 @@ jobs:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_app_name: "dev-server"
         heroku_email: ${{secrets.HEROKU_EMAIL}}
-        healthcheck: "https://dev-server.herokuapp.com/health"
-        checkstring: "ok"
       env:
         HD_SERVER: ${{secrets.HEROKU_SERVER}}
         HD_CLIENT: ${{secrets.HEROKU_CLIENT}}
