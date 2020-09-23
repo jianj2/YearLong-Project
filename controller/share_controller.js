@@ -95,12 +95,14 @@ const completeShare = function (req, res) {
     let clinicianEmail = req.body.clinicianEmail;
     let personalDetails = req.body.personalDetails;
     let questionnaireId = req.body.questionnaireId;
+    let sortBy  = req.body.sortBy;
 
     sendResultsEmail(
         questionnaireId,
         questionnaireData,
         clinicianEmail,
         personalDetails,
+        sortBy,
         req.params.shareId
     )
         .then((emailRes) => {

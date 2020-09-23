@@ -29,6 +29,10 @@ const HELPER_IMPORTANCE = {
     "Not important": 1,
     "Not Applicable.": 0
 }
+const HELPER_SORT = {
+    "PERFORMANCE": "PERFORMANCE",
+    "IMPORTANCE": "IMPORTANCE",
+}
 const getTimeStamp = function () {
     let date_ob = new Date();
     // adjust 0 before single digit date
@@ -647,7 +651,7 @@ const generateCSV = function (questionnaireData, personalDetails, scenarioResult
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used generate the pdf report.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const generateAttachments = function (questionnaireId, personalDetails, questionnaireData, shareId) {
+const generateAttachments = function (questionnaireId, personalDetails, questionnaireData, shareId, sortBy) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
 
@@ -743,7 +747,12 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     // -------  TO DO  --------
                     // MAKE THIS BETTER
                     // const sortedResults = sortByImportance(resultToPrint)
-                    const sortedResults = sortByPerformance(resultToPrint)
+                    let sortedResults = []
+                    if (sortBy === HELPER_SORT.PERFORMANCE){
+                        sortedResults = sortByPerformance(resultToPrint)
+                    } else {
+                        sortedResults = sortByImportance(resultToPrint)
+                    }
 
 
                     if (sortedResults.isStandard) {
