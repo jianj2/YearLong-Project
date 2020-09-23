@@ -10,147 +10,172 @@ let share_id = uuidv1();
 describe('Sprint3 Backend unit-test',function(){
 
 
-    describe('Test the admin.js router',function(){
+    //describe('Test the admin.js router',function(){
 
-        it('Test adminLogin with empty username',function(done){
-            chai.request('http://localhost:3001/admin')
-                .post('/login')
-                .send({'username': '', 'password': 'testPassword'})
-                .end(function(err,res){
-                    if(!err){
-                        res.body.should.have.property('code');
-                        res.body.should.have.property('message');
-                        res.should.have.status(200);
-                        res.body.code.should.equal(1);
-                        res.body.message.should.equal('Username can not be empty!');
-                        done();
-                    }else{
-                        done(err);
-                    }
-                });
-        });
+        // it('Test adminLogin with empty username',function(done){
+        //     chai.request('http://localhost:3001/admin')
+        //         .post('/login')
+        //         .send({'username': '', 'password': 'testPassword'})
+        //         .end(function(err,res){
+        //             if(!err){
+        //                 res.body.should.have.property('code');
+        //                 res.body.should.have.property('message');
+        //                 res.should.have.status(200);
+        //                 res.body.code.should.equal(1);
+        //                 res.body.message.should.equal('Username can not be empty!');
+        //                 done();
+        //             }else{
+        //                 done(err);
+        //             }
+        //         });
+        // });
+        //
+        // it('Test adminLogin with empty password',function(done){
+        //     chai.request('http://localhost:3001/admin')
+        //         .post('/login')
+        //         .send({'username': 'tester', 'password': ''})
+        //         .end(function(err,res){
+        //             if(!err){
+        //                 res.body.should.have.property('code');
+        //                 res.body.should.have.property('message');
+        //                 res.should.have.status(200);
+        //                 res.body.code.should.equal(2);
+        //                 res.body.message.should.equal('Password can not be empty!');
+        //                 done();
+        //             }else{
+        //                 done(err);
+        //             }
+        //         });
+        // });
+        //
+        // it('Test adminLogin with correct information',function(done){
+        //     chai.request('http://localhost:3001/admin')
+        //         .post('/login')
+        //         .send({'username': 'AdminUser1', 'password': 'pw1234'})
+        //         .end(function(err,res){
+        //             if(!err){
+        //                 res.should.have.status(200);
+        //                 res.body.should.have.property('code');
+        //                 res.body.should.have.property('message');
+        //                 res.body.code.should.equal(3);
+        //                 res.body.message.should.have.property('auth');
+        //                 res.body.message.should.have.property('token');
+        //                 res.body.message.auth.should.equal(true);
+        //                 done();
+        //             }else{
+        //                 done(err);
+        //             }
+        //         });
+        // });
+        //
+        // it('Test adminLogin with wrong information',function(done){
+        //     chai.request('http://localhost:3001/admin')
+        //         .post('/login')
+        //         .send({'username': 'tester', 'password': 'testPassword'})
+        //         .end(function(err,res){
+        //             if(!err){
+        //                 res.body.should.have.property('code');
+        //                 res.body.should.have.property('message');
+        //                 res.should.have.status(200);
+        //                 res.body.code.should.equal(4);
+        //                 res.body.message.should.equal('Incorrect details!');
+        //                 done();
+        //             }else{
+        //                 done(err);
+        //             }
+        //         });
+        // });
+        // it('Test admin update the instruction',function(done){
+        //     chai.request('http://localhost:3001/admin')
+        //         .post('/instruction/CC')
+        //         .send({'instruction':{'_id':'5f4f77c14e3b3e5934d64f0f'
+        //                 ,'title':'For clinicians administering SSQ-C'
+        //                 ,'content':'How are you? test1'
+        //                 ,'type':'CC'
+        //                 ,'__v':'0'}})
+        //         .end(function(err,res){
+        //             if(!err){
+        //                 res.should.have.status(200);
+        //                 done();
+        //             }else{
+        //                 done(err);
+        //             }
+        //         });
+        // });
+        // it('Test admin get the instruction',function(done){
+        //     chai.request('http://localhost:3001/admin')
+        //         .get('/instruction')
+        //         .end(function(err,res){
+        //             if(!err){
+        //                 res.should.have.status(200);
+        //                 done();
+        //             }else{
+        //                 done(err);
+        //             }
+        //         });
+        // }).timeout(5000);
+        // it('Test admin get the questionnaire',function(done){
+        //     chai.request('http://localhost:3001/admin')
+        //         .get('/getStandardisedQuestionnaire')
+        //         .end(function(err,res){
+        //             if(!err){
+        //                 res.should.have.status(200);
+        //                 done();
+        //             }else{
+        //                 done(err);
+        //             }
+        //         });
+        // });
+        // it('Test admin verify login',function(done){
+        //     chai.request('http://localhost:3001/admin')
+        //         .get('/verifylogin/:token')
+        //         .end(function(err,res){
+        //             if(!err){
+        //                 res.should.have.status(200);
+        //                 done();
+        //             }else{
+        //                 done(err);
+        //             }
+        //         });
+        // });
+        // it('Test admin get all instructions',function(done){
+        //     chai.request('http://localhost:3001/admin')
+        //         .get('/instructionsSummary')
+        //         .end(function(err,res){
+        //             if(!err){
+        //                 res.should.have.status(200);
+        //                 done();
+        //             }else{
+        //                 done(err);
+        //             }
+        //         });
+        // }).timeout(5000);
 
-        it('Test adminLogin with empty password',function(done){
-            chai.request('http://localhost:3001/admin')
-                .post('/login')
-                .send({'username': 'tester', 'password': ''})
-                .end(function(err,res){
-                    if(!err){
-                        res.body.should.have.property('code');
-                        res.body.should.have.property('message');
-                        res.should.have.status(200);
-                        res.body.code.should.equal(2);
-                        res.body.message.should.equal('Password can not be empty!');
-                        done();
-                    }else{
-                        done(err);
-                    }
-                });
-        });
-
-        it('Test adminLogin with correct information',function(done){
-            chai.request('http://localhost:3001/admin')
-                .post('/login')
-                .send({'username': 'AdminUser1', 'password': 'pw1234'})
-                .end(function(err,res){
-                    if(!err){
-                        res.should.have.status(200);
-                        res.body.should.have.property('code');
-                        res.body.should.have.property('message');
-                        res.body.code.should.equal(3);
-                        res.body.message.should.have.property('auth');
-                        res.body.message.should.have.property('token');
-                        res.body.message.auth.should.equal(true);
-                        done();
-                    }else{
-                        done(err);
-                    }
-                });
-        });
-
-        it('Test adminLogin with wrong information',function(done){
-            chai.request('http://localhost:3001/admin')
-                .post('/login')
-                .send({'username': 'tester', 'password': 'testPassword'})
-                .end(function(err,res){
-                    if(!err){
-                        res.body.should.have.property('code');
-                        res.body.should.have.property('message');
-                        res.should.have.status(200);
-                        res.body.code.should.equal(4);
-                        res.body.message.should.equal('Incorrect details!');
-                        done();
-                    }else{
-                        done(err);
-                    }
-                });
-        });
-        it('Test admin update the instruction',function(done){
-            chai.request('http://localhost:3001/admin')
-                .post('/instruction/CC')
-                .send({'instruction':{'_id':'5f4f77c14e3b3e5934d64f0f'
-                        ,'title':'For clinicians administering SSQ-C'
-                        ,'content':'How are you? test1'
-                        ,'type':'CC'
-                        ,'__v':'0'}})
-                .end(function(err,res){
-                    if(!err){
-                        res.should.have.status(200);
-                        done();
-                    }else{
-                        done(err);
-                    }
-                });
-        });
-        it('Test admin get the instruction',function(done){
-            chai.request('http://localhost:3001/admin')
-                .get('/instruction')
-                .end(function(err,res){
-                    if(!err){
-                        res.should.have.status(200);
-                        done();
-                    }else{
-                        done(err);
-                    }
-                });
-        }).timeout(5000);
-        it('Test admin get the questionnaire',function(done){
-            chai.request('http://localhost:3001/admin')
-                .get('/getStandardisedQuestionnaire')
-                .end(function(err,res){
-                    if(!err){
-                        res.should.have.status(200);
-                        done();
-                    }else{
-                        done(err);
-                    }
-                });
-        });
-        it('Test admin verify login',function(done){
-            chai.request('http://localhost:3001/admin')
-                .get('/verifylogin/:token')
-                .end(function(err,res){
-                    if(!err){
-                        res.should.have.status(200);
-                        done();
-                    }else{
-                        done(err);
-                    }
-                });
-        });
-        it('Test admin get all instructions',function(done){
-            chai.request('http://localhost:3001/admin')
-                .get('/instructionsSummary')
-                .end(function(err,res){
-                    if(!err){
-                        res.should.have.status(200);
-                        done();
-                    }else{
-                        done(err);
-                    }
-                });
-        }).timeout(5000);
-    });
+    //     it('Test admin get all organisation',function(done){
+    //         chai.request('http://localhost:3001/admin')
+    //             .get('/organisation')
+    //             .end(function(err,res){
+    //                 if(!err){
+    //                     res.should.have.status(200);
+    //                     done();
+    //                 }else{
+    //                     done(err);
+    //                 }
+    //             });
+    //     }).timeout(5000);
+    //     it('Test admin get clinicians in a organisation',function(done){
+    //         chai.request('http://localhost:3001/admin')
+    //             .get('/organisation/zoo')
+    //             .end(function(err,res){
+    //                 if(!err){
+    //                     res.should.have.status(200);
+    //                     done();
+    //                 }else{
+    //                     done(err);
+    //                 }
+    //             });
+    //     }).timeout(5000);
+    // });
 
 
     // describe('Test the clinician.js router',function(){
