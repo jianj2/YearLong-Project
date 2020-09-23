@@ -50,7 +50,7 @@ class unittest_frontend_adminHomePage(unittest.TestCase):
         time.sleep(2)
         assert ("http://localhost:3000/admin/standard/75bea290-a6c4-11ea-90b9-4720072c0f8f/view" in self.driver.current_url)
 
-        def test_edit_questionnaire(self):
+    def test_edit_questionnaire(self):
         edit = self.driver.find_elements_by_class_name("button")[2]
         edit.click()
         time.sleep(2)

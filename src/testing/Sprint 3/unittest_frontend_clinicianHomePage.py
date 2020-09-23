@@ -21,10 +21,9 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         time.sleep(2)
         self.driver.get("http://localhost:3000/clinician")
 
-
-        def test_sidebar(self):
-        navbar_left = self.driver.find_element_by_class_name("navbar-left")
-        navbar_left.click()
+    def test_sidebar(self):
+        navbar = self.driver.find_element_by_class_name("navbar-left")
+        navbar.click()
         time.sleep(2)
         assert ("http://localhost:3000" in self.driver.current_url)
 

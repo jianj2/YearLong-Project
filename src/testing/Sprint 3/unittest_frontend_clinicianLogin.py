@@ -128,7 +128,7 @@ class unittest_frontend_clinicianLogin(unittest.TestCase):
         time.sleep(2)
         assert "http://localhost:3000" in self.driver.current_url
 
-        def test_forgetPassword(self):
+    def test_forgetPassword(self):
         forget = self.driver.find_element_by_id("btn-password-find")
         forget.click()
         time.sleep(2)

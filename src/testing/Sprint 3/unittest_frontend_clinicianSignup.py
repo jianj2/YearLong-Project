@@ -15,7 +15,7 @@ class unittest_frontend_clinicianSignup(unittest.TestCase):
         button = self.driver.find_element_by_link_text("Signup")
         button.click()
 
-        def test_firstName(self):
+    def test_firstName(self):
         firstName = self.driver.find_element_by_id("fname")
         firstName.send_keys("First")
         time.sleep(2)

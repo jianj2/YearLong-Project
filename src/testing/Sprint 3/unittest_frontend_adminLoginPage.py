@@ -13,7 +13,7 @@ class unittest_frontend_adminLoginPage(unittest.TestCase):
         self.driver = webdriver.Chrome("chromedriver.exe")
         self.driver.get("http://localhost:3000/admin")
 
-        def test_select_username(self):
+    def test_select_username(self):
         username = self.driver.find_element_by_name("username")
         username.click()
         time.sleep(2)
