@@ -32,8 +32,8 @@ import FindPassword from "./components/FindPassword";
 
 function App() {
 
-    console.log("This is server domain",process.env);
-    console.log("This is redirect link",process.env);
+    console.log("This is server domain",);
+    console.log("This is redirect link",);
     // const { loading } = useAuth0();
 
     // if (loading) {
