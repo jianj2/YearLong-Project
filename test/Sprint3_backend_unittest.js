@@ -20,6 +20,7 @@ describe('Sprint2 Backend unit-test',function(){
                     if(!err){
                         res.body.should.have.property('code');
                         res.body.should.have.property('message');
+                        res.should.have.status(200);
                         res.body.code.should.equal(1);
                         res.body.message.should.equal('Username can not be empty!');
                         done();
@@ -37,6 +38,7 @@ describe('Sprint2 Backend unit-test',function(){
                     if(!err){
                         res.body.should.have.property('code');
                         res.body.should.have.property('message');
+                        res.should.have.status(200);
                         res.body.code.should.equal(2);
                         res.body.message.should.equal('Password can not be empty!');
                         done();
@@ -52,6 +54,7 @@ describe('Sprint2 Backend unit-test',function(){
                 .send({'username': 'AdminUser1', 'password': 'pw1234'})
                 .end(function(err,res){
                     if(!err){
+                        res.should.have.status(200);
                         res.body.should.have.property('code');
                         res.body.should.have.property('message');
                         res.body.code.should.equal(3);
@@ -73,6 +76,7 @@ describe('Sprint2 Backend unit-test',function(){
                     if(!err){
                         res.body.should.have.property('code');
                         res.body.should.have.property('message');
+                        res.should.have.status(200);
                         res.body.code.should.equal(4);
                         res.body.message.should.equal('Incorrect details!');
                         done();
@@ -83,10 +87,11 @@ describe('Sprint2 Backend unit-test',function(){
         });
         it('Test admin update the instruction',function(done){
             chai.request('http://localhost:3001/admin')
-                .post('/instruction')
-                .send({'title':'Sample instruction','content':'This is the sample instruction'})
+                .post('/instruction/CC')
+                .send({'title':'For clinicians administering SSQ-C','content':'This is the sample instruction'})
                 .end(function(err,res){
                     if(!err){
+                        res.should.have.status(200);
                         done();
                     }else{
                         done(err);
@@ -98,6 +103,7 @@ describe('Sprint2 Backend unit-test',function(){
                 .get('/instruction')
                 .end(function(err,res){
                     if(!err){
+                        res.should.have.status(200);
                         done();
                     }else{
                         done(err);
@@ -109,6 +115,7 @@ describe('Sprint2 Backend unit-test',function(){
                 .get('/getStandardisedQuestionnaire')
                 .end(function(err,res){
                     if(!err){
+                        res.should.have.status(200);
                         done();
                     }else{
                         done(err);
@@ -120,6 +127,20 @@ describe('Sprint2 Backend unit-test',function(){
                 .get('/verifylogin/:token')
                 .end(function(err,res){
                     if(!err){
+                        res.should.have.status(200);
+                        done();
+                    }else{
+                        done(err);
+                    }
+                });
+        });
+        it('Test admin get all instructions',function(done){
+            chai.request('http://localhost:3001/admin')
+                .get('/instructionsSummary')
+                .end(function(err,res){
+                    if(!err){
+                        res.should.have.status(200);
+                        res.body.should.have.lengthOf(4);
                         done();
                     }else{
                         done(err);
