@@ -7,7 +7,7 @@ chai.use(chaiHttp);
 let delete_id = uuidv1();
 let share_id = uuidv1();
 
-describe('Sprint2 Backend unit-test',function(){
+describe('Sprint3 Backend unit-test',function(){
 
 
     describe('Test the admin.js router',function(){
@@ -88,7 +88,11 @@ describe('Sprint2 Backend unit-test',function(){
         it('Test admin update the instruction',function(done){
             chai.request('http://localhost:3001/admin')
                 .post('/instruction/CC')
-                .send({'title':'For clinicians administering SSQ-C','content':'This is the sample instruction'})
+                .send({'instruction':{'_id':'5f4f77c14e3b3e5934d64f0f'
+                        ,'title':'For clinicians administering SSQ-C'
+                        ,'content':'How are you? test1'
+                        ,'type':'CC'
+                        ,'__v':'0'}})
                 .end(function(err,res){
                     if(!err){
                         res.should.have.status(200);
@@ -109,7 +113,7 @@ describe('Sprint2 Backend unit-test',function(){
                         done(err);
                     }
                 });
-        });
+        }).timeout(5000);
         it('Test admin get the questionnaire',function(done){
             chai.request('http://localhost:3001/admin')
                 .get('/getStandardisedQuestionnaire')
@@ -140,13 +144,12 @@ describe('Sprint2 Backend unit-test',function(){
                 .end(function(err,res){
                     if(!err){
                         res.should.have.status(200);
-                        res.body.should.have.lengthOf(4);
                         done();
                     }else{
                         done(err);
                     }
                 });
-        });
+        }).timeout(5000);
     });
 
 
