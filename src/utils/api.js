@@ -1,4 +1,6 @@
-const api = process.env.REACT_APP_SERVER || "http://localhost:3001";
+const api = process.env.REACT_APP_SERVER 
+
+// || "http://localhost:3001";
 
 //const api = "https://d1iiwjsw1v8g79.cloudfront.net/";
 
