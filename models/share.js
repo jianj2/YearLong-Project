@@ -23,7 +23,7 @@ const shareSchema = mongoose.Schema({
     readOnly:{type:Boolean, required:true},
     message:{type:String},
     shareSection:[visibleSections],
-    sortBy: {type:Boolean, required:true},
+    sortBy: {type:String, required:true},
 });
 
 
