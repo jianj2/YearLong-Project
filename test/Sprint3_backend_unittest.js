@@ -179,20 +179,6 @@ describe('Sprint3 Backend unit-test',function(){
 
 
     // describe('Test the clinician.js router',function(){
-    //
-    //     it('Test getAllClinician',function(done){
-    //         chai.request('http://localhost:3001/clinician')
-    //             .get('/')
-    //             .end(function(err,res){
-    //                 if(!err){
-    //                     res.should.have.property('body');
-    //                     done();
-    //                 }else{
-    //                     done(err);
-    //                 }
-    //             }).timeout(5000);
-    //     });
-    //
     //     it('Test clinician shares the questionnaire',function(done){
     //         chai.request('http://localhost:3001/clinician')
     //             .post('/share')
