@@ -11,7 +11,7 @@ class unittest_frontend_patientPage(unittest.TestCase):
 
     def setUp(self):
         self.driver = webdriver.Chrome("chromedriver.exe")
-        self.driver.get("http://localhost:3000/parent/06b33da0-e910-11ea-b82c-9f026748dd35")
+        self.driver.get("http://localhost:3000/parent/3d00a650-fd82-11ea-8313-814f9cea06fc")
         time.sleep(3)
 
     def test_next_page1(self):
@@ -24,19 +24,11 @@ class unittest_frontend_patientPage(unittest.TestCase):
         next1 = self.driver.find_element_by_class_name("subheader-container").find_element_by_class_name("button")
         next1.click()
         time.sleep(2)
-        instruction = self.driver.find_element_by_class_name("subheader-container").find_elements_by_class_name("button")[0]
+        instruction =self.driver.find_element_by_class_name("subheader-container").find_elements_by_class_name("button")[0]
         instruction.click()
         time.sleep(2)
-        assert "I N S T R U C T I O N S" in self.driver.find_element_by_class_name("parents-container").find_element_by_tag_name("h1").text
-
-    def test_back_page2(self):
-        next1 = self.driver.find_element_by_class_name("subheader-container").find_element_by_class_name("button")
-        next1.click()
-        time.sleep(2)
-        back = self.driver.find_element_by_class_name("subheader-container").find_elements_by_class_name("button")[0]
-        back.click()
-        time.sleep(2)
-        assert "I N S T R U C T I O N S" in self.driver.find_element_by_class_name("parents-container").find_element_by_tag_name("h1").text
+        assert "I N S T R U C T I O N S" in self.driver.find_element_by_class_name(
+            "parents-container").find_element_by_tag_name("h1").text
 
     def test_fillin_name_page2(self):
         next1 = self.driver.find_element_by_class_name("subheader-container").find_element_by_class_name("button")
@@ -50,23 +42,16 @@ class unittest_frontend_patientPage(unittest.TestCase):
         next1 = self.driver.find_element_by_class_name("subheader-container").find_element_by_class_name("button")
         next1.click()
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
         birth.send_keys("19960829")
         time.sleep(2)
 
-    def test_fillin_type_page2(self):
-        next1 = self.driver.find_element_by_class_name("subheader-container").find_element_by_class_name("button")
-        next1.click()
-        time.sleep(2)
-        type = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
-        type.send_keys("Parent")
-        time.sleep(2)
 
     def test_fillin_LDevice_page2(self):
         next1 = self.driver.find_element_by_class_name("subheader-container").find_element_by_class_name("button")
         next1.click()
         time.sleep(2)
-        LDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        LDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         LDevice.send_keys("None")
         time.sleep(2)
 
@@ -74,7 +59,7 @@ class unittest_frontend_patientPage(unittest.TestCase):
         next1 = self.driver.find_element_by_class_name("subheader-container").find_element_by_class_name("button")
         next1.click()
         time.sleep(2)
-        RDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
+        RDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         RDevice.send_keys("None")
         time.sleep(2)
 
@@ -82,7 +67,8 @@ class unittest_frontend_patientPage(unittest.TestCase):
         next1 = self.driver.find_element_by_class_name("subheader-container").find_element_by_class_name("button")
         next1.click()
         time.sleep(2)
-        next2 = self.driver.find_element_by_class_name("parents-detail-form-submit-button").find_element_by_class_name("button")
+        next2 = self.driver.find_element_by_class_name("parents-detail-form-submit-button").find_element_by_class_name(
+            "button")
         next2.click()
         time.sleep(2)
         assert self.driver.find_element_by_class_name("parents-detail-form")
@@ -94,16 +80,17 @@ class unittest_frontend_patientPage(unittest.TestCase):
         name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         name.send_keys("TestName")
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
         birth.send_keys("19960829")
         time.sleep(2)
-        LDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        LDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         LDevice.send_keys("None")
         time.sleep(2)
-        RDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
+        RDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         RDevice.send_keys("None")
         time.sleep(2)
-        next2 = self.driver.find_element_by_class_name("parents-detail-form-submit-button").find_element_by_class_name("button")
+        next2 = self.driver.find_element_by_class_name("parents-detail-form-submit-button").find_element_by_class_name(
+            "button")
         next2.click()
         time.sleep(2)
         assert self.driver.find_element_by_class_name("questionaire-container")
@@ -115,16 +102,17 @@ class unittest_frontend_patientPage(unittest.TestCase):
         name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         name.send_keys("TestName")
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
         birth.send_keys("19960829")
         time.sleep(2)
-        LDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        LDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         LDevice.send_keys("None")
         time.sleep(2)
-        RDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
+        RDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         RDevice.send_keys("None")
         time.sleep(2)
-        next2 = self.driver.find_element_by_class_name("parents-detail-form-submit-button").find_element_by_class_name("button")
+        next2 = self.driver.find_element_by_class_name("parents-detail-form-submit-button").find_element_by_class_name(
+            "button")
         next2.click()
         time.sleep(2)
         slider = self.driver.find_elements_by_class_name("MuiSlider-thumb")[0]
@@ -138,16 +126,17 @@ class unittest_frontend_patientPage(unittest.TestCase):
         name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         name.send_keys("TestName")
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
         birth.send_keys("19960829")
         time.sleep(2)
-        LDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        LDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         LDevice.send_keys("None")
         time.sleep(2)
-        RDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
+        RDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         RDevice.send_keys("None")
         time.sleep(2)
-        next2 = self.driver.find_element_by_class_name("parents-detail-form-submit-button").find_element_by_class_name("button")
+        next2 = self.driver.find_element_by_class_name("parents-detail-form-submit-button").find_element_by_class_name(
+            "button")
         next2.click()
         time.sleep(2)
         box = self.driver.find_elements_by_class_name("MuiFormControlLabel-root")[3]
@@ -161,13 +150,13 @@ class unittest_frontend_patientPage(unittest.TestCase):
         name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         name.send_keys("TestName")
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
         birth.send_keys("19960829")
         time.sleep(2)
-        LDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        LDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         LDevice.send_keys("None")
         time.sleep(2)
-        RDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
+        RDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         RDevice.send_keys("None")
         time.sleep(2)
         next2 = self.driver.find_element_by_class_name("parents-detail-form-submit-button").find_element_by_class_name(
@@ -181,20 +170,20 @@ class unittest_frontend_patientPage(unittest.TestCase):
         assert "I N S T R U C T I O N S" in self.driver.find_element_by_class_name(
             "parents-container").find_element_by_tag_name("h1").text
 
-    def test_instruction_page3(self):
+    def test_back_page3(self):
         next1 = self.driver.find_element_by_class_name("subheader-container").find_element_by_class_name("button")
         next1.click()
         time.sleep(2)
         name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         name.send_keys("TestName")
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
         birth.send_keys("19960829")
         time.sleep(2)
-        LDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        LDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         LDevice.send_keys("None")
         time.sleep(2)
-        RDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
+        RDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         RDevice.send_keys("None")
         time.sleep(2)
         next2 = self.driver.find_element_by_class_name("parents-detail-form-submit-button").find_element_by_class_name(
@@ -214,13 +203,13 @@ class unittest_frontend_patientPage(unittest.TestCase):
         name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         name.send_keys("TestName")
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
         birth.send_keys("19960829")
         time.sleep(2)
-        LDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        LDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         LDevice.send_keys("None")
         time.sleep(2)
-        RDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
+        RDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         RDevice.send_keys("None")
         time.sleep(2)
         next2 = self.driver.find_element_by_class_name("parents-detail-form-submit-button").find_element_by_class_name(
@@ -239,13 +228,13 @@ class unittest_frontend_patientPage(unittest.TestCase):
         name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         name.send_keys("TestName")
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
         birth.send_keys("19960829")
         time.sleep(2)
-        LDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        LDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         LDevice.send_keys("None")
         time.sleep(2)
-        RDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
+        RDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         RDevice.send_keys("None")
         time.sleep(2)
         next2 = self.driver.find_element_by_class_name("parents-detail-form-submit-button").find_element_by_class_name(
@@ -266,13 +255,13 @@ class unittest_frontend_patientPage(unittest.TestCase):
         name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         name.send_keys("TestName")
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
         birth.send_keys("19960829")
         time.sleep(2)
-        LDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        LDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         LDevice.send_keys("None")
         time.sleep(2)
-        RDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
+        RDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         RDevice.send_keys("None")
         time.sleep(2)
         next2 = self.driver.find_element_by_class_name("parents-detail-form-submit-button").find_element_by_class_name(
@@ -292,13 +281,13 @@ class unittest_frontend_patientPage(unittest.TestCase):
         name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         name.send_keys("TestName")
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
         birth.send_keys("19960829")
         time.sleep(2)
-        LDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        LDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         LDevice.send_keys("None")
         time.sleep(2)
-        RDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
+        RDevice = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         RDevice.send_keys("None")
         time.sleep(2)
         next2 = self.driver.find_element_by_class_name("parents-detail-form-submit-button").find_element_by_class_name(
@@ -309,7 +298,8 @@ class unittest_frontend_patientPage(unittest.TestCase):
             "button")[2]
         submit.click()
         time.sleep(10)
-        assert "Response Sent" in self.driver.find_element_by_class_name("form-completed").find_element_by_tag_name("h1").text
+        assert "Response Sent" in self.driver.find_element_by_class_name("form-completed").find_element_by_tag_name(
+            "h1").text
     
     def tearDown(self):
         self.driver.close()
