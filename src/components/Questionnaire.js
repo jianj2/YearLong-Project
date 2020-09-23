@@ -13,7 +13,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Slider } from "@material-ui/core";
+import {Slider, TextField} from "@material-ui/core";
 import Loading from "./Loading";
 import { Snackbar } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
@@ -129,12 +129,19 @@ export default function Questionnaire({
 
                             {/* ====== ====== ====== ====== ====== */}
                             {/* TODO: ADD INPUT FIELD HERE    */}
-                            <input
-                                onChange={(e) => handleCommentChange(sectionIndex, scenarioIndex, e.target.value)}
-                                value={commentData[sectionIndex][scenarioIndex]}
-                                placeholder="Comment"
-
-                            />
+                            <div className="comment-container">
+                                <TextField
+                                    className="comment-input"
+                                    id="outlined-multiline-static"
+                                    label="COMMENT"
+                                    multiline
+                                    variant="outlined"
+                                    rows={4}
+                                    onChange={(e) => handleCommentChange(sectionIndex, scenarioIndex, e.target.value)}
+                                    value={commentData[sectionIndex][scenarioIndex]}
+                                    placeholder="Add Comment Here"
+                                />
+                            </div>
 
                             {/* ====== ====== ====== ====== ====== */}
                         </div>

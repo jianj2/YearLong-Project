@@ -186,7 +186,8 @@ const DoTheTestContainer = () => {
             personalDetails,
             clinicianEmail: user.name,
             questionnaireId: selectedQuestionnaire.questionnaireId,
-        //    TODO: ADD COMMENT DATA HERE
+           // TODO: ADD COMMENT DATA HERE
+            comments:commentData
         };
 
         completeQuestionnaire(token, data).then((res) => {
@@ -258,6 +259,7 @@ const DoTheTestContainer = () => {
                     questionnaire={selectedQuestionnaire}
                     personalDetails={personalDetails}
                     questionnaireData={questionnaireData}
+                    commentData={commentData}
                 />
             </div>
         );
