@@ -15,7 +15,7 @@ class unittest_frontend_clinicianSignup(unittest.TestCase):
         button = self.driver.find_element_by_link_text("Signup")
         button.click()
 
-    def test_firstName(self):
+        def test_firstName(self):
         firstName = self.driver.find_element_by_id("fname")
         firstName.send_keys("First")
         time.sleep(2)
@@ -59,7 +59,7 @@ class unittest_frontend_clinicianSignup(unittest.TestCase):
         signup = self.driver.find_element_by_id("btn-signup")
         signup.click()
         time.sleep(2)
-        assert "Please enter your First Name." \
+        assert "Your firstName must be non-empty." \
                in self.driver.find_element_by_id("error-message-signup").text
 
     def test_empty_lastName(self):
@@ -76,7 +76,7 @@ class unittest_frontend_clinicianSignup(unittest.TestCase):
         signup = self.driver.find_element_by_id("btn-signup")
         signup.click()
         time.sleep(2)
-        assert "Please enter your Last name." \
+        assert "Your lastName must be non-empty." \
                in self.driver.find_element_by_id("error-message-signup").text
 
     def test_empty_organisation(self):
@@ -93,7 +93,7 @@ class unittest_frontend_clinicianSignup(unittest.TestCase):
         signup = self.driver.find_element_by_id("btn-signup")
         signup.click()
         time.sleep(2)
-        assert "Please enter your organisation" \
+        assert "Your organisation must be non-empty." \
                in self.driver.find_element_by_id("error-message-signup").text
 
     def test_empty_email(self):
