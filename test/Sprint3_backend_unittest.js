@@ -239,7 +239,7 @@ describe('Sprint3 Backend unit-test',function(){
     //
     //     it('Test the first shareId',function(done){
     //         chai.request('http://localhost:3001/share')
-    //             .get('/7c2f0710-e507-11ea-920a-af9fa6f10364')
+    //             .get('/4596bc90-fda1-11ea-81b5-c92b194d8d18')
     //             .end(function(err,res){
     //                 if(!err){
     //                     res.body.statusCode.should.equal(200);
@@ -253,7 +253,7 @@ describe('Sprint3 Backend unit-test',function(){
     //
     //     it('Test the second shareId',function(done){
     //         chai.request('http://localhost:3001/share')
-    //             .get('/6a45e2b0-e928-11ea-aab1-bbbcd6ea9818')
+    //             .get('/f4e5c690-fda2-11ea-ba45-c5a9ddddb126')
     //             .end(function(err,res){
     //                 if(!err){
     //                     res.body.statusCode.should.equal(200);
@@ -281,11 +281,11 @@ describe('Sprint3 Backend unit-test',function(){
     //
     //     it('Test the completeShare',function(done){
     //         chai.request('http://localhost:3001/share')
-    //             .post('/submit/6a45e2b0-e928-11ea-aab1-bbbcd6ea9818')
+    //             .post('/submit/f4e5c690-fda2-11ea-ba45-c5a9ddddb126')
     //             .send({
     //                 'clinicianEmail':'unittest2@gmail.com',
-    //                 'questionnaireData':[[[{'value':'1','supplumentaryValue':''}]],[],[]],
-    //                 'personalDetails':{'name':'','date':'', 'rightDeviceType':'','leftDeviceType':'','completedBy':'clinician'},
+    //                 'questionnaireData':[[[{'value':'1','supplementaryValue':''},{'value':'thihsir','supplementaryValue':''}]]],
+    //                 'personalDetails':{'name':'daniel','date':'19960829', 'rightDeviceType':'None','leftDeviceType':'None','completeBy':'Child'},
     //                 'questionnaireId': '6b2b75d0-e92a-11ea-a345-17af331cb519'
     //             })
     //             .end(function(err,res){
@@ -295,7 +295,7 @@ describe('Sprint3 Backend unit-test',function(){
     //                     done(err);
     //                 }
     //             });
-    //     }).timeout(5000);
+    //     }).timeout(20000);
     // });
     //
     // describe('Test the questionnaire.js router',function(){

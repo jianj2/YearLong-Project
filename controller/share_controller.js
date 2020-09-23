@@ -95,6 +95,7 @@ const completeShare = function (req, res) {
     let clinicianEmail = req.body.clinicianEmail;
     let personalDetails = req.body.personalDetails;
     let questionnaireId = req.body.questionnaireId;
+    console.log(questionnaireData[0][0]);
 
     sendResultsEmail(
         questionnaireId,
