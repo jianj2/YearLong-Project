@@ -54,6 +54,14 @@ const DoTheTestContainer = () => {
     ] = useState([]);
     const [questionnaireData, setQuestionnaireData] = useState([]);
 
+
+    console.log("questionnaires", questionnaires)
+    console.log("standardisedQuestionnaires", standardisedQuestionnaires)
+    // ==================================================================
+    // TODO: USE THIS VARIABLE TO STORE COMMENT DATA
+    const [commentData, setCommentData] = useState([]);
+    // ==================================================================
+
     const [selectedQuestionnaire, setSelectedQuestionnaire] = useState({
         questionnaireId: "",
         title: "",
@@ -124,6 +132,12 @@ const DoTheTestContainer = () => {
         setQuestionnaireData(temp);
     };
 
+    const handleCommentChange = (sectionIndex, scenarioIndex, data) => {
+        let temp = [...commentData];
+        temp[sectionIndex][scenarioIndex] = data;
+        setCommentData(temp);
+    }
+
     const onClickQuestion = async (questionnaireId) => {
         console.log("questionnaire clicked", questionnaireId);
         setWizardStep(0);
@@ -134,10 +148,13 @@ const DoTheTestContainer = () => {
         if (statusCode === 200) {
             const questionnaire = data;
             let tempResponse = [];
+            let tempComments = [];
             questionnaire.sections.forEach((section, sectionIndex) => {
                 tempResponse[sectionIndex] = [];
+                tempComments[sectionIndex] = [];
                 section.scenarios.forEach((scenario, scenarioIndex) => {
                     tempResponse[sectionIndex][scenarioIndex] = [];
+                    tempComments[sectionIndex][scenarioIndex] = "";
                     scenario.questions.forEach((question, questionIndex) => {
                         tempResponse[sectionIndex][scenarioIndex][
                             questionIndex
@@ -150,6 +167,7 @@ const DoTheTestContainer = () => {
             });
             // Updating the state using the initial data and the questionnaire
             // retrieved from the server.
+            setCommentData(tempComments);
             setQuestionnaireData(tempResponse);
             setSelectedQuestionnaire(questionnaire);
         } else {
@@ -168,6 +186,8 @@ const DoTheTestContainer = () => {
             personalDetails,
             clinicianEmail: user.name,
             questionnaireId: selectedQuestionnaire.questionnaireId,
+           // TODO: ADD COMMENT DATA HERE
+            comments:commentData
         };
 
         completeQuestionnaire(token, data).then((res) => {
@@ -215,6 +235,8 @@ const DoTheTestContainer = () => {
                     questionnaire={selectedQuestionnaire}
                     submitQuestionnaire={submitQuestionnaire}
                     questionnaireData={questionnaireData}
+                    commentData={commentData}
+                    handleCommentChange={handleCommentChange}
                     handleQuestionnaireChange={handleQuestionnaireChange}
                 />
             </div>
@@ -237,6 +259,7 @@ const DoTheTestContainer = () => {
                     questionnaire={selectedQuestionnaire}
                     personalDetails={personalDetails}
                     questionnaireData={questionnaireData}
+                    commentData={commentData}
                 />
             </div>
         );

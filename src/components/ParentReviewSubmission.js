@@ -13,12 +13,18 @@
 
 import React from "react";
 
+// import style
+import "../styles/questionnaire.css";
+
 export default function ParentReviewSubmission({ 
     questionnaire, 
     personalDetails, 
-    questionnaireData 
+    questionnaireData,
+//    TODO: IMport commentData
+    commentData
 }) {
     console.log("questionnaire in review", questionnaire)
+    console.log(commentData)
     return (
         <div className="review-submission">
             <h1>Personal Details</h1>
@@ -88,6 +94,13 @@ export default function ParentReviewSubmission({
                                         </div>
                                     </div>
                                 ))}
+                                {/* TODO: ADD THE SECTION's COMMENT */}
+                                <div className="comment-review-container">
+                                    <label>Comment</label>
+                                    <br/>
+                                    <br/>
+                                    {commentData[sectionIndex][scenarioIndex]}
+                                </div>
                             </div>
                         ))}
                     </div>
