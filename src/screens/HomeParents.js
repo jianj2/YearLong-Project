@@ -228,7 +228,7 @@ const HomeParents = ({ match }) => {
         API.sendQuestionnaireData(data, match.params.shareId).then((res) => {
             if (res) {
                 setLoading(false);
-                nextStep();
+                // nextStep();
             }
             console.log(res);
         });
