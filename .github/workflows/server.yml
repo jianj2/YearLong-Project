@@ -26,7 +26,7 @@ on:
     - master-server
 
 jobs:
-  # Test server code with mocha
+  # Testing server code with mocha
   test:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -34,14 +34,18 @@ jobs:
         os: [ubuntu-latest]
     name: test
     steps:
+    # Checking out code to server
     - name: Checkout
-      uses: actions/checkout@v2    
+      uses: actions/checkout@v2
+    # Setting up Node.js 14.8 for testing    
     - name: Set up Node.js 14.x for testing
       uses: actions/setup-node@v1
       with:
         node-version: 14.8
+    # Installing npm dependencies  
     - name: Install dependencies    
       run: npm install
+    # Running mocha
     #- name: Run mocha tests
     #  run: npm test
 
@@ -55,14 +59,16 @@ jobs:
         node-version: [14.x]
     name: deploy
     steps:
+    # Checking out code to server
     - name: Checkout
       uses: actions/checkout@v2
+    # Setting up heroku
     - name: Set up Heroku
       uses: akhileshns/heroku-deploy@v3.5.6
       with:
-        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: "dev-server"
-        heroku_email: ${{secrets.HEROKU_EMAIL}}
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}} # Heroku key
+        heroku_app_name: "dev-server" # Heroku app name
+        heroku_email: ${{secrets.HEROKU_EMAIL}} # Heroku email
       env:
-        HD_SERVER: ${{secrets.HEROKU_SERVER}}
-        HD_CLIENT: ${{secrets.HEROKU_CLIENT}}
+        HD_SERVER: ${{secrets.HEROKU_SERVER}} # Server URL
+        HD_CLIENT: ${{secrets.HEROKU_CLIENT}} # Client URL
