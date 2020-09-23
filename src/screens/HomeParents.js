@@ -50,6 +50,7 @@ const HomeParents = ({ match }) => {
         isStandard: true,
     });
     const [clinicianEmail, setClinicianEmail] = useState("");
+    const [sortBy, setSortBy] = useState("PERFORMANCE");
 
     const [personalDetails, setPersonalDetails] = useState({
         name: "",
@@ -122,7 +123,9 @@ const HomeParents = ({ match }) => {
         // Server call to get the questionnaireId
         API.getShareDetails(match.params.shareId).then((shareResponse) => {
             if (shareResponse.statusCode === 200) {
+                console.log('shareResponse', shareResponse)
                 // Server call to get the questionnaire.
+                setSortBy(shareResponse.data.sortBy);
                 setClinicianEmail(shareResponse.data.clinicianEmail);
                 setReadOnly(shareResponse.data.readOnly);
                 API.getQuestionnaireById(
@@ -210,16 +213,18 @@ const HomeParents = ({ match }) => {
             personalDetails,
             clinicianEmail: clinicianEmail,
             questionnaireId: questionnaire.questionnaireId,
+            sortBy,
         };
 
+        console.log(data)
         setLoading(true);
-        API.sendQuestionnaireData(data, match.params.shareId).then((res) => {
-            if (res) {
-                setLoading(false);
-                nextStep();
-            }
-            console.log(res);
-        });
+        // API.sendQuestionnaireData(data, match.params.shareId).then((res) => {
+        //     if (res) {
+        //         setLoading(false);
+        //         nextStep();
+        //     }
+        //     console.log(res);
+        // });
     };
 
     if (wizardStep === -2) {

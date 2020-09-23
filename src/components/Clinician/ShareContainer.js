@@ -146,6 +146,7 @@ const ShareQuestionnaire = (props) => {
             console.log("shareModalData ", shareModalData)
             API.shareQuestionnaire(token, shareModalData)
                .then( res => {
+                   console.log("res from create Share", res)
                     setLoading(false);
                     closeModal();
                 });
