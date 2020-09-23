@@ -191,11 +191,10 @@ const DoTheTestContainer = () => {
         completeQuestionnaire(token, data)
             .then((res) => {
                 console.log("complete question", res);
-                // setWizardStep(3);
+                setWizardStep(3);
                 setLoading(false);
             });
     };
-
 
     if (wizardStep === 0) {
         return (
