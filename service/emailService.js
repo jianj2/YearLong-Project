@@ -21,7 +21,7 @@ const {generateAttachments} = require('./reportService')
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        auth: 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,
+        auth: "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",
     }
 });
 
