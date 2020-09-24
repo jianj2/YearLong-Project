@@ -40,14 +40,6 @@ const sendInvitationEmail = function (createdShare) {
             message = "Message from the clinician: " + createdShare.message + "";
         }
 
-        // Used to create the email
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: require(path.join(__dirname, '..', 'config/keys')).GmailUserName,
-                pass: require(path.join(__dirname, '..', 'config/keys')).GmailPassword,
-            }
-        });
 
         // Parameters for the email.
         const mailOptions = {
