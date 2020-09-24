@@ -179,7 +179,7 @@ const printCustomQuestionnaireResults = function (doc, resultToPrint, startSpaci
 
 }
 
-const printStandardQuestionnaireResults = function (doc, resultToPrint, startSpacing) {
+const printStandardQuestionnaireResults = function (doc, resultToPrint, startSpacing, comments) {
     // initial document spacing after patient information
     let docHeight = Math.ceil(doc.page.height / 10) * 10 - 100;
     let rightMargin = 40
@@ -239,6 +239,7 @@ const printStandardQuestionnaireResults = function (doc, resultToPrint, startSpa
                 // doc.font('Helvetica-Bold')
                 //     .text('Comments: ', rightMargin, spacing);
                 // spacing = spacing + 35;
+                console.table(comments);
             });
 
         });
@@ -651,7 +652,7 @@ const generateCSV = function (questionnaireData, personalDetails, scenarioResult
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used generate the pdf report.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const generateAttachments = function (questionnaireId, personalDetails, questionnaireData, shareId, sortBy) {
+const generateAttachments = function (questionnaireId, personalDetails, questionnaireData, shareId, sortBy, comments) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
 
@@ -756,9 +757,9 @@ const generateAttachments = function (questionnaireId, personalDetails, question
 
 
                     if (sortedResults.isStandard) {
-                        printStandardQuestionnaireResults(doc, sortedResults, lineSpacing)
+                        printStandardQuestionnaireResults(doc, sortedResults, lineSpacing, comments)
                     } else {
-                        printCustomQuestionnaireResults(doc, sortedResults, lineSpacing)
+                        printCustomQuestionnaireResults(doc, sortedResults, lineSpacing, comments)
                     }
 
                     // CLOSE THE DOCUMENT,

@@ -60,7 +60,7 @@ const completeQuestionnaire = function (req, res) {
     console.log("sortBy ",sortBy);
     const userEmail = extractUserEmail(req);
     if(userEmail === clinicianEmail){
-        sendResultsEmail(questionnaireId, questionnaireData, clinicianEmail, personalDetails, sortBy)
+        sendResultsEmail(questionnaireId, questionnaireData, clinicianEmail, personalDetails, sortBy, undefined ,comments)
         .then(emailRes => res.send(emailRes))
         .catch(emailRej => res.send(emailRej));
     }else{
