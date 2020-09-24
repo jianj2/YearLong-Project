@@ -40,7 +40,8 @@ const onRedirectCallback = (appState) => {
     );
 };
 
-const link = `${process.env.REACT_APP_SERVER}/clinician` || "http://localhost:3001/clinician"
+const link = //`${process.env.REACT_APP_SERVER}/clinician` || 
+"http://localhost:3001/clinician";
 
 ReactDOM.render(
     <React.StrictMode>
