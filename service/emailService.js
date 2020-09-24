@@ -21,8 +21,8 @@ const {generateAttachments} = require('./reportService')
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: require(path.join(__dirname, '..', 'config/keys')).GmailUserName,
-        pass: require(path.join(__dirname, '..', 'config/keys')).GmailPassword,
+        user: 'ssq.paediatric@gmail.com',
+        pass: 'ps@12345',
     }
 });
 
