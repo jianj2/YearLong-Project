@@ -54,13 +54,10 @@ const DoTheTestContainer = () => {
     ] = useState([]);
     const [questionnaireData, setQuestionnaireData] = useState([]);
 
-
     console.log("questionnaires", questionnaires)
     console.log("standardisedQuestionnaires", standardisedQuestionnaires)
-    // ==================================================================
-    // TODO: USE THIS VARIABLE TO STORE COMMENT DATA
+
     const [commentData, setCommentData] = useState([]);
-    // ==================================================================
 
     const [selectedQuestionnaire, setSelectedQuestionnaire] = useState({
         questionnaireId: "",
@@ -132,6 +129,7 @@ const DoTheTestContainer = () => {
         setQuestionnaireData(temp);
     };
 
+    // Method called to update comment data when a scenario comment is updated.
     const handleCommentChange = (sectionIndex, scenarioIndex, data) => {
         let temp = [...commentData];
         temp[sectionIndex][scenarioIndex] = data;
@@ -156,9 +154,7 @@ const DoTheTestContainer = () => {
                     tempResponse[sectionIndex][scenarioIndex] = [];
                     tempComments[sectionIndex][scenarioIndex] = "";
                     scenario.questions.forEach((question, questionIndex) => {
-                        tempResponse[sectionIndex][scenarioIndex][
-                            questionIndex
-                        ] = {
+                        tempResponse[sectionIndex][scenarioIndex][questionIndex] = {
                             value: "",
                             supplementaryValue: "",
                         };
@@ -179,25 +175,25 @@ const DoTheTestContainer = () => {
         setPersonalDetails(data);
     };
 
-    const submitResponse = () => {
+    const emailResponse = (sortType) => {
         setLoading(true);
         let data = {
             questionnaireData,
             personalDetails,
             clinicianEmail: user.name,
             questionnaireId: selectedQuestionnaire.questionnaireId,
-           // TODO: ADD COMMENT DATA HERE
-            comments:commentData
+            comments:commentData,
+            sortBy: sortType
         };
 
-        completeQuestionnaire(token, data).then((res) => {
-            console.log("complete question", res);
-            setWizardStep(3);
-            setLoading(false);
-        });
+        completeQuestionnaire(token, data)
+            .then((res) => {
+                console.log("complete question", res);
+                setWizardStep(3);
+                setLoading(false);
+            });
     };
 
-    console.log("wizardStep", wizardStep);
     if (wizardStep === 0) {
         return (
             <div className="dothetest-container">
@@ -248,8 +244,14 @@ const DoTheTestContainer = () => {
                     <button className="button" onClick={prevStep}>
                         B A C K
                     </button>
-                    <button className="button" onClick={submitResponse}>
-                        S U B M I T
+                </div>
+                <div className="dothetest-subheader-container">
+                    <label>Email Report</label>
+                    <button className="button" onClick={() => emailResponse("PERFORMANCE")}>
+                        Sorted by Performance
+                    </button>
+                    <button className="button" onClick={() => emailResponse("IMPORTANCE")}>
+                        Sorted by Importance
                     </button>
                 </div>
 
@@ -290,7 +292,6 @@ const DoTheTestContainer = () => {
                     canDelete={false}
                     onClickDelete={() => {}}
                 />
-
                 <QuestionnaireList
                     questionnaires={questionnaires}
                     listTitle={"My Customised Questionnaires"}

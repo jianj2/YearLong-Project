@@ -126,24 +126,23 @@ export default function Questionnaire({
                                     />
                                 )
                             )}
-
-                            {/* ====== ====== ====== ====== ====== */}
-                            {/* TODO: ADD INPUT FIELD HERE    */}
-                            <div className="comment-container">
-                                <TextField
-                                    className="comment-input"
-                                    id="outlined-multiline-static"
-                                    label="COMMENT"
-                                    multiline
-                                    variant="outlined"
-                                    rows={4}
-                                    onChange={(e) => handleCommentChange(sectionIndex, scenarioIndex, e.target.value)}
-                                    value={commentData[sectionIndex][scenarioIndex]}
-                                    placeholder="Add Comment Here"
-                                />
-                            </div>
-
-                            {/* ====== ====== ====== ====== ====== */}
+                            {
+                                readOnly
+                                    ? null
+                                    : <div className="comment-container">
+                                        <TextField
+                                            className="comment-input"
+                                            id="outlined-multiline-static"
+                                            label="COMMENT"
+                                            multiline
+                                            variant="outlined"
+                                            rows={4}
+                                            onChange={(e) => handleCommentChange(sectionIndex, scenarioIndex, e.target.value)}
+                                            value={commentData[sectionIndex][scenarioIndex]}
+                                            placeholder="Add Comment Here"
+                                        />
+                                    </div>
+                            }
                         </div>
                     ))}
                 </div>
