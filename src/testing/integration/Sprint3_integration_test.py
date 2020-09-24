@@ -455,8 +455,8 @@ class Sprint3_integration_test(unittest.TestCase):
         rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         rd.send_keys("None")
         time.sleep(2)
-        next = self.driver.find_elements_by_class_name("button")[2]
-        next.click()
+        next1 = self.driver.find_elements_by_class_name("button")[2]
+        next1.click()
         time.sleep(2)
         assert self.driver.find_element_by_class_name("scenario-container")
 
@@ -477,8 +477,8 @@ class Sprint3_integration_test(unittest.TestCase):
         q = self.driver.find_elements_by_class_name("questionnaire-list-item")[1]
         q.click()
         time.sleep(2)
-        next = self.driver.find_elements_by_class_name("button")[2]
-        next.click()
+        next1 = self.driver.find_elements_by_class_name("button")[2]
+        next1.click()
         time.sleep(2)
         assert self.driver.find_element_by_class_name("parents-detail-form")
 
@@ -545,8 +545,8 @@ class Sprint3_integration_test(unittest.TestCase):
         rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         rd.send_keys("None")
         time.sleep(2)
-        next = self.driver.find_elements_by_class_name("button")[2]
-        next.click()
+        next1 = self.driver.find_elements_by_class_name("button")[2]
+        next1.click()
         time.sleep(2)
         review = self.driver.find_elements_by_class_name("button")[2]
         review.click()
@@ -582,8 +582,8 @@ class Sprint3_integration_test(unittest.TestCase):
         rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         rd.send_keys("None")
         time.sleep(2)
-        next = self.driver.find_elements_by_class_name("button")[2]
-        next.click()
+        next1 = self.driver.find_elements_by_class_name("button")[2]
+        next1.click()
         time.sleep(2)
         back = self.driver.find_elements_by_class_name("button")[1]
         back.click()
@@ -619,8 +619,8 @@ class Sprint3_integration_test(unittest.TestCase):
         rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         rd.send_keys("None")
         time.sleep(2)
-        next = self.driver.find_elements_by_class_name("button")[2]
-        next.click()
+        next1 = self.driver.find_elements_by_class_name("button")[2]
+        next1.click()
         time.sleep(2)
         slider = self.driver.find_elements_by_class_name("MuiSlider-thumb")[0]
         slider.click()
@@ -661,8 +661,8 @@ class Sprint3_integration_test(unittest.TestCase):
         rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         rd.send_keys("None")
         time.sleep(2)
-        next = self.driver.find_elements_by_class_name("button")[2]
-        next.click()
+        next1 = self.driver.find_elements_by_class_name("button")[2]
+        next1.click()
         time.sleep(2)
         review = self.driver.find_elements_by_class_name("button")[2]
         review.click()
@@ -701,8 +701,8 @@ class Sprint3_integration_test(unittest.TestCase):
         rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         rd.send_keys("None")
         time.sleep(2)
-        next = self.driver.find_elements_by_class_name("button")[2]
-        next.click()
+        next1 = self.driver.find_elements_by_class_name("button")[2]
+        next1.click()
         time.sleep(2)
         review = self.driver.find_elements_by_class_name("button")[2]
         review.click()
