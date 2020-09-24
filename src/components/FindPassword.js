@@ -34,7 +34,7 @@ const FindPassword = () => {
         setOpen(false);
         await loginWithRedirect({
 
-            redirect_uri: process.env.REDIRECT_LINK,
+            redirect_uri: process.env.REACT_APP_CLIENT,
 
         });
 
