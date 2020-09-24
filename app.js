@@ -32,9 +32,7 @@ app.use('/admin/', adminRouter);
 app.use('/share/', shareRouter);
 
 
-
-
-
+console.log(process.env.CLIENT)
 
 
 const port = process.env.PORT || 3001;
