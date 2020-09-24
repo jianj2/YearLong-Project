@@ -21,9 +21,9 @@ const {generateAttachments} = require('./reportService')
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'ssq.paediatric@gmail.com',
-        pass: 'zb5Mx6mKC*qTF5-#7h_ZN!C6'
-    } 
+        user: process.env.GMAILUSERNAME || require(path.join(__dirname, '..', 'config/keys')).GmailUserName,
+        pass: process.env.GMAILPASSWORD || require(path.join(__dirname, '..', 'config/keys')).GmailPassword,
+    }
 });
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -40,12 +40,10 @@ const sendInvitationEmail = function (createdShare) {
             message = "Message from the clinician: " + createdShare.message + "";
         }
 
-
         // Parameters for the email.
         const mailOptions = {
             from: 'SSQ Paediatric',
             to: patientEmail,
-            replyTo: "ssq.paediatric@gmail.com",
             subject: " You are invited to complete the following questionnaire.",
             html: '<div style="background-color: #151641; display: flex;flex-flow: column;align-items: center;justify-content: space-evenly;color: #fff;padding: 20px;">\n' +
                 '        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="200px"  viewBox="0 0 1138 341" enable-background="new 0 0 1138 341" xml:space="preserve">  <image id="image0" width="1138" height="341" x="0" y="0"\n' +

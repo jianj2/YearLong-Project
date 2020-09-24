@@ -3,3 +3,6 @@
 
 # IDE
 .idea
+
+# keys.js
+config/keys.js
