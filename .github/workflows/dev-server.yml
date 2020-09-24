@@ -18,20 +18,15 @@ on:
     branches: 
     - deployment-server 
     - development-server
-    - master-server 
   # Pipeline trigger on pull request
   pull_request:
     branches:
     - development-server
-    - master-server
 
 jobs:
-  # Testing server code with npm CI
+  # Testing server code with mocha
   test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
+    runs-on: ubuntu-latest
     name: test
     steps:
     # Checking out code to server
@@ -42,18 +37,20 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 14.8
-    # Running npm CI
-    - name: Lint with npm CI 
-      run: npm ci
-      
+    # Installing npm dependencies  
+    - name: Install dependencies    
+      run: npm install
+    # Running ESlint
+    - name: Lint with ESlint 
+      uses: getsentry/action-eslint-fix@v1
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        dry: true
+
   # Deploy nodejs to heroku
   deploy:
     needs: test
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node-version: [14.x]
+    runs-on: ubuntu-latest
     name: deploy
     steps:
     # Checking out code to server
