@@ -46,8 +46,8 @@ jobs:
     - name: Install dependencies    
       run: npm install
     # Running mocha
-    #- name: Run mocha tests
-    #  run: npm test
+    - name: Run mocha tests
+      run: npm test
 
   # Deploy nodejs to heroku
   deploy:
