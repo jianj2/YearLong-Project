@@ -847,6 +847,29 @@ class Sprint3_integration_test(unittest.TestCase):
         time.sleep(2)
         assert "http://localhost:3000/admin/Organisation/zoo" in self.driver.current_url
 
+    def test_forgetPassword_withoutInput(self):
+        self.driver.get("http://localhost:3000/findPassword")
+        time.sleep(2)
+        submit = self.driver.find_element_by_class_name("button")
+        submit.click()
+        time.sleep(2)
+        assert "error" in self.driver.find_elements_by_class_name("MuiTypography-root")[1].text
+
+    def test_forgetPassword_withInput(self):
+        self.driver.get("http://localhost:3000/findPassword")
+        time.sleep(2)
+        submit = self.driver.find_element_by_class_name("button")
+        submit.click()
+        time.sleep(2)
+        email = self.driver.find_element_by_class_name("MuiInputBase-input")
+        email.send_keys("test_email")
+        time.sleep(2)
+        assert "Request sent successfully!" in self.driver.find_elements_by_class_name("MuiTypography-root")[1].text
+        ok = self.driver.find_element_by_class_name("MuiButtonBase-root")
+        ok.click()
+        time.sleep(2)
+        assert self.driver.find_element_by_class_name(" login-box ")
+
     def tearDown(self):
         self.driver.close()
 
