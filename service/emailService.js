@@ -33,7 +33,8 @@ const sendInvitationEmail = function (createdShare) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
         const {patientEmail} = createdShare;
-        let link = "http://localhost:3000/parent/" + createdShare.shareId + "";
+        let client = `${process.env.CLIENT}/parent/` || "http://localhost:3000/parent/"
+        let link = client + createdShare.shareId + "";
         let message = "";
         if (createdShare.message != undefined) {
             message = "Message from the clinician: " + createdShare.message + "";

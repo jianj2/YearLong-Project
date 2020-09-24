@@ -14,7 +14,7 @@ const router = express.Router();
 const questionnaire_controller = require('../controller/questionnaire_controller.js');
 const jwt = require('express-jwt');
 const jwksRsa = require('jwks-rsa');
-const domain = "http://localhost:3001";
+const domain = process.env.SERVER || "http://localhost:3001";
 
 
 // Authentication middleware. When used, the
