@@ -47,12 +47,16 @@ const shareQuestionnaire = function (req, res) {
                 sendInvitationEmail(createdShare)
                     .then((emailRes) => {
                         if (emailRes.success) {
-                            res.send(emailRes);
+                            res.send(JSON.stringify(emailRes));
+                        } else {
+                            res.send("I got an error");
                         }
                     })
                     .catch((emailRej) => {
                         if (emailRej.success) {
-                            res.send(emailRej);
+                            res.send(JSON.stringify(emailRej));
+                        } else {
+                            res.send("I got an error");
                         }
                     });
             } else {
