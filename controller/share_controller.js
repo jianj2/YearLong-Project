@@ -105,7 +105,8 @@ const completeShare = function (req, res) {
         clinicianEmail,
         personalDetails,
         sortBy,
-        req.params.shareId
+        req.params.shareId,
+        comments
     )
         .then((emailRes) => {
             deleteShare(req, res);
