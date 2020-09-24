@@ -106,7 +106,7 @@ const scoreColour = function (doc, value) {
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to print the results on the document
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const printCustomQuestionnaireResults = function (doc, resultToPrint, startSpacing) {
+const printCustomQuestionnaireResults = function (doc, resultToPrint, startSpacing, comments) {
     // initial document spacing after patient information
     let docHeight = Math.ceil(doc.page.height / 10) * 10 - 100;
     let rightMargin = 40
@@ -122,7 +122,7 @@ const printCustomQuestionnaireResults = function (doc, resultToPrint, startSpaci
         // doc.font('Helvetica').fontSize(12).text("Section average: " + section.score, midMargin, spacing);
         spacing = spacing + 30;
 
-        section.scenarios.map((scenario) => {
+        section.scenarios.map((scenario,senarioIndex) => {
             spacing = addPage(doc, spacing, docHeight)
             // Writing the description for each scenario.
             doc.font('Helvetica-Bold').fontSize(12).text("Scenario: ", rightMargin, spacing);
@@ -163,11 +163,16 @@ const printCustomQuestionnaireResults = function (doc, resultToPrint, startSpaci
                     spacing = spacing + 35;
                 }
                 spacing = addPage(doc, spacing, docHeight)
-                doc.font('Helvetica-Bold')
-                    .text('Comments: ', rightMargin, spacing);
-                spacing = spacing + 35;
 
             });
+            // Add a comment
+            if (comments[sectionIndex][senarioIndex] != null && comments[sectionIndex][senarioIndex] != "" ) {
+                doc.font('Helvetica-Bold')
+                    .text('Comments: ' + comments[sectionIndex][senarioIndex], rightMargin, spacing);
+                spacing = spacing + 35;
+                spacing = addPage(doc, spacing, docHeight)
+            }
+
 
         });
         // Add a separation line.
@@ -207,7 +212,7 @@ const printStandardQuestionnaireResults = function (doc, resultToPrint, startSpa
         // doc.font('Helvetica').fontSize(12).text("Section average: " + section.score, midMargin, spacing);
         spacing = spacing + 35;
 
-        section.scenarios.map((scenario) => {
+        section.scenarios.forEach((scenario, senarioIndex) => {
             spacing = addPage(doc, spacing, docHeight)
             // Writing the description for each scenario.
             doc.font('Helvetica-Bold').fontSize(12).text("Scenario: ", rightMargin, spacing);
@@ -235,12 +240,16 @@ const printStandardQuestionnaireResults = function (doc, resultToPrint, startSpa
                 })
                 doc.fillColor('black')
                 spacing = spacing + Math.ceil(doc.heightOfString(questionAnswer, {width: paragraphWidth}) / 10) * 10 + 20;
-                // spacing = addPage(doc, spacing, docHeight)
-                // doc.font('Helvetica-Bold')
-                //     .text('Comments: ', rightMargin, spacing);
-                // spacing = spacing + 35;
-                console.table(comments);
+                spacing = addPage(doc, spacing, docHeight)
             });
+
+            // Add a comment
+            if (comments[sectionIndex][senarioIndex] != null && comments[sectionIndex][senarioIndex] != "" ) {
+                doc.font('Helvetica-Bold')
+                    .text('Comments: ' + comments[sectionIndex][senarioIndex], rightMargin, spacing);
+                spacing = spacing + 35;
+                spacing = addPage(doc, spacing, docHeight)
+            }
 
         });
         // Add a separation line.

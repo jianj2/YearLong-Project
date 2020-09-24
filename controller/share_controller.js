@@ -109,7 +109,7 @@ const completeShare = function (req, res) {
         comments
     )
         .then((emailRes) => {
-            deleteShare(req, res);
+            //deleteShare(req, res);
             res.send(emailRes);
         })
         .catch((emailRej) => res.send(emailRej));
