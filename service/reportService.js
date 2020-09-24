@@ -134,6 +134,11 @@ const printCustomQuestionnaireResults = function (doc, resultToPrint, startSpaci
                 align: 'justify'
             });
 
+            // adds purple overlay on top of scenario
+            doc.fillOpacity(0.1).rect(30, spacing - 10, 550, doc.heightOfString(scenario.description, {width: paragraphWidth}) + 15).fill('purple');
+            doc.fillOpacity(1).fill('black');
+
+
             spacing = spacing + Math.ceil(doc.heightOfString(scenario.description, {width: paragraphWidth}) / 10) * 10 + 15;
 
             scenario.questions.map((question) => {
