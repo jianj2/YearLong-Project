@@ -33,6 +33,8 @@ app.use('/share/', shareRouter);
 
 
 console.log(process.env.CLIENT)
+// console.log(process.env)
+console.log("Testing testing testing")
 
 
 const port = process.env.PORT || 3001;
