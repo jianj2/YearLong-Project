@@ -21,10 +21,9 @@ const {generateAttachments} = require('./reportService')
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        type: 'OAuth2',
         user: 'ssq.paediatric@gmail.com',
         pass: 'zb5Mx6mKC*qTF5-#7h_ZN!C6'
-        } 
+    } 
 });
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
