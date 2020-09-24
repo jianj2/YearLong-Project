@@ -237,7 +237,10 @@ export const getShareDetails = (shareId) =>
 export const shareQuestionnaire = async (token, data) =>
     fetch(`${api}/clinician/share/`, {
         method: "POST",
-        headers: header,
+        headers: {
+            ...header,
+            ...createHeader(token),
+        },
         body: JSON.stringify(data),
     }).then((res) => res);
 
