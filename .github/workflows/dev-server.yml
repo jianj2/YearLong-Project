@@ -26,7 +26,7 @@ on:
     - master-server
 
 jobs:
-  # Testing server code with mocha
+  # Testing server code with npm CI
   test:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -42,16 +42,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 14.8
-    # Installing npm dependencies  
-    - name: Install dependencies    
-      run: npm install
-    # Running ESlint
-    - name: Lint with ESlint 
-      uses: getsentry/action-eslint-fix@v1
-      with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        dry: true
-
+    # Running npm CI
+    - name: Lint with npm CI 
+      run: npm ci
+      
   # Deploy nodejs to heroku
   deploy:
     needs: test
