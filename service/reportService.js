@@ -17,7 +17,7 @@ const mongoose = require("mongoose");
 const Questionnaire = mongoose.model("questionnaire");
 const Share = mongoose.model("share");
 const fs = require('fs');
-const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require('constants');
+const {SSL_OP_SSLEAY_080_CLIENT_DH_BUG} = require('constants');
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // HELPERS
@@ -51,14 +51,21 @@ const getTimeStamp = function () {
     return (year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds);
 }
 
-const addPage = function (doc, spacing, docHeight) {
-    if (spacing >= docHeight) {
+const addPage = function (doc, spacing, docHeight, paragraphHeight) {
+    if (paragraphHeight > 0 && (spacing + paragraphHeight) > docHeight) {
         doc.addPage();
         // prints time stamp
         doc.font('Helvetica').fontSize(10).text(getTimeStamp(), 10, 10);
         // insert logo
         doc.image('assets/logo_complete.png', 450, 30, {width: 100})
-        spacing = 90;
+        spacing = 100;
+    } else if (spacing >= docHeight) {
+        doc.addPage();
+        // prints time stamp
+        doc.font('Helvetica').fontSize(10).text(getTimeStamp(), 10, 10);
+        // insert logo
+        doc.image('assets/logo_complete.png', 450, 30, {width: 100})
+        spacing = 100;
     }
     return spacing;
 }
@@ -93,11 +100,9 @@ const printMCQAnswer = function (doc, questionAnswer, startMargin, midMargin, sp
 const scoreColour = function (doc, value) {
     if (value < 4.0) {
         doc.fillColor('red')
-    }
-    else if (value >= 4.0 && value < 7.0) {
+    } else if (value >= 4.0 && value < 7.0) {
         doc.fillColor('orange')
-    }
-    else if (value >= 7.0 && value <= 10.0) {
+    } else if (value >= 7.0 && value <= 10.0) {
         doc.fillColor('green')
     }
 }
@@ -112,7 +117,7 @@ const printCustomQuestionnaireResults = function (doc, resultToPrint, startSpaci
     let rightMargin = 40
     let startMargin = 30
     let spacing = startSpacing;
-    let midMargin = Math.ceil((doc.widthOfString("Answer: ") + rightMargin) / 10) * 10 + 5;
+    let answerMargin = Math.ceil((doc.widthOfString("Answer: ") + rightMargin) / 10) * 10 + 5;
     let paragraphWidth = 465;
 
     resultToPrint.sections.forEach((section, sectionIndex) => {
@@ -122,8 +127,8 @@ const printCustomQuestionnaireResults = function (doc, resultToPrint, startSpaci
         // doc.font('Helvetica').fontSize(12).text("Section average: " + section.score, midMargin, spacing);
         spacing = spacing + 30;
 
-        section.scenarios.map((scenario,senarioIndex) => {
-            spacing = addPage(doc, spacing, docHeight)
+        section.scenarios.map((scenario, scenarioIndex) => {
+            spacing = addPage(doc, spacing, docHeight, Math.ceil(doc.heightOfString(scenario.description, {width: paragraphWidth}) / 10) * 10 + 15)
             // Writing the description for each scenario.
             doc.font('Helvetica-Bold').fontSize(12).text("Scenario: ", rightMargin, spacing);
             //spacing = spacing + 20;
@@ -138,7 +143,6 @@ const printCustomQuestionnaireResults = function (doc, resultToPrint, startSpaci
             doc.fillOpacity(0.1).rect(30, spacing - 10, 550, doc.heightOfString(scenario.description, {width: paragraphWidth}) + 15).fill('purple');
             doc.fillOpacity(1).fill('black');
 
-
             spacing = spacing + Math.ceil(doc.heightOfString(scenario.description, {width: paragraphWidth}) / 10) * 10 + 15;
 
             scenario.questions.map((question) => {
@@ -147,7 +151,7 @@ const printCustomQuestionnaireResults = function (doc, resultToPrint, startSpaci
                 let questionAnswer = question.response;
                 // If the question is range type then the print out both value and supplementary value.
                 if (!question.isMCQ) {
-                    printRQAnswer(doc, questionAnswer, rightMargin, midMargin, spacing)
+                    printRQAnswer(doc, questionAnswer, rightMargin, answerMargin, spacing)
 
                     spacing = spacing + 35;
                     spacing = addPage(doc, spacing, docHeight)
@@ -155,6 +159,7 @@ const printCustomQuestionnaireResults = function (doc, resultToPrint, startSpaci
 
                 // MCQ questions will have the question and answer printed on pdf.
                 else {
+                    spacing = addPage(doc, spacing, docHeight, Math.ceil(doc.heightOfString(question.description, {width: paragraphWidth}) / 10) * 10 + 10)
                     doc.font('Helvetica-Bold')
                         .text(question.description, rightMargin, spacing, {
                             width: paragraphWidth,
@@ -164,17 +169,23 @@ const printCustomQuestionnaireResults = function (doc, resultToPrint, startSpaci
                     spacing = spacing + Math.ceil(doc.heightOfString(question.description, {width: paragraphWidth}) / 10) * 10 + 10;
                     spacing = addPage(doc, spacing, docHeight)
 
-                    printMCQAnswer(doc, questionAnswer, rightMargin, midMargin, spacing)
+                    printMCQAnswer(doc, questionAnswer, rightMargin, answerMargin, spacing)
                     spacing = spacing + 35;
                 }
                 spacing = addPage(doc, spacing, docHeight)
 
             });
             // Add a comment
-            if (comments[sectionIndex][senarioIndex] != null && comments[sectionIndex][senarioIndex] != "" ) {
-                doc.font('Helvetica-Bold')
-                    .text('Comments: ' + comments[sectionIndex][senarioIndex], rightMargin, spacing);
-                spacing = spacing + 35;
+            if (comments[sectionIndex][scenarioIndex] != null && comments[sectionIndex][scenarioIndex] != "") {
+                let comment = comments[sectionIndex][scenarioIndex]
+                spacing = addPage(doc, spacing, docHeight, Math.ceil(doc.heightOfString(comment, {width: paragraphWidth-25}) / 10) * 10 + 10)
+                doc.font('Helvetica-Bold').fontSize(12)
+                    .text('Comments: ', rightMargin, spacing);
+                doc.font('Helvetica').text(comment, answerMargin, spacing, {
+                    width: paragraphWidth - 25,
+                    align: 'justify'
+                })
+                spacing = spacing + Math.ceil(doc.heightOfString(comment, {width: paragraphWidth-25}) / 10) * 10 + 15;
                 spacing = addPage(doc, spacing, docHeight)
             }
 
@@ -217,7 +228,7 @@ const printStandardQuestionnaireResults = function (doc, resultToPrint, startSpa
         // doc.font('Helvetica').fontSize(12).text("Section average: " + section.score, midMargin, spacing);
         spacing = spacing + 35;
 
-        section.scenarios.forEach((scenario, senarioIndex) => {
+        section.scenarios.forEach((scenario, scenarioIndex) => {
             spacing = addPage(doc, spacing, docHeight)
             // Writing the description for each scenario.
             doc.font('Helvetica-Bold').fontSize(12).text("Scenario: ", rightMargin, spacing);
@@ -249,10 +260,16 @@ const printStandardQuestionnaireResults = function (doc, resultToPrint, startSpa
             });
 
             // Add a comment
-            if (comments[sectionIndex][senarioIndex] != null && comments[sectionIndex][senarioIndex] != "" ) {
-                doc.font('Helvetica-Bold')
-                    .text('Comments: ' + comments[sectionIndex][senarioIndex], rightMargin, spacing);
-                spacing = spacing + 35;
+            if (comments[sectionIndex][scenarioIndex] != null && comments[sectionIndex][scenarioIndex] != "") {
+                let comment = comments[sectionIndex][scenarioIndex]
+                spacing = addPage(doc, spacing, docHeight, Math.ceil(doc.heightOfString(comment, {width: paragraphWidth-25}) / 10) * 10 + 10)
+                doc.font('Helvetica-Bold').fontSize(12)
+                    .text('Comments: ', rightMargin, spacing);
+                doc.font('Helvetica').text(comment, answerMargin, spacing, {
+                    width: paragraphWidth-25,
+                    align: 'justify'
+                })
+                spacing = spacing + Math.ceil(doc.heightOfString(comment, {width: paragraphWidth-25}) / 10) * 10 + 15;
                 spacing = addPage(doc, spacing, docHeight)
             }
 
@@ -438,19 +455,24 @@ const speechSection = function (speechScenarios, subScaleScore) {
 
                     // switch case combination to calculate the average score
                     // of sub-scale SpQ, SpN, SpSp, SpStrm
-                    switch(j){
+                    switch (j) {
                         // For SpQ A2 A3
-                        case 1: case 2:            
+                        case 1:
+                        case 2:
                             scoreSpQ += speechScenarios[j][z].value
                             spQCount += 1;
                             break;
                         // For SpN A1 A4 A5 A6
-                        case 0: case 3: case 4: case 5:
+                        case 0:
+                        case 3:
+                        case 4:
+                        case 5:
                             scoreSpN += speechScenarios[j][z].value
                             spNCount += 1;
                             break;
                         // For SpSp A7 A8
-                        case 6: case 7:
+                        case 6:
+                        case 7:
                             scoreSpSp += speechScenarios[j][z].value
                             spSpCount += 1;
                             break;
@@ -489,20 +511,30 @@ const spatialSection = function (spatialScenarios, subScaleScore) {
 
     // The counting starts from zero
     for (let j = 0; j < spatialScenarios.length; j++) {
-        for (let z = 0; z < spatialScenarios[j].length; z++) {       
+        for (let z = 0; z < spatialScenarios[j].length; z++) {
             if (!isNaN(spatialScenarios[j][z].value)) {
                 if (spatialScenarios[j][z].value !== '') {
 
                     // switch case combination to calculate the average score
                     // of sub-scale Localiz, Dist/Move
-                    switch(j){
+                    switch (j) {
                         // For Localiz B1 B2 B3 B4 B5
-                        case 0: case 1: case 2: case 3: case 4:
+                        case 0:
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
                             scoreLocaliz += spatialScenarios[j][z].value
                             localizCount += 1;
                             break;
                         // For Dist/Move B6 B7 B8 B9 B10 B11 B12
-                        case 5: case 6: case 7: case 8: case 9: case 10: case 11:
+                        case 5:
+                        case 6:
+                        case 7:
+                        case 8:
+                        case 9:
+                        case 10:
+                        case 11:
                             scoreDist += spatialScenarios[j][z].value
                             distCount += 1;
                             break;
@@ -510,7 +542,7 @@ const spatialSection = function (spatialScenarios, subScaleScore) {
                             console.log(`spatialScenario: ${j} is not included in any subscale`)
                     }
                 }
-            }    
+            }
         }
     }
 
@@ -518,7 +550,7 @@ const spatialSection = function (spatialScenarios, subScaleScore) {
     subScaleScore.Spatial.Localiz = (!isNaN(scoreLocaliz / localizCount)) ? (scoreLocaliz / localizCount) : "N/A"
     subScaleScore.Spatial.Dist = (!isNaN(scoreDist / distCount)) ? (scoreDist / distCount) : "N/A"
 
-    return subScaleScore;   
+    return subScaleScore;
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -535,26 +567,32 @@ const qualitiesSection = function (qualitiesScenarios, subScaleScore) {
     let listEffCount = 0;
 
     // The counting starts from zero
-    for (let j = 0; j < qualitiesScenarios.length; j++) { 
-        for (let z = 0; z < qualitiesScenarios[j].length; z++) { 
+    for (let j = 0; j < qualitiesScenarios.length; j++) {
+        for (let z = 0; z < qualitiesScenarios[j].length; z++) {
             if (!isNaN(qualitiesScenarios[j][z].value)) {
                 if (qualitiesScenarios[j][z].value !== '') {
-                    
+
                     // switch case combination to calculate the average score
                     // of sub-scale Segreg, ID Sound, ListEff
-                    switch(j){
+                    switch (j) {
                         // Segreg C1 C2
-                        case 0: case 1:
+                        case 0:
+                        case 1:
                             scoreSegreg += qualitiesScenarios[j][z].value
                             segregCount += 1;
                             break;
                         // ID Sound C3 C4 C5 C6
-                        case 2: case 3: case 4: case 5:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
                             scoreIDSound += qualitiesScenarios[j][z].value
                             idSoundCount += 1;
                             break;
                         // ListEff C7 C9 C10
-                        case 6: case 8: case 9:
+                        case 6:
+                        case 8:
+                        case 9:
                             scoreListEff += qualitiesScenarios[j][z].value
                             listEffCount += 1;
                             break;
@@ -563,7 +601,7 @@ const qualitiesSection = function (qualitiesScenarios, subScaleScore) {
                     }
                 }
             }
-        }    
+        }
     }
 
     // Averaging the score for each subscale
@@ -571,15 +609,15 @@ const qualitiesSection = function (qualitiesScenarios, subScaleScore) {
     subScaleScore.Qualities.IDSound = (!isNaN(scoreIDSound / idSoundCount)) ? (scoreIDSound / idSoundCount) : "N/A"
     subScaleScore.Qualities.ListEff = (!isNaN(scoreListEff / listEffCount)) ? (scoreListEff / listEffCount) : "N/A"
 
-    return subScaleScore; 
+    return subScaleScore;
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to calculate the average score for each sub-scale 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const calculateSubScaleScore = function (questionnaireData, subScaleScore) {
-    for (let i = 0; i < questionnaireData.length; i++) {     
-        switch(i) {
+    for (let i = 0; i < questionnaireData.length; i++) {
+        switch (i) {
             case 0:
                 subScaleScore = speechSection(questionnaireData[i], subScaleScore)
                 break;
@@ -640,11 +678,11 @@ const calculateScore = function (questionnaireData, calculateAverage, section_sc
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used generate the csv report.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const generateCSV = function (questionnaireData, personalDetails, scenarioResults) {
+const generateCSV = function (questionnaireData, personalDetails, scenarioResults, comments) {
     const device_r = personalDetails.rightDeviceType === 'Other' ? personalDetails.rightDeviceTypeOther : personalDetails.rightDeviceType;
     const device_l = personalDetails.leftDeviceType === 'Other' ? personalDetails.leftDeviceTypeOther : personalDetails.leftDeviceType
     let toWrite = `Section,Item Number,Rating,Frequency,Importance,Listening Situation,` +
-        `Completed By,Name,Date,Right Device Type, Left Device Type\n`
+        `Completed By,Name,Date,Right Device Type, Left Device Type, Comments\n`
     let itemNumber = 1;
     questionnaireData.sections.forEach((section, sectionIndex) => {
         // ADD SCORE TO THE SECTION
@@ -656,7 +694,7 @@ const generateCSV = function (questionnaireData, personalDetails, scenarioResult
             let questionDescription = (scenario.description).replace(/,/g, "")
             toWrite += `${section.title},${itemNumber},${response[0]},${response[1]},${response[2]},` +
                 `${questionDescription},${personalDetails.completedBy},${personalDetails.name},` +
-                `${personalDetails.date},${device_r},${device_l}\n`
+                `${personalDetails.date},${device_r},${device_l}, ${comments[sectionIndex][scenarioIndex]}\n`
             itemNumber += 1;
         });
     });
@@ -674,13 +712,13 @@ const generateAttachments = function (questionnaireId, personalDetails, question
             if (!err) {
                 let section_score = [];
 
-                let subScaleScore = { 
-                    Speech:{ SpQ: 0.0, SpN: 0.0, SpSp: 0.0, SpStrm: 0.0 },
-                    Spatial:{ Localiz: 0.0, Dist: 0.0 },
-                    Qualities:{ Segreg: 0.0, IDSound: 0.0, ListEff: 0.0 }
+                let subScaleScore = {
+                    Speech: {SpQ: 0.0, SpN: 0.0, SpSp: 0.0, SpStrm: 0.0},
+                    Spatial: {Localiz: 0.0, Dist: 0.0},
+                    Qualities: {Segreg: 0.0, IDSound: 0.0, ListEff: 0.0}
                 }
 
-                let newSubScaleScore = calculateSubScaleScore(questionnaireData,subScaleScore);
+                let newSubScaleScore = calculateSubScaleScore(questionnaireData, subScaleScore);
                 console.log(newSubScaleScore)
                 section_score = calculateScore(questionnaire, false, section_score)
                 let average_score = calculateScore(questionnaireData, true, section_score);
@@ -732,7 +770,7 @@ const generateAttachments = function (questionnaireId, personalDetails, question
 
                     const [resultToPrint, scenarioResults] = getQuestionnaireResponseJoin(questionnaire, questionnaireData, section_score, sharedSections);
 
-                    const csvResult = generateCSV(resultToPrint, personalDetails, scenarioResults);
+                    const csvResult = generateCSV(resultToPrint, personalDetails, scenarioResults, comments);
 
                     // prints out summary of section scores
                     doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire Score Summary", 30, 240);
@@ -744,7 +782,7 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     resultToPrint.sections.forEach((section, sectionIndex) => {
                         doc.font('Helvetica-Bold').fontSize(12).text(section.title + " Average: ", 50, lineSpacing);
                         margin = Math.ceil(doc.widthOfString(section.title + " Average: ") / 10) * 10 + 60;
-                        doc.font('Helvetica').text(scores.sectionScores[sectionIndex] == "N/A" ? "N/A": scores.sectionScores[sectionIndex].toFixed(2), margin, lineSpacing);
+                        doc.font('Helvetica').text(scores.sectionScores[sectionIndex] == "N/A" ? "N/A" : scores.sectionScores[sectionIndex].toFixed(2), margin, lineSpacing);
                         lineSpacing += 30;
                         lineSpacing = addPage(doc, lineSpacing, doc.page.height);
                     })
@@ -763,7 +801,7 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     // MAKE THIS BETTER
                     // const sortedResults = sortByImportance(resultToPrint)
                     let sortedResults = []
-                    if (sortBy === HELPER_SORT.PERFORMANCE){
+                    if (sortBy === HELPER_SORT.PERFORMANCE) {
                         sortedResults = sortByPerformance(resultToPrint)
                     } else {
                         sortedResults = sortByImportance(resultToPrint)
