@@ -32,11 +32,6 @@ app.use('/admin/', adminRouter);
 app.use('/share/', shareRouter);
 
 
-console.log(process.env.CLIENT)
-// console.log(process.env)
-console.log("Testing testing testing")
-
-
 const port = process.env.PORT || 3001;
 app.listen(port, function (req,res) {
     console.log("server is running on port " + port + "!");
