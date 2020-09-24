@@ -242,7 +242,7 @@ export const shareQuestionnaire = async (token, data) =>
             ...createHeader(token),
         },
         body: JSON.stringify(data),
-    }).then((res) => res);
+    }).then((res) => res.json());
 
 // get Instruction
 export const getInstruction = async () => {
