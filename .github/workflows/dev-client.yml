@@ -5,9 +5,8 @@
 # Mayank Sharma - 22th August 2020
 #
 # This YAML file runs a pipeline in GitHub Actions containing a number of jobs.
-# Jobs include testing the code, building the image, caching the image, publishing
-# the image to GitHub registry, transfering the files to the production server and 
-# deploying the frontend on the server.
+# Jobs include testing the code and deploying the deployment-client and development-client branches
+# to Heroku.
 
 ---
 name: client-CI/CD
@@ -18,20 +17,15 @@ on:
     branches: 
     - deployment-client 
     - development-client
-    - master-client 
   # Pipeline trigger on pull request    
   pull_request:
     branches:
     - development-client
-    - master-client
 
 jobs:
   # Linting client code with flake8
   test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
+    runs-on: ubuntu-latest
     name: test
     steps:
     # Checking out code to server
@@ -61,11 +55,7 @@ jobs:
   # Deploy reactjs to heroku
   deploy:
     needs: test
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node-version: [14.x]
+    runs-on: ubuntu-latest
     name: deploy
     steps:
     # Checking out code to server
