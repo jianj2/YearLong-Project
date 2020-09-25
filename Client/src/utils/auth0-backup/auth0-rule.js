@@ -3,7 +3,7 @@
 
 let backup = function (user, context, callback) {
 
-    var namespace = 'http://pediatric-scale.com/';
+    let namespace = 'http://pediatric-scale.com/';
   
     context.accessToken[namespace + 'email'] = user.email;
     return callback(null, user, context);

@@ -31,7 +31,8 @@ import ContentPanel from "../components/Clinician/ContentPanel";
 const HomeClinician = (props) => {
     const { loading, isAuthenticated, loginWithRedirect, user, getTokenSilently, setToken} = useAuth0();
     
-    const domain = "http://localhost:3001";
+    const domain = //process.env.REACT_APP_SERVER ||
+     "http://localhost:3001";
     
      
     
@@ -63,9 +64,9 @@ const HomeClinician = (props) => {
 
             await loginWithRedirect({
 
-                redirect_uri: process.env.REDIRECT_LINK,
+                redirect_uri: //`${process.env.REACT_APP_CLIENT}/clinician`
                 
-                //"http://localhost:3000/clinician", //TODO: figure out why window.location.pathname doesn't work
+                "http://localhost:3000/clinician", //TODO: figure out why window.location.pathname doesn't work
 
                 //redirect_uri: "https://d1hg2pgsuj0kio.cloudfront.net/clinician", //TODO: figure out why window.location.pathname doesn't work
 

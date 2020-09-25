@@ -32,8 +32,8 @@ import FindPassword from "./components/FindPassword";
 
 function App() {
 
-    console.log("This is server domain",process.env);
-    console.log("This is redirect link",process.env);
+    console.log("This is server domain",);
+    console.log("This is redirect link",);
     // const { loading } = useAuth0();
 
     // if (loading) {
@@ -71,9 +71,15 @@ function App() {
                         render={() => <HomeAdmin active = {2} />}
                     />
                     <Route
-                        path="/admin/SSQ_Introduction"
+                        path="/admin/Organisation"
                         exact
                         render={() => <HomeAdmin active = {3} />}
+                    />
+
+                    <Route
+                        path="/admin/Organisation/:name"
+                        exact
+                        render={({match})=>(<HomeAdmin active={7} organName={match.params.name}/>)}
                     />
 
                     <Route

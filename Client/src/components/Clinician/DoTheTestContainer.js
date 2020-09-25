@@ -54,6 +54,11 @@ const DoTheTestContainer = () => {
     ] = useState([]);
     const [questionnaireData, setQuestionnaireData] = useState([]);
 
+    console.log("questionnaires", questionnaires)
+    console.log("standardisedQuestionnaires", standardisedQuestionnaires)
+
+    const [commentData, setCommentData] = useState([]);
+
     const [selectedQuestionnaire, setSelectedQuestionnaire] = useState({
         questionnaireId: "",
         title: "",
@@ -102,8 +107,8 @@ const DoTheTestContainer = () => {
     // Method called to go to the instructions page in the wizard.
     const submitDetails = (data) => {
         // to make sure field is not empty.
-        data["completedBy"] = "clinician";
-        setPersonalDetails(data);
+        getPersonalDetails["completedBy"] = "clinician";
+        setPersonalDetails(getPersonalDetails);
         console.log("details submitted", data);
         nextStep();
     };
@@ -124,6 +129,13 @@ const DoTheTestContainer = () => {
         setQuestionnaireData(temp);
     };
 
+    // Method called to update comment data when a scenario comment is updated.
+    const handleCommentChange = (sectionIndex, scenarioIndex, data) => {
+        let temp = [...commentData];
+        temp[sectionIndex][scenarioIndex] = data;
+        setCommentData(temp);
+    }
+
     const onClickQuestion = async (questionnaireId) => {
         console.log("questionnaire clicked", questionnaireId);
         setWizardStep(0);
@@ -134,14 +146,15 @@ const DoTheTestContainer = () => {
         if (statusCode === 200) {
             const questionnaire = data;
             let tempResponse = [];
+            let tempComments = [];
             questionnaire.sections.forEach((section, sectionIndex) => {
                 tempResponse[sectionIndex] = [];
+                tempComments[sectionIndex] = [];
                 section.scenarios.forEach((scenario, scenarioIndex) => {
                     tempResponse[sectionIndex][scenarioIndex] = [];
+                    tempComments[sectionIndex][scenarioIndex] = "";
                     scenario.questions.forEach((question, questionIndex) => {
-                        tempResponse[sectionIndex][scenarioIndex][
-                            questionIndex
-                        ] = {
+                        tempResponse[sectionIndex][scenarioIndex][questionIndex] = {
                             value: "",
                             supplementaryValue: "",
                         };
@@ -150,6 +163,7 @@ const DoTheTestContainer = () => {
             });
             // Updating the state using the initial data and the questionnaire
             // retrieved from the server.
+            setCommentData(tempComments);
             setQuestionnaireData(tempResponse);
             setSelectedQuestionnaire(questionnaire);
         } else {
@@ -161,23 +175,25 @@ const DoTheTestContainer = () => {
         setPersonalDetails(data);
     };
 
-    const submitResponse = () => {
+    const emailResponse = (sortType) => {
         setLoading(true);
         let data = {
             questionnaireData,
             personalDetails,
             clinicianEmail: user.name,
             questionnaireId: selectedQuestionnaire.questionnaireId,
+            comments:commentData,
+            sortBy: sortType
         };
 
-        completeQuestionnaire(token, data).then((res) => {
-            console.log("complete question", res);
-            setWizardStep(3);
-            setLoading(false);
-        });
+        completeQuestionnaire(token, data)
+            .then((res) => {
+                console.log("complete question", res);
+                setWizardStep(3);
+                setLoading(false);
+            });
     };
 
-    console.log("wizardStep", wizardStep);
     if (wizardStep === 0) {
         return (
             <div className="dothetest-container">
@@ -215,6 +231,8 @@ const DoTheTestContainer = () => {
                     questionnaire={selectedQuestionnaire}
                     submitQuestionnaire={submitQuestionnaire}
                     questionnaireData={questionnaireData}
+                    commentData={commentData}
+                    handleCommentChange={handleCommentChange}
                     handleQuestionnaireChange={handleQuestionnaireChange}
                 />
             </div>
@@ -226,8 +244,14 @@ const DoTheTestContainer = () => {
                     <button className="button" onClick={prevStep}>
                         B A C K
                     </button>
-                    <button className="button" onClick={submitResponse}>
-                        S U B M I T
+                </div>
+                <div className="dothetest-subheader-container">
+                    <label>Email Report</label>
+                    <button className="button" onClick={() => emailResponse("PERFORMANCE")}>
+                        Sorted by Performance
+                    </button>
+                    <button className="button" onClick={() => emailResponse("IMPORTANCE")}>
+                        Sorted by Importance
                     </button>
                 </div>
 
@@ -237,6 +261,7 @@ const DoTheTestContainer = () => {
                     questionnaire={selectedQuestionnaire}
                     personalDetails={personalDetails}
                     questionnaireData={questionnaireData}
+                    commentData={commentData}
                 />
             </div>
         );
@@ -267,7 +292,6 @@ const DoTheTestContainer = () => {
                     canDelete={false}
                     onClickDelete={() => {}}
                 />
-
                 <QuestionnaireList
                     questionnaires={questionnaires}
                     listTitle={"My Customised Questionnaires"}

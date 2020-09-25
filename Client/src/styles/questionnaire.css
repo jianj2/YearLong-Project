@@ -137,3 +137,15 @@
     color: #888;
 }
 
+.comment-container{
+    margin-top: 2vh;
+}
+
+.comment-input{
+    width: 100%;
+}
+
+.comment-review-container{
+    margin-top: 2vh;
+    width: 100%;
+}

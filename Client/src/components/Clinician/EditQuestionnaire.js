@@ -12,13 +12,8 @@
  *
  */
 
-import React from "react";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import React, { useState } from "react";
+import CustomModal from "../../utils/modals";
 
 // Import components.
 import EditDescription from "./EditDescription";
@@ -33,61 +28,73 @@ import * as API from "../../utils/api";
 //Auth0
 import { useAuth0 } from "../../utils/react-auth0-spa";
 
-// handles rendering of TopContainer in the Clinician page
+// handles rendering of the edit questionnaire page for clinicians
 const EditQuestionnaire = ({
-                               Questionnaire,
-                               removeQuestion,
-                               changeToRangeQuestion,
-                               changeToMCQQuestion,
-                               addAnswerToMCQQuestion,
-                               deleteAnswerFromMCQQuestion,
-                               addQuestion,
-                               addScenario,removeScenario,
-                               handleQuestionnaireTitleChange,
-                               handleQuestionnaireTypeChange,
-                               handleQuestionnaireDesChange,
-                               handleQuestionDesChange,
-                               handleQuestionOptsChange,
-                               handleSecTitleChange,
-                               handleSceDesChange,
-                               redirectURL
-                           } ) => {
+    Questionnaire,
+    removeQuestion,
+    changeToRangeQuestion,
+    changeToMCQQuestion,
+    addAnswerToMCQQuestion,
+    deleteAnswerFromMCQQuestion,
+    addQuestion,
+    addScenario,
+    removeScenario,
+    handleQuestionnaireTitleChange,
+    handleQuestionnaireTypeChange,
+    handleQuestionnaireDesChange,
+    handleQuestionDesChange,
+    handleQuestionOptsChange,
+    handleSecTitleChange,
+    handleSceDesChange,
+    redirectURL,
+}) => {
+    const [isSaveModalVisible, setIsSaveModalVisible] = useState(false);
 
-    const [saveDialogOpen, setSaveDialogOpen] = React.useState(false);
-    
-    const [cancelDialogOpen, setCancelDialogOpen] = React.useState(false);
+    const [isCancelModalVisible, setIsCancelModalVisible] = useState(false);
 
-    const {token } = useAuth0();
+    const { token } = useAuth0();
 
-    const handleSaveOpen = () => {
-        setSaveDialogOpen(true);
-    };
-
-    const handleSaveClose = () => {
-        setSaveDialogOpen(false);
-    };
-
-    const handleCancelOpen = () => {
-        setCancelDialogOpen(true);
-    };
-
-    
-    const handleCancelClose = () => {
-        setCancelDialogOpen(false);
-    };
-
-    const  handleSaveQuestionnaire = async() =>{
-        handleSaveClose();
-     
-        if(manage_questionnaire_url === "/clinician"){
+    const handleSaveQuestionnaire = async () => {
+        if (manage_questionnaire_url === "/clinician") {
             await API.editQuestionnaire(token, Questionnaire);
-        }else{
+        } else {
             await API.editStandardQuestionnaire(Questionnaire);
         }
-        
-    
+
         window.location.href = manage_questionnaire_url;
-    }
+    };
+
+    // renders a modal when user wants to save changes while editing questionnaire
+    const renderSaveModal = () => {
+        const message =
+            "Are you sure you want to save your changes to this questionnaire?";
+        return (
+            <CustomModal
+                isModalVisible={isSaveModalVisible}
+                setIsModalVisible={setIsSaveModalVisible}
+                message={message}
+                onClickConfirm={handleSaveQuestionnaire}
+                onClickCancel={() => {}}
+            />
+        );
+    };
+
+    // renders a modal when user wants to discard changes made while editing questionnaire
+    const renderCancelModal = () => {
+        const message =
+            "Your changes will not be saved. Are you sure you want to cancel editing this questionnaire?";
+        return (
+            <CustomModal
+                isModalVisible={isCancelModalVisible}
+                setIsModalVisible={setIsCancelModalVisible}
+                message={message}
+                onClickConfirm={() => {
+                    window.location.href = manage_questionnaire_url;
+                }}
+                onClickCancel={() => {}}
+            />
+        );
+    };
 
     const manage_questionnaire_url = redirectURL;
 
@@ -102,8 +109,7 @@ const EditQuestionnaire = ({
                         className="button"
                         onClick={(event) => {
                             event.preventDefault();
-                            handleCancelOpen();
-                            
+                            setIsCancelModalVisible(true);
                         }}
                     >
                         Cancel
@@ -112,75 +118,17 @@ const EditQuestionnaire = ({
                     <button
                         id="edit-save-button"
                         className="button"
-                        onClick={(event)=>{
+                        onClick={(event) => {
                             event.preventDefault();
-                            handleSaveOpen();
-                            }}
+                            setIsSaveModalVisible(true);
+                        }}
                     >
                         Save
                     </button>
                 </div>
 
-                <Dialog
-                    open={saveDialogOpen}
-                    onClose={handleSaveClose}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                >
-                    <DialogTitle id="alert-dialog-title">{"Save"}</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            Are you sure you want to save this questionnaire?
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                    <Button
-                            onClick={() => {
-                                handleSaveQuestionnaire();
-                                
-                            }}
-                            color="primary"
-                            autoFocus
-                        >
-                            Yes
-                        </Button>
-                        <Button onClick={handleSaveClose} color="primary">
-                            No
-                        </Button>
-                        
-                    </DialogActions>
-                </Dialog>
-
-                <Dialog
-                    open={cancelDialogOpen}
-                    onClose={handleCancelClose}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                >
-                    <DialogTitle id="alert-dialog-title">{"Save"}</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            Your changes will not be saved. Are you sure you want to cancel editing this questionnaire? 
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                    <Button
-                            onClick={() => {
-                                handleCancelClose();
-                                window.location.href = manage_questionnaire_url;
-                               
-                            }}
-                            color="primary"
-                            autoFocus
-                        >
-                            Yes
-                        </Button>
-                        <Button onClick={handleCancelClose} color="primary">
-                            No
-                        </Button>
-                        
-                    </DialogActions>
-                </Dialog>
+                {renderSaveModal()}
+                {renderCancelModal()}
 
                 <EditDescription
                     Questionnaire={Questionnaire}
@@ -188,7 +136,9 @@ const EditQuestionnaire = ({
                         handleQuestionnaireTitleChange
                     }
                     handleQuestionnaireDesChange={handleQuestionnaireDesChange}
-                    handleQuestionnaireTypeChange = {handleQuestionnaireTypeChange}
+                    handleQuestionnaireTypeChange={
+                        handleQuestionnaireTypeChange
+                    }
                 />
 
                 <SectionsContainer
@@ -204,7 +154,8 @@ const EditQuestionnaire = ({
                     handleQuestionDesChange={handleQuestionDesChange}
                     handleQuestionOptsChange={handleQuestionOptsChange}
                     handleSecTitleChange={handleSecTitleChange}
-                    handleSceDesChange={handleSceDesChange}/>
+                    handleSceDesChange={handleSceDesChange}
+                />
             </div>
         );
     }

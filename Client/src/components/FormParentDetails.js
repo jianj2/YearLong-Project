@@ -39,6 +39,37 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
     const [leftDeviceType, setLeftDeviceType] = useState(defaultValue.leftDeviceType);
     // const [completedBy, setCompletedBy] = useState(defaultValue.completedBy);
 
+    let [rightDeviceTypeOtherVisible, setRightDeviceTypeOtherVisible] = useState(null);
+    let [leftDeviceTypeOtherVisible, setLeftDeviceTypeOtherVisible] = useState(null);
+    const [rightDeviceTypeOther, setRightDeviceTypeOther] = useState(defaultValue.rightDeviceTypeOther);
+    const [leftDeviceTypeOther, setLeftDeviceTypeOther] = useState(defaultValue.leftDeviceTypeOther);
+    let [rightDeviceSubmit, setRightDeviceSubmit] = useState("null");
+    let [leftDeviceSubmit, setLeftDeviceSubmit] = useState(null);
+
+    let personalData = {}
+    useEffect(() =>{
+
+        if (rightDeviceType === "Other"){
+            rightDeviceTypeOtherVisible = true
+            setRightDeviceTypeOtherVisible(true)
+        }else{
+            rightDeviceTypeOtherVisible = false
+            setRightDeviceTypeOtherVisible(false)
+        }
+
+    },[rightDeviceType])
+
+    useEffect(() =>{
+
+        if (leftDeviceType === "Other"){
+            leftDeviceTypeOtherVisible = true
+            setLeftDeviceTypeOtherVisible(true)
+        }else{
+            leftDeviceTypeOtherVisible = false
+            setLeftDeviceTypeOtherVisible(false)
+        }
+
+    },[leftDeviceType])
 
     useEffect(() => {
 
@@ -48,23 +79,38 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
         }else{
             completedBy = isSSQ_Ch ? "Child" : "Parent"
         }
+        if (rightDeviceTypeOtherVisible){
+            rightDeviceSubmit = rightDeviceTypeOther
+            setRightDeviceSubmit(rightDeviceTypeOther)
+        } else {
+            rightDeviceSubmit = rightDeviceType
+            setRightDeviceSubmit(rightDeviceType)
+        }
+        if (leftDeviceTypeOtherVisible){
+            leftDeviceSubmit = leftDeviceTypeOther
+            setLeftDeviceSubmit(leftDeviceTypeOther)
+        } else {
+            leftDeviceSubmit = leftDeviceType
+            setLeftDeviceSubmit(leftDeviceType)
+        }
 
-        const personalData = {
+
+        personalData = {
             name,
             date,
-            rightDeviceType,
-            leftDeviceType,
+            rightDeviceType:rightDeviceSubmit,
+            leftDeviceType:leftDeviceSubmit,
             completedBy
         }
 
+
         getPersonalDetails(personalData);
-    }, [name,date,rightDeviceType,leftDeviceType])
+    }, [name,date,rightDeviceType,leftDeviceType, rightDeviceTypeOther, leftDeviceTypeOther])
 
 
 
-    const handleButtonPress = (data) => {
-        console.log(data);
-        submitDetails(data);
+    const handleButtonPress = () => {
+        submitDetails(personalData);
     };
 
     const maxDate = new Date(new Date().getTime());
@@ -95,53 +141,7 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                         <FormHelperText>{errors.name ? errors.name.message : "Please enter the child's name."}</FormHelperText>
                     </FormControl>
 
-                    <FormControl margin="dense">
-                        <InputLabel>Child's Date of Birth</InputLabel>
-                        <Input
-                            // defaultValue={defaultValue.date}
-                            value={date}
-                            onChange={(event) => setDate(event.target.value)}
-                            name="date"
-                            type="date"
-                            required
-                            onBlur={handleDateChange}
-                            inputProps={{ min: "1900-01-01", max: moment().format("YYYY-MM-DD")  }}
-                            error={errors.date !== undefined}
-                            inputRef={register({
-                                required: "You have not entered the date of birth.",
-                            })}
-                        />
-                        <FormHelperText>{errors.date ? errors.date.message : "Please enter the child's name."}</FormHelperText>
-                    </FormControl>
 
-                    {/*    {clinicianAccess ? (*/}
-                    {/*        <div></div>*/}
-                    {/*    ) : (*/}
-                    {/*        <FormControl margin="dense">*/}
-                    {/*            <InputLabel>Completed By</InputLabel>*/}
-                    {/*            <Select*/}
-                    {/*                // defaultValue={defaultValue.completedBy}*/}
-                    {/*                value={completedBy}*/}
-                    {/*                onChange={(event) => setCompletedBy(event.target.value)}*/}
-                    {/*                name="completedBy"*/}
-                    {/*                error={errors.completedBy !== undefined}*/}
-                    {/*                native*/}
-                    {/*                inputRef={register({*/}
-                    {/*                    required: "This is required.",*/}
-                    {/*                })}*/}
-                    {/*            >*/}
-                    {/*                <option value="" disabled selected></option>*/}
-                    {/*                <option value="parent">Parent</option>*/}
-                    {/*                <option value="child">Child</option>*/}
-                    {/*            </Select>*/}
-                    {/*            <FormHelperText>{errors.completedBy ? errors.completedBy.message : "Please specify who is filling the form."}</FormHelperText>*/}
-                    {/*        </FormControl>*/}
-                    {/*    )}*/}
-                </div>
-
-
-
-                <div className="parents-detail-form-column">
                     <FormControl margin="dense">
                         <InputLabel>Right Device Type</InputLabel>
                         <Select id="DeviceOne"
@@ -164,6 +164,52 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
 
                         <FormHelperText>{errors.rightDeviceType ? errors.rightDeviceType.message : "Please specify the device type."}</FormHelperText>
                     </FormControl>
+
+                    {rightDeviceTypeOtherVisible ? (
+                        <FormControl margin="dense">
+                            <InputLabel>What sort of device (right)?</InputLabel>
+                            <Input
+                                // defaultValue={defaultValue.date}
+                                value={rightDeviceTypeOther}
+                                onChange={(event) => setRightDeviceTypeOther(event.target.value)}
+                                name="rightDeviceTypeOther"
+                                placeholder="Other device type"
+                                required
+                                error={errors.name !== undefined}
+                                inputRef={register({
+                                    required: "You have not entered another device type.",
+                                })}
+                            />
+                            <FormHelperText>{errors.rightDeviceTypeOther ? errors.rightDeviceTypeOther.message : "Please enter the device type."}</FormHelperText>
+                        </FormControl>
+                    ): (<div></div>)}
+
+                </div>
+
+
+                <div className="parents-detail-form-column">
+
+
+                    <FormControl margin="dense">
+                        <InputLabel>Child's Date of Birth</InputLabel>
+                        <Input
+                            // defaultValue={defaultValue.date}
+                            value={date}
+                            onChange={(event) => setDate(event.target.value)}
+                            name="date"
+                            type="date"
+                            required
+                            onBlur={handleDateChange}
+                            inputProps={{ min: "1900-01-01", max: moment().format("YYYY-MM-DD")  }}
+                            error={errors.date !== undefined}
+                            inputRef={register({
+                                required: "You have not entered the date of birth.",
+                            })}
+                        />
+                        <FormHelperText>{errors.date ? errors.date.message : "Please enter the child's name."}</FormHelperText>
+                    </FormControl>
+
+
 
                     <FormControl margin="dense">
                         <InputLabel>Left Device Type</InputLabel>
@@ -189,15 +235,25 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                         <FormHelperText>{errors.leftDeviceType ? errors.leftDeviceType.message : "Please specify the device type."}</FormHelperText>
                     </FormControl>
 
-                    {/*{clinicianAccess ? (*/}
-                    {/*    <div></div>*/}
-                    {/*) : (*/}
-                    {/*<div className="parents-detail-form-submit-button">*/}
-                    {/*    <button id="next" className="button">*/}
-                    {/*        N E X T*/}
-                    {/*    </button>*/}
-                    {/*</div>*/}
-                    {/*)}*/}
+                    {leftDeviceTypeOtherVisible ? (
+                        <FormControl margin="dense">
+                        <InputLabel>What sort of device (left)?</InputLabel>
+                        <Input
+                            // defaultValue={defaultValue.date}
+                            value={leftDeviceTypeOther}
+                            onChange={(event) => setLeftDeviceTypeOther(event.target.value)}
+                            name="leftDeviceTypeOther"
+                            placeholder="Other device type"
+                            required
+                            error={errors.name !== undefined}
+                            inputRef={register({
+                                required: "You have not entered another device type.",
+                            })}
+                        />
+                        <FormHelperText>{errors.leftDeviceTypeOther ? errors.leftDeviceTypeOther.message : "Please enter the device type."}</FormHelperText>
+                    </FormControl>
+                    ): (<div></div>)}
+
                 </div>
             </div>
 

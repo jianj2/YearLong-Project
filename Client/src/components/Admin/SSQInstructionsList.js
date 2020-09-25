@@ -26,7 +26,6 @@ const InstructionItem = ({
     title,
     type
 }) => {
-    // var edit_url = "/clinician/" + QID + "/edit";
     return (
         <div
             className={
@@ -62,7 +61,6 @@ return (
                 key={index}
                 title={instruction.title}
                 type = {instruction.type}
-
             />
         ))}
     </div>

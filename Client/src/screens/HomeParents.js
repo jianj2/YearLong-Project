@@ -34,9 +34,9 @@ import "../styles/parents.css";
 import "../styles/landing.css";
 import "../styles/main.css";
 
-
-const INSTRUCTIONS_READ_ONLY = "Go to the next page to view the questions. These would be the questions asked to you by the clinician on the call.";
-const INSTRUCTIONS = "We would have instructions here stored by the admin."
+const INSTRUCTIONS_READ_ONLY =
+    "Go to the next page to view the questions. These would be the questions asked to you by the clinician on the call.";
+const INSTRUCTIONS = "We would have instructions here stored by the admin.";
 // ---------------------------------------------------------------
 // This method defines the elements for this component.
 // ---------------------------------------------------------------
@@ -47,45 +47,46 @@ const HomeParents = ({ match }) => {
         title: "",
         description: "",
         sections: [],
-        isStandard: true,
+        isStandard: true
     });
     const [clinicianEmail, setClinicianEmail] = useState("");
+    const [sortBy, setSortBy] = useState("PERFORMANCE");
 
     const [personalDetails, setPersonalDetails] = useState({
         name: "",
         date: "",
         completedBy: "parent",
         rightDeviceType: "",
-        leftDeviceType: "",
+        leftDeviceType: ""
     });
 
     const [questionnaireData, setQuestionnaireData] = useState([]);
+    const [commentData, setCommentData] = useState([]);
     const [readOnly, setReadOnly] = useState(false);
     const [loading, setLoading] = useState(false);
-  
+
     const [instruction, setInstruction] = useState({
         title: "",
         content: ""
     });
-    const [isInit, setIsInit] = useState(true);
-    const getInstruction = () => {
-        API.getInstruction().then((res) =>{
+
+    const getPersonalDetails = (data) => {
+        setPersonalDetails(data);
+    };
+
+    const setQuestionnaireInstruction = (isSSQ_ch) => {
+        let instructionType;
+        if (isSSQ_ch) {
+            instructionType = "RC";
+        } else {
+            instructionType = "RP";
+        }
+        API.getSpecificInstruction(instructionType).then((res) => {
             setInstruction({
                 title: res["title"],
                 content: res["content"]
-            })   
-        })
-    };
-
-    if(isInit){
-        getInstruction();
-        setIsInit(false);
-    }
-
-
-    const getPersonalDetails = (data) => {
-        setPersonalDetails(data)
-        console.log("data", data)
+            });
+        });
     };
 
     //////////// Share section update /////////////////////////////
@@ -116,7 +117,6 @@ const HomeParents = ({ match }) => {
         }
     };
 
-
     //////////////////////////////////////////////////////////////
 
     // This is called when the component first mounts.
@@ -124,44 +124,53 @@ const HomeParents = ({ match }) => {
         // Server call to get the questionnaireId
         API.getShareDetails(match.params.shareId).then((shareResponse) => {
             if (shareResponse.statusCode === 200) {
-
-            // Server call to get the questionnaire.
-            setClinicianEmail(shareResponse.data.clinicianEmail);
-            setReadOnly(shareResponse.data.readOnly);
-            API.getQuestionnaireById(shareResponse.data.questionnaireId).then((res) => {
-                const [statusCode, data] = res;
-                // Define initial values for the Questionnaire
-                if (statusCode === 200 ){
-                    updateSections(data, shareResponse.data.shareSection);
-
-                    let tempResponse = [];
-                    data.sections.forEach((section, sectionIndex) => {
-                        tempResponse[sectionIndex] = [];
-                        section.scenarios.forEach((scenario, scenarioIndex) => {
-                            tempResponse[sectionIndex][scenarioIndex] = [];
-                            scenario.questions.forEach(
-                                (question, questionIndex) => {
-                                    tempResponse[sectionIndex][scenarioIndex][questionIndex] = {
-                                        value: "",
-                                        supplementaryValue: "",
-                                    };
+                console.log("shareResponse", shareResponse);
+                // Server call to get the questionnaire.
+                setSortBy(shareResponse.data.sortBy);
+                setClinicianEmail(shareResponse.data.clinicianEmail);
+                setReadOnly(shareResponse.data.readOnly);
+                API.getQuestionnaireById(
+                    shareResponse.data.questionnaireId
+                ).then((res) => {
+                    const [statusCode, data] = res;
+                    // Define initial values for the Questionnaire
+                    if (statusCode === 200) {
+                        updateSections(data, shareResponse.data.shareSection);
+                        let tempResponse = [];
+                        let tempComments = [];
+                        data.sections.forEach((section, sectionIndex) => {
+                            tempResponse[sectionIndex] = [];
+                            tempComments[sectionIndex] = [];
+                            section.scenarios.forEach(
+                                (scenario, scenarioIndex) => {
+                                    tempResponse[sectionIndex][scenarioIndex] = [];
+                                    tempComments[sectionIndex][scenarioIndex] = "";
+                                    scenario.questions.forEach(
+                                        (question, questionIndex) => {
+                                            tempResponse[sectionIndex][scenarioIndex][questionIndex] = {
+                                                value: "",
+                                                supplementaryValue: ""
+                                            };
+                                        }
+                                    );
                                 }
                             );
                         });
-                    });
-                    // Updating the state using the initial data and the questionnaire
-                    // retrieved from the server.
-                    setQuestionnaireData(tempResponse);
-                    setQuestionnaire(data);
-                    setWizardStep(0);
+                        // Updating the state using the initial data and the questionnaire
+                        // retrieved from the server.
+                        setCommentData(tempComments);
+                        setQuestionnaireData(tempResponse);
+                        setQuestionnaire(data);
 
-                }else{
-                    setWizardStep(-1)
-                }
+                        setQuestionnaireInstruction(data.isSSQ_Ch);
 
-            });
-            }else{
-                setWizardStep(-1)
+                        setWizardStep(0);
+                    } else {
+                        setWizardStep(-1);
+                    }
+                });
+            } else {
+                setWizardStep(-1);
             }
         });
     }, []);
@@ -176,6 +185,12 @@ const HomeParents = ({ match }) => {
         let temp = [...questionnaireData];
         temp[sectionIndex][scenarioIndex][questionIndex] = data;
         setQuestionnaireData(temp);
+    };
+    // Method called to update comment data when a scenario comment is updated.
+    const handleCommentChange = (sectionIndex, scenarioIndex, data) => {
+        let temp = [...commentData];
+        temp[sectionIndex][scenarioIndex] = data;
+        setCommentData(temp);
     };
 
     // Method called to go to the next page in the wizard.
@@ -201,12 +216,14 @@ const HomeParents = ({ match }) => {
     const submitResponse = () => {
         let data = {
             questionnaireData,
+            comments: commentData,
             personalDetails,
             clinicianEmail: clinicianEmail,
             questionnaireId: questionnaire.questionnaireId,
+            sortBy
         };
-        console.log(data);
 
+        console.log(data);
         setLoading(true);
         API.sendQuestionnaireData(data, match.params.shareId).then((res) => {
             if (res) {
@@ -216,7 +233,6 @@ const HomeParents = ({ match }) => {
             console.log(res);
         });
     };
-
 
     if (wizardStep === -2) {
         return (
@@ -229,10 +245,11 @@ const HomeParents = ({ match }) => {
     if (wizardStep === -1) {
         return (
             <div className="parents-home">
-                <div className="subheader-container">
-                </div>
+                <div className="subheader-container"></div>
                 <div className="parents-container">
-                    <h1 style={{textAlign: "center" }}>I N V A L I D &nbsp; L I N K</h1>
+                    <h1 style={{ textAlign: "center" }}>
+                        I N V A L I D &nbsp; L I N K
+                    </h1>
                 </div>
             </div>
         );
@@ -263,22 +280,23 @@ const HomeParents = ({ match }) => {
 
     if (wizardStep === 1) {
         // If it is read only, we skip this step
-        if (readOnly) nextStep() 
+        if (readOnly) nextStep();
         return (
             <div className="parents-home">
                 <div className="subheader-container">
-                    <button id="instructions" className="button" onClick={goToInstructions}>
+                    <button
+                        id="instructions"
+                        className="button"
+                        onClick={goToInstructions}
+                    >
                         I N S T R U C T I O N S
-                    </button>
-                    <button id="back" className="button" onClick={prevStep}>
-                        B A C K
                     </button>
                 </div>
 
                 <div className="parents-container">
-                    <FormParentDetails 
-                        submitDetails={submitDetails} 
-                        clinicianAccess={false} 
+                    <FormParentDetails
+                        submitDetails={submitDetails}
+                        clinicianAccess={false}
                         defaultValue={personalDetails}
                         getPersonalDetails={getPersonalDetails}
                         isSSQ_Ch={questionnaire.isSSQ_Ch}
@@ -292,16 +310,18 @@ const HomeParents = ({ match }) => {
         return (
             <div className="parents-home">
                 <div className="subheader-container">
-                    <button id="instructions" className="button" onClick={goToInstructions}>
+                    <button
+                        id="instructions"
+                        className="button"
+                        onClick={goToInstructions}
+                    >
                         I N S T R U C T I O N S
-                    </button> 
-                    { readOnly
-                        ? null
-                        :   <button id="back" className="button" onClick={prevStep}>
-                                B A C K
-                            </button>
-                    }
-                     
+                    </button>
+                    {readOnly ? null : (
+                        <button id="back" className="button" onClick={prevStep}>
+                            B A C K
+                        </button>
+                    )}
                 </div>
 
                 <div className="parents-container">
@@ -310,6 +330,8 @@ const HomeParents = ({ match }) => {
                         questionnaire={questionnaire}
                         submitQuestionnaire={submitQuestionnaire}
                         questionnaireData={questionnaireData}
+                        commentData={commentData}
+                        handleCommentChange={handleCommentChange}
                         handleQuestionnaireChange={handleQuestionnaireChange}
                     />
                 </div>
@@ -319,20 +341,24 @@ const HomeParents = ({ match }) => {
 
     if (wizardStep === 3) {
         return (
-            <div className="parents-home"> 
-                {
-                    loading
-                    ? <Loading />
-                    : null
-                } 
+            <div className="parents-home">
+                {loading ? <Loading/> : null}
                 <div className="subheader-container">
-                    <button id="instructions" className="button" onClick={goToInstructions}>
+                    <button
+                        id="instructions"
+                        className="button"
+                        onClick={goToInstructions}
+                    >
                         I N S T R U C T I O N S
                     </button>
                     <button id="back" className="button" onClick={prevStep}>
                         B A C K
                     </button>
-                    <button id="submit" className="button" onClick={submitResponse}>
+                    <button
+                        id="submit"
+                        className="button"
+                        onClick={submitResponse}
+                    >
                         S U B M I T
                     </button>
                 </div>
@@ -342,6 +368,7 @@ const HomeParents = ({ match }) => {
                         questionnaire={questionnaire}
                         personalDetails={personalDetails}
                         questionnaireData={questionnaireData}
+                        commentData={commentData}
                     />
                 </div>
             </div>
@@ -351,7 +378,7 @@ const HomeParents = ({ match }) => {
     return (
         <div className="landing">
             <div className="landing-logo">
-                <img src={logoComplete} />
+                <img src={logoComplete}/>
             </div>
 
             <div className="form-completed">

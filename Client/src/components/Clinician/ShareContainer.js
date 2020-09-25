@@ -9,7 +9,7 @@ import {
     FormHelperText,
     FormControlLabel,
     Checkbox,
-    FormLabel,
+    FormLabel, RadioGroup, Radio
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -64,6 +64,7 @@ const ShareQuestionnaire = (props) => {
         clinicianEmail: user.name,
         message: "",
         readOnly: false,
+        sortBy: "PERFORMANCE",
     });
 
     const [shareSection, setShareSection] = useState({});
@@ -100,7 +101,7 @@ const ShareQuestionnaire = (props) => {
         //making sure the state get reset once the modal is reloaded.
         setIsSectionsEmpty(false);
 
-        var temp = {};
+        let temp = {};
         sections.map((index) => {
             temp = { ...temp, [index.title.toString()]: true };
         });
@@ -142,10 +143,13 @@ const ShareQuestionnaire = (props) => {
         if( !isSectionsEmpty ){
             setLoading(true);
             shareModalData["shareSection"] = shareSection;
-            API.shareQuestionnaire(token, shareModalData).then( res => {
-                setLoading(false);
-                closeModal();
-            });
+            console.log("shareModalData ", shareModalData)
+            API.shareQuestionnaire(token, shareModalData)
+               .then( res => {
+                   console.log("res from create Share", res)
+                    setLoading(false);
+                    closeModal();
+                });
         }
     };
 
@@ -256,6 +260,42 @@ const ShareQuestionnaire = (props) => {
                                 report will be sent to you.
                             </FormHelperText>
                         </FormControl>
+
+                        <br/>
+                        <span>Sort responses by</span>
+                        <FormControl color="secondary" margin="dense">
+                            <RadioGroup name="frequency" value={shareModalData.sortBy} className="slider-checkboxes">
+                                <FormControlLabel
+                                    value="PERFORMANCE"
+                                    control={
+                                        <Radio
+                                            onChange={() => {
+                                                setShareModalData({
+                                                    ...shareModalData,
+                                                    sortBy: "PERFORMANCE",
+                                                });
+                                            }}
+                                        />
+                                    }
+                                    label="Performance"
+                                />
+                                <FormControlLabel
+                                    value="IMPORTANCE"
+                                    control={
+                                        <Radio
+                                            onChange={() => {
+                                                setShareModalData({
+                                                    ...shareModalData,
+                                                    sortBy: "IMPORTANCE",
+                                                });
+                                            }}
+                                        />
+                                    }
+                                    label="Importance"
+                                />
+                            </RadioGroup>
+                        </FormControl>
+
                         <button className="button">S H A R E</button>
                     </form>
                 </Fade>
