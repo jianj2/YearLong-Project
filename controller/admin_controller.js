@@ -48,8 +48,8 @@ const loginAdmin = function (req, res) {
     }
     if (username === _username && password === _password) {
         const token = jwt.sign({ username: username }, "secretLOL", {
-            // expiresIn: 86400, // expires in 24 hours
-            expiresIn: 100, // expires in 100 seconds FOR TESTING
+            expiresIn: 86400, // expires in 24 hours
+            //expiresIn: 100, // expires in 100 seconds FOR TESTING
         });
         res.send({
             code: 3,
