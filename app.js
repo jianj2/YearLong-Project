@@ -21,8 +21,6 @@ const questionnaireRouter = require('./routes/questionnaire');
 const adminRouter = require('./routes/admin');
 const shareRouter = require('./routes/share');
 
-
-
 // using routes
 
 app.use('/', indexRouter);
