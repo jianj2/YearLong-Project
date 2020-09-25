@@ -33,7 +33,8 @@ const sendInvitationEmail = function (createdShare) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
         const {patientEmail} = createdShare;
-        let client = `${process.env.CLIENT}/parent/` || "http://localhost:3000/parent/"
+        let client = //`${process.env.CLIENT}/parent/` || 
+        "http://localhost:3000/parent/";
         let link = client + createdShare.shareId + "";
         let message = "";
         if (createdShare.message != undefined) {
@@ -75,7 +76,7 @@ const sendInvitationEmail = function (createdShare) {
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to send the results PDF report through email.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const sendResultsEmail = function (questionnaireId, questionnaireData, clinicianEmail, personalDetails, shareId) {
+const sendResultsEmail = function (questionnaireId, questionnaireData, clinicianEmail, personalDetails, sortBy, shareId, comments) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
         let mailOptions = {
@@ -98,7 +99,7 @@ const sendResultsEmail = function (questionnaireId, questionnaireData, clinician
                 "    </div>",
         }
 
-        generateAttachments(questionnaireId, personalDetails, questionnaireData, shareId)
+        generateAttachments(questionnaireId, personalDetails, questionnaireData, shareId, sortBy,comments)
             .then((attachments) => {
                 mailOptions.attachments = attachments;
                 // Resolves this promise if sendEmail promise is resolved.
