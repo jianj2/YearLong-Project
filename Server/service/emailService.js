@@ -21,8 +21,8 @@ const {generateAttachments} = require('./reportService')
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: require(path.join(__dirname, '..', 'config/keys')).GmailUserName,
-        pass: require(path.join(__dirname, '..', 'config/keys')).GmailPassword,
+        user: process.env.GMAILUSERNAME || require(path.join(__dirname, '..', 'config/keys')).GmailUserName,
+        pass: process.env.GMAILPASSWORD || require(path.join(__dirname, '..', 'config/keys')).GmailPassword,
     }
 });
 
@@ -33,20 +33,13 @@ const sendInvitationEmail = function (createdShare) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
         const {patientEmail} = createdShare;
-        let link = "http://localhost:3000/parent/" + createdShare.shareId + "";
+        let client = //`${process.env.CLIENT}/parent/` || 
+        "http://localhost:3000/parent/";
+        let link = client + createdShare.shareId + "";
         let message = "";
         if (createdShare.message != undefined) {
             message = "Message from the clinician: " + createdShare.message + "";
         }
-
-        // Used to create the email
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: require(path.join(__dirname, '..', 'config/keys')).GmailUserName,
-                pass: require(path.join(__dirname, '..', 'config/keys')).GmailPassword,
-            }
-        });
 
         // Parameters for the email.
         const mailOptions = {
@@ -83,7 +76,7 @@ const sendInvitationEmail = function (createdShare) {
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to send the results PDF report through email.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const sendResultsEmail = function (questionnaireId, questionnaireData, clinicianEmail, personalDetails, shareId) {
+const sendResultsEmail = function (questionnaireId, questionnaireData, clinicianEmail, personalDetails, sortBy, shareId, comments) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
         let mailOptions = {
@@ -106,7 +99,7 @@ const sendResultsEmail = function (questionnaireId, questionnaireData, clinician
                 "    </div>",
         }
 
-        generateAttachments(questionnaireId, personalDetails, questionnaireData, shareId)
+        generateAttachments(questionnaireId, personalDetails, questionnaireData, shareId, sortBy,comments)
             .then((attachments) => {
                 mailOptions.attachments = attachments;
                 // Resolves this promise if sendEmail promise is resolved.
