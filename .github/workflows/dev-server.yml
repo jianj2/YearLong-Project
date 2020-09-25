@@ -1,13 +1,11 @@
-#!/bin/bash
 # ####################################################################
 # PIPELINE YAML FILE
 # ####################################################################
 # Mayank Sharma - 22th August 2020
 #
 # This YAML file runs a pipeline in GitHub Actions containing a number of jobs.
-# Jobs include testing the code, building the image, caching the image, publishing
-# the image to GitHub registry, transfering the files to the production server and 
-# deploying the backend on the server.
+# Jobs include testing the code and deploying the deployment-server and development-server branches
+# to Heroku.
 
 ---
 name: server-CI/CD
@@ -18,20 +16,15 @@ on:
     branches: 
     - deployment-server 
     - development-server
-    - master-server 
   # Pipeline trigger on pull request
   pull_request:
     branches:
     - development-server
-    - master-server
 
 jobs:
-  # Testing server code with npm CI
+  # Testing dependency installing
   test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
+    runs-on: ubuntu-latest
     name: test
     steps:
     # Checking out code to server
@@ -42,18 +35,14 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 14.8
-    # Running npm CI
-    - name: Lint with npm CI 
-      run: npm ci
-      
+    # Installing npm dependencies  
+    - name: Install dependencies    
+      run: npm install
+
   # Deploy nodejs to heroku
   deploy:
     needs: test
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node-version: [14.x]
+    runs-on: ubuntu-latest
     name: deploy
     steps:
     # Checking out code to server
@@ -69,3 +58,6 @@ jobs:
       env:
         HD_SERVER: ${{secrets.HEROKU_SERVER}} # Server URL
         HD_CLIENT: ${{secrets.HEROKU_CLIENT}} # Client URL
+        HD_GMAILUSERNAME: ${{secrets.HEROKU_GMAILUSERNAME}} # Gmail username
+        HD_GMAILPASSWORD: ${{secrets.HEROKU_GMAILPASSWORD}} # Gmail password
+        HD_MONGOURI: ${{secrets.HEROKU_MONGOURI}} # Mongo URI

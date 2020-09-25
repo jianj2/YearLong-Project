@@ -13,7 +13,7 @@ const mongoose = require('mongoose');
 
 const path = require("path");
 
-const url = require(path.join(__dirname, '..', 'config/keys')).MongoURI;
+const url = process.env.MONGOURI || require(path.join(__dirname, '..', 'config/')).MongoURI;
 
 // Connect to MongoDB using the MongoURI
 mongoose.connect(url,  { useNewUrlParser: true } ,  function (err) {
