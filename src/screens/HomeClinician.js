@@ -45,7 +45,7 @@ const HomeClinician = (props) => {
             const setAuth0Token = async ()=>{
                 try {
                 const accessToken = await getTokenSilently({
-                    audience: {link},
+                    audience: link,
                     scope: "read:current_user",
                   });
                 setToken(accessToken);
