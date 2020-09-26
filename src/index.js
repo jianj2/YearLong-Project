@@ -46,8 +46,8 @@ console.log(process.env.NODE_ENV)
 const link = `${process.env.REACT_APP_SERVER}/clinician` ||  "http://localhost:3001/clinician";
 
 const production = process.env.NODE_ENV;
-const domain = production ? config.prod_domain : config.domain;
-const client_id = production ? config.prod_clientId : config.clientId;
+const domain = production == "production" ? config.prod_domain : config.domain;
+const client_id = production == "production" ? config.prod_clientId : config.clientId;
 
 
 ReactDOM.render(
