@@ -51,13 +51,13 @@ const sendRequest = async (
 // ================================================
 
 export const findPassword = (email) => {
-    fetch(`https://pediatric-scale.au.auth0.com/dbconnections/change_password`, {
+    fetch(`https://ssq.au.auth0.com/dbconnections/change_password`, {
         method: "POST",
         headers: {
             ...header
         },
         body: JSON.stringify({
-            client_id: 'ko5IIugoRXQf2uCpqRclocwbhrbqAYx4',
+            client_id: 'cFvWQEJAqVjpvvvaz3WVkFsAilRxl8jo',
             email: email,
             connection: 'Username-Password-Authentication'
         }),
