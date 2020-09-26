@@ -49,7 +49,7 @@ jwt({
     }),
   
     // Validate the audience and the issuer.
-    audience: `${domain}/clinician`,
+    audience: `http://localhost:3001/clinician`, // for localhost development, hardcoded in Auth0
     issuer: `https://pediatric-scale.au.auth0.com/`,
     algorithms: ['RS256']
   });
