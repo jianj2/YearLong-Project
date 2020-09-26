@@ -63,9 +63,9 @@ const HomeClinician = (props) => {
 
             await loginWithRedirect({
 
-                redirect_uri: //`${process.env.REACT_APP_CLIENT}/clinician`
+                redirect_uri: `${process.env.REACT_APP_CLIENT}/clinician`
                 
-                "http://localhost:3000/clinician", //TODO: figure out why window.location.pathname doesn't work
+                //"http://localhost:3000/clinician", //TODO: figure out why window.location.pathname doesn't work
 
                 //redirect_uri: "https://d1hg2pgsuj0kio.cloudfront.net/clinician", //TODO: figure out why window.location.pathname doesn't work
 
