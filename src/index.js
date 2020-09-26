@@ -42,6 +42,7 @@ const onRedirectCallback = (appState) => {
 
 console.log(process.env.REACT_APP_SERVER)
 console.log(process.env.NODE_ENV)
+console.log(process.env.REACT_APP_CLIENT)
 
 const link = `${process.env.REACT_APP_SERVER}/clinician` ||  "http://localhost:3001/clinician";
 
