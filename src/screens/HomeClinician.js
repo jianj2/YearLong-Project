@@ -35,7 +35,7 @@ const HomeClinician = (props) => {
     
      
     
-       
+    const link = "https://ssq.au.auth0.com/api/v2/";
     
     useEffect(() => {
         if (loading ) {
@@ -45,7 +45,7 @@ const HomeClinician = (props) => {
             const setAuth0Token = async ()=>{
                 try {
                 const accessToken = await getTokenSilently({
-                    audience: `${domain}/clinician`,
+                    audience: {link},
                     scope: "read:current_user",
                   });
                 setToken(accessToken);
