@@ -32,7 +32,7 @@ const HomeClinician = (props) => {
     const { loading, isAuthenticated, loginWithRedirect, user, getTokenSilently, setToken} = useAuth0();
     
     const domain = process.env.REACT_APP_SERVER || "http://localhost:3001";
-    
+    const client = process.env.REACT_APP_CLIENT || "http://localhost:3000";
      
     // this API must be listed in one of the Auth0 APIs
     const clinicianAuthAPI = `${domain}/clinician`;
@@ -58,12 +58,12 @@ const HomeClinician = (props) => {
             return;
         }
 
-
+        
         const fn = async () => {
 
             await loginWithRedirect({
 
-                redirect_uri: `${process.env.REACT_APP_CLIENT}/clinician`
+                redirect_uri: `${client}/clinician`
                 
                 //"http://localhost:3000/clinician", //TODO: figure out why window.location.pathname doesn't work
 
