@@ -44,11 +44,12 @@ console.log(process.env.REACT_APP_SERVER)
 console.log(process.env.NODE_ENV)
 console.log(process.env.REACT_APP_CLIENT)
 
-const link = "https://ssq.au.auth0.com/api/v2/";
-
 const production = process.env.NODE_ENV;
-const domain = production == "production" ? config.prod_domain : config.domain;
-const client_id = production == "production" ? config.prod_clientId : config.clientId;
+
+const managementAPI = production === "production" ? "https://ssq.au.auth0.com/api/v2/" : "https://pediatric-scale.au.auth0.com/api/v2/";
+
+const domain = production === "production" ? config.prod_domain : config.domain;
+const client_id = production === "production" ? config.prod_clientId : config.clientId;
 
 
 ReactDOM.render(
@@ -60,7 +61,7 @@ ReactDOM.render(
                     client_id={client_id}
                     redirect_uri= {window.location.origin}
                     onRedirectCallback={onRedirectCallback}
-                    audience={link}
+                    audience={managementAPI}
                     scope={"read:current_user"}
                 >
                     <App />

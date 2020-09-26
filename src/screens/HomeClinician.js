@@ -34,8 +34,8 @@ const HomeClinician = (props) => {
     const domain = process.env.REACT_APP_SERVER || "http://localhost:3001";
     
      
-    
-    const link = "https://ssq.au.auth0.com/api/v2/";
+    // this API must be listed in one of the Auth0 APIs
+    const clinicianAuthAPI = `${domain}/clinician`;
     
     useEffect(() => {
         if (loading ) {
@@ -45,7 +45,7 @@ const HomeClinician = (props) => {
             const setAuth0Token = async ()=>{
                 try {
                 const accessToken = await getTokenSilently({
-                    audience: link,
+                    audience: clinicianAuthAPI,
                     scope: "read:current_user",
                   });
                 setToken(accessToken);
