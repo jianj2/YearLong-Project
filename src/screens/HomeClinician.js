@@ -31,8 +31,7 @@ import ContentPanel from "../components/Clinician/ContentPanel";
 const HomeClinician = (props) => {
     const { loading, isAuthenticated, loginWithRedirect, user, getTokenSilently, setToken} = useAuth0();
     
-    const domain = //process.env.REACT_APP_SERVER ||
-     "http://localhost:3001";
+    const domain = process.env.REACT_APP_SERVER || "http://localhost:3001";
     
      
     

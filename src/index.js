@@ -40,16 +40,20 @@ const onRedirectCallback = (appState) => {
     );
 };
 
-const link = //`${process.env.REACT_APP_SERVER}/clinician` || 
-"http://localhost:3001/clinician";
+const link = `${process.env.REACT_APP_SERVER}/clinician` ||  "http://localhost:3001/clinician";
+
+const production = process.env.NODE_ENV;
+const domain = production ? config.prod_domain : config.domain;
+const client_id = production ? config.prod_clientId : config.clientId;
+
 
 ReactDOM.render(
     <React.StrictMode>
         <MuiThemeProvider theme={theme}>
             <AdminAuthProvider>
                 <Auth0Provider
-                    domain={config.domain}
-                    client_id={config.clientId}
+                    domain={domain}
+                    client_id={client_id}
                     redirect_uri={window.location.origin}
                     onRedirectCallback={onRedirectCallback}
                     audience={link}
