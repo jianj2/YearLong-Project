@@ -58,8 +58,7 @@ ReactDOM.render(
                 <Auth0Provider
                     domain={domain}
                     client_id={client_id}
-                    redirect_uri= "https://ssq-client.herokuapp.com/clinician"
-                    //{window.location.origin}
+                    redirect_uri= {window.location.origin}
                     onRedirectCallback={onRedirectCallback}
                     audience={link}
                     scope={"read:current_user"}

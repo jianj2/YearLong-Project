@@ -63,8 +63,7 @@ const HomeClinician = (props) => {
 
             await loginWithRedirect({
 
-                redirect_uri: "https://ssq-client.herokuapp.com/clinician"
-                //`${process.env.REACT_APP_CLIENT}/clinician`
+                redirect_uri: `${process.env.REACT_APP_CLIENT}/clinician`
                 
                 //"http://localhost:3000/clinician", //TODO: figure out why window.location.pathname doesn't work
 
