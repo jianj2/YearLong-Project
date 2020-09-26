@@ -72,7 +72,4 @@ jobs:
         HD_REACT_APP_SERVER: ${{secrets.HEROKU_SERVER}} # Server URL
         HD_REACT_APP_CLIENT: ${{secrets.HEROKU_CLIENT}} # Client URL
 
-  
-
-
-
+        
