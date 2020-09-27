@@ -34,7 +34,7 @@ const FindPassword = () => {
         setOpen(false);
         await loginWithRedirect({
 
-            redirect_uri: process.env.REACT_APP_CLIENT,
+            redirect_uri: `${process.env.REACT_APP_CLIENT}/clinician`,
 
         });
 

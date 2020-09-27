@@ -31,12 +31,11 @@ import ContentPanel from "../components/Clinician/ContentPanel";
 const HomeClinician = (props) => {
     const { loading, isAuthenticated, loginWithRedirect, user, getTokenSilently, setToken} = useAuth0();
     
-    const domain = //process.env.REACT_APP_SERVER ||
-     "http://localhost:3001";
-    
+    const domain = process.env.REACT_APP_SERVER || "http://localhost:3001";
+    const client = process.env.REACT_APP_CLIENT || "http://localhost:3000";
      
-    
-       
+    // this API must be listed in one of the Auth0 APIs
+    const clinicianAuthAPI = `${domain}/clinician`;
     
     useEffect(() => {
         if (loading ) {
@@ -46,7 +45,7 @@ const HomeClinician = (props) => {
             const setAuth0Token = async ()=>{
                 try {
                 const accessToken = await getTokenSilently({
-                    audience: `${domain}/clinician`,
+                    audience: clinicianAuthAPI,
                     scope: "read:current_user",
                   });
                 setToken(accessToken);
@@ -59,14 +58,14 @@ const HomeClinician = (props) => {
             return;
         }
 
-
+        
         const fn = async () => {
 
             await loginWithRedirect({
 
-                redirect_uri: //`${process.env.REACT_APP_CLIENT}/clinician`
+                redirect_uri: `${client}/clinician`
                 
-                "http://localhost:3000/clinician", //TODO: figure out why window.location.pathname doesn't work
+                //"http://localhost:3000/clinician", //TODO: figure out why window.location.pathname doesn't work
 
                 //redirect_uri: "https://d1hg2pgsuj0kio.cloudfront.net/clinician", //TODO: figure out why window.location.pathname doesn't work
 
