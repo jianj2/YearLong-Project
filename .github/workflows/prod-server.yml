@@ -14,12 +14,11 @@ on:
   # Pipeline trigger on push
   push:
     branches: 
-    - deployment-server 
-    - development-server
+    - production-server
   # Pipeline trigger on pull request
   pull_request:
     branches:
-    - development-server
+    - production-server
 
 jobs:
   # Testing dependency installing
@@ -53,7 +52,7 @@ jobs:
       uses: akhileshns/heroku-deploy@v3.5.6
       with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}} # Heroku key
-        heroku_app_name: "dev-server" # Heroku app name
+        heroku_app_name: "ssq-server" # Heroku app name
         heroku_email: ${{secrets.HEROKU_EMAIL}} # Heroku email
       env:
         HD_SERVER: ${{secrets.HEROKU_SERVER}} # Server URL
@@ -61,3 +60,5 @@ jobs:
         HD_GMAILUSERNAME: ${{secrets.HEROKU_GMAILUSERNAME}} # Gmail username
         HD_GMAILPASSWORD: ${{secrets.HEROKU_GMAILPASSWORD}} # Gmail password
         HD_MONGOURI: ${{secrets.HEROKU_MONGOURI}} # Mongo URI
+
+        
