@@ -40,10 +40,6 @@ const onRedirectCallback = (appState) => {
     );
 };
 
-console.log(process.env.REACT_APP_SERVER)
-console.log(process.env.NODE_ENV)
-console.log(process.env.REACT_APP_CLIENT)
-
 const production = process.env.NODE_ENV;
 
 const managementAPI = production === "production" ? "https://ssq.au.auth0.com/api/v2/" : "https://pediatric-scale.au.auth0.com/api/v2/";
