@@ -66,13 +66,12 @@ const findStandardisedQuestionnaires = async () => {
 
 // generate an almost empty questionnaire with uuid.
 const generateNewCustomisedQuestionnaire = (uuid) => {
-    console.log((new Date()).toLocaleString())
     return new Questionnaire({
         questionnaireId: uuid,
         title: "New Questionnaire",
         description: "Please click edit to begin with this questionnaire.",
         isSSQ_Ch: true,
-        updateDate: (new Date()).toLocaleString(),
+        updateDate: new Date().toLocaleString("en-US", {timeZone: "Australia/Sydney"}),
         sections: [
             {
                 title: "Section A - Speech",
@@ -113,7 +112,7 @@ const generateNewStandardisedQuestionnaire = (uuid) => {
         title: "New Standard Questionnaire",
         description: "Please click edit to begin with this questionnaire.",
         isSSQ_Ch: true,
-        updateDate: (new Date()).toLocaleString(),
+        updateDate: new Date().toLocaleString("en-US", {timeZone: "Australia/Sydney"}),
         sections: [
             { title: "Section A - Speech", scenarios: [] },
             { title: "Section B - Spatial", scenarios: [] },
@@ -130,7 +129,7 @@ const generateCopy = (copiedQuestionnaire, questionnaireId, isStandard) => {
         questionnaireId,
         isStandard,
         title: copiedQuestionnaire.title + " - Copy",
-        updateDate: (new Date()).toLocaleString(),
+        updateDate: new Date().toLocaleString("en-US", {timeZone: "Australia/Sydney"}),
     });
 };
 
@@ -192,7 +191,7 @@ const updateQuestionnaireOnDatabase = async (
             { questionnaireId: questionnaireId },
             {
                 ...editedQuestionnaire,
-                updateDate: (new Date()).toLocaleString()
+                updateDate: new Date().toLocaleString("en-US", {timeZone: "Australia/Sydney"})
             }
         );
         return Promise.resolve([undefined, "Updated questionnaire."]);
