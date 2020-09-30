@@ -51,58 +51,36 @@ const sendRequest = async (
 // ================================================
 
 export const findPassword = (email) => {
-    fetch(`https://ssq.au.auth0.com/dbconnections/change_password`, {
-        method: "POST",
-        headers: {
-            ...header
-        },
-        body: JSON.stringify({
-            client_id: 'cFvWQEJAqVjpvvvaz3WVkFsAilRxl8jo',
-            email: email,
-            connection: 'Username-Password-Authentication'
-        }),
-        json: true
-    }).then((res) => res.json());
+    const url = `https://ssq.au.auth0.com/dbconnections/change_password`
+    const data = {
+        client_id: 'cFvWQEJAqVjpvvvaz3WVkFsAilRxl8jo',
+        email: email,
+        connection: 'Username-Password-Authentication'
+    }
+    return await sendRequest("POST", url, data);
 }
 
+export const adminLogin = (loginData) =>{
+    const url = `${api}/admin/login`;
+    return await sendRequest("POST", url, loginData);
+}
 
+export const verifyAdminLogin = (token) => {
+    const url = `${api}/admin/verifylogin/${token}`;
+    return await sendRequest("GET", url);
+}
 
-export const adminLogin = (loginData) =>
-    fetch(`${api}/admin/login`, {
-        method: "POST",
-        headers: {
-            ...header,
-        },
-        body: JSON.stringify(loginData),
-    }).then((res) => res.json());
-
-export const verifyAdminLogin = (token) =>
-    fetch(`${api}/admin/verifylogin/${token}`, {
-        ...header,
-    }).then((res) => res.json());
-
-export const sendQuestionnaireData = (data, shareId) =>
-    fetch(`${api}/share/submit/${shareId}`, {
-        method: "POST",
-        headers: {
-            ...header,
-        },
-        body: JSON.stringify(data),
-    }).then((res) => res.json());
+export const sendQuestionnaireData = (data, shareId) =>{
+    const url = `${api}/share/submit/${shareId}`;
+    return await sendRequest("POST", url, data);
+}
 
 // ================================================
 // Clinician server calls
 // ================================================
 export const completeQuestionnaire = async (token, data) => {
-    const headers = {
-        ...header,
-        ...createHeader(token),
-    };
-    fetch(`${api}/clinician/complete-questionnaire/`, {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(data),
-    }).then((res) => res.json());
+    const url =`${api}/clinician/complete-questionnaire/`;
+    return await sendRequest("POST", url, data,token);
 };
 
 // ================================================
@@ -146,7 +124,6 @@ export const editQuestionnaire = async (token, questionnaire) => {
     const data = {
         questionnaire,
     };
-
     return await sendRequest("POST", url, data, token);
 };
 
@@ -157,32 +134,27 @@ export const editStandardQuestionnaire = async (questionnaire) => {
     const data = {
         questionnaire,
     };
-
     return await sendRequest("POST", url, data);
 };
 
 //COPY questionnaire
 export const copyQuestionnaire = async (questionnaire, clinicianId) => {
     const url = "questionnaire/copy";
-
     const data = {
-        clinicianId: clinicianId,
+        clinicianId,
         copyToCustomisedQuestionnaire: true,
         questionnaire,
     };
-
     return await sendRequest("POST", url, data);
 };
 
 //admin COPY questionnaire
 export const adminCopyQuestionnaire = async (questionnaire) => {
     const url = "questionnaire/copy";
-
     const data = {
         copyToCustomisedQuestionnaire: false,
         questionnaire,
     };
-
     return await sendRequest("POST", url, data);
 };
 
@@ -209,11 +181,7 @@ export const getStandardisedQuestionnaires = async () => {
 //get standardised questionnaires(admin)
 export const getStandardisedQuestionnaireForAdmin = async () => {
     const url = `${api}/admin/getStandardisedQuestionnaire`;
-    let response = await fetch(url, {
-        headers: header,
-    });
-    let json = await response.json();
-    return json;
+    return await sendRequest("GET", url);
 };
 
 export const deleteStandardQuestionnaire = async (questionnaireID) => {
