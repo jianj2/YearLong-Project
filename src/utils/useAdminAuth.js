@@ -43,7 +43,6 @@ export const AdminAuthProvider = ({ children }) => {
         const [statusCode, response] = await API.adminLogin(loginData);
         console.log("response from login", response);
         if (statusCode === 200) {
-            console.log("cary logged");
             setAuthenticated(response.message.auth);
             setAdminToken(response.message.token);
             localStorage.setItem(
@@ -53,7 +52,6 @@ export const AdminAuthProvider = ({ children }) => {
                 })
             );
         }else {
-            console.log("cary not logged");
             let errorMessage = document.getElementById('error-message-login');
             errorMessage.innerHTML = "Login information is wrong.";
             console.error(response);

@@ -51,47 +51,48 @@ const sendRequest = async (
 // ================================================
 
 export const findPassword = async (email) => {
-
-    const url =  process.env.NODE_ENV === 'production'?
-    "https://ssq.au.auth0.com/dbconnections/change_password" :
-    "https://pediatric-scale.au.auth0.com/dbconnections/change_password";
-    const client_id = process.env.NODE_ENV === 'production'? 
-    'cFvWQEJAqVjpvvvaz3WVkFsAilRxl8jo':
-    "ko5IIugoRXQf2uCpqRclocwbhrbqAYx4";
+    const url =
+        process.env.NODE_ENV === "production"
+            ? "https://ssq.au.auth0.com/dbconnections/change_password"
+            : "https://pediatric-scale.au.auth0.com/dbconnections/change_password";
+    const client_id =
+        process.env.NODE_ENV === "production"
+            ? "cFvWQEJAqVjpvvvaz3WVkFsAilRxl8jo"
+            : "ko5IIugoRXQf2uCpqRclocwbhrbqAYx4";
     const data = {
         client_id: client_id,
         email: email,
-        connection: 'Username-Password-Authentication'
-    }
+        connection: "Username-Password-Authentication",
+    };
     const fetchOptions = {
         method: "POST",
         headers: header,
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
     };
     await fetch(url, fetchOptions);
-}
+};
 
-export const adminLogin = async (loginData) =>{
+export const adminLogin = async (loginData) => {
     const url = `admin/login`;
     return await sendRequest("POST", url, loginData);
-}
+};
 
 export const verifyAdminLogin = async (token) => {
     const url = `admin/verifylogin/${token}`;
     return await sendRequest("GET", url);
-}
+};
 
-export const sendQuestionnaireData = async (data, shareId) =>{
+export const sendQuestionnaireData = async (data, shareId) => {
     const url = `share/submit/${shareId}`;
     return await sendRequest("POST", url, data);
-}
+};
 
 // ================================================
 // Clinician server calls
 // ================================================
 export const completeQuestionnaire = async (token, data) => {
-    const url =`clinician/complete-questionnaire/`;
-    return await sendRequest("POST", url, data,token);
+    const url = `clinician/complete-questionnaire/`;
+    return await sendRequest("POST", url, data, token);
 };
 
 // ================================================
@@ -259,11 +260,11 @@ export const sendInstructions = (data) =>
 
 // update instruction by type
 export const updateInstruction = (type, data) =>
-fetch(`${api}/admin/instruction/${type}`, {
-    method: "POST",
-    headers: header,
-    body: JSON.stringify(data),
-}).then((res) => res);
+    fetch(`${api}/admin/instruction/${type}`, {
+        method: "POST",
+        headers: header,
+        body: JSON.stringify(data),
+    }).then((res) => res);
 
 // get organisations
 export const getOrganisations = async () => {
@@ -280,7 +281,7 @@ export const getOrganisations = async () => {
 export const getOrganisationClinicians = async (organisationName) => {
     const url = `${api}/admin/organisation/${organisationName}`;
     let response = await fetch(url, {
-        headers: header
+        headers: header,
     });
     let json = await response.json();
     return json;
