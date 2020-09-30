@@ -33,17 +33,11 @@ const loginAdmin = function (req, res) {
 
     // Username can not be empty
     if (username === "") {
-        res.send({
-            code: 1,
-            message: "Username can not be empty!",
-        });
+        res.status(400).json({message:"Username can not be empty!"});
         return;
     }
     if (password === "") {
-        res.send({
-            code: 2,
-            message: "Password can not be empty!",
-        });
+        res.status(400).json({message:"Password can not be empty!"});
         return;
     }
     if (username === _username && password === _password) {
@@ -51,22 +45,15 @@ const loginAdmin = function (req, res) {
             expiresIn: 86400, // expires in 24 hours
             //expiresIn: 100, // expires in 100 seconds FOR TESTING
         });
-        res.send({
-            code: 3,
+        res.status(200).json({
             message: {
                 auth: true,
                 token: token,
-            },
+            }
         });
-
-        // res.send({
-        //     code: 3,
-        //     message: "Successful login!",
-        // });
     } else {
-        res.send({
-            code: 4,
-            message: "Incorrect details!",
+        res.status(400).json({
+            message: "Incorrect details!"
         });
     }
 };
