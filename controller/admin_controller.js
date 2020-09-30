@@ -147,18 +147,6 @@ const addInstruction = function (req, res) {
     });
 };
 
-// Get all standardised questionnaires for admin
-const getStandardisedQuestionnaire = function (req, res) {
-    Questionnaire.find({ isStandard: true }, function (err, questionnaire) {
-        if (!err && questionnaire != null) {
-            console.log("successful");
-            res.send(questionnaire);
-        } else {
-            res.send(err);
-        }
-    });
-};
-
 //Get the title and content of the Instruction
 const getInstruction = function (req, res) {
     Instruction.findOne({}, function (err, Instruction) {
@@ -271,7 +259,6 @@ const getOrganisationClinicians = function (req, res) {
 module.exports.loginAdmin = loginAdmin;
 module.exports.verifyLogin = verifyLogin;
 module.exports.addStandardisedQuestionnaire = addStandardisedQuestionnaire;
-module.exports.getStandardisedQuestionnaire = getStandardisedQuestionnaire;
 module.exports.getInstruction = getInstruction;
 module.exports.getSpecificInstruction = getSpecificInstruction;
 module.exports.getInstructionsSummary = getInstructionsSummary;
