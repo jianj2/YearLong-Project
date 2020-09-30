@@ -39,24 +39,27 @@ export const AdminAuthProvider = ({ children }) => {
         }
     }, []);
 
-    const adminLogin = (loginData) => {
-        API.adminLogin(loginData).then((res) => {
-            console.log("response from login", res);
-            if (res.code === 3) {
-                setAuthenticated(res.message.auth);
-                setAdminToken(res.message.token);
-                localStorage.setItem(
-                    "adminAuthentication",
-                    JSON.stringify({
-                        token: res.message.token,
-                    })
-                );
-            }else if (res.code===4){
-                let errorMessage = document.getElementById('error-message-login');
-                errorMessage.innerHTML = "Login information is wrong";
-                errorMessage.style.display = 'block';
-            }
-        });
+    const adminLogin = async (loginData) => {
+        const [statusCode, response] = await API.adminLogin(loginData);
+        console.log("response from login", response);
+        if (statusCode === 200) {
+            console.log("cary logged");
+            setAuthenticated(response.message.auth);
+            setAdminToken(response.message.token);
+            localStorage.setItem(
+                "adminAuthentication",
+                JSON.stringify({
+                    token: response.message.token,
+                })
+            );
+        }else {
+            console.log("cary not logged");
+            let errorMessage = document.getElementById('error-message-login');
+            errorMessage.innerHTML = "Login information is wrong.";
+            console.error(response);
+            errorMessage.style.display = 'block';
+        }
+    
     };
 
     const adminLogout = () => {

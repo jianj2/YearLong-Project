@@ -87,7 +87,7 @@ const AdminManageQuestionnaires = () => {
                 statusCode,
                 response,
             ] = await getStandardisedQuestionnaires();
-            if (statusCode === "200") {
+            if (statusCode === 200) {
                 
                 let sortedResponse = response.sort(function (a, b) {
                     let dateA = new Date(a.updateDate),

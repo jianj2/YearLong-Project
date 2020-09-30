@@ -50,28 +50,39 @@ const sendRequest = async (
 // Admin server calls
 // ================================================
 
-export const findPassword = (email) => {
-    const url = `https://ssq.au.auth0.com/dbconnections/change_password`
+export const findPassword = async (email) => {
+
+    const url =  process.env.NODE_ENV === 'production'?
+    "https://ssq.au.auth0.com/dbconnections/change_password" :
+    "https://pediatric-scale.au.auth0.com/dbconnections/change_password";
+    const client_id = process.env.NODE_ENV === 'production'? 
+    'cFvWQEJAqVjpvvvaz3WVkFsAilRxl8jo':
+    "ko5IIugoRXQf2uCpqRclocwbhrbqAYx4";
     const data = {
-        client_id: 'cFvWQEJAqVjpvvvaz3WVkFsAilRxl8jo',
+        client_id: client_id,
         email: email,
         connection: 'Username-Password-Authentication'
     }
-    return await sendRequest("POST", url, data);
+    const fetchOptions = {
+        method: "POST",
+        headers: header,
+        body: JSON.stringify(data)
+    };
+    await fetch(url, fetchOptions);
 }
 
-export const adminLogin = (loginData) =>{
-    const url = `${api}/admin/login`;
+export const adminLogin = async (loginData) =>{
+    const url = `admin/login`;
     return await sendRequest("POST", url, loginData);
 }
 
-export const verifyAdminLogin = (token) => {
-    const url = `${api}/admin/verifylogin/${token}`;
+export const verifyAdminLogin = async (token) => {
+    const url = `admin/verifylogin/${token}`;
     return await sendRequest("GET", url);
 }
 
-export const sendQuestionnaireData = (data, shareId) =>{
-    const url = `${api}/share/submit/${shareId}`;
+export const sendQuestionnaireData = async (data, shareId) =>{
+    const url = `share/submit/${shareId}`;
     return await sendRequest("POST", url, data);
 }
 
@@ -79,7 +90,7 @@ export const sendQuestionnaireData = (data, shareId) =>{
 // Clinician server calls
 // ================================================
 export const completeQuestionnaire = async (token, data) => {
-    const url =`${api}/clinician/complete-questionnaire/`;
+    const url =`clinician/complete-questionnaire/`;
     return await sendRequest("POST", url, data,token);
 };
 

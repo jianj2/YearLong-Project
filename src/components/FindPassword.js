@@ -32,9 +32,10 @@ const FindPassword = () => {
 
     const handleClose = async () => {
         setOpen(false);
+        const domain = process.env.NODE_ENV === 'production'? process.env.REACT_APP_CLIENT: "http://localhost:3000";
         await loginWithRedirect({
-
-            redirect_uri: `${process.env.REACT_APP_CLIENT}/clinician`,
+           
+            redirect_uri: `${domain}/clinician`,
 
         });
 
