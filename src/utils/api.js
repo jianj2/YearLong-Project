@@ -178,12 +178,6 @@ export const getStandardisedQuestionnaires = async () => {
     return await sendRequest("GET", url);
 };
 
-//get standardised questionnaires(admin)
-export const getStandardisedQuestionnaireForAdmin = async () => {
-    const url = `${api}/admin/getStandardisedQuestionnaire`;
-    return await sendRequest("GET", url);
-};
-
 export const deleteStandardQuestionnaire = async (questionnaireID) => {
     const url = "questionnaire/deleteStandard";
     const data = {

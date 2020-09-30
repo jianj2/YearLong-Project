@@ -24,7 +24,7 @@ import * as API from "../../utils/api";
 
 import {
     addStandardQuestionnaire,
-    getStandardisedQuestionnaireForAdmin,
+    getStandardisedQuestionnaires,
     deleteStandardQuestionnaire,
 } from "../../utils/api";
 
@@ -86,9 +86,9 @@ const AdminManageQuestionnaires = () => {
             const [
                 statusCode,
                 response,
-            ] = await getStandardisedQuestionnaireForAdmin();
+            ] = await getStandardisedQuestionnaires();
             if (statusCode === "200") {
-                console.log(response);
+                
                 let sortedResponse = response.sort(function (a, b) {
                     let dateA = new Date(a.updateDate),
                         dateB = new Date(b.updateDate);
