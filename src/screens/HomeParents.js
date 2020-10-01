@@ -213,7 +213,7 @@ const HomeParents = ({ match }) => {
         nextStep();
     };
 
-    const submitResponse = () => {
+    const submitResponse = async () => {
         let data = {
             questionnaireData,
             comments: commentData,
@@ -225,13 +225,15 @@ const HomeParents = ({ match }) => {
 
         console.log(data);
         setLoading(true);
-        API.sendQuestionnaireData(data, match.params.shareId).then((res) => {
-            if (res) {
+        const [statusCode, response] = await API.sendQuestionnaireData(data, match.params.shareId);
+            if (statusCode === 200) {
                 setLoading(false);
                 nextStep();
+            }else{
+                console.error(response);
             }
-            console.log(res);
-        });
+          
+     
     };
 
     if (wizardStep === -2) {

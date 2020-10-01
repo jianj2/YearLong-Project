@@ -11,20 +11,17 @@ export const AdminAuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     const verifyAdminLoginFun = async (previousAuth) => {  //this is for shortly redirect to the admin login page(bug)
-        await API.verifyAdminLogin(previousAuth.token).then((res) => {
-            console.log("VERYIFY LOGIN in CUSTOM HOOK", res);
-            if (res.auth) {
+        const [statusCode, response] = await API.verifyAdminLogin(previousAuth.token);
+     
+            console.log("VERYIFY LOGIN in CUSTOM HOOK", response);
+            if (statusCode === 200 && response.auth) {
                 setAuthenticated(true);
                 setLoading(false);
                 setAdminToken(previousAuth.token);
             } else {
                 setLoading(false);
             }
-        }).catch(
-            ()=>{
-                setLoading(false);
-            }
-        );
+       
     }
 
     useEffect(() => {
