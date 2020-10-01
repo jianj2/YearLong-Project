@@ -63,12 +63,12 @@ const verifyLogin = (req, res) => {
 
     jwt.verify(token, "secretLOL", function (err, decoded) {
         if (!err) {
-            res.send({
+            res.status(200).json({
                 auth: true,
                 decoded: decoded.username,
             });
         } else {
-            res.send({
+            res.status(401).json({
                 auth: false,
                 decoded: "",
             });

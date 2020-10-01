@@ -48,24 +48,24 @@ const shareQuestionnaire = function (req, res) {
                 sendInvitationEmail(createdShare)
                     .then((emailRes) => {
                         if (emailRes.success) {
-                            res.send(JSON.stringify(emailRes));
+                            res.status(200).json(emailRes);
                         } else {
-                            res.send("I got an error");
+                            res.status(400).json("Unknown Error");
                         }
                     })
                     .catch((emailRej) => {
                         if (emailRej.success) {
-                            res.send(JSON.stringify(emailRej));
+                            res.status(200).json(emailRes);
                         } else {
-                            res.send("I got an error");
+                            res.status(400).json("Unknown Error");
                         }
                     });
             } else {
-                res.send(err);
+                res.status(400).json(err);
             }
         });
     }else{
-        res.send("Authroisation faiiled");
+        res.status(401).json("Authroisation faiiled");
     }
 };
 
@@ -114,9 +114,9 @@ const completeShare = function (req, res) {
     )
         .then((emailRes) => {
             deleteShare(req, res);
-            res.send(emailRes);
+            res.status(200).json(emailRes);
         })
-        .catch((emailRej) => res.send(emailRej));
+        .catch((emailRej) => res.status(400).json(emailRej));
 };
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
