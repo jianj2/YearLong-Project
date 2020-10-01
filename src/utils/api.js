@@ -202,21 +202,18 @@ export const deleteStandardQuestionnaire = async (questionnaireID) => {
 // Managing Share server calls
 // ================================================
 // get questionnaire ID using the Share ID.
-export const getShareDetails = (shareId) =>
-    fetch(`${api}/share/${shareId}`, {
-        header,
-    }).then((res) => res.json());
+export const getShareDetails = async (shareId) =>{
+    const url = `share/${shareId}`;
+    return await sendRequest("GET", url);
+}
 
 // Used to share a questionnaire.
-export const shareQuestionnaire = async (token, data) =>
-    fetch(`${api}/clinician/share/`, {
-        method: "POST",
-        headers: {
-            ...header,
-            ...createHeader(token),
-        },
-        body: JSON.stringify(data),
-    }).then((res) => res.json());
+export const shareQuestionnaire = async (token, data) => {
+    const url = `clinician/share/`;
+    return await sendRequest("POST", url, data, token);
+}
+    
+      
 
 // get Instruction
 export const getInstruction = async () => {
