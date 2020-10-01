@@ -784,7 +784,7 @@
                                                         <tbody>
                                                         <tr>
                                                             <td class="esd-block-text es-m-txt-c" align="left">
-                                                                <h1 style="color: #151641; line-height: 150%;">Hello, Uvin!</h1>
+                                                                <h1 style="color: #151641; line-height: 150%;">Hello!</h1>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -794,7 +794,9 @@
                                                         </tr>
                                                         <tr>
                                                             <td class="esd-block-text es-m-txt-c es-p10t" align="left">
-                                                                <p style="color: #151641;">Message from the clinician:Uvin</p>
+                                                                <% if (message != ""){%>
+                                                                <p style="color: #151641;"><%= message %></p>
+                                                                <%}%>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -810,20 +812,20 @@
                                                         </tr>
                                                         <tr>
                                                             <td class="esd-block-button es-p20t" align="center">
-                                                                <!--[if mso]><a href="https://viewstripo.email/" target="_blank">
-                                                                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" stripoVmlButton href="https://viewstripo.email/"
+                                                                <!--[if mso]><a href=<%=link%>> target="_blank">
+                                                                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" stripoVmlButton href=<%=link%>
                                                                                  style="height:44px;v-text-anchor:middle;width:170px;" arcsize="0%" strokecolor="#ca4c91" fillcolor="#ffffff">
                                                                         <w:anchorlock></w:anchorlock>
                                                                         <center style='color:#ca4c91;font-family:georgia, times, "times new roman", serif;font-size:16px;font-weight:normal;'>Start questionnaire</center>
                                                                     </v:roundrect></a>
                                                                 <![endif]-->
-                                                                <!--[if !mso]><!-- --><span class="msohide es-button-border" style="border-radius: 0px; border-width: 2px; border-color: #ca4c91;"><a href="uvin" class="es-button" target="_blank" style="border-radius: 0px; font-style: italic; font-family: georgia,times,'times new roman',serif; font-size: 16px; color: #ca4c91; border-width: 5px 15px;">Start questionnaire</a></span>
+                                                                <!--[if !mso]><!-- --><span class="msohide es-button-border" style="border-radius: 0px; border-width: 2px; border-color: #ca4c91;"><a href=<%=link%> class="es-button" target="_blank" style="border-radius: 0px; font-style: italic; font-family: georgia,times,'times new roman',serif; font-size: 16px; color: #ca4c91; border-width: 5px 15px;">Start questionnaire</a></span>
                                                                 <!--<![endif]-->
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="esd-block-text es-m-txt-c es-p10t" align="left">
-                                                                <p style="color: #151641;">Questionnaire link: Uvin</p>
+                                                                <p style="color: #ca4c91;" href=<%= link %> >Questionnaire link: <%= link %></p>
                                                             </td>
                                                         </tr>
                                                         <tr>

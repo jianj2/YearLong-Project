@@ -37,13 +37,13 @@ const sendInvitationEmail = function (createdShare) {
         "http://localhost:3000/parent/";
         let link = client + createdShare.shareId + "";
         let message = "";
-        if (createdShare.message != undefined) {
+        if (createdShare.message != undefined && createdShare.message != "" ) {
             message = "Message from the clinician: " + createdShare.message + "";
         }
 
         const ejs = require("ejs");
-
-        ejs.renderFile(__dirname + "/shareTemplate.ejs", { link: link }, function (err, data) {
+        console.log(link)
+        ejs.renderFile(__dirname + "/shareTemplate.ejs", { link: link, message:message }, function (err, data) {
             if (err) {
                 console.log(err);
             } else {
