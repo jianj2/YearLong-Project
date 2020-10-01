@@ -9,7 +9,7 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "ejs": "^2.7.1",
+    "ejs": "^2.7.4",
     "express": "^4.16.4",
     "express-ejs-layouts": "^2.5.0",
     "express-jwt": "^6.0.0",
