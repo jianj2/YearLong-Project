@@ -40,9 +40,7 @@ const sendInvitationEmail = function (createdShare) {
         if (createdShare.message != undefined && createdShare.message != "" ) {
             message = "Message from the clinician: " + createdShare.message + "";
         }
-
         const ejs = require("ejs");
-        console.log(link)
         ejs.renderFile(__dirname + "/shareTemplate.ejs", { link: link, message:message }, function (err, data) {
             if (err) {
                 console.log(err);
@@ -57,8 +55,6 @@ const sendInvitationEmail = function (createdShare) {
                 sendEmail(mailOptions)
                     .then(res => resolve(res))
                     .catch(rej => reject(rej))
-
-
 
             }
         });
