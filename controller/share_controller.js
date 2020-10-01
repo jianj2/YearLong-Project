@@ -77,14 +77,12 @@ const getShareDetails = function (req, res) {
 
     Share.findOne({ shareId }, function (err, share) {
         if (!err && share != null) {
-            res.send({
-                statusCode: 200,
+            res.status(200).json({
                 message: "Valid ShareId",
                 data: share,
             });
         } else {
-            res.send({
-                statusCode: 400,
+            res.status(400).json({
                 message: "Invalid ShareId",
                 data: err,
             });
