@@ -212,74 +212,41 @@ export const shareQuestionnaire = async (token, data) => {
     const url = `clinician/share/`;
     return await sendRequest("POST", url, data, token);
 }
-    
-      
 
 // get Instruction
 export const getInstruction = async () => {
-    const url = `${api}/admin/instruction`;
-    let response = await fetch(url, {
-        headers: header,
-    });
-    let json = await response.json();
-
-    return json;
+    const url = `admin/instruction`;
+    return await sendRequest("GET", url);
 };
 
 // get instructions
 export const getSpecificInstruction = async (instructionType) => {
-    const url = `${api}/admin/specificInstruction/${instructionType}`;
-    let response = await fetch(url, {
-        headers: header,
-    });
-    let json = await response.json();
-    return json;
+    const url = `admin/specificInstruction/${instructionType}`;
+    return await sendRequest("GET", url);
 };
 
 // get instructions summary including title and type
 
 export const getInstructionsSummary = async () => {
-    const url = `${api}/admin/instructionsSummary`;
-    let response = await fetch(url, {
-        headers: header,
-    });
-    let json = await response.json();
-    return json;
+    const url = `admin/instructionsSummary`;
+    return await sendRequest("GET", url);
 };
 
-// send Instructions
-export const sendInstructions = (data) =>
-    fetch(`${api}/admin/instruction`, {
-        method: "POST",
-        headers: header,
-        body: JSON.stringify(data),
-    }).then((res) => res);
-
 // update instruction by type
-export const updateInstruction = (type, data) =>
-    fetch(`${api}/admin/instruction/${type}`, {
-        method: "POST",
-        headers: header,
-        body: JSON.stringify(data),
-    }).then((res) => res);
+export const updateInstruction = async (type, data) => {
+    const url = `admin/instruction/${type}`;
+    return await sendRequest("POST", url, data);
+};
+   
 
 // get organisations
 export const getOrganisations = async () => {
     const url = `${api}/admin/organisation`;
-    let response = await fetch(url, {
-        headers: header,
-    });
-    let json = await response.json();
-
-    return json;
+    return await sendRequest("GET", url);
 };
 
 // get organisation's clinicians
 export const getOrganisationClinicians = async (organisationName) => {
     const url = `${api}/admin/organisation/${organisationName}`;
-    let response = await fetch(url, {
-        headers: header,
-    });
-    let json = await response.json();
-    return json;
+    return await sendRequest("GET", url);
 };

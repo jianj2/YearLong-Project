@@ -137,19 +137,22 @@ const ShareQuestionnaire = (props) => {
     const openModal = () => setIsShareModalVisible(true);
     const closeModal = () => setIsShareModalVisible(false);
 
-    const handleShareSubmit = (e) => {
+    const handleShareSubmit = async (e) => {
         e.preventDefault();
 
         if( !isSectionsEmpty ){
             setLoading(true);
             shareModalData["shareSection"] = shareSection;
-            console.log("shareModalData ", shareModalData)
-            API.shareQuestionnaire(token, shareModalData)
-               .then( res => {
-                   console.log("res from create Share", res)
+            console.log("shareModalData ", shareModalData);
+            const [statusCode, response] = await API.shareQuestionnaire(token, shareModalData);
+            if(statusCode===200){
+                   console.log("res from create Share", response)
                     setLoading(false);
                     closeModal();
-                });
+            }else{
+                console.error(response)
+            }
+           
         }
     };
 
