@@ -121,30 +121,6 @@ const addStandardisedQuestionnaire = function (req, res) {
     });
 };
 
-//add an instruction
-const addInstruction = function (req, res) {
-    let newInstruction = new Instruction({
-        title: "Hello world",
-        content: "How are you?",
-        type: "RP",
-    });
-
-    newInstruction.save(function (err, createdQuestionnaire) {
-        console.log("added instruction!");
-    });
-};
-
-//Get the title and content of the Instruction
-const getInstruction = function (req, res) {
-    Instruction.findOne({}, function (err, Instruction) {
-        if (!err && Instruction != null) {
-            res.send(Instruction);
-        } else {
-            res.send(err);
-        }
-    });
-};
-
 //Get all instructions
 const getSpecificInstruction = function (req, res) {
 
@@ -153,9 +129,9 @@ const getSpecificInstruction = function (req, res) {
         instruction
     ) {
         if (!err && instruction != null) {
-            res.send(JSON.stringify(instruction));
+            res.status(200).json(instruction);
         } else {
-            res.send(JSON.stringify(err));
+            res.status(400).json(err);
         }
     });
 };
@@ -174,9 +150,9 @@ const getInstructionsSummary = function (req, res) {
                     type: instruction.type,
                 };
             });
-            res.send(JSON.stringify(summary));
+            res.status(200).json(summary);
         } else {
-            res.send(JSON.stringify(err));
+            res.status(400).json(err);
         }
     });
 };
@@ -194,11 +170,11 @@ const updateInstructionByType = function (req, res) {
         (err, raw) => {
             if (!err) {
 
-                res.send("successfully edit");
+                res.status(200).json("Successfully updated instruction.");
                 
               
             } else {
-                res.send(err);
+                res.status(400).json(err);
             }
         }
     );
@@ -215,9 +191,9 @@ const getOrganisations = function (req, res) {
                     clinicianId: clinician.clinicianId,
                 };
             });
-            res.send(JSON.stringify(summary));
+            res.status(200).json(summary);
         } else {
-            res.send(JSON.stringify(err));
+            res.status(400).json(err);
         }
     });
 };
@@ -234,9 +210,9 @@ const getOrganisationClinicians = function (req, res) {
                     clinicianId: clinician.clinicianId,
                 };
             });
-            res.send(JSON.stringify(summary));
+            res.status(200).json(summary);
         } else {
-            res.send(JSON.stringify(err));
+            res.status(400).json(err);
         }
     });
 };
@@ -246,10 +222,8 @@ const getOrganisationClinicians = function (req, res) {
 module.exports.loginAdmin = loginAdmin;
 module.exports.verifyLogin = verifyLogin;
 module.exports.addStandardisedQuestionnaire = addStandardisedQuestionnaire;
-module.exports.getInstruction = getInstruction;
 module.exports.getSpecificInstruction = getSpecificInstruction;
 module.exports.getInstructionsSummary = getInstructionsSummary;
 module.exports.updateInstructionByType = updateInstructionByType;
-module.exports.addInstruction = addInstruction;
 module.exports.getOrganisations = getOrganisations;
 module.exports.getOrganisationClinicians = getOrganisationClinicians;
