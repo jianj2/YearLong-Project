@@ -13,10 +13,8 @@ const mongoose = require("mongoose");
 const adminKeyFile = require("../config/admin.json");
 const jwt = require("jsonwebtoken");
 
-const Questionnaire = mongoose.model("questionnaire");
 const Clinician = mongoose.model("clinician");
 const Instruction = mongoose.model("instruction");
-const { v1: uuidv1 } = require("uuid");
 
 // Login check.
 const loginAdmin = function (req, res) {
@@ -73,51 +71,6 @@ const verifyLogin = (req, res) => {
                 decoded: "",
             });
         }
-    });
-};
-
-// add a standardised questionnaires
-const addStandardisedQuestionnaire = function (req, res) {
-    const uuid = uuidv1();
-
-    let newQuestionnaire = new Questionnaire({
-        questionnaireId: uuid,
-        title: "SSQ-CH",
-        description: "SSQ-CH",
-        sections: [
-            {
-                title: "Speech",
-                scenarios: [
-                    {
-                        description: "You are at Melbourne Uni...",
-                        questions: [
-                            {
-                                isMCQ: false,
-                                rangeOptions: ["Zero", "Ten"],
-                            },
-                            {
-                                description:
-                                    "If only one option can be true, which of the following is correct?",
-                                isMCQ: true,
-                                MCQOptions: [
-                                    "All of the above is true",
-                                    " Those below the below is true",
-                                    "None of the above is true",
-                                    "Those above the above is true",
-                                ],
-                            },
-                        ],
-                    },
-                ],
-            },
-            { title: "Spatial", scenarios: [] },
-            { title: "Quality", scenarios: [] },
-        ],
-        isStandard: true,
-    });
-
-    newQuestionnaire.save(function (err, createdQuestionnaire) {
-        console.log("added standardised questionnaire:", uuid);
     });
 };
 
