@@ -14,7 +14,6 @@ const mongoose = require("mongoose");
 const Share = mongoose.model("share");
 const { v1: uuidv1 } = require("uuid");
 const { extractUserEmail } = require("../utils/jwtUtils");
-
 const { sendInvitationEmail, sendResultsEmail } = require("../service/emailService");
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -93,28 +92,29 @@ const getShareDetails = function (req, res) {
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is called when share response is completed.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const completeShare = function (req, res) {
+const completeShare = async function (req, res) {
     let questionnaireData = req.body.questionnaireData;
     let clinicianEmail = req.body.clinicianEmail;
     let personalDetails = req.body.personalDetails;
     let questionnaireId = req.body.questionnaireId;
     let comments = req.body.comments;
     let sortBy  = req.body.sortBy;
-
-    sendResultsEmail(
-        questionnaireId,
-        questionnaireData,
-        clinicianEmail,
-        personalDetails,
-        sortBy,
-        req.params.shareId,
-        comments
-    )
-        .then((emailRes) => {
-            deleteShare(req, res);
-            res.status(200).json(emailRes);
-        })
-        .catch((emailRej) => res.status(400).json(emailRej));
+    try {
+        const emailResponse = await sendResultsEmail(
+            questionnaireId,
+            questionnaireData,
+            clinicianEmail,
+            personalDetails,
+            sortBy,
+            req.params.shareId,
+            comments
+        )
+            
+        deleteShare(req, res); 
+        res.status(200).json(emailResponse);
+    }catch(error){
+        res.status(400).json(error);
+    }
 };
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====

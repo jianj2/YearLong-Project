@@ -174,7 +174,6 @@ const getOrganisationClinicians = function (req, res) {
 
 module.exports.loginAdmin = loginAdmin;
 module.exports.verifyLogin = verifyLogin;
-module.exports.addStandardisedQuestionnaire = addStandardisedQuestionnaire;
 module.exports.getSpecificInstruction = getSpecificInstruction;
 module.exports.getInstructionsSummary = getInstructionsSummary;
 module.exports.updateInstructionByType = updateInstructionByType;
