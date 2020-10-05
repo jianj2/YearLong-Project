@@ -120,14 +120,14 @@ const QuestionnaireList = ({
                                 label="SSQ-FOR-CHILDERN"
                             />
                         ) : (
-                                <Chip
-                                    id="SSQtype"
-                                    variant="outlined"
-                                    size="small"
-                                    avatar={<Avatar>P</Avatar>}
-                                    label="SSQ-FOR-PARENTS"
-                                />
-                            )
+                            <Chip
+                                id="SSQtype"
+                                variant="outlined"
+                                size="small"
+                                avatar={<Avatar>P</Avatar>}
+                                label="SSQ-FOR-PARENTS"
+                            />
+                        )
                     ) : null}
 
                     {title}
@@ -161,19 +161,18 @@ const QuestionnaireList = ({
                                 E D I T
                             </button>
                         ) : null}
-                        
-                        {canDelete? (
+
+                        {
                             <button
-                            className="button"
-                            onClick={(event) => {
-                                event.stopPropagation();
-                                onClickCopy(questionnaire);
-                            }}
+                                className="button"
+                                onClick={(event) => {
+                                    event.stopPropagation();
+                                    onClickCopy(questionnaire);
+                                }}
                             >
                                 C O P Y
                             </button>
-                        ) : null}
-                        
+                        }
 
                         {canDelete ? (
                             <button
@@ -204,15 +203,15 @@ const QuestionnaireList = ({
                     isSelectable={isSelectable}
                     onClickQuestion={onClickQuestion}
                     canEdit={canEdit}
-                    onClickCopy = {onClickCopy}
+                    onClickCopy={onClickCopy}
                     onClickEdit={onClickEdit}
                     canDelete={canDelete}
                     onClickDelete={onClickDelete}
                     canShare={canShare}
                     onClickShare={onClickShare}
                     sections={question.sections}
-                    questionnaire = {question}
-                    date = {question.updateDate}
+                    questionnaire={question}
+                    date={question.updateDate}
                 />
             ))}
         </div>
