@@ -28,19 +28,13 @@ const {
     copyQuestionnaireToDatabase,
 } = require("../service/questionnaireService");
 
+const { sendJSONResponse } = require("../utils/apiUtils");
+
+
 const sendAuthroisationError = (res) => {
     res.send(
         JSON.stringify("You do not have access to the clinician account.")
     );
-};
-
-const sendJSONResponse = (res, data, error, errorCode) => {
-    if (data != null && !error) {
-        res.status(200).json(data);
-    } else {
-        res.status(errorCode).json(error.message);
-        console.log(error.message);
-    }
 };
 
 // Get a questionnaire by ID from request
