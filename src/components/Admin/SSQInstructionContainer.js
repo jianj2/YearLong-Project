@@ -93,7 +93,7 @@ const SSQInstructionsContainer = ({instructionType}) => {
     const saveInstruction = async (e) =>{
         setLoading(true);
       
-        const [statusCode, res] = API.updateInstruction(instructionType, {instruction});
+        const [statusCode, res] = await API.updateInstruction(instructionType, {instruction});
             setLoading(false);
             if (statusCode === 200){
                 setsaveSuccess(true);
