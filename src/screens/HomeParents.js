@@ -74,19 +74,20 @@ const HomeParents = ({ match }) => {
         setPersonalDetails(data);
     };
 
-    const setQuestionnaireInstruction = (isSSQ_ch) => {
+    const setQuestionnaireInstruction = async (isSSQ_ch) => {
         let instructionType;
         if (isSSQ_ch) {
             instructionType = "RC";
         } else {
             instructionType = "RP";
         }
-        API.getSpecificInstruction(instructionType).then((res) => {
+        const [statusCode, res] = await API.getSpecificInstruction(instructionType);
+        if(statusCode===200){
             setInstruction({
                 title: res["title"],
                 content: res["content"],
             });
-        });
+        }    
     };
 
     //////////// Share section update /////////////////////////////

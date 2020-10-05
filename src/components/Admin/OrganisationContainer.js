@@ -5,12 +5,11 @@ const OrganisationContainer = ({organName}) =>{
 
     const [AllClinicianOrgan, setAllClinicianOrgan] = useState([]);
     const getAllClinicianInOrgan = async () => {
-        const clinicians = await getOrganisationClinicians(organName);
-        let res = [];
-        clinicians.forEach((item)=>{
-            res.push(item.clinicianId);
-        });
-        setAllClinicianOrgan(res);
+        const [statusCode, clinicians] = await getOrganisationClinicians(organName);
+        if (statusCode === 200){
+            const clinicianIds = clinicians.map((c)=> c.clinicianId );
+            setAllClinicianOrgan(clinicianIds);
+        }
     }
 
     useEffect(()=>{

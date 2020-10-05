@@ -20,12 +20,13 @@ const OrganisationList = () => {
     const [OrganisationSummary, setOrganisationSummary] = useState([]);
 
     const getOrganisationList = async () => { //To handle the data from the API
-        const allOrganisation= await getOrganisations();
-        console.log(allOrganisation);
-        let OrganList = new Set(allOrganisation.map((item)=>{
-            return item.organisation.toLowerCase();
-        }));
-        setOrganisationSummary(Array.from(OrganList));
+        const [statusCode, allOrganisation] = await getOrganisations();
+        if(statusCode === 200){
+            let OrganList = new Set(allOrganisation.map((item)=>{
+                return item.organisation.toLowerCase();
+            }));
+            setOrganisationSummary(Array.from(OrganList));
+        }
     }
 
     const OrganisationItem = ({

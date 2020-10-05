@@ -16,8 +16,10 @@ const SSQInstructionsList = () => {
 
 const [instructionsSummary, setInstructionsSummary] = useState([]); 
 const setup = async ()  => {
-    const summary = await getInstructionsSummary();
-    setInstructionsSummary(summary);
+    const [statusCode, summary] = await getInstructionsSummary();
+    if(statusCode==200){
+        setInstructionsSummary(summary);
+    }
 };
 
 

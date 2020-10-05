@@ -43,10 +43,13 @@ const SSQInstructionsContainer = ({instructionType}) => {
         type: instructionType
     });
 
-    const getInstruction = (instructionType) => {
-        API.getSpecificInstruction(instructionType).then((instruction) =>{
+    const getInstruction = async (instructionType) => {
+        const [statusCode, instruction] = await API.getSpecificInstruction(instructionType); 
+        if (statusCode == 200){
             setInstruction(instruction);
-            });
+        }    
+        
+            
         
     }
     
@@ -87,21 +90,21 @@ const SSQInstructionsContainer = ({instructionType}) => {
     };
 
 
-    const saveInstruction = (e) =>{
+    const saveInstruction = async (e) =>{
         setLoading(true);
-        //TODO send collated instructions
-        API.updateInstruction(instructionType, {instruction}).then( res =>{
-                setLoading(false);
-                if (res.status === 200){
-                    setsaveSuccess(true);
-                    openSaveModal();
-                }
-                else{
-                    setsaveSuccess(false);
-                    openSaveModal();
-                }
+      
+        const [statusCode, res] = API.updateInstruction(instructionType, {instruction});
+            setLoading(false);
+            if (statusCode === 200){
+                setsaveSuccess(true);
+                openSaveModal();
             }
-        )
+            else{
+                setsaveSuccess(false);
+                openSaveModal();
+            }
+        
+        
 
     }
 

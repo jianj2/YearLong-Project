@@ -213,13 +213,7 @@ export const shareQuestionnaire = async (token, data) => {
     return await sendRequest("POST", url, data, token);
 }
 
-// get Instruction
-export const getInstruction = async () => {
-    const url = `admin/instruction`;
-    return await sendRequest("GET", url);
-};
-
-// get instructions
+// get instruction based on type
 export const getSpecificInstruction = async (instructionType) => {
     const url = `admin/specificInstruction/${instructionType}`;
     return await sendRequest("GET", url);
@@ -241,12 +235,12 @@ export const updateInstruction = async (type, data) => {
 
 // get organisations
 export const getOrganisations = async () => {
-    const url = `${api}/admin/organisation`;
+    const url = `admin/organisation`;
     return await sendRequest("GET", url);
 };
 
 // get organisation's clinicians
 export const getOrganisationClinicians = async (organisationName) => {
-    const url = `${api}/admin/organisation/${organisationName}`;
+    const url = `admin/organisation/${organisationName}`;
     return await sendRequest("GET", url);
 };
