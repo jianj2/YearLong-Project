@@ -13,8 +13,12 @@ const mongoose = require("mongoose");
 const adminKeyFile = require("../config/admin.json");
 const jwt = require("jsonwebtoken");
 
-const {sendJSONResponse} = require("../utils/apiUtils");
-const { findInstructionByType, findAllInstructions, updateInstructionInDatabase } = require("../service/adminService");
+const { sendJSONResponse } = require("../utils/apiUtils");
+const {
+    findInstructionByType,
+    findAllInstructions,
+    updateInstructionInDatabase,
+} = require("../service/adminService");
 
 const Clinician = mongoose.model("clinician");
 const Instruction = mongoose.model("instruction");
@@ -90,7 +94,7 @@ const getInstructionsSummary = async function (req, res) {
     const [error, instructions] = await findAllInstructions();
     if (error) {
         res.status(400).json(error);
-    }{
+    } else {
         const filteredInstructions = instructions.filter(
             (instruction) => instruction.type != null
         );
@@ -111,48 +115,44 @@ const updateInstructionByType = async function (req, res) {
     sendJSONResponse(res, message, error, 404);
 };
 
-
-const getOrganisations = function (req, res) {
-    Clinician.find({}, function (err, clinicians) {
-        if (!err && clinicians != null) {
-            const filteredClinicians = clinicians.filter(
-                (clinician) =>
-                    clinician.organisation != null &&
-                    clinician.organisation.trim() != ""
-            );
-            const summary = filteredClinicians.map((clinician) => {
-                return {
-                    organisation: clinician.organisation.toLowerCase(),
-                    clinicianId: clinician.clinicianId,
-                };
-            });
-            res.status(200).json(summary);
-        } else {
-            res.status(400).json(err);
-        }
-    });
+const getOrganisations = async function (req, res) {
+    try {
+        const clinicians = await Clinician.find({});
+        const filteredClinicians = clinicians.filter(
+            (clinician) =>
+                clinician.organisation != null &&
+                clinician.organisation.trim() != ""
+        );
+        const summary = filteredClinicians.map((clinician) => {
+            return {
+                organisation: clinician.organisation.toLowerCase(),
+                clinicianId: clinician.clinicianId,
+            };
+        });
+        res.status(200).json(summary);
+    } catch (error) {
+        res.status(400).json(error);
+    }
 };
-const getOrganisationClinicians = function (req, res) {
-    console.log("test for getOrganisationClinicians");
-    Clinician.find({}, function (err, clinicians) {
-        if (!err && clinicians != null) {
-            const filteredClinicians = clinicians.filter(
-                (clinician) =>
-                    clinician.organisation != null &&
-                    clinician.organisation.toLowerCase() ==
-                        req.params.organisationName
-            );
-            const summary = filteredClinicians.map((clinician) => {
-                return {
-                    organisation: clinician.organisation,
-                    clinicianId: clinician.clinicianId,
-                };
-            });
-            res.status(200).json(summary);
-        } else {
-            res.status(400).json(err);
-        }
-    });
+const getOrganisationClinicians = async function (req, res) {
+    try {
+        const clinicians = await Clinician.find({});
+        const filteredClinicians = clinicians.filter(
+            (clinician) =>
+                clinician.organisation != null &&
+                clinician.organisation.toLowerCase() ==
+                    req.params.organisationName
+        );
+        const summary = filteredClinicians.map((clinician) => {
+            return {
+                organisation: clinician.organisation,
+                clinicianId: clinician.clinicianId,
+            };
+        });
+        res.status(200).json(summary);
+    } catch (error) {
+        res.status(400).json(err);
+    }
 };
 
 module.exports.loginAdmin = loginAdmin;
