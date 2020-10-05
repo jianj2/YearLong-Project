@@ -21,7 +21,6 @@ const {
 } = require("../service/adminService");
 
 const Clinician = mongoose.model("clinician");
-const Instruction = mongoose.model("instruction");
 
 // Login check.
 const loginAdmin = function (req, res) {
