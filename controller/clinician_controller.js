@@ -37,7 +37,4 @@ const completeQuestionnaire = function (req, res) {
    
 }
 
-
-
-module.exports.getAllClinician = getAllClinician;
 module.exports.completeQuestionnaire = completeQuestionnaire;

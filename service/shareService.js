@@ -51,7 +51,7 @@ const createShare =  (packet) => {
     return newShare;
 }
 
-const saveShare = (share) => {
+const saveShare = async (share) => {
     try {
         await share.save();
         return undefined;

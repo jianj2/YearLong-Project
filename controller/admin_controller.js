@@ -13,6 +13,9 @@ const mongoose = require("mongoose");
 const adminKeyFile = require("../config/admin.json");
 const jwt = require("jsonwebtoken");
 
+const {sendJSONResponse} = require("../utils/apiUtils");
+const { findInstructionByType, findAllInstructions, updateInstructionInDatabase } = require("../service/adminService");
+
 const Clinician = mongoose.model("clinician");
 const Instruction = mongoose.model("instruction");
 
@@ -31,11 +34,11 @@ const loginAdmin = function (req, res) {
 
     // Username can not be empty
     if (username === "") {
-        res.status(400).json({message:"Username can not be empty!"});
+        res.status(400).json({ message: "Username can not be empty!" });
         return;
     }
     if (password === "") {
-        res.status(400).json({message:"Password can not be empty!"});
+        res.status(400).json({ message: "Password can not be empty!" });
         return;
     }
     if (username === _username && password === _password) {
@@ -47,11 +50,11 @@ const loginAdmin = function (req, res) {
             message: {
                 auth: true,
                 token: token,
-            }
+            },
         });
     } else {
         res.status(400).json({
-            message: "Incorrect details!"
+            message: "Incorrect details!",
         });
     }
 };
@@ -75,68 +78,47 @@ const verifyLogin = (req, res) => {
 };
 
 //Get all instructions
-const getSpecificInstruction = function (req, res) {
-
-    Instruction.findOne({ type: req.params.instructionType }, function (
-        err,
-        instruction
-    ) {
-        if (!err && instruction != null) {
-            res.status(200).json(instruction);
-        } else {
-            res.status(400).json(err);
-        }
-    });
+const getSpecificInstruction = async function (req, res) {
+    const [error, instruction] = await findInstructionByType(
+        req.params.instructionType
+    );
+    sendJSONResponse(res, instruction, error, 404);
 };
 
 //get summary for all instructions including type and title
-
-const getInstructionsSummary = function (req, res) {
-    Instruction.find({}, function (err, instructions) {
-        if (!err && instructions != null) {
-            const filteredInstructions = instructions.filter(
-                (instruction) => instruction.type != null
-            );
-            const summary = filteredInstructions.map((instruction) => {
-                return {
-                    title: instruction.title,
-                    type: instruction.type,
-                };
-            });
-            res.status(200).json(summary);
-        } else {
-            res.status(400).json(err);
-        }
-    });
+const getInstructionsSummary = async function (req, res) {
+    const [error, instructions] = await findAllInstructions();
+    if (error) {
+        res.status(400).json(error);
+    }{
+        const filteredInstructions = instructions.filter(
+            (instruction) => instruction.type != null
+        );
+        const summary = filteredInstructions.map((instruction) => {
+            return {
+                title: instruction.title,
+                type: instruction.type,
+            };
+        });
+        res.status(200).json(summary);
+    }
 };
 
 //Update the instruction based on type
-const updateInstructionByType = function (req, res) {
-    console.log("updated", req.body);
-
-    let type = req.body.instruction.type;
-    
-
-    Instruction.replaceOne(
-        {type: type},
-        req.body.instruction,
-        (err, raw) => {
-            if (!err) {
-
-                res.status(200).json("Successfully updated instruction.");
-                
-              
-            } else {
-                res.status(400).json(err);
-            }
-        }
-    );
+const updateInstructionByType = async function (req, res) {
+    const instruction = req.body.instruction;
+    const [error, message] = await updateInstructionInDatabase(instruction);
+    sendJSONResponse(res, message, error, 404);
 };
+
+
 const getOrganisations = function (req, res) {
     Clinician.find({}, function (err, clinicians) {
         if (!err && clinicians != null) {
             const filteredClinicians = clinicians.filter(
-                (clinician) => clinician.organisation != null && clinician.organisation.trim() != ""
+                (clinician) =>
+                    clinician.organisation != null &&
+                    clinician.organisation.trim() != ""
             );
             const summary = filteredClinicians.map((clinician) => {
                 return {
@@ -155,7 +137,10 @@ const getOrganisationClinicians = function (req, res) {
     Clinician.find({}, function (err, clinicians) {
         if (!err && clinicians != null) {
             const filteredClinicians = clinicians.filter(
-                (clinician) => clinician.organisation != null && clinician.organisation.toLowerCase() == req.params.organisationName
+                (clinician) =>
+                    clinician.organisation != null &&
+                    clinician.organisation.toLowerCase() ==
+                        req.params.organisationName
             );
             const summary = filteredClinicians.map((clinician) => {
                 return {
@@ -169,8 +154,6 @@ const getOrganisationClinicians = function (req, res) {
         }
     });
 };
-
-
 
 module.exports.loginAdmin = loginAdmin;
 module.exports.verifyLogin = verifyLogin;
