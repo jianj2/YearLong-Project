@@ -62,22 +62,21 @@ const loginAdmin = function (req, res) {
     }
 };
 
-const verifyLogin = (req, res) => {
+const verifyLogin = async (req, res) => {
     let token = req.params.token;
+    try{
+        await jwt.verify(token, "secretLOL");
+        res.status(200).json({
+            auth: true,
+            decoded: decoded.username,
+        });
 
-    jwt.verify(token, "secretLOL", function (err, decoded) {
-        if (!err) {
-            res.status(200).json({
-                auth: true,
-                decoded: decoded.username,
-            });
-        } else {
-            res.status(401).json({
-                auth: false,
-                decoded: "",
-            });
-        }
-    });
+    }catch(error){
+        res.status(401).json({
+            auth: false,
+            decoded: "",
+        });
+    }
 };
 
 //Get all instructions
