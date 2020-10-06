@@ -494,7 +494,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                     {
                         // third question
                         description: 
-                            "Your child is in a group of about five people, sitting round a table. It is an otherwise quiet place. Your child can see everyone else in the group. Can your child follow the conversation?",
+                            "Your child is sitting in between yourself and another person. One of you starts to speak. Can your child tell right away whether it is the person on their left or their right who is speaking, without having to look?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -502,7 +502,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of group conversation in a quiet place occur for your child?",
+                                    "How often does this type of situation occur for your child, in which it would be useful to locate the speaker as being on the left or on the right?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -526,7 +526,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                     {
                         // fourth question
                         description: 
-                            "Your child is in a group of about five people, sitting round a table. It is a noisy room, such as a busy restaurant or large family gathering at home. Your child can see everyone else in the group. Can your child follow theconversation?",
+                            "You and your child are in different rooms at home. It is quiet. If your childhears you call out their name, will he/she know where in the house you are?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -534,7 +534,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of group conversation in a noisy room occur for your child?",
+                                    "How often does this type of situation occur for your child, in which he/she needs to know from which room a someone is calling",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -558,7 +558,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                     {
                         // fifth question
                         description: 
-                            "You are talking with your child. There is a continuous background noise, such as a fan or running water. Can your child follow what you say?",
+                            "Your child is outside. A dog barks loudly. Can your child tell immediately where it is, without having to look?",
                         questions: [
                             {
                                 isMCQ: false,
