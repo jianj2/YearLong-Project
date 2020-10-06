@@ -229,6 +229,38 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                                 ],
                             },
                         ],
+                    },
+                    {
+                        // fourth question
+                        description: 
+                            "Your child is in a group of about five people, sitting round a table. It is a noisy room, such as a busy restaurant or large family gathering at home. Your child can see everyone else in the group. Can your child follow theconversation?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of group conversation in a quiet place occur for your child?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
                     },  
                 ],    
             },
