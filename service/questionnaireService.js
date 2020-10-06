@@ -830,7 +830,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                     {
                         // eighth question
                         description: 
-                            "You are talking to your child in a room in which there are many other people talking. Can your child follow what you say?",
+                            "Can your child easily ignore other sounds when trying to listen to something?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -838,7 +838,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of situation occur for your child, in which he/she is trying to follow a speaker in a room with lots of other people talking?",
+                                    "How often does this type of situation occur for your child, in which it would be useful to ignore another sound in order to listen to something?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
