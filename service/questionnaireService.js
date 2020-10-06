@@ -645,7 +645,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required for this type of situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
@@ -709,7 +709,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required for this situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
@@ -741,7 +741,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required for this type of situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
@@ -755,7 +755,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                     {
                         // fifth question
                         description: 
-                            "You are talking with your child. There is a continuous background noise, such as a fan or running water. Can your child follow what you say?",
+                            "Can your child tell the difference between sounds that are somewhat similar, for example, a car versus a bus, OR water boiling in a pot versus food cooking in a frypan?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -763,7 +763,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of situation occur for your child, in which he/she is trying to follow a speaker in a continuous background noise?",
+                                    "How often does this type of situation occur for your child, in which it would be useful to be able to tell the difference between sounds that are somewhat similar?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -773,7 +773,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required for this situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
