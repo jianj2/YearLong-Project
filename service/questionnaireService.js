@@ -977,7 +977,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                     {
                         // fourth question
                         description: 
-                            "Your child is in a group of about five people, sitting round a table. It is a noisy room, such as a busy restaurant or large family gathering at home. Your child can see everyone else in the group. Can your child follow theconversation?",
+                            "You are in a group of about five people, sitting round a table. It is a noisy room, like a busy classroom where students are moving around and talking. You can see everyone in the group around your table. Can you understand what the group is talking about?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -985,7 +985,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of group conversation in a noisy room occur for your child?",
+                                    "How often does this type of situation occur for you, in which you are trying to understand a group conversation in a noisy room?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
