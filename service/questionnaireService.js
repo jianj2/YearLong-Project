@@ -1206,7 +1206,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                     {   
                         // first question
                         description: 
-                            "Your child is outdoors in an unfamiliar place. A loud constant noise, such as from a lawnmower, aeroplane or power tool, can be heard. The source of the sound can’t be seen. Can your child tell right away where the sound is coming from?",
+                            "You are outside in a place you haven’t been before. There is a loud noise from a lawnmower or aeroplane that you can’t see. Can you tell right awaywhere the sound is coming from?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -1214,7 +1214,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of situation occur for your child, in which it would be useful to be able to tell where a sound is coming from when outside?",
+                                    "How often does this type of situation occur for you, in which you are trying to tell where a loud and constant noise is coming from?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -1224,7 +1224,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
@@ -1238,7 +1238,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                     {
                         // second question
                         description: 
-                            "Your child is sitting around a table with several people. Your child cannot see everyone. Can your child tell where any person is as soon as they start speaking?",
+                            "You are in a group of about 5 people, sitting round a table. You cannot see everyone in the group. Can you tell where any person is as soon as theystart talking?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -1246,7 +1246,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of situation occur for your child, in which it would be useful to know where a speaker is as soon as they start speaking?",
+                                    "How often does this type of situation occur for you, in which you are trying to tell where the person is who is speaking in a group conversation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -1256,7 +1256,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
@@ -1270,7 +1270,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                     {
                         // third question
                         description: 
-                            "Your child is sitting in between yourself and another person. One of you starts to speak. Can your child tell right away whether it is the person on their left or their right who is speaking, without having to look?",
+                            "You are sitting between two friends. One of them starts to talk. Can you tell straight away if it is the friend on the left or on the right who is talking, without having to look?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -1278,7 +1278,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of situation occur for your child, in which it would be useful to locate the speaker as being on the left or on the right?",
+                                    "How often does this type of situation occur for you, in which you are sitting between two people talking?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -1288,7 +1288,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
@@ -1302,7 +1302,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                     {
                         // fourth question
                         description: 
-                            "You and your child are in different rooms at home. It is quiet. If your childhears you call out their name, will he/she know where in the house you are?",
+                            "You are at home and it is quiet. Your Mum or Dad calls you from another room. Will you know where they are without having to look?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -1310,7 +1310,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of situation occur for your child, in which he/she needs to know from which room a someone is calling",
+                                    "How often does this type of situation occur for you, in which you are trying to find someone calling you from another room?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -1320,7 +1320,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
@@ -1334,7 +1334,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                     {
                         // fifth question
                         description: 
-                            "Your child is outside. A dog barks loudly. Can your child tell immediately where it is, without having to look?",
+                            "You are outside. A dog barks loudly. Can you tell straight away where the dog is, without having to look?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -1342,7 +1342,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of situation occur for your child, in which it would be useful to know where the source was for this type of sound?",
+                                    "How often does this type of situation occur for you, in which you are trying to tell where a short loud noise is coming from?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -1352,7 +1352,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
@@ -1366,7 +1366,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                     {
                         // sixth question
                         description: 
-                            "Your child is standing on the footpath of a busy street. Can your child hear right away which direction a bus or truck is coming from before they see it?",
+                            "You are standing on the footpath of a busy street. You can hear a bus or truck. Can you tell right away where it is coming from before you see it?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -1374,7 +1374,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of situation occur for your child, in which it would be useful to know from which direction a vehicle was approaching?",
+                                    "How often does this type of situation occur for you, in which you are trying to tell where a bus or truck is coming from on a busy street",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -1384,7 +1384,199 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // seventh question
+                        description: 
+                            "You can hear a bus or truck. Can you tell whether it is coming towards you or moving away just from the sound?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for you, in which you are trying to tell if a bus or truck you can hear is coming towards you or moving away?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // eighth question
+                        description: 
+                            "You can hear voices or footsteps. Can you tell if the person is coming towards you or moving away just by the sound?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for you, in which you are trying to tell if footsteps or voices you can hear are coming towards you or moving away?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // ninth question
+                        description: 
+                            "You can hear a bus or truck. Just from the sound, can you tell which direction it is moving (for example, from your left to your right, or fromyour right to your left)?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for you, in which you are trying to use just the sound to tell which direction a bus or truck is moving (forexample, from your left to your right)",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // tenth question
+                        description: 
+                            "You can hear voices or footsteps. Just from the sound, can you tell which direction the person is moving (for example, from your left to your right, or from your right to your left)?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for you, in which you are trying to use just the sound to tell which direction voices or footsteps are moving (for example, from your left to your right?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // eleventh question
+                        description: 
+                            "You can hear a bus or truck. Can you tell how far away it is just from the sound?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for you, in which you are trying to tell from the sound how far away a bus or truck is?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // twelfth question
+                        description: 
+                            "You can hear voices or footsteps. Can you tell how far away the person is just from the sound?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for you, in which you are trying to are trying to tell how far away a person is just from the sound of footsteps or voices?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
