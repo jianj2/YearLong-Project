@@ -241,7 +241,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of group conversation in a quiet place occur for your child?",
+                                    "How often does this type of group conversation in a noisy room occur for your child?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -261,7 +261,39 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                                 ],
                             },
                         ],
-                    },  
+                    },
+                    {
+                        // fifth question
+                        description: 
+                            "You are talking with your child. There is a continuous background noise, such as a fan or running water. Can your child follow what you say?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for your child, in which he/she is trying to follow a speaker in a continuous background noise?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    }  
                 ],    
             },
             { title: "Section B - Spatial", scenarios: [] },
