@@ -723,7 +723,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                     {
                         // fourth question
                         description: 
-                            "Your child is in a group of about five people, sitting round a table. It is a noisy room, such as a busy restaurant or large family gathering at home. Your child can see everyone else in the group. Can your child follow theconversation?",
+                            "Can your child distinguish between different pieces of familiar music? Note that producing words or movements relevant to a song can indicate recognition.",
                         questions: [
                             {
                                 isMCQ: false,
@@ -731,7 +731,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of group conversation in a noisy room occur for your child?",
+                                    "How often does this type of situation occur for your child, in which it would be useful (or enjoyable) to be able to distinguish between pieces of music?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
