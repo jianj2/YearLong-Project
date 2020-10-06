@@ -566,7 +566,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of situation occur for your child, in which he/she is trying to follow a speaker in a continuous background noise?",
+                                    "How often does this type of situation occur for your child, in which it would be useful to know where the source was for this type of sound?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -590,7 +590,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                     {
                         // sixth question
                         description: 
-                            "Your child is in a group of about five people, sitting round a table. It is a noisy room, such as a busy restaurant or large family gathering at home. Your child cannot see everyone else in the group. Can your child follow the conversation?",
+                            "Your child is standing on the footpath of a busy street. Can your child hear right away which direction a bus or truck is coming from before they see it?",
                         questions: [
                             {
                                 isMCQ: false,
