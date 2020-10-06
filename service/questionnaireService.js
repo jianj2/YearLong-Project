@@ -691,7 +691,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                     {
                         // third question
                         description: 
-                            "Your child is in a group of about five people, sitting round a table. It is an otherwise quiet place. Your child can see everyone else in the group. Can your child follow the conversation?",
+                            "Can your child recognise family members or other very familiar people by the sound of each one’s voice without seeing them?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -699,7 +699,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of group conversation in a quiet place occur for your child?",
+                                    "How often does this situation occur for your child, in which it would be useful to recognise people by the sound of their voice?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
