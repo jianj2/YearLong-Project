@@ -921,7 +921,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of situation occur for you, in which you are trying to understand someone speaking in a   quiet room?",
+                                    "How often does this type of situation occur for you, in which you are trying to understand someone speaking in a quiet room?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -931,7 +931,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
@@ -945,7 +945,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                     {
                         // third question
                         description: 
-                            "Your child is in a group of about five people, sitting round a table. It is an otherwise quiet place. Your child can see everyone else in the group. Can your child follow the conversation?",
+                            "You are in a group of about five people, sitting round a table. It is a quiet place. You can see everyone else in the group. Can you understand what the group is talking about?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -953,7 +953,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of group conversation in a quiet place occur for your child?",
+                                    "How often does this type of situation occur for you, in which you are trying to understand a group conversation in a quiet room?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -963,7 +963,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
