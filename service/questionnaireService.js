@@ -122,6 +122,130 @@ const generateNewStandardisedQuestionnaire = (uuid) => {
     });
 };
 
+//generates a complete standard questionnaire template for parents with uuid.
+const generateCompleteParentQuestionnaire = (uuid) => {
+    return new Questionnaire({
+        questionnaireId: uuid,
+        title: "Standard Questionnaire For Parent",
+        description: "Complete Questionnaire.",
+        isSSQ_Ch: false,
+        updateDate: new Date().toLocaleString("en-US", {timeZone: "Australia/Sydney"}),
+        sections: [
+            { 
+                title: "Section A - Speech", 
+                scenarios: [
+                    {
+                        description: 
+                            "You are talking with your child and there is a TV on in the same room. Without turning the TV down, can your child follow what you’re saying?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for your child, in which he/she needs to follow what someone is saying with the TV on in the same room?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        description: 
+                            "You are talking with your child in a quiet, carpeted lounge-room. Can your child follow what you’re saying?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for your child, in which he/she is trying to follow a speaker in a quiet room without reverberation (echoes)?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },  
+                ],    
+            },
+            { title: "Section B - Spatial", scenarios: [] },
+            { title: "Section C - Quality", scenarios: [] },
+        ],
+        isStandard: true,
+    });
+};
+
+//generates a complete standard questionnaire template for children with uuid.
+const generateCompleteChildQuestionnaire = (uuid) => {
+    return new Questionnaire({
+        questionnaireId: uuid,
+        title: "Standard Questionnaire For Child",
+        description: "Complete Questionnaire.",
+        isSSQ_Ch: true,
+        updateDate: new Date().toLocaleString("en-US", {timeZone: "Australia/Sydney"}),
+        sections: [
+            { 
+                title: "Section A - Speech", 
+                scenarios: [
+                    {
+                        description: "You are at Melbourne Uni...",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "If only one option can be true, which of the following is correct?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "All of the above is true",
+                                    " Those below the below is true",
+                                    "None of the above is true",
+                                    "Those above the above is true",
+                                ],
+                            },
+                        ],
+                    }, 
+                ],    
+            },
+            { title: "Section B - Spatial", scenarios: [] },
+            { title: "Section C - Quality", scenarios: [] },
+        ],
+        isStandard: true,
+    });
+};
+
 // generates a new questionnaire with given content and fields
 const generateCopy = (copiedQuestionnaire, questionnaireId, isStandard) => {
     return new Questionnaire({
@@ -317,6 +441,8 @@ module.exports.findQuestionnaireForClinician = findQuestionnaireForClinician;
 module.exports.findStandardisedQuestionnaires = findStandardisedQuestionnaires;
 module.exports.generateNewCustomisedQuestionnaire = generateNewCustomisedQuestionnaire;
 module.exports.generateNewStandardisedQuestionnaire = generateNewStandardisedQuestionnaire;
+module.exports.generateCompleteParentQuestionnaire = generateCompleteParentQuestionnaire;
+module.exports.generateCompleteChildQuestionnaire = generateCompleteChildQuestionnaire;
 module.exports.generateCopy = generateCopy;
 module.exports.copyQuestionnaireToDatabase = copyQuestionnaireToDatabase;
 module.exports.attachQuestionnaireToClinician = attachQuestionnaireToClinician;
