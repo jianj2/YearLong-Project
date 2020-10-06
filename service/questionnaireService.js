@@ -357,6 +357,70 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                                 ],
                             },
                         ],
+                    },
+                    {
+                        // eighth question
+                        description: 
+                            "You are talking to your child in a room in which there are many other people talking. Can your child follow what you say?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for your child, in which he/she is trying to follow a speaker in a room with lots of other people talking?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // ninth question
+                        description: 
+                            "Can your child easily have a conversation with a familiar person on the telephone?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this situation occur for your child, in which he/she is trying to have a conversation on the telephone with a familiar person?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
                     },   
                 ],    
             },
