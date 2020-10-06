@@ -325,7 +325,39 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                                 ],
                             },
                         ],
-                    }   
+                    },
+                    {
+                        // seventh question
+                        description: 
+                            "You are talking to your child in a place where there are a lot of echoes, such as a school assembly hall or indoor swimming pool. Can your child follow what you say?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for your child, in which he/she is trying to follow a speaker in a place with echoes?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },   
                 ],    
             },
             { title: "Section B - Spatial", scenarios: [] },
