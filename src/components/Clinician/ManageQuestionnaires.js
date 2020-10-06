@@ -184,6 +184,7 @@ const ManageQuestionnaires = (props) => {
                     onClickQuestion={viewQuestionnaire}
                     canEdit={false}
                     onClickEdit={editQuestionnaire}
+                    canCopy={true}
                     onClickCopy={copyQuestionnaire}
                     canDelete={false}
                     onClickDelete={deleteQuestionnaire}
@@ -204,6 +205,7 @@ const ManageQuestionnaires = (props) => {
                 onClickQuestion={viewQuestionnaire}
                 canEdit={true}
                 onClickEdit={editQuestionnaire}
+                canCopy={true}
                 onClickCopy={copyQuestionnaire}
                 canDelete={true}
                 onClickDelete={deleteQuestionnaire}

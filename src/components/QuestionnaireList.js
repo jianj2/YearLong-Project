@@ -74,6 +74,7 @@ const QuestionnaireList = ({
     onClickQuestion,
     canEdit,
     onClickCopy,
+    canCopy,
     onClickEdit,
     canDelete,
     onClickDelete,
@@ -91,6 +92,7 @@ const QuestionnaireList = ({
         canEdit,
         questionnaire,
         onClickCopy,
+        canCopy,
         onClickEdit,
         canDelete,
         onClickDelete,
@@ -162,7 +164,7 @@ const QuestionnaireList = ({
                             </button>
                         ) : null}
 
-                        {
+                        {canCopy ?(
                             <button
                                 className="button"
                                 onClick={(event) => {
@@ -172,7 +174,7 @@ const QuestionnaireList = ({
                             >
                                 C O P Y
                             </button>
-                        }
+                        ):null}
 
                         {canDelete ? (
                             <button
@@ -204,6 +206,7 @@ const QuestionnaireList = ({
                     onClickQuestion={onClickQuestion}
                     canEdit={canEdit}
                     onClickCopy={onClickCopy}
+                    canCopy={canCopy}
                     onClickEdit={onClickEdit}
                     canDelete={canDelete}
                     onClickDelete={onClickDelete}

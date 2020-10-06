@@ -154,6 +154,7 @@ const AdminManageQuestionnaires = () => {
                     onClickQuestion={viewQuestionnaire}
                     canEdit={true}
                     onClickEdit={editQuestionnaire}
+                    canCopy={true}
                     onClickCopy={copyQuestionnaire}
                     canDelete={true}
                     onClickDelete={deleteQuestionnaire}
