@@ -787,7 +787,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                     {
                         // sixth question
                         description: 
-                            "Your child is in a group of about five people, sitting round a table. It is a noisy room, such as a busy restaurant or large family gathering at home. Your child cannot see everyone else in the group. Can your child follow the conversation?",
+                            "Can your child easily judge another person’s mood from the sound of their voice?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -795,7 +795,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of group conversation in a noisy room occur for your child?",
+                                    "How often does this type of situation occur for your child, in which it would be useful to judge mood from a person’s voice?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -805,7 +805,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required for this situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
