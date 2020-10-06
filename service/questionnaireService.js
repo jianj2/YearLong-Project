@@ -995,7 +995,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation? ",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
@@ -1009,7 +1009,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                     {
                         // fifth question
                         description: 
-                            "You are talking with your child. There is a continuous background noise, such as a fan or running water. Can your child follow what you say?",
+                            "You are talking with one person. There is noise in the background, like a tap running or a fan. Can you understand what the person is saying to you?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -1017,7 +1017,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of situation occur for your child, in which he/she is trying to follow a speaker in a continuous background noise?",
+                                    "How often does this type of situation occur for you, in which you are trying to understand a person speaking when there’s a constant background noise?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -1027,7 +1027,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
@@ -1041,7 +1041,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                     {
                         // sixth question
                         description: 
-                            "Your child is in a group of about five people, sitting round a table. It is a noisy room, such as a busy restaurant or large family gathering at home. Your child cannot see everyone else in the group. Can your child follow the conversation?",
+                            "You are in a group of about five people, sitting round a table. It is a noisy room, such as a busy classroom where students are moving around and talking. You cannot see everyone in the group around your table. Can you understand what the group is talking about?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -1049,7 +1049,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of group conversation in a noisy room occur for your child?",
+                                    "How often does this type of situation occur for you, in which you are trying to understand a group conversation in a noisy room when you can’t see everyone?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -1059,7 +1059,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
@@ -1073,7 +1073,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                     {
                         // seventh question
                         description: 
-                            "You are talking to your child in a place where there are a lot of echoes, such as a school assembly hall or indoor swimming pool. Can your child follow what you say?",
+                            "You are talking to someone in a place where there are a lot of echoes, like a school assembly hall. Can you understand what the person is saying",
                         questions: [
                             {
                                 isMCQ: false,
@@ -1081,7 +1081,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of situation occur for your child, in which he/she is trying to follow a speaker in a place with echoes?",
+                                    "How often does this type of situation occur for you, in which you are trying to understand a person speaking when there’s a lot of echoes?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -1091,7 +1091,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
@@ -1105,7 +1105,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                     {
                         // eighth question
                         description: 
-                            "You are talking to your child in a room in which there are many other people talking. Can your child follow what you say?",
+                            "You are talking to one person in a room in which there are many other people talking. Can you understand what the other person is saying",
                         questions: [
                             {
                                 isMCQ: false,
@@ -1113,7 +1113,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of situation occur for your child, in which he/she is trying to follow a speaker in a room with lots of other people talking?",
+                                    "How often does this type of situation occur for you, in which you are trying to understand a person speaking when there are a lot of other people talking in the background?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -1123,7 +1123,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
@@ -1137,7 +1137,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                     {
                         // ninth question
                         description: 
-                            "Can your child easily have a conversation with a familiar person on the telephone?",
+                            "You are talking with a group of friends and everyone is taking turns to talk. Can you understand what is being said without missing the start each time a new person begins to talk?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -1145,7 +1145,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this situation occur for your child, in which he/she is trying to have a conversation on the telephone with a familiar person?",
+                                    "How often does this type of situation occur for you, in which you are trying to understand a group of people taking turns to talk?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -1155,7 +1155,39 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // tenth question
+                        description: 
+                            "Is it easy for you to understand a friend or your Mum or Dad on the phone?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for you, in which you are trying to understand a person speaking on the phone?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
