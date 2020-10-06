@@ -825,6 +825,27 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                                 isMCQ: false,
                                 rangeOptions: ["Zero", "Ten"],
                             },
+                            {
+                                description:
+                                    "How often does this type of situation occur for your child, in which it would be useful to hear what is being said in conversation with others?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
                         ],
                     },
                     {
