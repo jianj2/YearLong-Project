@@ -921,7 +921,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of situation occur for your child, in which he/she is trying to follow a speaker in a quiet room without reverberation (echoes)?",
+                                    "How often does this type of situation occur for you, in which you are trying to understand someone speaking in a   quiet room?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
