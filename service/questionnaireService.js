@@ -1595,7 +1595,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                     {   
                         // first question
                         description: 
-                            "Think about when there are two noises in or around the home at once, for example, water running into the bath and a radio playing, OR a truck driving past and the sound of knocking at the door. Is your child able to identify thetwo separate sounds?",
+                            "You are in a room with music playing. Someone starts to talk. Will you know that someone has started speaking (even though you may not know what they are saying)?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -1603,7 +1603,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of situation occur for your child, in which it would be useful to identify two separate sounds?",
+                                    "How often does this type of situation occur for you, in which you are already listening to a sound but you need to notice if someone starts speaking?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -1613,7 +1613,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required for this type of situation?",
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
@@ -1627,7 +1627,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                     {
                         // second question
                         description: 
-                            "You are in a room with your child and music is playing. Will your child be aware of your voice if you start speaking? Note that the child does not have to understand what you say.",
+                            "Think about when you can hear two noises at once, for example, water running into the bath and a radio playing, OR a truck driving past and the sound of knocking at the door. Do you hear these as two separate sounds?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -1635,7 +1635,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of situation occur for your child, in which he/she is already listening to a sound, but needs to be aware when someone starts speaking?",
+                                    "How often does this type of situation occur for you, in which it would be useful to know that the sound you can hear is two separate sounds?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -1645,7 +1645,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to be able to have, or to develop, the listening skills required for this type of situation?",
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
@@ -1659,7 +1659,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                     {
                         // third question
                         description: 
-                            "Can your child recognise family members or other very familiar people by the sound of each one’s voice without seeing them?",
+                            "Do you know which person in your family is talking just by the sound of their voice, even if you can’t see them?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -1667,7 +1667,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this situation occur for your child, in which it would be useful to recognise people by the sound of their voice?",
+                                    "How often does this type of situation occur for you, in which it would be useful to identify someone by just their voice?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -1677,7 +1677,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required for this situation?",
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
@@ -1691,7 +1691,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                     {
                         // fourth question
                         description: 
-                            "Can your child distinguish between different pieces of familiar music? Note that producing words or movements relevant to a song can indicate recognition.",
+                            "You can hear a song you know being played. Is it easy for you to tell what song it is just by listening?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -1699,7 +1699,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of situation occur for your child, in which it would be useful (or enjoyable) to be able to distinguish between pieces of music?",
+                                    "How often does this type of situation occur for you, in which you wouldlike to recognise a song just by sound?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -1709,7 +1709,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required for this type of situation?",
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
@@ -1723,7 +1723,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                     {
                         // fifth question
                         description: 
-                            "Can your child tell the difference between sounds that are somewhat similar, for example, a car versus a bus, OR water boiling in a pot versus food cooking in a frypan?",
+                            "Can you tell the difference between noises that are a bit the same, like a car versus a bus, OR the tap running and a fan?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -1731,7 +1731,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of situation occur for your child, in which it would be useful to be able to tell the difference between sounds that are somewhat similar?",
+                                    "How often does this type of situation occur for you, in which it would be useful to tell the difference between two sounds that are a bit the same?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -1741,7 +1741,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required for this situation?",
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
@@ -1755,7 +1755,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                     {
                         // sixth question
                         description: 
-                            "Can your child easily judge another person’s mood from the sound of their voice?",
+                            "Can you tell how someone feels (happy, angry, sad) just by listening to their voice?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -1763,7 +1763,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of situation occur for your child, in which it would be useful to judge mood from a person’s voice?",
+                                    "How often does this type of situation occur for you, in which it would be useful to tell how someone feels just by their voice?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -1773,7 +1773,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required for this situation?",
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
@@ -1787,18 +1787,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                     {
                         // seventh question
                         description: 
-                            "Does your child have to put in a lot of effort to hear what is being said in conversation with others?",
-                        questions: [
-                            {
-                                isMCQ: false,
-                                rangeOptions: ["Zero", "Ten"],
-                            },
-                        ],
-                    },
-                    {
-                        // eighth question
-                        description: 
-                            "Can your child easily ignore other sounds when trying to listen to something?",
+                            "Do you have to try very hard when listening to someone or something?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -1806,7 +1795,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How often does this type of situation occur for your child, in which it would be useful to ignore another sound in order to listen to something?",
+                                    "How often does this type of situation occur for you, in which it would be useful to tell how hard it is when listening to someone or something?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
@@ -1816,7 +1805,103 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // eighth question
+                        description: 
+                            "When you are travelling in the front seat of the car can you easily understand what the driver is saying to you?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for you, in which you are travelling in the front seat of the car and it would be useful to understand the driver?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // ninth question
+                        description: 
+                            "Do you have to try hard to understand what other people are saying?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for you, in which it would be useful to tell what other people are saying?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // tenth question
+                        description: 
+                            "Is it easy for you to ignore other sounds when trying to listen to something?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for you, in which it would be useful to ignore other sounds when trying to listen to something?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very important",
