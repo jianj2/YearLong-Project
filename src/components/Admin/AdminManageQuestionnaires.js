@@ -24,7 +24,7 @@ import * as API from "../../utils/api";
 
 import {
     addStandardQuestionnaire,
-    getStandardisedQuestionnaireForAdmin,
+    getStandardisedQuestionnaires,
     deleteStandardQuestionnaire,
 } from "../../utils/api";
 
@@ -83,24 +83,28 @@ const AdminManageQuestionnaires = () => {
     useEffect(() => {
         setLoading(true);
         async function retrieveStandardisedQuestionnaires() {
-            const response = await getStandardisedQuestionnaireForAdmin();
-            console.log(response);
-            let sortedResponse = response.sort(function(a,b){
-                let dateA = new Date(a.updateDate), dateB = new Date(b.updateDate);
-                return dateB - dateA ;
-            })
-            setStandardisedQuestionnaires(sortedResponse); // cause the structure is not the same with cary's
-            setLoading(false);
+            const [
+                statusCode,
+                response,
+            ] = await getStandardisedQuestionnaires();
+            if (statusCode === 200) {
+                
+                let sortedResponse = response.sort(function (a, b) {
+                    let dateA = new Date(a.updateDate),
+                        dateB = new Date(b.updateDate);
+                    return dateB - dateA;
+                });
+                setStandardisedQuestionnaires(sortedResponse); 
+                setLoading(false);
+            }
         }
         retrieveStandardisedQuestionnaires();
     }, []);
 
     // function for adding new standardised questionnaire
     async function AddNew() {
-        
         const [_, uuid] = await addStandardQuestionnaire();
         window.location.reload(false);
-        
     }
 
     // ========================================================================

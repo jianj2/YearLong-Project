@@ -175,7 +175,7 @@ const DoTheTestContainer = () => {
         setPersonalDetails(data);
     };
 
-    const emailResponse = (sortType) => {
+    const emailResponse = async (sortType) => {
         setLoading(true);
         let data = {
             questionnaireData,
@@ -186,12 +186,15 @@ const DoTheTestContainer = () => {
             sortBy: sortType
         };
 
-        completeQuestionnaire(token, data)
-            .then((res) => {
-                console.log("complete question", res);
+        const [statusCode, response] = await completeQuestionnaire(token, data);
+            if(statusCode === 200){
+                console.log("complete questionnaire", response);
                 setWizardStep(3);
                 setLoading(false);
-            });
+            }else{
+                console.error(response);
+            }
+           
     };
 
     if (wizardStep === 0) {
