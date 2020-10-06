@@ -878,8 +878,10 @@ const generateCompleteChildQuestionnaire = (uuid) => {
             { 
                 title: "Section A - Speech", 
                 scenarios: [
-                    {
-                        description: "You are at Melbourne Uni...",
+                    {   
+                        // first question
+                        description: 
+                            "You are talking with your Mum or Dad and there is a TV on in the same room. Without turning the TV down, can you understand what your Mum or Dad is saying to you?",
                         questions: [
                             {
                                 isMCQ: false,
@@ -887,21 +889,722 @@ const generateCompleteChildQuestionnaire = (uuid) => {
                             },
                             {
                                 description:
-                                    "If only one option can be true, which of the following is correct?",
+                                    "How often does this type of situation occur for you, in which you are trying to understand someone speaking when the TV is on",
                                 isMCQ: true,
                                 MCQOptions: [
-                                    "All of the above is true",
-                                    " Those below the below is true",
-                                    "None of the above is true",
-                                    "Those above the above is true",
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for you to have, or to learn, the listening skills needed for this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
                                 ],
                             },
                         ],
-                    }, 
+                    },
+                    {
+                        // second question
+                        description: 
+                            "You are talking with one person in a quiet room with carpet. Can you understand what the other person is saying to you?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for your child, in which he/she is trying to follow a speaker in a quiet room without reverberation (echoes)?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // third question
+                        description: 
+                            "Your child is in a group of about five people, sitting round a table. It is an otherwise quiet place. Your child can see everyone else in the group. Can your child follow the conversation?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of group conversation in a quiet place occur for your child?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // fourth question
+                        description: 
+                            "Your child is in a group of about five people, sitting round a table. It is a noisy room, such as a busy restaurant or large family gathering at home. Your child can see everyone else in the group. Can your child follow theconversation?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of group conversation in a noisy room occur for your child?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // fifth question
+                        description: 
+                            "You are talking with your child. There is a continuous background noise, such as a fan or running water. Can your child follow what you say?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for your child, in which he/she is trying to follow a speaker in a continuous background noise?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // sixth question
+                        description: 
+                            "Your child is in a group of about five people, sitting round a table. It is a noisy room, such as a busy restaurant or large family gathering at home. Your child cannot see everyone else in the group. Can your child follow the conversation?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of group conversation in a noisy room occur for your child?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // seventh question
+                        description: 
+                            "You are talking to your child in a place where there are a lot of echoes, such as a school assembly hall or indoor swimming pool. Can your child follow what you say?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for your child, in which he/she is trying to follow a speaker in a place with echoes?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // eighth question
+                        description: 
+                            "You are talking to your child in a room in which there are many other people talking. Can your child follow what you say?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for your child, in which he/she is trying to follow a speaker in a room with lots of other people talking?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // ninth question
+                        description: 
+                            "Can your child easily have a conversation with a familiar person on the telephone?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this situation occur for your child, in which he/she is trying to have a conversation on the telephone with a familiar person?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },   
                 ],    
             },
-            { title: "Section B - Spatial", scenarios: [] },
-            { title: "Section C - Quality", scenarios: [] },
+            { 
+                title: "Section B - Spatial", 
+                scenarios: [
+                    {   
+                        // first question
+                        description: 
+                            "Your child is outdoors in an unfamiliar place. A loud constant noise, such as from a lawnmower, aeroplane or power tool, can be heard. The source of the sound can’t be seen. Can your child tell right away where the sound is coming from?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for your child, in which it would be useful to be able to tell where a sound is coming from when outside?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // second question
+                        description: 
+                            "Your child is sitting around a table with several people. Your child cannot see everyone. Can your child tell where any person is as soon as they start speaking?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for your child, in which it would be useful to know where a speaker is as soon as they start speaking?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // third question
+                        description: 
+                            "Your child is sitting in between yourself and another person. One of you starts to speak. Can your child tell right away whether it is the person on their left or their right who is speaking, without having to look?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for your child, in which it would be useful to locate the speaker as being on the left or on the right?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // fourth question
+                        description: 
+                            "You and your child are in different rooms at home. It is quiet. If your childhears you call out their name, will he/she know where in the house you are?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for your child, in which he/she needs to know from which room a someone is calling",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // fifth question
+                        description: 
+                            "Your child is outside. A dog barks loudly. Can your child tell immediately where it is, without having to look?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for your child, in which it would be useful to know where the source was for this type of sound?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // sixth question
+                        description: 
+                            "Your child is standing on the footpath of a busy street. Can your child hear right away which direction a bus or truck is coming from before they see it?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for your child, in which it would be useful to know from which direction a vehicle was approaching?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                ], 
+            },
+            { 
+                title: "Section C - Quality", 
+                scenarios: [
+                    {   
+                        // first question
+                        description: 
+                            "Think about when there are two noises in or around the home at once, for example, water running into the bath and a radio playing, OR a truck driving past and the sound of knocking at the door. Is your child able to identify thetwo separate sounds?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for your child, in which it would be useful to identify two separate sounds?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required for this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // second question
+                        description: 
+                            "You are in a room with your child and music is playing. Will your child be aware of your voice if you start speaking? Note that the child does not have to understand what you say.",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for your child, in which he/she is already listening to a sound, but needs to be aware when someone starts speaking?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to be able to have, or to develop, the listening skills required for this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // third question
+                        description: 
+                            "Can your child recognise family members or other very familiar people by the sound of each one’s voice without seeing them?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this situation occur for your child, in which it would be useful to recognise people by the sound of their voice?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required for this situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // fourth question
+                        description: 
+                            "Can your child distinguish between different pieces of familiar music? Note that producing words or movements relevant to a song can indicate recognition.",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for your child, in which it would be useful (or enjoyable) to be able to distinguish between pieces of music?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required for this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // fifth question
+                        description: 
+                            "Can your child tell the difference between sounds that are somewhat similar, for example, a car versus a bus, OR water boiling in a pot versus food cooking in a frypan?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for your child, in which it would be useful to be able to tell the difference between sounds that are somewhat similar?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required for this situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // sixth question
+                        description: 
+                            "Can your child easily judge another person’s mood from the sound of their voice?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for your child, in which it would be useful to judge mood from a person’s voice?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required for this situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // seventh question
+                        description: 
+                            "Does your child have to put in a lot of effort to hear what is being said in conversation with others?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                        ],
+                    },
+                    {
+                        // eighth question
+                        description: 
+                            "Can your child easily ignore other sounds when trying to listen to something?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of situation occur for your child, in which it would be useful to ignore another sound in order to listen to something?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                ], 
+            },
         ],
         isStandard: true,
     });
