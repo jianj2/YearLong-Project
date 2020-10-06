@@ -134,7 +134,8 @@ const generateCompleteParentQuestionnaire = (uuid) => {
             { 
                 title: "Section A - Speech", 
                 scenarios: [
-                    {
+                    {   
+                        // first question
                         description: 
                             "You are talking with your child and there is a TV on in the same room. Without turning the TV down, can your child follow what you’re saying?",
                         questions: [
@@ -166,6 +167,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                         ],
                     },
                     {
+                        // second question
                         description: 
                             "You are talking with your child in a quiet, carpeted lounge-room. Can your child follow what you’re saying?",
                         questions: [
@@ -176,6 +178,38 @@ const generateCompleteParentQuestionnaire = (uuid) => {
                             {
                                 description:
                                     "How often does this type of situation occur for your child, in which he/she is trying to follow a speaker in a quiet room without reverberation (echoes)?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very often (4 or more times in a week)",
+                                    "Often (1 to 3 times in a week)",
+                                    "Not often (1 to 2 times in a month)",
+                                ],
+                            },
+                            {
+                                description:
+                                    "How important do you think it is for your child to have, or to develop, the listening skills required in this type of situation?",
+                                isMCQ: true,
+                                MCQOptions: [
+                                    "Very important",
+                                    "Important",
+                                    "Only a little bit important",
+                                    "Not important",
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        // third question
+                        description: 
+                            "Your child is in a group of about five people, sitting round a table. It is an otherwise quiet place. Your child can see everyone else in the group. Can your child follow the conversation?",
+                        questions: [
+                            {
+                                isMCQ: false,
+                                rangeOptions: ["Zero", "Ten"],
+                            },
+                            {
+                                description:
+                                    "How often does this type of group conversation in a quiet place occur for your child?",
                                 isMCQ: true,
                                 MCQOptions: [
                                     "Very often (4 or more times in a week)",
