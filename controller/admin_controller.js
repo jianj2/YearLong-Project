@@ -65,7 +65,7 @@ const loginAdmin = function (req, res) {
 const verifyLogin = async (req, res) => {
     let token = req.params.token;
     try{
-        await jwt.verify(token, "secretLOL");
+        const decoded = await jwt.verify(token, "secretLOL");
         res.status(200).json({
             auth: true,
             decoded: decoded.username,
