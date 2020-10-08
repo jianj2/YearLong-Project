@@ -29,7 +29,8 @@ export const AdminAuthProvider = ({ children }) => {
             localStorage.getItem("adminAuthentication")
         );
         // console.log("previousAuth", previousAuth);
-        if (previousAuth) {
+        if ( previousAuth && previousAuth.token !== "") {
+            console.log("pr: ", previousAuth);
             verifyAdminLoginFun(previousAuth);
         } else { //if the previousAuth is null(not have previousAuth in localStorage, the loading will disappear)
             setLoading(false);
@@ -58,17 +59,19 @@ export const AdminAuthProvider = ({ children }) => {
     };
 
     const adminLogout = () => {
+       
         localStorage.setItem(
             "adminAuthentication",
             JSON.stringify({
                 token: "",
             })
         );
+        window.location.href = "/"
         setAuthenticated(false);
         setAdminToken("");
         console.log("logout admin");
     };
-
+   
     return (
         <AdminAuthContext.Provider
             value={{
