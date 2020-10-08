@@ -169,6 +169,7 @@ const getOrganisations = async function (req, res) {
     }
 };
 
+// Get clinician list under the organisation
 const getOrganisationClinicians = async function (req, res) {
     try {
         const clinicians = await Clinician.find({});
