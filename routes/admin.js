@@ -23,7 +23,8 @@ router.get('/specificInstruction/:instructionType', admin_controller.getSpecific
 router.get("/verifylogin/:token", admin_controller.verifyLogin);
 router.get("/instructionsSummary", admin_controller.getInstructionsSummary);
 
-//test router for testing getting the organisation information
+//router for getting the organisation information
+router.get("/country", admin_controller.getCountrylist);
 router.get("/organisation", admin_controller.getOrganisations);
 router.get("/organisation/:organisationName", admin_controller.getOrganisationClinicians);
 

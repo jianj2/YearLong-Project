@@ -126,6 +126,28 @@ const updateInstructionByType = async function (req, res) {
     sendJSONResponse(res, message, error, 404);
 };
 
+// Get all country list
+const getCountrylist = async function (req, res) {
+    try {
+        const clinicians = await Clinician.find({});
+        const filteredClinicians = clinicians.filter(
+            (clinician) =>
+                clinician.country != null &&
+                clinician.country.trim() != ""
+        );
+        const summary = filteredClinicians.map((clinician) => {
+            return {
+                country: clinician.country.toUpperCase(),
+                clinicianId: clinician.clinicianId,
+            };
+        });
+        res.status(200).json(summary);
+    } catch (error) {
+        res.status(400).json(error);
+    }
+};
+
+
 const getOrganisations = async function (req, res) {
     try {
         const clinicians = await Clinician.find({});
@@ -145,6 +167,7 @@ const getOrganisations = async function (req, res) {
         res.status(400).json(error);
     }
 };
+
 const getOrganisationClinicians = async function (req, res) {
     try {
         const clinicians = await Clinician.find({});
@@ -173,3 +196,5 @@ module.exports.getInstructionsSummary = getInstructionsSummary;
 module.exports.updateInstructionByType = updateInstructionByType;
 module.exports.getOrganisations = getOrganisations;
 module.exports.getOrganisationClinicians = getOrganisationClinicians;
+module.exports.getCountrylist = getCountrylist;
+
