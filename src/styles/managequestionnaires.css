@@ -9,7 +9,9 @@
  * component to style the component.
  *
  */
-
+ .center-h2{
+     text-align: center;
+ }
 
 @media all and (max-width: 800px) {
     .CQ-header, .SQ-header{
