@@ -8,11 +8,11 @@
  *
  */
 
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
 //import style
 import "../../styles/organisationList.css";
-import {getOrganisations} from "../../utils/api";
+import { getOrganisations } from "../../utils/api";
 
 // handles rendering of OrganisationList in the Admin Page
 const OrganisationList = () => {
@@ -21,8 +21,8 @@ const OrganisationList = () => {
 
     const getOrganisationList = async () => { //To handle the data from the API
         const [statusCode, allOrganisation] = await getOrganisations();
-        if(statusCode === 200){
-            let OrganList = new Set(allOrganisation.map((item)=>{
+        if (statusCode === 200) {
+            let OrganList = new Set(allOrganisation.map((item) => {
                 return item.organisation.toLowerCase();
             }));
             setOrganisationSummary(Array.from(OrganList));
@@ -30,8 +30,8 @@ const OrganisationList = () => {
     }
 
     const OrganisationItem = ({
-                                  title,
-                              }) => {
+        title,
+    }) => {
         return (
             <div
                 className={
@@ -50,14 +50,14 @@ const OrganisationList = () => {
         );
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         getOrganisationList();
-    },[]);
+    }, []);
 
     return (
         <div className="organisation-list-container">
             <h1>Organisation</h1>
-            {OrganisationSummary.map((organisations,index)=>
+            {OrganisationSummary.map((organisations, index) =>
                 <OrganisationItem
                     key={index}
                     title={organisations}
