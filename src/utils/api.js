@@ -202,7 +202,7 @@ export const deleteStandardQuestionnaire = async (questionnaireID) => {
 // Managing Share server calls
 // ================================================
 // get questionnaire ID using the Share ID.
-export const getShareDetails = async (shareId) =>{
+export const getShareDetails = async (shareId) => {
     const url = `share/${shareId}`;
     return await sendRequest("GET", url);
 }
@@ -231,16 +231,21 @@ export const updateInstruction = async (type, data) => {
     const url = `admin/instruction/${type}`;
     return await sendRequest("POST", url, data);
 };
-   
+
+//get countries
+export const getCountries = async () => {
+    const url = `admin/country`;
+    return await sendRequest("GET", url);
+}
 
 // get organisations
-export const getOrganisations = async () => {
-    const url = `admin/organisation`;
+export const getOrganisations = async (countryName) => {
+    const url = `admin/country/organisation/${countryName}`;
     return await sendRequest("GET", url);
 };
 
 // get organisation's clinicians
 export const getOrganisationClinicians = async (organisationName) => {
-    const url = `admin/organisation/${organisationName}`;
+    const url = `admin/organisation/clinician/${organisationName}`;
     return await sendRequest("GET", url);
 };

@@ -15,12 +15,13 @@ import "../../styles/organisationList.css";
 import { getOrganisations } from "../../utils/api";
 
 // handles rendering of OrganisationList in the Admin Page
-const OrganisationList = () => {
-
+const OrganisationList = ({ countryName }) => {
+    console.log(countryName, getOrganisations(countryName));
     const [OrganisationSummary, setOrganisationSummary] = useState([]);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const getOrganisationList = async () => { //To handle the data from the API
-        const [statusCode, allOrganisation] = await getOrganisations();
+        const [statusCode, allOrganisation] = await getOrganisations(countryName);
         if (statusCode === 200) {
             let OrganList = new Set(allOrganisation.map((item) => {
                 return item.organisation.toLowerCase();
@@ -38,7 +39,7 @@ const OrganisationList = () => {
                     "organisation-list-item organisation-list-item-selectable"
                 }
                 onClick={() => {
-                    const url = "/admin/Organisation/" + title;
+                    const url = `/admin/${countryName}/` + title;
                     window.location.href = url;
                 }}
             >
@@ -52,7 +53,7 @@ const OrganisationList = () => {
 
     useEffect(() => {
         getOrganisationList();
-    }, []);
+    }, [getOrganisationList]);
 
     return (
         <div className="organisation-list-container">

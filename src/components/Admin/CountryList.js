@@ -1,23 +1,26 @@
 import React, { useEffect, useState } from "react";
 
 //import style
-import "../../styles/organisationList.css";
-// import { getCountries } from "../../utils/api";
+import "../../styles/countryList.css";
+import { getCountries } from "../../utils/api";
 
 // handles rendering of CountryList in the Admin Page
 const CountryList = () => {
 
-  const [CountryList, setCountryList] = useState([]);
+  // console.log(getCountries());
+  const [countryList, setCountryList] = useState([]);
 
   const getCountryList = async () => { //To handle the data from the API
-    const [statusCode, allCountries] = await getCountires();
+    const [statusCode, allCountries] = await getCountries();
+
     if (statusCode === 200) {
       let Coun_List = new Set(allCountries.map((item) => {
-        return item.organisation.toLowerCase();
+        return item.country.toUpperCase();
       }));
-      setCountryList(Array.from(OrganList));
+      setCountryList(Array.from(Coun_List));
     }
   }
+
 
   const CountryItem = ({
     title,
@@ -28,7 +31,7 @@ const CountryList = () => {
           "country-list-item country-list-item-selectable"
         }
         onClick={() => {
-          const url = "/admin/country/" + title;
+          const url = "/admin/" + title + "/Organisation";
           window.location.href = url;
         }}
       >
@@ -44,15 +47,17 @@ const CountryList = () => {
     getCountryList();
   }, []);
 
+  console.log(countryList);
+
   return (
     <div className="country-list-container">
       <h1>Countries</h1>
-      {CountryList.map((countries, index) =>
+      {countryList.map((countries, index) =>
         <CountryItem
           key={index}
           title={countries}
-        />
-      )}
+        />)
+      }
     </div>
   );
 };
