@@ -62,21 +62,34 @@ const loginAdmin = function (req, res) {
     }
 };
 
+const verifyToken = (token, secret) =>{
+    console.log("verifying");
+    return new Promise((resolve,reject)=>{
+        jwt.verify(token, secret, function (err, decoded) {
+            if (!err) {
+               resolve({
+                    auth: true,
+                    decoded: decoded.username,
+                });
+            } else {
+                 reject({
+                    auth: false,
+                    decoded: "",
+                });
+            }
+        });
+    });
+}
 const verifyLogin = async (req, res) => {
-    let token = req.params.token;
-    try{
-        const decoded = await jwt.verify(token, "secretLOL");
-        res.status(200).json({
-            auth: true,
-            decoded: decoded.username,
-        });
-
-    }catch(error){
-        res.status(401).json({
-            auth: false,
-            decoded: "",
-        });
+    const token = req.params.token;
+    const result = await verifyToken(token, "secretLOL");
+    if(result.auth === true){
+        res.status(200).json(result);
+    }else{
+        res.status(401).json(result);
     }
+
+
 };
 
 //Get all instructions
