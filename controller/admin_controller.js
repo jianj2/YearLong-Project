@@ -127,7 +127,7 @@ const updateInstructionByType = async function (req, res) {
 };
 
 // Get all country list
-const getCountrylist = async function (req, res) {
+const getCountryList = async function (req, res) {
     try {
         const clinicians = await Clinician.find({});
         const filteredClinicians = clinicians.filter(
@@ -147,14 +147,15 @@ const getCountrylist = async function (req, res) {
     }
 };
 
-
+// Get organization list under the country
 const getOrganisations = async function (req, res) {
     try {
         const clinicians = await Clinician.find({});
         const filteredClinicians = clinicians.filter(
             (clinician) =>
-                clinician.organisation != null &&
-                clinician.organisation.trim() != ""
+                clinician.country != null &&
+                clinician.country.toUpperCase() ==
+                    req.params.countryName
         );
         const summary = filteredClinicians.map((clinician) => {
             return {
@@ -194,7 +195,7 @@ module.exports.verifyLogin = verifyLogin;
 module.exports.getSpecificInstruction = getSpecificInstruction;
 module.exports.getInstructionsSummary = getInstructionsSummary;
 module.exports.updateInstructionByType = updateInstructionByType;
+module.exports.getCountryList = getCountryList;
 module.exports.getOrganisations = getOrganisations;
 module.exports.getOrganisationClinicians = getOrganisationClinicians;
-module.exports.getCountrylist = getCountrylist;
 

@@ -24,8 +24,8 @@ router.get("/verifylogin/:token", admin_controller.verifyLogin);
 router.get("/instructionsSummary", admin_controller.getInstructionsSummary);
 
 //router for getting the organisation information
-router.get("/country", admin_controller.getCountrylist);
-router.get("/organisation", admin_controller.getOrganisations);
-router.get("/organisation/:organisationName", admin_controller.getOrganisationClinicians);
+router.get("/country", admin_controller.getCountryList);
+router.get("/organisation/:countryName", admin_controller.getOrganisations);
+//router.get("/organisation/:organisationName", admin_controller.getOrganisationClinicians);
 
 module.exports = router;
