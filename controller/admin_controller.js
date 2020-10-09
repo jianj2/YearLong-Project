@@ -126,13 +126,36 @@ const updateInstructionByType = async function (req, res) {
     sendJSONResponse(res, message, error, 404);
 };
 
+// Get all country list
+const getCountryList = async function (req, res) {
+    try {
+        const clinicians = await Clinician.find({});
+        const filteredClinicians = clinicians.filter(
+            (clinician) =>
+                clinician.country != null &&
+                clinician.country.trim() != ""
+        );
+        const summary = filteredClinicians.map((clinician) => {
+            return {
+                country: clinician.country.toUpperCase(),
+                clinicianId: clinician.clinicianId,
+            };
+        });
+        res.status(200).json(summary);
+    } catch (error) {
+        res.status(400).json(error);
+    }
+};
+
+// Get organization list under the country
 const getOrganisations = async function (req, res) {
     try {
         const clinicians = await Clinician.find({});
         const filteredClinicians = clinicians.filter(
             (clinician) =>
-                clinician.organisation != null &&
-                clinician.organisation.trim() != ""
+                clinician.country != null &&
+                clinician.country.toUpperCase() ==
+                    req.params.countryName
         );
         const summary = filteredClinicians.map((clinician) => {
             return {
@@ -145,6 +168,8 @@ const getOrganisations = async function (req, res) {
         res.status(400).json(error);
     }
 };
+
+// Get clinician list under the organisation
 const getOrganisationClinicians = async function (req, res) {
     try {
         const clinicians = await Clinician.find({});
@@ -171,5 +196,7 @@ module.exports.verifyLogin = verifyLogin;
 module.exports.getSpecificInstruction = getSpecificInstruction;
 module.exports.getInstructionsSummary = getInstructionsSummary;
 module.exports.updateInstructionByType = updateInstructionByType;
+module.exports.getCountryList = getCountryList;
 module.exports.getOrganisations = getOrganisations;
 module.exports.getOrganisationClinicians = getOrganisationClinicians;
+
