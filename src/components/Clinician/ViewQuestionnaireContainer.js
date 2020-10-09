@@ -35,9 +35,10 @@ const ViewQuestionnaireContainer = (props) => {
     
         const prepareQuestionnaire = async () => {
             const [statusCode, data] = await API.getQuestionnaireById(props.questionnaireID);
-    
+
             if (statusCode === 200 ){
                 const questionnaire = data;
+                console.log(data)
                 setSelectedQuestionnaire(questionnaire);
                 let emptyResponse = [];
                 console.log(`current q: ${questionnaire.title}`);
