@@ -8,21 +8,22 @@
  *
  */
 
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
 //import style
 import "../../styles/organisationList.css";
-import {getOrganisations} from "../../utils/api";
+import { getOrganisations } from "../../utils/api";
 
 // handles rendering of OrganisationList in the Admin Page
-const OrganisationList = () => {
-
+const OrganisationList = ({ countryName }) => {
+    console.log(countryName, getOrganisations(countryName));
     const [OrganisationSummary, setOrganisationSummary] = useState([]);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const getOrganisationList = async () => { //To handle the data from the API
-        const [statusCode, allOrganisation] = await getOrganisations();
-        if(statusCode === 200){
-            let OrganList = new Set(allOrganisation.map((item)=>{
+        const [statusCode, allOrganisation] = await getOrganisations(countryName);
+        if (statusCode === 200) {
+            let OrganList = new Set(allOrganisation.map((item) => {
                 return item.organisation.toLowerCase();
             }));
             setOrganisationSummary(Array.from(OrganList));
@@ -30,15 +31,15 @@ const OrganisationList = () => {
     }
 
     const OrganisationItem = ({
-                                  title,
-                              }) => {
+        title,
+    }) => {
         return (
             <div
                 className={
                     "organisation-list-item organisation-list-item-selectable"
                 }
                 onClick={() => {
-                    const url = "/admin/Organisation/" + title;
+                    const url = `/admin/${countryName}/` + title;
                     window.location.href = url;
                 }}
             >
@@ -50,14 +51,14 @@ const OrganisationList = () => {
         );
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         getOrganisationList();
-    },[]);
+    }, [getOrganisationList]);
 
     return (
         <div className="organisation-list-container">
             <h1>Organisation</h1>
-            {OrganisationSummary.map((organisations,index)=>
+            {OrganisationSummary.map((organisations, index) =>
                 <OrganisationItem
                     key={index}
                     title={organisations}

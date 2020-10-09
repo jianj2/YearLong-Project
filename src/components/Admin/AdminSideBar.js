@@ -12,23 +12,23 @@
  *
  */
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import "../../styles/sidebar.css";
 
-const AdminSideBar = (props) =>{
+const AdminSideBar = (props) => {
 
     const pathname = window.location.href.split("/").pop();
 
     return (
         <div className="sidebar-container">
             <Link className={`sidebar-questionnaires
-            ${(pathname === "admin" || pathname === "Questionnaires" || pathname === "edit")? "active" : ""}`}
-                  to = "/admin/Questionnaires">Questionnaires</Link>
-            <Link className={`sidebar-ssq-instructions ${(pathname === "SSQ_Instructions")? "active" : ""}`}
-                  to = "/admin/SSQ_Instructions">SSQ Instructions</Link>
-            <Link className={`sidebar-organisation ${(pathname === "Organisation")? "active" : ""}`}
-                  to = "/admin/Organisation">Organisation</Link>
+            ${(pathname === "admin" || pathname === "Questionnaires" || pathname === "edit") ? "active" : ""}`}
+                to="/admin/Questionnaires">Questionnaires</Link>
+            <Link className={`sidebar-ssq-instructions ${(pathname === "SSQ_Instructions") ? "active" : ""}`}
+                to="/admin/SSQ_Instructions">SSQ Instructions</Link>
+            <Link className={`sidebar-organisation ${(pathname === "Organisation" || pathname === "Country") ? "active" : ""}`}
+                to="/admin/Country">Organisation</Link>
         </div>
     )
 }
