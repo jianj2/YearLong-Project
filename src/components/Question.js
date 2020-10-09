@@ -161,7 +161,7 @@ export default function Question({
         return (
             <div className="question-container">
                 <FormControl color="secondary" margin="dense">
-                    <p>{description}</p>
+                    <p>{'('}{questionIndex+1}{')'} {description}</p>
                     <RadioGroup name="frequency" value={data.value}>
                         {MCQOptions.map((item, index) => (
                             <FormControlLabel
@@ -209,6 +209,7 @@ export default function Question({
                         <label className="slider-value">{data.value === "" || data.value === undefined? "Ø" : data.value }</label>
                         <label>{rangeOptions[1]}</label>
                     </div>
+                    <p>{'('}{questionIndex+1}{')'}</p>
                     <FormControl color="secondary" margin="dense">
                         <RadioGroup name="frequency" value={data.supplementaryValue} className="slider-checkboxes">
                             <FormControlLabel
