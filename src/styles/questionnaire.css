@@ -94,7 +94,8 @@
     width: 40px;
     height: 40px;
     border-radius: 100px;
-    display: flex;
+    /* display: flex; */
+    display: none;
     justify-content: center;
     align-items: center;
     font-family: 'Gill Sans';
