@@ -38,7 +38,6 @@ const ViewQuestionnaireContainer = (props) => {
 
             if (statusCode === 200 ){
                 const questionnaire = data;
-                console.log(data)
                 setSelectedQuestionnaire(questionnaire);
                 let emptyResponse = [];
                 console.log(`current q: ${questionnaire.title}`);
