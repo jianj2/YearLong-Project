@@ -26,6 +26,7 @@ import QuestionnaireContainer from "../Clinician/QuestionnaireContainer";
 import AdminViewStandardQuestionnaire from "./AdminViewStandardQuestionnaire";
 import InstructionContainer from "./SSQInstructionContainer";
 import OrganisationContainer from "./OrganisationContainer";
+import CountryList from "./CountryList";
 
 const AdminContentPanel = (props) => {
     if (props.active === 2) {
@@ -37,7 +38,7 @@ const AdminContentPanel = (props) => {
     } else if (props.active === 3) {
         return (
             <div className="content-container">
-                <OrganisationList />
+                <CountryList />
             </div>
         );
     } else if (props.active === 4) {
@@ -45,30 +46,36 @@ const AdminContentPanel = (props) => {
             <div className="content-container">
                 <QuestionnaireContainer
                     questionnaireID={props.questionnaireID}
-                    redirectURL = "/admin/Questionnaires"
+                    redirectURL="/admin/Questionnaires"
                 />
             </div>
         );
-    } else if (props.active === 5){
+    } else if (props.active === 5) {
         return (
             <div className="content-container">
                 <AdminViewStandardQuestionnaire
-                     questionnaireID={props.questionnaireID}
+                    questionnaireID={props.questionnaireID}
                 />
             </div>
         );
-    } else if (props.active === 6){
+    } else if (props.active === 6) {
         return (
             <div className="content-container">
                 <InstructionContainer
-                     instructionType={props.instructionType}
+                    instructionType={props.instructionType}
                 />
             </div>
         );
-    } else if (props.active === 7){
+    } else if (props.active === 7) {
         return (
             <div className="content-container">
-                <OrganisationContainer organName={props.organName}/>
+                <OrganisationList countryName={props.countryName} />
+            </div>
+        )
+    } else if (props.active === 8) {
+        return (
+            <div className="content-container">
+                <OrganisationContainer organName={props.organName} />
             </div>
         )
     }

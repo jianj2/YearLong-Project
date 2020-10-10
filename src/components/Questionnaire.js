@@ -100,7 +100,7 @@ export default function Questionnaire({
                             key={scenarioIndex}
                             className="scenario-container"
                         >
-                            <p>{scenario.description}</p>
+                            <p><span className="scenario-number">{scenarioIndex+1}</span>  {scenario.description}</p>
                             {scenario.questions.map(
                                 (question, questionIndex) => (
                                     <Question
