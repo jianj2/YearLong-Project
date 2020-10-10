@@ -41,14 +41,14 @@ function App() {
     // }
 
     return (
-        <div className="app-container">            
+        <div className="app-container">
             <Router>
                 <NavBar />
                 <Switch>
-                    <Route 
-                        path="/" 
-                        exact 
-                        render={() => <Landing />} 
+                    <Route
+                        path="/"
+                        exact
+                        render={() => <Landing />}
                     />
                     <Route
                         path="/parent/:shareId"
@@ -58,92 +58,97 @@ function App() {
                     <Route
                         path="/admin"
                         exact
-                        render={() => <HomeAdmin active ={1}/>}
+                        render={() => <HomeAdmin active={1} />}
                     />
                     <Route
                         path="/admin/Questionnaires"
                         exact
-                        render={() => <HomeAdmin active = {1}/>}
+                        render={() => <HomeAdmin active={1} />}
                     />
                     <Route
                         path="/admin/SSQ_Instructions"
                         exact
-                        render={() => <HomeAdmin active = {2} />}
+                        render={() => <HomeAdmin active={2} />}
                     />
                     <Route
-                        path="/admin/Organisation"
+                        path="/admin/Country"
                         exact
-                        render={() => <HomeAdmin active = {3} />}
+                        render={() => <HomeAdmin active={3} />}
+                    />
+                    <Route
+                        path="/admin/:country/Organisation"
+                        exact
+                        render={({ match }) => <HomeAdmin active={7} countryName={match.params.country} />}
                     />
 
                     <Route
-                        path="/admin/Organisation/:name"
+                        path="/admin/:country/:name"
                         exact
-                        render={({match})=>(<HomeAdmin active={7} organName={match.params.name}/>)}
+                        render={({ match }) => (<HomeAdmin active={8} organName={match.params.name} />)}
                     />
 
                     <Route
                         path="/admin/:id/edit"
                         exact
-                        render={({match}) => (<HomeAdmin active = {4} questionnaireID={match.params.id}/>)}
+                        render={({ match }) => (<HomeAdmin active={4} questionnaireID={match.params.id} />)}
                     />
 
 
                     <Route
                         path="/admin/standard/:id/view"
                         exact
-                        render={({match}) => <HomeAdmin active = {5} questionnaireID={match.params.id}/> }
+                        render={({ match }) => <HomeAdmin active={5} questionnaireID={match.params.id} />}
                     />
-                    
+
                     <Route
                         path="/admin/instruction/:type/edit"
                         exact
-                        render={({match}) => <HomeAdmin active = {6} 
-                                    instructionType = {match.params.type}/> }
+                        render={({ match }) => <HomeAdmin active={6}
+                            instructionType={match.params.type} />}
                     />
 
 
                     <Route
                         path="/clinician"
                         exact
-                        render={() => <HomeClinician active = {1}/>}
+                        render={() => <HomeClinician active={1} />}
                     />
-                    <Route 
-                        path="/clinician/Questionnaires" 
-                        exact 
-                        render={() => <HomeClinician active = {1}/>} 
+                    <Route
+                        path="/clinician/Questionnaires"
+                        exact
+                        render={() => <HomeClinician active={1} />}
                     />
-                    <Route 
-                        path="/clinician/DoTheTest" 
-                        exact 
-                        render={() => <HomeClinician active = {2}/>} 
+                    <Route
+                        path="/clinician/DoTheTest"
+                        exact
+                        render={() => <HomeClinician active={2} />}
                     />
                     <Route
                         path="/clinician/Share"
                         exact
-                        render={() => <HomeClinician active = {6}/>}
-                    />
-                    <Route 
-                        path="/clinician/Instructions" 
-                        exact 
-                        render={() => <HomeClinician active = {3}/>} 
+                        render={() => <HomeClinician active={6} />}
                     />
                     <Route
-                        path="/clinician/:id/edit" 
+                        path="/clinician/Instructions"
                         exact
-                        render={({match}) => (<HomeClinician active = {4} questionnaireID={match.params.id}/>)}
+                        render={() => <HomeClinician active={3} />}
+                    />
+                    <Route
+                        path="/clinician/:id/edit"
+                        exact
+                        render={({ match }) => (<HomeClinician active={4} questionnaireID={match.params.id} />)}
                     />
 
                     <Route
-                        path="/standard/:id/view" 
-                        exact 
-                        render={({match}) => <HomeClinician active = {5} questionnaireID={match.params.id}/> }
+                        path="/standard/:id/view"
+                        exact
+                        render={({ match }) => <HomeClinician active={5} questionnaireID={match.params.id} />}
                     />
 
                     <Route
                         path="/findPassword"
                         exact
-                        render={() => <FindPassword /> }
+                        render={() => <FindPassword />}
                     />
                 </Switch>
             </Router>

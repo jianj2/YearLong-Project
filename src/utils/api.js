@@ -50,59 +50,49 @@ const sendRequest = async (
 // Admin server calls
 // ================================================
 
-export const findPassword = (email) => {
-    fetch(`https://ssq.au.auth0.com/dbconnections/change_password`, {
+export const findPassword = async (email) => {
+    const url =
+        process.env.NODE_ENV === "production"
+            ? "https://ssq.au.auth0.com/dbconnections/change_password"
+            : "https://pediatric-scale.au.auth0.com/dbconnections/change_password";
+    const client_id =
+        process.env.NODE_ENV === "production"
+            ? "cFvWQEJAqVjpvvvaz3WVkFsAilRxl8jo"
+            : "ko5IIugoRXQf2uCpqRclocwbhrbqAYx4";
+    const data = {
+        client_id: client_id,
+        email: email,
+        connection: "Username-Password-Authentication",
+    };
+    const fetchOptions = {
         method: "POST",
-        headers: {
-            ...header
-        },
-        body: JSON.stringify({
-            client_id: 'cFvWQEJAqVjpvvvaz3WVkFsAilRxl8jo',
-            email: email,
-            connection: 'Username-Password-Authentication'
-        }),
-        json: true
-    }).then((res) => res.json());
-}
-
-
-
-export const adminLogin = (loginData) =>
-    fetch(`${api}/admin/login`, {
-        method: "POST",
-        headers: {
-            ...header,
-        },
-        body: JSON.stringify(loginData),
-    }).then((res) => res.json());
-
-export const verifyAdminLogin = (token) =>
-    fetch(`${api}/admin/verifylogin/${token}`, {
-        ...header,
-    }).then((res) => res.json());
-
-export const sendQuestionnaireData = (data, shareId) =>
-    fetch(`${api}/share/submit/${shareId}`, {
-        method: "POST",
-        headers: {
-            ...header,
-        },
+        headers: header,
         body: JSON.stringify(data),
-    }).then((res) => res.json());
+    };
+    await fetch(url, fetchOptions);
+};
+
+export const adminLogin = async (loginData) => {
+    const url = `admin/login`;
+    return await sendRequest("POST", url, loginData);
+};
+
+export const verifyAdminLogin = async (token) => {
+    const url = `admin/verifylogin/${token}`;
+    return await sendRequest("GET", url);
+};
+
+export const sendQuestionnaireData = async (data, shareId) => {
+    const url = `share/submit/${shareId}`;
+    return await sendRequest("POST", url, data);
+};
 
 // ================================================
 // Clinician server calls
 // ================================================
 export const completeQuestionnaire = async (token, data) => {
-    const headers = {
-        ...header,
-        ...createHeader(token),
-    };
-    fetch(`${api}/clinician/complete-questionnaire/`, {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(data),
-    }).then((res) => res.json());
+    const url = `clinician/complete-questionnaire/`;
+    return await sendRequest("POST", url, data, token);
 };
 
 // ================================================
@@ -146,7 +136,6 @@ export const editQuestionnaire = async (token, questionnaire) => {
     const data = {
         questionnaire,
     };
-
     return await sendRequest("POST", url, data, token);
 };
 
@@ -157,32 +146,27 @@ export const editStandardQuestionnaire = async (questionnaire) => {
     const data = {
         questionnaire,
     };
-
     return await sendRequest("POST", url, data);
 };
 
 //COPY questionnaire
 export const copyQuestionnaire = async (questionnaire, clinicianId) => {
     const url = "questionnaire/copy";
-
     const data = {
-        clinicianId: clinicianId,
+        clinicianId,
         copyToCustomisedQuestionnaire: true,
         questionnaire,
     };
-
     return await sendRequest("POST", url, data);
 };
 
 //admin COPY questionnaire
 export const adminCopyQuestionnaire = async (questionnaire) => {
     const url = "questionnaire/copy";
-
     const data = {
         copyToCustomisedQuestionnaire: false,
         questionnaire,
     };
-
     return await sendRequest("POST", url, data);
 };
 
@@ -206,16 +190,6 @@ export const getStandardisedQuestionnaires = async () => {
     return await sendRequest("GET", url);
 };
 
-//get standardised questionnaires(admin)
-export const getStandardisedQuestionnaireForAdmin = async () => {
-    const url = `${api}/admin/getStandardisedQuestionnaire`;
-    let response = await fetch(url, {
-        headers: header,
-    });
-    let json = await response.json();
-    return json;
-};
-
 export const deleteStandardQuestionnaire = async (questionnaireID) => {
     const url = "questionnaire/deleteStandard";
     const data = {
@@ -228,87 +202,50 @@ export const deleteStandardQuestionnaire = async (questionnaireID) => {
 // Managing Share server calls
 // ================================================
 // get questionnaire ID using the Share ID.
-export const getShareDetails = (shareId) =>
-    fetch(`${api}/share/${shareId}`, {
-        header,
-    }).then((res) => res.json());
+export const getShareDetails = async (shareId) => {
+    const url = `share/${shareId}`;
+    return await sendRequest("GET", url);
+}
 
 // Used to share a questionnaire.
-export const shareQuestionnaire = async (token, data) =>
-    fetch(`${api}/clinician/share/`, {
-        method: "POST",
-        headers: {
-            ...header,
-            ...createHeader(token),
-        },
-        body: JSON.stringify(data),
-    }).then((res) => res.json());
+export const shareQuestionnaire = async (token, data) => {
+    const url = `clinician/share/`;
+    return await sendRequest("POST", url, data, token);
+}
 
-// get Instruction
-export const getInstruction = async () => {
-    const url = `${api}/admin/instruction`;
-    let response = await fetch(url, {
-        headers: header,
-    });
-    let json = await response.json();
-
-    return json;
-};
-
-// get instructions
+// get instruction based on type
 export const getSpecificInstruction = async (instructionType) => {
-    const url = `${api}/admin/specificInstruction/${instructionType}`;
-    let response = await fetch(url, {
-        headers: header,
-    });
-    let json = await response.json();
-    return json;
+    const url = `admin/specificInstruction/${instructionType}`;
+    return await sendRequest("GET", url);
 };
 
 // get instructions summary including title and type
 
 export const getInstructionsSummary = async () => {
-    const url = `${api}/admin/instructionsSummary`;
-    let response = await fetch(url, {
-        headers: header,
-    });
-    let json = await response.json();
-    return json;
+    const url = `admin/instructionsSummary`;
+    return await sendRequest("GET", url);
 };
 
-// send Instructions
-export const sendInstructions = (data) =>
-    fetch(`${api}/admin/instruction`, {
-        method: "POST",
-        headers: header,
-        body: JSON.stringify(data),
-    }).then((res) => res);
-
 // update instruction by type
-export const updateInstruction = (type, data) =>
-fetch(`${api}/admin/instruction/${type}`, {
-    method: "POST",
-    headers: header,
-    body: JSON.stringify(data),
-}).then((res) => res);
+export const updateInstruction = async (type, data) => {
+    const url = `admin/instruction/${type}`;
+    return await sendRequest("POST", url, data);
+};
+
+//get countries
+export const getCountries = async () => {
+    const url = `admin/country`;
+    return await sendRequest("GET", url);
+}
 
 // get organisations
-export const getOrganisations = async () => {
-    const url = `${api}/admin/organisation`;
-    let response = await fetch(url, {
-        headers: header,
-    });
-    let json = await response.json();
-
-    return json;
+export const getOrganisations = async (countryName) => {
+    const url = `admin/country/organisation/${countryName}`;
+    return await sendRequest("GET", url);
 };
 
 // get organisation's clinicians
 export const getOrganisationClinicians = async (organisationName) => {
-    const url = `${api}/admin/organisation/${organisationName}`;
-    let response = await fetch(url, {
-        headers: header
-    });
-    let json = await response.json();
-    return json;
+    const url = `admin/organisation/clinician/${organisationName}`;
+    return await sendRequest("GET", url);
 };

@@ -47,7 +47,7 @@ const HomeParents = ({ match }) => {
         title: "",
         description: "",
         sections: [],
-        isStandard: true
+        isStandard: true,
     });
     const [clinicianEmail, setClinicianEmail] = useState("");
     const [sortBy, setSortBy] = useState("PERFORMANCE");
@@ -57,7 +57,7 @@ const HomeParents = ({ match }) => {
         date: "",
         completedBy: "parent",
         rightDeviceType: "",
-        leftDeviceType: ""
+        leftDeviceType: "",
     });
 
     const [questionnaireData, setQuestionnaireData] = useState([]);
@@ -67,26 +67,27 @@ const HomeParents = ({ match }) => {
 
     const [instruction, setInstruction] = useState({
         title: "",
-        content: ""
+        content: "",
     });
 
     const getPersonalDetails = (data) => {
         setPersonalDetails(data);
     };
 
-    const setQuestionnaireInstruction = (isSSQ_ch) => {
+    const setQuestionnaireInstruction = async (isSSQ_ch) => {
         let instructionType;
         if (isSSQ_ch) {
             instructionType = "RC";
         } else {
             instructionType = "RP";
         }
-        API.getSpecificInstruction(instructionType).then((res) => {
+        const [statusCode, res] = await API.getSpecificInstruction(instructionType);
+        if(statusCode===200){
             setInstruction({
                 title: res["title"],
-                content: res["content"]
+                content: res["content"],
             });
-        });
+        }    
     };
 
     //////////// Share section update /////////////////////////////
@@ -122,8 +123,9 @@ const HomeParents = ({ match }) => {
     // This is called when the component first mounts.
     useEffect(() => {
         // Server call to get the questionnaireId
-        API.getShareDetails(match.params.shareId).then((shareResponse) => {
-            if (shareResponse.statusCode === 200) {
+        const getDetails = async () => {
+            const [statusCode, shareResponse] = await API.getShareDetails(match.params.shareId);
+            if (statusCode === 200) {
                 console.log("shareResponse", shareResponse);
                 // Server call to get the questionnaire.
                 setSortBy(shareResponse.data.sortBy);
@@ -143,13 +145,18 @@ const HomeParents = ({ match }) => {
                             tempComments[sectionIndex] = [];
                             section.scenarios.forEach(
                                 (scenario, scenarioIndex) => {
-                                    tempResponse[sectionIndex][scenarioIndex] = [];
-                                    tempComments[sectionIndex][scenarioIndex] = "";
+                                    tempResponse[sectionIndex][
+                                        scenarioIndex
+                                    ] = [];
+                                    tempComments[sectionIndex][scenarioIndex] =
+                                        "";
                                     scenario.questions.forEach(
                                         (question, questionIndex) => {
-                                            tempResponse[sectionIndex][scenarioIndex][questionIndex] = {
+                                            tempResponse[sectionIndex][
+                                                scenarioIndex
+                                            ][questionIndex] = {
                                                 value: "",
-                                                supplementaryValue: ""
+                                                supplementaryValue: "",
                                             };
                                         }
                                     );
@@ -172,7 +179,11 @@ const HomeParents = ({ match }) => {
             } else {
                 setWizardStep(-1);
             }
-        });
+
+        };
+        getDetails();
+        
+        
     }, []);
 
     // Method called to update questionnaire data when a question is updated.
@@ -213,31 +224,34 @@ const HomeParents = ({ match }) => {
         nextStep();
     };
 
-    const submitResponse = () => {
+    const submitResponse = async () => {
         let data = {
             questionnaireData,
             comments: commentData,
             personalDetails,
             clinicianEmail: clinicianEmail,
             questionnaireId: questionnaire.questionnaireId,
-            sortBy
+            sortBy,
         };
 
         console.log(data);
         setLoading(true);
-        API.sendQuestionnaireData(data, match.params.shareId).then((res) => {
-            if (res) {
-                setLoading(false);
-                nextStep();
-            }
-            console.log(res);
-        });
+        const [statusCode, response] = await API.sendQuestionnaireData(
+            data,
+            match.params.shareId
+        );
+        if (statusCode === 200) {
+            setLoading(false);
+            nextStep();
+        } else {
+            console.error(response);
+        }
     };
 
     if (wizardStep === -2) {
         return (
             <div className="parents-home">
-                <Loading/>
+                <Loading />
             </div>
         );
     }
@@ -342,7 +356,7 @@ const HomeParents = ({ match }) => {
     if (wizardStep === 3) {
         return (
             <div className="parents-home">
-                {loading ? <Loading/> : null}
+                {loading ? <Loading /> : null}
                 <div className="subheader-container">
                     <button
                         id="instructions"
@@ -378,7 +392,7 @@ const HomeParents = ({ match }) => {
     return (
         <div className="landing">
             <div className="landing-logo">
-                <img src={logoComplete}/>
+                <img src={logoComplete} />
             </div>
 
             <div className="form-completed">

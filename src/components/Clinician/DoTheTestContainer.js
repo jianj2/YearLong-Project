@@ -73,15 +73,15 @@ const DoTheTestContainer = () => {
             const [statusCode, data] = await getStandardisedQuestionnaires();
             if (statusCode === 200) {
                 setStandardisedQuestionnaires(data);
-            }else{
+            } else {
                 console.error(data);
             }
         }
         async function retrieveCustomisedQuestionnaires() {
             const [statusCode, data] = await getClinicianQuestionnaires(token, user.name);
-            if (statusCode === 200){
+            if (statusCode === 200) {
                 setQuestionnaires(data);
-            }else{
+            } else {
                 console.error(data);
             }
         }
@@ -175,23 +175,26 @@ const DoTheTestContainer = () => {
         setPersonalDetails(data);
     };
 
-    const emailResponse = (sortType) => {
+    const emailResponse = async (sortType) => {
         setLoading(true);
         let data = {
             questionnaireData,
             personalDetails,
             clinicianEmail: user.name,
             questionnaireId: selectedQuestionnaire.questionnaireId,
-            comments:commentData,
+            comments: commentData,
             sortBy: sortType
         };
 
-        completeQuestionnaire(token, data)
-            .then((res) => {
-                console.log("complete question", res);
-                setWizardStep(3);
-                setLoading(false);
-            });
+        const [statusCode, response] = await completeQuestionnaire(token, data);
+        if (statusCode === 200) {
+            console.log("complete questionnaire", response);
+            setWizardStep(3);
+            setLoading(false);
+        } else {
+            console.error(response);
+        }
+
     };
 
     if (wizardStep === 0) {
@@ -224,6 +227,9 @@ const DoTheTestContainer = () => {
                 <div className="dothetest-subheader-container">
                     <button className="button" onClick={prevStep}>
                         B A C K
+                    </button>
+                    <button className="button">
+                        R E V I E W
                     </button>
                 </div>
 
@@ -288,9 +294,9 @@ const DoTheTestContainer = () => {
                     isSelectable={true}
                     onClickQuestion={onClickQuestion}
                     canEdit={false}
-                    onClickEdit={() => {}}
+                    onClickEdit={() => { }}
                     canDelete={false}
-                    onClickDelete={() => {}}
+                    onClickDelete={() => { }}
                 />
                 <QuestionnaireList
                     questionnaires={questionnaires}
@@ -298,9 +304,9 @@ const DoTheTestContainer = () => {
                     isSelectable={true}
                     onClickQuestion={onClickQuestion}
                     canEdit={false}
-                    onClickEdit={() => {}}
+                    onClickEdit={() => { }}
                     canDelete={false}
-                    onClickDelete={() => {}}
+                    onClickDelete={() => { }}
                 />
             </div>
         );

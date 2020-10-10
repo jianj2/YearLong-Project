@@ -57,6 +57,10 @@ const ShareQuestionnaire = (props) => {
 
     const [isSectionsEmpty, setIsSectionsEmpty] = useState(false);
 
+    const [isShareResultVisible, setIsShareResultVisible] = useState(false);
+
+    const [isShareSuccess, setIsShareSuccess] = useState(false);
+
 
     const [shareModalData, setShareModalData] = useState({
         patientEmail: "",
@@ -130,6 +134,42 @@ const ShareQuestionnaire = (props) => {
         setIsSectionsEmpty(isEmpty);
 
     };
+    
+    // ========================================================================
+    // Share result Modal Functions
+    // ========================================================================
+    const openResultModal = () => setIsShareResultVisible(true);
+    const closeResultModal = () => setIsShareResultVisible(false);;
+
+
+    const renderShareResultModal = () => {
+        return (
+            <Modal
+                open={isShareResultVisible}
+                onClose={closeResultModal}
+                closeAfterTransition
+                className={classes.modal}
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Fade in={isShareResultVisible && !loading}>
+                    <div className="share-modal-container">
+                        {isShareSuccess? 
+                        <h2 className = "center-h2">Shared Successfully!</h2>
+                        :<h2 className = "center-h2">Fail to share, please try again!</h2>
+                        }
+                        
+                        <button className="button"
+                        onClick = {closeResultModal}
+                        >OK</button>
+                    </div>
+                </Fade>
+                    
+            </Modal>
+        );
+    };
 
     // ========================================================================
     // Share Modal Functions
@@ -137,21 +177,29 @@ const ShareQuestionnaire = (props) => {
     const openModal = () => setIsShareModalVisible(true);
     const closeModal = () => setIsShareModalVisible(false);
 
-    const handleShareSubmit = (e) => {
+    const handleShareSubmit = async (e) => {
         e.preventDefault();
 
         if( !isSectionsEmpty ){
             setLoading(true);
             shareModalData["shareSection"] = shareSection;
-            console.log("shareModalData ", shareModalData)
-            API.shareQuestionnaire(token, shareModalData)
-               .then( res => {
-                   console.log("res from create Share", res)
+            console.log("shareModalData ", shareModalData);
+            const [statusCode, response] = await API.shareQuestionnaire(token, shareModalData);
+            if(statusCode===200){
+                   console.log("res from create Share", response)
                     setLoading(false);
                     closeModal();
-                });
+                    setIsShareSuccess(true);
+                    openResultModal();
+            }else{
+                console.error(response)
+                setIsShareSuccess(false);
+                openResultModal();
+            }
+           
         }
     };
+
 
     const renderShareModal = () => {
         return (
@@ -305,6 +353,7 @@ const ShareQuestionnaire = (props) => {
 
     return (
         <div>
+            {renderShareResultModal()}
             {renderShareModal()}
             {loading ? <Loading /> : null}
 
