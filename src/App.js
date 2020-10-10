@@ -88,7 +88,7 @@ function App() {
                     />
 
                     <Route
-                        path="/admin/:id/edit"
+                        path="/admin/standard/:id/edit"
                         exact
                         render={({ match }) => (<HomeAdmin active={4} questionnaireID={match.params.id} />)}
                     />

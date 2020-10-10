@@ -53,7 +53,7 @@ const OrganisationList = ({ countryName }) => {
 
     useEffect(() => {
         getOrganisationList();
-    }, [getOrganisationList]);
+    }, []);
 
     return (
         <div className="organisation-list-container">
