@@ -12,6 +12,7 @@
 const { v1: uuidv1 } = require("uuid");
 
 const mongoose = require("mongoose");
+const { SSQ_CH, SSQ_P } = require("../questionnaires/SSQ_content");
 const Questionnaire = mongoose.model("questionnaire");
 const Clinician = mongoose.model("clinician");
 
@@ -66,39 +67,14 @@ const findStandardisedQuestionnaires = async () => {
 
 // generate an almost empty questionnaire with uuid.
 const generateNewCustomisedQuestionnaire = (uuid) => {
-    console.log((new Date()).toLocaleString())
     return new Questionnaire({
         questionnaireId: uuid,
         title: "New Questionnaire",
         description: "Please click edit to begin with this questionnaire.",
         isSSQ_Ch: true,
-        updateDate: (new Date()).toLocaleString(),
+        updateDate: new Date().toLocaleString("en-US", {timeZone: "Australia/Sydney"}),
         sections: [
-            {
-                title: "Section A - Speech",
-                scenarios: [
-                    {
-                        description: "You are at Melbourne Uni...",
-                        questions: [
-                            {
-                                isMCQ: false,
-                                rangeOptions: ["Zero", "Ten"],
-                            },
-                            {
-                                description:
-                                    "If only one option can be true, which of the following is correct?",
-                                isMCQ: true,
-                                MCQOptions: [
-                                    "All of the above is true",
-                                    " Those below the below is true",
-                                    "None of the above is true",
-                                    "Those above the above is true",
-                                ],
-                            },
-                        ],
-                    },
-                ],
-            },
+            { title: "Section A - Speech", scenarios: [] },
             { title: "Section B - Spatial", scenarios: [] },
             { title: "Section C - Quality", scenarios: [] },
         ],
@@ -113,12 +89,38 @@ const generateNewStandardisedQuestionnaire = (uuid) => {
         title: "New Standard Questionnaire",
         description: "Please click edit to begin with this questionnaire.",
         isSSQ_Ch: true,
-        updateDate: (new Date()).toLocaleString(),
+        updateDate: new Date().toLocaleString("en-US", {timeZone: "Australia/Sydney"}),
         sections: [
             { title: "Section A - Speech", scenarios: [] },
             { title: "Section B - Spatial", scenarios: [] },
             { title: "Section C - Quality", scenarios: [] },
         ],
+        isStandard: true,
+    });
+};
+
+//generates a complete standard questionnaire template for parents with uuid.
+const generateCompleteParentQuestionnaire = (uuid) => {
+    return new Questionnaire({
+        questionnaireId: uuid,
+        title: "Standard Questionnaire For Parent",
+        description: "Complete Questionnaire.",
+        isSSQ_Ch: false,
+        updateDate: new Date().toLocaleString("en-US", {timeZone: "Australia/Sydney"}),
+        sections: SSQ_P,
+        isStandard: true,
+    });
+};
+
+//generates a complete standard questionnaire template for children with uuid.
+const generateCompleteChildQuestionnaire = (uuid) => {
+    return new Questionnaire({
+        questionnaireId: uuid,
+        title: "Standard Questionnaire For Child",
+        description: "Complete Questionnaire.",
+        isSSQ_Ch: true,
+        updateDate: new Date().toLocaleString("en-US", {timeZone: "Australia/Sydney"}),
+        sections: SSQ_CH,
         isStandard: true,
     });
 };
@@ -130,7 +132,7 @@ const generateCopy = (copiedQuestionnaire, questionnaireId, isStandard) => {
         questionnaireId,
         isStandard,
         title: copiedQuestionnaire.title + " - Copy",
-        updateDate: (new Date()).toLocaleString(),
+        updateDate: new Date().toLocaleString("en-US", {timeZone: "Australia/Sydney"}),
     });
 };
 
@@ -192,7 +194,7 @@ const updateQuestionnaireOnDatabase = async (
             { questionnaireId: questionnaireId },
             {
                 ...editedQuestionnaire,
-                updateDate: (new Date()).toLocaleString()
+                updateDate: new Date().toLocaleString("en-US", {timeZone: "Australia/Sydney"})
             }
         );
         return Promise.resolve([undefined, "Updated questionnaire."]);
@@ -318,6 +320,8 @@ module.exports.findQuestionnaireForClinician = findQuestionnaireForClinician;
 module.exports.findStandardisedQuestionnaires = findStandardisedQuestionnaires;
 module.exports.generateNewCustomisedQuestionnaire = generateNewCustomisedQuestionnaire;
 module.exports.generateNewStandardisedQuestionnaire = generateNewStandardisedQuestionnaire;
+module.exports.generateCompleteParentQuestionnaire = generateCompleteParentQuestionnaire;
+module.exports.generateCompleteChildQuestionnaire = generateCompleteChildQuestionnaire;
 module.exports.generateCopy = generateCopy;
 module.exports.copyQuestionnaireToDatabase = copyQuestionnaireToDatabase;
 module.exports.attachQuestionnaireToClinician = attachQuestionnaireToClinician;

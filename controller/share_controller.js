@@ -10,121 +10,82 @@
  */
 
 // Import Libraries
-const mongoose = require("mongoose");
-const Share = mongoose.model("share");
-const { v1: uuidv1 } = require("uuid");
 const { extractUserEmail } = require("../utils/jwtUtils");
-
-const { sendInvitationEmail, sendResultsEmail } = require("../service/emailService");
+const {
+    sendInvitationEmail,
+    sendResultsEmail,
+} = require("../service/emailService");
+const {
+    deleteShare,
+    findShareById,
+    createShare,
+    saveShare,
+} = require("../service/shareService");
+const { sendJSONResponse } = require("../utils/apiUtils");
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to create a new share.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const shareQuestionnaire = function (req, res) {
+const shareQuestionnaire = async function (req, res) {
     const userEmail = extractUserEmail(req);
-    const clinicianEmail = req.body.clinicianEmail
+    const clinicianEmail = req.body.clinicianEmail;
 
     if (clinicianEmail === userEmail) {
-        // convert to a list of objects
-        let visibleSection = [];
-        Object.entries(req.body.shareSection).map((k, v) => {
-            visibleSection.push({ title: k[0], isVisible: k[1] });
-        });
-
-        const uuid = uuidv1();
-        let newShare = new Share({
-            shareId: uuid,
-            clinicianEmail: req.body.clinicianEmail,
-            patientEmail: req.body.patientEmail,
-            questionnaireId: req.body.questionnaireId,
-            readOnly: req.body.readOnly,
-            message: req.body.message,
-            shareSection: visibleSection,
-            sortBy: req.body.sortBy,
-        });
-
-        newShare.save(function (err, createdShare) {
-            if (!err) {
-                sendInvitationEmail(createdShare)
-                    .then((emailRes) => {
-                        if (emailRes.success) {
-                            res.send(JSON.stringify(emailRes));
-                        } else {
-                            res.send("I got an error");
-                        }
-                    })
-                    .catch((emailRej) => {
-                        if (emailRej.success) {
-                            res.send(JSON.stringify(emailRej));
-                        } else {
-                            res.send("I got an error");
-                        }
-                    });
+        const newShare = createShare(req.body);
+        const error = await saveShare(newShare);
+        if (error) {
+            res.status(400).json(error);
+        } else {
+            const emailRes = await sendInvitationEmail(newShare);
+            if (emailRes.success) {
+                res.status(200).json(emailRes);
             } else {
-                res.send(err);
+                res.status(400).json("Unknown Error");
             }
-        });
-    }else{
-        res.send("Authroisation faiiled");
+        }
+    } else {
+        res.status(401).json("Authorisation faiiled");
     }
 };
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to get ShareDetails using ShareId
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const getShareDetails = function (req, res) {
-    let shareId = req.params.shareId;
-
-    Share.findOne({ shareId }, function (err, share) {
-        if (!err && share != null) {
-            res.send({
-                statusCode: 200,
-                message: "Valid ShareId",
-                data: share,
-            });
-        } else {
-            res.send({
-                statusCode: 400,
-                message: "Invalid ShareId",
-                data: err,
-            });
-        }
-    });
+const getShareDetails = async function (req, res) {
+    const shareId = req.params.shareId;
+    const [err, foundShare] = await findShareById(shareId);
+    sendJSONResponse(res, foundShare, err, 404);
 };
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is called when share response is completed.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const completeShare = function (req, res) {
+const completeShare = async function (req, res) {
     let questionnaireData = req.body.questionnaireData;
     let clinicianEmail = req.body.clinicianEmail;
     let personalDetails = req.body.personalDetails;
     let questionnaireId = req.body.questionnaireId;
     let comments = req.body.comments;
-    let sortBy  = req.body.sortBy;
-
-    sendResultsEmail(
-        questionnaireId,
-        questionnaireData,
-        clinicianEmail,
-        personalDetails,
-        sortBy,
-        req.params.shareId,
-        comments
-    )
-        .then((emailRes) => {
-            deleteShare(req, res);
-            res.send(emailRes);
-        })
-        .catch((emailRej) => res.send(emailRej));
-};
-
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-// This function is used to delete the share from our database.
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const deleteShare = function (req, res) {
-    const shareId = req.params.shareId;
-    Share.deleteOne({ shareId: shareId });
+    let sortBy = req.body.sortBy;
+    try {
+        const emailResponse = await sendResultsEmail(
+            questionnaireId,
+            questionnaireData,
+            clinicianEmail,
+            personalDetails,
+            sortBy,
+            req.params.shareId,
+            comments
+        );
+        const err = await deleteShare(req.params.shareId);
+        if (!err) {
+            res.status(200).json(emailResponse);
+        } else {
+            res.status(400).json(err);
+        }
+    } catch (error) {
+        res.status(400).json(error);
+    }
 };
 
 module.exports.sendResultsEmail = sendResultsEmail;

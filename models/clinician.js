@@ -14,6 +14,7 @@ const clinicianSchema = mongoose.Schema({
     clinicianId: { type: String, required:true, lowercase:true, unique:true, trim:true},
     name: { type: String, required:true, trim:true},
     email: {type: String, required:true, unique:true },
+    country : {type:String},
     organisation : {type:String},
     questionnaires: [String],
 });
