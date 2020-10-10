@@ -63,7 +63,7 @@ const AdminManageQuestionnaires = () => {
     };
 
     const editQuestionnaire = (questionnaireID) => {
-        const edit_url = "/admin/" + questionnaireID + "/edit";
+        const edit_url = "/admin/standard/" + questionnaireID + "/edit";
         window.location.href = edit_url;
     };
 
