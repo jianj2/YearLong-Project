@@ -15,7 +15,7 @@ const OrganisationContainer = ({ organName }) => {
 
     useEffect(() => {
         getAllClinicianInOrgan();
-    }, [getAllClinicianInOrgan])
+    }, [])
 
     const MemberItem = ({
         clinicianID,
