@@ -92,6 +92,14 @@ const verifyLogin = async (req, res) => {
 
 };
 
+function authorize(req, res){
+    const token = req.token;
+    const result = verifyToken(token, "secretLOL");
+    if(result.auth === false){
+        res.status(401).json(result);
+    }
+}
+
 //Get all instructions
 const getSpecificInstruction = async function (req, res) {
     const [error, instruction] = await findInstructionByType(
@@ -149,6 +157,7 @@ const getCountryList = async function (req, res) {
 
 // Get organization list under the country
 const getOrganisations = async function (req, res) {
+    authorize(req,res)
     try {
         const clinicians = await Clinician.find({});
         const filteredClinicians = clinicians.filter(
