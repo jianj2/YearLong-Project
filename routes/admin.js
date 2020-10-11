@@ -19,35 +19,14 @@ const admin_controller = require('../controller/admin_controller.js');
 router.post('/login', admin_controller.loginAdmin);
 router.post('/instruction/:type', admin_controller.updateInstructionByType);
 
-router.get('/specificInstruction/:instructionType', admin_controller.getSpecificInstruction);
+router.get('/specificInstruction/:instructionType',admin_controller.getSpecificInstruction);
 router.get("/verifylogin/:token", admin_controller.verifyLogin);
-router.get("/instructionsSummary", admin_controller.getInstructionsSummary);
+router.get("/instructionsSummary",admin_controller.authorize,admin_controller.getInstructionsSummary);
 
 //router for getting the organisation information
 router.get("/country", admin_controller.getCountryList);
-router.get("/country/organisation/:countryName", validateToken, admin_controller.getOrganisations);
+router.get("/country/organisation/:countryName", admin_controller.authorize, admin_controller.getOrganisations);
 router.get("/organisation/clinician/:organisationName", admin_controller.getOrganisationClinicians);
 
-
-// validate Token
-function validateToken(req, res, next) {
-    // Get auth header value
-    const bearerHeader = req.headers['authorization'];
-    // Check if bearer is undefined
-    console.log(bearerHeader)
-    if(typeof bearerHeader !== 'undefined') {
-        // Split at the space
-        const bearer = bearerHeader.split(' ');
-        // Get token from array
-        const bearerToken = bearer[1];
-        // Set the token
-        req.token = bearerToken;
-        // Next middleware
-        next();
-    } else {
-        // Forbidden
-        res.sendStatus(403);
-    }
-}
 
 module.exports = router;

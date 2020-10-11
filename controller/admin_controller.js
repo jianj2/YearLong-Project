@@ -92,12 +92,32 @@ const verifyLogin = async (req, res) => {
 
 };
 
-function authorize(req, res){
-    const token = req.token;
-    const result = verifyToken(token, "secretLOL");
-    if(result.auth === false){
-        res.status(401).json(result);
+async function authorize(req, res, next){
+    // Get auth header value
+    const bearerHeader = req.headers['authorization'];
+    // Check if bearer is undefined
+    if(typeof bearerHeader !== 'undefined') {
+        // Split at the space
+        const bearer = bearerHeader.split(' ');
+        // Get token from array
+        const bearerToken = bearer[1];
+        // Set the token
+        try {
+            const result = await verifyToken(bearerToken, "secretLOL");
+            if(result.auth === false){
+                res.status(403).json(result);
+            }else{
+                // Next middleware
+                next();
+            }
+        }catch(e){ res.sendStatus(403); }
+
+    } else {
+        // Forbidden
+        res.sendStatus(403);
+
     }
+
 }
 
 //Get all instructions
@@ -157,7 +177,6 @@ const getCountryList = async function (req, res) {
 
 // Get organization list under the country
 const getOrganisations = async function (req, res) {
-    authorize(req,res)
     try {
         const clinicians = await Clinician.find({});
         const filteredClinicians = clinicians.filter(
@@ -208,4 +227,6 @@ module.exports.updateInstructionByType = updateInstructionByType;
 module.exports.getCountryList = getCountryList;
 module.exports.getOrganisations = getOrganisations;
 module.exports.getOrganisationClinicians = getOrganisationClinicians;
+module.exports.authorize = authorize;
+
 
