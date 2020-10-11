@@ -10,7 +10,6 @@
  */
 
 const mongoose = require("mongoose");
-const adminKeyFile = require("../config/admin.json");
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
 
@@ -28,11 +27,7 @@ const Admin = mongoose.model("admin");
 
 // Login check.
 const loginAdmin = function (req, res) {
-    console.log("admin file", adminKeyFile);
-    console.log(req.body);
 
-    let _username = adminKeyFile.username;
-    let _password = adminKeyFile.password;
     let username = req.body.username;
     let password = req.body.password;
 
@@ -46,8 +41,7 @@ const loginAdmin = function (req, res) {
         return;
     }
 
-
-
+    // find admin with that username.
     Admin.findOne({
         username: username
     }).then(admin => {
@@ -56,12 +50,10 @@ const loginAdmin = function (req, res) {
                 message: "Incorrect details!",
             });
         }
-
         // Match password
         bcrypt.compare(req.body.password, admin.password, (err, isMatch) => {
             if (err) throw err;
             if (isMatch) {
-
                 const token = jwt.sign({ username: username }, "secretLOL", {
                     expiresIn: 86400, // expires in 24 hours
                     //expiresIn: 100, // expires in 100 seconds FOR TESTING
@@ -72,14 +64,11 @@ const loginAdmin = function (req, res) {
                         token: token,
                     },
                 });
-
             } else {
                 res.status(400).json({
                     message: "Incorrect details!",
                 });
             }
-
-
         });
     });
 };
