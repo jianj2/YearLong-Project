@@ -21,6 +21,8 @@ const {
 } = require("../service/adminService");
 
 const Clinician = mongoose.model("clinician");
+const Admin = mongoose.model("admin");
+
 
 // Login check.
 const loginAdmin = function (req, res) {
@@ -220,9 +222,15 @@ const getOrganisationClinicians = async function (req, res) {
 };
 
 const createAdmin = function (req, res){
-    
+    var newAdmin = new Admin({
+        username: "AdminUser1",
+        email: "testadmin@example.com",
+        password:"pw1234"
+    });
 
 }
+
+
 module.exports.loginAdmin = loginAdmin;
 module.exports.verifyLogin = verifyLogin;
 module.exports.getSpecificInstruction = getSpecificInstruction;
