@@ -219,6 +219,10 @@ const getOrganisationClinicians = async function (req, res) {
     }
 };
 
+const createAdmin = function (req, res){
+    
+
+}
 module.exports.loginAdmin = loginAdmin;
 module.exports.verifyLogin = verifyLogin;
 module.exports.getSpecificInstruction = getSpecificInstruction;
