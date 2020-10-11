@@ -49,8 +49,8 @@ const SSQInstructionsContainer = ({instructionType}) => {
             if (statusCode === 200) {
                 setInstruction(instruction);
             }
-        }catch{
-
+        }catch(err){
+            console.error(err);
         }
             
         
