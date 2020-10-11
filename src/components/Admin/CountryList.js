@@ -20,7 +20,9 @@ const CountryList = () => {
         }));
         setCountryList(Array.from(Coun_List));
       }
-    }catch{}
+    }catch(error){
+      console.error(error);
+    }
   }
 
 
