@@ -19,24 +19,7 @@ const OrganisationList = ({ countryName }) => {
     console.log(countryName, getOrganisations(countryName));
     const [OrganisationSummary, setOrganisationSummary] = useState([]);
 
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const getOrganisationList = async () => { //To handle the data from the API
-        try{
-            const [statusCode, allOrganisation] = await getOrganisations(countryName);
-            if (statusCode === 200) {
-                let OrganList = new Set(allOrganisation.map((item) => {
-                    return item.organisation.toLowerCase();
-                }));
-                setOrganisationSummary(Array.from(OrganList));
-            }  }catch(e){
-
-            }
-    }
-
-    const OrganisationItem = ({
-        title,
-    }) => {
+    const OrganisationItem = ({ title }) => {
         return (
             <div
                 className={
@@ -47,27 +30,36 @@ const OrganisationList = ({ countryName }) => {
                     window.location.href = url;
                 }}
             >
-                <div className="q-name">
-                    {title}
-                </div>
-
+                <div className="q-name">{title}</div>
             </div>
         );
     };
 
     useEffect(() => {
+        const getOrganisationList = async () => {
+            //To handle the data from the API
+            const [statusCode, allOrganisation] = await getOrganisations(
+                countryName
+            );
+            if (statusCode === 200) {
+                let OrganList = new Set(
+                    allOrganisation.map((item) => {
+                        return item.organisation.toLowerCase();
+                    })
+                );
+                setOrganisationSummary(Array.from(OrganList));
+            }
+        };
+
         getOrganisationList();
-    }, []);
+    }, [countryName]);
 
     return (
         <div className="organisation-list-container">
             <h1>Organisation</h1>
-            {OrganisationSummary.map((organisations, index) =>
-                <OrganisationItem
-                    key={index}
-                    title={organisations}
-                />
-            )}
+            {OrganisationSummary.map((organisations, index) => (
+                <OrganisationItem key={index} title={organisations} />
+            ))}
         </div>
     );
 };
