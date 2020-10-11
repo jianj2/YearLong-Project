@@ -36,9 +36,6 @@ const loginAdmin = function (req, res) {
     let username = req.body.username;
     let password = req.body.password;
 
-    console.log("admin file _username", _username);
-    console.log("admin file _password", _password);
-
     // Username can not be empty
     if (username === "") {
         res.status(400).json({ message: "Username can not be empty!" });
@@ -48,22 +45,43 @@ const loginAdmin = function (req, res) {
         res.status(400).json({ message: "Password can not be empty!" });
         return;
     }
-    if (username === _username && password === _password) {
-        const token = jwt.sign({ username: username }, "secretLOL", {
-            expiresIn: 86400, // expires in 24 hours
-            //expiresIn: 100, // expires in 100 seconds FOR TESTING
+
+
+
+    Admin.findOne({
+        username: username
+    }).then(admin => {
+        if (!admin) {
+            return res.status(400).json({
+                message: "Incorrect details!",
+            });
+        }
+
+        // Match password
+        bcrypt.compare(req.body.password, admin.password, (err, isMatch) => {
+            if (err) throw err;
+            if (isMatch) {
+
+                const token = jwt.sign({ username: username }, "secretLOL", {
+                    expiresIn: 86400, // expires in 24 hours
+                    //expiresIn: 100, // expires in 100 seconds FOR TESTING
+                });
+                res.status(200).json({
+                    message: {
+                        auth: true,
+                        token: token,
+                    },
+                });
+
+            } else {
+                res.status(400).json({
+                    message: "Incorrect details!",
+                });
+            }
+
+
         });
-        res.status(200).json({
-            message: {
-                auth: true,
-                token: token,
-            },
-        });
-    } else {
-        res.status(400).json({
-            message: "Incorrect details!",
-        });
-    }
+    });
 };
 
 const verifyToken = (token, secret) =>{
