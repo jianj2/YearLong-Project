@@ -50,7 +50,9 @@ const OrganisationList = ({ countryName }) => {
                     );
                     setOrganisationSummary(Array.from(OrganList));
                 }
-            }catch(e){}
+            }catch(err){
+                console.error(err);
+            }
         };
 
         getOrganisationList();
