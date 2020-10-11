@@ -16,7 +16,7 @@ const OrganisationContainer = ({ organName }) => {
                     setAllClinicianOrgan(clinicianIds);
                 }
             }catch(err){
-                console.error(err)
+                console.error(err);
             }
         }
         getAllClinicianInOrgan();
