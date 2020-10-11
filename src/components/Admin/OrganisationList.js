@@ -19,15 +19,19 @@ const OrganisationList = ({ countryName }) => {
     console.log(countryName, getOrganisations(countryName));
     const [OrganisationSummary, setOrganisationSummary] = useState([]);
 
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const getOrganisationList = async () => { //To handle the data from the API
-        const [statusCode, allOrganisation] = await getOrganisations(countryName);
-        if (statusCode === 200) {
-            let OrganList = new Set(allOrganisation.map((item) => {
-                return item.organisation.toLowerCase();
-            }));
-            setOrganisationSummary(Array.from(OrganList));
-        }
+        try{
+            const [statusCode, allOrganisation] = await getOrganisations(countryName);
+            if (statusCode === 200) {
+                let OrganList = new Set(allOrganisation.map((item) => {
+                    return item.organisation.toLowerCase();
+                }));
+                setOrganisationSummary(Array.from(OrganList));
+            }  }catch(e){
+
+            }
     }
 
     const OrganisationItem = ({

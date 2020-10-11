@@ -241,7 +241,7 @@ export const getCountries = async () => {
 // get organisations
 export const getOrganisations = async (countryName) => {
     const url = `admin/country/organisation/${countryName}`;
-    return await sendRequest("GET", url);
+    return await sendRequest("GET", url, undefined,getToken());
 };
 
 // get organisation's clinicians
@@ -249,3 +249,19 @@ export const getOrganisationClinicians = async (organisationName) => {
     const url = `admin/organisation/clinician/${organisationName}`;
     return await sendRequest("GET", url);
 };
+
+const getToken = () => {
+
+    let previousAuth = JSON.parse(
+        localStorage.getItem("adminAuthentication")
+    );
+    // console.log("previousAuth", previousAuth);
+    if ( !previousAuth ) {
+        previousAuth=""
+    }else{
+        previousAuth = previousAuth['token']
+    }
+
+    return previousAuth
+
+}
