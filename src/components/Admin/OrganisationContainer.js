@@ -4,18 +4,19 @@ import { getOrganisationClinicians } from "../../utils/api";
 const OrganisationContainer = ({ organName }) => {
 
     const [AllClinicianOrgan, setAllClinicianOrgan] = useState([]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const getAllClinicianInOrgan = async () => {
-        const [statusCode, clinicians] = await getOrganisationClinicians(organName);
-        if (statusCode === 200) {
-            const clinicianIds = clinicians.map((c) => c.clinicianId);
-            setAllClinicianOrgan(clinicianIds);
-        }
-    }
+   
+    
 
     useEffect(() => {
+        const getAllClinicianInOrgan = async () => {
+            const [statusCode, clinicians] = await getOrganisationClinicians(organName);
+            if (statusCode === 200) {
+                const clinicianIds = clinicians.map((c) => c.clinicianId);
+                setAllClinicianOrgan(clinicianIds);
+            }
+        }
         getAllClinicianInOrgan();
-    }, [])
+    }, [organName])
 
     const MemberItem = ({
         clinicianID,
