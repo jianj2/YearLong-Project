@@ -29,3 +29,5 @@ require('./questionnaire.js');
 require('./clinician.js');
 require('./share');
 require('./instruction.js');
+require('./admin.js');
+

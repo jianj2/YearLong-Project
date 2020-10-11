@@ -12,6 +12,8 @@
 const mongoose = require("mongoose");
 const adminKeyFile = require("../config/admin.json");
 const jwt = require("jsonwebtoken");
+const bcrypt = require('bcryptjs');
+
 
 const { sendJSONResponse } = require("../utils/apiUtils");
 const {
@@ -221,14 +223,32 @@ const getOrganisationClinicians = async function (req, res) {
     }
 };
 
-const createAdmin = function (req, res){
-    var newAdmin = new Admin({
-        username: "AdminUser1",
-        email: "testadmin@example.com",
-        password:"pw1234"
-    });
+// function used to create new admins
+// DO NOT DELETE - UVIN
 
-}
+// const createAdmin = function (req, res){
+//     var newAdmin = new Admin({
+//         username: "",
+//         email: "",
+//         password:""
+//     });
+//     //hashing the password and then saving the user.
+//     bcrypt.genSalt(10, (err, salt) => {
+//         bcrypt.hash(newAdmin.password, salt, (err, hash) => {
+//             if (err) throw err;
+//             newAdmin.password = hash;
+//             newAdmin.save(function(err, createdUser){
+//                 if (!err){
+//                     res.send(createdUser);
+//                 }
+//                 else{
+//                     console.log(err);
+//                     res.send(err)
+//                 }
+//             });
+//         })
+//     });
+// }
 
 
 module.exports.loginAdmin = loginAdmin;
