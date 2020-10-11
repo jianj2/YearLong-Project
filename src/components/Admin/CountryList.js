@@ -11,14 +11,16 @@ const CountryList = () => {
   const [countryList, setCountryList] = useState([]);
 
   const getCountryList = async () => { //To handle the data from the API
-    const [statusCode, allCountries] = await getCountries();
+    try {
+      const [statusCode, allCountries] = await getCountries();
 
-    if (statusCode === 200) {
-      let Coun_List = new Set(allCountries.map((item) => {
-        return item.country.toUpperCase();
-      }));
-      setCountryList(Array.from(Coun_List));
-    }
+      if (statusCode === 200) {
+        let Coun_List = new Set(allCountries.map((item) => {
+          return item.country.toUpperCase();
+        }));
+        setCountryList(Array.from(Coun_List));
+      }
+    }catch{}
   }
 
 

@@ -44,11 +44,14 @@ const SSQInstructionsContainer = ({instructionType}) => {
     });
 
     const getInstruction = async (instructionType) => {
-        const [statusCode, instruction] = await API.getSpecificInstruction(instructionType); 
-        if (statusCode === 200){
-            setInstruction(instruction);
-        }    
-        
+        try {
+            const [statusCode, instruction] = await API.getSpecificInstruction(instructionType);
+            if (statusCode === 200) {
+                setInstruction(instruction);
+            }
+        }catch{
+
+        }
             
         
     }
@@ -92,19 +95,18 @@ const SSQInstructionsContainer = ({instructionType}) => {
 
     const saveInstruction = async (e) =>{
         setLoading(true);
-      
-        const [statusCode, ] = await API.updateInstruction(instructionType, {instruction});
+
+        try {
+            const [statusCode,] = await API.updateInstruction(instructionType, {instruction});
             setLoading(false);
-            if (statusCode === 200){
+            if (statusCode === 200) {
                 setsaveSuccess(true);
                 openSaveModal();
-            }
-            else{
+            } else {
                 setsaveSuccess(false);
                 openSaveModal();
             }
-        
-        
+        }catch{}
 
     }
 
