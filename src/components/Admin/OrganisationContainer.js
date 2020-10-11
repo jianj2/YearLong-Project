@@ -9,11 +9,13 @@ const OrganisationContainer = ({ organName }) => {
 
     useEffect(() => {
         const getAllClinicianInOrgan = async () => {
-            const [statusCode, clinicians] = await getOrganisationClinicians(organName);
-            if (statusCode === 200) {
-                const clinicianIds = clinicians.map((c) => c.clinicianId);
-                setAllClinicianOrgan(clinicianIds);
-            }
+            try {
+                const [statusCode, clinicians] = await getOrganisationClinicians(organName);
+                if (statusCode === 200) {
+                    const clinicianIds = clinicians.map((c) => c.clinicianId);
+                    setAllClinicianOrgan(clinicianIds);
+                }
+            }catch(e){}
         }
         getAllClinicianInOrgan();
     }, [organName])
