@@ -15,7 +15,9 @@ const OrganisationContainer = ({ organName }) => {
                     const clinicianIds = clinicians.map((c) => c.clinicianId);
                     setAllClinicianOrgan(clinicianIds);
                 }
-            }catch(e){}
+            }catch(err){
+                console.error(err)
+            }
         }
         getAllClinicianInOrgan();
     }, [organName])
