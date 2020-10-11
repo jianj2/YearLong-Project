@@ -19,7 +19,9 @@ const SSQInstructionsList = () => {
             if (statusCode === 200) {
                 setInstructionsSummary(summary);
             }
-        }catch{}
+        }catch(err){
+            console.error(err);
+        }
     };
 
     const InstructionItem = ({ title, type }) => {
