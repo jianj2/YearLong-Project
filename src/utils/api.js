@@ -1,3 +1,5 @@
+import {useAdminAuth, getToken} from "./useAdminAuth";
+
 const api = process.env.REACT_APP_SERVER || "http://localhost:3001";
 
 //const api = "https://d1iiwjsw1v8g79.cloudfront.net/";
@@ -247,18 +249,6 @@ export const getOrganisations = async (countryName) => {
 // get organisation's clinicians
 export const getOrganisationClinicians = async (organisationName) => {
     const url = `admin/organisation/clinician/${organisationName}`;
-    return await sendRequest("GET", url,undefined,getToken());
+    return await sendRequest("GET", url,undefined,getToken() );
 };
 
-const getToken = () => {
-    let previousAuth = JSON.parse(
-        localStorage.getItem("adminAuthentication")
-    );
-    // console.log("previousAuth", previousAuth);
-    if ( !previousAuth ) {
-        previousAuth=""
-    }else{
-        previousAuth = previousAuth['token']
-    }
-    return previousAuth
-}
