@@ -116,7 +116,7 @@ export const addQuestionnaire = async (token, clinicianId) => {
 
 export const addStandardQuestionnaire = async () => {
     const url = "questionnaire/addStandard";
-    return await sendRequest("POST", url);
+    return await sendRequest("POST", url,undefined,getToken());
 };
 
 // delete customised questionnaire
@@ -146,7 +146,7 @@ export const editStandardQuestionnaire = async (questionnaire) => {
     const data = {
         questionnaire,
     };
-    return await sendRequest("POST", url, data);
+    return await sendRequest("POST", url, data,getToken());
 };
 
 //COPY questionnaire
@@ -195,7 +195,7 @@ export const deleteStandardQuestionnaire = async (questionnaireID) => {
     const data = {
         questionnaireID,
     };
-    return await sendRequest("POST", url, data);
+    return await sendRequest("POST", url, data,getToken());
 };
 
 // ================================================
@@ -251,7 +251,6 @@ export const getOrganisationClinicians = async (organisationName) => {
 };
 
 const getToken = () => {
-
     let previousAuth = JSON.parse(
         localStorage.getItem("adminAuthentication")
     );
@@ -261,7 +260,5 @@ const getToken = () => {
     }else{
         previousAuth = previousAuth['token']
     }
-
     return previousAuth
-
 }
