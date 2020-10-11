@@ -106,7 +106,9 @@ const SSQInstructionsContainer = ({instructionType}) => {
                 setsaveSuccess(false);
                 openSaveModal();
             }
-        }catch{}
+        }catch(err){
+            console.error(err);
+        }
 
     }
 
