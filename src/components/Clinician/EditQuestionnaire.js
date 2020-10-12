@@ -13,7 +13,7 @@
  */
 
 import React, { useState } from "react";
-import CustomModal from "../../utils/modals";
+import { CustomModal } from "../Commons";
 
 // Import components.
 import EditDescription from "./EditDescription";

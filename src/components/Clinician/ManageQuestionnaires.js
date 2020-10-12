@@ -16,7 +16,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 // Import Utils.
 import * as API from "../../utils/api";
-import CustomModal from "../../utils/modals";
+import { CustomModal } from "../Commons";
 import { useAuth0 } from "../../utils/react-auth0-spa";
 // Import styles.
 import "../../styles/managequestionnaires.css";
