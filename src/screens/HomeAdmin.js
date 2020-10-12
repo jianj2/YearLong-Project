@@ -13,16 +13,16 @@
  *
  */
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 // Import Utilities
-
 import { useAdminAuth } from "../utils/useAdminAuth";
+import { USER_TYPE_ADMIN } from "../utils/helper";
 
 // Import components
 import FormLoginAdmin from "../components/FormLoginAdmin";
-import AdminSideBar from "../components/Admin/AdminSideBar";
 import AdminContentPanel from "../components/Admin/AdminContentPanel";
+import { SideBar } from "../components/Commons";
 
 // Import styles.
 import "../styles/admin.css";
@@ -30,8 +30,8 @@ import "../styles/main.css";
 
 // Import assets.
 import logoComplete from "../assets/logo_complete.png";
-import ContentPanel from "../components/Clinician/ContentPanel";
 import Loading from "../components/Loading";
+
 
 // ---------------------------------------------------------------
 // This function defines the Admin's Home screen.
@@ -39,15 +39,14 @@ import Loading from "../components/Loading";
 const HomeAdmin = (props) => {
     console.log("It exists", process.env.REACT_APP_SERVER);
     const { isAdminAuthenticated, adminLogin, loading } = useAdminAuth();
-    if (loading == true) {
+    if (loading === true) {
         return <Loading />
     }
     // console.log(props.organName);
     if (isAdminAuthenticated === true) {
         return (
             <div className="HomeAdmin">
-                <AdminSideBar />
-
+                <SideBar userType={USER_TYPE_ADMIN} />
                 <AdminContentPanel
                     active={props.active}
                     questionnaireID={props.questionnaireID}

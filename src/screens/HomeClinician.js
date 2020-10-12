@@ -15,7 +15,10 @@
 
 // Import Libraries
 import React, { useEffect, useState } from "react";
+
+// Import Utilities
 import { useAuth0 } from "../utils/react-auth0-spa";
+import { USER_TYPE_CLINICIAN } from "../utils/helper";
 
 // Import styles.
 import "../styles/clinician.css";
@@ -95,7 +98,7 @@ const HomeClinician = (props) => {
 
     return (
         <div className="HomeClinician">
-            <SideBar />
+            <SideBar userType={USER_TYPE_CLINICIAN} />
 
             <ContentPanel
                 active={props.active}
