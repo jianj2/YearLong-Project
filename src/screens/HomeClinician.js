@@ -14,15 +14,14 @@
  */
 
 import React, { useEffect, useState } from "react";
-
 import { useAuth0 } from "../utils/react-auth0-spa";
-
 import Loading from "../components/Loading";
 
 // Import styles.
 import "../styles/clinician.css";
 import "../styles/main.css";
-import SideBar from "../components/Clinician/Sidebar";
+// import SideBar from "../components/Commons/Sidebar";
+import { SideBar } from "../components/Commons";
 import ContentPanel from "../components/Clinician/ContentPanel";
 
 // ---------------------------------------------------------------
@@ -87,9 +86,6 @@ const HomeClinician = (props) => {
 
         fn();
     }, [isAuthenticated, loading, user]);
-
-    // const { loading, user } = useAuth0();
-
     if (loading || !user) {
         return <Loading />;
     } else {
