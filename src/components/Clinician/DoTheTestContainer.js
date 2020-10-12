@@ -20,7 +20,7 @@ import { useAuth0 } from "../../utils/react-auth0-spa";
 import QuestionnaireList from "../QuestionnaireList";
 import { Questionnaire } from "../Commons/";
 import ParentReviewSubmission from "../ParentReviewSubmission";
-import FormParentDetails from "../FormParentDetails";
+import { FormParentDetails } from "../Forms";
 
 // Import Utils
 import {

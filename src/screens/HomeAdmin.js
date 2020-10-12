@@ -20,7 +20,7 @@ import { useAdminAuth } from "../utils/useAdminAuth";
 import { USER_TYPE_ADMIN } from "../utils/helper";
 
 // Import components
-import FormLoginAdmin from "../components/FormLoginAdmin";
+import { FormLoginAdmin } from "../components/Forms";
 import AdminContentPanel from "../components/Admin/AdminContentPanel";
 import { SideBar } from "../components/Commons";
 

@@ -14,7 +14,7 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { useAuth0 } from "../utils/react-auth0-spa";
+import { useAuth0 } from "../../utils/react-auth0-spa";
 import { useForm } from "react-hook-form";
 import {
     Input,
@@ -27,7 +27,7 @@ import {
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 // Import styles.
-import "../styles/admin.css";
+import "../../styles/admin.css";
 
 export default function FormLoginAdmin({ adminLogin }) {
     const { register, handleSubmit, errors } = useForm();

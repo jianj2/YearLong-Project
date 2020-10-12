@@ -18,7 +18,7 @@ import React, { useState, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 
 // Import components.
-import FormParentDetails from "../components/FormParentDetails";
+import { FormParentDetails } from "../components/Forms";
 import { Questionnaire } from "../components/Commons";
 import ParentReviewSubmission from "../components/ParentReviewSubmission";
 import { Loading } from "../components/Commons";
