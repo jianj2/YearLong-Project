@@ -1,11 +1,24 @@
-import React, { useState, useEffect, useContext } from "react";
-import * as API from "./api";
+/**
+ * =============================================================================
+ * JAVASCRIPT HELPER FILE
+ * =============================================================================
+ * @date created: 18th May  2020
+ * @authors:  Waqas Rehmani
+ *
+ * This file defines the context for admin authentication.
+ *
+ * =============================================================================
+ */
 
+// Import Libraries
+import React, { useState, useEffect, useContext } from "react";
+
+// Import Utilities
+import * as API from "./api";
 
 export const AdminAuthContext = React.createContext();
 export const useAdminAuth = () => useContext(AdminAuthContext);
 export const AdminAuthProvider = ({ children }) => {
-    
     const [isAdminAuthenticated, setAuthenticated] = useState(false);
     const [adminToken, setAdminToken] = useState("");
     const [loading, setLoading] = useState(true);
@@ -28,11 +41,12 @@ export const AdminAuthProvider = ({ children }) => {
         let previousAuth = JSON.parse(
             localStorage.getItem("adminAuthentication")
         );
-        // console.log("previousAuth", previousAuth);
         if ( previousAuth && previousAuth.token !== "") {
             console.log("pr: ", previousAuth);
             verifyAdminLoginFun(previousAuth);
-        } else { //if the previousAuth is null(not have previousAuth in localStorage, the loading will disappear)
+        } else {
+            // If the previousAuth is null (not have previousAuth in
+            // localStorage), the loading will disappear.
             setLoading(false);
         }
     }, []);
@@ -85,6 +99,4 @@ export const AdminAuthProvider = ({ children }) => {
             {children}
         </AdminAuthContext.Provider>
     );
-
-    // return { isAdminAuthenticated, adminToken, adminLogin, adminLogout };
 };

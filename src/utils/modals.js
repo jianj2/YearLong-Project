@@ -3,11 +3,12 @@
  * REACT COMPONENT CLASS
  * ====================================================================
  * @date created: 20th September 2020
- * @authors: Cary
+ * @authors: Cary Jin
  *
  * The modal component defines a basic yet customisable modal where users
  * can confirm or cancel their actions
  *
+ * =============================================================================
  */
 
 import React, { useState, useEffect } from "react";

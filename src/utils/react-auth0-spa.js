@@ -1,3 +1,16 @@
+/**
+ * =============================================================================
+ * JAVASCRIPT HELPER FILE
+ * =============================================================================
+ * @date created: 12th May 2020
+ * @authors: Cary Jin, Waqas Rehmani, Saier Ding
+ *
+ * This file defines the context for Auth0 authentication.
+ *
+ * =============================================================================
+ */
+
+
 // src/react-auth0-spa.js
 import React, { useState, useEffect, useContext } from "react";
 import createAuth0Client from "@auth0/auth0-spa-js";

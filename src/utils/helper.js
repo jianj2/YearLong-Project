@@ -1,19 +1,32 @@
+/**
+ * =============================================================================
+ * JAVASCRIPT HELPER FILE
+ * =============================================================================
+ * @date created: 12th October 2020
+ * @authors: Team PS
+ *
+ * This file contains helper variables, constants and functions used throughout
+ * the application.
+ *
+ * =============================================================================
+ */
 
-export const USER_TYPE_CLINICIAN = "CLINICIAN"
-export const USER_TYPE_ADMIN = "ADMIN"
-export const USER_TYPE_PARTICIPANT = "PARTICIPANT"
+// Helper Constants
+export const USER_TYPE_CLINICIAN = "CLINICIAN";
+export const USER_TYPE_ADMIN = "ADMIN";
+export const USER_TYPE_PARTICIPANT = "PARTICIPANT";
 
-
+// Helper Function
 export function formatDate() {
     let d = new Date(),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
+        month = "" + (d.getMonth() + 1),
+        day = "" + d.getDate(),
         year = d.getFullYear();
 
     if (month.length < 2)
-        month = '0' + month;
+        month = "0" + month;
     if (day.length < 2)
-        day = '0' + day;
+        day = "0" + day;
 
-    return [day, month, year].join('/');
+    return [day, month, year].join("/");
 }
