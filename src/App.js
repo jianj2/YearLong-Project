@@ -14,31 +14,23 @@
 
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { useAuth0 } from "./utils/react-auth0-spa";
-import { AdminAuthProvider } from "./utils/useAdminAuth";
 
-// Import styles.
-import "./styles/main.css";
 
-// Import screens.
+// Import Screens
 import Landing from "./screens/Landing";
 import HomeClinician from "./screens/HomeClinician";
 import HomeParents from "./screens/HomeParents";
 import HomeAdmin from "./screens/HomeAdmin";
+import FindPassword from "./screens/FindPassword";
 
-// Import components.
+// Import Components
 import { NavBar } from "./components/Commons";
-import FindPassword from "./components/FindPassword";
+
+
+// Import Styles
+import "./styles/main.css";
 
 function App() {
-
-    console.log("This is server domain",);
-    console.log("This is redirect link",);
-    // const { loading } = useAuth0();
-
-    // if (loading) {
-    //     return <div>Loading...</div>;
-    // }
 
     return (
         <div className="app-container">

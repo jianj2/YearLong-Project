@@ -22,7 +22,7 @@ import { useAuth0 } from "../../utils/react-auth0-spa";
 import "../../styles/managequestionnaires.css";
 import "../../styles/main.css";
 // Import Components.
-import QuestionnaireList from "../QuestionnaireList";
+import { QuestionnaireList } from "../Commons";
 import { Loading } from "../Commons";
 import { useAdminAuth } from "../../utils/useAdminAuth";
 

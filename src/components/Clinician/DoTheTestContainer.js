@@ -17,9 +17,9 @@ import React, { useEffect, useState } from "react";
 import { useAuth0 } from "../../utils/react-auth0-spa";
 
 // Import Components
-import QuestionnaireList from "../QuestionnaireList";
+import { QuestionnaireList } from "../Commons";
 import { Questionnaire } from "../Commons/";
-import ParentReviewSubmission from "../ParentReviewSubmission";
+import { ParentReviewSubmission } from "../Commons";
 import { FormParentDetails } from "../Forms";
 
 // Import Utils

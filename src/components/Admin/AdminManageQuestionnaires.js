@@ -12,7 +12,7 @@ import React, { useEffect, useState } from "react";
 
 // Components
 import { Loading } from "../Commons";
-import QuestionnaireList from "../QuestionnaireList";
+import { QuestionnaireList } from "../Commons";
 import { CustomModal } from "../Commons/";
 import { makeStyles } from "@material-ui/core/styles";
 

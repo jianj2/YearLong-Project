@@ -18,7 +18,7 @@ import { Snackbar } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
 
 // Import components.
-import Question from "../Question";
+import Question from "./Question";
 
 // Import styles.
 import "../../styles/questionnaire.css";

@@ -43,7 +43,7 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
     let [leftDeviceTypeOtherVisible, setLeftDeviceTypeOtherVisible] = useState(null);
     const [rightDeviceTypeOther, setRightDeviceTypeOther] = useState(defaultValue.rightDeviceType);
     const [leftDeviceTypeOther, setLeftDeviceTypeOther] = useState(defaultValue.leftDeviceType);
-    let [rightDeviceSubmit, setRightDeviceSubmit] = useState("null");
+    let [rightDeviceSubmit, setRightDeviceSubmit] = useState(null);
     let [leftDeviceSubmit, setLeftDeviceSubmit] = useState(null);
 
     let personalData = {}

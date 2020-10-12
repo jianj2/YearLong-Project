@@ -14,7 +14,7 @@
 import React from "react";
 
 // import style
-import "../styles/questionnaire.css";
+import "../../styles/questionnaire.css";
 
 export default function ParentReviewSubmission({ 
     questionnaire, 

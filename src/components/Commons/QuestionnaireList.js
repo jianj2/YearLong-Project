@@ -57,14 +57,15 @@
  *
  */
 
+// Import Libraries
 import React from "react";
 
 // Import Utils
 import Chip from "@material-ui/core/Chip";
 import { Avatar } from "@material-ui/core";
+
 // Import Styles
-import "../styles/questionnaireList.css";
-import { DialogTitle } from "@material-ui/core";
+import "../../styles/questionnaireList.css";
 
 const QuestionnaireList = ({
     questionnaires,
