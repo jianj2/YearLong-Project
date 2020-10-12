@@ -19,7 +19,7 @@ import { Link, withRouter } from "react-router-dom";
 
 // Import components.
 import FormParentDetails from "../components/FormParentDetails";
-import Questionnaire from "../components/Questionnaire";
+import { Questionnaire } from "../components/Commons";
 import ParentReviewSubmission from "../components/ParentReviewSubmission";
 import { Loading } from "../components/Commons";
 

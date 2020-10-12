@@ -18,7 +18,7 @@ import { useAuth0 } from "../../utils/react-auth0-spa";
 
 // Import Components
 import QuestionnaireList from "../QuestionnaireList";
-import Questionnaire from "../Questionnaire";
+import { Questionnaire } from "../Commons/";
 import ParentReviewSubmission from "../ParentReviewSubmission";
 import FormParentDetails from "../FormParentDetails";
 

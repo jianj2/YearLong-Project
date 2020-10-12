@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as API from "../../utils/api";
-import Questionnaire from "../Questionnaire";
+import { Questionnaire } from "../Commons";
 /**
  * ====================================================================
  * REACT COMPONENT

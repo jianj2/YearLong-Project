@@ -18,17 +18,17 @@ import { Snackbar } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
 
 // Import components.
-import Question from "./Question";
+import Question from "../Question";
 
 // Import styles.
-import "../styles/questionnaire.css";
-import "../styles/main.css";
+import "../../styles/questionnaire.css";
+import "../../styles/main.css";
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export default function Questionnaire({
+function Questionnaire({
       readOnly,
       questionnaire,
       submitQuestionnaire,
@@ -168,3 +168,5 @@ export default function Questionnaire({
         );
      
 }
+
+export default Questionnaire
