@@ -32,7 +32,7 @@ import {
 
 // Import Styles
 import "../../styles/clinicianDoTheTest.css";
-import Loading from "../Loading";
+import { Loading } from "../Commons";
 
 // handles rendering of QuestionnaireContainer in the Clinician Page
 const DoTheTestContainer = () => {

@@ -22,7 +22,7 @@ import "../../styles/managequestionnaires.css";
 import "../../styles/main.css";
 // Import Components.
 import QuestionnaireList from "../QuestionnaireList";
-import Loading from "../Loading";
+import { Loading } from "../Commons";
 
 const useStyles = makeStyles((theme) => ({
     modal: {

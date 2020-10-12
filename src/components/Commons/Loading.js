@@ -13,7 +13,7 @@
 import React from "react";
 
 // Import styles.
-import "../styles/loading.css";
+import "../../styles/loading.css";
 
 // handles rendering of Navigation Bar with Login
 const Loading = () => {

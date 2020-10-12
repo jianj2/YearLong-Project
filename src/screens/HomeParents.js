@@ -21,7 +21,7 @@ import { Link, withRouter } from "react-router-dom";
 import FormParentDetails from "../components/FormParentDetails";
 import Questionnaire from "../components/Questionnaire";
 import ParentReviewSubmission from "../components/ParentReviewSubmission";
-import Loading from "../components/Loading";
+import { Loading } from "../components/Commons";
 
 // Import assets.
 import logoComplete from "../assets/logo_complete.png";

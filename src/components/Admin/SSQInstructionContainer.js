@@ -15,7 +15,7 @@ import "../../styles/admin.css";
 import * as API from "../../utils/api";
 import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Loading from "../Loading";
+import { Loading } from "../Commons";
 
 const useStyles = makeStyles((theme) => ({
     modal: {

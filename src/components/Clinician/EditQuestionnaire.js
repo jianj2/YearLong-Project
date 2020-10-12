@@ -17,7 +17,7 @@ import CustomModal from "../../utils/modals";
 
 // Import components.
 import EditDescription from "./EditDescription";
-import Loading from "../Loading";
+import { Loading } from "../Commons";
 import SectionsContainer from "./SectionsContainer";
 //style
 import "../../styles/clinician.css";

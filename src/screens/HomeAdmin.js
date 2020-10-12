@@ -30,7 +30,7 @@ import "../styles/main.css";
 
 // Import assets.
 import logoComplete from "../assets/logo_complete.png";
-import Loading from "../components/Loading";
+import { Loading } from "../components/Commons";
 
 
 // ---------------------------------------------------------------

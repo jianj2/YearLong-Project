@@ -14,7 +14,7 @@
  */
 
 // Import Libraries
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 // Import Utilities
 import { useAuth0 } from "../utils/react-auth0-spa";
@@ -27,7 +27,7 @@ import "../styles/main.css";
 // Import Components
 import { SideBar } from "../components/Commons";
 import ContentPanel from "../components/Clinician/ContentPanel";
-import Loading from "../components/Loading";
+import { Loading } from "../components/Commons";
 
 // ---------------------------------------------------------------
 // This function defines the Clinician Home screen.
