@@ -20,7 +20,7 @@ import "../../styles/sidebar.css";
 
 
 // handles rendering of SideBar with Login
-const SideBar = (props) => {
+const SideBar = ({  }) => {
 
     const pathname = window.location.href.split("/").pop()
 

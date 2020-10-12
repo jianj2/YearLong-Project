@@ -60,7 +60,6 @@
 import React from "react";
 
 // Import Utils
-import { formatDate } from "../utils/formatter";
 import Chip from "@material-ui/core/Chip";
 import { Avatar } from "@material-ui/core";
 // Import Styles

@@ -15,7 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 // Import Utils.
 import * as API from "../../utils/api";
-import { formatDate } from "../../utils/formatter";
+import { formatDate } from "../../utils/helper";
 import { useAuth0 } from "../../utils/react-auth0-spa";
 // Import styles.
 import "../../styles/managequestionnaires.css";
