@@ -209,7 +209,7 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                                 required: "You have not entered the date of birth.",
                             })}
                         />
-                        <FormHelperText>{errors.date ? errors.date.message : "Please enter the child's name."}</FormHelperText>
+                        <FormHelperText>{errors.date ? errors.date.message : "Please enter the child's date of birth."}</FormHelperText>
                     </FormControl>
 
 
@@ -255,14 +255,11 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                             />
                             <FormHelperText>{errors.leftDeviceTypeOther ? errors.leftDeviceTypeOther.message : "Please enter the device type."}</FormHelperText>
                         </FormControl>
-                    ) : (<div></div>)}
-
+                    ) : null }
                 </div>
             </div>
 
-            {clinicianAccess ? (
-                <div></div>
-            ) : (
+            {clinicianAccess ? null : (
                 <div className="parents-detail-form-submit-button">
                     <button id="next" className="button">
                         N E X T
