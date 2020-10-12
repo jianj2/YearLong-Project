@@ -27,7 +27,7 @@ import HomeParents from "./screens/HomeParents";
 import HomeAdmin from "./screens/HomeAdmin";
 
 // Import components.
-import NavBar from "./components/Navbar";
+import { NavBar } from "./components/Commons";
 import FindPassword from "./components/FindPassword";
 
 function App() {

@@ -42,7 +42,7 @@ const HomeAdmin = (props) => {
     if (loading === true) {
         return <Loading />
     }
-    // console.log(props.organName);
+
     if (isAdminAuthenticated === true) {
         return (
             <div className="HomeAdmin">
