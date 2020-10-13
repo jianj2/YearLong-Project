@@ -10,8 +10,9 @@
  */
 
 const mongoose = require("mongoose");
-const adminKeyFile = require("../config/admin.json");
 const jwt = require("jsonwebtoken");
+const bcrypt = require('bcryptjs');
+
 
 const { sendJSONResponse } = require("../utils/apiUtils");
 const {
@@ -21,19 +22,14 @@ const {
 } = require("../service/adminService");
 
 const Clinician = mongoose.model("clinician");
+const Admin = mongoose.model("admin");
+
 
 // Login check.
 const loginAdmin = function (req, res) {
-    console.log("admin file", adminKeyFile);
-    console.log(req.body);
 
-    let _username = adminKeyFile.username;
-    let _password = adminKeyFile.password;
     let username = req.body.username;
     let password = req.body.password;
-
-    console.log("admin file _username", _username);
-    console.log("admin file _password", _password);
 
     // Username can not be empty
     if (username === "") {
@@ -44,22 +40,37 @@ const loginAdmin = function (req, res) {
         res.status(400).json({ message: "Password can not be empty!" });
         return;
     }
-    if (username === _username && password === _password) {
-        const token = jwt.sign({ username: username }, "secretLOL", {
-            expiresIn: 86400, // expires in 24 hours
-            //expiresIn: 100, // expires in 100 seconds FOR TESTING
+
+    // find admin with that username.
+    Admin.findOne({
+        username: username
+    }).then(admin => {
+        if (!admin) {
+            return res.status(400).json({
+                message: "Incorrect details!",
+            });
+        }
+        // Match password
+        bcrypt.compare(req.body.password, admin.password, (err, isMatch) => {
+            if (err) throw err;
+            if (isMatch) {
+                const token = jwt.sign({ username: username }, "secretLOL", {
+                    expiresIn: 86400, // expires in 24 hours
+                    //expiresIn: 100, // expires in 100 seconds FOR TESTING
+                });
+                res.status(200).json({
+                    message: {
+                        auth: true,
+                        token: token,
+                    },
+                });
+            } else {
+                res.status(400).json({
+                    message: "Incorrect details!",
+                });
+            }
         });
-        res.status(200).json({
-            message: {
-                auth: true,
-                token: token,
-            },
-        });
-    } else {
-        res.status(400).json({
-            message: "Incorrect details!",
-        });
-    }
+    });
 };
 
 const verifyToken = (token, secret) =>{
@@ -91,6 +102,34 @@ const verifyLogin = async (req, res) => {
 
 
 };
+
+async function authorize(req, res, next){
+    // Get auth header value
+    const bearerHeader = req.headers['authorization'];
+    // Check if bearer is undefined
+    if(typeof bearerHeader !== 'undefined') {
+        // Split at the space
+        const bearer = bearerHeader.split(' ');
+        // Get token from array
+        const bearerToken = bearer[1];
+        // Set the token
+        try {
+            const result = await verifyToken(bearerToken, "secretLOL");
+            if(result.auth === false){
+                res.status(403).json(result);
+            }else{
+                // Next middleware
+                next();
+            }
+        }catch(e){ res.sendStatus(403); }
+
+    } else {
+        // Forbidden
+        res.sendStatus(403);
+
+    }
+
+}
 
 //Get all instructions
 const getSpecificInstruction = async function (req, res) {
@@ -191,6 +230,34 @@ const getOrganisationClinicians = async function (req, res) {
     }
 };
 
+// function used to create new admins
+// DO NOT DELETE - UVIN
+
+// const createAdmin = function (req, res){
+//     var newAdmin = new Admin({
+//         username: "",
+//         email: "",
+//         password:""
+//     });
+//     //hashing the password and then saving the user.
+//     bcrypt.genSalt(10, (err, salt) => {
+//         bcrypt.hash(newAdmin.password, salt, (err, hash) => {
+//             if (err) throw err;
+//             newAdmin.password = hash;
+//             newAdmin.save(function(err, createdUser){
+//                 if (!err){
+//                     res.send(createdUser);
+//                 }
+//                 else{
+//                     console.log(err);
+//                     res.send(err)
+//                 }
+//             });
+//         })
+//     });
+// }
+
+
 module.exports.loginAdmin = loginAdmin;
 module.exports.verifyLogin = verifyLogin;
 module.exports.getSpecificInstruction = getSpecificInstruction;
@@ -199,4 +266,6 @@ module.exports.updateInstructionByType = updateInstructionByType;
 module.exports.getCountryList = getCountryList;
 module.exports.getOrganisations = getOrganisations;
 module.exports.getOrganisationClinicians = getOrganisationClinicians;
+module.exports.authorize = authorize;
+
 

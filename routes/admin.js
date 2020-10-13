@@ -17,15 +17,16 @@ const admin_controller = require('../controller/admin_controller.js');
 //admin_controller.addInstruction();
 
 router.post('/login', admin_controller.loginAdmin);
-router.post('/instruction/:type', admin_controller.updateInstructionByType);
+router.post('/instruction/:type', admin_controller.authorize, admin_controller.updateInstructionByType);
 
-router.get('/specificInstruction/:instructionType', admin_controller.getSpecificInstruction);
+router.get('/specificInstruction/:instructionType', admin_controller.authorize, admin_controller.getSpecificInstruction);
 router.get("/verifylogin/:token", admin_controller.verifyLogin);
-router.get("/instructionsSummary", admin_controller.getInstructionsSummary);
+router.get("/instructionsSummary",admin_controller.authorize,admin_controller.getInstructionsSummary);
 
 //router for getting the organisation information
-router.get("/country", admin_controller.getCountryList);
-router.get("/country/organisation/:countryName", admin_controller.getOrganisations);
-router.get("/organisation/clinician/:organisationName", admin_controller.getOrganisationClinicians);
+router.get("/country", admin_controller.authorize, admin_controller.getCountryList);
+router.get("/country/organisation/:countryName", admin_controller.authorize, admin_controller.getOrganisations);
+router.get("/organisation/clinician/:organisationName", admin_controller.authorize, admin_controller.getOrganisationClinicians);
+
 
 module.exports = router;
