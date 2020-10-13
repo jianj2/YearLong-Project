@@ -37,17 +37,21 @@ const OrganisationList = ({ countryName }) => {
 
     useEffect(() => {
         const getOrganisationList = async () => {
-            //To handle the data from the API
-            const [statusCode, allOrganisation] = await getOrganisations(
-                countryName
-            );
-            if (statusCode === 200) {
-                let OrganList = new Set(
-                    allOrganisation.map((item) => {
-                        return item.organisation.toLowerCase();
-                    })
+            try {
+                //To handle the data from the API
+                const [statusCode, allOrganisation] = await getOrganisations(
+                    countryName
                 );
-                setOrganisationSummary(Array.from(OrganList));
+                if (statusCode === 200) {
+                    let OrganList = new Set(
+                        allOrganisation.map((item) => {
+                            return item.organisation.toLowerCase();
+                        })
+                    );
+                    setOrganisationSummary(Array.from(OrganList));
+                }
+            }catch(err){
+                console.error(err);
             }
         };
 
