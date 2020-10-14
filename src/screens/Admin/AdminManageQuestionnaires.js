@@ -16,9 +16,6 @@ import { QuestionnaireList } from "../../components/Commons";
 import { CustomModal } from "../../components/Commons";
 import { makeStyles } from "@material-ui/core/styles";
 
-//style
-import "../../styles/questionnaireList.css";
-
 // utils
 import * as API from "../../utils/api";
 

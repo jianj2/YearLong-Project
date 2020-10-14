@@ -18,8 +18,6 @@ import { Link } from 'react-router-dom'
 // Import Utilities
 import { USER_TYPE_ADMIN, USER_TYPE_CLINICIAN } from '../../utils/helper'
 
-// Import Styles
-import "../../styles/sidebar.css";
 
 // handles rendering of SideBar with Login
 const SideBar = ({ userType }) => {

@@ -18,8 +18,6 @@ import { CustomModal } from "./index";
 // Import components.
 import { Loading, EditDescription, SectionsContainer } from "./";
 
-//style
-import "../../styles/clinician.css";
 
 //utils
 import * as API from "../../utils/api";

@@ -11,7 +11,7 @@
 import React from "react";
 import TextField from '@material-ui/core/TextField';
 import { Modal, Backdrop, Fade } from "@material-ui/core";
-import "../../styles/admin.css";
+
 import * as API from "../../utils/api";
 import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";

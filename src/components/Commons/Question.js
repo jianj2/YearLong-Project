@@ -25,10 +25,6 @@ import React, { useState, useEffect } from "react";
 // Import Material-UI components.
 import { Slider, FormControl, FormLabel, FormControlLabel, Radio, RadioGroup, Checkbox, FormGroup, FormHelperText, withStyles } from "@material-ui/core";
 
-// Import styles.
-import "../../styles/questionnaire.css";
-import "../../styles/main.css";
-
 // Create a new slider with a custom style.
 const SliderWithTicks = withStyles({
     mark: {

@@ -20,10 +20,6 @@ import React, { useEffect } from "react";
 import { useAuth0 } from "../utils/react-auth0-spa";
 import { USER_TYPE_CLINICIAN } from "../utils/helper";
 
-// Import Styles
-import "../styles/clinician.css";
-import "../styles/main.css";
-
 // Import Components
 import { SideBar, Loading } from "../components/Commons";
 import ContentPanel from "../components/Commons/ContentPanel";

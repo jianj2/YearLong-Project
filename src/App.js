@@ -28,7 +28,22 @@ import { NavBar } from "./components/Commons";
 
 
 // Import Styles
+import "./styles/admin.css";
+import "./styles/clinician.css";
+import "./styles/clinicianDoTheTest.css";
+import "./styles/contentpanel.css";
+import "./styles/countryList.css";
+import "./styles/landing.css";
 import "./styles/main.css";
+import "./styles/managequestionnaires.css";
+import "./styles/navbar.css";
+import "./styles/organisationList.css";
+import "./styles/parents.css";
+import "./styles/questionnaire.css";
+import "./styles/questionnaireList.css";
+import "./styles/sidebar.css";
+import "./styles/topcontainer.css";
+
 
 function App() {
 

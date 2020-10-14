@@ -20,9 +20,6 @@ import { Link } from 'react-router-dom';
 import logoComplete from '../assets/logo_complete.png';
 
 
-// Import styles.
-import "../styles/landing.css";
-
 // ---------------------------------------------------------------
 // This method defines the elements for this component.
 // ---------------------------------------------------------------

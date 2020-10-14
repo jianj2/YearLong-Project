@@ -10,8 +10,7 @@
 
 import React, { useEffect, useState } from "react";
 
-//import style
-import "../../styles/organisationList.css";
+
 import { getOrganisations } from "../../utils/api";
 
 // handles rendering of OrganisationList in the Admin Page

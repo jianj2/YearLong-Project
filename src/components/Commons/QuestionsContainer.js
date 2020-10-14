@@ -24,9 +24,6 @@ import {
 
 import PropTypes from "prop-types";
 
-// import style
-import "../../styles/main.css";
-
 // handles rendering of Quetionnaire questions in the Clinician page
 const QuestionsContainer = ({
                                 questions,

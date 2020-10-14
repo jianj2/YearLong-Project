@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-//import style
-import "../../styles/countryList.css";
 import { getCountries } from "../../utils/api";
 
 // handles rendering of CountryList in the Admin Page

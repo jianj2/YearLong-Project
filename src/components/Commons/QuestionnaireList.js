@@ -64,8 +64,6 @@ import React from "react";
 import Chip from "@material-ui/core/Chip";
 import { Avatar } from "@material-ui/core";
 
-// Import Styles
-import "../../styles/questionnaireList.css";
 
 const QuestionnaireList = ({
     questionnaires,

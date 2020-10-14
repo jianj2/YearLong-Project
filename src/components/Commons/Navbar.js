@@ -18,9 +18,6 @@ import { useAdminAuth } from "../../utils/useAdminAuth";
 import { Link } from 'react-router-dom'
 import { IoMdLogOut } from "react-icons/io";
 
-// Import styles.
-import "../../styles/navbar.css";
-
 // Import assets.
 import logoCompressed from "../../assets/logo_compressed.png";
 

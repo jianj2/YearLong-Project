@@ -18,9 +18,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import * as API from "../../utils/api";
 import { CustomModal } from "../../components/Commons";
 import { useAuth0 } from "../../utils/react-auth0-spa";
-// Import styles.
-import "../../styles/managequestionnaires.css";
-import "../../styles/main.css";
+
 // Import Components.
 import { QuestionnaireList } from "../../components/Commons";
 import { Loading } from "../../components/Commons";
@@ -42,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
 
 const ManageQuestionnaires = (props) => {
     const { isAuthenticated, user, token } = useAuth0();
-    // console.log("user.name", user.name); //TODO: change that when we have actual clincianId
 
     const [customisedQuestionnaires, setCustomisedQuestionnaires] = useState(
         []

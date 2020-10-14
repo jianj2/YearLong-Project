@@ -11,6 +11,7 @@
  *
  */
 
+// Import Libraries
 import React from "react";
 
 // Import Screens
@@ -36,10 +37,8 @@ import {
     QuestionnaireContainer
 } from "../../screens/Common";
 
-// Import Styles
-import "../../styles/contentpanel.css";
-import "../../styles/main.css";
 
+// Import Utilities
 import { USER_TYPE_CLINICIAN, USER_TYPE_ADMIN } from "../../utils/helper";
 
 const ContentPanel = (props) => {
@@ -68,7 +67,7 @@ const ContentPanel = (props) => {
             case 6:
                 return (<ShareContainer/>);
             default:
-                return (<AdminManageQuestionnaires/>);
+                return (<ManageQuestionnaires/>);
 
         }
 

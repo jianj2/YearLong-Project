@@ -23,10 +23,6 @@ import { USER_TYPE_ADMIN } from "../utils/helper";
 import { FormLoginAdmin } from "../components/Forms";
 import { SideBar } from "../components/Commons";
 
-// Import styles.
-import "../styles/admin.css";
-import "../styles/main.css";
-
 // Import assets.
 import logoComplete from "../assets/logo_complete.png";
 import { Loading } from "../components/Commons";

@@ -30,8 +30,6 @@ import {
     getStandardisedQuestionnaires,
 } from "../../utils/api";
 
-// Import Styles
-import "../../styles/clinicianDoTheTest.css";
 import { Loading } from "../../components/Commons";
 
 // handles rendering of QuestionnaireContainer in the Clinician Page

@@ -21,9 +21,6 @@ import MuiAlert from "@material-ui/lab/Alert";
 // Import components.
 import Question from "./Question";
 
-// Import styles.
-import "../../styles/questionnaire.css";
-import "../../styles/main.css";
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;

@@ -17,9 +17,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import * as API from "../../utils/api";
 import { formatDate } from "../../utils/helper";
 import { useAuth0 } from "../../utils/react-auth0-spa";
-// Import styles.
-import "../../styles/managequestionnaires.css";
-import "../../styles/main.css";
+
 // Import Components.
 import { QuestionnaireList } from "../../components/Commons";
 import { Loading } from "../../components/Commons";

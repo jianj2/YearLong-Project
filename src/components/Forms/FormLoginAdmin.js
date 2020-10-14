@@ -26,8 +26,6 @@ import {
 } from "@material-ui/core";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
-// Import styles.
-import "../../styles/admin.css";
 
 export default function FormLoginAdmin({ adminLogin }) {
     const { register, handleSubmit, errors } = useForm();

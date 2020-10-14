@@ -27,8 +27,6 @@ import {
 } from "@material-ui/core";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
-// Import styles.
-// import "../styles/parents.css";
 
 export default function FormParentDetails({ submitDetails, clinicianAccess, defaultValue, getPersonalDetails, isSSQ_Ch }) {
     const { register, handleSubmit, errors } = useForm();

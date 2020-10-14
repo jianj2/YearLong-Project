@@ -15,7 +15,6 @@ import {
 } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 
-import "../styles/clinician.css"
 
 const FindPassword = () => {
     const { register, handleSubmit, errors } = useForm();

@@ -28,11 +28,6 @@ import logoComplete from "../assets/logo_complete.png";
 // Import utils
 import * as API from "../utils/api";
 
-// Import styles.
-import "../styles/parents.css";
-import "../styles/landing.css";
-import "../styles/main.css";
-
 const INSTRUCTIONS_READ_ONLY =
     "Go to the next page to view the questions. These would be the questions asked to you by the clinician on the call.";
 const INSTRUCTIONS = "We would have instructions here stored by the admin.";
