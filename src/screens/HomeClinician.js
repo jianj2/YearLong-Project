@@ -26,7 +26,7 @@ import "../styles/main.css";
 
 // Import Components
 import { SideBar } from "../components/Commons";
-import ContentPanel from "../components/Clinician/ContentPanel";
+import ContentPanel from "./Clinician/ContentPanel";
 import { Loading } from "../components/Commons";
 
 // ---------------------------------------------------------------

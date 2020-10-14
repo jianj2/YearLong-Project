@@ -11,9 +11,9 @@
 import React, { useEffect, useState } from "react";
 
 // Components
-import { Loading } from "../Commons";
-import { QuestionnaireList } from "../Commons";
-import { CustomModal } from "../Commons/";
+import { Loading } from "../../components/Commons";
+import { QuestionnaireList } from "../../components/Commons";
+import { CustomModal } from "../../components/Commons";
 import { makeStyles } from "@material-ui/core/styles";
 
 //style

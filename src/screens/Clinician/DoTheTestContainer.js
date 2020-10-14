@@ -17,10 +17,10 @@ import React, { useEffect, useState } from "react";
 import { useAuth0 } from "../../utils/react-auth0-spa";
 
 // Import Components
-import { QuestionnaireList } from "../Commons";
-import { Questionnaire } from "../Commons/";
-import { ParentReviewSubmission } from "../Commons";
-import { FormParentDetails } from "../Forms";
+import { QuestionnaireList } from "../../components/Commons";
+import { Questionnaire } from "../../components/Commons";
+import { ParentReviewSubmission } from "../../components/Commons";
+import { FormParentDetails } from "../../components/Forms";
 
 // Import Utils
 import {
@@ -32,7 +32,7 @@ import {
 
 // Import Styles
 import "../../styles/clinicianDoTheTest.css";
-import { Loading } from "../Commons";
+import { Loading } from "../../components/Commons";
 
 // handles rendering of QuestionnaireContainer in the Clinician Page
 const DoTheTestContainer = () => {

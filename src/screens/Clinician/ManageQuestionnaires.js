@@ -16,14 +16,14 @@ import { makeStyles } from "@material-ui/core/styles";
 
 // Import Utils.
 import * as API from "../../utils/api";
-import { CustomModal } from "../Commons";
+import { CustomModal } from "../../components/Commons";
 import { useAuth0 } from "../../utils/react-auth0-spa";
 // Import styles.
 import "../../styles/managequestionnaires.css";
 import "../../styles/main.css";
 // Import Components.
-import { QuestionnaireList } from "../Commons";
-import { Loading } from "../Commons";
+import { QuestionnaireList } from "../../components/Commons";
+import { Loading } from "../../components/Commons";
 import { useAdminAuth } from "../../utils/useAdminAuth";
 
 const useStyles = makeStyles((theme) => ({

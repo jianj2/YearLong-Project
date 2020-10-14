@@ -21,8 +21,8 @@ import { useAuth0 } from "../../utils/react-auth0-spa";
 import "../../styles/managequestionnaires.css";
 import "../../styles/main.css";
 // Import Components.
-import { QuestionnaireList } from "../Commons";
-import { Loading } from "../Commons";
+import { QuestionnaireList } from "../../components/Commons";
+import { Loading } from "../../components/Commons";
 
 const useStyles = makeStyles((theme) => ({
     modal: {

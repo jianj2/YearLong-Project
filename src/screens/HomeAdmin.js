@@ -21,7 +21,7 @@ import { USER_TYPE_ADMIN } from "../utils/helper";
 
 // Import components
 import { FormLoginAdmin } from "../components/Forms";
-import AdminContentPanel from "../components/Admin/AdminContentPanel";
+import AdminContentPanel from "./Admin/AdminContentPanel";
 import { SideBar } from "../components/Commons";
 
 // Import styles.
