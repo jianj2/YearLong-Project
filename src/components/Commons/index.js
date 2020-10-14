@@ -6,6 +6,12 @@ import CustomModal from "./CustomModal"
 import Questionnaire from "./Questionnaire";
 import QuestionnaireList from "./QuestionnaireList";
 import ParentReviewSubmission from "./ParentReviewSubmission";
+import EditDescription from "./EditDescription";
+import EditQuestionnaire from "./EditQuestionnaire";
+import QuestionsContainer from "./QuestionsContainer";
+import ScenariosContainer from "./ScenariosContainer";
+import SectionsContainer from "./SectionsContainer";
+
 
 export {
     SideBar,
@@ -15,4 +21,9 @@ export {
     Questionnaire,
     QuestionnaireList,
     ParentReviewSubmission,
+    EditDescription,
+    EditQuestionnaire,
+    QuestionsContainer,
+    ScenariosContainer,
+    SectionsContainer,
 }

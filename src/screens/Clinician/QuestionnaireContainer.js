@@ -13,7 +13,7 @@
  */
 
 import React, {useState,useEffect} from "react";
-import EditQuestionnaire from "../../components/Clinician/EditQuestionnaire";
+import EditQuestionnaire from "../../components/Commons/EditQuestionnaire";
 import * as API from "../../utils/api";
 
 // import set from "react-hook-form/dist/utils/set";
