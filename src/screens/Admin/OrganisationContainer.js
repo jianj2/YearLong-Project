@@ -1,11 +1,25 @@
-import React, { useEffect, useState } from 'react';
+/**
+ * =============================================================================
+ * REACT COMPONENT CLASS
+ * =============================================================================
+ * @date created: 20th August 2020
+ * @authors: Jin Chen
+ *
+ * The OrganisationContainer handles the rendering of organisation in the
+ * Admin Page.
+ *
+ */
+
+// Import Libraries.
+import React, { useEffect, useState } from "react";
+// Import Utilities.
 import { getOrganisationClinicians } from "../../utils/api";
 
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const OrganisationContainer = ({ organName }) => {
-
     const [AllClinicianOrgan, setAllClinicianOrgan] = useState([]);
-   
-    
 
     useEffect(() => {
         const getAllClinicianInOrgan = async () => {
@@ -14,13 +28,11 @@ const OrganisationContainer = ({ organName }) => {
                 const clinicianIds = clinicians.map((c) => c.clinicianId);
                 setAllClinicianOrgan(clinicianIds);
             }
-        }
+        };
         getAllClinicianInOrgan();
-    }, [organName])
+    }, [organName]);
 
-    const MemberItem = ({
-        clinicianID,
-    }) => {
+    const MemberItem = ({ clinicianID }) => {
         return (
             <div
                 className={
@@ -32,7 +44,6 @@ const OrganisationContainer = ({ organName }) => {
                 <div className="q-name">
                     {clinicianID}
                 </div>
-
             </div>
         );
     };
@@ -48,6 +59,6 @@ const OrganisationContainer = ({ organName }) => {
             )}
         </div>
     );
-}
+};
 
 export default OrganisationContainer;

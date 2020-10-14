@@ -1,5 +1,18 @@
-import React, { Component, useState } from 'react';
-import { adminLogin, findPassword } from "../utils/api";
+/**
+ * =============================================================================
+ * REACT COMPONENT
+ * =============================================================================
+ * @date created: 16th Aug 2020
+ * @authors: Cary Jin
+ *
+ * This class handles the rendering of read-only versions of questionnaires
+ * This includes both standardised and customised questionnaires.
+ *
+ */
+
+// Import Libraries.
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useAuth0 } from "../utils/react-auth0-spa";
 import logoComplete from "../assets/logo_complete.png";
 import {
@@ -13,9 +26,12 @@ import {
     DialogContentText,
     DialogActions, FormHelperText
 } from "@material-ui/core";
-import { useForm } from "react-hook-form";
+// Import Utilities.
+import { findPassword } from "../utils/api";
 
-
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const FindPassword = () => {
     const { register, handleSubmit, errors } = useForm();
     const { loginWithRedirect } = useAuth0();
@@ -27,33 +43,33 @@ const FindPassword = () => {
         findPassword(email);
         // alert(email);
         setOpen(true);
-    }
+    };
 
     const handleClose = async () => {
         setOpen(false);
-        const domain = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_CLIENT : "http://localhost:3000";
+        const domain = process.env.NODE_ENV === "production" ? process.env.REACT_APP_CLIENT : "http://localhost:3000";
         await loginWithRedirect({
-
-            redirect_uri: `${domain}/clinician`,
-
+            redirect_uri: `${domain}/clinician`
         });
-
     };
 
     return (
         <div className="find-password">
             <div className="landing-logo">
-                <img src={logoComplete} />
+                <img src={logoComplete}/>
             </div>
 
             <div className="landing-buttons">
-                <form className="find-password-form" onSubmit={handleSubmit(findEmail)}>
+                <form className="find-password-form"
+                      onSubmit={handleSubmit(findEmail)}>
                     <FormControl margin="normal">
                         <InputLabel>Email</InputLabel>
                         <Input
                             name="email"
                             placeholder="Enter your email"
-                            onChange={(event) => { setEmail(event.target.value) }}
+                            onChange={(event) => {
+                                setEmail(event.target.value);
+                            }}
                             type="email"
                             required
                         />
@@ -62,12 +78,12 @@ const FindPassword = () => {
                                 ? errors.email
                                 : "Please enter the registered email ."}
                         </FormHelperText>
-                        <br />
+                        <br/>
                         <button
                             className={errors.code ? "button-disabled" : "button"}
                         >
                             S U B M I T
-                            </button>
+                        </button>
                         {errors.code && <span>{errors.code.message}</span>}
                     </FormControl>
                 </form>
@@ -83,16 +99,16 @@ const FindPassword = () => {
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         Request sent successfully!
-                        </DialogContentText>
+                    </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary" autoFocus>
                         OK
-                        </Button>
+                    </Button>
                 </DialogActions>
             </Dialog>
         </div>
     );
-}
+};
 
 export default FindPassword;

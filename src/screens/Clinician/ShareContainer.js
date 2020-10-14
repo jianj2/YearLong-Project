@@ -25,15 +25,15 @@ import {
     FormLabel, RadioGroup, Radio
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-
 // Import Utilities.
 import * as API from "../../utils/api";
 import { formatDate } from "../../utils/helper";
 import { useAuth0 } from "../../utils/react-auth0-spa";
-
 // Import Components.
-import { QuestionnaireList } from "../../components/Commons";
-import { Loading } from "../../components/Commons";
+import {
+    QuestionnaireList,
+    Loading
+} from "../../components/Commons";
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -49,10 +49,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const ShareQuestionnaire = (props) => {
     const classes = useStyles();
     const { user, token } = useAuth0();
-    // console.log("user.name", user.name); //TODO: change that when we have actual clincianId
 
     const [customisedQuestionnaires, setCustomisedQuestionnaires] = useState(
         []

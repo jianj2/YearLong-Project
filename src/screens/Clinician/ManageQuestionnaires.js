@@ -18,7 +18,7 @@ import * as API from "../../utils/api";
 import { CustomModal } from "../../components/Commons";
 import { useAuth0 } from "../../utils/react-auth0-spa";
 // Import Components.
-import { QuestionnaireList, Loading} from "../../components/Commons";
+import { QuestionnaireList, Loading } from "../../components/Commons";
 import { useAdminAuth } from "../../utils/useAdminAuth";
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -32,7 +32,7 @@ const ManageQuestionnaires = (props) => {
     );
     const [
         standardisedQuestionnaires,
-        setStandardisedQuestionnaires,
+        setStandardisedQuestionnaires
     ] = useState([]);
 
     const [loading, setLoading] = useState(false);
@@ -41,7 +41,7 @@ const ManageQuestionnaires = (props) => {
 
     const [deleteQuestionnaireData, setdeleteQuestionnaireData] = useState({
         deleteQuestionnaireID: "",
-        deleteQuestionnaireName: "",
+        deleteQuestionnaireName: ""
     });
 
     const { isAdminAuthenticated, adminLogout } = useAdminAuth();
@@ -56,21 +56,23 @@ const ManageQuestionnaires = (props) => {
             async function retrieveCustomisedQuestionnaires() {
                 const [
                     _,
-                    customisedQuestionnaires,
+                    customisedQuestionnaires
                 ] = await API.getClinicianQuestionnaires(token, user.name);
                 console.log(customisedQuestionnaires);
-                const sortedCustomisedQuestionnaires = customisedQuestionnaires.sort(function(a,b){
-                    let dateA = new Date(a.updateDate), dateB = new Date(b.updateDate);
-                    return dateB - dateA ;
-                })
+                const sortedCustomisedQuestionnaires = customisedQuestionnaires.sort(function (a, b) {
+                    let dateA = new Date(a.updateDate),
+                        dateB = new Date(b.updateDate);
+                    return dateB - dateA;
+                });
                 // setQuestionnaires({ customized_Questionnaire: customisedQuestionnairesElement });
                 setCustomisedQuestionnaires(sortedCustomisedQuestionnaires);
                 setLoading(false);
             }
+
             async function retrieveStandardisedQuestionnaires() {
                 const [
                     statusCode,
-                    data,
+                    data
                 ] = await API.getStandardisedQuestionnaires();
                 if (statusCode === 200) {
                     setStandardisedQuestionnaires(data);
@@ -78,6 +80,7 @@ const ManageQuestionnaires = (props) => {
                     console.error(data);
                 }
             }
+
             retrieveStandardisedQuestionnaires();
             retrieveCustomisedQuestionnaires();
         }
@@ -107,7 +110,7 @@ const ManageQuestionnaires = (props) => {
         console.log("delete ", title);
         setdeleteQuestionnaireData({
             deleteQuestionnaireID: questionnaireId,
-            deleteQuestionnaireName: title,
+            deleteQuestionnaireName: title
         });
         setIsDeleteModalVisible(true);
     };
@@ -115,7 +118,7 @@ const ManageQuestionnaires = (props) => {
     // Function called when Add New Button is clicked
     async function AddNew() {
         setLoading(true);
-        const [_,uuid] = await API.addQuestionnaire(token, user.name);
+        const [_, uuid] = await API.addQuestionnaire(token, user.name);
         setLoading(false);
         window.location.reload(false);
         // let edit_url = "/clinician/" + uuid + "/edit";
@@ -136,7 +139,7 @@ const ManageQuestionnaires = (props) => {
         setCustomisedQuestionnaires(arrayCopy);
         API.deleteQuestionnaire(token, questionnaireId, user.name);
     };
-    
+
     // renders a modal when user chooses to delete a questionnaire
     const renderDeleteModal = () => {
         const message = `Are you sure you want to delete ${deleteQuestionnaireData.deleteQuestionnaireName}?`;
@@ -147,14 +150,15 @@ const ManageQuestionnaires = (props) => {
                 setIsModalVisible={setIsDeleteModalVisible}
                 message={message}
                 onClickConfirm={deleteSelecctedQuestionnaire}
-                onClickCancel={() => {}}
+                onClickCancel={() => {
+                }}
             />
         );
     };
 
     return (
         <div>
-            {loading ? <Loading /> : null}
+            {loading ? <Loading/> : null}
             {renderDeleteModal()}
             <div className="standard-questionnaire-container">
                 <div className="SQ-header">

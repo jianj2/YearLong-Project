@@ -11,9 +11,10 @@ import EditQuestionnaire from "./EditQuestionnaire";
 import QuestionsContainer from "./QuestionsContainer";
 import ScenariosContainer from "./ScenariosContainer";
 import SectionsContainer from "./SectionsContainer";
-
+import ContentPanel from "./ContentPanel";
 
 export {
+    ContentPanel,
     SideBar,
     Loading,
     NavBar,

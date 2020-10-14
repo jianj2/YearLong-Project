@@ -1,29 +1,31 @@
 /**
- * ====================================================================
+ * =============================================================================
  * REACT COMPONENT CLASS
- * ====================================================================
+ * =============================================================================
  * @date created: 14th May 2020
  * @authors: Jin Chen, Guang Yang
  *
- * The Sidebar component defines our SideBar for the application. This
- * will visible at the top of our application.
- *
- * This file is used to display the Sidebar component
+ * The InstructionsContainer component handles rendering of
+ * QuestionnaireContainer in the Clinician Page
  *
  */
 
+// Import Libraries.
 import React, { useState, useEffect } from "react";
+// Import Utilities.
 import * as API from "../../utils/api";
 
-// handles rendering of QuestionnaireContainer in the Clinician Page
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const InstructionsContainer = () => {
     const [instructionCC, setInstructionCC] = useState({
         title: "",
-        content: "",
+        content: ""
     });
     const [instructionCP, setInstructionCP] = useState({
         title: "",
-        content: "",
+        content: ""
     });
 
     const getInstructions = async () => {
@@ -31,7 +33,7 @@ const InstructionsContainer = () => {
         if (statusCode === 200) {
             setInstructionCC({
                 title: res["title"],
-                content: res["content"],
+                content: res["content"]
             });
         }
 
@@ -39,7 +41,7 @@ const InstructionsContainer = () => {
         if (statusCode === 200) {
             setInstructionCP({
                 title: res["title"],
-                content: res["content"],
+                content: res["content"]
             });
         }
     };

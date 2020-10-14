@@ -1,6 +1,3 @@
-import React, { useState, useEffect } from "react";
-import * as API from "../../utils/api";
-import { Questionnaire } from "../../components/Commons";
 /**
  * =============================================================================
  * REACT COMPONENT
@@ -13,6 +10,16 @@ import { Questionnaire } from "../../components/Commons";
  *
  */
 
+// Import Libraries.
+import React, { useState, useEffect } from "react";
+// Import Utilities.
+import * as API from "../../utils/api";
+// Import Components.
+import { Questionnaire } from "../../components/Commons";
+
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const AdminViewStandardQuestionnaire = (props)=>{
     const [questionnaire, setSelectedQuestionnaire] = useState({
         questionnaireId: "",

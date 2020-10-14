@@ -10,10 +10,10 @@
  * =============================================================================
  */
 
-// Import Libraries
+// Import Libraries.
 import React, { useState, useEffect, useContext } from "react";
 
-// Import Utilities
+// Import Utilities.
 import * as API from "./api";
 
 export const AdminAuthContext = React.createContext();

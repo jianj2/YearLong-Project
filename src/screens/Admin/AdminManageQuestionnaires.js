@@ -5,52 +5,56 @@
  * @date created: 15th August 2020
  * @authors: Jin Chen
  *
+ * The AdminManageQuestionnaires handles the rendering  of
+ * SSQInstructionsContainer in the Admin Page
  *
  */
 
+// Import Libraries.
 import React, { useEffect, useState } from "react";
-
-// Components
-import { Loading } from "../../components/Commons";
-import { QuestionnaireList } from "../../components/Commons";
-import { CustomModal } from "../../components/Commons";
 import { makeStyles } from "@material-ui/core/styles";
-
-// utils
+// Import Utilities.
 import * as API from "../../utils/api";
-
 import {
     addStandardQuestionnaire,
     getStandardisedQuestionnaires,
-    deleteStandardQuestionnaire,
+    deleteStandardQuestionnaire
 } from "../../utils/api";
+// Import Components.
+import {
+    Loading,
+    QuestionnaireList,
+    CustomModal
+} from "../../components/Commons";
 
-//Styling
+// Styling
 const useStyles = makeStyles((theme) => ({
     modal: {
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "center"
     },
     paper: {
         backgroundColor: theme.palette.background.paper,
         border: "2px solid #000",
         boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-    },
+        padding: theme.spacing(2, 4, 3)
+    }
 }));
 
-// handles rendering of SSQInstructionsContainer in the Admin Page
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const AdminManageQuestionnaires = () => {
     const classes = useStyles();
     const [loading, setLoading] = useState(false);
     const [
         standardisedQuestionnaires,
-        setStandardisedQuestionnaires,
+        setStandardisedQuestionnaires
     ] = useState([]);
     const [deleteQuestionnaireData, setdeleteQuestionnaireData] = useState({
         deleteQuestionnaireID: "",
-        deleteQuestionnaireName: "",
+        deleteQuestionnaireName: ""
     });
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
 
@@ -72,29 +76,31 @@ const AdminManageQuestionnaires = () => {
     const deleteQuestionnaire = (questionnaireId, title) => {
         setdeleteQuestionnaireData({
             deleteQuestionnaireID: questionnaireId,
-            deleteQuestionnaireName: title,
+            deleteQuestionnaireName: title
         });
         openDeleteConfirmation();
     };
 
     useEffect(() => {
         setLoading(true);
+
         async function retrieveStandardisedQuestionnaires() {
             const [
                 statusCode,
-                response,
+                response
             ] = await getStandardisedQuestionnaires();
             if (statusCode === 200) {
-                
+
                 let sortedResponse = response.sort(function (a, b) {
                     let dateA = new Date(a.updateDate),
                         dateB = new Date(b.updateDate);
                     return dateB - dateA;
                 });
-                setStandardisedQuestionnaires(sortedResponse); 
+                setStandardisedQuestionnaires(sortedResponse);
                 setLoading(false);
             }
         }
+
         retrieveStandardisedQuestionnaires();
     }, []);
 
@@ -130,14 +136,15 @@ const AdminManageQuestionnaires = () => {
                 setIsModalVisible={setIsDeleteModalVisible}
                 message={message}
                 onClickConfirm={deleteSelecctedQuestionnaire}
-                onClickCancel={() => {}}
+                onClickCancel={() => {
+                }}
             />
         );
     };
 
     return (
         <div className="admin-manage-questionnaires">
-            {loading ? <Loading /> : null}
+            {loading ? <Loading/> : null}
 
             {renderDeleteModal()}
 

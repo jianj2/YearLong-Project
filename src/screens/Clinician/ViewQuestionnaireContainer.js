@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from "react";
-import * as API from "../../utils/api";
-import { Questionnaire } from "../../components/Commons";
-
 /**
- * ====================================================================
+ * =============================================================================
  * REACT COMPONENT
- * ====================================================================
+ * =============================================================================
  * @date created: 16th Aug 2020
  * @authors: Cary Jin
  *
@@ -14,35 +10,42 @@ import { Questionnaire } from "../../components/Commons";
  *
  */
 
+// Import Libraries.
+import React, { useState, useEffect } from "react";
+// Import Utilities.
+import * as API from "../../utils/api";
+// Import Components.
+import { Questionnaire } from "../../components/Commons";
 
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const ViewQuestionnaireContainer = (props) => {
-
     const [questionnaire, setSelectedQuestionnaire] = useState({
         questionnaireId: "",
         title: "",
         description: "",
         sections: [],
-        isStandard: false,
+        isStandard: false
     });
 
     const [questionnaireData, setQuestionnaireData] = useState([]);
     const [loaded, setLoaded] = useState(false);
     const [message, setMessage] = useState("");
-   
+
     // get the questionnaire content from API
-    useEffect(() =>{
-    
+    useEffect(() => {
+
         const prepareQuestionnaire = async () => {
             const [statusCode, data] = await API.getQuestionnaireById(props.questionnaireID);
 
-            if (statusCode === 200 ){
+            if (statusCode === 200) {
                 const questionnaire = data;
                 setSelectedQuestionnaire(questionnaire);
                 let emptyResponse = [];
                 console.log(`current q: ${questionnaire.title}`);
-               
-                
-                    questionnaire.sections.forEach((section, sectionIndex) => {
+
+                questionnaire.sections.forEach((section, sectionIndex) => {
                     emptyResponse[sectionIndex] = [];
                     section.scenarios.forEach((scenario, scenarioIndex) => {
                         emptyResponse[sectionIndex][scenarioIndex] = [];
@@ -50,37 +53,37 @@ const ViewQuestionnaireContainer = (props) => {
                             (question, questionIndex) => {
                                 emptyResponse[sectionIndex][scenarioIndex][questionIndex] = {
                                     value: "",
-                                    supplementaryValue: "",
+                                    supplementaryValue: ""
                                 };
                             }
                         );
                     });
-                
+
                 });
-            
+
                 setQuestionnaireData(emptyResponse);
                 setLoaded(true);
-                
-            }else{
+
+            } else {
                 console.log(data);
-          
-                    setMessage("Oops! No Questionnaire Available!");
+
+                setMessage("Oops! No Questionnaire Available!");
             }
-        }
+        };
         prepareQuestionnaire();
     }, [props.questionnaireID]);
 
     return (
-        loaded?
-        <Questionnaire
-                    readOnly = {true}
-                    questionnaire={questionnaire}
-                    submitQuestionnaire={()=>{}}
-                    questionnaireData={questionnaireData}
-                    handleQuestionnaireChange={()=>{}}
-                />:<div>{message}</div>
+        loaded ?
+            <Questionnaire
+                readOnly={true}
+                questionnaire={questionnaire}
+                submitQuestionnaire={() => {}}
+                questionnaireData={questionnaireData}
+                handleQuestionnaireChange={() => {}}
+            /> : <div>{message}</div>
     );
 
-}
+};
 
 export default ViewQuestionnaireContainer;

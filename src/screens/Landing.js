@@ -1,7 +1,7 @@
 /**
- * ====================================================================
+ * =============================================================================
  * REACT SCREEN COMPONENT CLASS
- * ====================================================================
+ * =============================================================================
  * @date created: 10th May 2020
  * @authors: Waqas Rehmani
  *
@@ -13,22 +13,21 @@
  *
  */
 
-import React from "react"; 
-import { Link } from 'react-router-dom';
+// Import Libraries.
+import React from "react";
+import { Link } from "react-router-dom";
+// Import Assets.
+import logoComplete from "../assets/logo_complete.png";
 
-// Import assets.
-import logoComplete from '../assets/logo_complete.png';
-
-
-// ---------------------------------------------------------------
-// This method defines the elements for this component.
-// ---------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const Landing = () => {
 
     return (
         <div className="landing">
             <div className="landing-logo">
-                <img src={logoComplete} />
+                <img src={logoComplete}/>
             </div>
 
             <div className="landing-buttons">

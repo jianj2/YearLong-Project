@@ -5,15 +5,19 @@
  * @date created: 15th August 2020
  * @authors: Jin Chen
  *
+ * The OrganisationList component handles rendering of OrganisationList in
+ * the Admin Page.
  *
  */
 
+// Import Libraries.
 import React, { useEffect, useState } from "react";
-
-
+// Import Utilities.
 import { getOrganisations } from "../../utils/api";
 
-// handles rendering of OrganisationList in the Admin Page
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const OrganisationList = ({ countryName }) => {
     console.log(countryName, getOrganisations(countryName));
     const [OrganisationSummary, setOrganisationSummary] = useState([]);
@@ -49,7 +53,6 @@ const OrganisationList = ({ countryName }) => {
                 setOrganisationSummary(Array.from(OrganList));
             }
         };
-
         getOrganisationList();
     }, [countryName]);
 
@@ -57,7 +60,7 @@ const OrganisationList = ({ countryName }) => {
         <div className="organisation-list-container">
             <h1>Organisation</h1>
             {OrganisationSummary.map((organisations, index) => (
-                <OrganisationItem key={index} title={organisations} />
+                <OrganisationItem key={index} title={organisations}/>
             ))}
         </div>
     );

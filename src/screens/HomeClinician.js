@@ -1,7 +1,7 @@
 /**
- * ====================================================================
+ * =============================================================================
  * REACT SCREEN COMPONENT CLASS
- * ====================================================================
+ * =============================================================================
  * @date created: 10th May 2020
  * @authors: Waqas Rehmani, Cary Jin, SaiEr Ding, Guang Yang
  *
@@ -13,20 +13,17 @@
  *
  */
 
-// Import Libraries
+// Import Libraries.
 import React, { useEffect } from "react";
-
-// Import Utilities
+// Import Utilities.
 import { useAuth0 } from "../utils/react-auth0-spa";
 import { USER_TYPE_CLINICIAN } from "../utils/helper";
+// Import Components.
+import { SideBar, Loading, ContentPanel } from "../components/Commons";
 
-// Import Components
-import { SideBar, Loading } from "../components/Commons";
-import ContentPanel from "../components/Commons/ContentPanel";
-
-// ---------------------------------------------------------------
-// This function defines the Clinician Home screen.
-// ---------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const HomeClinician = (props) => {
     const {
         loading,
@@ -35,7 +32,7 @@ const HomeClinician = (props) => {
         user,
         getTokenSilently,
         getTokenWithPopup,
-        setToken,
+        setToken
     } = useAuth0();
 
     const domain = process.env.REACT_APP_SERVER || "http://localhost:3001";
@@ -54,7 +51,7 @@ const HomeClinician = (props) => {
                 try {
                     accessToken = await getTokenSilently({
                         audience: clinicianAuthAPI,
-                        scope: "read:current_user",
+                        scope: "read:current_user"
                     });
                     setToken(accessToken);
                 } catch (e) {
@@ -62,7 +59,7 @@ const HomeClinician = (props) => {
                         // this is for the first time when some registers on localhost (
                         // localhost is treated differently by Auth0
                         audience: clinicianAuthAPI,
-                        scope: "read:current_user",
+                        scope: "read:current_user"
                     });
                     setToken(accessToken);
                     // console.log("error:", e);
@@ -74,12 +71,9 @@ const HomeClinician = (props) => {
 
         const fn = async () => {
             await loginWithRedirect({
-                redirect_uri: `${client}/clinician`,
-
+                redirect_uri: `${client}/clinician`
                 //"http://localhost:3000/clinician", //TODO: figure out why window.location.pathname doesn't work
-
                 //redirect_uri: "https://d1hg2pgsuj0kio.cloudfront.net/clinician", //TODO: figure out why window.location.pathname doesn't work
-
                 //appState: { targetUrl: window.location.pathname},
             });
         };
@@ -87,13 +81,13 @@ const HomeClinician = (props) => {
         fn();
     }, [isAuthenticated, loading, user]);
     if (loading || !user) {
-        return <Loading />;
+        return <Loading/>;
     } else {
     }
 
     return (
         <div className="HomeClinician">
-            <SideBar userType={USER_TYPE_CLINICIAN} />
+            <SideBar userType={USER_TYPE_CLINICIAN}/>
 
             <div className="content-container">
                 <ContentPanel

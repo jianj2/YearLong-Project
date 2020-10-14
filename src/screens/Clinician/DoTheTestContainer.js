@@ -1,38 +1,37 @@
 /**
- * ====================================================================
+ * =============================================================================
  * REACT COMPONENT CLASS
- * ====================================================================
+ * =============================================================================
  * @date created: 14th May 2020
  * @authors: Jin Chen, Guang Yang
  *
- * The Sidebar component defines our SideBar for the application. This
- * will visible at the top of our application.
- *
- * This file is used to display the Sidebar component
+ * The DoTheTestContainer component handles rendering of QuestionnaireContainer
+ * in the Clinician Page.
  *
  */
 
-// Import Libraries
+// Import Libraries.
 import React, { useEffect, useState } from "react";
 import { useAuth0 } from "../../utils/react-auth0-spa";
-
-// Import Components
-import { QuestionnaireList } from "../../components/Commons";
-import { Questionnaire } from "../../components/Commons";
-import { ParentReviewSubmission } from "../../components/Commons";
-import { FormParentDetails } from "../../components/Forms";
-
-// Import Utils
+// Import Utilities.
 import {
     getClinicianQuestionnaires,
     getQuestionnaireById,
     completeQuestionnaire,
-    getStandardisedQuestionnaires,
+    getStandardisedQuestionnaires
 } from "../../utils/api";
+// Import Components.
+import {
+    QuestionnaireList,
+    Questionnaire,
+    ParentReviewSubmission,
+    Loading
+} from "../../components/Commons";
+import { FormParentDetails } from "../../components/Forms";
 
-import { Loading } from "../../components/Commons";
-
-// handles rendering of QuestionnaireContainer in the Clinician Page
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const DoTheTestContainer = () => {
     const { user, token } = useAuth0();
     const [wizardStep, setWizardStep] = useState(-1);
@@ -42,18 +41,18 @@ const DoTheTestContainer = () => {
         date: "",
         completedBy: "clinician",
         rightDeviceType: "",
-        leftDeviceType: "",
+        leftDeviceType: ""
     });
 
     const [questionnaires, setQuestionnaires] = useState([]);
     const [
         standardisedQuestionnaires,
-        setStandardisedQuestionnaires,
+        setStandardisedQuestionnaires
     ] = useState([]);
     const [questionnaireData, setQuestionnaireData] = useState([]);
 
-    console.log("questionnaires", questionnaires)
-    console.log("standardisedQuestionnaires", standardisedQuestionnaires)
+    console.log("questionnaires", questionnaires);
+    console.log("standardisedQuestionnaires", standardisedQuestionnaires);
 
     const [commentData, setCommentData] = useState([]);
 
@@ -62,7 +61,7 @@ const DoTheTestContainer = () => {
         title: "",
         description: "",
         sections: [],
-        isStandard: false,
+        isStandard: false
     });
 
     // This is called whenever "user" changes
@@ -75,6 +74,7 @@ const DoTheTestContainer = () => {
                 console.error(data);
             }
         }
+
         async function retrieveCustomisedQuestionnaires() {
             const [statusCode, data] = await getClinicianQuestionnaires(token, user.name);
             if (statusCode === 200) {
@@ -83,6 +83,7 @@ const DoTheTestContainer = () => {
                 console.error(data);
             }
         }
+
         if (user && token !== "") {
             retrieveCustomisedQuestionnaires();
             retrieveStandardisedQuestionnaires();
@@ -132,7 +133,7 @@ const DoTheTestContainer = () => {
         let temp = [...commentData];
         temp[sectionIndex][scenarioIndex] = data;
         setCommentData(temp);
-    }
+    };
 
     const onClickQuestion = async (questionnaireId) => {
         console.log("questionnaire clicked", questionnaireId);
@@ -154,7 +155,7 @@ const DoTheTestContainer = () => {
                     scenario.questions.forEach((question, questionIndex) => {
                         tempResponse[sectionIndex][scenarioIndex][questionIndex] = {
                             value: "",
-                            supplementaryValue: "",
+                            supplementaryValue: ""
                         };
                     });
                 });
@@ -251,15 +252,17 @@ const DoTheTestContainer = () => {
                 </div>
                 <div className="dothetest-subheader-container">
                     <label>Email Report</label>
-                    <button className="button" onClick={() => emailResponse("PERFORMANCE")}>
+                    <button className="button"
+                            onClick={() => emailResponse("PERFORMANCE")}>
                         Sorted by Performance
                     </button>
-                    <button className="button" onClick={() => emailResponse("IMPORTANCE")}>
+                    <button className="button"
+                            onClick={() => emailResponse("IMPORTANCE")}>
                         Sorted by Importance
                     </button>
                 </div>
 
-                {loading ? <Loading /> : null}
+                {loading ? <Loading/> : null}
 
                 <ParentReviewSubmission
                     questionnaire={selectedQuestionnaire}
@@ -292,9 +295,11 @@ const DoTheTestContainer = () => {
                     isSelectable={true}
                     onClickQuestion={onClickQuestion}
                     canEdit={false}
-                    onClickEdit={() => { }}
+                    onClickEdit={() => {
+                    }}
                     canDelete={false}
-                    onClickDelete={() => { }}
+                    onClickDelete={() => {
+                    }}
                 />
                 <QuestionnaireList
                     questionnaires={questionnaires}
@@ -302,9 +307,11 @@ const DoTheTestContainer = () => {
                     isSelectable={true}
                     onClickQuestion={onClickQuestion}
                     canEdit={false}
-                    onClickEdit={() => { }}
+                    onClickEdit={() => {
+                    }}
                     canDelete={false}
-                    onClickDelete={() => { }}
+                    onClickDelete={() => {
+                    }}
                 />
             </div>
         );

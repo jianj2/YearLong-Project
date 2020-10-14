@@ -5,13 +5,19 @@
  * @date created: 2nd September 2020
  * @authors: Cary Jin
  *
+ * The SSQInstructionsList component renders the instuction list in the admin
+ * page.
  *
  */
 
-import SSQInstructionContainer from "./SSQInstructionContainer";
+// Import Libraries.
 import React, { useState, useEffect } from "react";
+// Import Utilities.
 import { getInstructionsSummary } from "../../utils/api";
 
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const SSQInstructionsList = () => {
     const [instructionsSummary, setInstructionsSummary] = useState([]);
     const setup = async () => {
@@ -54,8 +60,6 @@ const SSQInstructionsList = () => {
             ))}
         </div>
     );
-    // return (<SSQInstructionContainer
-    // instructionType = "CC"/>);
 };
 
 export default SSQInstructionsList;

@@ -1,7 +1,7 @@
 /**
- * ====================================================================
+ * =============================================================================
  * REACT SCREEN COMPONENT CLASS
- * ====================================================================
+ * =============================================================================
  * @date created: 10th May 2020
  * @authors: Waqas Rehmani, Cary Jin, SaiEr Ding
  *
@@ -13,24 +13,21 @@
  *
  */
 
+// Import Libraries.
 import React from "react";
-
-// Import Utilities
+// Import Utilities.
 import { useAdminAuth } from "../utils/useAdminAuth";
 import { USER_TYPE_ADMIN } from "../utils/helper";
-
-// Import components
+// Import Components.
 import { FormLoginAdmin } from "../components/Forms";
-import { SideBar } from "../components/Commons";
-
-// Import assets.
+import { SideBar, ContentPanel } from "../components/Commons";
+// Import Assets.
 import logoComplete from "../assets/logo_complete.png";
 import { Loading } from "../components/Commons";
-import ContentPanel from "../components/Commons/ContentPanel";
 
-// ---------------------------------------------------------------
-// This function defines the Admin's Home screen.
-// ---------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const HomeAdmin = (props) => {
     console.log("It exists", process.env.REACT_APP_SERVER);
     const { isAdminAuthenticated, adminLogin, loading } = useAdminAuth();

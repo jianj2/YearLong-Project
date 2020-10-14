@@ -1,9 +1,9 @@
 /**
- * ====================================================================
+ * =============================================================================
  * REACT SCREEN COMPONENT FUNCTION
- * ====================================================================
+ * =============================================================================
  * @date created: 10th May 2020
- * @authors:    Waqas Rehmani, Cary Jin, SaiEr Ding, Uvin AbeySinghe.
+ * @authors: Waqas Rehmani, Cary Jin, SaiEr Ding, Uvin AbeySinghe.
  *
  *
  * The Home screen component defines our screen for the route
@@ -14,26 +14,27 @@
  *
  */
 
+// Import Libraries.
 import React, { useState, useEffect } from "react";
-import { Link, withRouter } from "react-router-dom";
-
-// Import components.
+import { withRouter } from "react-router-dom";
+// Import Utilities.
+import * as API from "../utils/api";
+// Import Components.
 import { FormParentDetails } from "../components/Forms";
-import { Questionnaire, ParentReviewSubmission } from "../components/Commons";
-import { Loading } from "../components/Commons";
-
+import {
+    Questionnaire,
+    ParentReviewSubmission,
+    Loading
+} from "../components/Commons";
 // Import assets.
 import logoComplete from "../assets/logo_complete.png";
 
-// Import utils
-import * as API from "../utils/api";
-
 const INSTRUCTIONS_READ_ONLY =
     "Go to the next page to view the questions. These would be the questions asked to you by the clinician on the call.";
-const INSTRUCTIONS = "We would have instructions here stored by the admin.";
-// ---------------------------------------------------------------
-// This method defines the elements for this component.
-// ---------------------------------------------------------------
+
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const HomeParents = ({ match }) => {
     const [wizardStep, setWizardStep] = useState(-2);
     const [questionnaire, setQuestionnaire] = useState({
@@ -41,7 +42,7 @@ const HomeParents = ({ match }) => {
         title: "",
         description: "",
         sections: [],
-        isStandard: true,
+        isStandard: true
     });
     const [clinicianEmail, setClinicianEmail] = useState("");
     const [sortBy, setSortBy] = useState("PERFORMANCE");
@@ -51,7 +52,7 @@ const HomeParents = ({ match }) => {
         date: "",
         completedBy: "parent",
         rightDeviceType: "",
-        leftDeviceType: "",
+        leftDeviceType: ""
     });
 
     const [questionnaireData, setQuestionnaireData] = useState([]);
@@ -61,7 +62,7 @@ const HomeParents = ({ match }) => {
 
     const [instruction, setInstruction] = useState({
         title: "",
-        content: "",
+        content: ""
     });
 
     const getPersonalDetails = (data) => {
@@ -76,12 +77,12 @@ const HomeParents = ({ match }) => {
             instructionType = "RP";
         }
         const [statusCode, res] = await API.getSpecificInstruction(instructionType);
-        if(statusCode===200){
+        if (statusCode === 200) {
             setInstruction({
                 title: res["title"],
-                content: res["content"],
+                content: res["content"]
             });
-        }    
+        }
     };
 
     //////////// Share section update /////////////////////////////
@@ -141,16 +142,16 @@ const HomeParents = ({ match }) => {
                                 (scenario, scenarioIndex) => {
                                     tempResponse[sectionIndex][
                                         scenarioIndex
-                                    ] = [];
+                                        ] = [];
                                     tempComments[sectionIndex][scenarioIndex] =
                                         "";
                                     scenario.questions.forEach(
                                         (question, questionIndex) => {
                                             tempResponse[sectionIndex][
                                                 scenarioIndex
-                                            ][questionIndex] = {
+                                                ][questionIndex] = {
                                                 value: "",
-                                                supplementaryValue: "",
+                                                supplementaryValue: ""
                                             };
                                         }
                                     );
@@ -176,8 +177,7 @@ const HomeParents = ({ match }) => {
 
         };
         getDetails();
-        
-        
+
     }, []);
 
     // Method called to update questionnaire data when a question is updated.
@@ -225,7 +225,7 @@ const HomeParents = ({ match }) => {
             personalDetails,
             clinicianEmail: clinicianEmail,
             questionnaireId: questionnaire.questionnaireId,
-            sortBy,
+            sortBy
         };
 
         console.log(data);
@@ -245,7 +245,7 @@ const HomeParents = ({ match }) => {
     if (wizardStep === -2) {
         return (
             <div className="parents-home">
-                <Loading />
+                <Loading/>
             </div>
         );
     }
@@ -350,7 +350,7 @@ const HomeParents = ({ match }) => {
     if (wizardStep === 3) {
         return (
             <div className="parents-home">
-                {loading ? <Loading /> : null}
+                {loading ? <Loading/> : null}
                 <div className="subheader-container">
                     <button
                         id="instructions"
@@ -386,7 +386,7 @@ const HomeParents = ({ match }) => {
     return (
         <div className="landing">
             <div className="landing-logo">
-                <img src={logoComplete} />
+                <img src={logoComplete}/>
             </div>
 
             <div className="form-completed">
