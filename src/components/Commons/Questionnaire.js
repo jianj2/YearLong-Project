@@ -1,7 +1,7 @@
 /**
- * ====================================================================
+ * =============================================================================
  * REACT COMPONENT FUNCTION
- * ====================================================================
+ * =============================================================================
  * @date created: 17th May 2020
  * @authors:    Uvin Abeysinghe, Waqas Rehmani, Ashley Curtis,
  *              Mayank Sharma, Jian Jiao
@@ -11,21 +11,23 @@
  *
  */
 
-// Import libraries.
+// Import Libraries.
 import React  from "react";
 import { useForm } from "react-hook-form";
 import { TextField} from "@material-ui/core";
 import { Snackbar } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
 
-// Import components.
+// Import Components.
 import Question from "./Question";
-
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 function Questionnaire({
       readOnly,
       questionnaire,

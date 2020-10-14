@@ -1,9 +1,9 @@
 /**
- * ====================================================================
+ * =============================================================================
  * REACT COMPONENT
- * ====================================================================
+ * =============================================================================
  * @date created: 16th May 2020
- * @authors: Guang Yang
+ * @authors: Guang Yang, Waqas Rehmani
  *
  * The content panel will display the content when people click the side bar
  *
@@ -13,7 +13,8 @@
 
 // Import Libraries
 import React from "react";
-
+// Import Utilities
+import { USER_TYPE_CLINICIAN, USER_TYPE_ADMIN } from "../../utils/helper";
 // Import Screens
 import {
     ManageQuestionnaires,
@@ -37,10 +38,9 @@ import {
     QuestionnaireContainer
 } from "../../screens/Common";
 
-
-// Import Utilities
-import { USER_TYPE_CLINICIAN, USER_TYPE_ADMIN } from "../../utils/helper";
-
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const ContentPanel = (props) => {
     // ========================================================================
     // Content Panel definition for Clinician

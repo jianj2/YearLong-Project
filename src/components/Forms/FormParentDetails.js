@@ -1,7 +1,7 @@
 /**
- * ====================================================================
+ * =============================================================================
  * REACT COMPONENT FUNCTION
- * ====================================================================
+ * =============================================================================
  * @date created: 18th May 2020
  * @authors: Waqas Rehmani
  *
@@ -13,6 +13,8 @@
  *
  */
 
+// Import Libraries.
+
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import moment from "moment";
@@ -21,14 +23,19 @@ import {
     FormControl,
     InputLabel,
     FormHelperText,
-    Select,
-    MenuItem,
-    TextField,
+    Select
 } from "@material-ui/core";
-import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
-
-export default function FormParentDetails({ submitDetails, clinicianAccess, defaultValue, getPersonalDetails, isSSQ_Ch }) {
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
+export default function FormParentDetails({
+    submitDetails,
+    clinicianAccess,
+    defaultValue,
+    getPersonalDetails,
+    isSSQ_Ch
+}) {
     const { register, handleSubmit, errors } = useForm();
 
     const [date, setDate] = useState(defaultValue.date);
@@ -44,57 +51,56 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
     let [rightDeviceSubmit, setRightDeviceSubmit] = useState(null);
     let [leftDeviceSubmit, setLeftDeviceSubmit] = useState(null);
 
-    let personalData = {}
+    let personalData = {};
 
-    const deviceTypeOption = ['None', 'Hearing Aid', 'Cochlear Implant', 'Other', ''];
+    const deviceTypeOption = ["None", "Hearing Aid", "Cochlear Implant", "Other", ""];
 
     useEffect(() => {
 
         if (rightDeviceType === "Other" || (deviceTypeOption.indexOf(rightDeviceType) === -1)) {
-            rightDeviceTypeOtherVisible = true
-            setRightDeviceTypeOtherVisible(true)
+            rightDeviceTypeOtherVisible = true;
+            setRightDeviceTypeOtherVisible(true);
         } else {
-            rightDeviceTypeOtherVisible = false
-            setRightDeviceTypeOtherVisible(false)
+            rightDeviceTypeOtherVisible = false;
+            setRightDeviceTypeOtherVisible(false);
         }
 
-    }, [rightDeviceType])
+    }, [rightDeviceType]);
 
     useEffect(() => {
 
         if (leftDeviceType === "Other" || (deviceTypeOption.indexOf(leftDeviceType) === -1)) {
-            leftDeviceTypeOtherVisible = true
-            setLeftDeviceTypeOtherVisible(true)
+            leftDeviceTypeOtherVisible = true;
+            setLeftDeviceTypeOtherVisible(true);
         } else {
-            leftDeviceTypeOtherVisible = false
-            setLeftDeviceTypeOtherVisible(false)
+            leftDeviceTypeOtherVisible = false;
+            setLeftDeviceTypeOtherVisible(false);
         }
 
-    }, [leftDeviceType])
+    }, [leftDeviceType]);
 
     useEffect(() => {
 
-        let completedBy
+        let completedBy;
         if (clinicianAccess) {
-            completedBy = "clinician"
+            completedBy = "clinician";
         } else {
-            completedBy = isSSQ_Ch ? "Child" : "Parent"
+            completedBy = isSSQ_Ch ? "Child" : "Parent";
         }
         if (rightDeviceTypeOtherVisible) {
-            rightDeviceSubmit = rightDeviceTypeOther
-            setRightDeviceSubmit(rightDeviceTypeOther)
+            rightDeviceSubmit = rightDeviceTypeOther;
+            setRightDeviceSubmit(rightDeviceTypeOther);
         } else {
-            rightDeviceSubmit = rightDeviceType
-            setRightDeviceSubmit(rightDeviceType)
+            rightDeviceSubmit = rightDeviceType;
+            setRightDeviceSubmit(rightDeviceType);
         }
         if (leftDeviceTypeOtherVisible) {
-            leftDeviceSubmit = leftDeviceTypeOther
-            setLeftDeviceSubmit(leftDeviceTypeOther)
+            leftDeviceSubmit = leftDeviceTypeOther;
+            setLeftDeviceSubmit(leftDeviceTypeOther);
         } else {
-            leftDeviceSubmit = leftDeviceType
-            setLeftDeviceSubmit(leftDeviceType)
+            leftDeviceSubmit = leftDeviceType;
+            setLeftDeviceSubmit(leftDeviceType);
         }
-
 
         personalData = {
             name,
@@ -102,13 +108,10 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
             rightDeviceType: rightDeviceSubmit,
             leftDeviceType: leftDeviceSubmit,
             completedBy
-        }
-
+        };
 
         getPersonalDetails(personalData);
-    }, [name, date, rightDeviceType, leftDeviceType, rightDeviceTypeOther, leftDeviceTypeOther])
-
-
+    }, [name, date, rightDeviceType, leftDeviceType, rightDeviceTypeOther, leftDeviceTypeOther]);
 
     const handleButtonPress = () => {
         submitDetails(personalData);
@@ -118,12 +121,13 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
 
     const handleDateChange = (event) => {
         if (Date.parse("1900-01-01") > Date.parse(event.target.value) || moment().format("YYYY-MM-DD") < Date.parse(event.target.value)) {
-            setDate("")
+            setDate("");
         }
     };
 
     return (
-        <form onSubmit={handleSubmit(handleButtonPress)} className="parents-detail-form" id="parents-detail-form">
+        <form onSubmit={handleSubmit(handleButtonPress)}
+              className="parents-detail-form" id="parents-detail-form">
             <div className="parents-detail-container">
                 <div className="parents-detail-form-column">
                     <FormControl margin="dense">
@@ -136,7 +140,7 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                             placeholder="Write the child's name"
                             error={errors.name !== undefined}
                             inputRef={register({
-                                required: "You have not entered the name.",
+                                required: "You have not entered the name."
                             })}
                         />
                         <FormHelperText>{errors.name ? errors.name.message : "Please enter the child's name."}</FormHelperText>
@@ -154,12 +158,13 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                             // required
                                 native
                                 inputRef={register({
-                                    required: "You have not specified the device type.",
+                                    required: "You have not specified the device type."
                                 })}>
                             <option value="" disabled selected></option>
                             <option value="None">None</option>
                             <option value="Hearing Aid">Hearing Aid</option>
-                            <option value="Cochlear Implant">Cochlear Implant</option>
+                            <option value="Cochlear Implant">Cochlear Implant
+                            </option>
                             <option value="Other">Other</option>
                         </Select>
 
@@ -168,7 +173,8 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
 
                     {rightDeviceTypeOtherVisible ? (
                         <FormControl margin="dense">
-                            <InputLabel>What sort of device (right)?</InputLabel>
+                            <InputLabel>What sort of device
+                                (right)?</InputLabel>
                             <Input
                                 // defaultValue={defaultValue.date}
                                 value={rightDeviceTypeOther}
@@ -178,7 +184,7 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                                 required
                                 error={errors.name !== undefined}
                                 inputRef={register({
-                                    required: "You have not entered another device type.",
+                                    required: "You have not entered another device type."
                                 })}
                             />
                             <FormHelperText>{errors.rightDeviceTypeOther ? errors.rightDeviceTypeOther.message : "Please enter the device type."}</FormHelperText>
@@ -201,15 +207,17 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                             type="date"
                             required
                             onBlur={handleDateChange}
-                            inputProps={{ min: "1900-01-01", max: moment().format("YYYY-MM-DD") }}
+                            inputProps={{
+                                min: "1900-01-01",
+                                max: moment().format("YYYY-MM-DD")
+                            }}
                             error={errors.date !== undefined}
                             inputRef={register({
-                                required: "You have not entered the date of birth.",
+                                required: "You have not entered the date of birth."
                             })}
                         />
                         <FormHelperText>{errors.date ? errors.date.message : "Please enter the child's date of birth."}</FormHelperText>
                     </FormControl>
-
 
 
                     <FormControl margin="dense">
@@ -223,13 +231,14 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                             // required
                             native
                             inputRef={register({
-                                required: "You have not specified the device type.",
+                                required: "You have not specified the device type."
                             })}
                         >
                             <option value="" disabled selected></option>
                             <option value="None">None</option>
                             <option value="Hearing Aid">Hearing Aid</option>
-                            <option value="Cochlear Implant">Cochlear Implant</option>
+                            <option value="Cochlear Implant">Cochlear Implant
+                            </option>
                             <option value="Other">Other</option>
                         </Select>
 
@@ -248,12 +257,12 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                                 required
                                 error={errors.name !== undefined}
                                 inputRef={register({
-                                    required: "You have not entered another device type.",
+                                    required: "You have not entered another device type."
                                 })}
                             />
                             <FormHelperText>{errors.leftDeviceTypeOther ? errors.leftDeviceTypeOther.message : "Please enter the device type."}</FormHelperText>
                         </FormControl>
-                    ) : null }
+                    ) : null}
                 </div>
             </div>
 

@@ -1,7 +1,7 @@
 /**
- * ====================================================================
+ * =============================================================================
  * REACT COMPONENT
- * ====================================================================
+ * =============================================================================
  * @date created: 17th May 2020
  * @authors: Guang Yang, Jin Chen
  *
@@ -11,33 +11,19 @@
  *
  */
 
+// Import Libraries.
 import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-
-// Import Utils.
+// Import Utilities.
 import * as API from "../../utils/api";
 import { CustomModal } from "../../components/Commons";
 import { useAuth0 } from "../../utils/react-auth0-spa";
-
 // Import Components.
-import { QuestionnaireList } from "../../components/Commons";
-import { Loading } from "../../components/Commons";
+import { QuestionnaireList, Loading} from "../../components/Commons";
 import { useAdminAuth } from "../../utils/useAdminAuth";
 
-const useStyles = makeStyles((theme) => ({
-    modal: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    paper: {
-        backgroundColor: theme.palette.background.paper,
-        border: "2px solid #000",
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-    },
-}));
-
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const ManageQuestionnaires = (props) => {
     const { isAuthenticated, user, token } = useAuth0();
 

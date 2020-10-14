@@ -1,7 +1,7 @@
 /**
- * ====================================================================
+ * =============================================================================
  * REACT COMPONENT CLASS
- * ====================================================================
+ * =============================================================================
  * @date created: 10th May 2020
  * @authors: Waqas Rehmani
  *
@@ -10,12 +10,14 @@
  *
  */
 
+// Import Libraries.
 import React from "react";
-
-// Import styles.
+// Import Styles.
 import "../../styles/loading.css";
 
-// handles rendering of Navigation Bar with Login
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const Loading = () => {
     return (
         <div className="loading">
@@ -46,6 +48,6 @@ const Loading = () => {
             </svg>
         </div>
     );
-}
+};
 
 export default Loading;

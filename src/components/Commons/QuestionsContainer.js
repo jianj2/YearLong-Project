@@ -1,97 +1,95 @@
 /**
- * ====================================================================
+ * =============================================================================
  * REACT COMPONENT CLASS
- * ====================================================================
+ * =============================================================================
  * @date created: 18th May 2020
  * @authors: Jin Chen, Guang Yang
  *
- * The Sidebar component defines our SideBar for the application. This
- * will visible at the top of our application.
- *
- * This file is used to display the Sidebar component
+ * The QuestionsContainer component handles the container that contains the
+ * question in the editing the questionnaire in the Clinician page.
  *
  */
 
-import React, { useState } from "react";
+// Import Libraries.
+import React from "react";
 import {
     Input,
     FormControl,
     InputLabel,
-    FormHelperText,
-    InputAdornment,
-    IconButton,
+    FormHelperText
 } from "@material-ui/core";
-
 import PropTypes from "prop-types";
 
-// handles rendering of Quetionnaire questions in the Clinician page
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const QuestionsContainer = ({
-                                questions,
-                                scenarioIndex,
-                                sectionIndex,
-                                removeQuestion,
-                                changeToRangeQuestion,
-                                changeToMCQQuestion,
-                                addAnswerToMCQQuestion,
-                                deleteAnswerFromMCQQuestion,
-                                handleQuestionDesChange,
-                                handleQuestionOptsChange,
-                            } ) => {
+    questions,
+    scenarioIndex,
+    sectionIndex,
+    removeQuestion,
+    changeToRangeQuestion,
+    changeToMCQQuestion,
+    addAnswerToMCQQuestion,
+    deleteAnswerFromMCQQuestion,
+    handleQuestionDesChange,
+    handleQuestionOptsChange
+}) => {
     return (
         <div className="questions-container">
             {questions && questions.map((item, index) => {
-                    return (
-                        <QuestionForm
-                            item={item}
-                            key={item._id}
-                            questionIndex={index}
-                            scenarioIndex={scenarioIndex}
-                            sectionIndex={sectionIndex}
-                            removeQuestion={removeQuestion}
-                            changeToRangeQuestion={changeToRangeQuestion}
-                            changeToMCQQuestion={changeToMCQQuestion}
-                            addAnswerToMCQQuestion={addAnswerToMCQQuestion}
-                            deleteAnswerFromMCQQuestion={
-                                deleteAnswerFromMCQQuestion
-                            }
-                            handleQuestionDesChange={
-                                handleQuestionDesChange
-                            }
-                            handleQuestionOptsChange={handleQuestionOptsChange}
-                        />
-                    );
-                })}
+                return (
+                    <QuestionForm
+                        item={item}
+                        key={item._id}
+                        questionIndex={index}
+                        scenarioIndex={scenarioIndex}
+                        sectionIndex={sectionIndex}
+                        removeQuestion={removeQuestion}
+                        changeToRangeQuestion={changeToRangeQuestion}
+                        changeToMCQQuestion={changeToMCQQuestion}
+                        addAnswerToMCQQuestion={addAnswerToMCQQuestion}
+                        deleteAnswerFromMCQQuestion={
+                            deleteAnswerFromMCQQuestion
+                        }
+                        handleQuestionDesChange={
+                            handleQuestionDesChange
+                        }
+                        handleQuestionOptsChange={handleQuestionOptsChange}
+                    />
+                );
+            })}
         </div>
     );
 };
 
 //decide which kind of question to show
 const QuestionForm = ({
-    questionIndex,
-    removeQuestion,
-    sectionIndex,
-    scenarioIndex,
-    changeToMCQQuestion,
-    changeToRangeQuestion,
-    addAnswerToMCQQuestion,
-    deleteAnswerFromMCQQuestion,
-    handleQuestionDesChange,
-    handleQuestionOptsChange,
-    item,
-}) => {
-    const { rangeOptions, description, MCQOptions, isMCQ} = item;
+                          questionIndex,
+                          removeQuestion,
+                          sectionIndex,
+                          scenarioIndex,
+                          changeToMCQQuestion,
+                          changeToRangeQuestion,
+                          addAnswerToMCQQuestion,
+                          deleteAnswerFromMCQQuestion,
+                          handleQuestionDesChange,
+                          handleQuestionOptsChange,
+                          item
+                      }) => {
+    const { rangeOptions, description, MCQOptions, isMCQ } = item;
 
     const handleRangeClick = (e) => {
         e.preventDefault();
-        changeToRangeQuestion(sectionIndex,scenarioIndex,questionIndex);
+        changeToRangeQuestion(sectionIndex, scenarioIndex, questionIndex);
     };
     const handleMultipleClick = (e) => {
         e.preventDefault();
-        changeToMCQQuestion(sectionIndex,scenarioIndex,questionIndex);
+        changeToMCQQuestion(sectionIndex, scenarioIndex, questionIndex);
     };
     const handleRemoveClick = (e) => {
         e.preventDefault();
-        removeQuestion(sectionIndex,scenarioIndex,questionIndex);
+        removeQuestion(sectionIndex, scenarioIndex, questionIndex);
     };
 
     const renderHeader = () => {
@@ -136,7 +134,7 @@ const QuestionForm = ({
     } else {
         return (
             <div className="questionTable">
-                {renderHeader()} 
+                {renderHeader()}
                 <MultipleChoiceQuestionFrom
                     description={description}
                     MCQOptions={MCQOptions}
@@ -160,11 +158,12 @@ const RangeQuestionFrom = ({
                                questionIndex,
                                rangeOptions,
                                handleQuestionDesChange,
-                               handleQuestionOptsChange}) => {
+                               handleQuestionOptsChange
+                           }) => {
 
-    const handleRangeChange = (event, questionIndex, answerIndex) =>{
-        handleQuestionOptsChange(event,questionIndex,answerIndex);
-    }
+    const handleRangeChange = (event, questionIndex, answerIndex) => {
+        handleQuestionOptsChange(event, questionIndex, answerIndex);
+    };
 
     return (
         <div className="questionTable-form">
@@ -183,7 +182,7 @@ const RangeQuestionFrom = ({
                 <Input
                     placeholder="Write the Range Starts."
                     value={rangeOptions[0]}
-                    onChange={(event) =>{
+                    onChange={(event) => {
                         handleQuestionOptsChange(
                             event,
                             sectionIndex,
@@ -195,13 +194,13 @@ const RangeQuestionFrom = ({
                 <FormHelperText>Write the Range Starts.</FormHelperText>
             </FormControl>
 
-           
+
             <FormControl margin="dense">
                 <InputLabel>RangeEnds</InputLabel>
                 <Input
                     placeholder="Write the Range Ends."
                     value={rangeOptions[1]}
-                    onChange={(event) =>{
+                    onChange={(event) => {
                         handleQuestionOptsChange(
                             event,
                             sectionIndex,
@@ -275,49 +274,49 @@ const MultipleChoiceQuestionFrom = (props) => {
 
             <h3>Answers</h3>
             {MCQOptions &&
-                MCQOptions.map((item, index) => {
-                    return (
-                        <div className="questionTable-answer" key={index}>
-                            <div>
-                                <FormControl margin="dense">
-                                    <InputLabel>Answer {index+1}</InputLabel>
-                                    <Input
-                                        placeholder="Write the Answer."
-                                        value={MCQOptions[index]}
-                                        onChange={(event) =>
-                                            handleQuestionOptsChange(
-                                                event,
-                                                sectionIndex,
-                                                scenarioIndex,
-                                                questionIndex,
-                                                index
-                                            )
-                                        }
-                                    />
-                                    <FormHelperText>
-                                        Write the Answer.
-                                    </FormHelperText>
-                                </FormControl>
-                            </div>
-                            <button
-                                className="delete-answer-button"
-                                type="button"
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    deleteAnswerFromMCQQuestion(sectionIndex,scenarioIndex,questionIndex, index);
-                                }}
-                            >
-                                {" "}
-                                -{" "}
-                            </button>
-                        </div> 
-                    );
-            })} 
+            MCQOptions.map((item, index) => {
+                return (
+                    <div className="questionTable-answer" key={index}>
+                        <div>
+                            <FormControl margin="dense">
+                                <InputLabel>Answer {index + 1}</InputLabel>
+                                <Input
+                                    placeholder="Write the Answer."
+                                    value={MCQOptions[index]}
+                                    onChange={(event) =>
+                                        handleQuestionOptsChange(
+                                            event,
+                                            sectionIndex,
+                                            scenarioIndex,
+                                            questionIndex,
+                                            index
+                                        )
+                                    }
+                                />
+                                <FormHelperText>
+                                    Write the Answer.
+                                </FormHelperText>
+                            </FormControl>
+                        </div>
+                        <button
+                            className="delete-answer-button"
+                            type="button"
+                            onClick={(event) => {
+                                event.preventDefault();
+                                deleteAnswerFromMCQQuestion(sectionIndex, scenarioIndex, questionIndex, index);
+                            }}
+                        >
+                            {" "}
+                            -{" "}
+                        </button>
+                    </div>
+                );
+            })}
             <button
                 className="add-answer-button"
                 onClick={(event) => {
                     event.preventDefault();
-                    addAnswerToMCQQuestion(sectionIndex,scenarioIndex,questionIndex);
+                    addAnswerToMCQQuestion(sectionIndex, scenarioIndex, questionIndex);
                 }}
             >
                 {" "}
@@ -328,7 +327,7 @@ const MultipleChoiceQuestionFrom = (props) => {
 };
 
 QuestionsContainer.protoTypes = {
-    removeQuestion: PropTypes.func,
+    removeQuestion: PropTypes.func
 };
 
 export default QuestionsContainer;

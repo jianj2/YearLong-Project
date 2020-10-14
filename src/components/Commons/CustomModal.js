@@ -1,16 +1,16 @@
 /**
- * ====================================================================
+ * =============================================================================
  * REACT COMPONENT CLASS
- * ====================================================================
+ * =============================================================================
  * @date created: 20th September 2020
  * @authors: Cary Jin
  *
  * The modal component defines a basic yet customisable modal where users
  * can confirm or cancel their actions
  *
- * =============================================================================
  */
 
+// Import Libraries.
 import React, { useState, useEffect } from "react";
 import { Modal, Backdrop, Fade } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const CustomModal = (props) => {
     const classes = useStyles();
     const [isVisible, setIsVisible] = useState(false);

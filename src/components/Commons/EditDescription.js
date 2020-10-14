@@ -1,17 +1,16 @@
 /**
- * ====================================================================
+ * =============================================================================
  * REACT COMPONENT CLASS
- * ====================================================================
+ * =============================================================================
  * @date created: 14th May 2020
  * @authors: Jin Chen, Guang Yang
  *
- * The Sidebar component defines our SideBar for the application. This
- * will visible at the top of our application.
- *
- * This file is used to display the Sidebar component
+ * The EditDescription component handles the rendering of edit questionnaire
+ * description box for clinicians.
  *
  */
 
+// Import Libraries.
 import React from "react";
 import {
     Input,
@@ -27,8 +26,9 @@ import {
 } from "@material-ui/core";
 
 
-
-// handles rendering of the edit questionnaire description box for clincians
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const EditDescription = (props, { Questionnaire }) => {
     // to modify the questionnaire title in real time.
     const handleQuestionnaireTitleChange = (event) => {

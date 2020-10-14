@@ -1,31 +1,27 @@
 /**
- * ====================================================================
+ * =============================================================================
  * REACT COMPONENT CLASS
- * ====================================================================
+ * =============================================================================
  * @date created: 14th May 2020
  * @authors: Jin Chen, Guang Yang
  *
- * The Sidebar component defines our SideBar for the application. This
- * will visible at the top of our application.
- *
- * This file is used to display the Sidebar component
+ * The EditQuestionnaire component handles rendering of the edit questionnaire
+ * page for clinicians
  *
  */
 
+// Import Libraries.
 import React, { useState } from "react";
 import { CustomModal } from "./index";
-
-// Import components.
+// Import Utilities.
+import * as API from "../../utils/api";
+import { useAuth0 } from "../../utils/react-auth0-spa";
+// Import Components.
 import { Loading, EditDescription, SectionsContainer } from "./";
 
-
-//utils
-import * as API from "../../utils/api";
-
-//Auth0
-import { useAuth0 } from "../../utils/react-auth0-spa";
-
-// handles rendering of the edit questionnaire page for clinicians
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const EditQuestionnaire = ({
     Questionnaire,
     removeQuestion,

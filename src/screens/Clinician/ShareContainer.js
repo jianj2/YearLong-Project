@@ -1,3 +1,16 @@
+/**
+ * =============================================================================
+ * REACT COMPONENT
+ * =============================================================================
+ * @date created: 20th August 2020
+ * @authors: Waqas Rehmani, Uvin Abeysinghe
+ *
+ * This is a Clinician's screen component that displays which questionnaire to
+ * share.
+ *
+ */
+
+// Import Libraries.
 import React, { useState, useEffect } from "react";
 import {
     Modal,
@@ -13,7 +26,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-// Import Utils.
+// Import Utilities.
 import * as API from "../../utils/api";
 import { formatDate } from "../../utils/helper";
 import { useAuth0 } from "../../utils/react-auth0-spa";

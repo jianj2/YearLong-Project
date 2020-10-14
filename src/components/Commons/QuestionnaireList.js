@@ -1,7 +1,7 @@
 /**
- * ====================================================================
+ * =============================================================================
  * REACT COMPONENT CLASS
- * ====================================================================
+ * =============================================================================
  * @date created: 3rd June 2020
  * @authors: Waqas Rehmani
  *
@@ -57,14 +57,16 @@
  *
  */
 
-// Import Libraries
+// Import Libraries.
 import React from "react";
 
-// Import Utils
+// Import Utilities.
 import Chip from "@material-ui/core/Chip";
 import { Avatar } from "@material-ui/core";
 
-
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const QuestionnaireList = ({
     questionnaires,
     listTitle,
