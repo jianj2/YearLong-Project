@@ -14,14 +14,16 @@
 import React from "react";
 
 // Import Screens
-import ManageQuestionnaires from "../../screens/Clinician/ManageQuestionnaires";
-import DoTheTestContainer from "../../screens/Clinician/DoTheTestContainer";
-import InstructionsContainer from "../../screens/Clinician/InstructionsContainer";
-import QuestionnaireContainer from "../../screens/Clinician/QuestionnaireContainer";
-import ViewQuestionnaireContainer from "../../screens/Clinician/ViewQuestionnaireContainer";
-import ShareContainer from "../../screens/Clinician/ShareContainer";
+import {
+    ManageQuestionnaires,
+    DoTheTestContainer,
+    InstructionsContainer,
+    QuestionnaireContainer,
+    ViewQuestionnaireContainer,
+    ShareContainer
+} from '../../screens/Clinician'
 
-//import Style
+// Import Styles
 import "../../styles/contentpanel.css";
 import "../../styles/main.css";
 

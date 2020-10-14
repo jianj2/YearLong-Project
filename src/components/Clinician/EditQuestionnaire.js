@@ -13,11 +13,11 @@
  */
 
 import React, { useState } from "react";
-import { CustomModal } from "../../components/Commons";
+import { CustomModal } from "../Commons";
 
 // Import components.
 import EditDescription from "./EditDescription";
-import { Loading } from "../../components/Commons";
+import { Loading } from "../Commons";
 import SectionsContainer from "./SectionsContainer";
 //style
 import "../../styles/clinician.css";
