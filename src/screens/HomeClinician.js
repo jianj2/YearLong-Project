@@ -28,6 +28,7 @@ import "../styles/main.css";
 import { SideBar, Loading } from "../components/Commons";
 import ContentPanel from "../components/Commons/ContentPanel";
 
+import { USER_TYPE_CLINICIAN } from '../utils/helper'
 // ---------------------------------------------------------------
 // This function defines the Clinician Home screen.
 // ---------------------------------------------------------------
@@ -101,6 +102,7 @@ const HomeClinician = (props) => {
 
             <div className="content-container">
                 <ContentPanel
+                    userType={USER_TYPE_CLINICIAN}
                     active={props.active}
                     questionnaireID={props.questionnaireID}
                 />

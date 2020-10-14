@@ -31,7 +31,10 @@ import "../styles/main.css";
 // Import assets.
 import logoComplete from "../assets/logo_complete.png";
 import { Loading } from "../components/Commons";
+import ContentPanel from "../components/Commons/ContentPanel";
 
+
+import { USER_TYPE_ADMIN } from '../utils/helper'
 
 // ---------------------------------------------------------------
 // This function defines the Admin's Home screen.
@@ -47,13 +50,23 @@ const HomeAdmin = (props) => {
         return (
             <div className="HomeAdmin">
                 <SideBar userType={USER_TYPE_ADMIN} />
-                <AdminContentPanel
+                {/*<AdminContentPanel*/}
+                {/*    active={props.active}*/}
+                {/*    questionnaireID={props.questionnaireID}*/}
+                {/*    instructionType={props.instructionType}*/}
+                {/*    organName={props.organName}*/}
+                {/*    countryName={props.countryName}*/}
+                {/*/>*/}
+                <div className="content-container">
+                <ContentPanel
+                    userType={USER_TYPE_ADMIN}
                     active={props.active}
                     questionnaireID={props.questionnaireID}
                     instructionType={props.instructionType}
                     organName={props.organName}
                     countryName={props.countryName}
                 />
+                </div>
             </div>
         );
     } else {

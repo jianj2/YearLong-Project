@@ -22,7 +22,7 @@ import OrganisationList from "./OrganisationList";
 import "../../styles/contentpanel.css";
 import "../../styles/main.css";
 import ViewQuestionnaireContainer from "../Clinician/ViewQuestionnaireContainer";
-import QuestionnaireContainer from "../Clinician/QuestionnaireContainer";
+import { QuestionnaireContainer } from "../Common";
 import AdminViewStandardQuestionnaire from "./AdminViewStandardQuestionnaire";
 import InstructionContainer from "./SSQInstructionContainer";
 import OrganisationContainer from "./OrganisationContainer";
