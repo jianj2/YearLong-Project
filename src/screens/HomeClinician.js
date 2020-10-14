@@ -26,7 +26,7 @@ import "../styles/main.css";
 
 // Import Components
 import { SideBar, Loading } from "../components/Commons";
-import ContentPanel from "./Clinician/ContentPanel";
+import ContentPanel from "../components/Commons/ContentPanel";
 
 // ---------------------------------------------------------------
 // This function defines the Clinician Home screen.
