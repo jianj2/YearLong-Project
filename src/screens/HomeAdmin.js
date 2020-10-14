@@ -21,7 +21,6 @@ import { USER_TYPE_ADMIN } from "../utils/helper";
 
 // Import components
 import { FormLoginAdmin } from "../components/Forms";
-import AdminContentPanel from "./Admin/AdminContentPanel";
 import { SideBar } from "../components/Commons";
 
 // Import styles.
@@ -33,9 +32,6 @@ import logoComplete from "../assets/logo_complete.png";
 import { Loading } from "../components/Commons";
 import ContentPanel from "../components/Commons/ContentPanel";
 
-
-import { USER_TYPE_ADMIN } from '../utils/helper'
-
 // ---------------------------------------------------------------
 // This function defines the Admin's Home screen.
 // ---------------------------------------------------------------
@@ -43,29 +39,22 @@ const HomeAdmin = (props) => {
     console.log("It exists", process.env.REACT_APP_SERVER);
     const { isAdminAuthenticated, adminLogin, loading } = useAdminAuth();
     if (loading === true) {
-        return <Loading />
+        return <Loading/>;
     }
 
     if (isAdminAuthenticated === true) {
         return (
             <div className="HomeAdmin">
-                <SideBar userType={USER_TYPE_ADMIN} />
-                {/*<AdminContentPanel*/}
-                {/*    active={props.active}*/}
-                {/*    questionnaireID={props.questionnaireID}*/}
-                {/*    instructionType={props.instructionType}*/}
-                {/*    organName={props.organName}*/}
-                {/*    countryName={props.countryName}*/}
-                {/*/>*/}
+                <SideBar userType={USER_TYPE_ADMIN}/>
                 <div className="content-container">
-                <ContentPanel
-                    userType={USER_TYPE_ADMIN}
-                    active={props.active}
-                    questionnaireID={props.questionnaireID}
-                    instructionType={props.instructionType}
-                    organName={props.organName}
-                    countryName={props.countryName}
-                />
+                    <ContentPanel
+                        userType={USER_TYPE_ADMIN}
+                        active={props.active}
+                        questionnaireID={props.questionnaireID}
+                        instructionType={props.instructionType}
+                        organName={props.organName}
+                        countryName={props.countryName}
+                    />
                 </div>
             </div>
         );
@@ -73,11 +62,11 @@ const HomeAdmin = (props) => {
         return (
             <div className="landing">
                 <div className="landing-logo">
-                    <img src={logoComplete} />
+                    <img src={logoComplete}/>
                 </div>
 
                 <div className="landing-buttons">
-                    <FormLoginAdmin adminLogin={adminLogin} />
+                    <FormLoginAdmin adminLogin={adminLogin}/>
                 </div>
             </div>
         );

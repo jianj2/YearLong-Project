@@ -28,7 +28,6 @@ import "../styles/main.css";
 import { SideBar, Loading } from "../components/Commons";
 import ContentPanel from "../components/Commons/ContentPanel";
 
-import { USER_TYPE_CLINICIAN } from '../utils/helper'
 // ---------------------------------------------------------------
 // This function defines the Clinician Home screen.
 // ---------------------------------------------------------------
