@@ -20,14 +20,13 @@ import React, { useEffect } from "react";
 import { useAuth0 } from "../utils/react-auth0-spa";
 import { USER_TYPE_CLINICIAN } from "../utils/helper";
 
-// Import styles.
+// Import Styles
 import "../styles/clinician.css";
 import "../styles/main.css";
 
 // Import Components
-import { SideBar } from "../components/Commons";
+import { SideBar, Loading } from "../components/Commons";
 import ContentPanel from "./Clinician/ContentPanel";
-import { Loading } from "../components/Commons";
 
 // ---------------------------------------------------------------
 // This function defines the Clinician Home screen.
@@ -100,10 +99,13 @@ const HomeClinician = (props) => {
         <div className="HomeClinician">
             <SideBar userType={USER_TYPE_CLINICIAN} />
 
-            <ContentPanel
-                active={props.active}
-                questionnaireID={props.questionnaireID}
-            />
+            <div className="content-container">
+                <ContentPanel
+                    active={props.active}
+                    questionnaireID={props.questionnaireID}
+                />
+            </div>
+
         </div>
     );
 };

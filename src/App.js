@@ -35,7 +35,7 @@ function App() {
     return (
         <div className="app-container">
             <Router>
-                <NavBar />
+                {/*<NavBar />*/}
                 <Switch>
                     <Route
                         path="/"
