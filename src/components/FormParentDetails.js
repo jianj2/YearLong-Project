@@ -148,16 +148,16 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                     <FormControl margin="dense">
                         <InputLabel>Right Device Type</InputLabel>
                         <Select id="DeviceOne"
-                                value={deviceTypeOption.indexOf(rightDeviceType) === -1 ? "Other" : rightDeviceType}
-                                onChange={(event) => setRightDeviceType(event.target.value)}
+                            value={deviceTypeOption.indexOf(rightDeviceType) === -1 ? "Other" : rightDeviceType}
+                            onChange={(event) => setRightDeviceType(event.target.value)}
                             // defaultValue={defaultValue.rightDeviceType}
-                                name="rightDeviceType"
-                                error={errors.rightDeviceType !== undefined}
+                            name="rightDeviceType"
+                            error={errors.rightDeviceType !== undefined}
                             // required
-                                native
-                                inputRef={register({
-                                    required: "You have not specified the device type.",
-                                })}>
+                            native
+                            inputRef={register({
+                                required: "You have not specified the device type.",
+                            })}>
                             <option value="" disabled selected></option>
                             <option value="None">None</option>
                             <option value="Hearing Aid">Hearing Aid</option>
@@ -263,12 +263,12 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
             {clinicianAccess ? (
                 <div></div>
             ) : (
-                <div className="parents-detail-form-submit-button">
-                    <button id="next" className="button">
-                        N E X T
+                    <div className="parents-detail-form-submit-button">
+                        <button id="next" className="button">
+                            N E X T
                     </button>
-                </div>
-            )}
+                    </div>
+                )}
             {errors.code && <span>{errors.code.message}</span>}
         </form>
     );
