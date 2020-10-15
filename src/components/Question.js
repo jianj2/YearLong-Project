@@ -208,7 +208,7 @@ export default function Question({
                     />
                     <div className="slider-labels">
                         <label>{rangeOptions[0]}</label>
-                        <label className="slider-value">{data.value === "" || data.value === undefined? "Ø" : data.value }</label>
+                        <label className={data.value === "" || data.value === undefined? "slider-value-disappear":"slider-value-display"}>{ data.value }</label>
                         <label>{rangeOptions[1]}</label>
                     </div>
                     <p>{'('}{romeNumber[questionIndex]}{')'}</p>
