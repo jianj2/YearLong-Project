@@ -54,8 +54,6 @@ const CountryList = () => {
         getCountryList();
     }, []);
 
-    console.log(countryList);
-
     return (
         <div className="country-list-container">
             <h1>Countries</h1>

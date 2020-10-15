@@ -51,9 +51,6 @@ const DoTheTestContainer = () => {
     ] = useState([]);
     const [questionnaireData, setQuestionnaireData] = useState([]);
 
-    console.log("questionnaires", questionnaires);
-    console.log("standardisedQuestionnaires", standardisedQuestionnaires);
-
     const [commentData, setCommentData] = useState([]);
 
     const [selectedQuestionnaire, setSelectedQuestionnaire] = useState({
@@ -108,7 +105,6 @@ const DoTheTestContainer = () => {
         // to make sure field is not empty.
         getPersonalDetails["completedBy"] = "clinician";
         setPersonalDetails(getPersonalDetails);
-        console.log("details submitted", data);
         nextStep();
     };
     // Method called when we submit the questionnaire.
@@ -136,7 +132,6 @@ const DoTheTestContainer = () => {
     };
 
     const onClickQuestion = async (questionnaireId) => {
-        console.log("questionnaire clicked", questionnaireId);
         setWizardStep(0);
         const [statusCode, data] = await getQuestionnaireById(
             questionnaireId
@@ -166,7 +161,7 @@ const DoTheTestContainer = () => {
             setQuestionnaireData(tempResponse);
             setSelectedQuestionnaire(questionnaire);
         } else {
-            console.log(data);
+            console.error(data);
         }
     };
 
@@ -187,7 +182,6 @@ const DoTheTestContainer = () => {
 
         const [statusCode, response] = await completeQuestionnaire(token, data);
         if (statusCode === 200) {
-            console.log("complete questionnaire", response);
             setWizardStep(3);
             setLoading(false);
         } else {

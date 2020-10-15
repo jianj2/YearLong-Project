@@ -113,8 +113,6 @@ const ShareQuestionnaire = (props) => {
 
     // Function called when Share is clicked on the QuestionnaireList
     const shareQuestionnaire = (questionnaireId, sections) => {
-        console.log("share Questionnaire ", questionnaireId);
-
         //making sure the state get reset once the modal is reloaded.
         setIsSectionsEmpty(false);
 
@@ -196,10 +194,8 @@ const ShareQuestionnaire = (props) => {
         if( !isSectionsEmpty ){
             setLoading(true);
             shareModalData["shareSection"] = shareSection;
-            console.log("shareModalData ", shareModalData);
             const [statusCode, response] = await API.shareQuestionnaire(token, shareModalData);
             if(statusCode===200){
-                   console.log("res from create Share", response)
                     setLoading(false);
                     closeModal();
                     setIsShareSuccess(true);

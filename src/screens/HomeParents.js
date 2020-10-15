@@ -121,7 +121,6 @@ const HomeParents = ({ match }) => {
         const getDetails = async () => {
             const [statusCode, shareResponse] = await API.getShareDetails(match.params.shareId);
             if (statusCode === 200) {
-                console.log("shareResponse", shareResponse);
                 // Server call to get the questionnaire.
                 setSortBy(shareResponse.data.sortBy);
                 setClinicianEmail(shareResponse.data.clinicianEmail);
@@ -228,7 +227,6 @@ const HomeParents = ({ match }) => {
             sortBy
         };
 
-        console.log(data);
         setLoading(true);
         const [statusCode, response] = await API.sendQuestionnaireData(
             data,

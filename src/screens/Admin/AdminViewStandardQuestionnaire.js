@@ -20,32 +20,29 @@ import { Questionnaire } from "../../components/Commons";
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-const AdminViewStandardQuestionnaire = (props)=>{
+const AdminViewStandardQuestionnaire = (props) => {
     const [questionnaire, setSelectedQuestionnaire] = useState({
         questionnaireId: "",
         title: "",
         description: "",
         sections: [],
-        isStandard: true,
+        isStandard: true
     });
 
     const [questionnaireData, setQuestionnaireData] = useState([]);
     const [loaded, setLoaded] = useState(false);
     const [message, setMessage] = useState("");
 
-    useEffect(()=>{
+    useEffect(() => {
 
         const prepareQuestionnaire = async () => {
             const [statusCode, data] = await API.getQuestionnaireById(props.questionnaireID);
-    
-            if (statusCode === 200 ){
+
+            if (statusCode === 200) {
                 const questionnaire = data;
                 setSelectedQuestionnaire(questionnaire);
                 let emptyResponse = [];
-                console.log(`current q: ${questionnaire.title}`);
-               
-                
-                    questionnaire.sections.forEach((section, sectionIndex) => {
+                questionnaire.sections.forEach((section, sectionIndex) => {
                     emptyResponse[sectionIndex] = [];
                     section.scenarios.forEach((scenario, scenarioIndex) => {
                         emptyResponse[sectionIndex][scenarioIndex] = [];
@@ -53,35 +50,36 @@ const AdminViewStandardQuestionnaire = (props)=>{
                             (question, questionIndex) => {
                                 emptyResponse[sectionIndex][scenarioIndex][questionIndex] = {
                                     value: "",
-                                    supplementaryValue: "",
+                                    supplementaryValue: ""
                                 };
                             }
                         );
                     });
-                
+
                 });
-            
+
                 setQuestionnaireData(emptyResponse);
                 setLoaded(true);
-                
-            }else{
-                console.log(data);
-                    setMessage("Oops! No Questionnaire Available!");
+
+            } else {
+                setMessage("Oops! No Questionnaire Available!");
             }
-        }
+        };
         prepareQuestionnaire();
     }, [props.questionnaireID]);
 
     return (
-        loaded?
+        loaded ?
             <Questionnaire
-                readOnly = {true}
+                readOnly={true}
                 questionnaire={questionnaire}
-                submitQuestionnaire={()=>{}}
+                submitQuestionnaire={() => {
+                }}
                 questionnaireData={questionnaireData}
-                handleQuestionnaireChange={()=>{}}
-            />:<div>{message}</div>
-    )
-}
+                handleQuestionnaireChange={() => {
+                }}
+            /> : <div>{message}</div>
+    );
+};
 
 export default AdminViewStandardQuestionnaire;

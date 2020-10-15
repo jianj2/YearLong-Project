@@ -19,7 +19,6 @@ import { getOrganisations } from "../../utils/api";
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
 const OrganisationList = ({ countryName }) => {
-    console.log(countryName, getOrganisations(countryName));
     const [OrganisationSummary, setOrganisationSummary] = useState([]);
 
     const OrganisationItem = ({ title }) => {

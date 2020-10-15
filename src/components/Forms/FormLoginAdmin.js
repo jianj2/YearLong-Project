@@ -37,7 +37,6 @@ export default function FormLoginAdmin({ adminLogin }) {
     const { isAuthenticated, logout } = useAuth0();
 
     const onSubmit = (data) => {
-        console.log(data);
         if (isAuthenticated) {
             logout();
         } else {

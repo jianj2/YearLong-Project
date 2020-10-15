@@ -62,7 +62,6 @@ const HomeClinician = (props) => {
                         scope: "read:current_user"
                     });
                     setToken(accessToken);
-                    // console.log("error:", e);
                 }
             };
             setAuth0Token();

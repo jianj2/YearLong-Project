@@ -47,7 +47,7 @@ const SSQInstructionsList = () => {
         setup();
     }, []);
 
-    console.log(instructionsSummary);
+
     return (
         <div className="instruction-list-container">
             <h1>SSQ Instructions</h1>

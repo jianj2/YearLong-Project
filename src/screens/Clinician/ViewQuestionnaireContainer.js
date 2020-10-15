@@ -43,7 +43,6 @@ const ViewQuestionnaireContainer = (props) => {
                 const questionnaire = data;
                 setSelectedQuestionnaire(questionnaire);
                 let emptyResponse = [];
-                console.log(`current q: ${questionnaire.title}`);
 
                 questionnaire.sections.forEach((section, sectionIndex) => {
                     emptyResponse[sectionIndex] = [];
@@ -65,8 +64,6 @@ const ViewQuestionnaireContainer = (props) => {
                 setLoaded(true);
 
             } else {
-                console.log(data);
-
                 setMessage("Oops! No Questionnaire Available!");
             }
         };

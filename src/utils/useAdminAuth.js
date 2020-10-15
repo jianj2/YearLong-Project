@@ -25,8 +25,6 @@ export const AdminAuthProvider = ({ children }) => {
 
     const verifyAdminLoginFun = async (previousAuth) => {  //this is for shortly redirect to the admin login page(bug)
         const [statusCode, response] = await API.verifyAdminLogin(previousAuth.token);
-     
-            console.log("VERYIFY LOGIN in CUSTOM HOOK", response);
             if (statusCode === 200 && response.auth) {
                 setAuthenticated(true);
                 setLoading(false);
@@ -42,7 +40,6 @@ export const AdminAuthProvider = ({ children }) => {
             localStorage.getItem("adminAuthentication")
         );
         if ( previousAuth && previousAuth.token !== "") {
-            console.log("pr: ", previousAuth);
             verifyAdminLoginFun(previousAuth);
         } else {
             // If the previousAuth is null (not have previousAuth in
@@ -53,7 +50,6 @@ export const AdminAuthProvider = ({ children }) => {
 
     const adminLogin = async (loginData) => {
         const [statusCode, response] = await API.adminLogin(loginData);
-        console.log("response from login", response);
         if (statusCode === 200) {
             setAuthenticated(response.message.auth);
             setAdminToken(response.message.token);
@@ -83,7 +79,6 @@ export const AdminAuthProvider = ({ children }) => {
         window.location.href = "/"
         setAuthenticated(false);
         setAdminToken("");
-        console.log("logout admin");
     };
    
     return (

@@ -33,7 +33,7 @@ const QuestionnaireContainer = (props) => {
             if (statusCode === 200) {
                 setQuestionnaire(data);
             } else {
-                console.log(data);
+                console.error(data);
             }
         };
         setup();

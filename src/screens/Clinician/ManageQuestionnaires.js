@@ -58,7 +58,6 @@ const ManageQuestionnaires = (props) => {
                     _,
                     customisedQuestionnaires
                 ] = await API.getClinicianQuestionnaires(token, user.name);
-                console.log(customisedQuestionnaires);
                 const sortedCustomisedQuestionnaires = customisedQuestionnaires.sort(function (a, b) {
                     let dateA = new Date(a.updateDate),
                         dateB = new Date(b.updateDate);
@@ -94,7 +93,6 @@ const ManageQuestionnaires = (props) => {
 
     // Function called when Copy is clicked on the QuestionnaireList
     const copyQuestionnaire = (questionnaire) => {
-        console.log(questionnaire);
         API.copyQuestionnaire(questionnaire, user.name);
         window.location.reload(false);
     };
@@ -106,8 +104,6 @@ const ManageQuestionnaires = (props) => {
 
     // Function called when Delete is clicked on the QuestionnaireList
     const deleteQuestionnaire = (questionnaireId, title) => {
-        console.log("delete ", questionnaireId);
-        console.log("delete ", title);
         setdeleteQuestionnaireData({
             deleteQuestionnaireID: questionnaireId,
             deleteQuestionnaireName: title

@@ -29,7 +29,6 @@ import { Loading } from "../components/Commons";
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
 const HomeAdmin = (props) => {
-    console.log("It exists", process.env.REACT_APP_SERVER);
     const { isAdminAuthenticated, adminLogin, loading } = useAdminAuth();
     if (loading === true) {
         return <Loading/>;

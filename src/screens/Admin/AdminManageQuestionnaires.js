@@ -123,7 +123,6 @@ const AdminManageQuestionnaires = () => {
         );
         setStandardisedQuestionnaires(filteredQuestionnaires);
         const [_, message] = await deleteStandardQuestionnaire(questionnaireId);
-        console.log(message);
         closeDeleteConfirmation();
     };
 
