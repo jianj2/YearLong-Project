@@ -21,9 +21,13 @@ import { getInstructionsSummary } from "../../utils/api";
 const SSQInstructionsList = () => {
     const [instructionsSummary, setInstructionsSummary] = useState([]);
     const setup = async () => {
-        const [statusCode, summary] = await getInstructionsSummary();
-        if (statusCode === 200) {
-            setInstructionsSummary(summary);
+        try {
+            const [statusCode, summary] = await getInstructionsSummary();
+            if (statusCode === 200) {
+                setInstructionsSummary(summary);
+            }
+        }catch(err){
+            console.error(err);
         }
     };
 

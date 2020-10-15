@@ -49,15 +49,19 @@ const SSQInstructionsContainer = ({ instructionType }) => {
     });
 
     const getInstruction = async (instructionType) => {
-        const [statusCode, instruction] = await API.getSpecificInstruction(instructionType);
-        if (statusCode === 200) {
-            setInstruction(instruction);
+        try {
+            const [statusCode, instruction] = await API.getSpecificInstruction(instructionType);
+            if (statusCode === 200) {
+                setInstruction(instruction);
+            }
+        }catch(err){
+            console.error(err);
         }
-    };
-
-    useEffect(() => {
-        getInstruction(instructionType);
-    }, []);
+            
+        
+    }
+    
+    useEffect(()=>{getInstruction(instructionType)},[]);
 
     // ========================================================================
     // Save Success/Failed Modal Functions
@@ -96,16 +100,23 @@ const SSQInstructionsContainer = ({ instructionType }) => {
 
     const saveInstruction = async (e) => {
         setLoading(true);
-        const [statusCode] = await API.updateInstruction(instructionType, { instruction });
-        setLoading(false);
-        if (statusCode === 200) {
-            setsaveSuccess(true);
-            openSaveModal();
-        } else {
-            setsaveSuccess(false);
-            openSaveModal();
+
+        try {
+            const [statusCode,] = await API.updateInstruction(instructionType, {instruction});
+            setLoading(false);
+            if (statusCode === 200) {
+                setsaveSuccess(true);
+                openSaveModal();
+            } else {
+                setsaveSuccess(false);
+                openSaveModal();
+            }
+        }catch(err){
+            console.error(err);
         }
-    };
+
+    }
+
 
     return (
         <div className="ssq-instructions-container">

@@ -95,3 +95,17 @@ export const AdminAuthProvider = ({ children }) => {
         </AdminAuthContext.Provider>
     );
 };
+
+export const getToken = () => {
+    let previousAuth = JSON.parse(
+        localStorage.getItem("adminAuthentication")
+    );
+    // console.log("previousAuth", previousAuth);
+    if ( !previousAuth ) {
+        previousAuth=""
+    }else{
+        previousAuth = previousAuth['token']
+    }
+    return previousAuth
+}
+

@@ -10,6 +10,9 @@
  * =============================================================================
  */
 
+import {getToken} from "./useAdminAuth";
+
+
 const api = process.env.REACT_APP_SERVER || "http://localhost:3001";
 
 //const api = "https://d1iiwjsw1v8g79.cloudfront.net/";
@@ -128,7 +131,7 @@ export const addQuestionnaire = async (token, clinicianId) => {
 
 export const addStandardQuestionnaire = async () => {
     const url = "questionnaire/addStandard";
-    return await sendRequest("POST", url);
+    return await sendRequest("POST", url,undefined,getToken());
 };
 
 // delete customised questionnaire
@@ -158,7 +161,7 @@ export const editStandardQuestionnaire = async (questionnaire) => {
     const data = {
         questionnaire,
     };
-    return await sendRequest("POST", url, data);
+    return await sendRequest("POST", url, data,getToken());
 };
 
 //COPY questionnaire
@@ -207,7 +210,7 @@ export const deleteStandardQuestionnaire = async (questionnaireID) => {
     const data = {
         questionnaireID,
     };
-    return await sendRequest("POST", url, data);
+    return await sendRequest("POST", url, data,getToken());
 };
 
 // ================================================
@@ -228,36 +231,37 @@ export const shareQuestionnaire = async (token, data) => {
 // get instruction based on type
 export const getSpecificInstruction = async (instructionType) => {
     const url = `admin/specificInstruction/${instructionType}`;
-    return await sendRequest("GET", url);
+    return await sendRequest("GET", url, undefined,getToken());
 };
 
 // get instructions summary including title and type
 
 export const getInstructionsSummary = async () => {
     const url = `admin/instructionsSummary`;
-    return await sendRequest("GET", url);
+    return await sendRequest("GET", url, undefined,getToken());
 };
 
 // update instruction by type
 export const updateInstruction = async (type, data) => {
     const url = `admin/instruction/${type}`;
-    return await sendRequest("POST", url, data);
+    return await sendRequest("POST", url, data, getToken());
 };
 
 //get countries
 export const getCountries = async () => {
     const url = `admin/country`;
-    return await sendRequest("GET", url);
+    return await sendRequest("GET", url, undefined, getToken());
 }
 
 // get organisations
 export const getOrganisations = async (countryName) => {
     const url = `admin/country/organisation/${countryName}`;
-    return await sendRequest("GET", url);
+    return await sendRequest("GET", url, undefined,getToken());
 };
 
 // get organisation's clinicians
 export const getOrganisationClinicians = async (organisationName) => {
     const url = `admin/organisation/clinician/${organisationName}`;
-    return await sendRequest("GET", url);
+    return await sendRequest("GET", url,undefined,getToken() );
 };
+

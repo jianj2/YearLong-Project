@@ -88,7 +88,7 @@ function Questionnaire({
     };
 
     return (
-        <form onSubmit={onSubmit} className="questionaire-container">
+        <form onSubmit={onSubmit} className="questionaire-container" id="questionaire-container">
             <h1>{questionnaire.title}</h1>
 
             {questionnaire.sections.map((section, sectionIndex) => (
@@ -116,8 +116,8 @@ function Questionnaire({
                                         onQuestionChange={onQuestionChange}
                                         data={
                                             questionnaireData[sectionIndex][
-                                                scenarioIndex
-                                                ][questionIndex]
+                                            scenarioIndex
+                                            ][questionIndex]
                                         }
                                         // is not applicable selected for slider question
                                         isNotApplicable={questionnaireData[sectionIndex][scenarioIndex][0].supplementaryValue === "" ? false : true}
@@ -159,14 +159,14 @@ function Questionnaire({
                     </button>
                 )}
             </div>
-                <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center'}}open={open} autoHideDuration={6000} onClose={handleClose}>
-                    <Alert onClose={handleClose} severity="error">
-                        Please Complete All The Questions!
+            <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="error">
+                    Please Complete All The Questions!
                     </Alert>
-                </Snackbar>
-            </form>
-        );
-     
+            </Snackbar>
+        </form>
+    );
+
 }
 
-export default Questionnaire
+export default Questionnaire;
