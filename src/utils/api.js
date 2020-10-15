@@ -1,4 +1,17 @@
-import {useAdminAuth, getToken} from "./useAdminAuth";
+/**
+ * =============================================================================
+ * JAVASCRIPT API FILE
+ * =============================================================================
+ * @date created: 12th October 2020
+ * @authors: Waqas Rehmani, Uvin Abeysinghe, Cary Jin
+ *
+ * This file contains all the requests made by the client to the server.
+ *
+ * =============================================================================
+ */
+
+import {getToken} from "./useAdminAuth";
+
 
 const api = process.env.REACT_APP_SERVER || "http://localhost:3001";
 
