@@ -1,15 +1,3 @@
-/**
- * =============================================================================
- * REACT COMPONENT CLASS
- * =============================================================================
- * @date created: 14th May 2020
- * @authors: Jin Chen, Guang Yang
- *
- * The DoTheTestContainer component handles rendering of QuestionnaireContainer
- * in the Clinician Page.
- *
- */
-
 // Import Libraries.
 import React, { useEffect, useState } from "react";
 import { useAuth0 } from "../../utils/react-auth0-spa";
@@ -29,6 +17,17 @@ import {
 } from "../../components/Commons";
 import { FormParentDetails } from "../../components/Forms";
 
+/**
+ * =============================================================================
+ * REACT COMPONENT CLASS
+ * =============================================================================
+ * @date created: 14th May 2020
+ * @authors: Jin Chen, Guang Yang
+ *
+ * The DoTheTestContainer component handles rendering of QuestionnaireContainer
+ * in the Clinician Page.
+ *
+ */
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////

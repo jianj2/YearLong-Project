@@ -1,15 +1,3 @@
-/**
- * =============================================================================
- * REACT COMPONENT CLASS
- * =============================================================================
- * @date created: 15th August 2020
- * @authors: Jin Chen Guang Yang
- *
- * The SSQInstructionsContainer component handles rendering of
- * SSQInstructionsContainer in the Admin Page.
- *
- */
-
 // Import Libraries.
 import React, { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
@@ -33,6 +21,18 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2, 4, 3)
     }
 }));
+
+/**
+ * =============================================================================
+ * REACT COMPONENT CLASS
+ * =============================================================================
+ * @date created: 15th August 2020
+ * @authors: Jin Chen Guang Yang
+ *
+ * The SSQInstructionsContainer component handles rendering of
+ * SSQInstructionsContainer in the Admin Page.
+ *
+ */
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////

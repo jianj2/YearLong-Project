@@ -1,3 +1,8 @@
+// Import Libraries.
+import React, { useEffect, useState } from "react";
+// Import Components.
+import { getCountries } from "../../utils/api";
+
 /**
  * =============================================================================
  * REACT COMPONENT CLASS
@@ -8,11 +13,6 @@
  * The CountryList handles the rendering of CountryList in the Admin Page.
  *
  */
-
-// Import Libraries.
-import React, { useEffect, useState } from "react";
-// Import Components.
-import { getCountries } from "../../utils/api";
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////

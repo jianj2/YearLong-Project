@@ -1,3 +1,15 @@
+// Import Libraries.
+import React from "react";
+// Import Utilities.
+import { useAdminAuth } from "../utils/useAdminAuth";
+import { USER_TYPE_ADMIN } from "../utils/helper";
+// Import Components.
+import { FormLoginAdmin } from "../components/Forms";
+import { SideBar, ContentPanel } from "../components/Commons";
+// Import Assets.
+import logoComplete from "../assets/logo_complete.png";
+import { Loading } from "../components/Commons";
+
 /**
  * =============================================================================
  * REACT SCREEN COMPONENT CLASS
@@ -12,18 +24,6 @@
  * This file is used to display the Admin Home screen.
  *
  */
-
-// Import Libraries.
-import React from "react";
-// Import Utilities.
-import { useAdminAuth } from "../utils/useAdminAuth";
-import { USER_TYPE_ADMIN } from "../utils/helper";
-// Import Components.
-import { FormLoginAdmin } from "../components/Forms";
-import { SideBar, ContentPanel } from "../components/Commons";
-// Import Assets.
-import logoComplete from "../assets/logo_complete.png";
-import { Loading } from "../components/Commons";
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////

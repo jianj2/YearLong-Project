@@ -1,3 +1,10 @@
+// Import Libraries.
+import React, { useState, useEffect } from "react";
+// Import Utilities.
+import * as API from "../../utils/api";
+// Import Components.
+import { Questionnaire } from "../../components/Commons";
+
 /**
  * =============================================================================
  * REACT COMPONENT
@@ -9,13 +16,6 @@
  * This includes both standardised and customised questionnaires.
  *
  */
-
-// Import Libraries.
-import React, { useState, useEffect } from "react";
-// Import Utilities.
-import * as API from "../../utils/api";
-// Import Components.
-import { Questionnaire } from "../../components/Commons";
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////

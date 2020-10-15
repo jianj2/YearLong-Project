@@ -1,15 +1,3 @@
-/**
- * =============================================================================
- * REACT COMPONENT
- * =============================================================================
- * @date created: 20th August 2020
- * @authors: Waqas Rehmani, Uvin Abeysinghe
- *
- * This is a Clinician's screen component that displays which questionnaire to
- * share.
- *
- */
-
 // Import Libraries.
 import React, { useState, useEffect } from "react";
 import {
@@ -34,6 +22,18 @@ import {
     QuestionnaireList,
     Loading
 } from "../../components/Commons";
+
+/**
+ * =============================================================================
+ * REACT COMPONENT
+ * =============================================================================
+ * @date created: 20th August 2020
+ * @authors: Waqas Rehmani, Uvin Abeysinghe
+ *
+ * This is a Clinician's screen component that displays which questionnaire to
+ * share.
+ *
+ */
 
 const useStyles = makeStyles((theme) => ({
     modal: {

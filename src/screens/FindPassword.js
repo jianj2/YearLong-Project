@@ -1,15 +1,3 @@
-/**
- * =============================================================================
- * REACT COMPONENT
- * =============================================================================
- * @date created: 16th Aug 2020
- * @authors: Cary Jin
- *
- * This class handles the rendering of read-only versions of questionnaires
- * This includes both standardised and customised questionnaires.
- *
- */
-
 // Import Libraries.
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -28,6 +16,18 @@ import {
 } from "@material-ui/core";
 // Import Utilities.
 import { findPassword } from "../utils/api";
+
+/**
+ * =============================================================================
+ * REACT COMPONENT
+ * =============================================================================
+ * @date created: 16th Aug 2020
+ * @authors: Cary Jin
+ *
+ * This class handles the rendering of read-only versions of questionnaires
+ * This includes both standardised and customised questionnaires.
+ *
+ */
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////

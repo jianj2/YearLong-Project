@@ -1,3 +1,8 @@
+// Import Libraries.
+import React, { useEffect, useState } from "react";
+// Import Utilities.
+import { getOrganisations } from "../../utils/api";
+
 /**
  * =============================================================================
  * REACT COMPONENT CLASS
@@ -9,11 +14,6 @@
  * the Admin Page.
  *
  */
-
-// Import Libraries.
-import React, { useEffect, useState } from "react";
-// Import Utilities.
-import { getOrganisations } from "../../utils/api";
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////

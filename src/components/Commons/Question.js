@@ -1,3 +1,14 @@
+// Import Libraries.
+import React, { useState, useEffect } from "react";
+import {
+    Slider,
+    FormControl,
+    FormControlLabel,
+    Radio,
+    RadioGroup,
+    withStyles
+} from "@material-ui/core";
+
 /**
  * =============================================================================
  * REACT COMPONENT FUNCTION
@@ -20,16 +31,6 @@
  *
  */
 
-// Import Libraries.
-import React, { useState, useEffect } from "react";
-import {
-    Slider,
-    FormControl,
-    FormControlLabel,
-    Radio,
-    RadioGroup,
-    withStyles
-} from "@material-ui/core";
 
 // Create a new slider with a custom style.
 const SliderWithTicks = withStyles({

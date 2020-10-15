@@ -1,3 +1,12 @@
+// Import Libraries.
+import React from "react";
+import { useForm } from "react-hook-form";
+import { TextField} from "@material-ui/core";
+import { Snackbar } from "@material-ui/core";
+import MuiAlert from "@material-ui/lab/Alert";
+// Import Components.
+import Question from "./Question";
+
 /**
  * =============================================================================
  * REACT COMPONENT FUNCTION
@@ -11,15 +20,6 @@
  *
  */
 
-// Import Libraries.
-import React  from "react";
-import { useForm } from "react-hook-form";
-import { TextField} from "@material-ui/core";
-import { Snackbar } from "@material-ui/core";
-import MuiAlert from "@material-ui/lab/Alert";
-
-// Import Components.
-import Question from "./Question";
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;

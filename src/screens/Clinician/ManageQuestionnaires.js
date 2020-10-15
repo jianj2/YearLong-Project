@@ -1,3 +1,13 @@
+// Import Libraries.
+import React, { useState, useEffect } from "react";
+// Import Utilities.
+import * as API from "../../utils/api";
+import { CustomModal } from "../../components/Commons";
+import { useAuth0 } from "../../utils/react-auth0-spa";
+// Import Components.
+import { QuestionnaireList, Loading } from "../../components/Commons";
+import { useAdminAuth } from "../../utils/useAdminAuth";
+
 /**
  * =============================================================================
  * REACT COMPONENT
@@ -10,16 +20,6 @@
  * This file is used to display the questionnaire lists
  *
  */
-
-// Import Libraries.
-import React, { useState, useEffect } from "react";
-// Import Utilities.
-import * as API from "../../utils/api";
-import { CustomModal } from "../../components/Commons";
-import { useAuth0 } from "../../utils/react-auth0-spa";
-// Import Components.
-import { QuestionnaireList, Loading } from "../../components/Commons";
-import { useAdminAuth } from "../../utils/useAdminAuth";
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////

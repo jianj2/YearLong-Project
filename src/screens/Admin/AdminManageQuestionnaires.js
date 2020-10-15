@@ -1,15 +1,3 @@
-/**
- * =============================================================================
- * REACT COMPONENT CLASS
- * =============================================================================
- * @date created: 15th August 2020
- * @authors: Jin Chen
- *
- * The AdminManageQuestionnaires handles the rendering  of
- * SSQInstructionsContainer in the Admin Page
- *
- */
-
 // Import Libraries.
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
@@ -26,6 +14,18 @@ import {
     QuestionnaireList,
     CustomModal
 } from "../../components/Commons";
+
+/**
+ * =============================================================================
+ * REACT COMPONENT CLASS
+ * =============================================================================
+ * @date created: 15th August 2020
+ * @authors: Jin Chen
+ *
+ * The AdminManageQuestionnaires handles the rendering  of
+ * SSQInstructionsContainer in the Admin Page
+ *
+ */
 
 // Styling
 const useStyles = makeStyles((theme) => ({

@@ -1,3 +1,8 @@
+// Import Libraries.
+import React, { useState, useEffect } from "react";
+// Import Utilities.
+import { getInstructionsSummary } from "../../utils/api";
+
 /**
  * =============================================================================
  * REACT COMPONENT CLASS
@@ -9,11 +14,6 @@
  * page.
  *
  */
-
-// Import Libraries.
-import React, { useState, useEffect } from "react";
-// Import Utilities.
-import { getInstructionsSummary } from "../../utils/api";
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////

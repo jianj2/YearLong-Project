@@ -1,15 +1,3 @@
-/**
- * =============================================================================
- * REACT COMPONENT CLASS
- * =============================================================================
- * @date created: 1st June 2020
- * @authors: Jin Chen, Guang Yang
- *
- * The ScenariosContainer component handles the container that contains the
- * scenario in the editing the questionnaire in the Clinician page.
- *
- */
-
 // Import Libraries.
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
@@ -45,6 +33,18 @@ const useStyles = makeStyles((theme) => ({
         padding: 0
     }
 }));
+
+/**
+ * =============================================================================
+ * REACT COMPONENT CLASS
+ * =============================================================================
+ * @date created: 1st June 2020
+ * @authors: Jin Chen, Guang Yang
+ *
+ * The ScenariosContainer component handles the container that contains the
+ * scenario in the editing the questionnaire in the Clinician page.
+ *
+ */
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////

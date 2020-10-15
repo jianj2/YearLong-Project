@@ -1,15 +1,3 @@
-/**
- * =============================================================================
- * REACT COMPONENT CLASS
- * =============================================================================
- * @date created: 1st June 2020
- * @authors: Jin Chen, Guang Yang
- *
- * The SectionsContainer component handles the container that contains the
- * sections in the editing the questionnaire in the Clinician page.
- *
- */
-
 // Import Libraries.
 import React from "react";
 import {
@@ -26,6 +14,18 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { makeStyles } from "@material-ui/core/styles";
 // Import Components.
 import ScenariosContainer from "./ScenariosContainer";
+
+/**
+ * =============================================================================
+ * REACT COMPONENT CLASS
+ * =============================================================================
+ * @date created: 1st June 2020
+ * @authors: Jin Chen, Guang Yang
+ *
+ * The SectionsContainer component handles the container that contains the
+ * sections in the editing the questionnaire in the Clinician page.
+ *
+ */
 
 const useStyles = makeStyles((theme) => ({
     heading: {
@@ -45,6 +45,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const SectionsContainer = ({
     removeQuestion,
     addQuestion,

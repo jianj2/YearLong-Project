@@ -1,3 +1,6 @@
+// Import Libraries.
+import React from "react";
+
 /**
  * =============================================================================
  * REACT COMPONENT FUNCTION
@@ -10,9 +13,6 @@
  * information filled by the user is shown.
  *
  */
-
-// Import Libraries.
-import React from "react";
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////

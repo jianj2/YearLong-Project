@@ -1,3 +1,9 @@
+// Import Libraries.
+import React from "react";
+import { Link } from "react-router-dom";
+// Import Assets.
+import logoComplete from "../assets/logo_complete.png";
+
 /**
  * =============================================================================
  * REACT SCREEN COMPONENT CLASS
@@ -12,13 +18,6 @@
  * This file is used to display the Home screen.
  *
  */
-
-// Import Libraries.
-import React from "react";
-import { Link } from "react-router-dom";
-// Import Assets.
-import logoComplete from "../assets/logo_complete.png";
-
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////

@@ -1,15 +1,3 @@
-/**
- * =============================================================================
- * REACT COMPONENT CLASS
- * =============================================================================
- * @date created: 14th May 2020
- * @authors: Jin Chen, Guang Yang
- *
- * The EditDescription component handles the rendering of edit questionnaire
- * description box for clinicians.
- *
- */
-
 // Import Libraries.
 import React from "react";
 import {
@@ -24,6 +12,18 @@ import {
     FormControlLabel,
     Radio,
 } from "@material-ui/core";
+
+/**
+ * =============================================================================
+ * REACT COMPONENT CLASS
+ * =============================================================================
+ * @date created: 14th May 2020
+ * @authors: Jin Chen, Guang Yang
+ *
+ * The EditDescription component handles the rendering of edit questionnaire
+ * description box for clinicians.
+ *
+ */
 
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -1,3 +1,8 @@
+// Import Libraries.
+import React, { useState, useEffect } from "react";
+import { Modal, Backdrop, Fade } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
 /**
  * =============================================================================
  * REACT COMPONENT CLASS
@@ -9,11 +14,6 @@
  * can confirm or cancel their actions
  *
  */
-
-// Import Libraries.
-import React, { useState, useEffect } from "react";
-import { Modal, Backdrop, Fade } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
     modal: {

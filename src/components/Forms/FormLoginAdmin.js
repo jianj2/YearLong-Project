@@ -1,18 +1,3 @@
-/**
- * =============================================================================
- * REACT COMPONENT FUNCTION
- * =============================================================================
- * @date created: 18th May 2020
- * @authors: Waqas Rehmani
- *
- * The LoginAdmin component defines the login form for the admin. This
- * will visible when the user selects the admin option at the
- * landing page.
- *
- * This file is used to display the login form.
- *
- */
-
 // Import Libraries.
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -27,6 +12,21 @@ import {
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 // Import Utilities.
 import { useAuth0 } from "../../utils/react-auth0-spa";
+
+/**
+ * =============================================================================
+ * REACT COMPONENT FUNCTION
+ * =============================================================================
+ * @date created: 18th May 2020
+ * @authors: Waqas Rehmani
+ *
+ * The LoginAdmin component defines the login form for the admin. This
+ * will visible when the user selects the admin option at the
+ * landing page.
+ *
+ * This file is used to display the login form.
+ *
+ */
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////

@@ -1,3 +1,15 @@
+// Import Libraries.
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import moment from "moment";
+import {
+    Input,
+    FormControl,
+    InputLabel,
+    FormHelperText,
+    Select
+} from "@material-ui/core";
+
 /**
  * =============================================================================
  * REACT COMPONENT FUNCTION
@@ -12,19 +24,6 @@
  * This file is used to display the login form.
  *
  */
-
-// Import Libraries.
-
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import moment from "moment";
-import {
-    Input,
-    FormControl,
-    InputLabel,
-    FormHelperText,
-    Select
-} from "@material-ui/core";
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////

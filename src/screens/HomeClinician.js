@@ -1,3 +1,11 @@
+// Import Libraries.
+import React, { useEffect } from "react";
+// Import Utilities.
+import { useAuth0 } from "../utils/react-auth0-spa";
+import { USER_TYPE_CLINICIAN } from "../utils/helper";
+// Import Components.
+import { SideBar, Loading, ContentPanel } from "../components/Commons";
+
 /**
  * =============================================================================
  * REACT SCREEN COMPONENT CLASS
@@ -12,14 +20,6 @@
  * This file is used to display the Clinician Home screen.
  *
  */
-
-// Import Libraries.
-import React, { useEffect } from "react";
-// Import Utilities.
-import { useAuth0 } from "../utils/react-auth0-spa";
-import { USER_TYPE_CLINICIAN } from "../utils/helper";
-// Import Components.
-import { SideBar, Loading, ContentPanel } from "../components/Commons";
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////

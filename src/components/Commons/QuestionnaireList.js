@@ -1,3 +1,9 @@
+// Import Libraries.
+import React from "react";
+// Import Utilities.
+import Chip from "@material-ui/core/Chip";
+import { Avatar } from "@material-ui/core";
+
 /**
  * =============================================================================
  * REACT COMPONENT CLASS
@@ -56,13 +62,6 @@
  *      calling this List to Share the questionnaire.
  *
  */
-
-// Import Libraries.
-import React from "react";
-
-// Import Utilities.
-import Chip from "@material-ui/core/Chip";
-import { Avatar } from "@material-ui/core";
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////

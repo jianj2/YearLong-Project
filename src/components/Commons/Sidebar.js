@@ -1,3 +1,9 @@
+// Import Libraries.
+import React from "react";
+import { Link } from "react-router-dom";
+// Import Utilities
+import { USER_TYPE_ADMIN, USER_TYPE_CLINICIAN } from "../../utils/helper";
+
 /**
  * =============================================================================
  * REACT COMPONENT CLASS
@@ -11,12 +17,6 @@
  * This file is used to display the Sidebar component
  *
  */
-
-// Import Libraries.
-import React from "react";
-import { Link } from "react-router-dom";
-// Import Utilities
-import { USER_TYPE_ADMIN, USER_TYPE_CLINICIAN } from "../../utils/helper";
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////

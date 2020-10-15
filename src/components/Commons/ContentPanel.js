@@ -1,16 +1,3 @@
-/**
- * =============================================================================
- * REACT COMPONENT
- * =============================================================================
- * @date created: 16th May 2020
- * @authors: Guang Yang, Waqas Rehmani
- *
- * The content panel will display the content when people click the side bar
- *
- * This file is used to display the content panel
- *
- */
-
 // Import Libraries
 import React from "react";
 // Import Utilities
@@ -37,6 +24,19 @@ import {
 import {
     QuestionnaireContainer
 } from "../../screens/Common";
+
+/**
+ * =============================================================================
+ * REACT COMPONENT
+ * =============================================================================
+ * @date created: 16th May 2020
+ * @authors: Guang Yang, Waqas Rehmani
+ *
+ * The content panel will display the content when people click the side bar
+ *
+ * This file is used to display the content panel
+ *
+ */
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////

@@ -1,3 +1,18 @@
+// Import Libraries.
+import React, { useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
+// Import Utilities.
+import * as API from "../utils/api";
+// Import Components.
+import { FormParentDetails } from "../components/Forms";
+import {
+    Questionnaire,
+    ParentReviewSubmission,
+    Loading
+} from "../components/Commons";
+// Import assets.
+import logoComplete from "../assets/logo_complete.png";
+
 /**
  * =============================================================================
  * REACT SCREEN COMPONENT FUNCTION
@@ -13,21 +28,6 @@
  * This file is used to display the Parents Home screen.
  *
  */
-
-// Import Libraries.
-import React, { useState, useEffect } from "react";
-import { withRouter } from "react-router-dom";
-// Import Utilities.
-import * as API from "../utils/api";
-// Import Components.
-import { FormParentDetails } from "../components/Forms";
-import {
-    Questionnaire,
-    ParentReviewSubmission,
-    Loading
-} from "../components/Commons";
-// Import assets.
-import logoComplete from "../assets/logo_complete.png";
 
 const INSTRUCTIONS_READ_ONLY =
     "Go to the next page to view the questions. These would be the questions asked to you by the clinician on the call.";

@@ -1,3 +1,10 @@
+// Import Libraries.
+import React, { useState, useEffect } from "react";
+// Import Utilities.
+import * as API from "../../utils/api";
+// Import Components.
+import { EditQuestionnaire } from "../../components/Commons";
+
 /**
  * =============================================================================
  * REACT COMPONENT CLASS
@@ -9,13 +16,6 @@
  * QuestionnaireContainer in the Clinician Page
  *
  */
-
-// Import Libraries.
-import React, { useState, useEffect } from "react";
-// Import Utilities.
-import * as API from "../../utils/api";
-// Import Components.
-import { EditQuestionnaire } from "../../components/Commons";
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////

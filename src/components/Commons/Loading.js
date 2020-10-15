@@ -1,3 +1,8 @@
+// Import Libraries.
+import React from "react";
+// Import Styles.
+import "../../styles/loading.css";
+
 /**
  * =============================================================================
  * REACT COMPONENT CLASS
@@ -9,11 +14,6 @@
  * application. This
  *
  */
-
-// Import Libraries.
-import React from "react";
-// Import Styles.
-import "../../styles/loading.css";
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////

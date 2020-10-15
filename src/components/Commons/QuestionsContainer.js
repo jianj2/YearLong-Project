@@ -1,3 +1,13 @@
+// Import Libraries.
+import React from "react";
+import {
+    Input,
+    FormControl,
+    InputLabel,
+    FormHelperText
+} from "@material-ui/core";
+import PropTypes from "prop-types";
+
 /**
  * =============================================================================
  * REACT COMPONENT CLASS
@@ -9,16 +19,6 @@
  * question in the editing the questionnaire in the Clinician page.
  *
  */
-
-// Import Libraries.
-import React from "react";
-import {
-    Input,
-    FormControl,
-    InputLabel,
-    FormHelperText
-} from "@material-ui/core";
-import PropTypes from "prop-types";
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////

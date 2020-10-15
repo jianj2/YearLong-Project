@@ -1,3 +1,13 @@
+// Import Libraries.
+import React from "react";
+import { Link } from 'react-router-dom'
+import { IoMdLogOut } from "react-icons/io";
+// Import Utilities.
+import { useAuth0 } from "../../utils/react-auth0-spa";
+import { useAdminAuth } from "../../utils/useAdminAuth";
+// Import Assets.
+import logoCompressed from "../../assets/logo_compressed.png";
+
 /**
  * =============================================================================
  * REACT COMPONENT CLASS
@@ -11,16 +21,6 @@
  * This file is used to display the Navbar component
  *
  */
-
-// Import Libraries.
-import React from "react";
-import { Link } from 'react-router-dom'
-import { IoMdLogOut } from "react-icons/io";
-// Import Utilities.
-import { useAuth0 } from "../../utils/react-auth0-spa";
-import { useAdminAuth } from "../../utils/useAdminAuth";
-// Import Assets.
-import logoCompressed from "../../assets/logo_compressed.png";
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
