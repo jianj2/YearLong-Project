@@ -16,6 +16,18 @@ import {
 // Import Components.
 import QuestionsContainer from "./QuestionsContainer";
 
+/**
+ * =============================================================================
+ * REACT COMPONENT CLASS
+ * =============================================================================
+ * @date created: 1st June 2020
+ * @authors: Jin Chen, Guang Yang
+ *
+ * The ScenariosContainer component handles the container that contains the
+ * scenario in the editing the questionnaire in the Clinician page.
+ *
+ */
+
 const useStyles = makeStyles((theme) => ({
     heading: {
         fontSize: theme.typography.pxToRem(15),
@@ -33,18 +45,6 @@ const useStyles = makeStyles((theme) => ({
         padding: 0
     }
 }));
-
-/**
- * =============================================================================
- * REACT COMPONENT CLASS
- * =============================================================================
- * @date created: 1st June 2020
- * @authors: Jin Chen, Guang Yang
- *
- * The ScenariosContainer component handles the container that contains the
- * scenario in the editing the questionnaire in the Clinician page.
- *
- */
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////

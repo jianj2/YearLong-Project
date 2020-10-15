@@ -85,7 +85,7 @@ const createMarks = function () {
             value: 9,
             label: "9"
         },
-        , {
+        {
             value: 10,
             label: "10"
         }
