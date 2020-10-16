@@ -83,8 +83,8 @@ const addEmptyQuestionnaire = async (req, res) => {
 // add a standardised questionnaire
 const addStandardisedQuestionnaire = async (req, res) => {
     const uuid = uuidv1();
-    //const newQuestionnaire = generateNewStandardisedQuestionnaire(uuid);
-    const newQuestionnaire = generateCompleteParentQuestionnaire(uuid);
+    const newQuestionnaire = generateNewStandardisedQuestionnaire(uuid);
+    // const newQuestionnaire = generateCompleteParentQuestionnaire(uuid);
     //const newQuestionnaire = generateCompleteChildQuestionnaire(uuid);
     const [err, message] = await saveNewStandardisedQuestionnaire(
         newQuestionnaire
