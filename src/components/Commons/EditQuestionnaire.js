@@ -104,7 +104,6 @@ const EditQuestionnaire = ({
                         onClick={(event) => {
                             event.preventDefault();
                             setIsCancelModalVisible(true);
-                            console.log(Questionnaire);
                         }}
                     >
                         Cancel
