@@ -16,13 +16,17 @@ const api = process.env.REACT_APP_SERVER || "http://localhost:3001";
 
 //const api = "https://d1iiwjsw1v8g79.cloudfront.net/";
 
-const header = {
+const COMMON_HEADER = {
     "Content-Type": "application/json",
     Accept: "application/json"
 };
 
 let createHeader = (accessToken) => {
+    if (accessToken){
+        return COMMON_HEADER;
+    }
     return {
+        ...COMMON_HEADER,
         Authorization: `Bearer ${accessToken}`
     };
 };
@@ -33,13 +37,7 @@ const sendRequest = async (
     data = undefined,
     token = undefined
 ) => {
-    let headers = header;
-    if (token) {
-        headers = {
-            ...header,
-            ...createHeader(token)
-        };
-    }
+    let headers =  createHeader(token);
     let fetchOptions = {
         method,
         headers
@@ -58,14 +56,6 @@ const sendRequest = async (
     } catch (error) {
         console.error(error);
     }
-};
-
-////////////////////////////////////////////////////////////////////////////////
-////                                   SHARE                                ////
-////////////////////////////////////////////////////////////////////////////////
-export const sendQuestionnaireData = async (data, shareId) => {
-    const url = `share/submit/${shareId}`;
-    return await sendRequest("POST", url, data);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -191,7 +181,7 @@ export const findPassword = async (email) => {
     };
     const fetchOptions = {
         method: "POST",
-        headers: header,
+        headers: COMMON_HEADER,
         body: JSON.stringify(data)
     };
     await fetch(url, fetchOptions);
@@ -244,11 +234,14 @@ export const getOrganisationClinicians = async (organisationName) => {
     return await sendRequest("GET", url, undefined, getToken());
 };
 
-
-
 ////////////////////////////////////////////////////////////////////////////////
 ////                                   SHARE                                ////
 ////////////////////////////////////////////////////////////////////////////////
+export const sendQuestionnaireData = async (data, shareId) => {
+    const url = `share/submit/${shareId}`;
+    return await sendRequest("POST", url, data);
+};
+
 export const getShareDetails = async (shareId) => {
     const url = `share/${shareId}`;
     return await sendRequest("GET", url);
