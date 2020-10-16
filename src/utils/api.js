@@ -61,13 +61,22 @@ const sendRequest = async (
 ////////////////////////////////////////////////////////////////////////////////
 ////                              QUESTIONNAIRE                             ////
 ////////////////////////////////////////////////////////////////////////////////
-// get specific questionnaire
+/**
+ * Gets a specific questionnaire by Id.
+ *
+ * @params Id
+ * @returns {Promise} ~ response from the server.
+ */
 export const getQuestionnaireById = async (Id) => {
     const url = `questionnaire/${Id}`;
     return await sendRequest("GET", url);
 };
 
-// get standardised questionnaires
+/**
+ * Gets all standardised questionnaires
+ *
+ * @returns {Promise} ~ response from the server.
+ */
 export const getStandardisedQuestionnaires = async () => {
     const url = `questionnaire/standardised`;
     return await sendRequest("GET", url);
@@ -76,34 +85,52 @@ export const getStandardisedQuestionnaires = async () => {
 ////////////////////////////////////////////////////////////////////////////////
 ////                         ADMIN & QUESTIONNAIRE                          ////
 ////////////////////////////////////////////////////////////////////////////////
-
+/**
+ * Creates a standardised questionnaire.
+ *
+ * @returns {Promise} ~ response from the server.
+ */
 export const addStandardQuestionnaire = async () => {
     const url = "questionnaire/addStandard";
     return await sendRequest("POST", url, undefined, getToken());
 };
-
-//edit standard questionnaire
-export const editStandardQuestionnaire = async (questionnaire) => {
+/**
+ * Edits a standard questionnaire
+ *
+ * @params questionnaireData
+ * @returns {Promise} ~ response from the server.
+ */
+export const editStandardQuestionnaire = async (questionnaireData) => {
     const url = "questionnaire/editStandard";
     const data = {
-        questionnaire
+        questionnaireData
     };
     return await sendRequest("POST", url, data, getToken());
 };
-
-export const adminCopyQuestionnaire = async (questionnaire) => {
+/**
+ * Copies the questionnaire
+ *
+ * @params questionnaireData
+ * @returns {Promise} ~ response from the server.
+ */
+export const adminCopyQuestionnaire = async (questionnaireData) => {
     const url = "questionnaire/copy";
     const data = {
         copyToCustomisedQuestionnaire: false,
-        questionnaire
+        questionnaireData
     };
     return await sendRequest("POST", url, data);
 };
-
-export const deleteStandardQuestionnaire = async (questionnaireID) => {
+/**
+ * Deletes the standard questionnaire.
+ *
+ * @params questionnaireId
+ * @returns {Promise} ~ response from the server.
+ */
+export const deleteStandardQuestionnaire = async (questionnaireId) => {
     const url = "questionnaire/deleteStandard";
     const data = {
-        questionnaireID
+        questionnaireId
     };
     return await sendRequest("POST", url, data, getToken());
 };
@@ -111,60 +138,94 @@ export const deleteStandardQuestionnaire = async (questionnaireID) => {
 ////////////////////////////////////////////////////////////////////////////////
 ////                        CLINICIAN & QUESTIONNAIRE                       ////
 ////////////////////////////////////////////////////////////////////////////////
-
-export const addQuestionnaire = async (token, clinicianId) => {
+/**
+ * Clinician creates a custom questionnaire.
+ *
+ * @params accessToken, clinicianId
+ * @returns {Promise} ~ response from the server.
+ */
+export const addQuestionnaire = async (accessToken, clinicianId) => {
     const url = "questionnaire/add";
     const data = {
         clinicianId,
         isStandard: false
     };
-    return await sendRequest("POST", url, data, token);
+    return await sendRequest("POST", url, data, accessToken);
 };
-
-// get clinician questionnaire list
+/**
+ * Gets all clinician's questionnaires.
+ *
+ * @params accessToken, clinicianId
+ * @returns {Promise} ~ response from the server.
+ */
 export const getClinicianQuestionnaires = async (accessToken, clinicianId) => {
     const url = `questionnaire/clinician?clinicianId=${clinicianId}`;
     return await sendRequest("GET", url, undefined, accessToken);
 };
 
-// Edit questionnaire.
-export const editQuestionnaire = async (token, questionnaire) => {
+/**
+ * Clinician edits a custom questionnaire.
+ *
+ * @params accessToken, questionnaireData
+ * @returns {Promise} ~ response from the server.
+ */
+export const editQuestionnaire = async (accessToken, questionnaireData) => {
     const url = "questionnaire/edit";
     const data = {
-        questionnaire
+        questionnaireData
     };
-    return await sendRequest("POST", url, data, token);
+    return await sendRequest("POST", url, data, accessToken);
 };
 
-//COPY questionnaire
-export const copyQuestionnaire = async (questionnaire, clinicianId) => {
+/**
+ * Clinician copies a custom questionnaire.
+ *
+ * @params questionnaireData, clinicianId
+ * @returns {Promise} ~ response from the server.
+ */
+export const copyQuestionnaire = async (questionnaireData, clinicianId) => {
     const url = "questionnaire/copy";
     const data = {
         clinicianId,
         copyToCustomisedQuestionnaire: true,
-        questionnaire
+        questionnaireData
     };
     return await sendRequest("POST", url, data);
 };
-
-// Delete customised questionnaire.
-export const deleteQuestionnaire = async (token, CQid, clinicianId) => {
+/**
+ * Deletes a clinician's questionnaire.
+ *
+ * @params accessToken, CQid, clinicianId
+ * @returns {Promise} ~ response from the server.
+ */
+export const deleteQuestionnaire = async (accessToken, CQid, clinicianId) => {
     const url = "questionnaire/delete";
     const data = {
         CQid,
         clinicianId
     };
-    return await sendRequest("POST", url, data, token);
+    return await sendRequest("POST", url, data, accessToken);
 };
-
-export const completeQuestionnaire = async (token, data) => {
+/**
+ * Clinician completes a questionnaire.
+ *
+ * @params accessToken, data
+ * @returns {Promise} ~ response from the server.
+ */
+export const completeQuestionnaire = async (accessToken, data) => {
     const url = `clinician/complete-questionnaire/`;
-    return await sendRequest("POST", url, data, token);
+    return await sendRequest("POST", url, data, accessToken);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                                   ADMIN                                ////
 ////////////////////////////////////////////////////////////////////////////////
+/**
+ * Find password for admin.
+ *
+ * @params email
+ * @returns {Promise} ~ response from the server.
+ */
 export const findPassword = async (email) => {
     const url =
         process.env.NODE_ENV === "production"
@@ -187,48 +248,87 @@ export const findPassword = async (email) => {
     await fetch(url, fetchOptions);
 };
 
+/**
+ * Admin Login
+ *
+ * @params loginData
+ * @returns {Promise} ~ response from the server.
+ */
 export const adminLogin = async (loginData) => {
     const url = `admin/login`;
     return await sendRequest("POST", url, loginData);
 };
 
-export const verifyAdminLogin = async (token) => {
-    const url = `admin/verifylogin/${token}`;
+/**
+ * Verify admin Login
+ *
+ * @params accessToken
+ * @returns {Promise} ~ response from the server.
+ */
+export const verifyAdminLogin = async (accessToken) => {
+    const url = `admin/verifylogin/${accessToken}`;
     return await sendRequest("GET", url);
 };
 
-
-// get instruction based on type
+/**
+ * Get specific instruction for admin
+ *
+ * @params instructionType
+ * @returns {Promise} ~ response from the server.
+ */
 export const getSpecificInstruction = async (instructionType) => {
     const url = `admin/specificInstruction/${instructionType}`;
     return await sendRequest("GET", url, undefined, getToken());
 };
 
-// get instructions summary including title and type
+/**
+ * Get all instructions.
+ *
+ * @returns {Promise} ~ response from the server.
+ */
 export const getInstructionsSummary = async () => {
     const url = `admin/instructionsSummary`;
     return await sendRequest("GET", url, undefined, getToken());
 };
-
-// update instruction by type
-export const updateInstruction = async (type, data) => {
-    const url = `admin/instruction/${type}`;
+/**
+ * Update specific instruction for admin
+ *
+ * @params instructionType, data
+ * @returns {Promise} ~ response from the server.
+ */
+export const updateInstruction = async (instructionType, data) => {
+    const url = `admin/instruction/${instructionType}`;
     return await sendRequest("POST", url, data, getToken());
 };
 
 //get countries
+
+/**
+ * Get all countries
+ *
+ * @returns {Promise} ~ response from the server.
+ */
 export const getCountries = async () => {
     const url = `admin/country`;
     return await sendRequest("GET", url, undefined, getToken());
 };
-
-// get organisations
+/**
+ * Get all organisations in a country.
+ *
+ * @params countryName
+ * @returns {Promise} ~ response from the server.
+ */
 export const getOrganisations = async (countryName) => {
     const url = `admin/country/organisation/${countryName}`;
     return await sendRequest("GET", url, undefined, getToken());
 };
 
-// get organisation's clinicians
+/**
+ * Get all clinicians in an organisations.
+ *
+ * @params organisationName
+ * @returns {Promise} ~ response from the server.
+ */
 export const getOrganisationClinicians = async (organisationName) => {
     const url = `admin/organisation/clinician/${organisationName}`;
     return await sendRequest("GET", url, undefined, getToken());
@@ -237,18 +337,36 @@ export const getOrganisationClinicians = async (organisationName) => {
 ////////////////////////////////////////////////////////////////////////////////
 ////                                   SHARE                                ////
 ////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Send questionnaire data after filling out the questionnaire
+ *
+ * @params data, shareId
+ * @returns {Promise} ~ response from the server.
+ */
 export const sendQuestionnaireData = async (data, shareId) => {
     const url = `share/submit/${shareId}`;
     return await sendRequest("POST", url, data);
 };
 
+/**
+ * Get share details.
+ *
+ * @params shareId
+ * @returns {Promise} ~ response from the server.
+ */
 export const getShareDetails = async (shareId) => {
     const url = `share/${shareId}`;
     return await sendRequest("GET", url);
 };
 
-// Used to share a questionnaire.
-export const shareQuestionnaire = async (token, data) => {
+/**
+ * Create a share data.
+ *
+ * @params accessToken, data
+ * @returns {Promise} ~ response from the server.
+ */
+export const shareQuestionnaire = async (accessToken, data) => {
     const url = `clinician/share/`;
-    return await sendRequest("POST", url, data, token);
+    return await sendRequest("POST", url, data, accessToken);
 };
