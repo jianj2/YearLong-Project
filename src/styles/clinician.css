@@ -101,6 +101,10 @@ width: 65%;
   background-color: rgba(175,139,192,.24) !important;
 }
 
+#display100{
+  width:100%;
+}
+
 #questionTable-remove-button{  
   border-right: none !important;
   background-color: rgba(86,24,58,.29) !important;

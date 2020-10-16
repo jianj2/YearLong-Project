@@ -1,14 +1,16 @@
 // src/index.js
 
+// Import Libraries.
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { Auth0Provider } from "./utils/react-auth0-spa";
 import { AdminAuthProvider } from "./utils/useAdminAuth";
 import config from "./auth_config.json";
 import history from "./utils/history";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+// Import Components.
+import App from "./App";
 
 // Defining Material UI Theme
 const theme = createMuiTheme({
