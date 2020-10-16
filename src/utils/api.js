@@ -37,7 +37,9 @@ const sendRequest = async (
     data = undefined,
     token = undefined
 ) => {
+
     let headers =  createHeader(token);
+
     let fetchOptions = {
         method,
         headers

@@ -57,7 +57,7 @@ const ManageQuestionnaires = (props) => {
                 const [
                     _,
                     customisedQuestionnaires
-                 = await API.getClinicianQuestionnaires(token, user.name);
+                 ] = await API.getClinicianQuestionnaires(token, user.name);
                 const sortedCustomisedQuestionnaires = customisedQuestionnaires.sort(function (a, b) {
                     let dateA = new Date(a.updateDate),
                         dateB = new Date(b.updateDate);
