@@ -203,7 +203,6 @@ const Scenario = ({
                         event.preventDefault();
                             addQuestion(sectionIndex, scenarioIndex);
                         
-                        
                     }}
                 >
                     ADD NEW QUESTION

@@ -54,7 +54,7 @@ const SectionsContainer = ({
     removeQuestion,
     addQuestion,
     addScenario,
-    addSdandardScenario,
+    addStandardScenario,
     removeScenario,
     changeToRangeQuestion,
     changeToMCQQuestion,
@@ -93,7 +93,7 @@ const SectionsContainer = ({
                                     removeQuestion={removeQuestion}
                                     addQuestion={addQuestion}
                                     addScenario={addScenario}
-                                    addSdandardScenario = {addSdandardScenario}
+                                    addStandardScenario = {addStandardScenario}
                                     removeScenario={removeScenario}
                                     changeToRangeQuestion={
                                         changeToRangeQuestion
@@ -129,7 +129,7 @@ const Section = ({
     removeQuestion,
     addQuestion,
     addScenario,
-    addSdandardScenario,
+    addStandardScenario,
     removeScenario,
     changeToRangeQuestion,
     changeToMCQQuestion,
@@ -187,7 +187,7 @@ const Section = ({
                                 addScenario(sectionIndex);
                             }
                             else{
-                                addSdandardScenario(sectionIndex);
+                                addStandardScenario(sectionIndex);
                             }
                             
                         }}

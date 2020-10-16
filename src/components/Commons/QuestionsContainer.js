@@ -121,30 +121,31 @@ const QuestionForm = ({
                         Multiple Choice Question
                     </button>
                 }[questionIndex]
-                : isMCQ?
-
-                    <div className="questionTable-button-group">
-                        <button
-                            className={!isMCQ ? "questionTable-button-selected" : ""}
-                            onClick={handleRangeClick}
-                        >
-                            Performance Rating
-                </button>
-                <button
-                    className={isMCQ ? "questionTable-button-selected" : ""}
-                    onClick={handleMultipleClick}
-                >
-                    Multiple Choice Question
-                </button>
-                <button
-                    id="questionTable-remove-button"
-                    onClick={handleRemoveClick}
-                >
-                    Remove
-                </button>
-                </div>
-                }
-
+                :isMCQ ?
+                        <div className="questionTable-button-group">
+                            <button
+                                className={isMCQ ? "questionTable-button-selected" : ""}
+                                onClick={handleMultipleClick}
+                            >
+                                Multiple Choice Question
+                            </button>
+                            <button
+                                id="questionTable-remove-button"
+                                onClick={handleRemoveClick}
+                            >
+                                Remove
+                            </button>
+                        </div>
+                        :
+                        <div className="questionTable-button-group">
+                            <button
+                                className={!isMCQ ? "questionTable-button-selected" : ""}
+                                onClick={handleRangeClick}
+                            >
+                                Performance Rating
+                            </button>
+                        </div>
+                    }
             </div>
         );
     };
