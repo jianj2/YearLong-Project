@@ -57,6 +57,40 @@ const QuestionnaireContainer = (props) => {
         setQuestionnaire(questionnaireTemp);
     };
 
+    const addSdandardScenario = (sectionIndex) => {
+        const newScenario = {
+            description: "",
+            questions: [
+                {
+                    MCQOptions: [],
+                    isMCQ: false,
+                    rangeOptions: [],
+                },
+                {
+                    description: "How often does this type of situation occur?",
+                    MCQOptions: ["Very often (4 or more times in a week)",
+                     "Often (1 to 3 times in a week)", 
+                     "Not often (1 to 2 times in a month)",
+                     "Almost Never"],
+                    isMCQ: true,
+                    rangeOptions: [],
+                },
+                {
+                    description: "How important do you think it is?",
+                    MCQOptions: ["Very important", 
+                    "Important", 
+                    "Only a little bit mportant",
+                    "Not important"],
+                    isMCQ: true,
+                    rangeOptions: [],
+                }
+            ]
+        };
+        const questionnaireTemp = Object.assign({}, questionnaire);
+        questionnaireTemp.sections[sectionIndex].scenarios.push(newScenario);
+        setQuestionnaire(questionnaireTemp);
+    };
+
     //remove scenario to questionnaire
     const removeScenario = (sectionIndex, scenarioIndex) => {
         const questionnaireTemp = Object.assign({}, questionnaire);
@@ -191,6 +225,7 @@ const QuestionnaireContainer = (props) => {
                     <EditQuestionnaire
                         Questionnaire={questionnaire}
                         addScenario={addScenario}
+                        addSdandardScenario = {addSdandardScenario}
                         removeScenario={removeScenario}
                         addQuestion={addQuestion}
                         removeQuestion={removeQuestion}
