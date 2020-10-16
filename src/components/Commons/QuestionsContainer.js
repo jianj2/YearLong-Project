@@ -24,6 +24,7 @@ import PropTypes from "prop-types";
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
 const QuestionsContainer = ({
+    isStandard,
     questions,
     scenarioIndex,
     sectionIndex,
@@ -40,6 +41,7 @@ const QuestionsContainer = ({
             {questions && questions.map((item, index) => {
                 return (
                     <QuestionForm
+                        isStandard = {isStandard}
                         item={item}
                         key={item._id}
                         questionIndex={index}
@@ -65,6 +67,7 @@ const QuestionsContainer = ({
 
 //decide which kind of question to show
 const QuestionForm = ({
+                          isStandard,
                           questionIndex,
                           removeQuestion,
                           sectionIndex,
@@ -95,6 +98,31 @@ const QuestionForm = ({
     const renderHeader = () => {
         return (
             <div className="questionTable-button-group">
+                {isStandard? 
+                {
+                    0: <button
+                    className={!isMCQ ? "questionTable-button-selected" : ""}
+                    id = "display100"
+                    disabled >
+                        Performance Rating
+                    </button>,
+                    1: <button
+                    className={isMCQ ? "questionTable-button-selected" : ""}
+                    id = "display100"
+                    disabled
+                    >
+                        Multiple Choice Question
+                    </button>,
+                    2: <button
+                    className={isMCQ ? "questionTable-button-selected" : ""}
+                    id = "display100"
+                    disabled
+                    >
+                        Multiple Choice Question
+                    </button>
+                }[questionIndex]
+                :
+                <div className="questionTable-button-group">
                 <button
                     className={!isMCQ ? "questionTable-button-selected" : ""}
                     onClick={handleRangeClick}
@@ -113,6 +141,9 @@ const QuestionForm = ({
                 >
                     Remove
                 </button>
+                </div>
+                }
+                
             </div>
         );
     };
@@ -122,6 +153,7 @@ const QuestionForm = ({
             <div className="questionTable">
                 {renderHeader()}
                 <RangeQuestionFrom
+                    isStandard = {isStandard}
                     sectionIndex={sectionIndex}
                     scenarioIndex={scenarioIndex}
                     questionIndex={questionIndex}
@@ -136,6 +168,7 @@ const QuestionForm = ({
             <div className="questionTable">
                 {renderHeader()}
                 <MultipleChoiceQuestionFrom
+                    isStandard = {isStandard}
                     description={description}
                     MCQOptions={MCQOptions}
                     addAnswerToMCQQuestion={addAnswerToMCQQuestion}
@@ -153,6 +186,7 @@ const QuestionForm = ({
 
 //display the range question
 const RangeQuestionFrom = ({
+                                isStandard,
                                sectionIndex,
                                scenarioIndex,
                                questionIndex,
@@ -218,6 +252,7 @@ const RangeQuestionFrom = ({
 //display the multiple choice question
 const MultipleChoiceQuestionFrom = (props) => {
     const {
+        isStandard,
         addAnswerToMCQQuestion,
         deleteAnswerFromMCQQuestion,
         MCQOptions,
@@ -298,30 +333,38 @@ const MultipleChoiceQuestionFrom = (props) => {
                                 </FormHelperText>
                             </FormControl>
                         </div>
-                        <button
+                        {
+                            isStandard? "":
+                            <button
                             className="delete-answer-button"
                             type="button"
                             onClick={(event) => {
                                 event.preventDefault();
                                 deleteAnswerFromMCQQuestion(sectionIndex, scenarioIndex, questionIndex, index);
                             }}
-                        >
-                            {" "}
-                            -{" "}
-                        </button>
+                            >
+                                {" "}
+                                -{" "}
+                            </button>
+                        }
+                        
                     </div>
                 );
             })}
-            <button
+            {
+                isStandard? "":
+                <button
                 className="add-answer-button"
                 onClick={(event) => {
                     event.preventDefault();
                     addAnswerToMCQQuestion(sectionIndex, scenarioIndex, questionIndex);
                 }}
-            >
-                {" "}
-                +{" "}
-            </button>
+                >
+                    {" "}
+                    +{" "}
+                </button>
+            }
+            
         </div>
     );
 };

@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
 const ScenariosContainer = ({
+    isStandard,
     scenarios,
     sectionIndex,
     removeQuestion,
@@ -98,6 +99,7 @@ const ScenariosContainer = ({
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails className={classes.details}>
                             <Scenario
+                                isStandard = {isStandard}
                                 item={item}
                                 key={item._id}
                                 sectionIndex={sectionIndex}
@@ -136,6 +138,7 @@ const ScenariosContainer = ({
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
 const Scenario = ({
+    isStandard,
     item,
     sectionIndex,
     scenarioIndex,
@@ -178,6 +181,7 @@ const Scenario = ({
             </div>
 
             <QuestionsContainer
+                isStandard = {isStandard}
                 questions={questions}
                 scenarioIndex={scenarioIndex}
                 sectionIndex={sectionIndex}
@@ -190,18 +194,23 @@ const Scenario = ({
                 handleQuestionDesChange={handleQuestionDesChange}
                 handleQuestionOptsChange={handleQuestionOptsChange}
             />
-
-            <div className="add-question-button">
+            
+            {isStandard? "": 
+                <div className="add-question-button">
                 <button
                     className="button"
                     onClick={(event) => {
                         event.preventDefault();
-                        addQuestion(sectionIndex, scenarioIndex);
+                            addQuestion(sectionIndex, scenarioIndex);
+                        
+                        
                     }}
                 >
                     ADD NEW QUESTION
                 </button>
-            </div>
+                </div>
+            }
+            
         </div>
     );
 };
