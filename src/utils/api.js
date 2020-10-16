@@ -23,12 +23,13 @@ const COMMON_HEADER = {
 
 let createHeader = (accessToken) => {
     if (accessToken){
+        return {
+            ...COMMON_HEADER,
+            Authorization: `Bearer ${accessToken}`
+        };
+    } else {
         return COMMON_HEADER;
     }
-    return {
-        ...COMMON_HEADER,
-        Authorization: `Bearer ${accessToken}`
-    };
 };
 
 const sendRequest = async (
@@ -37,7 +38,6 @@ const sendRequest = async (
     data = undefined,
     token = undefined
 ) => {
-
     let headers =  createHeader(token);
 
     let fetchOptions = {
