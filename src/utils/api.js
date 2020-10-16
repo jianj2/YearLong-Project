@@ -363,7 +363,6 @@ export const getShareDetails = async (shareId) => {
 /**
  * Create a share data.
  *
- * @params accessToken, data
  * @returns {Promise} ~ response from the server.
  */
 export const shareQuestionnaire = async (accessToken, data) => {
