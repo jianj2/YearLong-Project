@@ -2,12 +2,12 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 // Import Utilities.
-import * as API from "../../utils/api";
+import * as API from "../../utils/API";
 import {
     addStandardQuestionnaire,
     getStandardisedQuestionnaires,
     deleteStandardQuestionnaire
-} from "../../utils/api";
+} from "../../utils/API";
 // Import Components.
 import {
     Loading,

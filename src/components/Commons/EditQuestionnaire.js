@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { CustomModal } from "./index";
 // Import Utilities.
-import * as API from "../../utils/api";
+import * as API from "../../utils/API";
 import { useAuth0 } from "../../utils/react-auth0-spa";
 // Import Components.
 import { Loading, EditDescription, SectionsContainer } from "./";

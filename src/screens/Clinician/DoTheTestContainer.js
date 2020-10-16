@@ -7,7 +7,7 @@ import {
     getQuestionnaireById,
     completeQuestionnaire,
     getStandardisedQuestionnaires
-} from "../../utils/api";
+} from "../../utils/API";
 // Import Components.
 import {
     QuestionnaireList,
