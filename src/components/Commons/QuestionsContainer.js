@@ -178,9 +178,8 @@ const RangeQuestionFrom = ({
 
             <h3>Ranges</h3>
             <FormControl margin="dense">
-                <InputLabel>RangeStarts</InputLabel>
+                <InputLabel>Minimum Label</InputLabel>
                 <Input
-                    placeholder="Write the Range Starts."
                     value={rangeOptions[0]}
                     onChange={(event) => {
                         handleQuestionOptsChange(
@@ -191,14 +190,13 @@ const RangeQuestionFrom = ({
                             0);
                     }}
                 />
-                <FormHelperText>Write the Range Starts.</FormHelperText>
+                <FormHelperText>Write a word to describe the minimum value on the slider.</FormHelperText>
             </FormControl>
 
 
             <FormControl margin="dense">
-                <InputLabel>RangeEnds</InputLabel>
+                <InputLabel>Maximum Label</InputLabel>
                 <Input
-                    placeholder="Write the Range Ends."
                     value={rangeOptions[1]}
                     onChange={(event) => {
                         handleQuestionOptsChange(
@@ -209,7 +207,7 @@ const RangeQuestionFrom = ({
                             1);
                     }}
                 />
-                <FormHelperText>Write the Range Ends.</FormHelperText>
+                <FormHelperText>Write a word to describe the maximum value on the slider.</FormHelperText>
             </FormControl>
         </div>
     );
