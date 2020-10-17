@@ -83,7 +83,7 @@ const verifyToken = (token, secret) =>{
                     decoded: decoded.username,
                 });
             } else {
-                 reject({
+                 resolve({
                     auth: false,
                     decoded: "",
                 });
