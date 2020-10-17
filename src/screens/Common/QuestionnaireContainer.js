@@ -50,14 +50,19 @@ const QuestionnaireContainer = (props) => {
     const addScenario = (sectionIndex) => {
         const newScenario = {
             description: "",
-            questions: []
+            questions: [
+                {
+                    isMCQ: false,
+                    rangeOptions: []
+                }
+            ]
         };
         const questionnaireTemp = Object.assign({}, questionnaire);
         questionnaireTemp.sections[sectionIndex].scenarios.push(newScenario);
         setQuestionnaire(questionnaireTemp);
     };
 
-    const addSdandardScenario = (sectionIndex) => {
+    const addStandardScenario = (sectionIndex) => {
         const newScenario = {
             description: "",
             questions: [
@@ -98,11 +103,11 @@ const QuestionnaireContainer = (props) => {
         setQuestionnaire(questionnaireTemp);
     };
 
-    //add question to questionnaire
+    //add question to questionnaire(Only MCQ)
     const addQuestion = (sectionIndex, scenarioIndex) => {
         const newQuestion = {
-            isMCQ: false,
-            rangeOptions: []
+            isMCQ: true,
+            MCQOptions: []
         };
         const questionnaireTemp = Object.assign({}, questionnaire);
         questionnaireTemp.sections[sectionIndex].scenarios[scenarioIndex].questions.push(newQuestion);
@@ -225,7 +230,7 @@ const QuestionnaireContainer = (props) => {
                     <EditQuestionnaire
                         Questionnaire={questionnaire}
                         addScenario={addScenario}
-                        addSdandardScenario = {addSdandardScenario}
+                        addStandardScenario = {addStandardScenario}
                         removeScenario={removeScenario}
                         addQuestion={addQuestion}
                         removeQuestion={removeQuestion}

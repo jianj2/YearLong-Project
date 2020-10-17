@@ -98,7 +98,7 @@ const QuestionForm = ({
     const renderHeader = () => {
         return (
             <div className="questionTable-button-group">
-                {isStandard? 
+                {isStandard?
                 {
                     0: <button
                     className={!isMCQ ? "questionTable-button-selected" : ""}
@@ -121,29 +121,31 @@ const QuestionForm = ({
                         Multiple Choice Question
                     </button>
                 }[questionIndex]
-                :
-                <div className="questionTable-button-group">
-                <button
-                    className={!isMCQ ? "questionTable-button-selected" : ""}
-                    onClick={handleRangeClick}
-                >
-                    Performance Rating
-                </button>
-                <button
-                    className={isMCQ ? "questionTable-button-selected" : ""}
-                    onClick={handleMultipleClick}
-                >
-                    Multiple Choice Question
-                </button>
-                <button
-                    id="questionTable-remove-button"
-                    onClick={handleRemoveClick}
-                >
-                    Remove
-                </button>
-                </div>
-                }
-                
+                :isMCQ ?
+                        <div className="questionTable-button-group">
+                            <button
+                                className={isMCQ ? "questionTable-button-selected" : ""}
+                                onClick={handleMultipleClick}
+                            >
+                                Multiple Choice Question
+                            </button>
+                            <button
+                                id="questionTable-remove-button"
+                                onClick={handleRemoveClick}
+                            >
+                                Remove
+                            </button>
+                        </div>
+                        :
+                        <div className="questionTable-button-group">
+                            <button
+                                className={!isMCQ ? "questionTable-button-selected" : ""}
+                                onClick={handleRangeClick}
+                            >
+                                Performance Rating
+                            </button>
+                        </div>
+                    }
             </div>
         );
     };
@@ -334,18 +336,18 @@ const MultipleChoiceQuestionFrom = (props) => {
                         {
                             isStandard? "":
                             <button
-                            className="delete-answer-button"
-                            type="button"
-                            onClick={(event) => {
-                                event.preventDefault();
-                                deleteAnswerFromMCQQuestion(sectionIndex, scenarioIndex, questionIndex, index);
-                            }}
+                                className="delete-answer-button"
+                                type="button"
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    deleteAnswerFromMCQQuestion(sectionIndex,scenarioIndex,questionIndex, index);
+                                }}
                             >
                                 {" "}
                                 -{" "}
                             </button>
                         }
-                        
+
                     </div>
                 );
             })}
@@ -362,7 +364,7 @@ const MultipleChoiceQuestionFrom = (props) => {
                     +{" "}
                 </button>
             }
-            
+
         </div>
     );
 };
