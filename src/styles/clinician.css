@@ -87,7 +87,8 @@ width: 65%;
 .questionTable-button-group button{
   cursor: pointer;
   color: #eeeeee !important;
-  width:42.5%;
+  /* width:42.5%; */
+  width: 100%;
   border: none;
   outline: none;
   border-bottom: 1px solid rgba(255,255,255,0.2);
@@ -98,6 +99,10 @@ width: 65%;
 }
 .questionTable-button-group button:hover{ 
   background-color: rgba(175,139,192,.24) !important;
+}
+
+#display100{
+  width:100%;
 }
 
 #questionTable-remove-button{  

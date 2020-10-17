@@ -1,3 +1,18 @@
+/**
+ * =============================================================================
+ * JAVASCRIPT API FILE
+ * =============================================================================
+ * @date created: 12th October 2020
+ * @authors: Waqas Rehmani, Uvin Abeysinghe, Cary Jin
+ *
+ * This file contains all the requests made by the client to the server.
+ *
+ * =============================================================================
+ */
+
+import {getToken} from "./useAdminAuth";
+
+
 const api = process.env.REACT_APP_SERVER || "http://localhost:3001";
 
 //const api = "https://d1iiwjsw1v8g79.cloudfront.net/";
@@ -116,7 +131,7 @@ export const addQuestionnaire = async (token, clinicianId) => {
 
 export const addStandardQuestionnaire = async () => {
     const url = "questionnaire/addStandard";
-    return await sendRequest("POST", url);
+    return await sendRequest("POST", url,undefined,getToken());
 };
 
 // delete customised questionnaire
@@ -146,7 +161,7 @@ export const editStandardQuestionnaire = async (questionnaire) => {
     const data = {
         questionnaire,
     };
-    return await sendRequest("POST", url, data);
+    return await sendRequest("POST", url, data,getToken());
 };
 
 //COPY questionnaire
@@ -195,14 +210,14 @@ export const deleteStandardQuestionnaire = async (questionnaireID) => {
     const data = {
         questionnaireID,
     };
-    return await sendRequest("POST", url, data);
+    return await sendRequest("POST", url, data,getToken());
 };
 
 // ================================================
 // Managing Share server calls
 // ================================================
 // get questionnaire ID using the Share ID.
-export const getShareDetails = async (shareId) =>{
+export const getShareDetails = async (shareId) => {
     const url = `share/${shareId}`;
     return await sendRequest("GET", url);
 }
@@ -216,31 +231,37 @@ export const shareQuestionnaire = async (token, data) => {
 // get instruction based on type
 export const getSpecificInstruction = async (instructionType) => {
     const url = `admin/specificInstruction/${instructionType}`;
-    return await sendRequest("GET", url);
+    return await sendRequest("GET", url, undefined,getToken());
 };
 
 // get instructions summary including title and type
 
 export const getInstructionsSummary = async () => {
     const url = `admin/instructionsSummary`;
-    return await sendRequest("GET", url);
+    return await sendRequest("GET", url, undefined,getToken());
 };
 
 // update instruction by type
 export const updateInstruction = async (type, data) => {
     const url = `admin/instruction/${type}`;
-    return await sendRequest("POST", url, data);
+    return await sendRequest("POST", url, data, getToken());
 };
-   
+
+//get countries
+export const getCountries = async () => {
+    const url = `admin/country`;
+    return await sendRequest("GET", url, undefined, getToken());
+}
 
 // get organisations
-export const getOrganisations = async () => {
-    const url = `admin/organisation`;
-    return await sendRequest("GET", url);
+export const getOrganisations = async (countryName) => {
+    const url = `admin/country/organisation/${countryName}`;
+    return await sendRequest("GET", url, undefined,getToken());
 };
 
 // get organisation's clinicians
 export const getOrganisationClinicians = async (organisationName) => {
-    const url = `admin/organisation/${organisationName}`;
-    return await sendRequest("GET", url);
+    const url = `admin/organisation/clinician/${organisationName}`;
+    return await sendRequest("GET", url,undefined,getToken() );
 };
+
