@@ -150,14 +150,15 @@ const createAdminInDatabase = async () => {
     //hashing the password and then saving the user.
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newAdmin.password, salt, (err, hash) => {
-            if (err) throw err;
+            if (err){
+                 console.error(err);
+            };
             newAdmin.password = hash;
             newAdmin.save(function (err, createdUser) {
                 if (!err) {
-                    res.send(createdUser);
+                    console.log(createdUser);
                 } else {
-                    console.log(err);
-                    res.send(err);
+                    console.error(err);
                 }
             });
         });
