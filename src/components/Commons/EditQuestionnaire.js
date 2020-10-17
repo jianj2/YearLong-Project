@@ -31,6 +31,7 @@ const EditQuestionnaire = ({
     deleteAnswerFromMCQQuestion,
     addQuestion,
     addScenario,
+    addSdandardScenario,
     removeScenario,
     handleQuestionnaireTitleChange,
     handleQuestionnaireTypeChange,
@@ -135,10 +136,12 @@ const EditQuestionnaire = ({
                 />
 
                 <SectionsContainer
+                    isStandard = {Questionnaire.isStandard}
                     sections={Questionnaire.sections}
                     addQuestion={addQuestion}
                     removeQuestion={removeQuestion}
                     addScenario={addScenario}
+                    addSdandardScenario = {addSdandardScenario}
                     removeScenario={removeScenario}
                     changeToRangeQuestion={changeToRangeQuestion}
                     changeToMCQQuestion={changeToMCQQuestion}

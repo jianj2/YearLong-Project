@@ -50,9 +50,11 @@ const useStyles = makeStyles((theme) => ({
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
 const SectionsContainer = ({
+    isStandard,
     removeQuestion,
     addQuestion,
     addScenario,
+    addSdandardScenario,
     removeScenario,
     changeToRangeQuestion,
     changeToMCQQuestion,
@@ -84,12 +86,14 @@ const SectionsContainer = ({
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails className={classes.details}>
                                 <Section
+                                    isStandard={isStandard}
                                     item={item}
                                     key={item._id}
                                     sectionIndex={index}
                                     removeQuestion={removeQuestion}
                                     addQuestion={addQuestion}
                                     addScenario={addScenario}
+                                    addSdandardScenario = {addSdandardScenario}
                                     removeScenario={removeScenario}
                                     changeToRangeQuestion={
                                         changeToRangeQuestion
@@ -119,11 +123,13 @@ const SectionsContainer = ({
 };
 
 const Section = ({
+    isStandard,
     item,
     sectionIndex,
     removeQuestion,
     addQuestion,
     addScenario,
+    addSdandardScenario,
     removeScenario,
     changeToRangeQuestion,
     changeToMCQQuestion,
@@ -156,6 +162,7 @@ const Section = ({
                 </FormControl>
             </div>
             <ScenariosContainer
+                isStandard = {isStandard}
                 scenarios={scenarios}
                 sectionIndex={sectionIndex}
                 removeQuestion={removeQuestion}
@@ -176,7 +183,13 @@ const Section = ({
                         className="button"
                         onClick={(event) => {
                             event.preventDefault();
-                            addScenario(sectionIndex);
+                            if(!isStandard){
+                                addScenario(sectionIndex);
+                            }
+                            else{
+                                addSdandardScenario(sectionIndex);
+                            }
+                            
                         }}
                     >
                         ADD NEW LISTENING SCENARIO
