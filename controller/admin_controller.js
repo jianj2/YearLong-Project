@@ -21,19 +21,19 @@ const {
     authenticateAdmin,
     createAdminInDatabase,
 } = require("../service/adminService");
-const serverSecret =  "secretLOL";
+const serverSecret = "secretLOL";
 
 // Login check.
 const loginAdmin = async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     const [err, message] = await authenticateAdmin(username, password);
-    sendJSONResponse(res, {message: message}, err, 401);
+    sendJSONResponse(res, { message: message }, err, 401);
 };
 
 const verifyLogin = async (req, res) => {
     const token = req.params.token;
-    const result = await verifyToken(token,serverSecret);
+    const result = await verifyToken(token, serverSecret);
     if (result.auth === true) {
         res.status(200).json(result);
     } else {

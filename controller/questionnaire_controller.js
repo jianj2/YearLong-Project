@@ -67,7 +67,7 @@ const addEmptyQuestionnaire = async (req, res) => {
     const clinicianId = req.body.clinicianId;
     if (userEmail === clinicianId) {
         const uuid = uuidv1();
-        let newQuestionnaire = generateNewCustomisedQuestionnaire(uuid);
+        const newQuestionnaire = generateNewCustomisedQuestionnaire(uuid);
         const [err, message] = await saveNewCustomisedQuestionnaire(
             newQuestionnaire,
             clinicianId

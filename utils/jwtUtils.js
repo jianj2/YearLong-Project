@@ -14,11 +14,10 @@ const jwt = require("jsonwebtoken");
 const jwksRsa = require('jwks-rsa');
 const domain = process.env.SERVER || "http://localhost:3001";
 
-
+const production = process.env.NODE_ENV;
 // Authentication middleware. When used, the
 // Access Token must exist and be verified against
 // the Auth0 JSON Web Key Set
-const production = process.env.NODE_ENV;
 const checkJwt = production == "production" ? expressJWT({
   // Dynamically provide a signing key
   // based on the kid in the header and 

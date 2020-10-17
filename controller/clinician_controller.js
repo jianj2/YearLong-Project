@@ -15,14 +15,13 @@ const { extractUserEmail } = require("../utils/jwtUtils");
 
 // Clinician completes the questionnaire
 const completeQuestionnaire = function (req, res) {
-    let questionnaireData  = req.body.questionnaireData;
-    let clinicianEmail  = req.body.clinicianEmail;
-    let personalDetails  = req.body.personalDetails;
-    let questionnaireId  = req.body.questionnaireId;
-    let comments = req.body.comments;
-    let sortBy  = req.body.sortBy;
+    const questionnaireData  = req.body.questionnaireData;
+    const clinicianEmail  = req.body.clinicianEmail;
+    const personalDetails  = req.body.personalDetails;
+    const questionnaireId  = req.body.questionnaireId;
+    const comments = req.body.comments;
+    const sortBy  = req.body.sortBy;
 
-    console.log("sortBy ",sortBy);
     const userEmail = extractUserEmail(req);
     if(userEmail === clinicianEmail){
         sendResultsEmail(questionnaireId, questionnaireData, clinicianEmail, personalDetails, sortBy, undefined ,comments)

@@ -11,7 +11,7 @@
  * can be viewed or managed by admins.
  */
 const jwt = require("jsonwebtoken");
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 
 const mongoose = require("mongoose");
 const Instruction = mongoose.model("instruction");
@@ -50,12 +50,11 @@ const authenticateAdmin = async (username, password) => {
             });
             return Promise.resolve([
                 undefined,
-                 {
+                {
                     auth: true,
                     token: token,
                 },
             ]);
-          
         } else {
             throw Error("Incorrect details!");
         }

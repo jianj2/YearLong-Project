@@ -61,21 +61,15 @@ const getShareDetails = async function (req, res) {
 // This function is called when share response is completed.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const completeShare = async function (req, res) {
-    let questionnaireData = req.body.questionnaireData;
-    let clinicianEmail = req.body.clinicianEmail;
-    let personalDetails = req.body.personalDetails;
-    let questionnaireId = req.body.questionnaireId;
-    let comments = req.body.comments;
-    let sortBy = req.body.sortBy;
     try {
         const emailResponse = await sendResultsEmail(
-            questionnaireId,
-            questionnaireData,
-            clinicianEmail,
-            personalDetails,
-            sortBy,
+            req.body.questionnaireId,
+            req.body.questionnaireData,
+            req.body.clinicianEmail,
+            req.body.personalDetails,
+            req.body.sortBy,
             req.params.shareId,
-            comments
+            req.body.comments
         );
         const err = await deleteShare(req.params.shareId);
         if (!err) {
