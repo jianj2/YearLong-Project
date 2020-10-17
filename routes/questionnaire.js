@@ -15,14 +15,10 @@ const questionnaire_controller = require('../controller/questionnaire_controller
 const admin_controller = require('../controller/admin_controller.js');
 const {checkJwt} = require("../utils/jwtUtils");
 
-
-
-
-// CRUD Routes for Posts
+//CRUD requests for questionnaires 
 
 router.get('/clinician/', checkJwt, questionnaire_controller.getClinicianQuestionnaires);
 router.get("/standardised",questionnaire_controller.getStandardisedQuestionnaires);
-
 router.get("/:questionnaireId", questionnaire_controller.getQuestionnaire);
 
 router.post('/deleteStandard', questionnaire_controller.deleteStandardisedQuestionnaire);
