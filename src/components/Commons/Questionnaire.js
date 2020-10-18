@@ -40,6 +40,9 @@ function Questionnaire({
     const { register, handleSubmit, errors } = useForm();
 
     const [open, setOpen] = React.useState(false);
+    const [unansweredSectionIndex, setUnansweredSectionIndex] = React.useState(-1);
+    const [unansweredScenarioIndex, setUnansweredScenarioIndex] = React.useState(-1);
+
 
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
@@ -49,22 +52,28 @@ function Questionnaire({
     };
 
 
-    // Method: Called when we submit the questionnaire
-    const onSubmit = (e) => {
-        let flag = true;
-        e.preventDefault();
-        for (let section of questionnaireData) {
-            for (let scenario of section) {
-                if (scenario[0].supplementaryValue === "") { //if supplementaryValue is "", it means all the question's value should be filled
-                    for (let question of scenario) {
-                        if (question.value === undefined) {
-                            flag = false;
-                            break;
-                        } // if supplementaryValue is not "", others question is not applicable, we don't have to check
-                    }
+const verifyAllScenariosAnswered = () => {
+    for (let [sectionIndex, section] of questionnaireData.entries()) {
+        for (let [scenarioIndex, scenario] of section.entries()) {
+            if (scenario[0].supplementaryValue === "") { //if supplementaryValue is "", it means all the question's value should be filled
+                for (let question of scenario) {
+                    if (question.value === undefined) {
+                            setUnansweredSectionIndex(sectionIndex);
+                            setUnansweredScenarioIndex(scenarioIndex);
+                        return false;
+                    } // if supplementaryValue is not "", others question is not applicable, we don't have to check
                 }
             }
         }
+    }
+    return true;
+} 
+    
+    // Method: Called when we submit the questionnaire
+    const onSubmit = (e) => {
+        
+        e.preventDefault();
+        const flag = verifyAllScenariosAnswered();
         if (flag === true) {
             submitQuestionnaire();
         } else {
@@ -78,7 +87,11 @@ function Questionnaire({
         scenarioIndex,
         questionIndex,
         data
-    ) => {
+    ) => {  
+        if(sectionIndex === unansweredSectionIndex && scenarioIndex === unansweredScenarioIndex){
+            setUnansweredSectionIndex(-1);
+            setUnansweredScenarioIndex(-1);
+        }
         handleQuestionnaireChange(
             sectionIndex,
             scenarioIndex,
@@ -94,10 +107,16 @@ function Questionnaire({
             {questionnaire.sections.map((section, sectionIndex) => (
                 <div key={sectionIndex} className="section-container">
                     <h2>{section.title}</h2>
-                    {section.scenarios.map((scenario, scenarioIndex) => (
+                    {section.scenarios.map((scenario, scenarioIndex) => { 
+                        let style = {};
+                        if(unansweredSectionIndex === sectionIndex && unansweredScenarioIndex == scenarioIndex){
+                            style = {borderColor: "red"}
+                        }
+                        return (
                         <div
                             key={scenarioIndex}
                             className="scenario-container"
+                            style={style}
                         >
                             <p><span className="scenario-number">{scenarioIndex+1}</span>  {scenario.description}</p>
                             {scenario.questions.map(
@@ -143,7 +162,7 @@ function Questionnaire({
                                     </div>
                             }
                         </div>
-                    ))}
+                    )})}
                 </div>
             ))}
 
