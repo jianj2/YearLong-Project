@@ -678,21 +678,22 @@ const calculateScore = function (questionnaireData, calculateAverage, section_sc
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used generate the csv report.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const generateCSV = function (questionnaireData, personalDetails, scenarioResults, comments) {
+const generateCSV = function (questionnaireData, personalDetails, scenarioResults, comments, scores) {
     const device_r = personalDetails.rightDeviceType === 'Other' ? personalDetails.rightDeviceTypeOther : personalDetails.rightDeviceType;
     const device_l = personalDetails.leftDeviceType === 'Other' ? personalDetails.leftDeviceTypeOther : personalDetails.leftDeviceType
-    let toWrite = `Section,Item Number,Rating,Frequency,Importance,Listening Situation,` +
-        `Completed By,Name,Date,Right Device Type, Left Device Type, Comments\n`
-    let itemNumber = 1;
+    let toWrite = `Questionnaire Completed, Section,Average Rating, Item Number,Rating,Frequency,Importance,Listening Situation,` +
+        `SSQ Completed By,Name,Date,Right Device Type, Left Device Type, Comments\n`
     questionnaireData.sections.forEach((section, sectionIndex) => {
+        let itemNumber = 1;
         // ADD SCORE TO THE SECTION
         section.scenarios.forEach((scenario, scenarioIndex) => {
             let response = scenarioResults[itemNumber - 1]
             while (response.length < 3) {
                 response.push("Not Applicable.")
             }
+
             let questionDescription = (scenario.description).replace(/,/g, "")
-            toWrite += `${section.title},${itemNumber},${response[0]},${response[1]},${response[2]},` +
+            toWrite += `${questionnaireData.title},${section.title},${scores.sectionScores[sectionIndex]}, ${itemNumber},${response[0]},${response[1]},${response[2]},` +
                 `${questionDescription},${personalDetails.completedBy},${personalDetails.name},` +
                 `${personalDetails.date},${device_r},${device_l}, ${comments[sectionIndex][scenarioIndex]}\n`
             itemNumber += 1;
@@ -770,7 +771,7 @@ const generateAttachments = function (questionnaireId, personalDetails, question
 
                     const [resultToPrint, scenarioResults] = getQuestionnaireResponseJoin(questionnaire, questionnaireData, section_score, sharedSections);
 
-                    const csvResult = generateCSV(resultToPrint, personalDetails, scenarioResults, comments);
+                    const csvResult = generateCSV(resultToPrint, personalDetails, scenarioResults, comments, scores);
 
                     // prints out summary of section scores
                     doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire Score Summary", 30, 240);
