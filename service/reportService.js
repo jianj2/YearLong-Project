@@ -119,6 +119,7 @@ const printCustomQuestionnaireResults = function (doc, resultToPrint, startSpaci
     let spacing = startSpacing;
     let answerMargin = Math.ceil((doc.widthOfString("Answer: ") + rightMargin) / 10) * 10 + 5;
     let paragraphWidth = 465;
+    let scenarioParagraphWidth = 440;
 
     resultToPrint.sections.forEach((section, sectionIndex) => {
         spacing = addPage(doc, spacing, docHeight)
@@ -126,24 +127,26 @@ const printCustomQuestionnaireResults = function (doc, resultToPrint, startSpaci
         doc.font('Helvetica-Bold').fontSize(14).text(section.title, startMargin, spacing);
         // doc.font('Helvetica').fontSize(12).text("Section average: " + section.score, midMargin, spacing);
         spacing = spacing + 30;
-
+        let count = 1;
         section.scenarios.map((scenario, scenarioIndex) => {
             spacing = addPage(doc, spacing, docHeight, Math.ceil(doc.heightOfString(scenario.description, {width: paragraphWidth}) / 10) * 10 + 15)
             // Writing the description for each scenario.
-            doc.font('Helvetica-Bold').fontSize(12).text("Scenario: ", rightMargin, spacing);
+            let scenarioString = count + ". Scenario: "
+
+            doc.font('Helvetica-Bold').fontSize(12).text(scenarioString, rightMargin, spacing);
             //spacing = spacing + 20;
-            let margin = Math.ceil((doc.widthOfString("Scenario: ") + rightMargin) / 10) * 10 + 5;
+            let margin = Math.ceil((doc.widthOfString(scenarioString) + rightMargin) / 10) * 10 + 5;
 
             doc.font('Helvetica').fontSize(12).text(scenario.description, margin, spacing, {
-                width: paragraphWidth,
+                width: scenarioParagraphWidth,
                 align: 'justify'
             });
 
             // adds purple overlay on top of scenario
-            doc.fillOpacity(0.1).rect(30, spacing - 10, 550, doc.heightOfString(scenario.description, {width: paragraphWidth}) + 15).fill('purple');
+            doc.fillOpacity(0.1).rect(30, spacing - 10, 550, doc.heightOfString(scenario.description, {width: scenarioParagraphWidth}) + 15).fill('purple');
             doc.fillOpacity(1).fill('black');
 
-            spacing = spacing + Math.ceil(doc.heightOfString(scenario.description, {width: paragraphWidth}) / 10) * 10 + 15;
+            spacing = spacing + Math.ceil(doc.heightOfString(scenario.description, {width: scenarioParagraphWidth}) / 10) * 10 + 15;
 
             scenario.questions.map((question) => {
                 spacing = addPage(doc, spacing, docHeight)
@@ -188,6 +191,7 @@ const printCustomQuestionnaireResults = function (doc, resultToPrint, startSpaci
                 spacing = spacing + Math.ceil(doc.heightOfString(comment, {width: paragraphWidth-25}) / 10) * 10 + 15;
                 spacing = addPage(doc, spacing, docHeight)
             }
+            count += 1;
 
 
         });
@@ -737,7 +741,7 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                 // insert logo
                 doc.image('assets/logo_complete.png', 450, 30, {width: 100})
                 // prints heading for patient details
-                doc.font('Helvetica-Bold').fontSize(14).text("Patient Details", 30, 70);
+                doc.font('Helvetica-Bold').fontSize(14).text("Client Details", 30, 70);
                 // purple overlay for patient information
                 doc.fillOpacity(0.1).rect(30, 90, 550, 110).fill('purple');
                 doc.fillOpacity(1).fill('black');
@@ -748,7 +752,6 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     .text('Date of Birth', 250, 110)
                     .text('Right Device Type', 50, 150)
                     .text('Left Device Type', 250, 150)
-                    .text('Completed By', 450, 110);
 
                 // prints out patient information
                 const device_r = personalDetails.rightDeviceType === 'Other' ? personalDetails.rightDeviceTypeOther : personalDetails.rightDeviceType;
@@ -758,7 +761,6 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     .text(personalDetails.date, 250, 130)
                     .text(device_r, 50, 170)
                     .text(device_l, 250, 170)
-                    .text(personalDetails.completedBy, 450, 130);
 
                 // THIS LINE PRINTS THE QUESTIONNAIRE RESULT IN THE DOC FILE
                 Share.findOne({shareId}, function (err, share
@@ -772,12 +774,27 @@ const generateAttachments = function (questionnaireId, personalDetails, question
 
                     const csvResult = generateCSV(resultToPrint, personalDetails, scenarioResults, comments);
 
-                    // prints out summary of section scores
-                    doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire Score Summary", 30, 240);
-
-                    let lineSpacing = 280;
+                    let lineSpacing = 230;
                     let margin = 0;
+                    doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire information", 30, lineSpacing);
+                    doc.fillOpacity(0.1).rect(30, lineSpacing + 20, 550, 70).fill('purple');
+                    doc.fillOpacity(1).fill('black');
+                    lineSpacing += 40;
+                    doc.font('Helvetica-Bold').fontSize(12)
+                        .text('Questionnaire Name', 50, lineSpacing)
+                        .text('SSQ Completed By', 250, lineSpacing)
+                    lineSpacing += 20;
+                    doc.font('Helvetica').fontSize(12)
+                        .text(questionnaire.title, 50, lineSpacing)
+                        .text(personalDetails.completedBy, 250, lineSpacing);
+
+                    // prints out summary of section scores
+                    doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire Score Summary", 30, lineSpacing + 70);
+                    lineSpacing += 110;
+                    //lineSpacing += 30;
+
                     doc.font('Helvetica-Bold').fontSize(12).text("Questionnaire Average: ", 50, lineSpacing);
+                    console.log(lineSpacing)
                     lineSpacing += 30;
                     resultToPrint.sections.forEach((section, sectionIndex) => {
                         doc.font('Helvetica-Bold').fontSize(12).text(section.title + " Average: ", 50, lineSpacing);
@@ -787,15 +804,18 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                         lineSpacing = addPage(doc, lineSpacing, doc.page.height);
                     })
 
-                    doc.font('Helvetica').text(scores.averageScore, margin, 280);
+                    doc.font('Helvetica').text(scores.averageScore, margin, 400);
 
-                    doc.fillOpacity(0.1).rect(30, 260, 550, lineSpacing - 260).fill('purple');
+                    doc.fillOpacity(0.1).rect(30, 380, 550, 140).fill('purple');
                     doc.fillOpacity(1).fill('black');
                     lineSpacing += 40
                     doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire Response", 30, lineSpacing);
                     lineSpacing += 30
                     doc.lineCap('butt').moveTo(30, lineSpacing).lineTo(doc.page.width - 30, lineSpacing).stroke();
                     lineSpacing += 20;
+
+
+
 
                     // -------  TO DO  --------
                     // MAKE THIS BETTER
