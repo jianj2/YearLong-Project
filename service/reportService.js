@@ -802,7 +802,6 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     //lineSpacing += 30;
 
                     doc.font('Helvetica-Bold').fontSize(12).text("Overall Average Rating: ", 50, lineSpacing);
-                    console.log(lineSpacing)
                     lineSpacing += 30;
                     resultToPrint.sections.forEach((section, sectionIndex) => {
                         doc.font('Helvetica-Bold').fontSize(12).text(section.title + " Average Rating: ", 50, lineSpacing);
