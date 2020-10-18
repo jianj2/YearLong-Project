@@ -122,16 +122,16 @@ const HomeParents = ({ match }) => {
             const [statusCode, shareResponse] = await API.getShareDetails(match.params.shareId);
             if (statusCode === 200) {
                 // Server call to get the questionnaire.
-                setSortBy(shareResponse.data.sortBy);
-                setClinicianEmail(shareResponse.data.clinicianEmail);
-                setReadOnly(shareResponse.data.readOnly);
+                setSortBy(shareResponse.sortBy);
+                setClinicianEmail(shareResponse.clinicianEmail);
+                setReadOnly(shareResponse.readOnly);
                 API.getQuestionnaireById(
-                    shareResponse.data.questionnaireId
+                    shareResponse.questionnaireId
                 ).then((res) => {
                     const [statusCode, data] = res;
                     // Define initial values for the Questionnaire
                     if (statusCode === 200) {
-                        updateSections(data, shareResponse.data.shareSection);
+                        updateSections(data, shareResponse.shareSection);
                         let tempResponse = [];
                         let tempComments = [];
                         data.sections.forEach((section, sectionIndex) => {
