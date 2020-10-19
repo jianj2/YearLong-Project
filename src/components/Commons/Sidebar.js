@@ -60,13 +60,13 @@ const SideBar = ({ userType }) => {
             <div className="sidebar-container">
                 <Link
                     className={`sidebar-questionnaires
-                        ${(pathname === "admin" || pathname === "Questionnaires" || pathname === "edit") ? "active" : ""}`}
+                        ${(pathname === "admin" || pathname === "Questionnaires" || pathname === "view" || window.location.href.includes("standard") ) ? "active" : ""}`}
                     to="/admin/Questionnaires"
                 >
                     Questionnaires
                 </Link>
                 <Link
-                    className={`sidebar-ssq-instructions ${(pathname === "SSQ_Instructions") ? "active" : ""}`}
+                    className={`sidebar-ssq-instructions ${(pathname === "SSQ_Instructions" || window.location.href.includes("instruction")) ? "active" : ""}`}
                     to="/admin/SSQ_Instructions"
                 >
                     SSQ Instructions
