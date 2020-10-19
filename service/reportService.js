@@ -709,6 +709,11 @@ const generateAttachments = function (questionnaireId, personalDetails, question
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
 
+        // Catherine
+        console.log(personalDetails.filledByTypeOption)
+        console.log(personalDetails.filledBy)
+        // Catherine
+
         Questionnaire.findOne({questionnaireId}, function (err, questionnaire) {
             if (!err) {
                 let section_score = [];
