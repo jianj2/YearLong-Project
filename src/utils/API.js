@@ -60,7 +60,7 @@ export const addStandardQuestionnaire = async () => {
 export const editStandardQuestionnaire = async (questionnaireData) => {
     const url = "questionnaire/editStandard";
     const data = {
-        questionnaireData
+        questionnaire: questionnaireData
     };
     return await sendRequest("POST", url, data, getToken());
 };
@@ -75,7 +75,7 @@ export const adminCopyQuestionnaire = async (questionnaireData) => {
     const url = "questionnaire/copy";
     const data = {
         copyToCustomisedQuestionnaire: false,
-        questionnaireData
+        questionnaire: questionnaireData
     };
     return await sendRequest("POST", url, data);
 };
@@ -136,7 +136,7 @@ export const getClinicianQuestionnaires = async (accessToken, clinicianId) => {
 export const editQuestionnaire = async (accessToken, questionnaireData) => {
     const url = "questionnaire/edit";
     const data = {
-        questionnaireData
+        questionnaire: questionnaireData
     };
     return await sendRequest("POST", url, data, accessToken);
 };
@@ -153,7 +153,7 @@ export const copyQuestionnaire = async (questionnaireData, clinicianId) => {
     const data = {
         clinicianId,
         copyToCustomisedQuestionnaire: true,
-        questionnaireData
+        questionnaire: questionnaireData
     };
     return await sendRequest("POST", url, data);
 };

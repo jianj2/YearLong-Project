@@ -29,18 +29,25 @@ import {
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-const EditDescription = (props, { Questionnaire }) => {
-    // to modify the questionnaire title in real time.
-    const handleQuestionnaireTitleChange = (event) => {
-        props.handleQuestionnaireTitleChange(event);
+const EditDescription = ({
+    questionnaire,
+    handleQuestionnaireTitleChange,
+    handleQuestionnaireDesChange,
+    handleQuestionnaireTypeChange,
+}) => {
+
+    console.log("questionnaire", questionnaire);
+    // // to modify the questionnaire title in real time.
+    const handleTitleChange = (event) => {
+        handleQuestionnaireTitleChange(event);
     };
     // to modify the questionnaire description in real time.
-    const handleQuestionnaireDescriptionChange = (event) => {
-        props.handleQuestionnaireDesChange(event);
+    const handleDescriptionChange = (event) => {
+        handleQuestionnaireDesChange(event);
     };
     // to modify the questionnaire type change in real time
-    const handleQuestionnaireTypeChange = (event) => {
-        props.handleQuestionnaireTypeChange(event);
+    const handleTypeChange = (event) => {
+        handleQuestionnaireTypeChange(event);
     };
     return (
         <div className="edit-description">
@@ -51,8 +58,8 @@ const EditDescription = (props, { Questionnaire }) => {
                     <Input
                         name="username"
                         placeholder="Write the title."
-                        value={props.Questionnaire.title}
-                        onChange={handleQuestionnaireTitleChange}
+                        value={questionnaire.title}
+                        onChange={handleTitleChange}
                     />
                     <FormHelperText>
                         Write the title of the questionnaire
@@ -63,9 +70,9 @@ const EditDescription = (props, { Questionnaire }) => {
                     <Input
                         name="username"
                         placeholder="Write the description."
-                        value={props.Questionnaire.description}
-                        defaultValue={props.Questionnaire.description}
-                        onChange={handleQuestionnaireDescriptionChange}
+                        value={questionnaire.description}
+                        defaultValue={questionnaire.description}
+                        onChange={handleDescriptionChange}
                     />
                     <FormHelperText>
                         Write the description of the questionnaire
@@ -75,10 +82,10 @@ const EditDescription = (props, { Questionnaire }) => {
                 <FormControl component="fieldset">
                 <FormLabel component="legend">SSQ Type</FormLabel>
                 <RadioGroup 
-                    defaultValue={props.Questionnaire.isSSQ_Ch? "children":"parents"} 
+                    defaultValue={questionnaire.isSSQ_Ch? "children":"parents"}
                     aria-label="SSQtype" 
                     name="customized-radios"
-                    onChange = {handleQuestionnaireTypeChange}
+                    onChange = {handleTypeChange}
                 >
                     <FormControlLabel value="children" control={<Radio />} label="Children" />
                     <FormControlLabel value="parents" control={<Radio />} label="Parents" />
