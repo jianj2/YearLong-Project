@@ -53,22 +53,23 @@ const ManageQuestionnaires = (props) => {
         setLoading(true);
 
         if (isAuthenticated && token !== "") {
-            async function retrieveCustomisedQuestionnaires() {
+            const retrieveCustomisedQuestionnaires = async () => {
                 const [
                     _,
                     customisedQuestionnaires
                  ] = await API.getClinicianQuestionnaires(token, user.name);
-                const sortedCustomisedQuestionnaires = customisedQuestionnaires.sort(function (a, b) {
+                const sortedCustomisedQuestionnaires = customisedQuestionnaires
+                    .sort((a, b) => {
                     let dateA = new Date(a.updateDate),
                         dateB = new Date(b.updateDate);
-                    return dateB - dateA;
+                    return (new Date(b.updateDate) - new Date(a.updateDate));
                 });
                 // setQuestionnaires({ customized_Questionnaire: customisedQuestionnairesElement });
-                setCustomisedQuestionnaires(sortedCustomisedQuestionnaires);
-                setLoading(false);
-            }
+                setCustomisedQuestionnaires(customisedQuestionnaires);
+                setLoading(false)
+            };
 
-            async function retrieveStandardisedQuestionnaires() {
+            const retrieveStandardisedQuestionnaires = async () => {
                 const [
                     statusCode,
                     data
