@@ -25,7 +25,7 @@ const COMMON_HEADER = {
  * @returns JSON object with header.
  */
 let createHeader = (accessToken) => {
-    if (accessToken){
+    if (accessToken) {
         return {
             ...COMMON_HEADER,
             Authorization: `Bearer ${accessToken}`

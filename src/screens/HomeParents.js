@@ -94,7 +94,7 @@ const HomeParents = ({ match }) => {
                     return visibilityInfo.title === section.title;
                 }
             );
-            if (foundVisibilityInfo != undefined) {
+            if (foundVisibilityInfo !== undefined) {
                 return foundVisibilityInfo.isVisible;
             } else {
                 return null;
@@ -105,7 +105,7 @@ const HomeParents = ({ match }) => {
 
     // set the updates questionnaire sections.
     const updateSections = (questionnaire, sectionVisibility) => {
-        if (sectionVisibility != undefined) {
+        if (sectionVisibility !== undefined) {
             questionnaire.sections = getVisibleSections(
                 questionnaire.sections,
                 sectionVisibility

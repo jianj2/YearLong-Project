@@ -10,7 +10,7 @@
  * =============================================================================
  */
 import { getToken } from "./useAdminAuth";
-import { sendRequest, findPasswordRequest} from './HTTP'
+import { sendRequest, findPasswordRequest } from "./HTTP";
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                              QUESTIONNAIRE                             ////
