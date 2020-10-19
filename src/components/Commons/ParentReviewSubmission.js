@@ -17,12 +17,12 @@ import React from "react";
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-export default function ParentReviewSubmission({
+const ParentReviewSubmission = ({
     questionnaire,
     personalDetails,
     questionnaireData,
     commentData
-}) {
+}) => {
     return (
         <div className="review-submission">
             <h1>Personal Details</h1>
@@ -88,7 +88,6 @@ export default function ParentReviewSubmission({
                                         </div>
                                     </div>
                                 ))}
-                                {/* TODO: ADD THE SECTION's COMMENT */}
                                 <div className="comment-review-container">
                                     <label>Comment</label>
                                     <br/>
@@ -103,3 +102,5 @@ export default function ParentReviewSubmission({
         </div>
     );
 }
+
+export default ParentReviewSubmission;

@@ -15,7 +15,7 @@ import {
     DialogActions, FormHelperText
 } from "@material-ui/core";
 // Import Utilities.
-import { findPassword } from "../utils/api";
+import { findPassword } from "../utils/API";
 
 /**
  * =============================================================================

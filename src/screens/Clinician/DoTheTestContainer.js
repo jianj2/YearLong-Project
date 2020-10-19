@@ -7,7 +7,7 @@ import {
     getQuestionnaireById,
     completeQuestionnaire,
     getStandardisedQuestionnaires
-} from "../../utils/api";
+} from "../../utils/API";
 // Import Components.
 import {
     QuestionnaireList,
@@ -62,23 +62,23 @@ const DoTheTestContainer = () => {
 
     // This is called whenever "user" changes
     useEffect(() => {
-        async function retrieveStandardisedQuestionnaires() {
+        const retrieveStandardisedQuestionnaires = async () => {
             const [statusCode, data] = await getStandardisedQuestionnaires();
             if (statusCode === 200) {
                 setStandardisedQuestionnaires(data);
             } else {
                 console.error(data);
             }
-        }
+        };
 
-        async function retrieveCustomisedQuestionnaires() {
+        const retrieveCustomisedQuestionnaires = async () => {
             const [statusCode, data] = await getClinicianQuestionnaires(token, user.name);
             if (statusCode === 200) {
                 setQuestionnaires(data);
             } else {
                 console.error(data);
             }
-        }
+        };
 
         if (user && token !== "") {
             retrieveCustomisedQuestionnaires();
@@ -220,7 +220,8 @@ const DoTheTestContainer = () => {
                     <button className="button" onClick={prevStep}>
                         B A C K
                     </button>
-                    <button className="button" form="questionaire-container" type="submit">
+                    <button className="button" form="questionaire-container"
+                            type="submit">
                         R E V I E W
                     </button>
                 </div>

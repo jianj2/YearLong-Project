@@ -21,14 +21,14 @@ import Question from "./Question";
  */
 
 
-function Alert(props) {
+const Alert = (props) => {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-function Questionnaire({
+const Questionnaire = ({
       readOnly,
       questionnaire,
       submitQuestionnaire,
@@ -36,7 +36,7 @@ function Questionnaire({
       commentData,
       handleCommentChange,
       handleQuestionnaireChange
-}) {
+}) => {
     const { register, handleSubmit, errors } = useForm();
 
     const [open, setOpen] = React.useState(false);
