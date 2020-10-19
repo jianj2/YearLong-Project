@@ -225,6 +225,7 @@ const FormParentDetails = ({
                         </FormControl>
                     ) : (<div></div>)}
 
+                    {isSSQ_Ch? (null) :(
                     <FormControl margin="dense">
                         <InputLabel>Filled by</InputLabel>
                         <Input
@@ -240,6 +241,7 @@ const FormParentDetails = ({
                         />
                         <FormHelperText>{errors.filledBy ? errors.filledBy.message : "Please enter the name of the person who filled this questionnaire."}</FormHelperText>
                     </FormControl>
+                        )}
 
                 </div>
 
@@ -316,7 +318,7 @@ const FormParentDetails = ({
 
 
 
-
+                    {isSSQ_Ch ? (null) :(
 
                     <FormControl margin="dense">
                         <InputLabel>Filled by (Relationship)</InputLabel>
@@ -342,7 +344,9 @@ const FormParentDetails = ({
                         <FormHelperText>{errors.filledByTypeOption ? errors.filledByTypeOption.message : "Please specify who filled the questionnaire."}</FormHelperText>
                     </FormControl>
 
-                    {filledByTypeOptionOtherVisible ? (
+                    )}
+
+                    {filledByTypeOptionOtherVisible && !isSSQ_Ch ? (
                         <FormControl margin="dense">
                             <InputLabel>Filled by (Relationship), please specify</InputLabel>
                             <Input

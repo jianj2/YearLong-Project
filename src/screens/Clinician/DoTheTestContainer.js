@@ -212,6 +212,7 @@ const DoTheTestContainer = () => {
                     clinicianAccess={true}
                     defaultValue={personalDetails}
                     getPersonalDetails={getPersonalDetails}
+                    isSSQ_Ch={selectedQuestionnaire.isSSQ_Ch}
                 />
             </div>
         );
