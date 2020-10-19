@@ -53,6 +53,10 @@ const HomeClinician = (props) => {
                         audience: clinicianAuthAPI,
                         scope: "read:current_user"
                     });
+
+                    console.log("Main yahan hoon yahan hoon'")
+                    console.log("accessToken", accessToken)
+
                     setToken(accessToken);
                 } catch (e) {
 
@@ -70,24 +74,27 @@ const HomeClinician = (props) => {
                         scope: "read:current_user"
                     });
                     setToken(accessToken);
-
-
-
-                    console.log("accessToken", accessToken)
+                    
+                    //
+                    //
+                    // console.log("accessToken", accessToken)
                     // setToken(accessToken);
-
-
-
-
-
                 }
             };
+
+
             setAuth0Token();
+
+            // getTokenSilently().then(res => {
+            //     console.log("getTokenSilently", res);
+            //     // setToken(res);
+            // })
+
             return;
         }
 
         const fn = async () => {
-            await loginWithRedirect({
+            let temp = await loginWithRedirect({
                 // redirect_uri: `${client}/clinician`
                 redirect_uri: window.location.href
 
@@ -95,9 +102,13 @@ const HomeClinician = (props) => {
                 //redirect_uri: "https://d1hg2pgsuj0kio.cloudfront.net/clinician", //TODO: figure out why window.location.pathname doesn't work
                 //appState: { targetUrl: window.location.pathname},
             });
+            console.log("temp'", temp)
+            return temp
         };
 
-        fn();
+        let shamlakal = fn();
+        console.log("shamlakal'", shamlakal)
+
     }, [isAuthenticated, loading, user]);
     if (loading || !user) {
         return <Loading/>;
