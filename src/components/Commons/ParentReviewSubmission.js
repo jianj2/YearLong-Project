@@ -21,7 +21,8 @@ export default function ParentReviewSubmission({
     questionnaire,
     personalDetails,
     questionnaireData,
-    commentData
+    commentData,
+    emailResponse
 }) {
     return (
         <div className="review-submission">
@@ -53,15 +54,15 @@ export default function ParentReviewSubmission({
             <div className="review-questionnaire">
                 {questionnaire.sections.map((section, sectionIndex) => (
                     <div key={sectionIndex}
-                         className="review-questionnaire-section">
+                        className="review-questionnaire-section">
                         <h2>Section: {section.title}</h2>
                         {section.scenarios.map((scenario, scenarioIndex) => (
                             <div key={scenarioIndex}
-                                 className="review-questionnaire-scenario">
+                                className="review-questionnaire-scenario">
                                 <p>{scenario.description}</p>
                                 {scenario.questions.map((question, questionIndex) => (
                                     <div key={questionIndex}
-                                         className="review-questionnaire-question">
+                                        className="review-questionnaire-question">
                                         <p>{question.description}</p>
                                         <div>
                                             {!question.isMCQ ? (
@@ -78,27 +79,39 @@ export default function ParentReviewSubmission({
                                                     </div>
                                                 </div>
                                             ) : (
-                                                <div>
-                                                    <div className="review-row">
-                                                        <label>Answer</label>
-                                                        <span>{questionnaireData[sectionIndex][scenarioIndex][questionIndex].value}</span>
+                                                    <div>
+                                                        <div className="review-row">
+                                                            <label>Answer</label>
+                                                            <span>{questionnaireData[sectionIndex][scenarioIndex][questionIndex].value}</span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            )}
+                                                )}
                                         </div>
                                     </div>
                                 ))}
                                 {/* TODO: ADD THE SECTION's COMMENT */}
                                 <div className="comment-review-container">
                                     <label>Comment</label>
-                                    <br/>
-                                    <br/>
+                                    <br />
+                                    <br />
                                     {commentData[sectionIndex][scenarioIndex]}
                                 </div>
                             </div>
                         ))}
                     </div>
                 ))}
+            </div>
+            {/* BUTTONS - SEND (SORTED)REPORT TO EMAIL */}
+            <div className="dothetest-bottom-container">
+                <label>Email Report</label>
+                <button className="button"
+                    onClick={() => emailResponse("PERFORMANCE")}>
+                    Sorted by Performance
+                    </button>
+                <button className="button"
+                    onClick={() => emailResponse("IMPORTANCE")}>
+                    Sorted by Importance
+                    </button>
             </div>
         </div>
     );

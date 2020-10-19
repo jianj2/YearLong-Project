@@ -30,8 +30,19 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    /* position: sticky;
+    top: 0; */
 }
 
+.dothetest-bottom-container{
+    padding: 1rem 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.dothetest-bottom-container button{
+    margin: 0 0 0 1rem;
+}
 .dothetest-subheader-container button{
     margin: 0 0 0 1rem;
 }

@@ -243,25 +243,15 @@ const DoTheTestContainer = () => {
                         B A C K
                     </button>
                 </div>
-                <div className="dothetest-subheader-container">
-                    <label>Email Report</label>
-                    <button className="button"
-                            onClick={() => emailResponse("PERFORMANCE")}>
-                        Sorted by Performance
-                    </button>
-                    <button className="button"
-                            onClick={() => emailResponse("IMPORTANCE")}>
-                        Sorted by Importance
-                    </button>
-                </div>
 
-                {loading ? <Loading/> : null}
+                {loading ? <Loading /> : null}
 
                 <ParentReviewSubmission
                     questionnaire={selectedQuestionnaire}
                     personalDetails={personalDetails}
                     questionnaireData={questionnaireData}
                     commentData={commentData}
+                    emailResponse={emailResponse}
                 />
             </div>
         );

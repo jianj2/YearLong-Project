@@ -109,7 +109,7 @@ const verifyAllScenariosAnswered = () => {
                     <h2>{section.title}</h2>
                     {section.scenarios.map((scenario, scenarioIndex) => { 
                         let style = {};
-                        if(unansweredSectionIndex === sectionIndex && unansweredScenarioIndex == scenarioIndex){
+                        if(unansweredSectionIndex === sectionIndex && unansweredScenarioIndex === scenarioIndex){
                             style = {borderColor: "red"}
                         }
                         return (
