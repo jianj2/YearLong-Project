@@ -52,7 +52,7 @@ const SliderWithTicks = withStyles({
 })(Slider);
 
 // create marks on the slider.
-const createMarks = function () {
+const createMarks = () => {
     let mymarks = [
         {
             value: 0,
@@ -105,7 +105,7 @@ const marks = createMarks();
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-export default function Question({
+const Question = ({
     readOnly,
     questionIndex,
     sectionIndex,
@@ -117,7 +117,7 @@ export default function Question({
     onQuestionChange,
     data,
     isNotApplicable
-}) {
+}) => {
 
     let romeNumber = ["i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x"];
 
@@ -142,7 +142,10 @@ export default function Question({
 // If it is an MCQ question.
     if (isMCQ) {
         return (
-            <div className="question-container">
+            <div
+                className="question-container"
+                style={(readOnly || isNotApplicable) ? {color:"#aaa"} : {}}
+            >
                 <FormControl color="secondary" margin="dense">
                     <p>{"("}{romeNumber[questionIndex]}{")"} {description}</p>
                     <RadioGroup name="frequency" value={data.value}>
@@ -256,3 +259,5 @@ export default function Question({
         );
     }
 }
+
+export default Question;

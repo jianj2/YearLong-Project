@@ -1,7 +1,7 @@
 // Import Libraries.
 import React, { useEffect, useState } from "react";
 // Import Utilities.
-import { getOrganisationClinicians } from "../../utils/api";
+import { getOrganisationClinicians } from "../../utils/API";
 
 /**
  * =============================================================================

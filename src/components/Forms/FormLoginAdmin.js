@@ -31,7 +31,7 @@ import { useAuth0 } from "../../utils/react-auth0-spa";
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-export default function FormLoginAdmin({ adminLogin }) {
+const FormLoginAdmin = ({ adminLogin }) => {
     const { register, handleSubmit, errors } = useForm();
     const [showPassword, setShowPassword] = useState(false);
     const { isAuthenticated, logout } = useAuth0();
@@ -42,7 +42,6 @@ export default function FormLoginAdmin({ adminLogin }) {
         } else {
             adminLogin(data);
         }
-
     };
 
     return (
@@ -107,4 +106,5 @@ export default function FormLoginAdmin({ adminLogin }) {
             </form>
         </div>
     );
-}
+};
+export default FormLoginAdmin;

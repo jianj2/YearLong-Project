@@ -1,7 +1,7 @@
 // Import Libraries.
 import React, { useState, useEffect } from "react";
 // Import Utilities.
-import * as API from "../../utils/api";
+import * as API from "../../utils/API";
 import { CustomModal } from "../../components/Commons";
 import { useAuth0 } from "../../utils/react-auth0-spa";
 // Import Components.
@@ -24,7 +24,7 @@ import { useAdminAuth } from "../../utils/useAdminAuth";
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-const ManageQuestionnaires = (props) => {
+const ManageQuestionnaires = () => {
     const { isAuthenticated, user, token } = useAuth0();
 
     const [customisedQuestionnaires, setCustomisedQuestionnaires] = useState(
@@ -39,7 +39,7 @@ const ManageQuestionnaires = (props) => {
 
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
 
-    const [deleteQuestionnaireData, setdeleteQuestionnaireData] = useState({
+    const [deleteQuestionnaireData, setDeleteQuestionnaireData] = useState({
         deleteQuestionnaireID: "",
         deleteQuestionnaireName: ""
     });
@@ -53,22 +53,18 @@ const ManageQuestionnaires = (props) => {
         setLoading(true);
 
         if (isAuthenticated && token !== "") {
-            async function retrieveCustomisedQuestionnaires() {
+            const retrieveCustomisedQuestionnaires = async () => {
                 const [
                     _,
                     customisedQuestionnaires
-                ] = await API.getClinicianQuestionnaires(token, user.name);
-                const sortedCustomisedQuestionnaires = customisedQuestionnaires.sort(function (a, b) {
-                    let dateA = new Date(a.updateDate),
-                        dateB = new Date(b.updateDate);
-                    return dateB - dateA;
-                });
-                // setQuestionnaires({ customized_Questionnaire: customisedQuestionnairesElement });
+                 ] = await API.getClinicianQuestionnaires(token, user.name);
+                const sortedCustomisedQuestionnaires = customisedQuestionnaires
+                    .sort((a, b) => (new Date(b.updateDate) - new Date(a.updateDate)));
                 setCustomisedQuestionnaires(sortedCustomisedQuestionnaires);
-                setLoading(false);
-            }
+                setLoading(false)
+            };
 
-            async function retrieveStandardisedQuestionnaires() {
+            const retrieveStandardisedQuestionnaires = async () => {
                 const [
                     statusCode,
                     data
@@ -104,7 +100,7 @@ const ManageQuestionnaires = (props) => {
 
     // Function called when Delete is clicked on the QuestionnaireList
     const deleteQuestionnaire = (questionnaireId, title) => {
-        setdeleteQuestionnaireData({
+        setDeleteQuestionnaireData({
             deleteQuestionnaireID: questionnaireId,
             deleteQuestionnaireName: title
         });
@@ -112,22 +108,17 @@ const ManageQuestionnaires = (props) => {
     };
 
     // Function called when Add New Button is clicked
-    async function AddNew() {
+    const addNew = async () => {
         setLoading(true);
         const [_, uuid] = await API.addQuestionnaire(token, user.name);
         setLoading(false);
         window.location.reload(false);
-        // let edit_url = "/clinician/" + uuid + "/edit";
-        // window.location.href = edit_url;
     }
 
     // ========================================================================
     // Delete Modal Functions
     // ========================================================================
-    //const openDeleteConfirmation = () => setIsDeleteModalVisible(true);
-    //const closeDeleteConfirmation = () => setIsDeleteModalVisible(false);
-
-    const deleteSelecctedQuestionnaire = () => {
+    const deleteSelectedQuestionnaire = () => {
         let questionnaireId = deleteQuestionnaireData.deleteQuestionnaireID;
         const arrayCopy = customisedQuestionnaires.filter(
             (q) => q.questionnaireId !== questionnaireId
@@ -145,7 +136,7 @@ const ManageQuestionnaires = (props) => {
                 isModalVisible={isDeleteModalVisible}
                 setIsModalVisible={setIsDeleteModalVisible}
                 message={message}
-                onClickConfirm={deleteSelecctedQuestionnaire}
+                onClickConfirm={deleteSelectedQuestionnaire}
                 onClickCancel={() => {
                 }}
             />
@@ -176,7 +167,7 @@ const ManageQuestionnaires = (props) => {
 
             <div className="CQ-header">
                 <h1>My Customised Questionnaires</h1>
-                <button className="button" onClick={AddNew}>
+                <button className="button" onClick={addNew}>
                     A D D &nbsp; N E W
                 </button>
             </div>

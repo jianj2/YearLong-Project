@@ -28,13 +28,13 @@ import {
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-export default function FormParentDetails({
+const FormParentDetails = ({
     submitDetails,
     clinicianAccess,
     defaultValue,
     getPersonalDetails,
     isSSQ_Ch
-}) {
+}) => {
     const { register, handleSubmit, errors } = useForm();
 
     const [date, setDate] = useState(defaultValue.date);
@@ -149,11 +149,11 @@ export default function FormParentDetails({
                     <FormControl margin="dense">
                         <InputLabel>Right Device Type</InputLabel>
                         <Select id="DeviceOne"
-                            value={deviceTypeOption.indexOf(rightDeviceType) === -1 ? "Other" : rightDeviceType}
-                            onChange={(event) => setRightDeviceType(event.target.value)}
+                                value={deviceTypeOption.indexOf(rightDeviceType) === -1 ? "Other" : rightDeviceType}
+                                onChange={(event) => setRightDeviceType(event.target.value)}
                             // defaultValue={defaultValue.rightDeviceType}
-                            name="rightDeviceType"
-                            error={errors.rightDeviceType !== undefined}
+                                name="rightDeviceType"
+                                error={errors.rightDeviceType !== undefined}
                             // required
                                 native
                                 inputRef={register({
@@ -270,9 +270,11 @@ export default function FormParentDetails({
                     <button id="next" className="button">
                         N E X T
                     </button>
-                    </div>
-                )}
+                </div>
+            )}
             {errors.code && <span>{errors.code.message}</span>}
         </form>
     );
-}
+};
+
+export default FormParentDetails;

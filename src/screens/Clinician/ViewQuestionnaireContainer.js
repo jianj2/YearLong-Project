@@ -1,7 +1,7 @@
 // Import Libraries.
 import React, { useState, useEffect } from "react";
 // Import Utilities.
-import * as API from "../../utils/api";
+import * as API from "../../utils/API";
 // Import Components.
 import { Questionnaire } from "../../components/Commons";
 

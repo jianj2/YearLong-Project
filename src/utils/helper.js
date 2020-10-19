@@ -17,7 +17,7 @@ export const USER_TYPE_ADMIN = "ADMIN";
 export const USER_TYPE_PARTICIPANT = "PARTICIPANT";
 
 // Helper Function
-export function formatDate() {
+export const formatDate = () => {
     let d = new Date(),
         month = "" + (d.getMonth() + 1),
         day = "" + d.getDate(),
@@ -29,4 +29,4 @@ export function formatDate() {
         day = "0" + day;
 
     return [day, month, year].join("/");
-}
+};

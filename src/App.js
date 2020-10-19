@@ -43,7 +43,7 @@ import "./styles/topcontainer.css";
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-function App() {
+const App = () => {
 
     return (
         <div className="app-container">
@@ -156,6 +156,6 @@ function App() {
             </Router>
         </div>
     );
-}
+};
 
 export default App;

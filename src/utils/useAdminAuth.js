@@ -14,7 +14,7 @@
 import React, { useState, useEffect, useContext } from "react";
 
 // Import Utilities.
-import * as API from "./api";
+import * as API from "./API";
 
 export const AdminAuthContext = React.createContext();
 export const useAdminAuth = () => useContext(AdminAuthContext);

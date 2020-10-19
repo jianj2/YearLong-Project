@@ -2,12 +2,12 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 // Import Utilities.
-import * as API from "../../utils/api";
+import * as API from "../../utils/API";
 import {
     addStandardQuestionnaire,
     getStandardisedQuestionnaires,
     deleteStandardQuestionnaire
-} from "../../utils/api";
+} from "../../utils/API";
 // Import Components.
 import {
     Loading,
@@ -91,11 +91,8 @@ const AdminManageQuestionnaires = () => {
             ] = await getStandardisedQuestionnaires();
             if (statusCode === 200) {
 
-                let sortedResponse = response.sort(function (a, b) {
-                    let dateA = new Date(a.updateDate),
-                        dateB = new Date(b.updateDate);
-                    return dateB - dateA;
-                });
+                let sortedResponse = response.sort((a, b) => new Date(b.updateDate) - new Date(a.updateDate));
+
                 setStandardisedQuestionnaires(sortedResponse);
                 setLoading(false);
             }
@@ -105,7 +102,7 @@ const AdminManageQuestionnaires = () => {
     }, []);
 
     // function for adding new standardised questionnaire
-    async function AddNew() {
+    const addNew = async () => {
         const [_, uuid] = await addStandardQuestionnaire();
         window.location.reload(false);
     }
@@ -150,7 +147,7 @@ const AdminManageQuestionnaires = () => {
             <div className="standard-questionnaire-container">
                 <div className="SQ-header">
                     <h1>Standard questionnaires</h1>
-                    <button className="button" onClick={AddNew}>
+                    <button className="button" onClick={addNew}>
                         A D D &nbsp; N E W
                     </button>
                 </div>
