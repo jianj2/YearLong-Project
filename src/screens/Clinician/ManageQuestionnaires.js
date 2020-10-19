@@ -39,7 +39,7 @@ const ManageQuestionnaires = () => {
 
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
 
-    const [deleteQuestionnaireData, setdeleteQuestionnaireData] = useState({
+    const [deleteQuestionnaireData, setDeleteQuestionnaireData] = useState({
         deleteQuestionnaireID: "",
         deleteQuestionnaireName: ""
     });
@@ -60,7 +60,6 @@ const ManageQuestionnaires = () => {
                  ] = await API.getClinicianQuestionnaires(token, user.name);
                 const sortedCustomisedQuestionnaires = customisedQuestionnaires
                     .sort((a, b) => (new Date(b.updateDate) - new Date(a.updateDate)));
-                // setQuestionnaires({ customized_Questionnaire: customisedQuestionnairesElement });
                 setCustomisedQuestionnaires(sortedCustomisedQuestionnaires);
                 setLoading(false)
             };
@@ -101,7 +100,7 @@ const ManageQuestionnaires = () => {
 
     // Function called when Delete is clicked on the QuestionnaireList
     const deleteQuestionnaire = (questionnaireId, title) => {
-        setdeleteQuestionnaireData({
+        setDeleteQuestionnaireData({
             deleteQuestionnaireID: questionnaireId,
             deleteQuestionnaireName: title
         });
