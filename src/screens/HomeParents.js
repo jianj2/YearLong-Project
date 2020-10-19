@@ -52,7 +52,9 @@ const HomeParents = ({ match }) => {
         date: "",
         completedBy: "parent",
         rightDeviceType: "",
-        leftDeviceType: ""
+        leftDeviceType: "",
+        filledByTypeOption:"",
+        filledBy:"",
     });
 
     const [questionnaireData, setQuestionnaireData] = useState([]);

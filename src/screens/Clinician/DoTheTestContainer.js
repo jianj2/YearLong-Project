@@ -40,7 +40,9 @@ const DoTheTestContainer = () => {
         date: "",
         completedBy: "clinician",
         rightDeviceType: "",
-        leftDeviceType: ""
+        leftDeviceType: "",
+        filledByTypeOption:"",
+        filledBy:"",
     });
 
     const [questionnaires, setQuestionnaires] = useState([]);

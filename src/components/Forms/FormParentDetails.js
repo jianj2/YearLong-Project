@@ -50,9 +50,31 @@ const FormParentDetails = ({
     let [rightDeviceSubmit, setRightDeviceSubmit] = useState(null);
     let [leftDeviceSubmit, setLeftDeviceSubmit] = useState(null);
 
+    let [filledByTypeOptionSubmit, setFilledByTypeOptionSubmit] = useState(null);
+    const [filledByTypeOption, setFilledByTypeOption] = useState(defaultValue.filledByTypeOption);
+    const [filledBy, setFilledBy] = useState(defaultValue.filledBy);
+    const [filledByTypeOptionOther, setFilledByTypeOptionOther] = useState(defaultValue.filledByTypeOption);
+    let [filledByTypeOptionOtherVisible,setFilledByTypeOptionOtherVisible ] = useState(null);
+
+
+
     let personalData = {};
 
     const deviceTypeOption = ["None", "Hearing Aid", "Cochlear Implant", "Other", ""];
+
+    const filledByTypeOptions = ["Mother", "Father", "Guardian", "Other", ""];
+
+    useEffect(() => {
+
+        if (filledByTypeOption === "Other" || (filledByTypeOptions.indexOf(filledByTypeOption) === -1) ) {
+            filledByTypeOptionOtherVisible = true;
+            setFilledByTypeOptionOtherVisible(true);
+        } else {
+            filledByTypeOptionOtherVisible = false;
+            setFilledByTypeOptionOtherVisible(false);
+        }
+
+    }, [filledByTypeOption]);
 
     useEffect(() => {
 
@@ -78,6 +100,7 @@ const FormParentDetails = ({
 
     }, [leftDeviceType]);
 
+
     useEffect(() => {
 
         let completedBy;
@@ -101,19 +124,31 @@ const FormParentDetails = ({
             setLeftDeviceSubmit(leftDeviceType);
         }
 
+        if (filledByTypeOptionOtherVisible){
+            filledByTypeOptionSubmit = filledByTypeOptionOther;
+            setFilledByTypeOptionSubmit(filledByTypeOptionOther)
+        }else{
+            filledByTypeOptionSubmit = filledByTypeOption;
+            setFilledByTypeOptionSubmit(filledByTypeOption)
+        }
+
         personalData = {
             name,
             date,
             rightDeviceType: rightDeviceSubmit,
             leftDeviceType: leftDeviceSubmit,
-            completedBy
+            completedBy,
+            filledByTypeOption: filledByTypeOptionSubmit,
+            filledBy
         };
+        console.log("uvin", personalData)
 
         getPersonalDetails(personalData);
-    }, [name, date, rightDeviceType, leftDeviceType, rightDeviceTypeOther, leftDeviceTypeOther]);
+    }, [name, date, rightDeviceType, leftDeviceType, rightDeviceTypeOther, leftDeviceTypeOther, filledByTypeOptionOther, filledByTypeOption, filledBy]);
 
     const handleButtonPress = () => {
         submitDetails(personalData);
+
     };
 
     const maxDate = new Date(new Date().getTime());
@@ -190,6 +225,22 @@ const FormParentDetails = ({
                         </FormControl>
                     ) : (<div></div>)}
 
+                    <FormControl margin="dense">
+                        <InputLabel>Filled by</InputLabel>
+                        <Input
+                            value={filledBy}
+                            onChange={(event) => setFilledBy(event.target.value)}
+                            // defaultValue={defaultValue.name}
+                            name="filledBy"
+                            placeholder="Write the name of the person who filled this"
+                            error={errors.filledBy !== undefined}
+                            inputRef={register({
+                                required: "You have not entered the name."
+                            })}
+                        />
+                        <FormHelperText>{errors.filledBy ? errors.filledBy.message : "Please enter the name of the person who filled this questionnaire."}</FormHelperText>
+                    </FormControl>
+
                 </div>
 
 
@@ -262,6 +313,56 @@ const FormParentDetails = ({
                             <FormHelperText>{errors.leftDeviceTypeOther ? errors.leftDeviceTypeOther.message : "Please enter the device type."}</FormHelperText>
                         </FormControl>
                     ) : null}
+
+
+
+
+
+                    <FormControl margin="dense">
+                        <InputLabel>Filled by (Relationship)</InputLabel>
+                        <Select
+                            // defaultValue={defaultValue.leftDeviceType}
+                            value={filledByTypeOptions.indexOf(filledByTypeOption) === -1 ? "Other" : filledByTypeOption}
+                            onChange={(event) => setFilledByTypeOption(event.target.value)}
+                            name="filledByTypeOption"
+                            error={errors.filledByTypeOption !== undefined}
+                            // required
+                            native
+                            inputRef={register({
+                                required: "You have not entered who filled the questionnaire."
+                            })}
+                        >
+                            <option value="" disabled selected></option>
+                            <option value="Mother">Mother</option>
+                            <option value="Father">Father</option>
+                            <option value="Guardian">Guardian</option>
+                            <option value="Other">Other</option>
+                        </Select>
+
+                        <FormHelperText>{errors.filledByTypeOption ? errors.filledByTypeOption.message : "Please specify who filled the questionnaire."}</FormHelperText>
+                    </FormControl>
+
+                    {filledByTypeOptionOtherVisible ? (
+                        <FormControl margin="dense">
+                            <InputLabel>Filled by (Relationship), please specify</InputLabel>
+                            <Input
+                                // defaultValue={defaultValue.date}
+                                value={filledByTypeOptionOther}
+                                onChange={(event) => setFilledByTypeOptionOther(event.target.value)}
+                                name="filledByTypeOptionOther"
+                                placeholder="e.g. Aunt, Uncle"
+                                required
+                                error={errors.filledByTypeOptionOther !== undefined}
+                                inputRef={register({
+                                    required: "You have not entered who filled the questionnaire(relationship)."
+                                })}
+                            />
+                            <FormHelperText>{errors.filledByTypeOptionOther ? errors.filledByTypeOptionOther.message : "Please specify who filled the questionnaire(relationship)."}</FormHelperText>
+                        </FormControl>
+                    ) : null}
+
+
+
                 </div>
             </div>
 
