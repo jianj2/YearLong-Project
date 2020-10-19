@@ -19,8 +19,8 @@ const Clinician = mongoose.model("clinician");
 const Admin = mongoose.model("admin");
 
 const compareAsync = (param1, param2) => {
-    return new Promise(function (resolve, reject) {
-        bcrypt.compare(param1, param2, function (err, res) {
+    return new Promise((resolve, reject) => {
+        bcrypt.compare(param1, param2, (err, res) => {
             if (err) {
                 reject(err);
             } else {
@@ -65,7 +65,7 @@ const authenticateAdmin = async (username, password) => {
 
 const verifyToken = (token, secret) => {
     return new Promise((resolve, reject) => {
-        jwt.verify(token, secret, function (err, decoded) {
+        jwt.verify(token, secret, (err, decoded) => {
             if (!err) {
                 resolve({
                     auth: true,
@@ -150,11 +150,11 @@ const createAdminInDatabase = async () => {
     //hashing the password and then saving the user.
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newAdmin.password, salt, (err, hash) => {
-            if (err){
-                 console.error(err);
-            };
+            if (err) {
+                console.error(err);
+            }
             newAdmin.password = hash;
-            newAdmin.save(function (err, createdUser) {
+            newAdmin.save((err, createdUser) => {
                 if (!err) {
                     console.log(createdUser);
                 } else {
@@ -187,7 +187,6 @@ const findAllInstructions = async () => {
 
 const updateInstructionInDatabase = async (instruction) => {
     try {
-        console.log(instruction);
         await Instruction.replaceOne({ type: instruction.type }, instruction);
         return Promise.resolve([undefined, "Successfully updated instruction"]);
     } catch (error) {

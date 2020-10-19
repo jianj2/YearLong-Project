@@ -1,8 +1,8 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-router.get('/', function(req, res, next) {
-    res.send('Pediatric SSQ Server ');
+router.get("/", (req, res, next) => {
+    res.send("Pediatric SSQ Server ");
 });
 
 module.exports = router;
