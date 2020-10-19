@@ -24,7 +24,7 @@ import { useAdminAuth } from "../../utils/useAdminAuth";
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-const ManageQuestionnaires = (props) => {
+const ManageQuestionnaires = () => {
     const { isAuthenticated, user, token } = useAuth0();
 
     const [customisedQuestionnaires, setCustomisedQuestionnaires] = useState(
@@ -59,11 +59,7 @@ const ManageQuestionnaires = (props) => {
                     customisedQuestionnaires
                  ] = await API.getClinicianQuestionnaires(token, user.name);
                 const sortedCustomisedQuestionnaires = customisedQuestionnaires
-                    .sort((a, b) => {
-                    let dateA = new Date(a.updateDate),
-                        dateB = new Date(b.updateDate);
-                    return (new Date(b.updateDate) - new Date(a.updateDate));
-                });
+                    .sort((a, b) => (new Date(b.updateDate) - new Date(a.updateDate)));
                 // setQuestionnaires({ customized_Questionnaire: customisedQuestionnairesElement });
                 setCustomisedQuestionnaires(sortedCustomisedQuestionnaires);
                 setLoading(false)
@@ -113,22 +109,17 @@ const ManageQuestionnaires = (props) => {
     };
 
     // Function called when Add New Button is clicked
-    async function AddNew() {
+    const addNew = async () => {
         setLoading(true);
         const [_, uuid] = await API.addQuestionnaire(token, user.name);
         setLoading(false);
         window.location.reload(false);
-        // let edit_url = "/clinician/" + uuid + "/edit";
-        // window.location.href = edit_url;
     }
 
     // ========================================================================
     // Delete Modal Functions
     // ========================================================================
-    //const openDeleteConfirmation = () => setIsDeleteModalVisible(true);
-    //const closeDeleteConfirmation = () => setIsDeleteModalVisible(false);
-
-    const deleteSelecctedQuestionnaire = () => {
+    const deleteSelectedQuestionnaire = () => {
         let questionnaireId = deleteQuestionnaireData.deleteQuestionnaireID;
         const arrayCopy = customisedQuestionnaires.filter(
             (q) => q.questionnaireId !== questionnaireId
@@ -146,7 +137,7 @@ const ManageQuestionnaires = (props) => {
                 isModalVisible={isDeleteModalVisible}
                 setIsModalVisible={setIsDeleteModalVisible}
                 message={message}
-                onClickConfirm={deleteSelecctedQuestionnaire}
+                onClickConfirm={deleteSelectedQuestionnaire}
                 onClickCancel={() => {
                 }}
             />
@@ -177,7 +168,7 @@ const ManageQuestionnaires = (props) => {
 
             <div className="CQ-header">
                 <h1>My Customised Questionnaires</h1>
-                <button className="button" onClick={AddNew}>
+                <button className="button" onClick={addNew}>
                     A D D &nbsp; N E W
                 </button>
             </div>
