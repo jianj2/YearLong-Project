@@ -24,6 +24,7 @@ const QuestionnaireContainer = (props) => {
 
     // the questionnaire content
     const [questionnaire, setQuestionnaire] = useState(null);
+    console.log("\n questionnaire", questionnaire)
 
     // get the questionnaire content from API
     useEffect(() => {
@@ -228,7 +229,7 @@ const QuestionnaireContainer = (props) => {
             <div className="questionnaire-container">
                 <form action="">
                     <EditQuestionnaire
-                        Questionnaire={questionnaire}
+                        questionnaire={questionnaire}
                         addScenario={addScenario}
                         addStandardScenario = {addStandardScenario}
                         removeScenario={removeScenario}

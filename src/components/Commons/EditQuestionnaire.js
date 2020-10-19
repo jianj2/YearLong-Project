@@ -23,7 +23,7 @@ import { Loading, EditDescription, SectionsContainer } from "./";
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
 const EditQuestionnaire = ({
-    Questionnaire,
+    questionnaire,
     removeQuestion,
     changeToRangeQuestion,
     changeToMCQQuestion,
@@ -50,11 +50,10 @@ const EditQuestionnaire = ({
 
     const handleSaveQuestionnaire = async () => {
         if (manage_questionnaire_url === "/clinician") {
-            await API.editQuestionnaire(token, Questionnaire);
+            await API.editQuestionnaire(token, questionnaire);
         } else {
-            await API.editStandardQuestionnaire(Questionnaire);
+            await API.editStandardQuestionnaire(questionnaire);
         }
-
         window.location.href = manage_questionnaire_url;
     };
 
@@ -92,7 +91,7 @@ const EditQuestionnaire = ({
 
     const manage_questionnaire_url = redirectURL;
 
-    if (!Questionnaire) {
+    if (!questionnaire) {
         return <Loading />;
     } else {
         return (
@@ -125,7 +124,7 @@ const EditQuestionnaire = ({
                 {renderCancelModal()}
 
                 <EditDescription
-                    Questionnaire={Questionnaire}
+                    questionnaire={questionnaire}
                     handleQuestionnaireTitleChange={
                         handleQuestionnaireTitleChange
                     }
@@ -136,8 +135,8 @@ const EditQuestionnaire = ({
                 />
 
                 <SectionsContainer
-                    isStandard = {Questionnaire.isStandard}
-                    sections={Questionnaire.sections}
+                    isStandard = {questionnaire.isStandard}
+                    sections={questionnaire.sections}
                     addQuestion={addQuestion}
                     removeQuestion={removeQuestion}
                     addScenario={addScenario}

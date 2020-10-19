@@ -10,7 +10,7 @@ import {
     FormLabel,
     RadioGroup,
     FormControlLabel,
-    Radio,
+    Radio
 } from "@material-ui/core";
 
 /**
@@ -29,19 +29,12 @@ import {
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-const EditDescription = (props, { Questionnaire }) => {
-    // to modify the questionnaire title in real time.
-    const handleQuestionnaireTitleChange = (event) => {
-        props.handleQuestionnaireTitleChange(event);
-    };
-    // to modify the questionnaire description in real time.
-    const handleQuestionnaireDescriptionChange = (event) => {
-        props.handleQuestionnaireDesChange(event);
-    };
-    // to modify the questionnaire type change in real time
-    const handleQuestionnaireTypeChange = (event) => {
-        props.handleQuestionnaireTypeChange(event);
-    };
+const EditDescription = ({
+    questionnaire,
+    handleQuestionnaireTitleChange,
+    handleQuestionnaireDesChange,
+    handleQuestionnaireTypeChange
+}) => {
     return (
         <div className="edit-description">
             <h2>Edit Questionnaire</h2>
@@ -51,7 +44,7 @@ const EditDescription = (props, { Questionnaire }) => {
                     <Input
                         name="username"
                         placeholder="Write the title."
-                        value={props.Questionnaire.title}
+                        value={questionnaire.title}
                         onChange={handleQuestionnaireTitleChange}
                     />
                     <FormHelperText>
@@ -63,9 +56,9 @@ const EditDescription = (props, { Questionnaire }) => {
                     <Input
                         name="username"
                         placeholder="Write the description."
-                        value={props.Questionnaire.description}
-                        defaultValue={props.Questionnaire.description}
-                        onChange={handleQuestionnaireDescriptionChange}
+                        value={questionnaire.description}
+                        defaultValue={questionnaire.description}
+                        onChange={handleQuestionnaireDesChange}
                     />
                     <FormHelperText>
                         Write the description of the questionnaire
@@ -73,16 +66,18 @@ const EditDescription = (props, { Questionnaire }) => {
                 </FormControl>
 
                 <FormControl component="fieldset">
-                <FormLabel component="legend">SSQ Type</FormLabel>
-                <RadioGroup 
-                    defaultValue={props.Questionnaire.isSSQ_Ch? "children":"parents"} 
-                    aria-label="SSQtype" 
-                    name="customized-radios"
-                    onChange = {handleQuestionnaireTypeChange}
-                >
-                    <FormControlLabel value="children" control={<Radio />} label="Children" />
-                    <FormControlLabel value="parents" control={<Radio />} label="Parents" />
-                </RadioGroup>
+                    <FormLabel component="legend">SSQ Type</FormLabel>
+                    <RadioGroup
+                        defaultValue={questionnaire.isSSQ_Ch ? "children" : "parents"}
+                        aria-label="SSQtype"
+                        name="customized-radios"
+                        onChange={handleQuestionnaireTypeChange}
+                    >
+                        <FormControlLabel value="children" control={<Radio/>}
+                                          label="Children"/>
+                        <FormControlLabel value="parents" control={<Radio/>}
+                                          label="Parents"/>
+                    </RadioGroup>
                 </FormControl>
             </div>
         </div>
