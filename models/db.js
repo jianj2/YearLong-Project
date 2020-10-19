@@ -9,25 +9,29 @@
  *
  */
 
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const path = require("path");
 
-const url = process.env.MONGOURI || require(path.join(__dirname, '..', 'config/keys')).MongoURI;
+const url =
+    process.env.MONGOURI ||
+    require(path.join(__dirname, "..", "config/keys")).MongoURI;
 
 // Connect to MongoDB using the MongoURI
-mongoose.connect(url,  { useNewUrlParser: true, useUnifiedTopology: true} ,  function (err) {
-    if(!err){
-        console.log("connected to the DB");
-    }else{
-        console.log('mongoose error', err);
+mongoose.connect(
+    url,
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    (err) => {
+        if (!err) {
+            console.log("connected to the DB");
+        } else {
+            console.log("mongoose error", err);
+        }
     }
+);
 
-});
-
-require('./questionnaire.js');
-require('./clinician.js');
-require('./share');
-require('./instruction.js');
-require('./admin.js');
-
+require("./questionnaire.js");
+require("./clinician.js");
+require("./share");
+require("./instruction.js");
+require("./admin.js");

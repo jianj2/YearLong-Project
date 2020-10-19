@@ -5,7 +5,7 @@
  * @date created: 10 May 2020
  * @authors: Uvin Abeysinghe, Cary
  *
- * The questionnaire controller is used for defining 
+ * The questionnaire controller is used for defining
  * the functionality of API calls related to questionnaires.
  *
  */
@@ -29,7 +29,6 @@ const {
 } = require("../service/questionnaireService");
 
 const { sendJSONResponse } = require("../utils/apiUtils");
-
 
 const sendAuthroisationError = (res) => {
     res.send(

@@ -26,7 +26,7 @@ const { sendJSONResponse } = require("../utils/apiUtils");
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to create a new share.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const shareQuestionnaire = async function (req, res) {
+const shareQuestionnaire = async (req, res) => {
     const userEmail = extractUserEmail(req);
     const clinicianEmail = req.body.clinicianEmail;
 
@@ -51,7 +51,7 @@ const shareQuestionnaire = async function (req, res) {
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to get ShareDetails using ShareId
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const getShareDetails = async function (req, res) {
+const getShareDetails = async (req, res) => {
     const shareId = req.params.shareId;
     const [err, foundShare] = await findShareById(shareId);
     sendJSONResponse(res, foundShare, err, 404);
@@ -60,7 +60,7 @@ const getShareDetails = async function (req, res) {
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is called when share response is completed.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const completeShare = async function (req, res) {
+const completeShare = async (req, res) => {
     try {
         const emailResponse = await sendResultsEmail(
             req.body.questionnaireId,

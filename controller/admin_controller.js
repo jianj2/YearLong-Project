@@ -41,7 +41,7 @@ const verifyLogin = async (req, res) => {
     }
 };
 
-async function authorize(req, res, next) {
+const authorize = async (req, res, next) => {
     // Get auth header value
     const bearerHeader = req.headers["authorization"];
     // Check if bearer is undefined
@@ -66,10 +66,10 @@ async function authorize(req, res, next) {
         // Forbidden
         res.sendStatus(403);
     }
-}
+};
 
 //Get all instructions
-const getSpecificInstruction = async function (req, res) {
+const getSpecificInstruction = async (req, res) => {
     const [error, instruction] = await findInstructionByType(
         req.params.instructionType
     );
@@ -77,7 +77,7 @@ const getSpecificInstruction = async function (req, res) {
 };
 
 //get summary for all instructions including type and title
-const getInstructionsSummary = async function (req, res) {
+const getInstructionsSummary = async (req, res) => {
     const [error, instructions] = await findAllInstructions();
     if (error) {
         res.status(400).json(error);
@@ -96,26 +96,26 @@ const getInstructionsSummary = async function (req, res) {
 };
 
 //Update the instruction based on type
-const updateInstructionByType = async function (req, res) {
+const updateInstructionByType = async (req, res) => {
     const instruction = req.body.instruction;
     const [error, message] = await updateInstructionInDatabase(instruction);
     sendJSONResponse(res, message, error, 400);
 };
 
 // Get all country list
-const getCountryList = async function (req, res) {
+const getCountryList = async (req, res) => {
     const [err, countryList] = await getCountryListFromDatabase();
     sendJSONResponse(res, countryList, err, 400);
 };
 
 // Get organization list under the country
-const getOrganisations = async function (req, res) {
+const getOrganisations = async (req, res) => {
     const [err, organisationList] = await getOrganisationListFromDatabase(req);
     sendJSONResponse(res, organisationList, err, 400);
 };
 
 // Get clinician list under the organisation
-const getOrganisationClinicians = async function (req, res) {
+const getOrganisationClinicians = async (req, res) => {
     const [err, clinicianList] = await getOrganisationCliniciansFromDatabase(
         req
     );
@@ -123,7 +123,7 @@ const getOrganisationClinicians = async function (req, res) {
 };
 
 // DO NOT DELETE - Backup function used to create new admins
-// const createAdmin = function (req, res){
+// const createAdmin = (req, res) => {
 //    createAdminInDatabase();
 // }
 

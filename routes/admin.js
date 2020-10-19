@@ -13,8 +13,7 @@ const router = express.Router();
 const admin_controller = require('../controller/admin_controller.js');
 
 
-// CRUD Routes for Posts
-//admin_controller.addInstruction();
+// CRUD Routes for Admin-related requests
 
 router.post('/login', admin_controller.loginAdmin);
 router.post('/instruction/:type', admin_controller.authorize, admin_controller.updateInstructionByType);
