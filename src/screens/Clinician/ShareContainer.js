@@ -39,14 +39,14 @@ const useStyles = makeStyles((theme) => ({
     modal: {
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "center"
     },
     paper: {
         backgroundColor: theme.palette.background.paper,
         border: "2px solid #000",
         boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-    },
+        padding: theme.spacing(2, 4, 3)
+    }
 }));
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -61,7 +61,7 @@ const ShareQuestionnaire = (props) => {
     );
     const [
         standardisedQuestionnaires,
-        setStandardisedQuestionnaires,
+        setStandardisedQuestionnaires
     ] = useState([]);
 
     const [loading, setLoading] = useState(true);
@@ -74,38 +74,37 @@ const ShareQuestionnaire = (props) => {
 
     const [isShareSuccess, setIsShareSuccess] = useState(false);
 
-
     const [shareModalData, setShareModalData] = useState({
         patientEmail: "",
         questionnaireId: "",
         clinicianEmail: user.name,
         message: "",
         readOnly: false,
-        sortBy: "PERFORMANCE",
+        sortBy: "PERFORMANCE"
     });
 
     const [shareSection, setShareSection] = useState({});
 
     useEffect(() => {
         setLoading(true);
-        async function retrieveCustomisedQuestionnaires() {
-           
+        const retrieveCustomisedQuestionnaires = async () => {
+
             const [statusCode, customisedQuestionnaires] = await API.getClinicianQuestionnaires(token,
                 user.name
             );
             const today = formatDate();
             setCustomisedQuestionnaires(customisedQuestionnaires);
             setLoading(false);
-        }
-        async function retrieveStandardisedQuestionnaires() {
+        };
+        const retrieveStandardisedQuestionnaires = async () => {
             const [statusCode, data] = await API.getStandardisedQuestionnaires();
             if (statusCode === 200) {
                 setStandardisedQuestionnaires(data);
-            }else{
+            } else {
                 console.error(data);
             }
-        }
-        if(user && token !== ""){
+        };
+        if (user && token !== "") {
             retrieveStandardisedQuestionnaires();
             retrieveCustomisedQuestionnaires();
         }
@@ -126,7 +125,7 @@ const ShareQuestionnaire = (props) => {
         setShareModalData({
             ...shareModalData,
             questionnaireId,
-            shareSection,
+            shareSection
         });
 
         openModal();
@@ -137,21 +136,21 @@ const ShareQuestionnaire = (props) => {
 
         let isEmpty = true;
         Object.entries(shareSection).map((k, v) => {
-            if(k[1]){
+            if (k[1]) {
                 isEmpty = false;
             }
-        })
+        });
 
         setIsSectionsEmpty(isEmpty);
 
     };
-    
+
     // ========================================================================
     // Share result Modal Functions
     // ========================================================================
     const openResultModal = () => setIsShareResultVisible(true);
-    const closeResultModal = () => setIsShareResultVisible(false);;
-
+    const closeResultModal = () => setIsShareResultVisible(false);
+    ;
 
     const renderShareResultModal = () => {
         return (
@@ -162,22 +161,25 @@ const ShareQuestionnaire = (props) => {
                 className={classes.modal}
                 BackdropComponent={Backdrop}
                 BackdropProps={{
-                    timeout: 500,
+                    timeout: 500
                 }}
             >
                 <Fade in={isShareResultVisible && !loading}>
                     <div className="share-modal-container">
-                        {isShareSuccess? 
-                        <h2 className = "center-h2">Shared Successfully!</h2>
-                        :<h2 className = "center-h2">Fail to share, please try again!</h2>
+                        {isShareSuccess ?
+                            <h2 className="center-h2">Shared Successfully!</h2>
+                            :
+                            <h2 className="center-h2">Fail to share, please try
+                                again!</h2>
                         }
-                        
+
                         <button className="button"
-                        onClick = {closeResultModal}
-                        >OK</button>
+                                onClick={closeResultModal}
+                        >OK
+                        </button>
                     </div>
                 </Fade>
-                    
+
             </Modal>
         );
     };
@@ -191,24 +193,23 @@ const ShareQuestionnaire = (props) => {
     const handleShareSubmit = async (e) => {
         e.preventDefault();
 
-        if( !isSectionsEmpty ){
+        if (!isSectionsEmpty) {
             setLoading(true);
             shareModalData["shareSection"] = shareSection;
             const [statusCode, response] = await API.shareQuestionnaire(token, shareModalData);
-            if(statusCode===200){
-                    setLoading(false);
-                    closeModal();
-                    setIsShareSuccess(true);
-                    openResultModal();
-            }else{
-                console.error(response)
+            if (statusCode === 200) {
+                setLoading(false);
+                closeModal();
+                setIsShareSuccess(true);
+                openResultModal();
+            } else {
+                console.error(response);
                 setIsShareSuccess(false);
                 openResultModal();
             }
-           
+
         }
     };
-
 
     const renderShareModal = () => {
         return (
@@ -219,7 +220,7 @@ const ShareQuestionnaire = (props) => {
                 className={classes.modal}
                 BackdropComponent={Backdrop}
                 BackdropProps={{
-                    timeout: 500,
+                    timeout: 500
                 }}
             >
                 <Fade in={isShareModalVisible && !loading}>
@@ -234,7 +235,7 @@ const ShareQuestionnaire = (props) => {
                                 onChange={(e) => {
                                     setShareModalData({
                                         ...shareModalData,
-                                        patientEmail: e.target.value,
+                                        patientEmail: e.target.value
                                     });
                                 }}
                                 name="patientEmail"
@@ -252,7 +253,7 @@ const ShareQuestionnaire = (props) => {
                                 onChange={(e) => {
                                     setShareModalData({
                                         ...shareModalData,
-                                        message: e.target.value,
+                                        message: e.target.value
                                     });
                                 }}
                                 multiline
@@ -267,10 +268,12 @@ const ShareQuestionnaire = (props) => {
 
                         {/* list of all the sections with check boxes*/}
                         <FormControl error={isSectionsEmpty}
-                            margin="dense"
-                            style={{ border: "1px groove #56577d" }}
+                                     margin="dense"
+                                     style={{ border: "1px groove #56577d" }}
                         >
-                            {isSectionsEmpty?(<FormLabel component="legend">Pick at least one section</FormLabel>):(null)}
+                            {isSectionsEmpty ? (
+                                <FormLabel component="legend">Pick at least one
+                                    section</FormLabel>) : (null)}
                             {Object.entries(shareSection).map((k, v) => (
                                 <FormControlLabel
                                     control={
@@ -281,8 +284,9 @@ const ShareQuestionnaire = (props) => {
                                                     e.target.checked;
                                                 setShareModalData({
                                                     ...shareModalData,
-                                                    shareSection,
-                                                }); sectionSelectionCheck();
+                                                    shareSection
+                                                });
+                                                sectionSelectionCheck();
                                             }}
                                             name="section selection"
                                         />
@@ -304,7 +308,7 @@ const ShareQuestionnaire = (props) => {
                                         onChange={() => {
                                             setShareModalData({
                                                 ...shareModalData,
-                                                readOnly: !shareModalData.readOnly,
+                                                readOnly: !shareModalData.readOnly
                                             });
                                         }}
                                     />
@@ -321,7 +325,9 @@ const ShareQuestionnaire = (props) => {
                         <br/>
                         <span>Sort responses by</span>
                         <FormControl color="secondary" margin="dense">
-                            <RadioGroup name="frequency" value={shareModalData.sortBy} className="slider-checkboxes">
+                            <RadioGroup name="frequency"
+                                        value={shareModalData.sortBy}
+                                        className="slider-checkboxes">
                                 <FormControlLabel
                                     value="PERFORMANCE"
                                     control={
@@ -329,7 +335,7 @@ const ShareQuestionnaire = (props) => {
                                             onChange={() => {
                                                 setShareModalData({
                                                     ...shareModalData,
-                                                    sortBy: "PERFORMANCE",
+                                                    sortBy: "PERFORMANCE"
                                                 });
                                             }}
                                         />
@@ -343,7 +349,7 @@ const ShareQuestionnaire = (props) => {
                                             onChange={() => {
                                                 setShareModalData({
                                                     ...shareModalData,
-                                                    sortBy: "IMPORTANCE",
+                                                    sortBy: "IMPORTANCE"
                                                 });
                                             }}
                                         />
@@ -364,7 +370,7 @@ const ShareQuestionnaire = (props) => {
         <div>
             {renderShareResultModal()}
             {renderShareModal()}
-            {loading ? <Loading /> : null}
+            {loading ? <Loading/> : null}
 
             <div className="standard-questionnaire-container">
                 <div className="SQ-header">
