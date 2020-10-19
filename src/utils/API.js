@@ -101,7 +101,8 @@ export const deleteStandardQuestionnaire = async (questionnaireId) => {
  * =============================================================================
  * Clinician creates a custom questionnaire.
  *
- * @params accessToken, clinicianId
+ * @params accessToken
+ * @params clinicianId
  * @returns {Promise} ~ response from the server.
  */
 export const addQuestionnaire = async (accessToken, clinicianId) => {
@@ -116,19 +117,20 @@ export const addQuestionnaire = async (accessToken, clinicianId) => {
  * =============================================================================
  * Gets all clinician's questionnaires.
  *
- * @params accessToken, clinicianId
+ * @param accessToken
+ * @param clinicianId
  * @returns {Promise} ~ response from the server.
  */
 export const getClinicianQuestionnaires = async (accessToken, clinicianId) => {
     const url = `questionnaire/clinician?clinicianId=${clinicianId}`;
     return await sendRequest("GET", url, undefined, accessToken);
 };
-
 /**
  * =============================================================================
  * Clinician edits a custom questionnaire.
  *
- * @params accessToken, questionnaireData
+ * @param accessToken
+ * @param questionnaireData
  * @returns {Promise} ~ response from the server.
  */
 export const editQuestionnaire = async (accessToken, questionnaireData) => {
@@ -138,12 +140,12 @@ export const editQuestionnaire = async (accessToken, questionnaireData) => {
     };
     return await sendRequest("POST", url, data, accessToken);
 };
-
 /**
  * =============================================================================
  * Clinician copies a custom questionnaire.
  *
- * @params questionnaireData, clinicianId
+ * @param questionnaireData
+ * @param clinicianId
  * @returns {Promise} ~ response from the server.
  */
 export const copyQuestionnaire = async (questionnaireData, clinicianId) => {
@@ -159,7 +161,9 @@ export const copyQuestionnaire = async (questionnaireData, clinicianId) => {
  * =============================================================================
  * Deletes a clinician's questionnaire.
  *
- * @params accessToken, CQid, clinicianId
+ * @param accessToken
+ * @param CQid
+ * @param clinicianId
  * @returns {Promise} ~ response from the server.
  */
 export const deleteQuestionnaire = async (accessToken, CQid, clinicianId) => {
@@ -174,7 +178,8 @@ export const deleteQuestionnaire = async (accessToken, CQid, clinicianId) => {
  * =============================================================================
  * Clinician completes a questionnaire.
  *
- * @params accessToken, data
+ * @params accessToken
+ * @params data
  * @returns {Promise} ~ response from the server.
  */
 export const completeQuestionnaire = async (accessToken, data) => {
@@ -241,7 +246,8 @@ export const getInstructionsSummary = async () => {
  * =============================================================================
  * Update specific instruction for admin
  *
- * @params instructionType, data
+ * @params instructionType
+ * @params data
  * @returns {Promise} ~ response from the server.
  */
 export const updateInstruction = async (instructionType, data) => {
@@ -288,7 +294,8 @@ export const getOrganisationClinicians = async (organisationName) => {
  * =============================================================================
  * Send questionnaire data after filling out the questionnaire
  *
- * @params data, shareId
+ * @params data
+ * @params shareId
  * @returns {Promise} ~ response from the server.
  */
 export const sendQuestionnaireData = async (data, shareId) => {
@@ -310,6 +317,8 @@ export const getShareDetails = async (shareId) => {
  * =============================================================================
  * Create a share data.
  *
+ * @param accessToken
+ * @param data
  * @returns {Promise} ~ response from the server.
  */
 export const shareQuestionnaire = async (accessToken, data) => {

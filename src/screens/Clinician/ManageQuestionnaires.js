@@ -65,7 +65,7 @@ const ManageQuestionnaires = (props) => {
                     return (new Date(b.updateDate) - new Date(a.updateDate));
                 });
                 // setQuestionnaires({ customized_Questionnaire: customisedQuestionnairesElement });
-                setCustomisedQuestionnaires(customisedQuestionnaires);
+                setCustomisedQuestionnaires(sortedCustomisedQuestionnaires);
                 setLoading(false)
             };
 
