@@ -298,7 +298,7 @@ const printStandardQuestionnaireResults = function (doc, resultToPrint, startSpa
     spacing = spacing + 70;
     spacing = addPage(doc, spacing, docHeight)
     doc.font('Helvetica-Bold').fontSize(12).text("If a performance rating was not provided, one of these alternative responses was selected:", rightMargin, spacing)
-    spacing = spacing + 25;
+    spacing = spacing + 30;
     //other options for slider
     otherOptions.map((option, index) => {
         doc.font('Helvetica-Bold').fontSize(12)
@@ -334,7 +334,6 @@ const printStandardQuestionnaireResults = function (doc, resultToPrint, startSpa
     importanceKey.map((importance) => {
         doc.list([importance], rightMargin, spacing)
         spacing = spacing + 20;
-        spacing = addPage(doc, spacing, docHeight)
     })
 
 
