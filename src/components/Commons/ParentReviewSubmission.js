@@ -23,7 +23,7 @@ const ParentReviewSubmission = ({
     questionnaireData,
     commentData,
     emailResponse
-}) {
+}) => {
     return (
         <div className="review-submission">
             <h1>Personal Details</h1>
