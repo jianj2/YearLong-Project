@@ -142,7 +142,10 @@ const Question = ({
 // If it is an MCQ question.
     if (isMCQ) {
         return (
-            <div className="question-container">
+            <div
+                className="question-container"
+                style={(readOnly || isNotApplicable) ? {color:"#aaa"} : {}}
+            >
                 <FormControl color="secondary" margin="dense">
                     <p>{"("}{romeNumber[questionIndex]}{")"} {description}</p>
                     <RadioGroup name="frequency" value={data.value}>
