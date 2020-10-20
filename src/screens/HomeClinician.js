@@ -132,7 +132,7 @@ const HomeClinician = (props) => {
 
     if (popupBlocked) {
         return (
-            <div className=''>
+            <div className='popup-blocked'>
                 <h1>Please enable popups!</h1>
                 <p>
                     This website uses popups for background processes. Please
