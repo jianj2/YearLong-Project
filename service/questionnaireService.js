@@ -76,7 +76,7 @@ const generateNewCustomisedQuestionnaire = (uuid) => {
         sections: [
             { title: "Section A - Speech", scenarios: [] },
             { title: "Section B - Spatial", scenarios: [] },
-            { title: "Section C - Quality", scenarios: [] },
+            { title: "Section C - Other Qualities", scenarios: [] },
         ],
         isStandard: false,
     });
@@ -93,7 +93,7 @@ const generateNewStandardisedQuestionnaire = (uuid) => {
         sections: [
             { title: "Section A - Speech", scenarios: [] },
             { title: "Section B - Spatial", scenarios: [] },
-            { title: "Section C - Quality", scenarios: [] },
+            { title: "Section C - Other Qualities", scenarios: [] },
         ],
         isStandard: true,
     });
