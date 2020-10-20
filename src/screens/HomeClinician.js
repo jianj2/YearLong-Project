@@ -42,7 +42,7 @@ const HomeClinician = (props) => {
     // this API must be listed in one of the Auth0 APIs
     const clinicianAuthAPI = `${domain}/clinician`;
 
-    const [popupBlocked, setPopupBlocked] = useState(true);
+    const [popupBlocked, setPopupBlocked] = useState(false);
 
     useEffect(() => {
         if (loading) {
@@ -62,6 +62,7 @@ const HomeClinician = (props) => {
                     console.log("inside try", isPopupBlocked);
                     popup_window.focus();
                     console.log("inside try after focus", isPopupBlocked);
+                    setPopupBlocked(false);
 
                 } catch (e) {
                     console.log("inside catch", e);
@@ -72,13 +73,27 @@ const HomeClinician = (props) => {
 
                 if (popup_window) {
                     popup_window.close();
-                    setPopupBlocked(false);
                 }
                 console.log("popup_window", popup_window);
 
                 return isPopupBlocked;
 
             };
+
+            const showErrorPartTwo = () => {
+
+                var newWin = window.open("");
+
+                let isPopupBlocked = false;
+                if(!newWin || newWin.closed || typeof newWin.closed=='undefined')
+                {
+                    //POPUP BLOCKED
+
+                    isPopupBlocked = true;
+                }
+
+                return isPopupBlocked;
+            }
 
             const setAuth0Token = async () => {
                 try {
@@ -94,14 +109,20 @@ const HomeClinician = (props) => {
                 } catch (e) {
 
 
-                    let isPopupBlocked = showErrorToUnblockPopup();
-                    //
+                    let isPopupBlocked = true;
+
                     // if (popupBlocked){
-                    //     showErrorToUnblockPopup();
+                    //     isPopupBlocked = showErrorToUnblockPopup();
                     // }
 
 
-                    if (!isPopupBlocked) {
+                    isPopupBlocked = showErrorPartTwo();
+
+                    console.log("The sypud isPopupBlocked is blokckkkk LOL", isPopupBlocked);
+
+                    if (isPopupBlocked) {
+                        setPopupBlocked(true);
+                    } else {
 
                         console.log("inside code block to get token with popup");
                         accessToken = await getTokenWithPopup({
@@ -111,9 +132,6 @@ const HomeClinician = (props) => {
                             scope: "read:current_user"
                         });
                         setToken(accessToken);
-                    } else {
-                        setPopupBlocked(true);
-
                     }
 
                     //
