@@ -49,7 +49,28 @@ const HomeClinician = (props) => {
         if (!loading && isAuthenticated && user != null) {
             let accessToken;
 
+            const showErrorToUnblockPopup = () => {
+                console.log('inside showErrorToUnblockPopup ');
+                var newWin = window.open("");
+                let isPopupBlocked = true;
 
+                let popup_window = window.open("","myWindow","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=400, height=400");
+                console.log('entering while');
+                // while (isPopupBlocked) {
+                    console.log('inside while', isPopupBlocked)
+                    isPopupBlocked = false;
+                    try {
+                        console.log('inside try', isPopupBlocked)
+                        popup_window.focus();
+                        console.log('inside try after focus', isPopupBlocked)
+                    } catch (e) {
+                        console.log('inside catch', e)
+                        isPopupBlocked = true;
+                        window.alert("Pop-up Blocker is enabled on your browser! This website uses popups for background processes. Please enable it to continue.");
+                        console.log('inside catch after alert', isPopupBlocked)
+                    }
+                // }
+            }
 
 
             const setAuth0Token = async () => {
@@ -65,12 +86,9 @@ const HomeClinician = (props) => {
                     setToken(accessToken);
                 } catch (e) {
 
-                    var newWin = window.open("clinician");
 
 
-
-
-                    var importantStuff = window.open('', '_blank');
+                    showErrorToUnblockPopup();
 
 
 
