@@ -192,7 +192,7 @@ const Section = ({
                             
                         }}
                     >
-                        ADD NEW LISTENING ITEM
+                        ADD NEW LISTENING SCENARIO
                     </button>
                 </div>
             </div>
