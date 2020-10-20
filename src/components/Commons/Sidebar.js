@@ -104,7 +104,7 @@ const SideBar = ({ userType }) => {
                     "Instructions for Clinicians"
                 )}
 
-                {renderSideBarTab(
+                {renderSideBarTabWithWarningOnRedirect(
                     "do-the-test",
                     ["DoTheTest"],
                     "clinician/DoTheTest",
