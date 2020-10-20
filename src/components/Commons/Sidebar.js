@@ -54,11 +54,12 @@ const SideBar = ({ userType }) => {
     ) => {
         let currentPathName;
         const currentPathFullName =  window.location.pathname.split("/");
-        if ( currentPathFullName.length === 1){
+        if ( currentPathFullName.length <= 2){
             currentPathName = currentPathFullName[0];
         }else{
-            currentPathName = currentPathFullName[1];
+            currentPathName = currentPathFullName[2];
         }
+ 
     
         return (
             <div
