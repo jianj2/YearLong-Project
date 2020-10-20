@@ -36,7 +36,7 @@ const HomeClinician = (props) => {
     } = useAuth0();
 
     const domain = process.env.REACT_APP_SERVER || "http://localhost:3001";
-    const client = process.env.REACT_APP_CLIENT || "http://localhost:3000";
+    // const client = process.env.REACT_APP_CLIENT || "http://localhost:3000";
 
     // this API must be listed in one of the Auth0 APIs
     const clinicianAuthAPI = `${domain}/clinician`;
