@@ -1,5 +1,5 @@
 // Import Libraries.
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // Import Utilities.
 import { useAuth0 } from "../utils/react-auth0-spa";
 import { USER_TYPE_CLINICIAN } from "../utils/helper";
@@ -42,6 +42,8 @@ const HomeClinician = (props) => {
     // this API must be listed in one of the Auth0 APIs
     const clinicianAuthAPI = `${domain}/clinician`;
 
+    const [popupBlocked, setPopupBlocked] = useState(true);
+
     useEffect(() => {
         if (loading) {
             return;
@@ -50,28 +52,33 @@ const HomeClinician = (props) => {
             let accessToken;
 
             const showErrorToUnblockPopup = () => {
-                console.log('inside showErrorToUnblockPopup ');
-                var newWin = window.open("");
-                let isPopupBlocked = true;
+                console.log("inside showErrorToUnblockPopup ");
+                let isPopupBlocked = false;
 
-                let popup_window = window.open("","myWindow","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=400, height=400");
-                console.log('entering while');
-                // while (isPopupBlocked) {
-                    console.log('inside while', isPopupBlocked)
-                    isPopupBlocked = false;
-                    try {
-                        console.log('inside try', isPopupBlocked)
-                        popup_window.focus();
-                        console.log('inside try after focus', isPopupBlocked)
-                    } catch (e) {
-                        console.log('inside catch', e)
-                        isPopupBlocked = true;
-                        window.alert("Pop-up Blocker is enabled on your browser! This website uses popups for background processes. Please enable it to continue.");
-                        console.log('inside catch after alert', isPopupBlocked)
-                    }
-                // }
-            }
+                let popup_window = window.open("", );
 
+                // isPopupBlocked = false;
+                try {
+                    console.log("inside try", isPopupBlocked);
+                    popup_window.focus();
+                    console.log("inside try after focus", isPopupBlocked);
+
+                } catch (e) {
+                    console.log("inside catch", e);
+                    isPopupBlocked = true;
+                    window.alert("Pop-up Blocker is enabled on your browser! This website uses popups for background processes. Please enable it to continue.");
+                    console.log("inside catch after alert", isPopupBlocked);
+                }
+
+                if (popup_window) {
+                    popup_window.close();
+                    setPopupBlocked(false);
+                }
+                console.log("popup_window", popup_window);
+
+                return isPopupBlocked;
+
+            };
 
             const setAuth0Token = async () => {
                 try {
@@ -80,25 +87,34 @@ const HomeClinician = (props) => {
                         scope: "read:current_user"
                     });
 
-                    console.log("Main yahan hoon yahan hoon'")
-                    console.log("accessToken", accessToken)
+                    console.log("Main yahan hoon yahan hoon'");
+                    console.log("accessToken", accessToken);
 
                     setToken(accessToken);
                 } catch (e) {
 
 
+                    let isPopupBlocked = showErrorToUnblockPopup();
+                    //
+                    // if (popupBlocked){
+                    //     showErrorToUnblockPopup();
+                    // }
 
-                    showErrorToUnblockPopup();
 
+                    if (!isPopupBlocked) {
 
+                        console.log("inside code block to get token with popup");
+                        accessToken = await getTokenWithPopup({
+                            // this is for the first time when some registers on localhost (
+                            // localhost is treated differently by Auth0
+                            audience: clinicianAuthAPI,
+                            scope: "read:current_user"
+                        });
+                        setToken(accessToken);
+                    } else {
+                        setPopupBlocked(true);
 
-                    accessToken = await getTokenWithPopup({
-                        // this is for the first time when some registers on localhost (
-                        // localhost is treated differently by Auth0
-                        audience: clinicianAuthAPI,
-                        scope: "read:current_user"
-                    });
-                    setToken(accessToken);
+                    }
 
                     //
                     //
@@ -106,7 +122,6 @@ const HomeClinician = (props) => {
                     // setToken(accessToken);
                 }
             };
-
 
             setAuth0Token();
 
@@ -118,7 +133,7 @@ const HomeClinician = (props) => {
             return;
         }
 
-        handleRedirectCallback().then(res => console.log("dada ",res))
+        handleRedirectCallback().then(res => console.log("dada ", res));
 
         const fn = async () => {
             let temp = await loginWithRedirect({
@@ -129,16 +144,31 @@ const HomeClinician = (props) => {
                 //redirect_uri: "https://d1hg2pgsuj0kio.cloudfront.net/clinician", //TODO: figure out why window.location.pathname doesn't work
                 //appState: { targetUrl: window.location.pathname},
             });
-            console.log("temp'", temp)
-            return temp
+            console.log("temp'", temp);
+            return temp;
         };
 
         fn();
 
     }, [isAuthenticated, loading, user]);
+
     if (loading || !user) {
         return <Loading/>;
-    } else {
+    }
+
+    if (popupBlocked) {
+        return (
+            <div >
+                <h1>Please enable popups!</h1>
+                <p>
+                    This website uses popups for background processes. Please
+                    enable them to continue.
+                </p>
+                <p>
+                    Please refresh the page after enabling.
+                </p>
+            </div>
+        );
     }
 
     return (
