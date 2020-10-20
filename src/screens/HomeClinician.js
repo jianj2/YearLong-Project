@@ -36,7 +36,6 @@ const HomeClinician = (props) => {
     } = useAuth0();
 
     const domain = process.env.REACT_APP_SERVER || "http://localhost:3001";
-    // const client = process.env.REACT_APP_CLIENT || "http://localhost:3000";
 
     // this API must be listed in one of the Auth0 APIs
     const clinicianAuthAPI = `${domain}/clinician`;
@@ -80,9 +79,6 @@ const HomeClinician = (props) => {
                         scope: "read:current_user"
                     });
 
-                    console.log("Main yahan hoon yahan hoon'");
-                    console.log("accessToken", accessToken);
-
                     setToken(accessToken);
                 } catch (e) {
                     const { isPopupBlocked, popupWindow } = checkPopupBlocked();
@@ -113,12 +109,7 @@ const HomeClinician = (props) => {
 
         const fn = async () => {
             await loginWithRedirect({
-                // redirect_uri: `${client}/clinician`
                 redirect_uri: window.location.href
-
-                //"http://localhost:3000/clinician", //TODO: figure out why window.location.pathname doesn't work
-                //redirect_uri: "https://d1hg2pgsuj0kio.cloudfront.net/clinician", //TODO: figure out why window.location.pathname doesn't work
-                //appState: { targetUrl: window.location.pathname},
             });
         };
 
