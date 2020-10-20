@@ -10,7 +10,7 @@
 .questionaire-container h4 {
     display: inline; 
 }
- 
+
 .questionaire-container {
     margin: 0 0 2rem 0;
     /* padding: 20px; */
@@ -87,14 +87,31 @@
 /*}*/
 
 
-.slider-value {
+.slider-value-disappear {
     background-color: rgba(245, 0, 87, 0.7);
     padding: 0 !important;
     margin: 0;
     width: 40px;
     height: 40px;
     border-radius: 100px;
-    display: flex;
+    /* display: flex; */
+    display: none;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Gill Sans';
+    font-weight: 200;
+    transition: all 0.1s;
+}
+
+.slider-value-display {
+    background-color: rgba(245, 0, 87, 0.7);
+    padding: 0 !important;
+    margin: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+     display: flex;
+    /*display: none;*/
     justify-content: center;
     align-items: center;
     font-family: 'Gill Sans';
@@ -148,4 +165,8 @@
 .comment-review-container{
     margin-top: 2vh;
     width: 100%;
+}
+
+.scenario-number {
+    font-size: 20px;
 }

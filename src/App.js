@@ -1,3 +1,31 @@
+// Import Libraries.
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+// Import Screens
+import Landing from "./screens/Landing";
+import HomeClinician from "./screens/HomeClinician";
+import HomeParents from "./screens/HomeParents";
+import HomeAdmin from "./screens/HomeAdmin";
+import FindPassword from "./screens/FindPassword";
+// Import Components
+import { NavBar } from "./components/Commons";
+// Import Styles
+import "./styles/admin.css";
+import "./styles/clinician.css";
+import "./styles/clinicianDoTheTest.css";
+import "./styles/contentpanel.css";
+import "./styles/countryList.css";
+import "./styles/landing.css";
+import "./styles/main.css";
+import "./styles/managequestionnaires.css";
+import "./styles/navbar.css";
+import "./styles/organisationList.css";
+import "./styles/parents.css";
+import "./styles/questionnaire.css";
+import "./styles/questionnaireList.css";
+import "./styles/sidebar.css";
+import "./styles/topcontainer.css";
+
 /**
  * ====================================================================
  * REACT COMPONENT CLASS
@@ -12,143 +40,122 @@
  *
  */
 
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { useAuth0 } from "./utils/react-auth0-spa";
-import { AdminAuthProvider } from "./utils/useAdminAuth";
-
-// Import styles.
-import "./styles/main.css";
-
-// Import screens.
-import Landing from "./screens/Landing";
-import HomeClinician from "./screens/HomeClinician";
-import HomeParents from "./screens/HomeParents";
-import HomeAdmin from "./screens/HomeAdmin";
-
-// Import components.
-import NavBar from "./components/Navbar";
-import FindPassword from "./components/FindPassword";
-
-function App() {
-
-    console.log("This is server domain",);
-    console.log("This is redirect link",);
-    // const { loading } = useAuth0();
-
-    // if (loading) {
-    //     return <div>Loading...</div>;
-    // }
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
+const App = () => {
 
     return (
-        <div className="app-container">            
+        <div className="app-container">
             <Router>
-                <NavBar />
+                <NavBar/>
                 <Switch>
-                    <Route 
-                        path="/" 
-                        exact 
-                        render={() => <Landing />} 
+                    <Route
+                        path="/"
+                        exact
+                        render={() => <Landing/>}
                     />
                     <Route
                         path="/parent/:shareId"
                         exact
-                        render={() => <HomeParents />}
+                        render={() => <HomeParents/>}
                     />
                     <Route
                         path="/admin"
                         exact
-                        render={() => <HomeAdmin active ={1}/>}
+                        render={() => <HomeAdmin active={1}/>}
                     />
                     <Route
                         path="/admin/Questionnaires"
                         exact
-                        render={() => <HomeAdmin active = {1}/>}
+                        render={() => <HomeAdmin active={1}/>}
                     />
                     <Route
                         path="/admin/SSQ_Instructions"
                         exact
-                        render={() => <HomeAdmin active = {2} />}
+                        render={() => <HomeAdmin active={2}/>}
                     />
                     <Route
-                        path="/admin/Organisation"
+                        path="/admin/Country"
                         exact
-                        render={() => <HomeAdmin active = {3} />}
+                        render={() => <HomeAdmin active={3}/>}
                     />
-
                     <Route
-                        path="/admin/Organisation/:name"
+                        path="/admin/:country/Organisation"
                         exact
-                        render={({match})=>(<HomeAdmin active={7} organName={match.params.name}/>)}
+                        render={({ match }) => <HomeAdmin active={7}
+                                                          countryName={match.params.country}/>}
                     />
-
                     <Route
-                        path="/admin/:id/edit"
+                        path="/admin/:country/:name"
                         exact
-                        render={({match}) => (<HomeAdmin active = {4} questionnaireID={match.params.id}/>)}
+                        render={({ match }) => (<HomeAdmin active={8}
+                                                           organName={match.params.name}/>)}
                     />
-
-
+                    <Route
+                        path="/admin/standard/:id/edit"
+                        exact
+                        render={({ match }) => (<HomeAdmin active={4}
+                                                           questionnaireID={match.params.id}/>)}
+                    />
                     <Route
                         path="/admin/standard/:id/view"
                         exact
-                        render={({match}) => <HomeAdmin active = {5} questionnaireID={match.params.id}/> }
+                        render={({ match }) => <HomeAdmin active={5}
+                                                          questionnaireID={match.params.id}/>}
                     />
-                    
                     <Route
                         path="/admin/instruction/:type/edit"
                         exact
-                        render={({match}) => <HomeAdmin active = {6} 
-                                    instructionType = {match.params.type}/> }
+                        render={({ match }) => <HomeAdmin active={6}
+                                                          instructionType={match.params.type}/>}
                     />
-
-
                     <Route
                         path="/clinician"
                         exact
-                        render={() => <HomeClinician active = {1}/>}
+                        render={() => <HomeClinician active={1}/>}
                     />
-                    <Route 
-                        path="/clinician/Questionnaires" 
-                        exact 
-                        render={() => <HomeClinician active = {1}/>} 
+                    <Route
+                        path="/clinician/Questionnaires"
+                        exact
+                        render={() => <HomeClinician active={1}/>}
                     />
-                    <Route 
-                        path="/clinician/DoTheTest" 
-                        exact 
-                        render={() => <HomeClinician active = {2}/>} 
+                    <Route
+                        path="/clinician/DoTheTest"
+                        exact
+                        render={() => <HomeClinician active={2}/>}
                     />
                     <Route
                         path="/clinician/Share"
                         exact
-                        render={() => <HomeClinician active = {6}/>}
-                    />
-                    <Route 
-                        path="/clinician/Instructions" 
-                        exact 
-                        render={() => <HomeClinician active = {3}/>} 
+                        render={() => <HomeClinician active={6}/>}
                     />
                     <Route
-                        path="/clinician/:id/edit" 
+                        path="/clinician/Instructions"
                         exact
-                        render={({match}) => (<HomeClinician active = {4} questionnaireID={match.params.id}/>)}
+                        render={() => <HomeClinician active={3}/>}
                     />
-
                     <Route
-                        path="/standard/:id/view" 
-                        exact 
-                        render={({match}) => <HomeClinician active = {5} questionnaireID={match.params.id}/> }
+                        path="/clinician/:id/edit"
+                        exact
+                        render={({ match }) => (<HomeClinician active={4}
+                                                               questionnaireID={match.params.id}/>)}
                     />
-
+                    <Route
+                        path="/standard/:id/view"
+                        exact
+                        render={({ match }) => <HomeClinician active={5}
+                                                              questionnaireID={match.params.id}/>}
+                    />
                     <Route
                         path="/findPassword"
                         exact
-                        render={() => <FindPassword /> }
+                        render={() => <FindPassword/>}
                     />
                 </Switch>
             </Router>
         </div>
     );
-}
+};
 
 export default App;
