@@ -300,3 +300,11 @@ width: 65%;
 html,body{
   overflow: auto;
 }
+
+.popup-blocked {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  height: 90vh;
+  text-align: center;
+}
