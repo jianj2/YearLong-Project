@@ -83,7 +83,7 @@ const ManageQuestionnaires = () => {
 
     // Function called when Edit is clicked on the QuestionnaireList
     const editQuestionnaire = (questionnaireID) => {
-        const edit_url = "/clinician/" + questionnaireID + "/edit";
+        const edit_url = "/clinician/Questionnaire/" + questionnaireID + "/edit";
         window.location.href = edit_url;
     };
 
@@ -94,7 +94,7 @@ const ManageQuestionnaires = () => {
     };
 
     const viewQuestionnaire = (questionnaireID) => {
-        const view_url = "/standard/" + questionnaireID + "/view";
+        const view_url = "/standard/Questionnaire/" + questionnaireID + "/view";
         window.location.href = view_url;
     };
 

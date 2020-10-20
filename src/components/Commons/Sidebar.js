@@ -24,6 +24,8 @@ import { USER_TYPE_ADMIN, USER_TYPE_CLINICIAN } from "../../utils/helper";
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
 const SideBar = ({ userType }) => {
+    const pathNamesWithWarning = ["DoTheTest", "SSQInstruction", "Questionnaire"];
+
     const [isSideBarResetModal, setIsSideBarResetModal] = useState(false);
     const [refreshUrl, setRefreshUrl] = useState("");
 
@@ -47,18 +49,31 @@ const SideBar = ({ userType }) => {
 
     const renderSideBarTab = (
         classSuffix,
-        srcPathNames,
         destPathName,
         textLabel
     ) => {
-        const currentPathName = window.location.href.split("/").pop();
+        let currentPathName;
+        const currentPathFullName =  window.location.pathname.split("/");
+        if ( currentPathFullName.length === 1){
+            currentPathName = currentPathFullName[0];
+        }else{
+            currentPathName = currentPathFullName[1];
+        }
+    
         return (
             <div
                 className={`sidebar-${classSuffix} ${
-                    srcPathNames.includes(currentPathName) ? "active" : ""
+                    destPathName.split("/")[1] === currentPathName ? "active" : ""
                 }`}
                 onClick={() => {
+                    if (pathNamesWithWarning.includes(currentPathName)) {
+                        setIsSideBarResetModal(true);
+                        setRefreshUrl(`/${destPathName}`);
+                   
+                } else {
                     window.location.href = `/${destPathName}`;
+                   
+            }
                 }}
             >
                 {textLabel}
@@ -66,31 +81,6 @@ const SideBar = ({ userType }) => {
         );
     };
 
-    const renderSideBarTabWithWarningOnRedirect = (
-        classSuffix,
-        srcPathNames,
-        destPathName,
-        textLabel
-    ) => {
-        const currentPathName = window.location.href.split("/").pop();
-        return (
-            <div
-                className={`sidebar-${classSuffix} ${
-                    srcPathNames.includes(currentPathName) ? "active" : ""
-                }`}
-                onClick={() => {
-                    if (!srcPathNames.includes(currentPathName)) {
-                        window.location.href = `/${destPathName}`;
-                    } else {
-                        setIsSideBarResetModal(true);
-                        setRefreshUrl(`/${destPathName}`);
-                    }
-                }}
-            >
-                {textLabel}
-            </div>
-        );
-    };
 
     if (userType === USER_TYPE_CLINICIAN) {
         return (
@@ -99,28 +89,24 @@ const SideBar = ({ userType }) => {
 
                 {renderSideBarTab(
                     "instructions",
-                    ["Instructions"],
                     "clinician/Instructions",
                     "Instructions for Clinicians"
                 )}
 
-                {renderSideBarTabWithWarningOnRedirect(
+                {renderSideBarTab(
                     "do-the-test",
-                    ["DoTheTest"],
                     "clinician/DoTheTest",
                     "Start a Questionnaire"
                 )}
 
                 {renderSideBarTab(
                     "share",
-                    ["Share"],
                     "clinician/Share",
                     "Share a Questionnaire"
                 )}
 
-                {renderSideBarTabWithWarningOnRedirect(
+                {renderSideBarTab(
                     "questionnaires",
-                    ["clinician", "Questionnaires", "edit", "view"],
                     "clinician/Questionnaires",
                     "List of Questionnaires"
                 )}
@@ -131,23 +117,20 @@ const SideBar = ({ userType }) => {
             <div className="sidebar-container">
                 {renderSideBarResetModal()}
 
-                {renderSideBarTabWithWarningOnRedirect(
+                {renderSideBarTab(
                     "questionnaires",
-                    ["admin", "Questionnaires", "edit", "view"],
                     "admin/Questionnaires",
                     "Questionnaires"
                 )}
 
-                {renderSideBarTabWithWarningOnRedirect(
+                {renderSideBarTab(
                     "ssq-instructions",
-                    ["SSQ_Instructions"],
                     "admin/SSQ_Instructions",
                     "SSQ Instructions"
                 )}
 
                 {renderSideBarTab(
                     "organisation",
-                    ["Organisation", "Country"],
                     "admin/Country",
                     "Organisation"
                 )}
