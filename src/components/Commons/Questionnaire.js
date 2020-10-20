@@ -67,11 +67,11 @@ const verifyAllScenariosAnswered = () => {
         }
     }
     return true;
-}
-
+} 
+    
     // Method: Called when we submit the questionnaire
     const onSubmit = (e) => {
-
+        
         e.preventDefault();
         const flag = verifyAllScenariosAnswered();
         if (flag === true) {
@@ -87,7 +87,7 @@ const verifyAllScenariosAnswered = () => {
         scenarioIndex,
         questionIndex,
         data
-    ) => {
+    ) => {  
         if(sectionIndex === unansweredSectionIndex && scenarioIndex === unansweredScenarioIndex){
             setUnansweredSectionIndex(-1);
             setUnansweredScenarioIndex(-1);
@@ -107,7 +107,7 @@ const verifyAllScenariosAnswered = () => {
             {questionnaire.sections.map((section, sectionIndex) => (
                 <div key={sectionIndex} className="section-container">
                     <h2>{section.title}</h2>
-                    {section.scenarios.map((scenario, scenarioIndex) => {
+                    {section.scenarios.map((scenario, scenarioIndex) => { 
                         let style = {};
                         if(unansweredSectionIndex === sectionIndex && unansweredScenarioIndex === scenarioIndex){
                             style = {borderColor: "red"}
@@ -119,8 +119,6 @@ const verifyAllScenariosAnswered = () => {
                             style={style}
                         >
                             <p><span className="scenario-number">{scenarioIndex+1}</span>  {scenario.description}</p>
-                            <p>{scenario.description}</p>
-                            <p>Please rate your performance:</p>
                             {scenario.questions.map(
                                 (question, questionIndex) => (
                                     <Question
