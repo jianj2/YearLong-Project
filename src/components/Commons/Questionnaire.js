@@ -118,7 +118,8 @@ const verifyAllScenariosAnswered = () => {
                             className="scenario-container"
                             style={style}
                         >
-                            <p><span className="scenario-number">{scenarioIndex+1}</span>  {scenario.description}</p>
+                            <p><span className="scenario-number">{scenarioIndex+1}</span>  {scenario.description} </p>
+                            <p> Please rate your performance. </p>
                             {scenario.questions.map(
                                 (question, questionIndex) => (
                                     <Question

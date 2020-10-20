@@ -95,7 +95,7 @@ const FindPassword = () => {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">{"Prompt"}</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         Request sent successfully!
