@@ -206,7 +206,7 @@ export default function FormParentDetails({ submitDetails, clinicianAccess, defa
                                 required: "You have not entered the date of birth.",
                             })}
                         />
-                        <FormHelperText>{errors.date ? errors.date.message : "Please enter the child's name."}</FormHelperText>
+                        <FormHelperText>{errors.date ? errors.date.message : "Please enter the child's date of birth."}</FormHelperText>
                     </FormControl>
 
 

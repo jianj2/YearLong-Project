@@ -150,10 +150,10 @@ const Scenario = ({
         <div className="scenario">
             <div className="scenario-description">
                 <FormControl margin="dense">
-                    <InputLabel>Scenario description</InputLabel>
+                    <InputLabel>Item description</InputLabel>
                     <Input
                         value={description}
-                        placeholder="Write the scenario description."
+                        placeholder="Write the item description."
                         onChange={(event) => {
                             handleSceDesChange(
                                 event,
@@ -163,7 +163,7 @@ const Scenario = ({
                         }}
                     />
                     <FormHelperText>
-                        Write the scenario description.
+                        Write the item description.
                     </FormHelperText>
                 </FormControl>
             </div>

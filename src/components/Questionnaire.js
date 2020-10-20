@@ -101,6 +101,7 @@ export default function Questionnaire({
                             className="scenario-container"
                         >
                             <p>{scenario.description}</p>
+                            <p>Please rate your performance:</p>
                             {scenario.questions.map(
                                 (question, questionIndex) => (
                                     <Question
