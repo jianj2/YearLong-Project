@@ -64,8 +64,6 @@ const SideBar = ({ userType }) => {
     </div>
     }
 
-    const pathname = window.location.href.split("/").pop();
-
     if (userType === USER_TYPE_CLINICIAN) {
         return (
             <div className="sidebar-container">
@@ -97,7 +95,7 @@ const SideBar = ({ userType }) => {
 
                 {renderSideBarTab("questionnaires", ["admin", "Questionnaires", "edit", "view"], "admin/Questionnaires", "Questionnaires")}
                
-                {renderSideBarTab("ssq-instructions", ["SSQ_Instructions"], "admin/SSQ_Instructions", " SSQ Instructions")}
+                {renderSideBarTab("ssq-instructions", ["SSQ_Instructions"], "admin/SSQ_Instructions", "SSQ Instructions")}
 
                 {renderSideBarTab("organisation", ["Organisation", "Country"], "admin/Country", "Organisation")}
                 
