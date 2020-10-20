@@ -32,7 +32,8 @@ const HomeClinician = (props) => {
         user,
         getTokenSilently,
         getTokenWithPopup,
-        setToken
+        setToken,
+        handleRedirectCallback
     } = useAuth0();
 
     const domain = process.env.REACT_APP_SERVER || "http://localhost:3001";
@@ -47,6 +48,10 @@ const HomeClinician = (props) => {
         }
         if (!loading && isAuthenticated && user != null) {
             let accessToken;
+
+
+
+
             const setAuth0Token = async () => {
                 try {
                     accessToken = await getTokenSilently({
@@ -60,12 +65,14 @@ const HomeClinician = (props) => {
                     setToken(accessToken);
                 } catch (e) {
 
-                    // var newWin = window.open("clinician");
-                    // if(!newWin || newWin.closed || typeof newWin.closed=='undefined')
-                    // {
-                    //     //POPUP BLOCKED
-                    //     console.log("POPUP BLOCKED !!!!");
-                    // }
+                    var newWin = window.open("clinician");
+
+
+
+
+                    var importantStuff = window.open('', '_blank');
+
+
 
                     accessToken = await getTokenWithPopup({
                         // this is for the first time when some registers on localhost (
@@ -74,7 +81,7 @@ const HomeClinician = (props) => {
                         scope: "read:current_user"
                     });
                     setToken(accessToken);
-                    
+
                     //
                     //
                     // console.log("accessToken", accessToken)
@@ -93,6 +100,8 @@ const HomeClinician = (props) => {
             return;
         }
 
+        handleRedirectCallback().then(res => console.log("dada ",res))
+
         const fn = async () => {
             let temp = await loginWithRedirect({
                 // redirect_uri: `${client}/clinician`
@@ -106,8 +115,7 @@ const HomeClinician = (props) => {
             return temp
         };
 
-        let shamlakal = fn();
-        console.log("shamlakal'", shamlakal)
+        fn();
 
     }, [isAuthenticated, loading, user]);
     if (loading || !user) {
