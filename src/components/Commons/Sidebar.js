@@ -1,6 +1,7 @@
 // Import Libraries.
 import React from "react";
-import { Link } from "react-router-dom";
+// This Link is replace by a
+// import { Link } from "react-router-dom"; 
 // Import Utilities
 import { USER_TYPE_ADMIN, USER_TYPE_CLINICIAN } from "../../utils/helper";
 
@@ -27,56 +28,63 @@ const SideBar = ({ userType }) => {
     if (userType === USER_TYPE_CLINICIAN) {
         return (
             <div className="sidebar-container">
-                <Link
+                {/* when click the siderbar tab, the page need to refresh(client requirement), Change Link to a */}
+                {/* <Link
                     className={`sidebar-instructions ${(pathname === "Instructions") ? "active" : ""}`}
                     to="/clinician/Instructions"
                 >
                     Instructions for Clinicians
-                </Link>
+                </Link> */}
+                <a
+                    className={`sidebar-instructions ${(pathname === "Instructions") ? "active" : ""}`}
+                    href="/clinician/Instructions"
+                >
+                    Instructions for Clinicians
+                </a>
 
-                <Link
+                <a
                     className={`sidebar-do-the-test ${(pathname === "DoTheTest") ? "active" : ""}`}
-                    to="/clinician/DoTheTest"
+                    href="/clinician/DoTheTest"
                 >
                     Start a Questionnaire
-                </Link>
-                <Link
+                </a>
+                <a
                     className={`sidebar-share ${(pathname === "Share") ? "active" : ""}`}
-                    to="/clinician/Share"
+                    href="/clinician/Share"
                 >
                     Share a Questionnaire
-                </Link>
-                <Link
+                </a>
+                <a
                     className={`sidebar-questionnaires
             ${(pathname === "clinician" || pathname === "Questionnaires" || pathname === "edit") ? "active" : ""}`}
-                    to="/clinician/Questionnaires"
+                    href="/clinician/Questionnaires"
                 >
                     List of Questionnaires
-                </Link>
+                </a>
             </div>
         );
     } else if (userType === USER_TYPE_ADMIN) {
         return (
             <div className="sidebar-container">
-                <Link
+                <a
                     className={`sidebar-questionnaires
                         ${(pathname === "admin" || pathname === "Questionnaires" || pathname === "edit") ? "active" : ""}`}
-                    to="/admin/Questionnaires"
+                    href="/admin/Questionnaires"
                 >
                     Questionnaires
-                </Link>
-                <Link
+                </a>
+                <a
                     className={`sidebar-ssq-instructions ${(pathname === "SSQ_Instructions") ? "active" : ""}`}
-                    to="/admin/SSQ_Instructions"
+                    href="/admin/SSQ_Instructions"
                 >
                     SSQ Instructions
-                </Link>
-                <Link
+                </a>
+                <a
                     className={`sidebar-organisation ${(pathname === "Organisation" || pathname === "Country") ? "active" : ""}`}
-                    to="/admin/Country"
+                    href="/admin/Country"
                 >
                     Organisation
-                </Link>
+                </a>
             </div>
         );
     } else {
