@@ -1,5 +1,6 @@
 // Import Libraries.
-import React from "react";
+import React, { useState } from "react";
+import { CustomModal } from "./index";
 // This Link is replace by a
 // import { Link } from "react-router-dom"; 
 // Import Utilities
@@ -23,8 +24,30 @@ import { USER_TYPE_ADMIN, USER_TYPE_CLINICIAN } from "../../utils/helper";
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
 const SideBar = ({ userType }) => {
+    const [isSideBarResetModal, setIsSideBarResetModal] = useState(false);
+    const [refreshUrl, setRefreshUrl] = useState('');
+
+    const handleSideBarReset = () => {
+        window.location.href = refreshUrl;
+    }
+
+    // renders a modal when user wants to click the sidebar and reset the page
+    const renderSideBarResetModal = () => {
+        const message =
+            "Are you sure you want to refresh this page?";
+        return (
+            <CustomModal
+                isModalVisible={isSideBarResetModal}
+                setIsModalVisible={setIsSideBarResetModal}
+                message={message}
+                onClickConfirm={handleSideBarReset}
+                onClickCancel={() => { }}
+            />
+        );
+    };
 
     const pathname = window.location.href.split("/").pop();
+
     if (userType === USER_TYPE_CLINICIAN) {
         return (
             <div className="sidebar-container">
@@ -35,56 +58,116 @@ const SideBar = ({ userType }) => {
                 >
                     Instructions for Clinicians
                 </Link> */}
-                <a
+                {renderSideBarResetModal()}
+                <div
                     className={`sidebar-instructions ${(pathname === "Instructions") ? "active" : ""}`}
-                    href="/clinician/Instructions"
+                    // href="/clinician/Instructions"
+                    onClick={() => {
+                        if (pathname !== "Instructions") {
+                            window.location.href = "/clinician/Instructions"
+                        } else {
+                            setIsSideBarResetModal(true);
+                            setRefreshUrl("/clinician/Instructions");
+                        }
+                    }}
                 >
                     Instructions for Clinicians
-                </a>
+                </div>
 
-                <a
+                <div
                     className={`sidebar-do-the-test ${(pathname === "DoTheTest") ? "active" : ""}`}
-                    href="/clinician/DoTheTest"
+                    // href="/clinician/DoTheTest"
+                    onClick={() => {
+                        if (pathname !== "DoTheTest") {
+                            window.location.href = "/clinician/DoTheTest"
+                        } else {
+                            setIsSideBarResetModal(true);
+                            setRefreshUrl("/clinician/DoTheTest");
+                        }
+                    }}
+
                 >
                     Start a Questionnaire
-                </a>
-                <a
+                </div>
+                <div
                     className={`sidebar-share ${(pathname === "Share") ? "active" : ""}`}
-                    href="/clinician/Share"
+                    // href="/clinician/Share"
+                    onClick={() => {
+                        if (pathname !== "Share") {
+                            window.location.href = "/clinician/Share"
+                        } else {
+                            setIsSideBarResetModal(true);
+                            setRefreshUrl("/clinician/Share");
+                        }
+                    }}
                 >
                     Share a Questionnaire
-                </a>
-                <a
+                </div>
+                <div
                     className={`sidebar-questionnaires
-            ${(pathname === "clinician" || pathname === "Questionnaires" || pathname === "edit") ? "active" : ""}`}
-                    href="/clinician/Questionnaires"
+            ${(pathname === "clinician" || pathname === "Questionnaires" || pathname === "edit" || pathname === "view") ? "active" : ""}`}
+                    // href="/clinician/Questionnaires"
+                    onClick={() => {
+                        if (pathname !== "clinician" && pathname !== "Questionnaires" && pathname !== "edit" && pathname !== "view") {
+                            window.location.href = "/clinician/Questionnaires"
+                        } else {
+                            setIsSideBarResetModal(true);
+                            setRefreshUrl("/clinician/Questionnaires");
+                        }
+                    }}
                 >
                     List of Questionnaires
-                </a>
+                </div>
             </div>
         );
     } else if (userType === USER_TYPE_ADMIN) {
         return (
+
             <div className="sidebar-container">
-                <a
+                {renderSideBarResetModal()}
+                <div
                     className={`sidebar-questionnaires
-                        ${(pathname === "admin" || pathname === "Questionnaires" || pathname === "edit") ? "active" : ""}`}
-                    href="/admin/Questionnaires"
+                        ${(pathname === "admin" || pathname === "Questionnaires" || pathname === "edit" || pathname === "view") ? "active" : ""}`}
+                    // href="/admin/Questionnaires"
+                    onClick={() => {
+                        if (pathname !== "admin" && pathname !== "Questionnaires" && pathname !== "edit" && pathname !== "view") {
+                            window.location.href = "/admin/Questionnaires"
+                        } else {
+                            setIsSideBarResetModal(true);
+                            setRefreshUrl("/admin/Questionnaires");
+                        }
+                    }}
                 >
                     Questionnaires
-                </a>
-                <a
+                </div>
+                <div
                     className={`sidebar-ssq-instructions ${(pathname === "SSQ_Instructions") ? "active" : ""}`}
-                    href="/admin/SSQ_Instructions"
+                    // href="/admin/SSQ_Instructions"
+                    onClick={() => {
+                        if (pathname !== "SSQ_Instructions") {
+                            window.location.href = "/admin/SSQ_Instructions"
+                        } else {
+                            setIsSideBarResetModal(true);
+                            setRefreshUrl("/admin/SSQ_Instructions");
+                        }
+                    }}
                 >
                     SSQ Instructions
-                </a>
-                <a
+                </div>
+                <div
                     className={`sidebar-organisation ${(pathname === "Organisation" || pathname === "Country") ? "active" : ""}`}
-                    href="/admin/Country"
+                    // href="/admin/Country"
+                    onClick={() => {
+                        if (pathname !== "Organisation" && pathname !== "Country") {
+                            window.location.href = "/admin/Country"
+                        } else {
+                            setIsSideBarResetModal(true);
+                            setRefreshUrl("/admin/Country");
+                        }
+                    }}
                 >
                     Organisation
-                </a>
+                </div>
             </div>
         );
     } else {
