@@ -46,6 +46,24 @@ const SideBar = ({ userType }) => {
         );
     };
 
+    const renderSideBarTab = (classSuffix, srcPathNames, destPathName, textLabel) => {
+        const currentPathName = window.location.href.split("/").pop();
+        return  <div
+        className={`sidebar-${classSuffix} ${(srcPathNames.includes(currentPathName)) ? "active" : ""}`}
+
+        onClick={() => {
+            if (! srcPathNames.includes(currentPathName)) {
+                window.location.href = `/${destPathName}`;
+            } else {
+                setIsSideBarResetModal(true);
+                setRefreshUrl( `/${destPathName}`);
+            }
+        }}
+    >
+        {textLabel}
+    </div>
+    }
+
     const pathname = window.location.href.split("/").pop();
 
     if (userType === USER_TYPE_CLINICIAN) {
@@ -59,65 +77,16 @@ const SideBar = ({ userType }) => {
                     Instructions for Clinicians
                 </Link> */}
                 {renderSideBarResetModal()}
-                <div
-                    className={`sidebar-instructions ${(pathname === "Instructions") ? "active" : ""}`}
-                    // href="/clinician/Instructions"
-                    onClick={() => {
-                        if (pathname !== "Instructions") {
-                            window.location.href = "/clinician/Instructions"
-                        } else {
-                            setIsSideBarResetModal(true);
-                            setRefreshUrl("/clinician/Instructions");
-                        }
-                    }}
-                >
-                    Instructions for Clinicians
-                </div>
 
-                <div
-                    className={`sidebar-do-the-test ${(pathname === "DoTheTest") ? "active" : ""}`}
-                    // href="/clinician/DoTheTest"
-                    onClick={() => {
-                        if (pathname !== "DoTheTest") {
-                            window.location.href = "/clinician/DoTheTest"
-                        } else {
-                            setIsSideBarResetModal(true);
-                            setRefreshUrl("/clinician/DoTheTest");
-                        }
-                    }}
+                {renderSideBarTab("instructions", ["Instructions"], "clinician/Instructions", "Instructions for Clinicians")}
 
-                >
-                    Start a Questionnaire
-                </div>
-                <div
-                    className={`sidebar-share ${(pathname === "Share") ? "active" : ""}`}
-                    // href="/clinician/Share"
-                    onClick={() => {
-                        if (pathname !== "Share") {
-                            window.location.href = "/clinician/Share"
-                        } else {
-                            setIsSideBarResetModal(true);
-                            setRefreshUrl("/clinician/Share");
-                        }
-                    }}
-                >
-                    Share a Questionnaire
-                </div>
-                <div
-                    className={`sidebar-questionnaires
-            ${(pathname === "clinician" || pathname === "Questionnaires" || pathname === "edit" || pathname === "view") ? "active" : ""}`}
-                    // href="/clinician/Questionnaires"
-                    onClick={() => {
-                        if (pathname !== "clinician" && pathname !== "Questionnaires" && pathname !== "edit" && pathname !== "view") {
-                            window.location.href = "/clinician/Questionnaires"
-                        } else {
-                            setIsSideBarResetModal(true);
-                            setRefreshUrl("/clinician/Questionnaires");
-                        }
-                    }}
-                >
-                    List of Questionnaires
-                </div>
+                {renderSideBarTab("do-the-test", ["DoTheTest"], "clinician/DoTheTest", "Start a Questionnaire")}
+
+                {renderSideBarTab("share", ["Share"], "clinician/Share", "Share a Questionnaire")}
+
+                {renderSideBarTab("questionnaires", ["clinician", "Questionnaires", "edit", "view"], 
+                    "clinician/Questionnaires", "List of Questionnaires")}
+
             </div>
         );
     } else if (userType === USER_TYPE_ADMIN) {
@@ -125,49 +94,13 @@ const SideBar = ({ userType }) => {
 
             <div className="sidebar-container">
                 {renderSideBarResetModal()}
-                <div
-                    className={`sidebar-questionnaires
-                        ${(pathname === "admin" || pathname === "Questionnaires" || pathname === "edit" || pathname === "view") ? "active" : ""}`}
-                    // href="/admin/Questionnaires"
-                    onClick={() => {
-                        if (pathname !== "admin" && pathname !== "Questionnaires" && pathname !== "edit" && pathname !== "view") {
-                            window.location.href = "/admin/Questionnaires"
-                        } else {
-                            setIsSideBarResetModal(true);
-                            setRefreshUrl("/admin/Questionnaires");
-                        }
-                    }}
-                >
-                    Questionnaires
-                </div>
-                <div
-                    className={`sidebar-ssq-instructions ${(pathname === "SSQ_Instructions") ? "active" : ""}`}
-                    // href="/admin/SSQ_Instructions"
-                    onClick={() => {
-                        if (pathname !== "SSQ_Instructions") {
-                            window.location.href = "/admin/SSQ_Instructions"
-                        } else {
-                            setIsSideBarResetModal(true);
-                            setRefreshUrl("/admin/SSQ_Instructions");
-                        }
-                    }}
-                >
-                    SSQ Instructions
-                </div>
-                <div
-                    className={`sidebar-organisation ${(pathname === "Organisation" || pathname === "Country") ? "active" : ""}`}
-                    // href="/admin/Country"
-                    onClick={() => {
-                        if (pathname !== "Organisation" && pathname !== "Country") {
-                            window.location.href = "/admin/Country"
-                        } else {
-                            setIsSideBarResetModal(true);
-                            setRefreshUrl("/admin/Country");
-                        }
-                    }}
-                >
-                    Organisation
-                </div>
+
+                {renderSideBarTab("questionnaires", ["admin", "Questionnaires", "edit", "view"], "admin/Questionnaires", "Questionnaires")}
+               
+                {renderSideBarTab("ssq-instructions", ["SSQ_Instructions"], "admin/SSQ_Instructions", " SSQ Instructions")}
+
+                {renderSideBarTab("organisation", ["Organisation", "Country"], "admin/Country", "Organisation")}
+                
             </div>
         );
     } else {
