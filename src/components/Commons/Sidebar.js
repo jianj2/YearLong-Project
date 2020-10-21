@@ -35,7 +35,7 @@ const SideBar = ({ userType }) => {
 
     // renders a modal when user wants to click the sidebar and reset the page
     const renderSideBarResetModal = () => {
-        const message = "Are you sure you want to refresh this page?";
+        const message = "Are you sure you want to leave this page?";
         return (
             <CustomModal
                 isModalVisible={isSideBarResetModal}
