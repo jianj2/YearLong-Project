@@ -1,6 +1,8 @@
 // Import Libraries.
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { CustomModal } from "./index";
+// This Link is replace by a
+// import { Link } from "react-router-dom";
 // Import Utilities
 import { USER_TYPE_ADMIN, USER_TYPE_CLINICIAN } from "../../utils/helper";
 
@@ -22,61 +24,127 @@ import { USER_TYPE_ADMIN, USER_TYPE_CLINICIAN } from "../../utils/helper";
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
 const SideBar = ({ userType }) => {
+    const pathNamesWithWarning = ["DoTheTest", "SSQInstruction"];
 
-    const pathname = window.location.href.split("/").pop();
+    const [isSideBarResetModal, setIsSideBarResetModal] = useState(false);
+    const [refreshUrl, setRefreshUrl] = useState("");
+
+    const handleSideBarReset = () => {
+        window.location.href = refreshUrl;
+    };
+
+    // renders a modal when user wants to click the sidebar and reset the page
+    const renderSideBarResetModal = () => {
+        const message = "Are you sure you want to leave this page?";
+        return (
+            <CustomModal
+                isModalVisible={isSideBarResetModal}
+                setIsModalVisible={setIsSideBarResetModal}
+                message={message}
+                onClickConfirm={handleSideBarReset}
+                onClickCancel={() => {}}
+            />
+        );
+    };
+
+    // detrmines whether a tab should be active given current path and tab destination path.
+    const determineActive = (currentPathName, destPathName) => {
+        // When users login, they land on the questionnaires page
+        if (currentPathName === "") {
+            return destPathName.split("/")[1] === "Questionnaires"
+                ? "active"
+                : "";
+        } else {
+            return destPathName.split("/")[1].includes(currentPathName)
+                ? "active"
+                : "";
+        }
+    };
+
+    const renderSideBarTab = (classSuffix, destPathName, textLabel) => {
+        let currentPathName;
+        const currentPathFullName = window.location.pathname.split("/");
+        if (currentPathFullName.length <= 2) {
+            currentPathName = currentPathFullName[0];
+        } else {
+            currentPathName = currentPathFullName[2];
+        }
+
+        return (
+            <div
+                className={`sidebar-${classSuffix} ${determineActive(
+                    currentPathName,
+                    destPathName
+                )}`}
+                onClick={() => {
+                    if (
+                        pathNamesWithWarning.includes(currentPathName) ||
+                        currentPathFullName.slice(-1)[0] === "edit"
+                    ) {
+                        setIsSideBarResetModal(true);
+                        setRefreshUrl(`/${destPathName}`);
+                    } else {
+                        window.location.href = `/${destPathName}`;
+                    }
+                }}
+            >
+                {textLabel}
+            </div>
+        );
+    };
+
     if (userType === USER_TYPE_CLINICIAN) {
         return (
             <div className="sidebar-container">
-                <Link
-                    className={`sidebar-instructions ${(pathname === "Instructions") ? "active" : ""}`}
-                    to="/clinician/Instructions"
-                >
-                    Instructions for Clinicians
-                </Link>
+                {renderSideBarResetModal()}
 
-                <Link
-                    className={`sidebar-do-the-test ${(pathname === "DoTheTest") ? "active" : ""}`}
-                    to="/clinician/DoTheTest"
-                >
-                    Start a Questionnaire
-                </Link>
-                <Link
-                    className={`sidebar-share ${(pathname === "Share") ? "active" : ""}`}
-                    to="/clinician/Share"
-                >
-                    Share a Questionnaire
-                </Link>
-                <Link
-                    className={`sidebar-questionnaires
-            ${(pathname === "clinician" || pathname === "Questionnaires" || pathname === "edit") ? "active" : ""}`}
-                    to="/clinician/Questionnaires"
-                >
-                    List of Questionnaires
-                </Link>
+                {renderSideBarTab(
+                    "instructions",
+                    "clinician/Instructions",
+                    "Instructions for Clinicians"
+                )}
+
+                {renderSideBarTab(
+                    "do-the-test",
+                    "clinician/DoTheTest",
+                    "Start a Questionnaire"
+                )}
+
+                {renderSideBarTab(
+                    "share",
+                    "clinician/Share",
+                    "Share a Questionnaire"
+                )}
+
+                {renderSideBarTab(
+                    "questionnaires",
+                    "clinician/Questionnaires",
+                    "List of Questionnaires"
+                )}
             </div>
         );
     } else if (userType === USER_TYPE_ADMIN) {
         return (
             <div className="sidebar-container">
-                <Link
-                    className={`sidebar-questionnaires
-                        ${(pathname === "admin" || pathname === "Questionnaires" || pathname === "view" || window.location.href.includes("standard") ) ? "active" : ""}`}
-                    to="/admin/Questionnaires"
-                >
-                    Questionnaires
-                </Link>
-                <Link
-                    className={`sidebar-ssq-instructions ${(pathname === "SSQ_Instructions" || window.location.href.includes("instruction")) ? "active" : ""}`}
-                    to="/admin/SSQ_Instructions"
-                >
-                    SSQ Instructions
-                </Link>
-                <Link
-                    className={`sidebar-organisation ${(pathname === "Organisation" || pathname === "Country") ? "active" : ""}`}
-                    to="/admin/Country"
-                >
-                    Organisation
-                </Link>
+                {renderSideBarResetModal()}
+
+                {renderSideBarTab(
+                    "questionnaires",
+                    "admin/Questionnaires",
+                    "Questionnaires"
+                )}
+
+                {renderSideBarTab(
+                    "ssq-instructions",
+                    "admin/SSQ_Instructions",
+                    "SSQ Instructions"
+                )}
+
+                {renderSideBarTab(
+                    "organisation",
+                    "admin/Country",
+                    "Organisation"
+                )}
             </div>
         );
     } else {

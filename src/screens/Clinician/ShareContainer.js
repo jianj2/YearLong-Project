@@ -83,6 +83,8 @@ const ShareQuestionnaire = (props) => {
         sortBy: "PERFORMANCE"
     });
 
+    const [isSelectedStandard, setIsSelectedStandard] = useState(false);
+
     const [shareSection, setShareSection] = useState({});
 
     useEffect(() => {
@@ -111,13 +113,14 @@ const ShareQuestionnaire = (props) => {
     }, [user, token]);
 
     // Function called when Share is clicked on the QuestionnaireList
-    const shareQuestionnaire = (questionnaireId, sections) => {
+    const shareQuestionnaire = (questionnaireId, isStandard, sectionNames) => {
         //making sure the state get reset once the modal is reloaded.
         setIsSectionsEmpty(false);
+        setIsSelectedStandard(isStandard)
 
         let temp = {};
-        sections.map((index) => {
-            temp = { ...temp, [index.title.toString()]: true };
+        sectionNames.forEach((s) => {
+            temp = { ...temp, [s]: true };
         });
 
         setShareSection(temp);
@@ -125,7 +128,7 @@ const ShareQuestionnaire = (props) => {
         setShareModalData({
             ...shareModalData,
             questionnaireId,
-            shareSection
+            sectionNames
         });
 
         openModal();
@@ -342,20 +345,24 @@ const ShareQuestionnaire = (props) => {
                                     }
                                     label="Performance"
                                 />
-                                <FormControlLabel
-                                    value="IMPORTANCE"
-                                    control={
-                                        <Radio
-                                            onChange={() => {
-                                                setShareModalData({
-                                                    ...shareModalData,
-                                                    sortBy: "IMPORTANCE"
-                                                });
-                                            }}
+                                {isSelectedStandard
+                                    ? (
+                                        <FormControlLabel
+                                            value="IMPORTANCE"
+                                            control={
+                                                <Radio
+                                                    onChange={() => {
+                                                        setShareModalData({
+                                                            ...shareModalData,
+                                                            sortBy: "IMPORTANCE"
+                                                        });
+                                                    }}
+                                                />
+                                            }
+                                            label="Importance"
                                         />
-                                    }
-                                    label="Importance"
-                                />
+                                    ) : null
+                                }
                             </RadioGroup>
                         </FormControl>
 

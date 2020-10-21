@@ -54,14 +54,17 @@ const DoTheTestContainer = () => {
 
     const [commentData, setCommentData] = useState([]);
 
-    const [selectedQuestionnaire, setSelectedQuestionnaire] = useState({
-        questionnaireId: "",
-        title: "",
-        description: "",
-        sections: [],
-        isStandard: false,
-        isSSQ_Ch: true
-    });
+    // const [selectedQuestionnaire, setSelectedQuestionnaire] = useState({
+    //     questionnaireId: "",
+    //     title: "",
+    //     description: "",
+    //     sections: [],
+    //     isStandard: false
+    // });
+
+    const [selectedQuestionnaire, setSelectedQuestionnaire] = useState(null);
+
+    console.log("SELECTED QUESTIONnAIRE:", selectedQuestionnaire);
 
     // This is called whenever "user" changes
     useEffect(() => {
@@ -257,6 +260,7 @@ const DoTheTestContainer = () => {
                 {loading ? <Loading /> : null}
 
                 <ParentReviewSubmission
+                    isStandard={selectedQuestionnaire.isStandard}
                     questionnaire={selectedQuestionnaire}
                     personalDetails={personalDetails}
                     questionnaireData={questionnaireData}
