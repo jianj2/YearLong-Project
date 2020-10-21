@@ -1,14 +1,3 @@
-/**
- * =============================================================================
- * DEFINING ADMIN API CALLS CONTROLLER
- * =============================================================================
- * @date created: 17 May 2020
- * @authors: Victor
- *
- * The admin_controller is used for defining the functionality of api calls related to admin.
- *
- */
-
 // Import Libraries.
 const { sendJSONResponse } = require("../utils/apiUtils");
 const {
@@ -20,11 +9,23 @@ const {
     getOrganisationListFromDatabase,
     getOrganisationCliniciansFromDatabase,
     authenticateAdmin,
-    createAdminInDatabase
 } = require("../service/adminService");
 const serverSecret = "secretLOL";
 
-// Login check.
+/**
+ * =============================================================================
+ * DEFINING ADMIN API CALLS CONTROLLER
+ * =============================================================================
+ * @date created: 17 May 2020
+ * @authors: Victor
+ *
+ * The admin_controller is used for defining the functionality of api calls related to admin.
+ *
+ */
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// Login check for adming
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const loginAdmin = async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
@@ -32,6 +33,9 @@ const loginAdmin = async (req, res) => {
     sendJSONResponse(res, { message: message }, err, 401);
 };
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is called when share response is completed.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const verifyLogin = async (req, res) => {
     const token = req.params.token;
     const result = await verifyToken(token, serverSecret);
@@ -42,6 +46,9 @@ const verifyLogin = async (req, res) => {
     }
 };
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is called for authorisation.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const authorize = async (req, res, next) => {
     // Get auth header value
     const bearerHeader = req.headers["authorization"];
@@ -69,7 +76,9 @@ const authorize = async (req, res, next) => {
     }
 };
 
-//Get all instructions
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// Get all instructions
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const getSpecificInstruction = async (req, res) => {
     const [error, instruction] = await findInstructionByType(
         req.params.instructionType
@@ -77,7 +86,9 @@ const getSpecificInstruction = async (req, res) => {
     sendJSONResponse(res, instruction, error, 404);
 };
 
-//get summary for all instructions including type and title
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// Get summary for all instructions including type and title.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const getInstructionsSummary = async (req, res) => {
     const [error, instructions] = await findAllInstructions();
     if (error) {
@@ -96,26 +107,34 @@ const getInstructionsSummary = async (req, res) => {
     }
 };
 
-//Update the instruction based on type
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is called when share response is completed.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const updateInstructionByType = async (req, res) => {
     const instruction = req.body.instruction;
     const [error, message] = await updateInstructionInDatabase(instruction);
     sendJSONResponse(res, message, error, 400);
 };
 
-// Get all country list
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is called to get all country list.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const getCountryList = async (req, res) => {
     const [err, countryList] = await getCountryListFromDatabase();
     sendJSONResponse(res, countryList, err, 400);
 };
 
-// Get organization list under the country
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is called to get organization list under the country.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const getOrganisations = async (req, res) => {
     const [err, organisationList] = await getOrganisationListFromDatabase(req);
     sendJSONResponse(res, organisationList, err, 400);
 };
 
-// Get clinician list under the organisation
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is called to get clinician list under the organisation.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const getOrganisationClinicians = async (req, res) => {
     const [err, clinicianList] = await getOrganisationCliniciansFromDatabase(
         req
