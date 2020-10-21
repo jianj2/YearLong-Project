@@ -24,7 +24,10 @@ import { SideBar, Loading, ContentPanel } from "../components/Commons";
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-const HomeClinician = (props) => {
+const HomeClinician = ({
+    active,
+    questionnaireID
+}) => {
     const {
         loading,
         isAuthenticated,
@@ -46,7 +49,7 @@ const HomeClinician = (props) => {
         if (loading) {
             return;
         }
-        if (!loading && isAuthenticated && user != null) {
+        if (!loading && isAuthenticated && user !== null) {
             let accessToken;
 
             // =================================================================
@@ -115,7 +118,16 @@ const HomeClinician = (props) => {
 
         fn();
 
-    }, [isAuthenticated, loading, user]);
+    }, [
+        isAuthenticated,
+        loading,
+        user,
+        getTokenSilently,
+        getTokenWithPopup,
+        loginWithRedirect,
+        setToken,
+        clinicianAuthAPI
+    ]);
 
     if (loading || !user) {
         return <Loading/>;
@@ -143,8 +155,8 @@ const HomeClinician = (props) => {
             <div className="content-container">
                 <ContentPanel
                     userType={USER_TYPE_CLINICIAN}
-                    active={props.active}
-                    questionnaireID={props.questionnaireID}
+                    active={active}
+                    questionnaireID={questionnaireID}
                 />
             </div>
 

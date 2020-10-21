@@ -20,7 +20,9 @@ import { Questionnaire } from "../../components/Commons";
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-const ViewQuestionnaireContainer = (props) => {
+const ViewQuestionnaireContainer = ({
+    questionnaireID
+}) => {
     const [questionnaire, setSelectedQuestionnaire] = useState({
         questionnaireId: "",
         title: "",
@@ -37,7 +39,7 @@ const ViewQuestionnaireContainer = (props) => {
     useEffect(() => {
 
         const prepareQuestionnaire = async () => {
-            const [statusCode, data] = await API.getQuestionnaireById(props.questionnaireID);
+            const [statusCode, data] = await API.getQuestionnaireById(questionnaireID);
 
             if (statusCode === 200) {
                 const questionnaire = data;
@@ -68,7 +70,7 @@ const ViewQuestionnaireContainer = (props) => {
             }
         };
         prepareQuestionnaire();
-    }, [props.questionnaireID]);
+    }, [questionnaireID]);
 
     return (
         loaded ?

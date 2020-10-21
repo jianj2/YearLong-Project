@@ -79,7 +79,7 @@ const ManageQuestionnaires = () => {
             retrieveStandardisedQuestionnaires();
             retrieveCustomisedQuestionnaires();
         }
-    }, [isAuthenticated, token]);
+    }, [isAuthenticated, token, adminLogout, isAdminAuthenticated, user]);
 
     // Function called when Edit is clicked on the QuestionnaireList
     const editQuestionnaire = (questionnaireID) => {
@@ -110,7 +110,7 @@ const ManageQuestionnaires = () => {
     // Function called when Add New Button is clicked
     const addNew = async () => {
         setLoading(true);
-        const [_, uuid] = await API.addQuestionnaire(token, user.name);
+        await API.addQuestionnaire(token, user.name);
         setLoading(false);
         window.location.reload(false);
     }

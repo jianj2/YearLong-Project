@@ -26,7 +26,7 @@ const Landing = () => {
     return (
         <div className="landing">
             <div className="landing-logo">
-                <img src={logoComplete}/>
+                <img src={logoComplete} alt="SSQ Logo"/>
             </div>
 
             <div className="landing-buttons">

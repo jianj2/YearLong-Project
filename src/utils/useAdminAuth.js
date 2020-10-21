@@ -1,3 +1,8 @@
+// Import Libraries.
+import React, { useState, useEffect, useContext } from "react";
+// Import Utilities.
+import * as API from "./API";
+
 /**
  * =============================================================================
  * JAVASCRIPT HELPER FILE
@@ -9,12 +14,6 @@
  *
  * =============================================================================
  */
-
-// Import Libraries.
-import React, { useState, useEffect, useContext } from "react";
-
-// Import Utilities.
-import * as API from "./API";
 
 export const AdminAuthContext = React.createContext();
 export const useAdminAuth = () => useContext(AdminAuthContext);
@@ -100,7 +99,6 @@ export const getToken = () => {
     let previousAuth = JSON.parse(
         localStorage.getItem("adminAuthentication")
     );
-    // console.log("previousAuth", previousAuth);
     if ( !previousAuth ) {
         previousAuth=""
     }else{
