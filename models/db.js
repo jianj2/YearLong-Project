@@ -1,17 +1,19 @@
+////////////////////////////////////////////////////////////////////////////////
+////                             Import Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
+const mongoose = require("mongoose");
+const path = require("path");
+
 /**
- * =======================================
+ * =============================================================================
  * CONNECTING TO MONGO ATLAS FROM SERVER
- * =======================================
+ * =============================================================================
  * @date created: 10 May 2020
- * @authors: Uvin Abeysinghe
+ * @authors: Uvin Abeysinghe, Waqas Rehmani
  *
  * The db.js is used for connecting the server to mongoDB so that data storage and retrieval can take place.
  *
  */
-
-const mongoose = require("mongoose");
-
-const path = require("path");
 
 const url =
     process.env.MONGOURI ||
@@ -30,6 +32,9 @@ mongoose.connect(
     }
 );
 
+////////////////////////////////////////////////////////////////////////////////
+////                            Import all Models                           ////
+////////////////////////////////////////////////////////////////////////////////
 require("./questionnaire.js");
 require("./clinician.js");
 require("./share");

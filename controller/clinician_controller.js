@@ -1,7 +1,13 @@
+////////////////////////////////////////////////////////////////////////////////
+////                             Import Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
+const { sendResultsEmail } = require("../service/emailService");
+const { extractUserEmail } = require("../utils/jwtUtils");
+
 /**
- * ========================================
+ * =============================================================================
  * DEFINING CLINICIAN API CALLS CONTROLLER
- * ========================================
+ * =============================================================================
  * @date created: 10 May 2020
  * @authors: Uvin Abeysinghe
  *
@@ -9,10 +15,9 @@
  *
  */
 
-const { sendResultsEmail } = require("../service/emailService");
-const { extractUserEmail } = require("../utils/jwtUtils");
-
-// Clinician completes the questionnaire
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is called when clinician completes the questionnaire.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const completeQuestionnaire = (req, res) => {
     const questionnaireData = req.body.questionnaireData;
     const clinicianEmail = req.body.clinicianEmail;
@@ -39,4 +44,9 @@ const completeQuestionnaire = (req, res) => {
     }
 };
 
-module.exports.completeQuestionnaire = completeQuestionnaire;
+////////////////////////////////////////////////////////////////////////////////
+////                             Export Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
+module.exports = {
+    completeQuestionnaire
+};
