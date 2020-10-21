@@ -38,7 +38,7 @@ const findQuestionnaireForClinician = async (clinicianId) => {
     try {
         const clinician = await Clinician.findOne({ clinicianId: clinicianId });
         const questionnaireIds = clinician.questionnaires;
-        const questionnaires = await Questionnaire.find()
+        const questionnaires = await Questionnaire.find({}, {sections: 0 })
             .where("questionnaireId")
             .in(questionnaireIds)
             .exec();
@@ -55,7 +55,7 @@ const findQuestionnaireForClinician = async (clinicianId) => {
 // find all standardised questionnaires
 const findStandardisedQuestionnaires = async () => {
     try {
-        const questionnaires = await Questionnaire.find({ isStandard: true });
+        const questionnaires = await Questionnaire.find({ isStandard: true }, {sections: 0 });
         const result = await new Promise((resolve, reject) => {
             resolve([undefined, questionnaires]);
         });
@@ -76,8 +76,9 @@ const generateNewCustomisedQuestionnaire = (uuid) => {
         sections: [
             { title: "Section A - Speech", scenarios: [] },
             { title: "Section B - Spatial", scenarios: [] },
-            { title: "Section C - Quality", scenarios: [] },
+            { title: "Section C - Other Qualities", scenarios: [] },
         ],
+        sectionNames: ["Section A - Speech", "Section B - Spatial", "Section C - Other Qualities"],
         isStandard: false,
     });
 };
@@ -93,8 +94,9 @@ const generateNewStandardisedQuestionnaire = (uuid) => {
         sections: [
             { title: "Section A - Speech", scenarios: [] },
             { title: "Section B - Spatial", scenarios: [] },
-            { title: "Section C - Quality", scenarios: [] },
+            { title: "Section C - Other Qualities", scenarios: [] },
         ],
+        sectionNames: ["Section A - Speech", "Section B - Spatial", "Section C - Other Qualities"],
         isStandard: true,
     });
 };
@@ -108,6 +110,7 @@ const generateCompleteParentQuestionnaire = (uuid) => {
         isSSQ_Ch: false,
         updateDate: new Date().toLocaleString("en-US", {timeZone: "Australia/Sydney"}),
         sections: SSQ_P,
+        sectionNames: ["Section A - Speech", "Section B - Spatial", "Section C - Other Qualities"],
         isStandard: true,
     });
 };
@@ -121,6 +124,7 @@ const generateCompleteChildQuestionnaire = (uuid) => {
         isSSQ_Ch: true,
         updateDate: new Date().toLocaleString("en-US", {timeZone: "Australia/Sydney"}),
         sections: SSQ_CH,
+        sectionNames: ["Section A - Speech", "Section B - Spatial", "Section C - Other Qualities"],
         isStandard: true,
     });
 };

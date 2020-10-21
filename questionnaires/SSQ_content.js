@@ -714,7 +714,7 @@ const SSQ_CH = [
         ],
     },
     {
-        title: "Section C - Quality",
+        title: "Section C - Other Qualities",
         scenarios: [
             {
                 // first question
@@ -1534,7 +1534,7 @@ const SSQ_P = [
         ],
     },
     {
-        title: "Section C - Quality",
+        title: "Section C - Other Qualities",
         scenarios: [
             {
                 // first question
