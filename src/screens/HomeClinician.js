@@ -24,7 +24,10 @@ import { SideBar, Loading, ContentPanel } from "../components/Commons";
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-const HomeClinician = (props) => {
+const HomeClinician = ({
+    active,
+    questionnaireID
+}) => {
     const {
         loading,
         isAuthenticated,
@@ -152,8 +155,8 @@ const HomeClinician = (props) => {
             <div className="content-container">
                 <ContentPanel
                     userType={USER_TYPE_CLINICIAN}
-                    active={props.active}
-                    questionnaireID={props.questionnaireID}
+                    active={active}
+                    questionnaireID={questionnaireID}
                 />
             </div>
 

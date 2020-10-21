@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-const ShareQuestionnaire = (props) => {
+const ShareQuestionnaire = () => {
     const classes = useStyles();
     const { user, token } = useAuth0();
 

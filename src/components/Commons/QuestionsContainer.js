@@ -235,19 +235,18 @@ const RangeQuestionFrom = ({
 };
 
 //display the multiple choice question
-const MultipleChoiceQuestionFrom = (props) => {
-    const {
-        isStandard,
-        addAnswerToMCQQuestion,
-        deleteAnswerFromMCQQuestion,
-        MCQOptions,
-        questionIndex,
-        description,
-        sectionIndex,
-        scenarioIndex,
-        handleQuestionDesChange,
-        handleQuestionOptsChange
-    } = props;
+const MultipleChoiceQuestionFrom = ({
+    isStandard,
+    addAnswerToMCQQuestion,
+    deleteAnswerFromMCQQuestion,
+    MCQOptions,
+    questionIndex,
+    description,
+    sectionIndex,
+    scenarioIndex,
+    handleQuestionDesChange,
+    handleQuestionOptsChange
+}) => {
 
     return (
         <div className="questionTable-form">

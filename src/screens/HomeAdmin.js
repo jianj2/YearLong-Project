@@ -28,7 +28,13 @@ import { Loading } from "../components/Commons";
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-const HomeAdmin = (props) => {
+const HomeAdmin = ({
+    active,
+    questionnaireID,
+    instructionType,
+    organName,
+    countryName
+}) => {
     const { isAdminAuthenticated, adminLogin, loading } = useAdminAuth();
     if (loading === true) {
         return <Loading/>;
@@ -41,11 +47,11 @@ const HomeAdmin = (props) => {
                 <div className="content-container">
                     <ContentPanel
                         userType={USER_TYPE_ADMIN}
-                        active={props.active}
-                        questionnaireID={props.questionnaireID}
-                        instructionType={props.instructionType}
-                        organName={props.organName}
-                        countryName={props.countryName}
+                        active={active}
+                        questionnaireID={questionnaireID}
+                        instructionType={instructionType}
+                        organName={organName}
+                        countryName={countryName}
                     />
                 </div>
             </div>
