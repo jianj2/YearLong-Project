@@ -41,12 +41,6 @@ const QuestionnaireContainer = (props) => {
 
     }, [props.questionnaireID]);
 
-    // these function can be combine together later
-
-    //add section to questionnaire
-
-    //remove section to questionnaire
-
     //add scenario to questionnaire
     const addScenario = (sectionIndex) => {
         const newScenario = {

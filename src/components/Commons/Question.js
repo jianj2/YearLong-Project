@@ -21,13 +21,14 @@ import {
  * will be visible in questionnaires when the questionnaires are fillable.
  *
  *
- * --------------------------------------------------------------------------------------------
- *                                          N O T E
- * --------------------------------------------------------------------------------------------
- *  -   Each question's answer has two values which are "value" and "supplementaryValue".
- *      This can be seen in the state. The idea behind the supplementaryValue is that
- *      the slider question always holds a supplementary MCQ question so in order to tackle
- *      that, I came up with this structure. ~ @waqas
+ * -----------------------------------------------------------------------------
+ *                                  N O T E
+ * -----------------------------------------------------------------------------
+ *  -   Each question's answer has two values which are "value" and
+ *      "supplementaryValue". This can be seen in the state. The idea behind the
+ *      supplementaryValue is that the slider question always holds a
+ *      supplementary MCQ question so in order to tackle that, I came up with
+ *      this structure. ~ @waqas
  *
  */
 
@@ -139,7 +140,7 @@ const Question = ({
         }
     }, [isNotApplicable]);
 
-// If it is an MCQ question.
+    // If it is an MCQ question.
     if (isMCQ) {
         return (
             <div

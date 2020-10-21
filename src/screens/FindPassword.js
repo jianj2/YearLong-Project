@@ -33,15 +33,12 @@ import { findPassword } from "../utils/API";
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
 const FindPassword = () => {
-    const { register, handleSubmit, errors } = useForm();
+    const { handleSubmit, errors } = useForm();
     const { loginWithRedirect } = useAuth0();
     const [open, setOpen] = useState(false);
 
-    const [email, setEmail] = useState();
-
     const findEmail = (email) => {
         findPassword(email);
-        // alert(email);
         setOpen(true);
     };
 
@@ -67,9 +64,6 @@ const FindPassword = () => {
                         <Input
                             name="email"
                             placeholder="Enter your email"
-                            onChange={(event) => {
-                                setEmail(event.target.value);
-                            }}
                             type="email"
                             required
                         />

@@ -37,12 +37,11 @@ const Questionnaire = ({
       handleCommentChange,
       handleQuestionnaireChange
 }) => {
-    const { register, handleSubmit, errors } = useForm();
+    const { errors } = useForm();
 
     const [open, setOpen] = React.useState(false);
     const [unansweredSectionIndex, setUnansweredSectionIndex] = React.useState(-1);
     const [unansweredScenarioIndex, setUnansweredScenarioIndex] = React.useState(-1);
-
 
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
@@ -52,22 +51,22 @@ const Questionnaire = ({
     };
 
 
-const verifyAllScenariosAnswered = () => {
-    for (let [sectionIndex, section] of questionnaireData.entries()) {
-        for (let [scenarioIndex, scenario] of section.entries()) {
-            if (scenario[0].supplementaryValue === "") { //if supplementaryValue is "", it means all the question's value should be filled
-                for (let question of scenario) {
-                    if (question.value === undefined) {
-                            setUnansweredSectionIndex(sectionIndex);
-                            setUnansweredScenarioIndex(scenarioIndex);
-                        return false;
-                    } // if supplementaryValue is not "", others question is not applicable, we don't have to check
+    const verifyAllScenariosAnswered = () => {
+        for (let [sectionIndex, section] of questionnaireData.entries()) {
+            for (let [scenarioIndex, scenario] of section.entries()) {
+                if (scenario[0].supplementaryValue === "") { //if supplementaryValue is "", it means all the question's value should be filled
+                    for (let question of scenario) {
+                        if (question.value === undefined) {
+                                setUnansweredSectionIndex(sectionIndex);
+                                setUnansweredScenarioIndex(scenarioIndex);
+                            return false;
+                        } // if supplementaryValue is not "", others question is not applicable, we don't have to check
+                    }
                 }
             }
         }
+        return true;
     }
-    return true;
-} 
     
     // Method: Called when we submit the questionnaire
     const onSubmit = (e) => {

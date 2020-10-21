@@ -91,10 +91,9 @@ const ShareQuestionnaire = (props) => {
         setLoading(true);
         const retrieveCustomisedQuestionnaires = async () => {
 
-            const [statusCode, customisedQuestionnaires] = await API.getClinicianQuestionnaires(token,
+            const [_, customisedQuestionnaires] = await API.getClinicianQuestionnaires(token,
                 user.name
             );
-            const today = formatDate();
             setCustomisedQuestionnaires(customisedQuestionnaires);
             setLoading(false);
         };
