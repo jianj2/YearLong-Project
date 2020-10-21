@@ -24,7 +24,7 @@ import { USER_TYPE_ADMIN, USER_TYPE_CLINICIAN } from "../../utils/helper";
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
 const SideBar = ({ userType }) => {
-    const pathNamesWithWarning = ["DoTheTest", "SSQInstruction", "Questionnaire"];
+    const pathNamesWithWarning = ["DoTheTest", "SSQInstruction"];
 
     const [isSideBarResetModal, setIsSideBarResetModal] = useState(false);
     const [refreshUrl, setRefreshUrl] = useState("");
@@ -59,15 +59,17 @@ const SideBar = ({ userType }) => {
         }else{
             currentPathName = currentPathFullName[2];
         }
- 
+        
+        console.log("d: "+ destPathName.split("/")[1])
+        console.log("c: " + currentPathName )
     
         return (
             <div
                 className={`sidebar-${classSuffix} ${
-                    destPathName.split("/")[1] === currentPathName ? "active" : ""
+                    destPathName.split("/")[1].includes(currentPathName) ? "active" : ""
                 }`}
                 onClick={() => {
-                    if (pathNamesWithWarning.includes(currentPathName)) {
+                    if (pathNamesWithWarning.includes(currentPathName) || currentPathFullName.slice(-1)[0] === "edit") {
                         setIsSideBarResetModal(true);
                         setRefreshUrl(`/${destPathName}`);
                    

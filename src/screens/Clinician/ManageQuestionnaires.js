@@ -94,7 +94,7 @@ const ManageQuestionnaires = () => {
     };
 
     const viewQuestionnaire = (questionnaireID) => {
-        const view_url = "/standard/Questionnaire/" + questionnaireID + "/view";
+        const view_url = "/clinician/Questionnaire/" + questionnaireID + "/view";
         window.location.href = view_url;
     };
 
