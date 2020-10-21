@@ -821,20 +821,18 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     doc.lineCap('butt').moveTo(30, lineSpacing).lineTo(doc.page.width - 30, lineSpacing).stroke();
                     lineSpacing += 20;
 
+                    let sortedResults = {};
 
-
-
-                    // -------  TO DO  --------
-                    // MAKE THIS BETTER
-                    // const sortedResults = sortByImportance(resultToPrint)
-                    let sortedResults = []
-                    if (sortBy === HELPER_SORT.PERFORMANCE) {
-                        sortedResults = sortByPerformance(resultToPrint)
+                    if (resultToPrint.isStandard) {
+                        if (sortBy === HELPER_SORT.PERFORMANCE) {
+                            sortedResults = sortByPerformance(resultToPrint)
+                        } else {
+                            sortedResults = sortByImportance(resultToPrint)
+                        }
                     } else {
-                        sortedResults = sortByImportance(resultToPrint)
+                        sortedResults = sortByPerformance(resultToPrint)
                     }
-
-
+x
                     if (sortedResults.isStandard) {
                         printStandardQuestionnaireResults(doc, sortedResults, lineSpacing, comments)
                     } else {
