@@ -46,7 +46,7 @@ const HomeClinician = (props) => {
         if (loading) {
             return;
         }
-        if (!loading && isAuthenticated && user != null) {
+        if (!loading && isAuthenticated && user !== null) {
             let accessToken;
 
             // =================================================================

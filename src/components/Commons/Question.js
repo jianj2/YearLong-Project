@@ -93,7 +93,7 @@ const createMarks = () => {
     ];
     let i;
     for (i = 0; i <= 10; i += 0.1) {
-        if (i % 1 != 0) {
+        if (i % 1 !== 0) {
             let temp = { value: i, style: { color: "blue" } };
             mymarks.push(temp);
         }
@@ -130,15 +130,15 @@ const Question = ({
 
     useEffect(() => {
         onQuestionChange(sectionIndex, scenarioIndex, questionIndex, answered);
-    }, [answered]);
+    }, [answered, onQuestionChange, sectionIndex, scenarioIndex, questionIndex]);
 
     // if it becomes not applicable, disable the next mcq question.
     useEffect(() => {
-        if (isNotApplicable == true && isMCQ) {
+        if (isNotApplicable === true && isMCQ) {
             setAnswered({ ...answered, value: "" });
             data.value = "";
         }
-    }, [isNotApplicable]);
+    }, [isNotApplicable, isMCQ, data, answered]);
 
     // If it is an MCQ question.
     if (isMCQ) {

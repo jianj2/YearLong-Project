@@ -136,7 +136,7 @@ const ShareQuestionnaire = (props) => {
     const sectionSelectionCheck = () => {
 
         let isEmpty = true;
-        Object.entries(shareSection).map((k, v) => {
+        Object.entries(shareSection).forEach((k, v) => {
             if (k[1]) {
                 isEmpty = false;
             }

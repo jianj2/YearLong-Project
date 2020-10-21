@@ -156,14 +156,11 @@ const SSQInstructionsContainer = ({ instructionType }) => {
                     });
                 }}
                 variant="filled"
-                multiline="true"
                 multiline={true}
                 rows={20}
                 rowsMax={20}
             />
-
         </div>
-
     );
 };
 
