@@ -1,27 +1,27 @@
+////////////////////////////////////////////////////////////////////////////////
+////                             Import Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
+const Readable = require('stream').Readable
+const PDFDocument = require('pdfkit');
+const mongoose = require("mongoose");
+const Questionnaire = mongoose.model("questionnaire");
+const Share = mongoose.model("share");
+
 /**
- * ========================================
+ * =============================================================================
  * DEFINING REPORT CONTROLLER
- * ========================================
+ * =============================================================================
  * @date created: 26 August 2020
- * @authors: Waqas
+ * @authors: Waqas Rehmani
  *
  * The report service is used for handling the generation
  * of reports from questionnaire responses.
  *
  */
 
-// Import Libraries
-const Readable = require('stream').Readable
-const PDFDocument = require('pdfkit');
-const mongoose = require("mongoose");
-const Questionnaire = mongoose.model("questionnaire");
-const Share = mongoose.model("share");
-const fs = require('fs');
-const {SSL_OP_SSLEAY_080_CLIENT_DH_BUG} = require('constants');
-
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // HELPERS
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const HELPER_IMPORTANCE = {
     "Very important": 4,
     "Important": 3,
@@ -108,9 +108,9 @@ const scoreColour = function (doc, value) {
 }
 
 
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to print the results on the document
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const printCustomQuestionnaireResults = function (doc, resultToPrint, startSpacing, comments) {
     // initial document spacing after patient information
     let docHeight = Math.ceil(doc.page.height / 10) * 10 - 100;
@@ -366,9 +366,9 @@ const updateSections = (questionnaire, sectionVisibility) => {
 };
 
 
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to compile the responses with the questionnaire
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const getQuestionnaireResponseJoin = function (questionnaire, questionnaireData, sectionScores, sharedSections) {
     // MAKE A COPY OF THE ORIGINAL QUESTIONNAIRE
     updateSections(questionnaire, sharedSections);
@@ -412,9 +412,9 @@ const getQuestionnaireResponseJoin = function (questionnaire, questionnaireData,
 }
 
 
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to sort the questions by the importance
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const sortByImportance = function (response) {
     let sortedResult = response;
 
@@ -427,9 +427,9 @@ const sortByImportance = function (response) {
     return sortedResult;
 }
 
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to sort the questions by the importance
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const sortByPerformance = function (response) {
     let sortedResult = response;
 
@@ -443,9 +443,9 @@ const sortByPerformance = function (response) {
 }
 
 
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // Helper function to obtain scores for speech sub-scales
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const speechSection = function (speechScenarios, subScaleScore) {
     // counter and score variables to
     // store the total score and total count
@@ -509,9 +509,9 @@ const speechSection = function (speechScenarios, subScaleScore) {
     return subScaleScore;
 }
 
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // Helper function to obtain scores for spatial sub-scales
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const spatialSection = function (spatialScenarios, subScaleScore) {
     // counter and score variables to
     // store the total score and total count
@@ -564,9 +564,9 @@ const spatialSection = function (spatialScenarios, subScaleScore) {
     return subScaleScore;
 }
 
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // Helper function to obtain scores for qualities sub-scales
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const qualitiesSection = function (qualitiesScenarios, subScaleScore) {
     // counter and score variables to
     // store the total score and total count
@@ -623,9 +623,9 @@ const qualitiesSection = function (qualitiesScenarios, subScaleScore) {
     return subScaleScore;
 }
 
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to calculate the average score for each sub-scale 
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const calculateSubScaleScore = function (questionnaireData, subScaleScore) {
     for (let i = 0; i < questionnaireData.length; i++) {
         switch (i) {
@@ -646,9 +646,9 @@ const calculateSubScaleScore = function (questionnaireData, subScaleScore) {
     return subScaleScore
 }
 
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to calculate both the average and section scores
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const calculateScore = function (questionnaireData, calculateAverage, section_score) {
     let total_score = 0;
     let total_q = 0;
@@ -713,9 +713,9 @@ const generateCSV = function (questionnaireData, personalDetails, scenarioResult
     return Buffer.from(toWrite, 'utf8')
 }
 
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used generate the pdf report.
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const generateAttachments = function (questionnaireId, personalDetails, questionnaireData, shareId, sortBy, comments) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
@@ -868,5 +868,7 @@ x
     });
 }
 
-
+////////////////////////////////////////////////////////////////////////////////
+////                             Export Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
 module.exports.generateAttachments = generateAttachments;

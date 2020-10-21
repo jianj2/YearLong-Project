@@ -1,10 +1,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////                             Import Modules                             ////
 ////////////////////////////////////////////////////////////////////////////////
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const clinician_controller = require('../controller/clinician_controller.js');
-const share_controller = require('../controller/share_controller.js');
+const clinician_controller = require("../controller/clinician_controller.js");
+const share_controller = require("../controller/share_controller.js");
 
 /**
  * =============================================================================

@@ -1,22 +1,25 @@
+////////////////////////////////////////////////////////////////////////////////
+////                             Import Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
+const nodemailer = require("nodemailer");
+const path = require("path");
+const { generateAttachments } = require("./reportService");
+
 /**
- * ========================================
+ * =============================================================================
  * DEFINING EMAIL CONTROLLER
- * ========================================
+ * =============================================================================
  * @date created: 26 August 2020
- * @authors: Waqas
+ * @authors: Waqas Rehmani
  *
  * The email service is used for handling all of email
  * requests.
  *
  */
 
-// Import Libraries
-const nodemailer = require("nodemailer");
-const path = require("path");
-
-const { generateAttachments } = require("./reportService");
-
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // Define Transporter
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -29,9 +32,9 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to send questionnaire link through email.
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const sendInvitationEmail = (createdShare) => {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
@@ -70,9 +73,9 @@ const sendInvitationEmail = (createdShare) => {
     });
 };
 
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to send the results PDF report through email.
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const sendResultsEmail = (
     questionnaireId,
     questionnaireData,
@@ -130,9 +133,9 @@ const sendResultsEmail = (
     });
 };
 
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to send the email.
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const sendEmail = (mailOptions) => {
     return new Promise((resolve, reject) => {
         transporter.sendMail(mailOptions, (error, info) => {
@@ -151,5 +154,12 @@ const sendEmail = (mailOptions) => {
     });
 };
 
-module.exports.sendInvitationEmail = sendInvitationEmail;
-module.exports.sendResultsEmail = sendResultsEmail;
+
+////////////////////////////////////////////////////////////////////////////////
+////                             Export Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
+module.exports = {
+    sendInvitationEmail,
+    sendResultsEmail
+}
+
