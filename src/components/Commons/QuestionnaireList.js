@@ -98,6 +98,7 @@ const QuestionnaireList = ({
         canShare,
         onClickShare,
         sectionNames,
+        isStandard,
     }) => {
         return (
             <div
@@ -144,7 +145,7 @@ const QuestionnaireList = ({
                                 className="button"
                                 onClick={(event) => {
                                     event.stopPropagation();
-                                    onClickShare(questionnaireId, sectionNames);
+                                    onClickShare(questionnaireId, isStandard, sectionNames);
                                 }}
                             >
                                 S H A R E
@@ -194,13 +195,13 @@ const QuestionnaireList = ({
     return (
         <div className="questionnaire-list-container">
             <h1>{listTitle}</h1>
-            {questionnaires.map((question, index) => (
+            {questionnaires.map((questionnaire, index) => (
                 <ListItem
                     key={index}
-                    questionnaireId={question.questionnaireId}
-                    title={question.title}
-                    description={question.description}
-                    isSSQ_Ch={question.isSSQ_Ch}
+                    questionnaireId={questionnaire.questionnaireId}
+                    title={questionnaire.title}
+                    description={questionnaire.description}
+                    isSSQ_Ch={questionnaire.isSSQ_Ch}
                     isSelectable={isSelectable}
                     onClickQuestion={onClickQuestion}
                     canEdit={canEdit}
@@ -211,9 +212,10 @@ const QuestionnaireList = ({
                     onClickDelete={onClickDelete}
                     canShare={canShare}
                     onClickShare={onClickShare}
-                    sectionNames={question.sectionNames}
-                    questionnaire={question}
-                    date={question.updateDate}
+                    sectionNames={questionnaire.sectionNames}
+                    questionnaire={questionnaire}
+                    date={questionnaire.updateDate}
+                    isStandard={questionnaire.isStandard}
                 />
             ))}
         </div>
