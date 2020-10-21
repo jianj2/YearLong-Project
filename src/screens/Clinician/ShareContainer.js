@@ -111,13 +111,13 @@ const ShareQuestionnaire = (props) => {
     }, [user, token]);
 
     // Function called when Share is clicked on the QuestionnaireList
-    const shareQuestionnaire = (questionnaireId, sections) => {
+    const shareQuestionnaire = (questionnaireId, sectionNames) => {
         //making sure the state get reset once the modal is reloaded.
         setIsSectionsEmpty(false);
 
         let temp = {};
-        sections.map((index) => {
-            temp = { ...temp, [index.title.toString()]: true };
+        sectionNames.forEach((s) => {
+            temp = { ...temp, [s]: true };
         });
 
         setShareSection(temp);
@@ -125,7 +125,7 @@ const ShareQuestionnaire = (props) => {
         setShareModalData({
             ...shareModalData,
             questionnaireId,
-            shareSection
+            sectionNames
         });
 
         openModal();

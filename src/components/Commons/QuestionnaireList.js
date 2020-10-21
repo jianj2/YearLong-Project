@@ -97,7 +97,7 @@ const QuestionnaireList = ({
         onClickDelete,
         canShare,
         onClickShare,
-        sections,
+        sectionNames,
     }) => {
         return (
             <div
@@ -144,7 +144,7 @@ const QuestionnaireList = ({
                                 className="button"
                                 onClick={(event) => {
                                     event.stopPropagation();
-                                    onClickShare(questionnaireId, sections);
+                                    onClickShare(questionnaireId, sectionNames);
                                 }}
                             >
                                 S H A R E
@@ -211,7 +211,7 @@ const QuestionnaireList = ({
                     onClickDelete={onClickDelete}
                     canShare={canShare}
                     onClickShare={onClickShare}
-                    sections={question.sections}
+                    sectionNames={question.sectionNames}
                     questionnaire={question}
                     date={question.updateDate}
                 />
