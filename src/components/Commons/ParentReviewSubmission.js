@@ -22,7 +22,8 @@ const ParentReviewSubmission = ({
     personalDetails,
     questionnaireData,
     commentData,
-    emailResponse
+    emailResponse,
+    isStandard
 }) => {
     return (
         <div className="review-submission">
@@ -101,16 +102,26 @@ const ParentReviewSubmission = ({
                 ))}
             </div>
             {/* BUTTONS - SEND (SORTED)REPORT TO EMAIL */}
+
             <div className="dothetest-bottom-container">
                 <label>Email Report</label>
-                <button className="button"
-                    onClick={() => emailResponse("PERFORMANCE")}>
+
+                <button
+                    className="button"
+                    onClick={() => emailResponse("PERFORMANCE")}
+                >
                     Sorted by Performance
+                </button>
+
+                {!isStandard ? null :
+                    <button
+                        className="button"
+                        onClick={() => emailResponse("IMPORTANCE")}
+                    >
+                        Sorted by Importance
                     </button>
-                <button className="button"
-                    onClick={() => emailResponse("IMPORTANCE")}>
-                    Sorted by Importance
-                    </button>
+                }
+
             </div>
         </div>
     );
