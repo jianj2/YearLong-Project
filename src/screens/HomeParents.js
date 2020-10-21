@@ -276,7 +276,7 @@ const HomeParents = ({ match }) => {
                     ) : (
                         <div>
                             <h2>{instruction.title}</h2>
-                            <p>{instruction.content}</p>
+                            <p style={{whiteSpace:'pre'}}>{instruction.content}</p>
                         </div>
                     )}
                 </div>
