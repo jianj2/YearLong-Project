@@ -42,7 +42,8 @@ const HomeParents = ({ match }) => {
         title: "",
         description: "",
         sections: [],
-        isStandard: true
+        isStandard: true,
+        isSSQ_Ch: true
     });
     const [clinicianEmail, setClinicianEmail] = useState("");
     const [sortBy, setSortBy] = useState("PERFORMANCE");
@@ -120,6 +121,7 @@ const HomeParents = ({ match }) => {
     // This is called when the component first mounts.
     useEffect(() => {
         // Server call to get the questionnaireId
+        setLoading(true)
         const getDetails = async () => {
             const [statusCode, shareResponse] = await API.getShareDetails(match.params.shareId);
             if (statusCode === 200) {
@@ -178,7 +180,7 @@ const HomeParents = ({ match }) => {
 
         };
         getDetails();
-
+        setLoading(false)
     }, []);
 
     // Method called to update questionnaire data when a question is updated.
@@ -308,6 +310,7 @@ const HomeParents = ({ match }) => {
                         defaultValue={personalDetails}
                         getPersonalDetails={getPersonalDetails}
                         isSSQ_Ch={questionnaire.isSSQ_Ch}
+                        loading={loading}
                     />
                 </div>
             </div>

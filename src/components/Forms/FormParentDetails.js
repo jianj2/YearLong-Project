@@ -9,6 +9,7 @@ import {
     FormHelperText,
     Select
 } from "@material-ui/core";
+import {Loading} from "../Commons";
 
 /**
  * =============================================================================
@@ -33,7 +34,8 @@ const FormParentDetails = ({
     clinicianAccess,
     defaultValue,
     getPersonalDetails,
-    isSSQ_Ch
+    isSSQ_Ch,
+    loading
 }) => {
     const { register, handleSubmit, errors } = useForm();
 
@@ -54,8 +56,10 @@ const FormParentDetails = ({
     const [filledByTypeOption, setFilledByTypeOption] = useState(defaultValue.filledByTypeOption);
     const [filledBy, setFilledBy] = useState(defaultValue.filledBy);
     const [filledByTypeOptionOther, setFilledByTypeOptionOther] = useState(defaultValue.filledByTypeOption);
-    let [filledByTypeOptionOtherVisible,setFilledByTypeOptionOtherVisible ] = useState(null);
+    let [filledByTypeOptionOtherVisible,setFilledByTypeOptionOtherVisible ] = useState(false);
 
+    console.log("ch",isSSQ_Ch)
+    console.log("visible",filledByTypeOptionOtherVisible)
 
 
     let personalData = {};
@@ -158,6 +162,11 @@ const FormParentDetails = ({
             setDate("");
         }
     };
+
+    console.log("loading", loading)
+    if (loading){
+        return <Loading/>
+    }
 
     return (
         <form onSubmit={handleSubmit(handleButtonPress)}
