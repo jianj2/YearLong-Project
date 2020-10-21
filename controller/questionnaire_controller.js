@@ -24,7 +24,7 @@ const { sendJSONResponse } = require("../utils/apiUtils");
  * DEFINING QUESTIONNAIRE API CALLS CONTROLLER
  * =============================================================================
  * @date created: 10 May 2020
- * @authors: Uvin Abeysinghe, Cary
+ * @authors: Uvin Abeysinghe, Cary Jin
  *
  * The questionnaire controller is used for defining
  * the functionality of API calls related to questionnaires.
