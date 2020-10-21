@@ -53,7 +53,7 @@ const FindPassword = () => {
     return (
         <div className="find-password">
             <div className="landing-logo">
-                <img src={logoComplete}/>
+                <img src={logoComplete} alt="SSQ Logo"/>
             </div>
 
             <div className="landing-buttons">

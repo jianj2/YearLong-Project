@@ -27,24 +27,25 @@ const InstructionsContainer = () => {
         content: ""
     });
 
-    const getInstructions = async () => {
-        let [statusCode, res] = await API.getSpecificInstruction("CC");
-        if (statusCode === 200) {
-            setInstructionCC({
-                title: res["title"],
-                content: res["content"]
-            });
-        }
-
-        [statusCode, res] = await API.getSpecificInstruction("CP");
-        if (statusCode === 200) {
-            setInstructionCP({
-                title: res["title"],
-                content: res["content"]
-            });
-        }
-    };
     useEffect(() => {
+        const getInstructions = async () => {
+            let [statusCode, res] = await API.getSpecificInstruction("CC");
+            if (statusCode === 200) {
+                setInstructionCC({
+                    title: res["title"],
+                    content: res["content"]
+                });
+            }
+
+            [statusCode, res] = await API.getSpecificInstruction("CP");
+            if (statusCode === 200) {
+                setInstructionCP({
+                    title: res["title"],
+                    content: res["content"]
+                });
+            }
+        };
+
         getInstructions();
     }, []);
 
