@@ -55,7 +55,6 @@ const FormParentDetails = ({
     useEffect(() => {
 
         if (rightDeviceType === "Other" || (deviceTypeOption.indexOf(rightDeviceType) === -1)) {
-            rightDeviceTypeOtherVisible = true;
             setRightDeviceTypeOtherVisible(true);
         } else {
             rightDeviceTypeOtherVisible = false;
