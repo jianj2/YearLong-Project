@@ -705,13 +705,14 @@ const generateCSV = function (questionnaireData, personalDetails, scenarioResult
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used generate the pdf report.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const generateAttachments = function (questionnaireId, personalDetails, questionnaireData, shareId, sortBy, comments) {
+const generateAttachments = function (questionnaireId, personalDetails, questionnaireData, shareId, sortBy, comments, clinicianEmail) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
 
         // Catherine
         console.log(personalDetails.filledByTypeOption)
         console.log(personalDetails.filledBy)
+        console.table(personalDetails)
         // Catherine
 
         Questionnaire.findOne({questionnaireId}, function (err, questionnaire) {
