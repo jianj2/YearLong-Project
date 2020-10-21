@@ -400,7 +400,7 @@ const getQuestionnaireResponseJoin = function (questionnaire, questionnaireData,
                     valueToSet;
 
                 currentScenarioResponse.push(valueToSet);
-                if (questionIndex == numQuestions - 1) {
+                if (questionIndex === numQuestions - 1) {
                     scenarioResponseList.push(currentScenarioResponse);
                 }
 
@@ -806,7 +806,7 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     resultToPrint.sections.forEach((section, sectionIndex) => {
                         doc.font('Helvetica-Bold').fontSize(12).text(section.title + " Average Rating: ", 50, lineSpacing);
                         margin = Math.ceil(doc.widthOfString(section.title + " Average Rating: ") / 10) * 10 + 60;
-                        doc.font('Helvetica').text(scores.sectionScores[sectionIndex] == "N/A" ? "N/A" : scores.sectionScores[sectionIndex].toFixed(2), margin, lineSpacing);
+                        doc.font('Helvetica').text(scores.sectionScores[sectionIndex] === "N/A" ? "N/A" : scores.sectionScores[sectionIndex].toFixed(2), margin, lineSpacing);
                         lineSpacing += 30;
                         lineSpacing = addPage(doc, lineSpacing, doc.page.height);
                     })
