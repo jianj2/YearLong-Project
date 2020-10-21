@@ -41,7 +41,7 @@ const QuestionsContainer = ({
             {questions && questions.map((item, index) => {
                 return (
                     <QuestionForm
-                        isStandard = {isStandard}
+                        isStandard={isStandard}
                         item={item}
                         key={item._id}
                         questionIndex={index}
@@ -67,19 +67,19 @@ const QuestionsContainer = ({
 
 //decide which kind of question to show
 const QuestionForm = ({
-                          isStandard,
-                          questionIndex,
-                          removeQuestion,
-                          sectionIndex,
-                          scenarioIndex,
-                          changeToMCQQuestion,
-                          changeToRangeQuestion,
-                          addAnswerToMCQQuestion,
-                          deleteAnswerFromMCQQuestion,
-                          handleQuestionDesChange,
-                          handleQuestionOptsChange,
-                          item
-                      }) => {
+    isStandard,
+    questionIndex,
+    removeQuestion,
+    sectionIndex,
+    scenarioIndex,
+    changeToMCQQuestion,
+    changeToRangeQuestion,
+    addAnswerToMCQQuestion,
+    deleteAnswerFromMCQQuestion,
+    handleQuestionDesChange,
+    handleQuestionOptsChange,
+    item
+}) => {
     const { rangeOptions, description, MCQOptions, isMCQ } = item;
 
     const handleRangeClick = (e) => {
@@ -98,30 +98,30 @@ const QuestionForm = ({
     const renderHeader = () => {
         return (
             <div className="questionTable-button-group">
-                {isStandard?
-                {
-                    0: <button
-                    className={!isMCQ ? "questionTable-button-selected" : ""}
-                    id = "display100"
-                    disabled >
-                        Performance Rating
-                    </button>,
-                    1: <button
-                    className={isMCQ ? "questionTable-button-selected" : ""}
-                    id = "display100"
-                    disabled
-                    >
-                        Multiple Choice Question
-                    </button>,
-                    2: <button
-                    className={isMCQ ? "questionTable-button-selected" : ""}
-                    id = "display100"
-                    disabled
-                    >
-                        Multiple Choice Question
-                    </button>
-                }[questionIndex]
-                :isMCQ ?
+                {isStandard ?
+                    {
+                        0: <button
+                            className={!isMCQ ? "questionTable-button-selected" : ""}
+                            id="display100"
+                            disabled>
+                            Performance Rating
+                        </button>,
+                        1: <button
+                            className={isMCQ ? "questionTable-button-selected" : ""}
+                            id="display100"
+                            disabled
+                        >
+                            Multiple Choice Question
+                        </button>,
+                        2: <button
+                            className={isMCQ ? "questionTable-button-selected" : ""}
+                            id="display100"
+                            disabled
+                        >
+                            Multiple Choice Question
+                        </button>
+                    }[questionIndex]
+                    : isMCQ ?
                         <div className="questionTable-button-group">
                             <button
                                 className={isMCQ ? "questionTable-button-selected" : ""}
@@ -145,7 +145,7 @@ const QuestionForm = ({
                                 Performance Rating
                             </button>
                         </div>
-                    }
+                }
             </div>
         );
     };
@@ -155,7 +155,7 @@ const QuestionForm = ({
             <div className="questionTable">
                 {renderHeader()}
                 <RangeQuestionFrom
-                    isStandard = {isStandard}
+                    isStandard={isStandard}
                     sectionIndex={sectionIndex}
                     scenarioIndex={scenarioIndex}
                     questionIndex={questionIndex}
@@ -170,7 +170,7 @@ const QuestionForm = ({
             <div className="questionTable">
                 {renderHeader()}
                 <MultipleChoiceQuestionFrom
-                    isStandard = {isStandard}
+                    isStandard={isStandard}
                     description={description}
                     MCQOptions={MCQOptions}
                     addAnswerToMCQQuestion={addAnswerToMCQQuestion}
@@ -188,30 +188,14 @@ const QuestionForm = ({
 
 //display the range question
 const RangeQuestionFrom = ({
-                                isStandard,
-                               sectionIndex,
-                               scenarioIndex,
-                               questionIndex,
-                               rangeOptions,
-                               handleQuestionDesChange,
-                               handleQuestionOptsChange
-                           }) => {
-
-    const handleRangeChange = (event, questionIndex, answerIndex) => {
-        handleQuestionOptsChange(event, questionIndex, answerIndex);
-    };
-
+    sectionIndex,
+    scenarioIndex,
+    questionIndex,
+    rangeOptions,
+    handleQuestionOptsChange
+}) => {
     return (
         <div className="questionTable-form">
-
-            {/*<FormControl margin="dense">*/}
-            {/*    <InputLabel>Description</InputLabel>*/}
-            {/*    <Input*/}
-            {/*        placeholder="Write the question."*/}
-            {/*    />*/}
-            {/*    <FormHelperText>Write the question.</FormHelperText>*/}
-            {/*</FormControl>*/}
-
             <h3>Ranges</h3>
             <FormControl margin="dense">
                 <InputLabel>Minimum Label</InputLabel>
@@ -226,9 +210,9 @@ const RangeQuestionFrom = ({
                             0);
                     }}
                 />
-                <FormHelperText>Write a word to describe the minimum value on the slider.</FormHelperText>
+                <FormHelperText>Write a word to describe the minimum value on
+                    the slider.</FormHelperText>
             </FormControl>
-
 
             <FormControl margin="dense">
                 <InputLabel>Maximum Label</InputLabel>
@@ -243,7 +227,8 @@ const RangeQuestionFrom = ({
                             1);
                     }}
                 />
-                <FormHelperText>Write a word to describe the maximum value on the slider.</FormHelperText>
+                <FormHelperText>Write a word to describe the maximum value on
+                    the slider.</FormHelperText>
             </FormControl>
         </div>
     );
@@ -263,30 +248,6 @@ const MultipleChoiceQuestionFrom = (props) => {
         handleQuestionDesChange,
         handleQuestionOptsChange
     } = props;
-
-    // const addAnswer = (sectionIndex,scenarioIndex,questionIndex) => {
-    //     addAnswerToMCQQuestion(sectionIndex,scenarioIndex,questionIndex);
-    // };
-
-    // const deleteAnswer = (sectionIndex,scenarioIndex,questionIndex, answerIndex) => {
-    //     deleteAnswerToMCQQuestion(sectionIndex,scenarioIndex,questionIndex, answerIndex);
-    // };
-
-    // to change the question of range questions (because the scheme in the data base didn't have this para,
-    // but we have in the frontend, so we need to change it later, comment this first).
-
-    // const handleMultiChoiceQuestionChange = (event) =>{
-    //
-    // }
-
-    //
-    // const handleMultiChoiceDesChange = (event, questionIndex) => {
-    //     props.handleMultiChoiceDesChange(event, questionIndex);
-    // };
-    //
-    // const handleMultiAnsChange = (event, questionIndex, answerIndex) => {
-    //     props.handleMultiAnsChange(event, questionIndex, answerIndex);
-    // };
 
     return (
         <div className="questionTable-form">
@@ -334,37 +295,36 @@ const MultipleChoiceQuestionFrom = (props) => {
                             </FormControl>
                         </div>
                         {
-                            isStandard? "":
-                            <button
-                                className="delete-answer-button"
-                                type="button"
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    deleteAnswerFromMCQQuestion(sectionIndex,scenarioIndex,questionIndex, index);
-                                }}
-                            >
-                                {" "}
-                                -{" "}
-                            </button>
+                            isStandard ? "" :
+                                <button
+                                    className="delete-answer-button"
+                                    type="button"
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        deleteAnswerFromMCQQuestion(sectionIndex, scenarioIndex, questionIndex, index);
+                                    }}
+                                >
+                                    {" "}
+                                    -{" "}
+                                </button>
                         }
 
                     </div>
                 );
             })}
             {
-                isStandard? "":
-                <button
-                className="add-answer-button"
-                onClick={(event) => {
-                    event.preventDefault();
-                    addAnswerToMCQQuestion(sectionIndex, scenarioIndex, questionIndex);
-                }}
-                >
-                    {" "}
-                    +{" "}
-                </button>
+                isStandard ? "" :
+                    <button
+                        className="add-answer-button"
+                        onClick={(event) => {
+                            event.preventDefault();
+                            addAnswerToMCQQuestion(sectionIndex, scenarioIndex, questionIndex);
+                        }}
+                    >
+                        {" "}
+                        +{" "}
+                    </button>
             }
-
         </div>
     );
 };

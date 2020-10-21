@@ -115,7 +115,16 @@ const HomeClinician = (props) => {
 
         fn();
 
-    }, [isAuthenticated, loading, user]);
+    }, [
+        isAuthenticated,
+        loading,
+        user,
+        getTokenSilently,
+        getTokenWithPopup,
+        loginWithRedirect,
+        setToken,
+        clinicianAuthAPI
+    ]);
 
     if (loading || !user) {
         return <Loading/>;
