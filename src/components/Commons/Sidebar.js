@@ -59,7 +59,7 @@ const SideBar = ({ userType }) => {
         return (
             <div
                 className={`sidebar-${classSuffix} ${
-                    destPathName.split("/")[1].includes(currentPathName)
+                    destPathName.split("/")[1].includes(currentPathName) && currentPathName!==""
                         ? "active"
                         : ""
                 }`}
