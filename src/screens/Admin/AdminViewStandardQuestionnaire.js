@@ -21,7 +21,7 @@ import { Questionnaire } from "../../components/Commons";
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
 const AdminViewStandardQuestionnaire = ({
-    questionnaireID,
+    questionnaireID
 }) => {
     const [questionnaire, setSelectedQuestionnaire] = useState({
         questionnaireId: "",
