@@ -113,13 +113,16 @@ const ParentReviewSubmission = ({
                     Sorted by Performance
                 </button>
 
-                {!isStandard ? null :
-                    <button
-                        className="button"
-                        onClick={() => emailResponse("IMPORTANCE")}
-                    >
-                        Sorted by Importance
-                    </button>
+                {isStandard
+                    ? (
+                        <button
+                            className="button"
+                            onClick={() => emailResponse("IMPORTANCE")}
+                        >
+                            Sorted by Importance
+                        </button>
+                    ) : null
+
                 }
 
             </div>
