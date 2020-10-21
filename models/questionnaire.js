@@ -56,6 +56,7 @@ const questionnaireSchema = mongoose.Schema({
     title: {type: String, required:true},
     description: {type: String, required:true},
     sections: [sectionSchema],
+    sectionNames: [String],
     isStandard: Boolean,
     isSSQ_Ch: {type: Boolean, required: false},
     updateDate: {type: String, required: true}
