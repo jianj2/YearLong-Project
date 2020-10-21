@@ -59,12 +59,12 @@ const AdminManageQuestionnaires = () => {
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
 
     const viewQuestionnaire = (questionnaireID) => {
-        const view_url = "/admin/standard/" + questionnaireID + "/view";
+        const view_url = "/admin/Questionnaire/standard/" + questionnaireID + "/view";
         window.location.href = view_url;
     };
 
     const editQuestionnaire = (questionnaireID) => {
-        const edit_url = "/admin/standard/" + questionnaireID + "/edit";
+        const edit_url = "/admin/Questionnaire/standard/" + questionnaireID + "/edit";
         window.location.href = edit_url;
     };
 
