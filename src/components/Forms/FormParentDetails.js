@@ -57,7 +57,6 @@ const FormParentDetails = ({
         if (rightDeviceType === "Other" || (deviceTypeOption.indexOf(rightDeviceType) === -1)) {
             setRightDeviceTypeOtherVisible(true);
         } else {
-            rightDeviceTypeOtherVisible = false;
             setRightDeviceTypeOtherVisible(false);
         }
 
