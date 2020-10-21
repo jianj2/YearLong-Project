@@ -1,4 +1,6 @@
-// Import Libraries.
+////////////////////////////////////////////////////////////////////////////////
+////                             Import Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
 const { v1: uuidv1 } = require("uuid");
 const { extractUserEmail } = require("../utils/jwtUtils");
 const {
@@ -29,13 +31,18 @@ const { sendJSONResponse } = require("../utils/apiUtils");
  *
  */
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is called to send authorisation error.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const sendAuthroisationError = (res) => {
     res.send(
         JSON.stringify("You do not have access to the clinician account.")
     );
 };
 
-// Get a questionnaire by ID from request
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is called to get a questionnaire by ID from request
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const getQuestionnaire = async (req, res) => {
     const questionnaireId = req.params.questionnaireId;
     console.log("get questionnaire:", questionnaireId);
@@ -46,7 +53,9 @@ const getQuestionnaire = async (req, res) => {
     sendJSONResponse(res, foundQuestionnaire, err, 404);
 };
 
-// given ClinicianId, gets the list of the clinician's customised questionnaire
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// given ClinicianId, gets the list of the clinician's customised questionnaire.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const getClinicianQuestionnaires = async (req, res) => {
     const clinicianId = req.query.clinicianId;
     if (extractUserEmail(req) === clinicianId) {
@@ -59,7 +68,9 @@ const getClinicianQuestionnaires = async (req, res) => {
     }
 };
 
-// add an empty customised questionnaire for clincians
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is called to add an empty customised questionnaire for clincian
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const addEmptyQuestionnaire = async (req, res) => {
     const userEmail = extractUserEmail(req);
     const clinicianId = req.body.clinicianId;
@@ -76,7 +87,9 @@ const addEmptyQuestionnaire = async (req, res) => {
     }
 };
 
-// add a standardised questionnaire
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is called to add a standardised questionnaire
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const addStandardisedQuestionnaire = async (req, res) => {
     const uuid = uuidv1();
     const newQuestionnaire = generateNewStandardisedQuestionnaire(uuid);
@@ -86,7 +99,9 @@ const addStandardisedQuestionnaire = async (req, res) => {
     sendJSONResponse(res, message, err, 500);
 };
 
-// edit a customised questionnaire
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is called to edit a customised questionnaire
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const editQuestionnaire = async (req, res) => {
     const userEmail = extractUserEmail(req);
     const questionnaireId = req.body.questionnaire.questionnaireId;
@@ -100,7 +115,9 @@ const editQuestionnaire = async (req, res) => {
     sendJSONResponse(res, message, err, 500);
 };
 
-// edit a standardised questionnaire
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is called to edit a standardised questionnaire
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const editStandardQuestionnaire = async (req, res) => {
     const questionnaireId = req.body.questionnaire.questionnaireId;
     const editedQuestionnaire = req.body.questionnaire;
@@ -111,7 +128,9 @@ const editStandardQuestionnaire = async (req, res) => {
     sendJSONResponse(res, message, err, 500);
 };
 
-// Delete customised questionnaire
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is called to delete customised questionnaire
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const deleteQuestionnaire = async (req, res) => {
     const questionnaireId = req.body.CQid;
     const userEmail = extractUserEmail(req);
@@ -124,7 +143,9 @@ const deleteQuestionnaire = async (req, res) => {
     sendJSONResponse(res, message, err, 500);
 };
 
-//Delete standardised questionnaire
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is called to delete standardised questionnaire
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const deleteStandardisedQuestionnaire = async (req, res) => {
     const questionnaireId = req.body.questionnaireID;
     const [err, message] = await deleteQuestionnaireFromDatabase(
@@ -134,13 +155,17 @@ const deleteStandardisedQuestionnaire = async (req, res) => {
     sendJSONResponse(res, message, err, 500);
 };
 
-// gets all standardised questionnaires
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is called to get all standardised questionnaires.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const getStandardisedQuestionnaires = async (req, res) => {
     const [err, questionnaires] = await findStandardisedQuestionnaires();
     sendJSONResponse(res, questionnaires, err, 404);
 };
 
-//Copy a questionnaire
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is called to copy a questionnaire.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const copyQuestionnaire = async (req, res) => {
     const copiedQuestionnaire = req.body.questionnaire;
     const copyToCustomisedQuestionnaire =
@@ -155,13 +180,18 @@ const copyQuestionnaire = async (req, res) => {
     sendJSONResponse(res, message, err, 500);
 };
 
-module.exports.copyQuestionnaire = copyQuestionnaire;
-module.exports.getQuestionnaire = getQuestionnaire;
-module.exports.addEmptyQuestionnaire = addEmptyQuestionnaire;
-module.exports.addStandardisedQuestionnaire = addStandardisedQuestionnaire;
-module.exports.deleteQuestionnaire = deleteQuestionnaire;
-module.exports.deleteStandardisedQuestionnaire = deleteStandardisedQuestionnaire;
-module.exports.editQuestionnaire = editQuestionnaire;
-module.exports.editStandardQuestionnaire = editStandardQuestionnaire;
-module.exports.getClinicianQuestionnaires = getClinicianQuestionnaires;
-module.exports.getStandardisedQuestionnaires = getStandardisedQuestionnaires;
+////////////////////////////////////////////////////////////////////////////////
+////                             Export Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
+module.exports = {
+    copyQuestionnaire,
+    getQuestionnaire,
+    addEmptyQuestionnaire,
+    addStandardisedQuestionnaire,
+    deleteQuestionnaire,
+    deleteStandardisedQuestionnaire,
+    editQuestionnaire,
+    editStandardQuestionnaire,
+    getClinicianQuestionnaires,
+    getStandardisedQuestionnaires,
+}
