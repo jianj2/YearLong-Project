@@ -47,43 +47,38 @@ const SideBar = ({ userType }) => {
         );
     };
 
-    const renderSideBarTab = (
-        classSuffix,
-        destPathName,
-        textLabel
-    ) => {
+    const renderSideBarTab = (classSuffix, destPathName, textLabel) => {
         let currentPathName;
-        const currentPathFullName =  window.location.pathname.split("/");
-        if ( currentPathFullName.length <= 2){
+        const currentPathFullName = window.location.pathname.split("/");
+        if (currentPathFullName.length <= 2) {
             currentPathName = currentPathFullName[0];
-        }else{
+        } else {
             currentPathName = currentPathFullName[2];
         }
-        
-        console.log("d: "+ destPathName.split("/")[1])
-        console.log("c: " + currentPathName )
-    
+
         return (
             <div
                 className={`sidebar-${classSuffix} ${
-                    destPathName.split("/")[1].includes(currentPathName) ? "active" : ""
+                    destPathName.split("/")[1].includes(currentPathName)
+                        ? "active"
+                        : ""
                 }`}
                 onClick={() => {
-                    if (pathNamesWithWarning.includes(currentPathName) || currentPathFullName.slice(-1)[0] === "edit") {
+                    if (
+                        pathNamesWithWarning.includes(currentPathName) ||
+                        currentPathFullName.slice(-1)[0] === "edit"
+                    ) {
                         setIsSideBarResetModal(true);
                         setRefreshUrl(`/${destPathName}`);
-                   
-                } else {
-                    window.location.href = `/${destPathName}`;
-                   
-            }
+                    } else {
+                        window.location.href = `/${destPathName}`;
+                    }
                 }}
             >
                 {textLabel}
             </div>
         );
     };
-
 
     if (userType === USER_TYPE_CLINICIAN) {
         return (
