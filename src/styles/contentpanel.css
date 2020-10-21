@@ -1,16 +1,11 @@
 /**
- * ====================================================================
- * CSS FILE TO STYLE the 'ContentPanel' Component
- * ====================================================================
- * @date created: 16th May 2020
- * @authors:Guang Yang
- *
- * This file contains all the CSS classes related to the ContentPanel
- * component to style the component.
- *
- */
-
-
+  * ============================================================================
+  * CSS STYLING FILE
+  * ============================================================================
+  * @date created: 16th May 2020
+  * @authors: Guang Yang, Jin Chen
+  *
+*/
 
 .content-container {
     display: flex;

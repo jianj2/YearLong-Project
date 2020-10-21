@@ -1,24 +1,21 @@
 /**
- * ====================================================================
- * CSS FILE TO STYLE the 'OrganisationList' Component
- * ====================================================================
+  * ============================================================================
+  * CSS STYLING FILE
+  * ============================================================================
  * @date created: 14th Sep 2020
  * @authors: Jin Chen
- *
- * This file contains all the CSS classes related to the OrganisationList
- * component to style the component.
- *
- */
+  *
+*/
 
 .organisation-list-item {
     margin: auto auto 1rem auto;
     padding: 20px;
     border-radius: 10px;
     min-width: 400px;
-    border: rgba(255,255,255,0.2);
+    border: rgba(255, 255, 255, 0.2);
     border-style: solid;
     border-width: 1px;
-    background-color: rgba(100,100,100,0.1);
+    background-color: rgba(100, 100, 100, 0.1);
     position: relative;
     transition: all 0.2s;
     display: flex;
@@ -28,7 +25,7 @@
 .organisation-list-item-selectable {
     cursor: pointer;
 }
-.organisation-list-item-selectable:hover{
-    background-color: rgba(100,100,100,0.2);
 
+.organisation-list-item-selectable:hover {
+    background-color: rgba(100, 100, 100, 0.2);
 }
