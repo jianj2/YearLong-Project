@@ -1,7 +1,7 @@
 /**
- * ========================================
+ * =============================================================================
  * DEFINING ADMIN API CALLS CONTROLLER
- * ========================================
+ * =============================================================================
  * @date created: 17 May 2020
  * @authors: Victor
  *
@@ -9,6 +9,7 @@
  *
  */
 
+// Import Libraries.
 const { sendJSONResponse } = require("../utils/apiUtils");
 const {
     findInstructionByType,
@@ -19,7 +20,7 @@ const {
     getOrganisationListFromDatabase,
     getOrganisationCliniciansFromDatabase,
     authenticateAdmin,
-    createAdminInDatabase,
+    createAdminInDatabase
 } = require("../service/adminService");
 const serverSecret = "secretLOL";
 
@@ -88,7 +89,7 @@ const getInstructionsSummary = async (req, res) => {
         const summary = filteredInstructions.map((instruction) => {
             return {
                 title: instruction.title,
-                type: instruction.type,
+                type: instruction.type
             };
         });
         res.status(200).json(summary);

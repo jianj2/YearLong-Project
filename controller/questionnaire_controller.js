@@ -1,17 +1,5 @@
-/**
- * ============================================
- * DEFINING QUESTIONNAIRE API CALLS CONTROLLER
- * ============================================
- * @date created: 10 May 2020
- * @authors: Uvin Abeysinghe, Cary
- *
- * The questionnaire controller is used for defining
- * the functionality of API calls related to questionnaires.
- *
- */
-
+// Import Libraries.
 const { v1: uuidv1 } = require("uuid");
-
 const { extractUserEmail } = require("../utils/jwtUtils");
 const {
     findQuestionnaireById,
@@ -25,10 +13,21 @@ const {
     editCustomisedQuestionnaire,
     deleteQuestionnaireFromDatabase,
     deleteCustomisedQuestionnaireFromDatabase,
-    copyQuestionnaireToDatabase,
+    copyQuestionnaireToDatabase
 } = require("../service/questionnaireService");
-
 const { sendJSONResponse } = require("../utils/apiUtils");
+
+/**
+ * =============================================================================
+ * DEFINING QUESTIONNAIRE API CALLS CONTROLLER
+ * =============================================================================
+ * @date created: 10 May 2020
+ * @authors: Uvin Abeysinghe, Cary
+ *
+ * The questionnaire controller is used for defining
+ * the functionality of API calls related to questionnaires.
+ *
+ */
 
 const sendAuthroisationError = (res) => {
     res.send(

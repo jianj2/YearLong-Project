@@ -1,14 +1,3 @@
-/**
- * ========================================
- * DEFINING SHARE API CALLS CONTROLLER
- * ========================================
- * @date created: 31 May 2020
- * @authors: Uvin, Waqas
- *
- * The share_controller is used for defining the functionality of api calls related to share.
- *
- */
-
 // Import Libraries
 const { extractUserEmail } = require("../utils/jwtUtils");
 const {
@@ -22,6 +11,17 @@ const {
     saveShare,
 } = require("../service/shareService");
 const { sendJSONResponse } = require("../utils/apiUtils");
+
+/**
+ * ========================================
+ * DEFINING SHARE API CALLS CONTROLLER
+ * ========================================
+ * @date created: 31 May 2020
+ * @authors: Uvin, Waqas
+ *
+ * The share_controller is used for defining the functionality of api calls related to share.
+ *
+ */
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to create a new share.

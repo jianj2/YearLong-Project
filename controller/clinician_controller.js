@@ -1,14 +1,14 @@
 /**
- * ========================================
+ * =============================================================================
  * DEFINING CLINICIAN API CALLS CONTROLLER
- * ========================================
+ * =============================================================================
  * @date created: 10 May 2020
  * @authors: Uvin Abeysinghe
  *
  * The clinician_controller is used for defining the functionality of api calls related to clinicians.
  *
  */
-
+// Import Libraries.
 const { sendResultsEmail } = require("../service/emailService");
 const { extractUserEmail } = require("../utils/jwtUtils");
 
