@@ -97,7 +97,7 @@ const getInstructionsSummary = async (req, res) => {
         res.status(400).json(error);
     } else {
         const filteredInstructions = instructions.filter(
-            (instruction) => instruction.type != null
+            (instruction) => instruction.type !== null
         );
         const summary = filteredInstructions.map((instruction) => {
             return {

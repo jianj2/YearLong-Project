@@ -42,7 +42,7 @@ const sendInvitationEmail = (createdShare) => {
         let client = process.env.CLIENT || "http://localhost:3000";
         let link = client + "/parent/" + createdShare.shareId + "";
         let message = "";
-        if (createdShare.message != undefined && createdShare.message != "") {
+        if (createdShare.message !== undefined && createdShare.message !== "") {
             message =
                 "Message from the clinician: " + createdShare.message + "";
         }

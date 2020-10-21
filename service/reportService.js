@@ -180,7 +180,7 @@ const printCustomQuestionnaireResults = function (doc, resultToPrint, startSpaci
 
             });
             // Add a comment
-            if (comments[sectionIndex][scenarioIndex] != null && comments[sectionIndex][scenarioIndex] != "") {
+            if (comments[sectionIndex][scenarioIndex] !== null && comments[sectionIndex][scenarioIndex] !== "") {
                 let comment = comments[sectionIndex][scenarioIndex]
                 spacing = addPage(doc, spacing, docHeight, Math.ceil(doc.heightOfString(comment, {width: paragraphWidth-25}) / 10) * 10 + 10)
                 doc.font('Helvetica-Bold').fontSize(12)
@@ -266,7 +266,7 @@ const printStandardQuestionnaireResults = function (doc, resultToPrint, startSpa
             });
 
             // Add a comment
-            if (comments[sectionIndex][scenarioIndex] != null && comments[sectionIndex][scenarioIndex] != "") {
+            if (comments[sectionIndex][scenarioIndex] !== null && comments[sectionIndex][scenarioIndex] !== "") {
                 let comment = comments[sectionIndex][scenarioIndex]
                 spacing = addPage(doc, spacing, docHeight, Math.ceil(doc.heightOfString(comment, {width: paragraphWidth-25}) / 10) * 10 + 10)
                 doc.font('Helvetica-Bold').fontSize(12)
@@ -346,7 +346,7 @@ const getVisibleSections = (sections, visibilityInfoList) => {
                 return visibilityInfo.title === section.title;
             }
         );
-        if (foundVisibilityInfo != undefined) {
+        if (foundVisibilityInfo !== undefined) {
             return foundVisibilityInfo.isVisible;
         } else {
             return null;
@@ -357,7 +357,7 @@ const getVisibleSections = (sections, visibilityInfoList) => {
 
 // set the updates questionnaire sections.
 const updateSections = (questionnaire, sectionVisibility) => {
-    if (sectionVisibility != undefined) {
+    if (sectionVisibility !== undefined) {
         questionnaire.sections = getVisibleSections(
             questionnaire.sections,
             sectionVisibility
@@ -774,7 +774,7 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                 Share.findOne({shareId}, function (err, share
                 ) {
                     let sharedSections = null;
-                    if (!err && share != null) {
+                    if (!err && share !== null) {
                         sharedSections = share.shareSection
                     }
 

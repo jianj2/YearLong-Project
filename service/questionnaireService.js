@@ -27,7 +27,7 @@ const findQuestionnaireById = async (questionnaireId) => {
     try {
         const questionnaire = await Questionnaire.findOne({ questionnaireId });
         // throw Error("My Error");
-        if (questionnaire != null ){
+        if (questionnaire !== null ){
             return await new Promise((resolve, reject) => {
                 resolve([undefined, questionnaire]);
              });
