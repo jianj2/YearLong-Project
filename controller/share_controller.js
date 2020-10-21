@@ -71,7 +71,7 @@ const completeShare = async (req, res) => {
             req.params.shareId,
             req.body.comments
         );
-        //const err = await deleteShare(req.params.shareId);
+        const err = await deleteShare(req.params.shareId);
         if (!err) {
             res.status(200).json(emailResponse);
         } else {
