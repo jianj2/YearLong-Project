@@ -711,13 +711,8 @@ const generateAttachments = function (questionnaireId, personalDetails, question
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
 
-        // Catherine
-        console.log(personalDetails.filledByTypeOption)
-        console.log(personalDetails.filledBy)
-        console.table(personalDetails)
-        // Catherine
-
         Clinician.findOne({email: clinicianEmail}, function (err, clinician) {
+            console.log(clinicianEmail)
             if (!err) {
                 Questionnaire.findOne({questionnaireId}, function (err, questionnaire) {
                     if (!err) {
@@ -770,7 +765,16 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                             .text(device_r, 50, 170)
                             .text(device_l, 250, 170)
                             .text(personalDetails.completedBy, 450, 130);
-                        //
+
+                        // Catherine
+                        console.log(clinician.name)
+
+                        if (!(questionnaire.isSSQ_Ch)) {
+                            console.log(personalDetails.filledByTypeOption)
+                            console.log(personalDetails.filledBy)
+                        }
+
+                        // Catherine
 
                         // THIS LINE PRINTS THE QUESTIONNAIRE RESULT IN THE DOC FILE
                         Share.findOne({shareId}, function (err, share
@@ -852,11 +856,15 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                         })
                     }
                 });
-            } else reject({
-                error: err,
-            });
+
+            } else {
+                reject({
+                    error: err,
+                });
+            }
         });
-});
+    });
+}
 
 
 module.exports.generateAttachments = generateAttachments;
