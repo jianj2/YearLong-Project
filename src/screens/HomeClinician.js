@@ -139,7 +139,7 @@ const HomeClinician = (props) => {
                     For Chrome:
                 </h4>
                 <p>
-                    Go to Preferences > Websites > Pop-up Windows > Set "Allow" pop-ups for  "https://ssq-client.herokuapp.com/"
+                    Go to Settings > Privacy and security > Site settings > Allow pop-ups for  "https://ssq-client.herokuapp.com/"
                 </p>
                 <p>
                     Please refresh the page after enabling.
