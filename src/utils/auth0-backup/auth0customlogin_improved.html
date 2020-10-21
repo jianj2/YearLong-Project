@@ -232,16 +232,23 @@
         top: 100%;
         left: 0;
         right: 0;
+        border-radius: 25px;
+        background-color: #151641;
+
     }
     .autocomplete-items div {
         padding: 10px;
         cursor: pointer;
         background-color: #151641;
         border-bottom: 1px solid #DB3D94;
+        border-radius: 25px;
+
     }
     .autocomplete-items div:hover {
         /*when hovering an item:*/
-        background-color: #e9e9e9;
+        background-color: #DB3D94;
+        border-radius: 25px;
+
     }
     .autocomplete-active {
         /*when navigating through the items using the arrow keys:*/
@@ -302,7 +309,7 @@
                         <input required id="fname" placeholder="Enter your first name">
 
                         <label for="name">Last Name</label>
-                        <input required id="lname" placeholder="Enter your family name">
+                        <input required id="lname" placeholder="Enter your last name">
 
                         <label for="name">Country</label>
                         <div class="autocomplete">
