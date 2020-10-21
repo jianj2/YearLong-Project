@@ -47,6 +47,20 @@ const SideBar = ({ userType }) => {
         );
     };
 
+    // detrmines whether a tab should be active given current path and tab destination path.
+    const determineActive = (currentPathName, destPathName) => {
+        // When users login, they land on the questionnaires page
+        if (currentPathName === "") {
+            return destPathName.split("/")[1] === "Questionnaires"
+                ? "active"
+                : "";
+        } else {
+            return destPathName.split("/")[1].includes(currentPathName)
+                ? "active"
+                : "";
+        }
+    };
+
     const renderSideBarTab = (classSuffix, destPathName, textLabel) => {
         let currentPathName;
         const currentPathFullName = window.location.pathname.split("/");
@@ -58,11 +72,10 @@ const SideBar = ({ userType }) => {
 
         return (
             <div
-                className={`sidebar-${classSuffix} ${
-                    destPathName.split("/")[1].includes(currentPathName) && currentPathName!==""
-                        ? "active"
-                        : ""
-                }`}
+                className={`sidebar-${classSuffix} ${determineActive(
+                    currentPathName,
+                    destPathName
+                )}`}
                 onClick={() => {
                     if (
                         pathNamesWithWarning.includes(currentPathName) ||
