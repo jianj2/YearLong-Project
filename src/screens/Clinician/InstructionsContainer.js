@@ -27,24 +27,25 @@ const InstructionsContainer = () => {
         content: ""
     });
 
-    const getInstructions = async () => {
-        let [statusCode, res] = await API.getSpecificInstruction("CC");
-        if (statusCode === 200) {
-            setInstructionCC({
-                title: res["title"],
-                content: res["content"]
-            });
-        }
-
-        [statusCode, res] = await API.getSpecificInstruction("CP");
-        if (statusCode === 200) {
-            setInstructionCP({
-                title: res["title"],
-                content: res["content"]
-            });
-        }
-    };
     useEffect(() => {
+        const getInstructions = async () => {
+            let [statusCode, res] = await API.getSpecificInstruction("CC");
+            if (statusCode === 200) {
+                setInstructionCC({
+                    title: res["title"],
+                    content: res["content"]
+                });
+            }
+
+            [statusCode, res] = await API.getSpecificInstruction("CP");
+            if (statusCode === 200) {
+                setInstructionCP({
+                    title: res["title"],
+                    content: res["content"]
+                });
+            }
+        };
+
         getInstructions();
     }, []);
 
@@ -54,7 +55,7 @@ const InstructionsContainer = () => {
 
             <div>
                 <h2>{instructionCC.title}</h2>
-                <p>{instructionCC.content}</p>
+                <p style={{whiteSpace:'pre'}}>{instructionCC.content}</p>
             </div>
 
             <div>
@@ -63,7 +64,7 @@ const InstructionsContainer = () => {
 
             <div>
                 <h2>{instructionCP.title}</h2>
-                <p>{instructionCP.content}</p>
+                <p style={{whiteSpace: 'pre'}}>{instructionCP.content}</p>
             </div>
         </div>
     );

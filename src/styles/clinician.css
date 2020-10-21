@@ -1,68 +1,64 @@
 /**
-  * ====================================================================
-  * CSS FILE TO STYLE the 'HomeClinician' Component 
-  * ====================================================================
+  * ============================================================================
+  * CSS STYLING FILE
+  * ============================================================================
   * @date created: 13th May 2020
   * @authors: Waqas Rehmani
   *
-  * This file contains all the CSS classes related to the HomeClinician
-  * to style the component.
-  *
 */
- 
 
 @media all and (max-width: 800px) {
-  .HomeClinician{
-    height: 100vh;
-    display: flex; 
-    flex-flow: row wrap;
-    flex-direction: row;
-  }
+    .HomeClinician {
+        height: 100vh;
+        display: flex;
+        flex-flow: row wrap;
+        flex-direction: row;
+    }
 
 }
 
-.HomeClinician{
-  height: 95vh;
-  display: flex; 
+.HomeClinician {
+    height: 95vh;
+    display: flex;
 }
 
 
-.questionnaire-container{
-  /*margin-left: 16vw;*/
-  flex: 1;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
+.questionnaire-container {
+    /*margin-left: 16vw;*/
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
 }
 
 .edit-questionnaire {
-  flex: 1;
-  /* width: 100%; */
-  /* height: 100%; */
-  background-color: #151641;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  padding-bottom: 2vh;
+    flex: 1;
+    /* width: 100%; */
+    /* height: 100%; */
+    background-color: #151641;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding-bottom: 2vh;
 }
 
 .edit-questionnaire-description-form {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .edit-description {
-  align-items: center; 
+    align-items: center;
 }
- 
-.edit-description hr{
-  alignSelf:center;
-  width:100%;
-  height:1px;
-  border:none;
-  border-top:1px solid;
-  color:#272850;
+
+.edit-description hr {
+    alignSelf: center;
+    width: 100%;
+    height: 1px;
+    border: none;
+    border-top: 1px solid;
+    color: #272850;
 }
 
 /* .edit-description label{
@@ -74,51 +70,53 @@
   margin-top: 10px;
 } */
 
-.edit-description input, .rangeQuestion input, .multipleChoiceQuestion input{
-width: 65%;
+.edit-description input, .rangeQuestion input, .multipleChoiceQuestion input {
+    width: 65%;
 }
 
 .questionTable-button-group {
-  width: 100%;
-  display: flex;
-  height: 2rem;
+    width: 100%;
+    display: flex;
+    height: 2rem;
 }
 
-.questionTable-button-group button{
-  cursor: pointer;
-  color: #eeeeee !important;
-  /* width:42.5%; */
-  width: 100%;
-  border: none;
-  outline: none;
-  border-bottom: 1px solid rgba(255,255,255,0.2);
-  border-right: 1px solid rgba(255,255,255,0.2);
-  background-color: transparent;
-  font-size: 1.2vh !important;
-  font-weight: 200;
-}
-.questionTable-button-group button:hover{ 
-  background-color: rgba(175,139,192,.24) !important;
+.questionTable-button-group button {
+    cursor: pointer;
+    color: #eeeeee !important;
+    /* width:42.5%; */
+    width: 100%;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: transparent;
+    font-size: 1.2vh !important;
+    font-weight: 200;
 }
 
-#display100{
-  width:100%;
+.questionTable-button-group button:hover {
+    background-color: rgba(175, 139, 192, .24) !important;
 }
 
-#questionTable-remove-button{  
-  border-right: none !important;
-  background-color: rgba(86,24,58,.29) !important;
+#display100 {
+    width: 100%;
 }
 
-#questionTable-remove-button:hover{
-  background-color:rgba(86,24,58,0.8) !important;
+#questionTable-remove-button {
+    border-right: none !important;
+    background-color: rgba(86, 24, 58, .29) !important;
+}
+
+#questionTable-remove-button:hover {
+    background-color: rgba(86, 24, 58, 0.8) !important;
 }
 
 .questionTable-button-selected {
-  background-color: rgba(175,139,192,.4) !important;
+    background-color: rgba(175, 139, 192, .4) !important;
 
 }
-/* 
+
+/*
 .rangeQuestion label,.multipleChoiceQuestion label{
   display:inline-block;
   width:20%;
@@ -127,184 +125,186 @@ width: 65%;
   margin-top:5px;
   font-size: 2vh;
 } */
- 
-.questionTable{
-  align-items:center;
-  border-radius:15px;
-  padding-block:100px;
-  border:1px solid rgba(255,255,255,0.2); 
-  overflow: hidden;
-  margin: 0 1rem 1rem;
+
+.questionTable {
+    align-items: center;
+    border-radius: 15px;
+    padding-block: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+    margin: 0 1rem 1rem;
 }
 
 .questionTable-form {
-  padding: 1rem;
-  display: flex;
-  flex-flow: column;
-}  
-.questionTable-form h3{
-  margin: 0;
-  font-weight: 200;
-  text-align: center;
-} 
+    padding: 1rem;
+    display: flex;
+    flex-flow: column;
+}
+
+.questionTable-form h3 {
+    margin: 0;
+    font-weight: 200;
+    text-align: center;
+}
+
 .questionTable-answer {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.questionTable-answer div{
-  /* width: 1,/ */
-  flex: 1;
-  display: flex;
-  flex-flow: column;
-  align-items: stretch;
-
-} 
- 
-
-.add-answer-button{
-  border-radius: 50%;
-  font-size: 1.8vh;
-  padding: 0.6vh 1.2vh;
-  display: block;
-  margin: 0 auto;
-  cursor: pointer;
-  font-weight: 100;
-  border: 1px solid #DB3D94;
-  background-color: #DB3D94;
-  outline: 0;
-
-  color: #eee;
-  text-decoration: none;
-  transition: all 0.2s;
-}
-
-.delete-answer-button{
-  width: 3vh;
-  height: 3vh;
-  border-radius: 50%;
-  font-size: 1.8vh;
-  /* padding: 0.6vh 1.2vh; */
-  /*margin: 0 auto;*/
-  display: inline-block;
-  margin-left: 10px;
-  cursor: pointer;
-  font-weight: 100;
-  border: 1px solid #DB3D94;
-  background-color: #DB3D94;
-  outline: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #eee;
-  text-decoration: none;
-  transition: all 0.2s;
-}
-
-.bottom-container button{
-  width:20%;
-  margin: 20px auto;
-  cursor: pointer;
-  padding: 0.8vh 2.5vh;
-  font-size: 1.3vh;
-  font-weight: 100;
-  border: 1px solid #DB3D94;
-  background-color: #DB3D94;
-  border-radius: 2vh;
-  outline: 0;
-  color: #eee;
-  text-decoration: none;
-  transition: all 0.2s;
-}
-
-.Add-btn,.edit-btn,.delete-btn{
-  cursor: pointer;
-  padding: 0.8vh 2.5vh;
-  font-size: 1.3vh;
-  font-weight: 100;
-  border: 1px solid #DB3D94;
-  background-color: #DB3D94;
-  border-radius: 2vh;
-  outline: 0;
-  color: #eee;
-  text-decoration: none;
-  transition: all 0.2s;
-}
-
-.edit-questionnaire-header{
-  display: flex;
-  flex-direction: row-reverse;
-  padding-top: 2vh;
-  padding-right: 2vw;
-}
-
-.bottom-container{
-  align-items: center;
-  display: flex;
-}
-
-.add-delete-button-div{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.add-question-button,.add-scenario-button{
-  text-align: center;
-  padding: 2vh 2vh;
-}
-
-.delete-scenario-button button{
-  padding: 0.2rem;
-  border-radius: 5px;
-  margin-right: 2vw;
-  font-size: 1.1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#edit-cancel-button{
-  margin-left: 1vw;
-}
-
-.section-title,.scenario-description{
-  display: flex;
-  justify-content: center;
-  padding: 0 1rem 1rem;
-  flex-flow: column;
-}
-
-.scenarios-container{
-  display: flex;
-  flex-direction: column;
-  align-items: center; 
+.questionTable-answer div {
+    /* width: 1,/ */
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+    align-items: stretch;
 
 }
 
-.sections-container{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 1rem -1rem;  
+
+.add-answer-button {
+    border-radius: 50%;
+    font-size: 1.8vh;
+    padding: 0.6vh 1.2vh;
+    display: block;
+    margin: 0 auto;
+    cursor: pointer;
+    font-weight: 100;
+    border: 1px solid #DB3D94;
+    background-color: #DB3D94;
+    outline: 0;
+
+    color: #eee;
+    text-decoration: none;
+    transition: all 0.2s;
 }
 
-.find-password-form{
-  min-width: 400px;
-  display: flex;
-  flex-flow: column;
+.delete-answer-button {
+    width: 3vh;
+    height: 3vh;
+    border-radius: 50%;
+    font-size: 1.8vh;
+    /* padding: 0.6vh 1.2vh; */
+    /*margin: 0 auto;*/
+    display: inline-block;
+    margin-left: 10px;
+    cursor: pointer;
+    font-weight: 100;
+    border: 1px solid #DB3D94;
+    background-color: #DB3D94;
+    outline: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #eee;
+    text-decoration: none;
+    transition: all 0.2s;
 }
 
-html,body{
-  overflow: auto;
+.bottom-container button {
+    width: 20%;
+    margin: 20px auto;
+    cursor: pointer;
+    padding: 0.8vh 2.5vh;
+    font-size: 1.3vh;
+    font-weight: 100;
+    border: 1px solid #DB3D94;
+    background-color: #DB3D94;
+    border-radius: 2vh;
+    outline: 0;
+    color: #eee;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.Add-btn, .edit-btn, .delete-btn {
+    cursor: pointer;
+    padding: 0.8vh 2.5vh;
+    font-size: 1.3vh;
+    font-weight: 100;
+    border: 1px solid #DB3D94;
+    background-color: #DB3D94;
+    border-radius: 2vh;
+    outline: 0;
+    color: #eee;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.edit-questionnaire-header {
+    display: flex;
+    flex-direction: row-reverse;
+    padding-top: 2vh;
+    padding-right: 2vw;
+}
+
+.bottom-container {
+    align-items: center;
+    display: flex;
+}
+
+.add-delete-button-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.add-question-button, .add-scenario-button {
+    text-align: center;
+    padding: 2vh 2vh;
+}
+
+.delete-scenario-button button {
+    padding: 0.2rem;
+    border-radius: 5px;
+    margin-right: 2vw;
+    font-size: 1.1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#edit-cancel-button {
+    margin-left: 1vw;
+}
+
+.section-title, .scenario-description {
+    display: flex;
+    justify-content: center;
+    padding: 0 1rem 1rem;
+    flex-flow: column;
+}
+
+.scenarios-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.sections-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem -1rem;
+}
+
+.find-password-form {
+    min-width: 400px;
+    display: flex;
+    flex-flow: column;
+}
+
+html, body {
+    overflow: auto;
 }
 
 .popup-blocked {
-  display: flex;
-  flex-flow: column wrap;
-  justify-content: center;
-  height: 90vh;
-  text-align: center;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    height: 90vh;
+    text-align: center;
 }

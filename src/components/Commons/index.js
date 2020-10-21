@@ -1,3 +1,14 @@
+/**
+ * =============================================================================
+ * REACT COMPONENT LIBRARY DEFINITION
+ * =============================================================================
+ * @date created: 10th October 2020
+ * @authors: Waqas Rehmani
+ *
+ * This file defines the Common Component Library for the app.
+ * It manages all the exports for the Common Component Library.
+ *
+ */
 
 import SideBar from "./Sidebar";
 import Loading from "./Loading"

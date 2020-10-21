@@ -15,7 +15,6 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 // Import Utilities.
 import * as API from "../../utils/API";
-import { formatDate } from "../../utils/helper";
 import { useAuth0 } from "../../utils/react-auth0-spa";
 // Import Components.
 import {
@@ -52,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-const ShareQuestionnaire = (props) => {
+const ShareQuestionnaire = () => {
     const classes = useStyles();
     const { user, token } = useAuth0();
 
@@ -91,10 +90,9 @@ const ShareQuestionnaire = (props) => {
         setLoading(true);
         const retrieveCustomisedQuestionnaires = async () => {
 
-            const [statusCode, customisedQuestionnaires] = await API.getClinicianQuestionnaires(token,
+            const [_, customisedQuestionnaires] = await API.getClinicianQuestionnaires(token,
                 user.name
             );
-            const today = formatDate();
             setCustomisedQuestionnaires(customisedQuestionnaires);
             setLoading(false);
         };
@@ -138,7 +136,7 @@ const ShareQuestionnaire = (props) => {
     const sectionSelectionCheck = () => {
 
         let isEmpty = true;
-        Object.entries(shareSection).map((k, v) => {
+        Object.entries(shareSection).forEach((k, v) => {
             if (k[1]) {
                 isEmpty = false;
             }

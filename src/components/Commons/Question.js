@@ -21,13 +21,14 @@ import {
  * will be visible in questionnaires when the questionnaires are fillable.
  *
  *
- * --------------------------------------------------------------------------------------------
- *                                          N O T E
- * --------------------------------------------------------------------------------------------
- *  -   Each question's answer has two values which are "value" and "supplementaryValue".
- *      This can be seen in the state. The idea behind the supplementaryValue is that
- *      the slider question always holds a supplementary MCQ question so in order to tackle
- *      that, I came up with this structure. ~ @waqas
+ * -----------------------------------------------------------------------------
+ *                                  N O T E
+ * -----------------------------------------------------------------------------
+ *  -   Each question's answer has two values which are "value" and
+ *      "supplementaryValue". This can be seen in the state. The idea behind the
+ *      supplementaryValue is that the slider question always holds a
+ *      supplementary MCQ question so in order to tackle that, I came up with
+ *      this structure. ~ @waqas
  *
  */
 
@@ -92,7 +93,7 @@ const createMarks = () => {
     ];
     let i;
     for (i = 0; i <= 10; i += 0.1) {
-        if (i % 1 != 0) {
+        if (i % 1 !== 0) {
             let temp = { value: i, style: { color: "blue" } };
             mymarks.push(temp);
         }
@@ -129,17 +130,17 @@ const Question = ({
 
     useEffect(() => {
         onQuestionChange(sectionIndex, scenarioIndex, questionIndex, answered);
-    }, [answered]);
+    }, [answered, onQuestionChange, sectionIndex, scenarioIndex, questionIndex]);
 
     // if it becomes not applicable, disable the next mcq question.
     useEffect(() => {
-        if (isNotApplicable == true && isMCQ) {
+        if (isNotApplicable === true && isMCQ) {
             setAnswered({ ...answered, value: "" });
             data.value = "";
         }
-    }, [isNotApplicable]);
+    }, [isNotApplicable, isMCQ, data, answered]);
 
-// If it is an MCQ question.
+    // If it is an MCQ question.
     if (isMCQ) {
         return (
             <div

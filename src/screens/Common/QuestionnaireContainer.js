@@ -20,7 +20,10 @@ import { EditQuestionnaire } from "../../components/Commons";
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-const QuestionnaireContainer = (props) => {
+const QuestionnaireContainer = ({
+    questionnaireID,
+    redirectURL
+}) => {
 
     // the questionnaire content
     const [questionnaire, setQuestionnaire] = useState(null);
@@ -29,7 +32,7 @@ const QuestionnaireContainer = (props) => {
     // get the questionnaire content from API
     useEffect(() => {
         const setup = async () => {
-            const [statusCode, data] = await API.getQuestionnaireById(props.questionnaireID);
+            const [statusCode, data] = await API.getQuestionnaireById(questionnaireID);
 
             if (statusCode === 200) {
                 setQuestionnaire(data);
@@ -39,13 +42,7 @@ const QuestionnaireContainer = (props) => {
         };
         setup();
 
-    }, [props.questionnaireID]);
-
-    // these function can be combine together later
-
-    //add section to questionnaire
-
-    //remove section to questionnaire
+    }, [questionnaireID]);
 
     //add scenario to questionnaire
     const addScenario = (sectionIndex) => {
@@ -246,7 +243,7 @@ const QuestionnaireContainer = (props) => {
                         handleSceDesChange={handleSceDesChange}
                         handleQuestionDesChange={handleQuestionDesChange}
                         handleQuestionOptsChange={handleQuestionOptsChange}
-                        redirectURL={props.redirectURL}/>
+                        redirectURL={redirectURL}/>
                 </form>
             </div>
         </div>

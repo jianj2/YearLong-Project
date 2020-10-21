@@ -1,15 +1,22 @@
-
+/**
+  * ============================================================================
+  * CSS STYLING FILE
+  * ============================================================================
+  * @date created: 13th May 2020
+  * @authors: Guang Yang, Jin Chen
+  *
+*/
 
 .dothetest-container {
     /* flexbox */
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;    flex-direction: column;
+    -webkit-flex: 1;
+    -webkit-box-flex: 1;
+    -moz-flex: 1;
+    -moz-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    flex-direction: column;
     height: 95vh;
-    
 }
 
 .dothetest-submit {
@@ -21,7 +28,7 @@
     overflow: auto;
 }
 
-.dothetest-submit h1{
+.dothetest-submit h1 {
     font-weight: 200;
 }
 
@@ -34,19 +41,21 @@
     top: 0; */
 }
 
-.dothetest-bottom-container{
+.dothetest-bottom-container {
     padding: 1rem 0;
     display: flex;
     justify-content: flex-end;
     align-items: center;
 }
-.dothetest-bottom-container button{
+
+.dothetest-bottom-container button {
     margin: 0 0 0 1rem;
 }
-.dothetest-subheader-container button{
+
+.dothetest-subheader-container button {
     margin: 0 0 0 1rem;
 }
 
 .dothetest-scrollable-container {
-    
+
 }

@@ -1,7 +1,6 @@
 // Import Libraries.
 import React, { useState, useEffect } from "react";
-import TextField from "@material-ui/core/TextField";
-import { Modal, Backdrop, Fade } from "@material-ui/core";
+import { Modal, Backdrop, Fade, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 // Import Utilities.
 import * as API from "../../utils/API";
@@ -156,14 +155,11 @@ const SSQInstructionsContainer = ({ instructionType }) => {
                     });
                 }}
                 variant="filled"
-                multiline="true"
                 multiline={true}
                 rows={20}
                 rowsMax={20}
             />
-
         </div>
-
     );
 };
 

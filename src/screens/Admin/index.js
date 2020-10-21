@@ -1,3 +1,15 @@
+/**
+ * =============================================================================
+ * REACT COMPONENT LIBRARY DEFINITION
+ * =============================================================================
+ * @date created: 10th October 2020
+ * @authors: Waqas Rehmani
+ *
+ * This file defines the Admin Screen Library for the app.
+ * It manages all the exports for the Admin Screen Library.
+ *
+ */
+
 import AdminViewStandardQuestionnaire from "./AdminViewStandardQuestionnaire";
 import InstructionContainer from "./SSQInstructionContainer";
 import OrganisationContainer from "./OrganisationContainer";

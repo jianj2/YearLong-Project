@@ -1,6 +1,5 @@
 // Import Libraries.
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 // Import Utilities.
 import * as API from "../../utils/API";
 import {
@@ -27,26 +26,10 @@ import {
  *
  */
 
-// Styling
-const useStyles = makeStyles((theme) => ({
-    modal: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-    },
-    paper: {
-        backgroundColor: theme.palette.background.paper,
-        border: "2px solid #000",
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3)
-    }
-}));
-
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
 const AdminManageQuestionnaires = () => {
-    const classes = useStyles();
     const [loading, setLoading] = useState(false);
     const [
         standardisedQuestionnaires,
@@ -103,7 +86,7 @@ const AdminManageQuestionnaires = () => {
 
     // function for adding new standardised questionnaire
     const addNew = async () => {
-        const [_, uuid] = await addStandardQuestionnaire();
+        await addStandardQuestionnaire();
         window.location.reload(false);
     }
 
@@ -119,7 +102,7 @@ const AdminManageQuestionnaires = () => {
             (q) => q.questionnaireId !== questionnaireId
         );
         setStandardisedQuestionnaires(filteredQuestionnaires);
-        const [_, message] = await deleteStandardQuestionnaire(questionnaireId);
+        await deleteStandardQuestionnaire(questionnaireId);
         closeDeleteConfirmation();
     };
 

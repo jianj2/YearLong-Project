@@ -106,22 +106,22 @@ const HomeParents = ({ match }) => {
         return filteredSections;
     };
 
-    // set the updates questionnaire sections.
-    const updateSections = (questionnaire, sectionVisibility) => {
-        if (sectionVisibility !== undefined) {
-            questionnaire.sections = getVisibleSections(
-                questionnaire.sections,
-                sectionVisibility
-            );
-        }
-    };
-
     //////////////////////////////////////////////////////////////
 
     // This is called when the component first mounts.
     useEffect(() => {
+        setLoading(true);
+        // set the updates questionnaire sections.
+        const updateSections = (questionnaire, sectionVisibility) => {
+            if (sectionVisibility !== undefined) {
+                questionnaire.sections = getVisibleSections(
+                    questionnaire.sections,
+                    sectionVisibility
+                );
+            }
+        };
+
         // Server call to get the questionnaireId
-        setLoading(true)
         const getDetails = async () => {
             const [statusCode, shareResponse] = await API.getShareDetails(match.params.shareId);
             if (statusCode === 200) {
@@ -180,8 +180,8 @@ const HomeParents = ({ match }) => {
 
         };
         getDetails();
-        setLoading(false)
-    }, []);
+        setLoading(false);
+    }, [match]);
 
     // Method called to update questionnaire data when a question is updated.
     const handleQuestionnaireChange = (
@@ -280,7 +280,7 @@ const HomeParents = ({ match }) => {
                     ) : (
                         <div>
                             <h2>{instruction.title}</h2>
-                            <p>{instruction.content}</p>
+                            <p style={{whiteSpace:'pre'}}>{instruction.content}</p>
                         </div>
                     )}
                 </div>
@@ -389,7 +389,7 @@ const HomeParents = ({ match }) => {
     return (
         <div className="landing">
             <div className="landing-logo">
-                <img src={logoComplete}/>
+                <img src={logoComplete} alt="SSQ Logo"/>
             </div>
 
             <div className="form-completed">
