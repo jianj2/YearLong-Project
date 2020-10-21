@@ -747,7 +747,7 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                         // purple overlay for patient information
                         doc.fillOpacity(0.1).rect(30, 90, 550, 110).fill('purple');
                         doc.fillOpacity(1).fill('black');
-                        console.log("uvin", clinician);
+
                         // prints out patient information headings
                         doc.font('Helvetica-Bold').fontSize(12)
                             .text('Name', 50, 110)
@@ -766,8 +766,9 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                             .text(device_l, 250, 170)
                             .text(personalDetails.completedBy, 450, 130);
 
-                        // Catherine
-                        console.log(clinician.name)
+                        // Catherine   // check if undefined, some early user dont have names.
+                        console.log(clinician.firstName)
+                        console.log(clinician.lastName)
 
                         if (!(questionnaire.isSSQ_Ch)) {
                             console.log(personalDetails.filledByTypeOption)
