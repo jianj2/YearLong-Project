@@ -81,17 +81,13 @@ const FormParentDetails = ({
             completedBy = isSSQ_Ch ? "Child" : "Parent";
         }
         if (rightDeviceTypeOtherVisible) {
-            rightDeviceSubmit = rightDeviceTypeOther;
             setRightDeviceSubmit(rightDeviceTypeOther);
         } else {
-            rightDeviceSubmit = rightDeviceType;
             setRightDeviceSubmit(rightDeviceType);
         }
         if (leftDeviceTypeOtherVisible) {
-            leftDeviceSubmit = leftDeviceTypeOther;
             setLeftDeviceSubmit(leftDeviceTypeOther);
         } else {
-            leftDeviceSubmit = leftDeviceType;
             setLeftDeviceSubmit(leftDeviceType);
         }
 
