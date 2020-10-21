@@ -1,14 +1,16 @@
-// Import Libraries
+////////////////////////////////////////////////////////////////////////////////
+////                             Import Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
 const { extractUserEmail } = require("../utils/jwtUtils");
 const {
     sendInvitationEmail,
-    sendResultsEmail,
+    sendResultsEmail
 } = require("../service/emailService");
 const {
     deleteShare,
     findShareById,
     createShare,
-    saveShare,
+    saveShare
 } = require("../service/shareService");
 const { sendJSONResponse } = require("../utils/apiUtils");
 
@@ -83,8 +85,13 @@ const completeShare = async (req, res) => {
     }
 };
 
-module.exports.sendResultsEmail = sendResultsEmail;
-module.exports.deleteShare = deleteShare;
-module.exports.completeShare = completeShare;
-module.exports.getShareDetails = getShareDetails;
-module.exports.shareQuestionnaire = shareQuestionnaire;
+////////////////////////////////////////////////////////////////////////////////
+////                             Export Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
+module.exports = {
+    sendResultsEmail,
+    deleteShare,
+    completeShare,
+    getShareDetails,
+    shareQuestionnaire
+};

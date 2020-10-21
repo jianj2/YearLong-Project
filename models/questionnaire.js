@@ -1,3 +1,8 @@
+////////////////////////////////////////////////////////////////////////////////
+////                             Import Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
+const mongoose = require('mongoose');
+
 /**
  * =============================================================================
  * SCHEMA OF QUESTIONNAIRE (WITH MONGOOSE)
@@ -7,9 +12,6 @@
  *
  * The models/questionnaire.js is used for establishing the 'questionnaire' schema and types using mongoose.
  */
-
-
-const mongoose = require('mongoose');
 
 const questionSchema = mongoose.Schema({
     description: String,
@@ -28,7 +30,6 @@ questionSchema.set('toJSON', {
 const scenarioSchema = mongoose.Schema({
     description: {type: String, required:true} ,
     questions: [questionSchema]
-
 })
 
 scenarioSchema.set('toJSON', {
@@ -69,4 +70,7 @@ questionnaireSchema.set('toJSON', {
     }
 })
 
+////////////////////////////////////////////////////////////////////////////////
+////                             Export Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
 module.exports = mongoose.model('questionnaire', questionnaireSchema);

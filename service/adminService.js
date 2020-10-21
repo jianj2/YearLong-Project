@@ -1,7 +1,17 @@
+////////////////////////////////////////////////////////////////////////////////
+////                             Import Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const mongoose = require("mongoose");
+const Instruction = mongoose.model("instruction");
+const Clinician = mongoose.model("clinician");
+const Admin = mongoose.model("admin");
+
 /**
- * ============================================
+ * =============================================================================
  * DEFINING ADMIN SERVICE
- * ============================================
+ * =============================================================================
  * @date created: 5 Oct 2020
  * @authors: Cary
  *
@@ -10,13 +20,7 @@
  * clinician information and any other data that
  * can be viewed or managed by admins.
  */
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
 
-const mongoose = require("mongoose");
-const Instruction = mongoose.model("instruction");
-const Clinician = mongoose.model("clinician");
-const Admin = mongoose.model("admin");
 
 const compareAsync = (param1, param2) => {
     return new Promise((resolve, reject) => {
@@ -30,11 +34,14 @@ const compareAsync = (param1, param2) => {
     });
 };
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// Authenticate Admin
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const authenticateAdmin = async (username, password) => {
     try {
         // find admin with that username.
         const admin = await Admin.findOne({
-            username: username,
+            username: username
         });
 
         if (!admin) {
@@ -45,15 +52,15 @@ const authenticateAdmin = async (username, password) => {
 
         if (isMatch) {
             const token = jwt.sign({ username: username }, "secretLOL", {
-                expiresIn: 86400, // expires in 24 hours
+                expiresIn: 86400 // expires in 24 hours
                 //expiresIn: 100, // expires in 100 seconds FOR TESTING
             });
             return Promise.resolve([
                 undefined,
                 {
                     auth: true,
-                    token: token,
-                },
+                    token: token
+                }
             ]);
         } else {
             throw Error("Incorrect details!");
@@ -63,35 +70,41 @@ const authenticateAdmin = async (username, password) => {
     }
 };
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// Verify Token
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const verifyToken = (token, secret) => {
     return new Promise((resolve, reject) => {
         jwt.verify(token, secret, (err, decoded) => {
             if (!err) {
                 resolve({
                     auth: true,
-                    decoded: decoded.username,
+                    decoded: decoded.username
                 });
             } else {
                 resolve({
                     auth: false,
-                    decoded: "",
+                    decoded: ""
                 });
             }
         });
     });
 };
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// Get Country list from database
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const getCountryListFromDatabase = async () => {
     try {
         const clinicians = await Clinician.find({});
         const filteredClinicians = clinicians.filter(
             (clinician) =>
-                clinician.country != null && clinician.country.trim() != ""
+                clinician.country !== null && clinician.country.trim() !== ""
         );
         const summary = filteredClinicians.map((clinician) => {
             return {
                 country: clinician.country.toUpperCase(),
-                clinicianId: clinician.clinicianId,
+                clinicianId: clinician.clinicianId
             };
         });
         return Promise.resolve([undefined, summary]);
@@ -100,18 +113,21 @@ const getCountryListFromDatabase = async () => {
     }
 };
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// Get Country list from database
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const getOrganisationListFromDatabase = async (req) => {
     try {
         const clinicians = await Clinician.find({});
         const filteredClinicians = clinicians.filter(
             (clinician) =>
-                clinician.country != null &&
-                clinician.country.toUpperCase() == req.params.countryName
+                clinician.country !== null &&
+                clinician.country.toUpperCase() === req.params.countryName
         );
         const summary = filteredClinicians.map((clinician) => {
             return {
                 organisation: clinician.organisation.toLowerCase(),
-                clinicianId: clinician.clinicianId,
+                clinicianId: clinician.clinicianId
             };
         });
         return Promise.resolve([undefined, summary]);
@@ -120,19 +136,22 @@ const getOrganisationListFromDatabase = async (req) => {
     }
 };
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// Get Country list from database
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const getOrganisationCliniciansFromDatabase = async (req) => {
     try {
         const clinicians = await Clinician.find({});
         const filteredClinicians = clinicians.filter(
             (clinician) =>
-                clinician.organisation != null &&
-                clinician.organisation.toLowerCase() ==
-                    req.params.organisationName
+                clinician.organisation !== null &&
+                clinician.organisation.toLowerCase() ===
+                req.params.organisationName
         );
         const summary = filteredClinicians.map((clinician) => {
             return {
                 organisation: clinician.organisation,
-                clinicianId: clinician.clinicianId,
+                clinicianId: clinician.clinicianId
             };
         });
         return Promise.resolve([undefined, summary]);
@@ -141,11 +160,14 @@ const getOrganisationCliniciansFromDatabase = async (req) => {
     }
 };
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// Create Admin in Database
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const createAdminInDatabase = async () => {
     var newAdmin = new Admin({
         username: "",
         email: "",
-        password: "",
+        password: ""
     });
     //hashing the password and then saving the user.
     bcrypt.genSalt(10, (err, salt) => {
@@ -165,8 +187,9 @@ const createAdminInDatabase = async () => {
     });
 };
 
-// Instructions
-
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// Instructions functions
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const findInstructionByType = async (type) => {
     try {
         const foundInstruction = await Instruction.findOne({ type: type });
@@ -175,7 +198,6 @@ const findInstructionByType = async (type) => {
         return Promise.resolve([error, undefined]);
     }
 };
-
 const findAllInstructions = async () => {
     try {
         const foundInstructions = await Instruction.find({});
@@ -184,7 +206,6 @@ const findAllInstructions = async () => {
         return Promise.resolve([error, undefined]);
     }
 };
-
 const updateInstructionInDatabase = async (instruction) => {
     try {
         await Instruction.replaceOne({ type: instruction.type }, instruction);
@@ -194,12 +215,17 @@ const updateInstructionInDatabase = async (instruction) => {
     }
 };
 
-module.exports.authenticateAdmin = authenticateAdmin;
-module.exports.findInstructionByType = findInstructionByType;
-module.exports.findAllInstructions = findAllInstructions;
-module.exports.updateInstructionInDatabase = updateInstructionInDatabase;
-module.exports.verifyToken = verifyToken;
-module.exports.getCountryListFromDatabase = getCountryListFromDatabase;
-module.exports.getOrganisationListFromDatabase = getOrganisationListFromDatabase;
-module.exports.getOrganisationCliniciansFromDatabase = getOrganisationCliniciansFromDatabase;
-module.exports.createAdminInDatabase = createAdminInDatabase;
+////////////////////////////////////////////////////////////////////////////////
+////                             Export Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
+module.exports = {
+    authenticateAdmin,
+    findInstructionByType,
+    findAllInstructions,
+    updateInstructionInDatabase,
+    verifyToken,
+    getCountryListFromDatabase,
+    getOrganisationListFromDatabase,
+    getOrganisationCliniciansFromDatabase,
+    createAdminInDatabase
+};

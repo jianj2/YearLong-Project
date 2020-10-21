@@ -1,4 +1,6 @@
-// Import Libraries.
+////////////////////////////////////////////////////////////////////////////////
+////                             Import Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
 const { sendJSONResponse } = require("../utils/apiUtils");
 const {
     findInstructionByType,
@@ -95,7 +97,7 @@ const getInstructionsSummary = async (req, res) => {
         res.status(400).json(error);
     } else {
         const filteredInstructions = instructions.filter(
-            (instruction) => instruction.type != null
+            (instruction) => instruction.type !== null
         );
         const summary = filteredInstructions.map((instruction) => {
             return {
@@ -147,12 +149,18 @@ const getOrganisationClinicians = async (req, res) => {
 //    createAdminInDatabase();
 // }
 
-module.exports.loginAdmin = loginAdmin;
-module.exports.verifyLogin = verifyLogin;
-module.exports.getSpecificInstruction = getSpecificInstruction;
-module.exports.getInstructionsSummary = getInstructionsSummary;
-module.exports.updateInstructionByType = updateInstructionByType;
-module.exports.getCountryList = getCountryList;
-module.exports.getOrganisations = getOrganisations;
-module.exports.getOrganisationClinicians = getOrganisationClinicians;
-module.exports.authorize = authorize;
+////////////////////////////////////////////////////////////////////////////////
+////                             Export Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
+module.exports = {
+    loginAdmin,
+    verifyLogin,
+    getSpecificInstruction,
+    getInstructionsSummary,
+    updateInstructionByType,
+    getCountryList,
+    getOrganisations,
+    getOrganisationClinicians,
+    authorize
+};
+

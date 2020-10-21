@@ -1,3 +1,9 @@
+////////////////////////////////////////////////////////////////////////////////
+////                             Import Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
+const { sendResultsEmail } = require("../service/emailService");
+const { extractUserEmail } = require("../utils/jwtUtils");
+
 /**
  * =============================================================================
  * DEFINING CLINICIAN API CALLS CONTROLLER
@@ -8,11 +14,10 @@
  * The clinician_controller is used for defining the functionality of api calls related to clinicians.
  *
  */
-// Import Libraries.
-const { sendResultsEmail } = require("../service/emailService");
-const { extractUserEmail } = require("../utils/jwtUtils");
 
-// Clinician completes the questionnaire
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is called when clinician completes the questionnaire.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const completeQuestionnaire = (req, res) => {
     const questionnaireData = req.body.questionnaireData;
     const clinicianEmail = req.body.clinicianEmail;
@@ -39,4 +44,9 @@ const completeQuestionnaire = (req, res) => {
     }
 };
 
-module.exports.completeQuestionnaire = completeQuestionnaire;
+////////////////////////////////////////////////////////////////////////////////
+////                             Export Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
+module.exports = {
+    completeQuestionnaire
+};

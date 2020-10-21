@@ -1,7 +1,14 @@
+////////////////////////////////////////////////////////////////////////////////
+////                             Import Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
+const mongoose = require("mongoose");
+const Share = mongoose.model("share");
+const { v1: uuidv1 } = require("uuid");
+
 /**
- * ============================================
+ * =============================================================================
  * DEFINING QUESTIONNAIRE SERVICE
- * ============================================
+ * =============================================================================
  * @date created: 5 Oct 2020
  * @authors: Cary Jin
  *
@@ -10,10 +17,9 @@
  *
  */
 
-const mongoose = require("mongoose");
-const Share = mongoose.model("share");
-const { v1: uuidv1 } = require("uuid");
-
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to delete a share
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const deleteShare = async (shareId) => {
     try {
         await Share.deleteOne({ shareId: shareId });
@@ -22,6 +28,10 @@ const deleteShare = async (shareId) => {
         return error;
     }
 };
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to find a share by id.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
 const findShareById = async (shareId) => {
     try {
@@ -32,6 +42,9 @@ const findShareById = async (shareId) => {
     }
 };
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to create a share
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const createShare =  (packet) => {
     let visibleSection = [];
     Object.entries(packet.shareSection).map((k, v) => {
@@ -52,6 +65,9 @@ const createShare =  (packet) => {
     return newShare;
 }
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to save a share
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const saveShare = async (share) => {
     try {
         await share.save();
@@ -61,7 +77,12 @@ const saveShare = async (share) => {
     }
 }
 
-module.exports.createShare = createShare;
-module.exports.deleteShare = deleteShare;
-module.exports.saveShare = saveShare;
-module.exports.findShareById = findShareById;
+////////////////////////////////////////////////////////////////////////////////
+////                             Export Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
+module.exports = {
+    createShare,
+    deleteShare,
+    saveShare,
+    findShareById,
+}

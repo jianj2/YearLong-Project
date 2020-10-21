@@ -1,3 +1,8 @@
+////////////////////////////////////////////////////////////////////////////////
+////                             Import Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
+const mongoose = require('mongoose');
+
 /**
  * =============================================================================
  * SCHEMA OF ADMIN (WITH MONGOOSE)
@@ -8,12 +13,13 @@
  * The models/admin.js is used for keeping track fo admin users.
  */
 
-const mongoose = require('mongoose');
-
 const adminSchema = mongoose.Schema({
     username: { type: String, required:true, trim:true},
     email: {type: String, required:true, unique:true },
     password : {type: String, required:true, unique:true },
 });
 
+////////////////////////////////////////////////////////////////////////////////
+////                             Export Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
 module.exports = mongoose.model('admin', adminSchema);

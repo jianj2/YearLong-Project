@@ -20,7 +20,7 @@ const production = process.env.NODE_ENV;
 // Access Token must exist and be verified against
 // the Auth0 JSON Web Key Set
 const checkJwt =
-    production == "production"
+    production === "production"
         ? expressJWT({
               // Dynamically provide a signing key
               // based on the kid in the header and
