@@ -86,7 +86,7 @@ const FormParentDetails = ({
             setRightDeviceTypeOtherVisible(false);
         }
 
-    }, [rightDeviceType]);
+    }, [rightDeviceType, deviceTypeOption]);
 
     useEffect(() => {
 
@@ -96,7 +96,7 @@ const FormParentDetails = ({
             setLeftDeviceTypeOtherVisible(false);
         }
 
-    }, [leftDeviceType]);
+    }, [leftDeviceType, deviceTypeOption]);
 
 
     useEffect(() => {
