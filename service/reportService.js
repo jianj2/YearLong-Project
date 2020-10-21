@@ -865,7 +865,6 @@ x
                             // -------  TO DO  --------
                             // MAKE THIS BETTER
                             // const sortedResults = sortByImportance(resultToPrint)
-                            let sortedResults = []
                             if (sortBy === HELPER_SORT.PERFORMANCE) {
                                 sortedResults = sortByPerformance(resultToPrint)
                             } else {
