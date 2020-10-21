@@ -32,18 +32,25 @@ const useStyles = makeStyles((theme) => ({
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-const CustomModal = (props) => {
+const CustomModal = ({
+    message,
+    onClickCancel,
+    onClickConfirm,
+    setIsModalVisible,
+    isModalVisible
+}) => {
     const classes = useStyles();
     const [isVisible, setIsVisible] = useState(false);
+
     useEffect(() => {
-        setIsVisible(props.isModalVisible);
-    }, [props]);
+        setIsVisible(isModalVisible);
+    }, [isModalVisible]);
 
     return (
         <Modal
             open={isVisible}
             onClose={() => {
-                props.setIsModalVisible(false);
+                setIsModalVisible(false);
             }}
             closeAfterTransition
             className={classes.modal}
@@ -54,14 +61,14 @@ const CustomModal = (props) => {
         >
             <Fade in={isVisible}>
                 <div className="share-modal-container">
-                    <h3 className="center-text">{props.message}</h3>
+                    <h3 className="center-text">{message}</h3>
                     <div className="buttons-container">
                         <button
                             className="button"
                             id="margin-button"
                             onClick={() => {
-                                props.onClickConfirm();
-                                props.setIsModalVisible(false);
+                                onClickConfirm();
+                                setIsModalVisible(false);
                             }}
                         >
                             CONFIRM
@@ -70,8 +77,8 @@ const CustomModal = (props) => {
                             className="button"
                             id="margin-button"
                             onClick={() => {
-                                props.onClickCancel();
-                                props.setIsModalVisible(false);
+                                onClickCancel();
+                                setIsModalVisible(false);
                             }}
                         >
                             CANCEL

@@ -20,7 +20,7 @@ import { getCountries } from "../../utils/API";
 const CountryList = () => {
     const [countryList, setCountryList] = useState([]);
 
-    const getCountryList = async () => { //To handle the data from the API
+    const getCountryList = async () => {
         const [statusCode, allCountries] = await getCountries();
 
         if (statusCode === 200) {

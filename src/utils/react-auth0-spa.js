@@ -94,7 +94,6 @@ export const Auth0Provider = ({
                 setToken,
                 loginWithPopup,
                 handleRedirectCallback,
-                getIdTokenClaims: (...p) => auth0Client.getIdTokenClaims(...p),
                 loginWithRedirect: (...p) =>
                     auth0Client.loginWithRedirect(...p),
                 getTokenSilently: (...p) => auth0Client.getTokenSilently(...p),

@@ -52,13 +52,9 @@ const DoTheTestContainer = () => {
 
     const [commentData, setCommentData] = useState([]);
 
-    const [selectedQuestionnaire, setSelectedQuestionnaire] = useState({
-        questionnaireId: "",
-        title: "",
-        description: "",
-        sections: [],
-        isStandard: false
-    });
+    const [selectedQuestionnaire, setSelectedQuestionnaire] = useState(null);
+
+    console.log("SELECTED QUESTIONnAIRE:", selectedQuestionnaire);
 
     // This is called whenever "user" changes
     useEffect(() => {
@@ -100,14 +96,14 @@ const DoTheTestContainer = () => {
     };
 
     // Method called to go to the instructions page in the wizard.
-    const submitDetails = (data) => {
+    const submitDetails = () => {
         // to make sure field is not empty.
         getPersonalDetails["completedBy"] = "clinician";
         setPersonalDetails(getPersonalDetails);
         nextStep();
     };
     // Method called when we submit the questionnaire.
-    const submitQuestionnaire = (data) => {
+    const submitQuestionnaire = () => {
         nextStep();
     };
 
@@ -248,6 +244,7 @@ const DoTheTestContainer = () => {
                 {loading ? <Loading /> : null}
 
                 <ParentReviewSubmission
+                    isStandard={selectedQuestionnaire.isStandard}
                     questionnaire={selectedQuestionnaire}
                     personalDetails={personalDetails}
                     questionnaireData={questionnaireData}

@@ -41,12 +41,19 @@ import {
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-const ContentPanel = (props) => {
+const ContentPanel = ({
+    userType,
+    active,
+    questionnaireID,
+    instructionType,
+    organName,
+    countryName,
+}) => {
     // ========================================================================
     // Content Panel definition for Clinician
     // ========================================================================
-    if (props.userType === USER_TYPE_CLINICIAN) {
-        switch (props.active) {
+    if (userType === USER_TYPE_CLINICIAN) {
+        switch (active) {
             case 2:
                 return (<DoTheTestContainer/>);
             case 3:
@@ -54,28 +61,27 @@ const ContentPanel = (props) => {
             case 4:
                 return (
                     <QuestionnaireContainer
-                        questionnaireID={props.questionnaireID}
+                        questionnaireID={questionnaireID}
                         redirectURL="/clinician"
                     />
                 );
             case 5:
                 return (
                     <ViewQuestionnaireContainer
-                        questionnaireID={props.questionnaireID}
+                        questionnaireID={questionnaireID}
                     />
                 );
             case 6:
                 return (<ShareContainer/>);
             default:
                 return (<ManageQuestionnaires/>);
-
         }
 
     // ========================================================================
     // Content Panel definition for admin
     // ========================================================================
-    } else if (props.userType === USER_TYPE_ADMIN) {
-        switch (props.active) {
+    } else if (userType === USER_TYPE_ADMIN) {
+        switch (active) {
             case 2:
                 return (<SSQInstructionsList/>);
             case 3:
@@ -83,27 +89,27 @@ const ContentPanel = (props) => {
             case 4:
                 return (
                     <QuestionnaireContainer
-                        questionnaireID={props.questionnaireID}
+                        questionnaireID={questionnaireID}
                         redirectURL="/admin/Questionnaires"
                     />
                 );
             case 5:
                 return (
                     <AdminViewStandardQuestionnaire
-                        questionnaireID={props.questionnaireID}
+                        questionnaireID={questionnaireID}
                     />
                 );
             case 6:
                 return (
                     <InstructionContainer
-                        instructionType={props.instructionType}
+                        instructionType={instructionType}
                     />
                 );
             case 7:
-                return (<OrganisationList countryName={props.countryName}/>);
+                return (<OrganisationList countryName={countryName}/>);
 
             case 8:
-                return (<OrganisationContainer organName={props.organName}/>);
+                return (<OrganisationContainer organName={organName}/>);
             default:
                 return (<AdminManageQuestionnaires/>);
 

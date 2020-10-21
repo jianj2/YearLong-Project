@@ -41,14 +41,12 @@ const FormParentDetails = ({
     const [name, setName] = useState(defaultValue.name);
     const [rightDeviceType, setRightDeviceType] = useState(defaultValue.rightDeviceType);
     const [leftDeviceType, setLeftDeviceType] = useState(defaultValue.leftDeviceType);
-    // const [completedBy, setCompletedBy] = useState(defaultValue.completedBy);
-
-    let [rightDeviceTypeOtherVisible, setRightDeviceTypeOtherVisible] = useState(null);
-    let [leftDeviceTypeOtherVisible, setLeftDeviceTypeOtherVisible] = useState(null);
+    const [rightDeviceTypeOtherVisible, setRightDeviceTypeOtherVisible] = useState(null);
+    const [leftDeviceTypeOtherVisible, setLeftDeviceTypeOtherVisible] = useState(null);
     const [rightDeviceTypeOther, setRightDeviceTypeOther] = useState(defaultValue.rightDeviceType);
     const [leftDeviceTypeOther, setLeftDeviceTypeOther] = useState(defaultValue.leftDeviceType);
-    let [rightDeviceSubmit, setRightDeviceSubmit] = useState(null);
-    let [leftDeviceSubmit, setLeftDeviceSubmit] = useState(null);
+    const [rightDeviceSubmit, setRightDeviceSubmit] = useState(null);
+    const [leftDeviceSubmit, setLeftDeviceSubmit] = useState(null);
 
     let personalData = {};
 
@@ -59,7 +57,6 @@ const FormParentDetails = ({
         if (rightDeviceType === "Other" || (deviceTypeOption.indexOf(rightDeviceType) === -1)) {
             setRightDeviceTypeOtherVisible(true);
         } else {
-            rightDeviceTypeOtherVisible = false;
             setRightDeviceTypeOtherVisible(false);
         }
 
@@ -115,8 +112,6 @@ const FormParentDetails = ({
         submitDetails(personalData);
     };
 
-    const maxDate = new Date(new Date().getTime());
-
     const handleDateChange = (event) => {
         if (Date.parse("1900-01-01") > Date.parse(event.target.value) || moment().format("YYYY-MM-DD") < Date.parse(event.target.value)) {
             setDate("");
@@ -133,7 +128,6 @@ const FormParentDetails = ({
                         <Input
                             value={name}
                             onChange={(event) => setName(event.target.value)}
-                            // defaultValue={defaultValue.name}
                             name="name"
                             placeholder="Write the child's name"
                             error={errors.name !== undefined}
@@ -150,10 +144,8 @@ const FormParentDetails = ({
                         <Select id="DeviceOne"
                                 value={deviceTypeOption.indexOf(rightDeviceType) === -1 ? "Other" : rightDeviceType}
                                 onChange={(event) => setRightDeviceType(event.target.value)}
-                            // defaultValue={defaultValue.rightDeviceType}
                                 name="rightDeviceType"
                                 error={errors.rightDeviceType !== undefined}
-                            // required
                                 native
                                 inputRef={register({
                                     required: "You have not specified the device type."
@@ -174,7 +166,6 @@ const FormParentDetails = ({
                             <InputLabel>What sort of device
                                 (right)?</InputLabel>
                             <Input
-                                // defaultValue={defaultValue.date}
                                 value={rightDeviceTypeOther}
                                 onChange={(event) => setRightDeviceTypeOther(event.target.value)}
                                 name="rightDeviceTypeOther"
@@ -198,7 +189,6 @@ const FormParentDetails = ({
                     <FormControl margin="dense">
                         <InputLabel>Child's Date of Birth</InputLabel>
                         <Input
-                            // defaultValue={defaultValue.date}
                             value={date}
                             onChange={(event) => setDate(event.target.value)}
                             name="date"
@@ -214,19 +204,18 @@ const FormParentDetails = ({
                                 required: "You have not entered the date of birth."
                             })}
                         />
-                        <FormHelperText>{errors.date ? errors.date.message : "Please enter the child's date of birth."}</FormHelperText>
+                        <FormHelperText>{errors.date ? errors.date.message : "Please enter the child's name."}</FormHelperText>
                     </FormControl>
 
 
                     <FormControl margin="dense">
                         <InputLabel>Left Device Type</InputLabel>
                         <Select
-                            // defaultValue={defaultValue.leftDeviceType}
                             value={deviceTypeOption.indexOf(leftDeviceType) === -1 ? "Other" : leftDeviceType}
                             onChange={(event) => setLeftDeviceType(event.target.value)}
                             name="leftDeviceType"
                             error={errors.leftDeviceType !== undefined}
-                            // required
+
                             native
                             inputRef={register({
                                 required: "You have not specified the device type."
@@ -247,7 +236,6 @@ const FormParentDetails = ({
                         <FormControl margin="dense">
                             <InputLabel>What sort of device (left)?</InputLabel>
                             <Input
-                                // defaultValue={defaultValue.date}
                                 value={leftDeviceTypeOther}
                                 onChange={(event) => setLeftDeviceTypeOther(event.target.value)}
                                 name="leftDeviceTypeOther"

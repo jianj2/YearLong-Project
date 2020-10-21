@@ -15,7 +15,6 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 // Import Utilities.
 import * as API from "../../utils/API";
-import { formatDate } from "../../utils/helper";
 import { useAuth0 } from "../../utils/react-auth0-spa";
 // Import Components.
 import {
@@ -52,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-const ShareQuestionnaire = (props) => {
+const ShareQuestionnaire = () => {
     const classes = useStyles();
     const { user, token } = useAuth0();
 
@@ -83,16 +82,17 @@ const ShareQuestionnaire = (props) => {
         sortBy: "PERFORMANCE"
     });
 
+    const [isSelectedStandard, setIsSelectedStandard] = useState(false);
+
     const [shareSection, setShareSection] = useState({});
 
     useEffect(() => {
         setLoading(true);
         const retrieveCustomisedQuestionnaires = async () => {
 
-            const [statusCode, customisedQuestionnaires] = await API.getClinicianQuestionnaires(token,
+            const [_, customisedQuestionnaires] = await API.getClinicianQuestionnaires(token,
                 user.name
             );
-            const today = formatDate();
             setCustomisedQuestionnaires(customisedQuestionnaires);
             setLoading(false);
         };
@@ -111,13 +111,14 @@ const ShareQuestionnaire = (props) => {
     }, [user, token]);
 
     // Function called when Share is clicked on the QuestionnaireList
-    const shareQuestionnaire = (questionnaireId, sections) => {
+    const shareQuestionnaire = (questionnaireId, isStandard, sectionNames) => {
         //making sure the state get reset once the modal is reloaded.
         setIsSectionsEmpty(false);
+        setIsSelectedStandard(isStandard)
 
         let temp = {};
-        sections.map((index) => {
-            temp = { ...temp, [index.title.toString()]: true };
+        sectionNames.forEach((s) => {
+            temp = { ...temp, [s]: true };
         });
 
         setShareSection(temp);
@@ -125,7 +126,7 @@ const ShareQuestionnaire = (props) => {
         setShareModalData({
             ...shareModalData,
             questionnaireId,
-            shareSection
+            sectionNames
         });
 
         openModal();
@@ -135,7 +136,7 @@ const ShareQuestionnaire = (props) => {
     const sectionSelectionCheck = () => {
 
         let isEmpty = true;
-        Object.entries(shareSection).map((k, v) => {
+        Object.entries(shareSection).forEach((k, v) => {
             if (k[1]) {
                 isEmpty = false;
             }
@@ -342,20 +343,24 @@ const ShareQuestionnaire = (props) => {
                                     }
                                     label="Performance"
                                 />
-                                <FormControlLabel
-                                    value="IMPORTANCE"
-                                    control={
-                                        <Radio
-                                            onChange={() => {
-                                                setShareModalData({
-                                                    ...shareModalData,
-                                                    sortBy: "IMPORTANCE"
-                                                });
-                                            }}
+                                {isSelectedStandard
+                                    ? (
+                                        <FormControlLabel
+                                            value="IMPORTANCE"
+                                            control={
+                                                <Radio
+                                                    onChange={() => {
+                                                        setShareModalData({
+                                                            ...shareModalData,
+                                                            sortBy: "IMPORTANCE"
+                                                        });
+                                                    }}
+                                                />
+                                            }
+                                            label="Importance"
                                         />
-                                    }
-                                    label="Importance"
-                                />
+                                    ) : null
+                                }
                             </RadioGroup>
                         </FormControl>
 

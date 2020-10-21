@@ -24,7 +24,6 @@ import "./styles/parents.css";
 import "./styles/questionnaire.css";
 import "./styles/questionnaireList.css";
 import "./styles/sidebar.css";
-import "./styles/topcontainer.css";
 
 /**
  * ====================================================================
@@ -93,19 +92,19 @@ const App = () => {
                                                            organName={match.params.name}/>)}
                     />
                     <Route
-                        path="/admin/standard/:id/edit"
+                        path="/admin/Questionnaire/standard/:id/edit"
                         exact
                         render={({ match }) => (<HomeAdmin active={4}
                                                            questionnaireID={match.params.id}/>)}
                     />
                     <Route
-                        path="/admin/standard/:id/view"
+                        path="/admin/Questionnaire/standard/:id/view"
                         exact
                         render={({ match }) => <HomeAdmin active={5}
                                                           questionnaireID={match.params.id}/>}
                     />
                     <Route
-                        path="/admin/instruction/:type/edit"
+                        path="/admin/SSQInstruction/:type/edit"
                         exact
                         render={({ match }) => <HomeAdmin active={6}
                                                           instructionType={match.params.type}/>}
@@ -136,13 +135,13 @@ const App = () => {
                         render={() => <HomeClinician active={3}/>}
                     />
                     <Route
-                        path="/clinician/:id/edit"
+                        path="/clinician/Questionnaire/:id/edit"
                         exact
                         render={({ match }) => (<HomeClinician active={4}
                                                                questionnaireID={match.params.id}/>)}
                     />
                     <Route
-                        path="/standard/:id/view"
+                        path="/clinician/Questionnaire/:id/view"
                         exact
                         render={({ match }) => <HomeClinician active={5}
                                                               questionnaireID={match.params.id}/>}

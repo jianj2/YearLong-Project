@@ -13,7 +13,7 @@ import logoCompressed from "../../assets/logo_compressed.png";
  * REACT COMPONENT CLASS
  * =============================================================================
  * @date created: 10th May 2020
- * @authors: Waqas Rehmani, Cary Jin, SaiEr Ding
+ * @authors: Waqas Rehmani
  *
  * The Navbar component defines our Navbar for the application. This
  * will visible at the top of our application.
@@ -28,7 +28,7 @@ import logoCompressed from "../../assets/logo_compressed.png";
 const NavBar = () => {
     const { isAuthenticated, logout } = useAuth0();
     const { isAdminAuthenticated, adminLogout } = useAdminAuth();
- 
+
     return (
         <div className="navbar-container">
             <div className="navbar-left">

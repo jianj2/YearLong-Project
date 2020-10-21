@@ -79,11 +79,11 @@ const ManageQuestionnaires = () => {
             retrieveStandardisedQuestionnaires();
             retrieveCustomisedQuestionnaires();
         }
-    }, [isAuthenticated, token]);
+    }, [isAuthenticated, token, adminLogout, isAdminAuthenticated, user]);
 
     // Function called when Edit is clicked on the QuestionnaireList
     const editQuestionnaire = (questionnaireID) => {
-        const edit_url = "/clinician/" + questionnaireID + "/edit";
+        const edit_url = "/clinician/Questionnaire/" + questionnaireID + "/edit";
         window.location.href = edit_url;
     };
 
@@ -94,7 +94,7 @@ const ManageQuestionnaires = () => {
     };
 
     const viewQuestionnaire = (questionnaireID) => {
-        const view_url = "/standard/" + questionnaireID + "/view";
+        const view_url = "/clinician/Questionnaire/" + questionnaireID + "/view";
         window.location.href = view_url;
     };
 
@@ -110,7 +110,7 @@ const ManageQuestionnaires = () => {
     // Function called when Add New Button is clicked
     const addNew = async () => {
         setLoading(true);
-        const [_, uuid] = await API.addQuestionnaire(token, user.name);
+        await API.addQuestionnaire(token, user.name);
         setLoading(false);
         window.location.reload(false);
     }
