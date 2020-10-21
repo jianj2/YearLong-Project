@@ -15,6 +15,7 @@ const Readable = require('stream').Readable
 const PDFDocument = require('pdfkit');
 const mongoose = require("mongoose");
 const Questionnaire = mongoose.model("questionnaire");
+const Clinician = mongoose.model("clinician");
 const Share = mongoose.model("share");
 const fs = require('fs');
 const {SSL_OP_SSLEAY_080_CLIENT_DH_BUG} = require('constants');
@@ -702,6 +703,7 @@ const generateCSV = function (questionnaireData, personalDetails, scenarioResult
     return Buffer.from(toWrite, 'utf8')
 }
 
+
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used generate the pdf report.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -715,140 +717,146 @@ const generateAttachments = function (questionnaireId, personalDetails, question
         console.table(personalDetails)
         // Catherine
 
-        Questionnaire.findOne({questionnaireId}, function (err, questionnaire) {
+        Clinician.findOne({email: clinicianEmail}, function (err, clinician) {
             if (!err) {
-                let section_score = [];
+                Questionnaire.findOne({questionnaireId}, function (err, questionnaire) {
+                    if (!err) {
+                        let section_score = [];
 
-                let subScaleScore = {
-                    Speech: {SpQ: 0.0, SpN: 0.0, SpSp: 0.0, SpStrm: 0.0},
-                    Spatial: {Localiz: 0.0, Dist: 0.0},
-                    Qualities: {Segreg: 0.0, IDSound: 0.0, ListEff: 0.0}
-                }
+                        let subScaleScore = {
+                            Speech: {SpQ: 0.0, SpN: 0.0, SpSp: 0.0, SpStrm: 0.0},
+                            Spatial: {Localiz: 0.0, Dist: 0.0},
+                            Qualities: {Segreg: 0.0, IDSound: 0.0, ListEff: 0.0}
+                        }
 
-                let newSubScaleScore = calculateSubScaleScore(questionnaireData, subScaleScore);
-                console.log(newSubScaleScore)
-                section_score = calculateScore(questionnaire, false, section_score)
-                let average_score = calculateScore(questionnaireData, true, section_score);
+                        let newSubScaleScore = calculateSubScaleScore(questionnaireData, subScaleScore);
+                        console.log(newSubScaleScore)
+                        section_score = calculateScore(questionnaire, false, section_score)
+                        let average_score = calculateScore(questionnaireData, true, section_score);
 
-                // object created to pass through
-                let scores = {
-                    averageScore: average_score,
-                    sectionScores: section_score
-                }
+                        // object created to pass through
+                        let scores = {
+                            averageScore: average_score,
+                            sectionScores: section_score
+                        }
 
-                //creating pdf document
-                const doc = new PDFDocument();
-                let ts = getTimeStamp();
-                // prints time stamp
-                doc.font('Helvetica').fontSize(10).text(ts, 10, 10);
-                // insert logo
-                doc.image('assets/logo_complete.png', 450, 30, {width: 100})
-                // prints heading for patient details
-                doc.font('Helvetica-Bold').fontSize(14).text("Patient Details", 30, 70);
-                // purple overlay for patient information
-                doc.fillOpacity(0.1).rect(30, 90, 550, 110).fill('purple');
-                doc.fillOpacity(1).fill('black');
+                        //creating pdf document
+                        const doc = new PDFDocument();
+                        let ts = getTimeStamp();
+                        // prints time stamp
+                        doc.font('Helvetica').fontSize(10).text(ts, 10, 10);
+                        // insert logo
+                        doc.image('assets/logo_complete.png', 450, 30, {width: 100})
+                        // prints heading for patient details
+                        doc.font('Helvetica-Bold').fontSize(14).text("Patient Details", 30, 70);
+                        // purple overlay for patient information
+                        doc.fillOpacity(0.1).rect(30, 90, 550, 110).fill('purple');
+                        doc.fillOpacity(1).fill('black');
+                        console.log("uvin", clinician);
+                        // prints out patient information headings
+                        doc.font('Helvetica-Bold').fontSize(12)
+                            .text('Name', 50, 110)
+                            .text('Date of Birth', 250, 110)
+                            .text('Right Device Type', 50, 150)
+                            .text('Left Device Type', 250, 150)
+                            .text('Completed By', 450, 110);
 
-                // prints out patient information headings
-                doc.font('Helvetica-Bold').fontSize(12)
-                    .text('Name', 50, 110)
-                    .text('Date of Birth', 250, 110)
-                    .text('Right Device Type', 50, 150)
-                    .text('Left Device Type', 250, 150)
-                    .text('Completed By', 450, 110);
+                        // prints out patient information
+                        const device_r = personalDetails.rightDeviceType === 'Other' ? personalDetails.rightDeviceTypeOther : personalDetails.rightDeviceType;
+                        const device_l = personalDetails.leftDeviceType === 'Other' ? personalDetails.leftDeviceTypeOther : personalDetails.leftDeviceType
+                        doc.font('Helvetica').fontSize(12)
+                            .text(personalDetails.name, 50, 130)
+                            .text(personalDetails.date, 250, 130)
+                            .text(device_r, 50, 170)
+                            .text(device_l, 250, 170)
+                            .text(personalDetails.completedBy, 450, 130);
+                        //
 
-                // prints out patient information
-                const device_r = personalDetails.rightDeviceType === 'Other' ? personalDetails.rightDeviceTypeOther : personalDetails.rightDeviceType;
-                const device_l = personalDetails.leftDeviceType === 'Other' ? personalDetails.leftDeviceTypeOther : personalDetails.leftDeviceType
-                doc.font('Helvetica').fontSize(12)
-                    .text(personalDetails.name, 50, 130)
-                    .text(personalDetails.date, 250, 130)
-                    .text(device_r, 50, 170)
-                    .text(device_l, 250, 170)
-                    .text(personalDetails.completedBy, 450, 130);
+                        // THIS LINE PRINTS THE QUESTIONNAIRE RESULT IN THE DOC FILE
+                        Share.findOne({shareId}, function (err, share
+                        ) {
+                            let sharedSections = null;
+                            if (!err && share != null) {
+                                sharedSections = share.shareSection
+                            }
 
-                // THIS LINE PRINTS THE QUESTIONNAIRE RESULT IN THE DOC FILE
-                Share.findOne({shareId}, function (err, share
-                ) {
-                    let sharedSections = null;
-                    if (!err && share != null) {
-                        sharedSections = share.shareSection
-                    }
+                            const [resultToPrint, scenarioResults] = getQuestionnaireResponseJoin(questionnaire, questionnaireData, section_score, sharedSections);
 
-                    const [resultToPrint, scenarioResults] = getQuestionnaireResponseJoin(questionnaire, questionnaireData, section_score, sharedSections);
+                            const csvResult = generateCSV(resultToPrint, personalDetails, scenarioResults, comments, scores);
 
-                    const csvResult = generateCSV(resultToPrint, personalDetails, scenarioResults, comments, scores);
+                            // prints out summary of section scores
+                            doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire Score Summary", 30, 240);
 
-                    // prints out summary of section scores
-                    doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire Score Summary", 30, 240);
+                            let lineSpacing = 280;
+                            let margin = 0;
+                            doc.font('Helvetica-Bold').fontSize(12).text("Questionnaire Average: ", 50, lineSpacing);
+                            lineSpacing += 30;
+                            resultToPrint.sections.forEach((section, sectionIndex) => {
+                                doc.font('Helvetica-Bold').fontSize(12).text(section.title + " Average: ", 50, lineSpacing);
+                                margin = Math.ceil(doc.widthOfString(section.title + " Average: ") / 10) * 10 + 60;
+                                doc.font('Helvetica').text(scores.sectionScores[sectionIndex] == "N/A" ? "N/A" : scores.sectionScores[sectionIndex].toFixed(2), margin, lineSpacing);
+                                lineSpacing += 30;
+                                lineSpacing = addPage(doc, lineSpacing, doc.page.height);
+                            })
 
-                    let lineSpacing = 280;
-                    let margin = 0;
-                    doc.font('Helvetica-Bold').fontSize(12).text("Questionnaire Average: ", 50, lineSpacing);
-                    lineSpacing += 30;
-                    resultToPrint.sections.forEach((section, sectionIndex) => {
-                        doc.font('Helvetica-Bold').fontSize(12).text(section.title + " Average: ", 50, lineSpacing);
-                        margin = Math.ceil(doc.widthOfString(section.title + " Average: ") / 10) * 10 + 60;
-                        doc.font('Helvetica').text(scores.sectionScores[sectionIndex] == "N/A" ? "N/A" : scores.sectionScores[sectionIndex].toFixed(2), margin, lineSpacing);
-                        lineSpacing += 30;
-                        lineSpacing = addPage(doc, lineSpacing, doc.page.height);
-                    })
+                            doc.font('Helvetica').text(scores.averageScore, margin, 280);
 
-                    doc.font('Helvetica').text(scores.averageScore, margin, 280);
+                            doc.fillOpacity(0.1).rect(30, 260, 550, lineSpacing - 260).fill('purple');
+                            doc.fillOpacity(1).fill('black');
+                            lineSpacing += 40
+                            doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire Response", 30, lineSpacing);
+                            lineSpacing += 30
+                            doc.lineCap('butt').moveTo(30, lineSpacing).lineTo(doc.page.width - 30, lineSpacing).stroke();
+                            lineSpacing += 20;
 
-                    doc.fillOpacity(0.1).rect(30, 260, 550, lineSpacing - 260).fill('purple');
-                    doc.fillOpacity(1).fill('black');
-                    lineSpacing += 40
-                    doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire Response", 30, lineSpacing);
-                    lineSpacing += 30
-                    doc.lineCap('butt').moveTo(30, lineSpacing).lineTo(doc.page.width - 30, lineSpacing).stroke();
-                    lineSpacing += 20;
+                            // -------  TO DO  --------
+                            // MAKE THIS BETTER
+                            // const sortedResults = sortByImportance(resultToPrint)
+                            let sortedResults = []
+                            if (sortBy === HELPER_SORT.PERFORMANCE) {
+                                sortedResults = sortByPerformance(resultToPrint)
+                            } else {
+                                sortedResults = sortByImportance(resultToPrint)
+                            }
 
-                    // -------  TO DO  --------
-                    // MAKE THIS BETTER
-                    // const sortedResults = sortByImportance(resultToPrint)
-                    let sortedResults = []
-                    if (sortBy === HELPER_SORT.PERFORMANCE) {
-                        sortedResults = sortByPerformance(resultToPrint)
+
+                            if (sortedResults.isStandard) {
+                                printStandardQuestionnaireResults(doc, sortedResults, lineSpacing, comments)
+                            } else {
+                                printCustomQuestionnaireResults(doc, sortedResults, lineSpacing, comments)
+                            }
+
+                            // CLOSE THE DOCUMENT,
+                            doc.end();
+
+                            // CREATE THE PDF
+                            const s = new Readable()
+                            s.push(JSON.stringify(personalDetails))    // the string you want
+                            s.push(JSON.stringify(questionnaireData))
+                            s.push(null);     // indicates end-of-file basically - the end of the stream
+
+                            // Used to display as a table in the email
+                            const {jsonToTableHtmlString} = require('json-table-converter')
+
+                            resolve([{
+                                filename: "Report.pdf",
+                                content: doc,
+                            }, {
+                                filename: "Report.csv",
+                                content: csvResult,
+                            }])
+                        });
                     } else {
-                        sortedResults = sortByImportance(resultToPrint)
+                        reject({
+                            error: err,
+                        })
                     }
-
-
-                    if (sortedResults.isStandard) {
-                        printStandardQuestionnaireResults(doc, sortedResults, lineSpacing, comments)
-                    } else {
-                        printCustomQuestionnaireResults(doc, sortedResults, lineSpacing, comments)
-                    }
-
-                    // CLOSE THE DOCUMENT,
-                    doc.end();
-
-                    // CREATE THE PDF
-                    const s = new Readable()
-                    s.push(JSON.stringify(personalDetails))    // the string you want
-                    s.push(JSON.stringify(questionnaireData))
-                    s.push(null);     // indicates end-of-file basically - the end of the stream
-
-                    // Used to display as a table in the email
-                    const {jsonToTableHtmlString} = require('json-table-converter')
-
-                    resolve([{
-                        filename: "Report.pdf",
-                        content: doc,
-                    }, {
-                        filename: "Report.csv",
-                        content: csvResult,
-                    }])
                 });
-            } else {
-                reject({
-                    error: err,
-                })
-            }
+            } else reject({
+                error: err,
+            });
         });
-    });
-}
+});
 
 
 module.exports.generateAttachments = generateAttachments;
