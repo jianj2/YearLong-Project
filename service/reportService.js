@@ -761,18 +761,18 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                 // prints out patient information headings
                 doc.font('Helvetica-Bold').fontSize(12)
                     .text('Name', 50, 110)
-                    .text('Date of Birth', 250, 110)
+                    .text('Date of Birth', 240, 110)
                     .text('Right Device Type', 50, 150)
-                    .text('Left Device Type', 250, 150)
+                    .text('Left Device Type', 240, 150)
 
                 // prints out patient information
                 const device_r = personalDetails.rightDeviceType === 'Other' ? personalDetails.rightDeviceTypeOther : personalDetails.rightDeviceType;
                 const device_l = personalDetails.leftDeviceType === 'Other' ? personalDetails.leftDeviceTypeOther : personalDetails.leftDeviceType
                 doc.font('Helvetica').fontSize(12)
                     .text(personalDetails.name, 50, 130)
-                    .text(personalDetails.date, 250, 130)
+                    .text(personalDetails.date, 240, 130)
                     .text(device_r, 50, 170)
-                    .text(device_l, 250, 170)
+                    .text(device_l, 240, 170)
 
                         // THIS LINE PRINTS THE QUESTIONNAIRE RESULT IN THE DOC FILE
                         Share.findOne({shareId}, function (err, share
@@ -794,52 +794,60 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     lineSpacing += 40;
                     doc.font('Helvetica-Bold').fontSize(12)
                         .text('Questionnaire Name', 50, lineSpacing)
-                        .text('Clinician First Name', 250, lineSpacing)
-                        .text('Clinician Last Name', 450, lineSpacing)
+                        .text('Clinician First Name', 240, lineSpacing)
+                        .text('Clinician Last Name', 420, lineSpacing)
 
                     lineSpacing += 20;
                     doc.font('Helvetica').fontSize(12)
                         .text(questionnaire.title, 50, lineSpacing)
-                        .text(clinician.firstName, 250, lineSpacing)
-                        .text(clinician.lastName, 450, lineSpacing)
+                        .text(clinician.firstName, 240, lineSpacing)
+                        .text(clinician.lastName, 420, lineSpacing)
 
-                    lineSpacing += 20
+
 
                     if (!(questionnaire.isSSQ_Ch)) {
+                        lineSpacing += 20
+
                         doc.font('Helvetica-Bold').fontSize(12)
-                            .text('Relationship', 250, lineSpacing)
-                            .text('Completed By (Name)', 450, lineSpacing)
+                            .text('Relationship', 50, lineSpacing)
+                            .text('Completed By (Name)', 240, lineSpacing)
 
                         lineSpacing += 20
 
                         doc.font('Helvetica').fontSize(12)
                             .text(personalDetails.completedByRelationship, 50, lineSpacing)
-                            .text(personalDetails.completedByName, 250, lineSpacing)
-                        lineSpacing += 20
+                            .text(personalDetails.completedByName, 240, lineSpacing)
+                        lineSpacing += 30
+                    } else {
+                                lineSpacing += 30
                     }
 
-                    doc.fillOpacity(0.1).rect(30, initialSpacing, lineSpacing - initialSpacing, 70).fill('purple');
+
+                    doc.fillOpacity(0.1).rect(30, initialSpacing, 550, lineSpacing - initialSpacing).fill('purple');
                     doc.fillOpacity(1).fill('black');
 
-
+                    lineSpacing += 20;
                     // prints out summary of section scores
-                    doc.font('Helvetica-Bold').fontSize(14).text("Performance Rating Summary", 30, lineSpacing + 70);
-                    lineSpacing += 110;
-                    //lineSpacing += 30;
+                    doc.font('Helvetica-Bold').fontSize(14).text("Performance Rating Summary", 30, lineSpacing);
+
+                    initialSpacing = lineSpacing + 20;
+                    lineSpacing += 40;
 
                     doc.font('Helvetica-Bold').fontSize(12).text("Overall Average Rating: ", 50, lineSpacing);
+                    let overallAverage = lineSpacing;
                     lineSpacing += 30;
                     resultToPrint.sections.forEach((section, sectionIndex) => {
                         doc.font('Helvetica-Bold').fontSize(12).text(section.title + " Average Rating: ", 50, lineSpacing);
-                        margin = Math.ceil(doc.widthOfString(section.title + " Average Rating: ") / 10) * 10 + 60;
+
+                        margin = Math.ceil(doc.widthOfString("Speech Average Rating: ") / 10) * 10 + 60;
                         doc.font('Helvetica').text(scores.sectionScores[sectionIndex] === "N/A" ? "N/A" : scores.sectionScores[sectionIndex].toFixed(2), margin, lineSpacing);
                         lineSpacing += 30;
                         lineSpacing = addPage(doc, lineSpacing, doc.page.height);
                     })
 
-                    doc.font('Helvetica').text(scores.averageScore, margin, 400);
+                    doc.font('Helvetica').text(scores.averageScore.toFixed(2), margin, overallAverage);
 
-                    doc.fillOpacity(0.1).rect(30, 380, 550, 140).fill('purple');
+                    doc.fillOpacity(0.1).rect(30, initialSpacing, 550, lineSpacing - initialSpacing).fill('purple');
                     doc.fillOpacity(1).fill('black');
                     lineSpacing += 40
                     doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire Responses", 30, lineSpacing);
