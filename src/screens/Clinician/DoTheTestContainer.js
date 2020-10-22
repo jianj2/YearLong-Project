@@ -56,8 +56,6 @@ const DoTheTestContainer = () => {
 
     const [selectedQuestionnaire, setSelectedQuestionnaire] = useState(null);
 
-    console.log("SELECTED QUESTIONnAIRE:", selectedQuestionnaire);
-
     // This is called whenever "user" changes
     useEffect(() => {
         setLoading(true)
@@ -184,11 +182,11 @@ const DoTheTestContainer = () => {
         const [statusCode, response] = await completeQuestionnaire(token, data);
         if (statusCode === 200) {
             setWizardStep(3);
-            setLoading(false);
         } else {
             console.error(response);
-        }
 
+        }
+            setLoading(false);
     };
 
     console.log("selectedQuestionnaire ",selectedQuestionnaire)

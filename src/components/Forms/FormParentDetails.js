@@ -161,6 +161,7 @@ const FormParentDetails = ({
                     <FormControl margin="dense">
                         <InputLabel>Right Device Type</InputLabel>
                         <Select id="DeviceOne"
+                                defaultValue=""
                                 value={deviceTypeOption.indexOf(rightDeviceType) === -1 ? "Other" : rightDeviceType}
                                 onChange={(event) => setRightDeviceType(event.target.value)}
                                 name="rightDeviceType"
@@ -169,7 +170,7 @@ const FormParentDetails = ({
                                 inputRef={register({
                                     required: "You have not specified the device type."
                                 })}>
-                            <option value="" disabled selected></option>
+                            <option value="" disabled></option>
                             <option value="None">None</option>
                             <option value="Hearing Aid">Hearing Aid</option>
                             <option value="Cochlear Implant">Cochlear Implant
@@ -248,6 +249,7 @@ const FormParentDetails = ({
                     <FormControl margin="dense">
                         <InputLabel>Left Device Type</InputLabel>
                         <Select
+                            defaultValue=""
                             value={deviceTypeOption.indexOf(leftDeviceType) === -1 ? "Other" : leftDeviceType}
                             onChange={(event) => setLeftDeviceType(event.target.value)}
                             name="leftDeviceType"
@@ -258,7 +260,7 @@ const FormParentDetails = ({
                                 required: "You have not specified the device type."
                             })}
                         >
-                            <option value="" disabled selected></option>
+                            <option value="" disabled></option>
                             <option value="None">None</option>
                             <option value="Hearing Aid">Hearing Aid</option>
                             <option value="Cochlear Implant">Cochlear Implant
