@@ -10,6 +10,8 @@ import time
 class Sprint2_integration_test(unittest.TestCase):
 
     def setUp(self):
+
+        # self.driver = webdriver.Chrome("../chromedriver_mac")  # for mac
         self.driver = webdriver.Chrome("chromedriver.exe")
         self.driver.get("http://localhost:3000/")
         time.sleep(2)
