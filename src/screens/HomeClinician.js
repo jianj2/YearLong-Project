@@ -1,5 +1,6 @@
 // Import Libraries.
 import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 // Import Utilities.
 import { useAuth0 } from "../utils/react-auth0-spa";
 import { USER_TYPE_CLINICIAN } from "../utils/helper";
@@ -162,6 +163,11 @@ const HomeClinician = ({
 
     return (
         <div className="HomeClinician">
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>SSQ: Clinician</title>
+            </Helmet>
+
             <SideBar userType={USER_TYPE_CLINICIAN}/>
 
             <div className="content-container">

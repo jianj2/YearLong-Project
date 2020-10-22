@@ -1,5 +1,6 @@
 // Import Libraries.
 import React from "react";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 // Import Assets.
 import logoComplete from "../assets/logo_complete.png";
@@ -25,6 +26,10 @@ const Landing = () => {
 
     return (
         <div className="landing">
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>SSQ: Digital Scale</title>
+            </Helmet>
             <div className="landing-logo">
                 <img src={logoComplete} alt="SSQ Logo"/>
             </div>
