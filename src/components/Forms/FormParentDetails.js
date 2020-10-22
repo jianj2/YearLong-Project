@@ -47,16 +47,15 @@ const FormParentDetails = ({
     const [leftDeviceTypeOtherVisible, setLeftDeviceTypeOtherVisible] = useState(null);
     const [rightDeviceTypeOther, setRightDeviceTypeOther] = useState(defaultValue.rightDeviceType);
     const [leftDeviceTypeOther, setLeftDeviceTypeOther] = useState(defaultValue.leftDeviceType);
-    const [rightDeviceSubmit, setRightDeviceSubmit] = useState(null);
-    const [leftDeviceSubmit, setLeftDeviceSubmit] = useState(null);
+    let [rightDeviceSubmit, setRightDeviceSubmit] = useState(defaultValue.rightDeviceType);
+    let [leftDeviceSubmit, setLeftDeviceSubmit] = useState(defaultValue.leftDeviceType);
 
-    const [completedByRelationshipSubmit, setCompletedByRelationshipSubmit] = useState(null);
+    let [completedByRelationshipSubmit, setCompletedByRelationshipSubmit] = useState(defaultValue.completedByRelationship);
     const [completedByRelationship, setCompletedByRelationship] = useState(defaultValue.completedByRelationship);
     const [completedByName, setCompletedByName] = useState(defaultValue.completedByName);
     const [completedByRelationshipOther, setCompletedByRelationshipOther] = useState(defaultValue.completedByRelationship);
     const [completedByRelationshipOtherVisible,setCompletedByRelationshipOtherVisible ] = useState(false);
 
-    console.log(rightDeviceType)
     let personalData = {};
 
     const deviceTypeOption = ["None", "Hearing Aid", "Cochlear Implant", "Other", ""];
@@ -104,19 +103,26 @@ const FormParentDetails = ({
         }
         if (rightDeviceTypeOtherVisible) {
             setRightDeviceSubmit(rightDeviceTypeOther);
+            rightDeviceSubmit = rightDeviceTypeOther
         } else {
             setRightDeviceSubmit(rightDeviceType);
+            rightDeviceSubmit = rightDeviceType
+
         }
         if (leftDeviceTypeOtherVisible) {
             setLeftDeviceSubmit(leftDeviceTypeOther);
+            leftDeviceSubmit = leftDeviceTypeOther
         } else {
             setLeftDeviceSubmit(leftDeviceType);
+            leftDeviceSubmit = leftDeviceType
         }
 
         if (completedByRelationshipOtherVisible){
             setCompletedByRelationshipSubmit(completedByRelationshipOther)
+            completedByRelationshipSubmit=completedByRelationshipOther
         }else{
             setCompletedByRelationshipSubmit(completedByRelationship)
+            completedByRelationshipSubmit=completedByRelationship
         }
 
         personalData = {
