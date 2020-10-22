@@ -111,7 +111,8 @@ const sendResultsEmail = (
                         questionnaireData,
                         shareId,
                         sortBy,
-                        comments
+                        comments,
+                        clinicianEmail
                     )
                         .then((attachments) => {
                             mailOptions.attachments = attachments;

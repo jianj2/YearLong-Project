@@ -5,6 +5,7 @@ const Readable = require('stream').Readable
 const PDFDocument = require('pdfkit');
 const mongoose = require("mongoose");
 const Questionnaire = mongoose.model("questionnaire");
+const Clinician = mongoose.model("clinician");
 const Share = mongoose.model("share");
 
 /**
@@ -713,33 +714,36 @@ const generateCSV = function (questionnaireData, personalDetails, scenarioResult
     return Buffer.from(toWrite, 'utf8')
 }
 
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used generate the pdf report.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const generateAttachments = function (questionnaireId, personalDetails, questionnaireData, shareId, sortBy, comments) {
+const generateAttachments = function (questionnaireId, personalDetails, questionnaireData, shareId, sortBy, comments, clinicianEmail) {
     // The promise resolves if email is sent successfully, and rejects if email fails.
     return new Promise((resolve, reject) => {
 
-        Questionnaire.findOne({questionnaireId}, function (err, questionnaire) {
+        Clinician.findOne({email: clinicianEmail}, function (err, clinician) {
             if (!err) {
-                let section_score = [];
+                Questionnaire.findOne({questionnaireId}, function (err, questionnaire) {
+                    if (!err) {
+                        let section_score = [];
 
-                let subScaleScore = {
-                    Speech: {SpQ: 0.0, SpN: 0.0, SpSp: 0.0, SpStrm: 0.0},
-                    Spatial: {Localiz: 0.0, Dist: 0.0},
-                    Qualities: {Segreg: 0.0, IDSound: 0.0, ListEff: 0.0}
-                }
+                        let subScaleScore = {
+                            Speech: {SpQ: 0.0, SpN: 0.0, SpSp: 0.0, SpStrm: 0.0},
+                            Spatial: {Localiz: 0.0, Dist: 0.0},
+                            Qualities: {Segreg: 0.0, IDSound: 0.0, ListEff: 0.0}
+                        }
 
-                let newSubScaleScore = calculateSubScaleScore(questionnaireData, subScaleScore);
-                console.log(newSubScaleScore)
-                section_score = calculateScore(questionnaire, false, section_score)
-                let average_score = calculateScore(questionnaireData, true, section_score);
+                        let newSubScaleScore = calculateSubScaleScore(questionnaireData, subScaleScore);
+                        console.log(newSubScaleScore)
+                        section_score = calculateScore(questionnaire, false, section_score)
+                        let average_score = calculateScore(questionnaireData, true, section_score);
 
-                // object created to pass through
-                let scores = {
-                    averageScore: average_score,
-                    sectionScores: section_score
-                }
+                        // object created to pass through
+                        let scores = {
+                            averageScore: average_score,
+                            sectionScores: section_score
+                        }
 
                 //creating pdf document
                 const doc = new PDFDocument();
@@ -770,17 +774,28 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     .text(device_r, 50, 170)
                     .text(device_l, 250, 170)
 
-                // THIS LINE PRINTS THE QUESTIONNAIRE RESULT IN THE DOC FILE
-                Share.findOne({shareId}, function (err, share
-                ) {
-                    let sharedSections = null;
-                    if (!err && share !== null) {
-                        sharedSections = share.shareSection
-                    }
+                        // Catherine   // check if undefined, some early user dont have names.
+                        console.log(clinician.firstName)
+                        console.log(clinician.lastName)
 
-                    const [resultToPrint, scenarioResults] = getQuestionnaireResponseJoin(questionnaire, questionnaireData, section_score, sharedSections);
+                        if (!(questionnaire.isSSQ_Ch)) {
+                            console.log(personalDetails.filledByTypeOption)
+                            console.log(personalDetails.filledBy)
+                        }
 
-                    const csvResult = generateCSV(resultToPrint, personalDetails, scenarioResults, comments, scores);
+                        // Catherine
+
+                        // THIS LINE PRINTS THE QUESTIONNAIRE RESULT IN THE DOC FILE
+                        Share.findOne({shareId}, function (err, share
+                        ) {
+                            let sharedSections = null;
+                            if (!err && share !== null) {
+                                sharedSections = share.shareSection
+                            }
+
+                            const [resultToPrint, scenarioResults] = getQuestionnaireResponseJoin(questionnaire, questionnaireData, section_score, sharedSections);
+
+                            const csvResult = generateCSV(resultToPrint, personalDetails, scenarioResults, comments, scores);
 
                     let lineSpacing = 230;
                     let margin = 0;
@@ -839,30 +854,37 @@ x
                         printCustomQuestionnaireResults(doc, sortedResults, lineSpacing, comments)
                     }
 
-                    // CLOSE THE DOCUMENT,
-                    doc.end();
+                            // CLOSE THE DOCUMENT,
+                            doc.end();
 
-                    // CREATE THE PDF
-                    const s = new Readable()
-                    s.push(JSON.stringify(personalDetails))    // the string you want
-                    s.push(JSON.stringify(questionnaireData))
-                    s.push(null);     // indicates end-of-file basically - the end of the stream
+                            // CREATE THE PDF
+                            const s = new Readable()
+                            s.push(JSON.stringify(personalDetails))    // the string you want
+                            s.push(JSON.stringify(questionnaireData))
+                            s.push(null);     // indicates end-of-file basically - the end of the stream
 
-                    // Used to display as a table in the email
-                    const {jsonToTableHtmlString} = require('json-table-converter')
+                            // Used to display as a table in the email
+                            const {jsonToTableHtmlString} = require('json-table-converter')
 
-                    resolve([{
-                        filename: "Report.pdf",
-                        content: doc,
-                    }, {
-                        filename: "Report.csv",
-                        content: csvResult,
-                    }])
+                            resolve([{
+                                filename: "Report.pdf",
+                                content: doc,
+                            }, {
+                                filename: "Report.csv",
+                                content: csvResult,
+                            }])
+                        });
+                    } else {
+                        reject({
+                            error: err,
+                        })
+                    }
                 });
+
             } else {
                 reject({
                     error: err,
-                })
+                });
             }
         });
     });
