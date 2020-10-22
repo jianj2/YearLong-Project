@@ -4,8 +4,7 @@
 # Mayank Sharma - 22th August 2020
 #
 # This YAML file runs a pipeline in GitHub Actions containing a number of jobs.
-# Jobs include testing the code and deploying the deployment-server and development-server branches
-# to Heroku.
+# Jobs include linting the code and deploying the production-server branch to Heroku.
 
 ---
 name: server-CI/CD
@@ -21,7 +20,7 @@ on:
     - production-server
 
 jobs:
-  # Testing dependency installing
+  # Linting server code with eslint
   test:
     runs-on: ubuntu-latest
     name: test
@@ -29,14 +28,12 @@ jobs:
     # Checking out code to server
     - name: Checkout
       uses: actions/checkout@v2
-    # Setting up Node.js 14.8 for testing    
-    - name: Set up Node.js 14.x for testing
-      uses: actions/setup-node@v1
+    # Running eslint    
+    - name: Lint with eslint
+      uses: getsentry/action-eslint-fix@v1
       with:
-        node-version: 14.8
-    # Installing npm dependencies  
-    - name: Install dependencies    
-      run: npm install
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        dry: true
 
   # Deploy nodejs to heroku
   deploy:
