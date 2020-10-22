@@ -276,7 +276,7 @@ const HomeParents = ({ match }) => {
             <div className="parents-home">
                 <Helmet>
                     <meta charSet="utf-8" />
-                    <title>SSQ: Client</title>
+                    <title>SSQ: Client - Instructions</title>
                 </Helmet>
 
                 <div className="subheader-container">
@@ -306,9 +306,9 @@ const HomeParents = ({ match }) => {
             <div className="parents-home">
                 <Helmet>
                     <meta charSet="utf-8" />
-                    <title>SSQ: Client</title>
+                    <title>SSQ: Client - Participant Details</title>
                 </Helmet>
-                
+
                 <div className="subheader-container">
                     <button
                         id="instructions"
@@ -338,7 +338,7 @@ const HomeParents = ({ match }) => {
             <div className="parents-home">
                 <Helmet>
                     <meta charSet="utf-8" />
-                    <title>SSQ: Client</title>
+                    <title>SSQ: Client - Questionnaire</title>
                 </Helmet>
 
                 <div className="subheader-container">
@@ -376,7 +376,7 @@ const HomeParents = ({ match }) => {
             <div className="parents-home">
                 <Helmet>
                     <meta charSet="utf-8" />
-                    <title>SSQ: Client</title>
+                    <title>SSQ: Client - Review Results</title>
                 </Helmet>
 
                 {loading ? <Loading/> : null}
@@ -416,7 +416,7 @@ const HomeParents = ({ match }) => {
         <div className="landing">
             <Helmet>
                 <meta charSet="utf-8" />
-                <title>SSQ: Client</title>
+                <title>SSQ: Client - Successfully Finished Questionnaire</title>
             </Helmet>
             
             <div className="landing-logo">
