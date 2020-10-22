@@ -71,11 +71,11 @@ export const editStandardQuestionnaire = async (questionnaireData) => {
  * @params questionnaireData
  * @returns {Promise} ~ response from the server.
  */
-export const adminCopyQuestionnaire = async (questionnaireData) => {
+export const adminCopyQuestionnaire = async (questionnaireId) => {
     const url = "questionnaire/copy";
     const data = {
         copyToCustomisedQuestionnaire: false,
-        questionnaire: questionnaireData
+        questionnaireId
     };
     return await sendRequest("POST", url, data);
 };
@@ -148,12 +148,12 @@ export const editQuestionnaire = async (accessToken, questionnaireData) => {
  * @param clinicianId
  * @returns {Promise} ~ response from the server.
  */
-export const copyQuestionnaire = async (questionnaireData, clinicianId) => {
+export const copyQuestionnaire = async (questionnaireId, clinicianId) => {
     const url = "questionnaire/copy";
     const data = {
         clinicianId,
         copyToCustomisedQuestionnaire: true,
-        questionnaire: questionnaireData
+        questionnaireId
     };
     return await sendRequest("POST", url, data);
 };
