@@ -19,6 +19,11 @@ export const USER_TYPE_PARTICIPANT = "PARTICIPANT";
 export const deviceTypeOption = ["None", "Hearing Aid", "Cochlear Implant", "Other", ""];
 export const filledByTypeOptions = ["Mother", "Father", "Guardian", "Other", ""];
 
+export const HELPER_SORT = {
+    "PERFORMANCE": "PERFORMANCE",
+    "IMPORTANCE": "IMPORTANCE",
+}
+
 // Helper Function
 export const formatDate = () => {
     let d = new Date(),

@@ -1,5 +1,7 @@
 // Import Libraries.
 import React from "react";
+// Import Utilities.
+import { HELPER_SORT } from '../../utils/helper'
 
 /**
  * =============================================================================
@@ -110,7 +112,7 @@ const ParentReviewSubmission = ({
                         <label>Email Report</label>
                         <button
                             className="button"
-                            onClick={() => emailResponse("PERFORMANCE")}
+                            onClick={() => emailResponse(HELPER_SORT.PERFORMANCE)}
                         >
                             Sorted by Performance
                         </button>
@@ -118,7 +120,7 @@ const ParentReviewSubmission = ({
                             ? (
                                 <button
                                     className="button"
-                                    onClick={() => emailResponse("IMPORTANCE")}
+                                    onClick={() => emailResponse(HELPER_SORT.IMPORTANCE)}
                                 >
                                     Sorted by Importance
                                 </button>
@@ -128,7 +130,7 @@ const ParentReviewSubmission = ({
 
                 ) : null
             }
-            
+
         </div>
     );
 }
