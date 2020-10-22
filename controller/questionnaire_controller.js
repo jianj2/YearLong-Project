@@ -147,7 +147,7 @@ const deleteQuestionnaire = async (req, res) => {
 // This function is called to delete standardised questionnaire
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const deleteStandardisedQuestionnaire = async (req, res) => {
-    const questionnaireId = req.body.questionnaireID;
+    const questionnaireId = req.body.questionnaireId;
     const [err, message] = await deleteQuestionnaireFromDatabase(
         questionnaireId,
         ""
