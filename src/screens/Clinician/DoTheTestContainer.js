@@ -225,10 +225,6 @@ const DoTheTestContainer = () => {
                     <button className="button" onClick={prevStep}>
                         B A C K
                     </button>
-                    <button className="button" form="questionaire-container"
-                            type="submit">
-                        R E V I E W
-                    </button>
                 </div>
 
                 <Questionnaire
