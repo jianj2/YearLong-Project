@@ -10,6 +10,8 @@ import time
 class unittest_frontend_clinicianSignup(unittest.TestCase):
 
     def setUp(self):
+
+        # self.driver = webdriver.Chrome("../chromedriver_mac")  # for mac
         self.driver = webdriver.Chrome("chromedriver.exe")
         self.driver.get("http://localhost:3000/clinician")
         button = self.driver.find_element_by_link_text("Signup")
