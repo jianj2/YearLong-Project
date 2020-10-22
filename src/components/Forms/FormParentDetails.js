@@ -50,11 +50,11 @@ const FormParentDetails = ({
     const [rightDeviceSubmit, setRightDeviceSubmit] = useState(null);
     const [leftDeviceSubmit, setLeftDeviceSubmit] = useState(null);
 
-    let [filledByTypeOptionSubmit, setFilledByTypeOptionSubmit] = useState(null);
+    const [filledByTypeOptionSubmit, setFilledByTypeOptionSubmit] = useState(null);
     const [filledByTypeOption, setFilledByTypeOption] = useState(defaultValue.filledByTypeOption);
     const [filledBy, setFilledBy] = useState(defaultValue.filledBy);
     const [filledByTypeOptionOther, setFilledByTypeOptionOther] = useState(defaultValue.filledByTypeOption);
-    let [filledByTypeOptionOtherVisible,setFilledByTypeOptionOtherVisible ] = useState(false);
+    const [filledByTypeOptionOtherVisible,setFilledByTypeOptionOtherVisible ] = useState(false);
 
     console.log("ch",isSSQ_Ch)
     console.log("visible",filledByTypeOptionOtherVisible)
@@ -69,10 +69,8 @@ const FormParentDetails = ({
     useEffect(() => {
 
         if (filledByTypeOption === "Other" || (filledByTypeOptions.indexOf(filledByTypeOption) === -1) ) {
-            filledByTypeOptionOtherVisible = true;
             setFilledByTypeOptionOtherVisible(true);
         } else {
-            filledByTypeOptionOtherVisible = false;
             setFilledByTypeOptionOtherVisible(false);
         }
 
@@ -119,10 +117,8 @@ const FormParentDetails = ({
         }
 
         if (filledByTypeOptionOtherVisible){
-            filledByTypeOptionSubmit = filledByTypeOptionOther;
             setFilledByTypeOptionSubmit(filledByTypeOptionOther)
         }else{
-            filledByTypeOptionSubmit = filledByTypeOption;
             setFilledByTypeOptionSubmit(filledByTypeOption)
         }
 
@@ -135,7 +131,6 @@ const FormParentDetails = ({
             filledByTypeOption: filledByTypeOptionSubmit,
             filledBy
         };
-        console.log("uvin", personalData)
 
         getPersonalDetails(personalData);
     }, [name, date, rightDeviceType, leftDeviceType, rightDeviceTypeOther, leftDeviceTypeOther, filledByTypeOptionOther, filledByTypeOption, filledBy]);
