@@ -259,6 +259,8 @@ const DoTheTestContainer = () => {
                     questionnaireData={questionnaireData}
                     commentData={commentData}
                     emailResponse={emailResponse}
+                    isSSQ_Ch={selectedQuestionnaire.isSSQ_Ch}
+
                 />
             </div>
         );
