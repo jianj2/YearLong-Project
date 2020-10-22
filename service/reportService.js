@@ -723,7 +723,6 @@ const generateAttachments = function (questionnaireId, personalDetails, question
     return new Promise((resolve, reject) => {
 
         Clinician.findOne({email: clinicianEmail}, function (err, clinician) {
-            console.log(clinicianEmail)
             if (!err) {
                 Questionnaire.findOne({questionnaireId}, function (err, questionnaire) {
                     if (!err) {
