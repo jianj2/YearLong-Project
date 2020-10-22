@@ -189,8 +189,6 @@ const DoTheTestContainer = () => {
             setLoading(false);
     };
 
-    console.log("selectedQuestionnaire ",selectedQuestionnaire)
-
     if (wizardStep === 0) {
         return (
             <div className="dothetest-container">

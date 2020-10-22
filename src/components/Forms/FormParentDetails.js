@@ -217,7 +217,6 @@ const FormParentDetails = ({
                         <FormHelperText>{errors.filledBy ? errors.filledBy.message : "Please enter the name of the person who filled this questionnaire."}</FormHelperText>
                     </FormControl>
                         )}
-
                 </div>
 
 
