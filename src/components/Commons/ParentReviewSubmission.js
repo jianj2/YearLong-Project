@@ -27,6 +27,7 @@ const ParentReviewSubmission = ({
     emailResponse,
     isStandard,
     clinicianAccess,
+    isSSQ_CH
 }) => {
     return (
         <div className="review-submission">
@@ -36,10 +37,20 @@ const ParentReviewSubmission = ({
                     <label>Name:</label>
                     <span>{personalDetails.name}</span>
                 </div>
-                <div className="review-row">
-                    <label>Filled By:</label>
-                    <span>{personalDetails.completedBy}</span>
-                </div>
+                { isSSQ_CH ? (null) : (
+                    <div className="review-row">
+                        <label>Completed by (Name):</label>
+                        <span>{personalDetails.completedByName}</span>
+                    </div>
+                )}
+                { isSSQ_CH ? (null) : (
+
+                    <div className="review-row">
+                    <label>Completed by (Relationship):</label>
+                    <span>{personalDetails.completedByRelationship === "Other" ? personalDetails.completedByRelationshipOther : personalDetails.completedByRelationship}</span>
+                    </div>
+                )}
+
                 <div className="review-row">
                     <label>Date of Birth:</label>
                     <span>{personalDetails.date}</span>
@@ -52,6 +63,7 @@ const ParentReviewSubmission = ({
                     <label>Left Device:</label>
                     <span>{personalDetails.leftDeviceType === "Other" ? personalDetails.leftDeviceTypeOther : personalDetails.leftDeviceType}</span>
                 </div>
+
             </div>
 
             <h1>Your Responses</h1>

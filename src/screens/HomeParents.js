@@ -61,8 +61,8 @@ const HomeParents = ({ match }) => {
         completedBy: "parent",
         rightDeviceType: "",
         leftDeviceType: "",
-        filledByTypeOption:"",
-        filledBy:"",
+        completedByRelationship:"",
+        completedByName:""
     });
 
     const [questionnaireData, setQuestionnaireData] = useState([]);
@@ -120,7 +120,13 @@ const HomeParents = ({ match }) => {
         setLoading(true);
         // set the updates questionnaire sections.
         const updateSections = (questionnaire, sectionVisibility) => {
-            if (sectionVisibility !== undefined) {
+            console.log("In")
+            console.log("VIsi", sectionVisibility)
+            console.log("Ques", questionnaire)
+
+            if (sectionVisibility) {
+                console.log("In if")
+
                 questionnaire.sections = getVisibleSections(
                     questionnaire.sections,
                     sectionVisibility
@@ -136,51 +142,47 @@ const HomeParents = ({ match }) => {
                 setSortBy(shareResponse.sortBy);
                 setClinicianEmail(shareResponse.clinicianEmail);
                 setReadOnly(shareResponse.readOnly);
-                getQuestionnaireById(
-                    shareResponse.questionnaireId
-                ).then((res) => {
-                    const [statusCode, data] = res;
-                    // Define initial values for the Questionnaire
-                    if (statusCode === 200) {
-                        updateSections(data, shareResponse.shareSection);
-                        let tempResponse = [];
-                        let tempComments = [];
-                        data.sections.forEach((section, sectionIndex) => {
-                            tempResponse[sectionIndex] = [];
-                            tempComments[sectionIndex] = [];
-                            section.scenarios.forEach(
-                                (scenario, scenarioIndex) => {
-                                    tempResponse[sectionIndex][
-                                        scenarioIndex
-                                        ] = [];
-                                    tempComments[sectionIndex][scenarioIndex] =
-                                        "";
-                                    scenario.questions.forEach(
-                                        (question, questionIndex) => {
-                                            tempResponse[sectionIndex][
-                                                scenarioIndex
-                                                ][questionIndex] = {
-                                                value: "",
-                                                supplementaryValue: ""
-                                            };
-                                        }
-                                    );
-                                }
-                            );
-                        });
-                        // Updating the state using the initial data and the questionnaire
-                        // retrieved from the server.
-                        setCommentData(tempComments);
-                        setQuestionnaireData(tempResponse);
-                        setQuestionnaire(data);
 
-                        setQuestionnaireInstruction(data.isSSQ_Ch);
+                const [statusCode, data] = await getQuestionnaireById(shareResponse.questionnaireId);
+                updateSections(data, shareResponse.shareSection);
+                // Define initial values for the Questionnaire
+                if (statusCode === 200) {
+                    let tempResponse = [];
+                    let tempComments = [];
+                    data.sections.forEach((section, sectionIndex) => {
+                        tempResponse[sectionIndex] = [];
+                        tempComments[sectionIndex] = [];
+                        section.scenarios.forEach(
+                            (scenario, scenarioIndex) => {
+                                tempResponse[sectionIndex][
+                                    scenarioIndex
+                                    ] = [];
+                                tempComments[sectionIndex][scenarioIndex] =
+                                    "";
+                                scenario.questions.forEach(
+                                    (question, questionIndex) => {
+                                        tempResponse[sectionIndex][
+                                            scenarioIndex
+                                            ][questionIndex] = {
+                                            value: "",
+                                            supplementaryValue: ""
+                                        };
+                                    }
+                                );
+                            }
+                        );
+                    });
+                    // Updating the state using the initial data and the questionnaire
+                    // retrieved from the server.
+                    setCommentData(tempComments);
+                    setQuestionnaireData(tempResponse);
+                    setQuestionnaire(data);
+                    setQuestionnaireInstruction(data.isSSQ_Ch);
 
-                        setWizardStep(0);
-                    } else {
-                        setWizardStep(-1);
-                    }
-                });
+                    setWizardStep(0);
+                } else {
+                    setWizardStep(-1);
+                }
             } else {
                 setWizardStep(-1);
             }
@@ -338,7 +340,6 @@ const HomeParents = ({ match }) => {
             </div>
         );
     }
-
     if (wizardStep === 2) {
         return (
             <div className="parents-home">
@@ -413,6 +414,7 @@ const HomeParents = ({ match }) => {
                         questionnaireData={questionnaireData}
                         commentData={commentData} 
                         clinicianAccess={false}
+                        isSSQ_Ch={questionnaire.isSSQ_Ch}
                     />
                 </div>
             </div>

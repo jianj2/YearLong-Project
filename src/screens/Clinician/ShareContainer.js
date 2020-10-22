@@ -169,7 +169,11 @@ const ShareQuestionnaire = () => {
                 <Fade in={isShareResultVisible && !loading}>
                     <div className="share-modal-container">
                         {isShareSuccess ?
-                            <h2 className="center-h2">Shared Successfully!</h2>
+                            <div>
+                                <h2 className="center-h2">Shared Successfully!</h2>
+                                <p className = "center-p">Please have a look at the spam box if did not recieve the email.</p>
+                            </div>
+                            
                             :
                             <h2 className="center-h2">Fail to share, please try
                                 again!</h2>

@@ -41,8 +41,8 @@ const DoTheTestContainer = () => {
         completedBy: "clinician",
         rightDeviceType: "",
         leftDeviceType: "",
-        filledByTypeOption:"",
-        filledBy:"",
+        completedByRelationship:"",
+        completedByName:""
     });
 
     const [questionnaires, setQuestionnaires] = useState([]);
@@ -129,7 +129,7 @@ const DoTheTestContainer = () => {
     };
 
     const onClickQuestion = async (questionnaireId) => {
-        setLoading(true)
+        setLoading(true);
         const [statusCode, data] = await getQuestionnaireById(
             questionnaireId
         );
@@ -185,10 +185,14 @@ const DoTheTestContainer = () => {
         } else {
             console.error(response);
 
+
         }
             setLoading(false);
     };
 
+    if (loading){
+        return <Loading/>
+    }
     if (wizardStep === 0) {
         return (
             <div className="dothetest-container">
@@ -210,7 +214,7 @@ const DoTheTestContainer = () => {
                     clinicianAccess={true}
                     defaultValue={personalDetails}
                     getPersonalDetails={getPersonalDetails}
-                    isSSQ_Ch={selectedQuestionnaire.isSSQ_Ch}
+                    isSSQ_Ch = {selectedQuestionnaire.isSSQ_Ch}
                     loading={loading}
                 />
             </div>
@@ -221,10 +225,6 @@ const DoTheTestContainer = () => {
                 <div className="dothetest-subheader-container">
                     <button className="button" onClick={prevStep}>
                         B A C K
-                    </button>
-                    <button className="button" form="questionaire-container"
-                            type="submit">
-                        R E V I E W
                     </button>
                 </div>
 
@@ -257,6 +257,7 @@ const DoTheTestContainer = () => {
                     commentData={commentData}
                     emailResponse={emailResponse}
                     clinicianAccess={true}
+                    isSSQ_Ch={selectedQuestionnaire.isSSQ_Ch}
                 />
             </div>
         );
@@ -266,7 +267,10 @@ const DoTheTestContainer = () => {
                 <div className="dothetest-submit">
                     <h1>Questionnaire Completed!</h1>
                     <p>
-                        A report will be sent to your registered email address.
+                        A report will be sent to your registered email address. 
+                    </p>
+                    <p>
+                        If you cannot find the report, please have a look at the spam box. 
                     </p>
                     <button className="button" onClick={resetStep}>
                         G O &nbsp; B A C K
