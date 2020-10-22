@@ -50,31 +50,29 @@ const FormParentDetails = ({
     const [rightDeviceSubmit, setRightDeviceSubmit] = useState(null);
     const [leftDeviceSubmit, setLeftDeviceSubmit] = useState(null);
 
-    const [filledByTypeOptionSubmit, setFilledByTypeOptionSubmit] = useState(null);
-    const [filledByTypeOption, setFilledByTypeOption] = useState(defaultValue.filledByTypeOption);
-    const [filledBy, setFilledBy] = useState(defaultValue.filledBy);
-    const [filledByTypeOptionOther, setFilledByTypeOptionOther] = useState(defaultValue.filledByTypeOption);
-    const [filledByTypeOptionOtherVisible,setFilledByTypeOptionOtherVisible ] = useState(false);
+    const [completedByRelationshipSubmit, setCompletedByRelationshipSubmit] = useState(null);
+    const [completedByRelationship, setCompletedByRelationship] = useState(defaultValue.completedByRelationship);
+    const [completedByName, setCompletedByName] = useState(defaultValue.completedByName);
+    const [completedByRelationshipOther, setCompletedByRelationshipOther] = useState(defaultValue.completedByRelationship);
+    const [completedByRelationshipOtherVisible,setCompletedByRelationshipOtherVisible ] = useState(false);
 
-    console.log("ch",isSSQ_Ch)
-    console.log("visible",filledByTypeOptionOtherVisible)
 
 
     let personalData = {};
 
     const deviceTypeOption = ["None", "Hearing Aid", "Cochlear Implant", "Other", ""];
 
-    const filledByTypeOptions = ["Mother", "Father", "Guardian", "Other", ""];
+    const completedByRelationshipOptions = ["Mother", "Father", "Guardian", "Other", ""];
 
     useEffect(() => {
 
-        if (filledByTypeOption === "Other" || (filledByTypeOptions.indexOf(filledByTypeOption) === -1) ) {
-            setFilledByTypeOptionOtherVisible(true);
+        if (completedByRelationship === "Other" || (completedByRelationshipOptions.indexOf(completedByRelationship) === -1) ) {
+            setCompletedByRelationshipOtherVisible(true);
         } else {
-            setFilledByTypeOptionOtherVisible(false);
+            setCompletedByRelationshipOtherVisible(false);
         }
 
-    }, [filledByTypeOption]);
+    }, [completedByRelationship]);
 
     useEffect(() => {
 
@@ -116,10 +114,10 @@ const FormParentDetails = ({
             setLeftDeviceSubmit(leftDeviceType);
         }
 
-        if (filledByTypeOptionOtherVisible){
-            setFilledByTypeOptionSubmit(filledByTypeOptionOther)
+        if (completedByRelationshipOtherVisible){
+            setCompletedByRelationshipSubmit(completedByRelationshipOther)
         }else{
-            setFilledByTypeOptionSubmit(filledByTypeOption)
+            setCompletedByRelationshipSubmit(completedByRelationship)
         }
 
         personalData = {
@@ -128,12 +126,12 @@ const FormParentDetails = ({
             rightDeviceType: rightDeviceSubmit,
             leftDeviceType: leftDeviceSubmit,
             completedBy,
-            completedByRelationship: filledByTypeOptionSubmit,
-            completedByName: filledBy
+            completedByRelationship: completedByRelationshipSubmit,
+            completedByName: completedByName
         };
 
         getPersonalDetails(personalData);
-    }, [name, date, rightDeviceType, leftDeviceType, rightDeviceTypeOther, leftDeviceTypeOther, filledByTypeOptionOther, filledByTypeOption, filledBy]);
+    }, [name, date, rightDeviceType, leftDeviceType, rightDeviceTypeOther, leftDeviceTypeOther, completedByRelationshipOther, completedByRelationship, completedByName]);
 
     const handleButtonPress = () => {
         submitDetails(personalData);
@@ -216,8 +214,8 @@ const FormParentDetails = ({
                     <FormControl margin="dense">
                         <InputLabel>Filled by</InputLabel>
                         <Input
-                            value={filledBy}
-                            onChange={(event) => setFilledBy(event.target.value)}
+                            value={completedByName}
+                            onChange={(event) => setCompletedByName(event.target.value)}
                             // defaultValue={defaultValue.name}
                             name="filledBy"
                             placeholder="Write the name of the person who filled this"
@@ -308,8 +306,8 @@ const FormParentDetails = ({
                         <InputLabel>Filled by (Relationship)</InputLabel>
                         <Select
                             // defaultValue={defaultValue.leftDeviceType}
-                            value={filledByTypeOptions.indexOf(filledByTypeOption) === -1 ? "Other" : filledByTypeOption}
-                            onChange={(event) => setFilledByTypeOption(event.target.value)}
+                            value={completedByRelationshipOptions.indexOf(completedByRelationship) === -1 ? "Other" : completedByRelationship}
+                            onChange={(event) => setCompletedByRelationship(event.target.value)}
                             name="filledByTypeOption"
                             error={errors.filledByTypeOption !== undefined}
                             // required
@@ -330,13 +328,13 @@ const FormParentDetails = ({
 
                     )}
 
-                    {filledByTypeOptionOtherVisible && !isSSQ_Ch ? (
+                    {completedByRelationshipOtherVisible && !isSSQ_Ch ? (
                         <FormControl margin="dense">
                             <InputLabel>Filled by (Relationship), please specify</InputLabel>
                             <Input
                                 // defaultValue={defaultValue.date}
-                                value={filledByTypeOptionOther}
-                                onChange={(event) => setFilledByTypeOptionOther(event.target.value)}
+                                value={completedByRelationshipOther}
+                                onChange={(event) => setCompletedByRelationshipOther(event.target.value)}
                                 name="filledByTypeOptionOther"
                                 placeholder="e.g. Aunt, Uncle"
                                 required
