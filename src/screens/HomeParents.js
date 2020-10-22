@@ -405,7 +405,8 @@ const HomeParents = ({ match }) => {
                         questionnaire={questionnaire}
                         personalDetails={personalDetails}
                         questionnaireData={questionnaireData}
-                        commentData={commentData}
+                        commentData={commentData} 
+                        clinicianAccess={false}
                     />
                 </div>
             </div>

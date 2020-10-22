@@ -258,6 +258,7 @@ const DoTheTestContainer = () => {
                     questionnaireData={questionnaireData}
                     commentData={commentData}
                     emailResponse={emailResponse}
+                    clinicianAccess={true}
                 />
             </div>
         );

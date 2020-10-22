@@ -23,7 +23,8 @@ const ParentReviewSubmission = ({
     questionnaireData,
     commentData,
     emailResponse,
-    isStandard
+    isStandard,
+    clinicianAccess,
 }) => {
     return (
         <div className="review-submission">
@@ -103,29 +104,32 @@ const ParentReviewSubmission = ({
             </div>
             {/* BUTTONS - SEND (SORTED)REPORT TO EMAIL */}
 
-            <div className="dothetest-bottom-container">
-                <label>Email Report</label>
-
-                <button
-                    className="button"
-                    onClick={() => emailResponse("PERFORMANCE")}
-                >
-                    Sorted by Performance
-                </button>
-
-                {isStandard
-                    ? (
+            { clinicianAccess 
+                ? (
+                    <div className="dothetest-bottom-container">
+                        <label>Email Report</label>
                         <button
                             className="button"
-                            onClick={() => emailResponse("IMPORTANCE")}
+                            onClick={() => emailResponse("PERFORMANCE")}
                         >
-                            Sorted by Importance
+                            Sorted by Performance
                         </button>
-                    ) : null
+                        {isStandard
+                            ? (
+                                <button
+                                    className="button"
+                                    onClick={() => emailResponse("IMPORTANCE")}
+                                >
+                                    Sorted by Importance
+                                </button>
+                            ) : null
+                        }
+                    </div>
 
-                }
+                ) : null
+            }
 
-            </div>
+            
         </div>
     );
 }
