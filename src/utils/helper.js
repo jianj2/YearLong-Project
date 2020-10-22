@@ -16,6 +16,9 @@ export const USER_TYPE_CLINICIAN = "CLINICIAN";
 export const USER_TYPE_ADMIN = "ADMIN";
 export const USER_TYPE_PARTICIPANT = "PARTICIPANT";
 
+export const deviceTypeOption = ["None", "Hearing Aid", "Cochlear Implant", "Other", ""];
+export const filledByTypeOptions = ["Mother", "Father", "Guardian", "Other", ""];
+
 // Helper Function
 export const formatDate = () => {
     let d = new Date(),

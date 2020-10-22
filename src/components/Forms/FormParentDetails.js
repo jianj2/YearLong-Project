@@ -9,7 +9,9 @@ import {
     FormHelperText,
     Select
 } from "@material-ui/core";
-import {Loading} from "../Commons";
+// Import Utilities
+import { deviceTypeOption, filledByTypeOptions } from '../../utils/helper'
+import { Loading } from "../Commons";
 
 /**
  * =============================================================================
@@ -56,15 +58,7 @@ const FormParentDetails = ({
     const [filledByTypeOptionOther, setFilledByTypeOptionOther] = useState(defaultValue.filledByTypeOption);
     const [filledByTypeOptionOtherVisible,setFilledByTypeOptionOtherVisible ] = useState(false);
 
-    console.log("ch",isSSQ_Ch)
-    console.log("visible",filledByTypeOptionOtherVisible)
-
-
     let personalData = {};
-
-    const deviceTypeOption = ["None", "Hearing Aid", "Cochlear Implant", "Other", ""];
-
-    const filledByTypeOptions = ["Mother", "Father", "Guardian", "Other", ""];
 
     useEffect(() => {
 
@@ -145,12 +139,10 @@ const FormParentDetails = ({
             setDate("");
         }
     };
-
-    console.log("loading", loading)
+    
     if (loading){
         return <Loading/>
     }
-
     return (
         <form onSubmit={handleSubmit(handleButtonPress)}
               className="parents-detail-form" id="parents-detail-form">
