@@ -358,7 +358,7 @@ const getVisibleSections = (sections, visibilityInfoList) => {
 
 // set the updates questionnaire sections.
 const updateSections = (questionnaire, sectionVisibility) => {
-    if (sectionVisibility !== undefined) {
+    if (sectionVisibility) {
         questionnaire.sections = getVisibleSections(
             questionnaire.sections,
             sectionVisibility
@@ -779,8 +779,9 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                         console.log(clinician.lastName)
 
                         if (!(questionnaire.isSSQ_Ch)) {
-                            console.log(personalDetails.filledByTypeOption)
-                            console.log(personalDetails.filledBy)
+                            console.log(personalDetails)
+                            // console.log(personalDetails.filledByTypeOption)
+                            // console.log(personalDetails.filledBy)
                         }
 
                         // Catherine
@@ -847,7 +848,7 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     } else {
                         sortedResults = sortByPerformance(resultToPrint)
                     }
-x
+
                     if (sortedResults.isStandard) {
                         printStandardQuestionnaireResults(doc, sortedResults, lineSpacing, comments)
                     } else {
