@@ -141,6 +141,18 @@ const HomeClinician = ({
                     This website uses popups for background processes. Please
                     enable them to continue.
                 </p>
+                <h4>
+                    For Safari:
+                </h4>
+                <p>
+                    Go to Preferences > Websites > Pop-up Windows > Set "Allow" pop-ups for  "https://ssq-client.herokuapp.com/"
+                </p>
+                <h4>
+                    For Chrome:
+                </h4>
+                <p>
+                    Go to Settings > Privacy and security > Site settings > Allow pop-ups for  "https://ssq-client.herokuapp.com/"
+                </p>
                 <p>
                     Please refresh the page after enabling.
                 </p>

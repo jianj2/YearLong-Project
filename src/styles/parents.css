@@ -67,12 +67,11 @@
     padding: 1rem;
     display: flex;
     flex-flow: column;
+    justify-content: flex-start;
 }
-
-.parents-detail-form-column div {
-    flex: 1;
-}
-
+/*.parents-detail-form-column div{*/
+/*    flex: 1; */
+/*}*/
 .parents-detail-form-submit-button {
     display: flex;
     justify-content: center;

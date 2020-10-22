@@ -42,7 +42,8 @@ const HomeParents = ({ match }) => {
         title: "",
         description: "",
         sections: [],
-        isStandard: true
+        isStandard: true,
+        isSSQ_Ch: true
     });
     const [clinicianEmail, setClinicianEmail] = useState("");
     const [sortBy, setSortBy] = useState("PERFORMANCE");
@@ -52,7 +53,9 @@ const HomeParents = ({ match }) => {
         date: "",
         completedBy: "parent",
         rightDeviceType: "",
-        leftDeviceType: ""
+        leftDeviceType: "",
+        filledByTypeOption:"",
+        filledBy:"",
     });
 
     const [questionnaireData, setQuestionnaireData] = useState([]);
@@ -174,6 +177,7 @@ const HomeParents = ({ match }) => {
             } else {
                 setWizardStep(-1);
             }
+
         };
         getDetails();
         setLoading(false);
@@ -306,6 +310,7 @@ const HomeParents = ({ match }) => {
                         defaultValue={personalDetails}
                         getPersonalDetails={getPersonalDetails}
                         isSSQ_Ch={questionnaire.isSSQ_Ch}
+                        loading={loading}
                     />
                 </div>
             </div>

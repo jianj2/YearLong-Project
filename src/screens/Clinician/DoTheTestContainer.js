@@ -40,7 +40,9 @@ const DoTheTestContainer = () => {
         date: "",
         completedBy: "clinician",
         rightDeviceType: "",
-        leftDeviceType: ""
+        leftDeviceType: "",
+        filledByTypeOption:"",
+        filledBy:"",
     });
 
     const [questionnaires, setQuestionnaires] = useState([]);
@@ -58,6 +60,7 @@ const DoTheTestContainer = () => {
 
     // This is called whenever "user" changes
     useEffect(() => {
+        setLoading(true)
         const retrieveStandardisedQuestionnaires = async () => {
             const [statusCode, data] = await getStandardisedQuestionnaires();
             if (statusCode === 200) {
@@ -80,6 +83,7 @@ const DoTheTestContainer = () => {
             retrieveCustomisedQuestionnaires();
             retrieveStandardisedQuestionnaires();
         }
+        setLoading(false)
     }, [user, token]);
 
     // Method called to go to the next page in the wizard.
@@ -127,6 +131,7 @@ const DoTheTestContainer = () => {
     };
 
     const onClickQuestion = async (questionnaireId) => {
+        setLoading(true)
         setWizardStep(0);
         const [statusCode, data] = await getQuestionnaireById(
             questionnaireId
@@ -158,6 +163,7 @@ const DoTheTestContainer = () => {
         } else {
             console.error(data);
         }
+        setLoading(false)
     };
 
     const getPersonalDetails = (data) => {
@@ -206,6 +212,8 @@ const DoTheTestContainer = () => {
                     clinicianAccess={true}
                     defaultValue={personalDetails}
                     getPersonalDetails={getPersonalDetails}
+                    isSSQ_Ch={selectedQuestionnaire.isSSQ_Ch}
+                    loading={loading}
                 />
             </div>
         );
