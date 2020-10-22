@@ -13,12 +13,11 @@ on:
   # Pipeline trigger on push
   push:
     branches:
-    - deployment-server-update   
+    - deployment-server-update 
     - production-server
   # Pipeline trigger on pull request
   pull_request:
     branches:
-    - deployment-server-update  
     - production-server
 
 jobs:
@@ -30,12 +29,23 @@ jobs:
     # Checking out code to server
     - name: Checkout
       uses: actions/checkout@v2
-    # Running eslint    
-    - name: Lint with eslint
-      uses: getsentry/action-eslint-fix@v1
+    # Setting up Node.js 14.8 for linting    
+    - name: Set up Node.js 14.x for Linting
+      uses: actions/setup-node@v1
       with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        dry: true
+        node-version: 14.8
+    # Installing npm dependencies  
+    - name: Install dependencies    
+      run: |
+        npm install
+        npm install eslint --save-dev
+        npx eslint --init
+    # Running eslint
+    - name: Run linters
+      uses: wearerequired/lint-action@v1
+      with:
+        github_token: ${{ secrets.github_token }}
+        eslint: true
 
   # Deploy nodejs to heroku
   #deploy:
@@ -43,7 +53,7 @@ jobs:
   #  runs-on: ubuntu-latest
   #  name: deploy
   #  steps:
-    # Checking out code to server
+  #  # Checking out code to server
   #  - name: Checkout
   #    uses: actions/checkout@v2
   #  # Setting up heroku
