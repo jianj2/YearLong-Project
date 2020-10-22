@@ -50,11 +50,11 @@ const FormParentDetails = ({
     const [rightDeviceSubmit, setRightDeviceSubmit] = useState(null);
     const [leftDeviceSubmit, setLeftDeviceSubmit] = useState(null);
 
-    const [filledByTypeOptionSubmit, setFilledByTypeOptionSubmit] = useState(null);
-    const [filledByTypeOption, setFilledByTypeOption] = useState(defaultValue.filledByTypeOption);
-    const [filledBy, setFilledBy] = useState(defaultValue.filledBy);
-    const [filledByTypeOptionOther, setFilledByTypeOptionOther] = useState(defaultValue.filledByTypeOption);
-    const [filledByTypeOptionOtherVisible,setFilledByTypeOptionOtherVisible ] = useState(false);
+    const [completedByRelationshipSubmit, setCompletedByRelationshipSubmit] = useState(null);
+    const [completedByRelationship, setCompletedByRelationship] = useState(defaultValue.completedByRelationship);
+    const [completedByName, setCompletedByName] = useState(defaultValue.completedByName);
+    const [completedByRelationshipOther, setCompletedByRelationshipOther] = useState(defaultValue.completedByRelationship);
+    const [completedByRelationshipOtherVisible,setCompletedByRelationshipOtherVisible ] = useState(false);
 
     let personalData = {};
 
@@ -215,14 +215,14 @@ const FormParentDetails = ({
                             value={completedByName}
                             onChange={(event) => setCompletedByName(event.target.value)}
                             // defaultValue={defaultValue.name}
-                            name="filledBy"
+                            name="completedBy"
                             placeholder="Write the name of the person who completed this questionnaire."
                             error={errors.completedByName !== undefined}
                             inputRef={register({
                                 required: "You have not entered the name."
                             })}
                         />
-                        <FormHelperText>{errors.completedByName ? errors.completedByName.message : "Please enter the name of the person who filled this questionnaire."}</FormHelperText>
+                        <FormHelperText>{errors.completedByName ? errors.completedByName.message : "Please enter the name of the person who completed this questionnaire."}</FormHelperText>
                     </FormControl>
                         )}
 
@@ -306,7 +306,7 @@ const FormParentDetails = ({
                             // defaultValue={defaultValue.leftDeviceType}
                             value={completedByRelationshipOptions.indexOf(completedByRelationship) === -1 ? "Other" : completedByRelationship}
                             onChange={(event) => setCompletedByRelationship(event.target.value)}
-                            name="filledByTypeOption"
+                            name="completedByTypeOption"
                             error={errors.completedByRelationship !== undefined}
                             // required
                             native
@@ -321,7 +321,7 @@ const FormParentDetails = ({
                             <option value="Other">Other</option>
                         </Select>
 
-                        <FormHelperText>{errors.completedByRelationship ? errors.completedByRelationship.message : "Please specify who filled the questionnaire."}</FormHelperText>
+                        <FormHelperText>{errors.completedByRelationship ? errors.completedByRelationship.message : "Please specify who completed the questionnaire."}</FormHelperText>
                     </FormControl>
 
                     )}
@@ -341,7 +341,7 @@ const FormParentDetails = ({
                                     required: "You have not entered who completed the questionnaire(relationship)."
                                 })}
                             />
-                            <FormHelperText>{errors.completedByRelationshipOther ? errors.completedByRelationshipOther.message : "Please specify who filled the questionnaire(relationship)."}</FormHelperText>
+                            <FormHelperText>{errors.completedByRelationshipOther ? errors.completedByRelationshipOther.message : "Please specify who completed the questionnaire(relationship)."}</FormHelperText>
                         </FormControl>
                     ) : null}
 
