@@ -847,7 +847,6 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     } else {
                         sortedResults = sortByPerformance(resultToPrint)
                     }
-x
                     if (sortedResults.isStandard) {
                         printStandardQuestionnaireResults(doc, sortedResults, lineSpacing, comments)
                     } else {
