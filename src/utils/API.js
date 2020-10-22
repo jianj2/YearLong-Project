@@ -74,7 +74,7 @@ export const editStandardQuestionnaire = async (questionnaireData) => {
 export const adminCopyQuestionnaire = async (questionnaireId) => {
     const url = "questionnaire/copy";
     const data = {
-        copyToCustomisedQuestionnaire: false,
+        isCopyingToCustomisedQuestionnaire: false,
         questionnaireId
     };
     return await sendRequest("POST", url, data);
