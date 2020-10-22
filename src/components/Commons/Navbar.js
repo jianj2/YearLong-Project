@@ -31,14 +31,15 @@ const NavBar = ({ history }) => {
 
     console.log("HISTORYU", )
 
+    // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
+    // This portion gets rendered if the user is a parent.
+    // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
     if (history.location.pathname.includes("parent")) {
         return (
             <div className="navbar-container">
-                <div className="navbar-left">
+                <div className="navbar-center">
                    <img src={logoCompressed} alt="logo" />
                 </div>
-    
-                <div className="navbar-right"></div>
             </div>
         );
     }
