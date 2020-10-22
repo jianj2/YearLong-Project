@@ -1,6 +1,6 @@
 // Import Libraries.
 import React from "react";
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { IoMdLogOut } from "react-icons/io";
 // Import Utilities.
 import { useAuth0 } from "../../utils/react-auth0-spa";
@@ -25,9 +25,24 @@ import logoCompressed from "../../assets/logo_compressed.png";
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-const NavBar = () => {
+const NavBar = ({ history }) => {
     const { isAuthenticated, logout } = useAuth0();
     const { isAdminAuthenticated, adminLogout } = useAdminAuth();
+
+    console.log("HISTORYU", )
+
+    if (history.location.pathname.includes("parent")) {
+        return (
+            <div className="navbar-container">
+                <div className="navbar-left">
+                   <img src={logoCompressed} alt="logo" />
+                </div>
+    
+                <div className="navbar-right"></div>
+            </div>
+        );
+    }
+
 
     return (
         <div className="navbar-container">
@@ -79,4 +94,4 @@ const NavBar = () => {
     );
 };
 
-export default NavBar;
+export default withRouter(NavBar);
