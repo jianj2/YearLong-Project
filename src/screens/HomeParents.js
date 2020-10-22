@@ -97,7 +97,7 @@ const HomeParents = ({ match }) => {
                     return visibilityInfo.title === section.title;
                 }
             );
-            if (foundVisibilityInfo) {
+            if (foundVisibilityInfo !== undefined) {
                 return foundVisibilityInfo.isVisible;
             } else {
                 return null;
@@ -137,6 +137,7 @@ const HomeParents = ({ match }) => {
                 setReadOnly(shareResponse.readOnly);
                 const [statusCode, data] = await API.getQuestionnaireById(shareResponse.questionnaireId);
 
+                    updateSections(data, shareResponse.shareSection);
                     // Define initial values for the Questionnaire
                     if (statusCode === 200) {
                         let tempResponse = [];
@@ -169,12 +170,6 @@ const HomeParents = ({ match }) => {
                         setCommentData(tempComments);
                         setQuestionnaireData(tempResponse);
                         setQuestionnaire(data);
-                        console.log("before", data)
-                        updateSections(data, shareResponse.shareSection);
-                        console.log(shareResponse.shareSection)
-                        console.log("after", data)
-
-
                         setQuestionnaireInstruction(data.isSSQ_Ch);
 
                         setWizardStep(0);
@@ -323,7 +318,6 @@ const HomeParents = ({ match }) => {
             </div>
         );
     }
-    console.log("uvin",questionnaire)
     if (wizardStep === 2) {
         return (
             <div className="parents-home">
