@@ -5,8 +5,7 @@
 # Mayank Sharma - 22th August 2020
 #
 # This YAML file runs a pipeline in GitHub Actions containing a number of jobs.
-# Jobs include testing the code and deploying the deployment-client and development-client branches
-# to Heroku.
+# Jobs include linting the code and deploying the production-client branch to Heroku.
 
 ---
 name: client-CI/CD
