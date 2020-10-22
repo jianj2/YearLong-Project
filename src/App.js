@@ -55,7 +55,7 @@ const App = () => {
                         render={() => <Landing/>}
                     />
                     <Route
-                        path="/parent/:shareId"
+                        path="/participant/:shareId"
                         exact
                         render={() => <HomeParents/>}
                     />

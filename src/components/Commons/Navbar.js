@@ -30,9 +30,9 @@ const NavBar = ({ history }) => {
     const { isAdminAuthenticated, adminLogout } = useAdminAuth();
 
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
-    // If the user is a parent, we load a different kind of Navbar.
+    // If the user is a participant, we load a different kind of Navbar.
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
-    if (history.location.pathname.includes("parent")) {
+    if (history.location.pathname.includes("participant")) {
         return (
             <div className="navbar-container">
                 <div className="navbar-center">

@@ -17,7 +17,7 @@ class unittest_frontend_parentPage1(unittest.TestCase):
         config_object.read("../driverConfig.ini")
         self.driver = webdriver.Chrome(config_object["DRIVERLOCATION"]["Driver"])
 
-        self.driver.get("http://localhost:3000/parent/:questionnaireId/:clinicianEmail")
+        self.driver.get("http://localhost:3000/participant/:questionnaireId/:clinicianEmail")
 
     def test_navbar_left(self):
         navbar_left = self.driver.find_element_by_class_name("navbar-left")

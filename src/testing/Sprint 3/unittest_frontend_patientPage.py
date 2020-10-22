@@ -15,7 +15,7 @@ class unittest_frontend_patientPage(unittest.TestCase):
         config_object.read("../driverConfig.ini")
         self.driver = webdriver.Chrome(config_object["DRIVERLOCATION"]["Driver"])
 
-        self.driver.get("http://localhost:3000/parent/3d00a650-fd82-11ea-8313-814f9cea06fc")
+        self.driver.get("http://localhost:3000/participant/3d00a650-fd82-11ea-8313-814f9cea06fc")
         time.sleep(3)
 
     def test_next_page1(self):
