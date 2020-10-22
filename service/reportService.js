@@ -774,17 +774,6 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     .text(device_r, 50, 170)
                     .text(device_l, 250, 170)
 
-                        // Catherine   // check if undefined, some early user dont have names.
-                        console.log(clinician.firstName)
-                        console.log(clinician.lastName)
-
-                        if (!(questionnaire.isSSQ_Ch)) {
-                            console.log(personalDetails.filledByTypeOption)
-                            console.log(personalDetails.filledBy)
-                        }
-
-                        // Catherine
-
                         // THIS LINE PRINTS THE QUESTIONNAIRE RESULT IN THE DOC FILE
                         Share.findOne({shareId}, function (err, share
                         ) {
@@ -799,17 +788,39 @@ const generateAttachments = function (questionnaireId, personalDetails, question
 
                     let lineSpacing = 230;
                     let margin = 0;
-                    doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire information", 30, lineSpacing);
-                    doc.fillOpacity(0.1).rect(30, lineSpacing + 20, 550, 70).fill('purple');
-                    doc.fillOpacity(1).fill('black');
+                    let initialSpacing = lineSpacing + 20
+                    doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire Information", 30, lineSpacing);
+
                     lineSpacing += 40;
                     doc.font('Helvetica-Bold').fontSize(12)
                         .text('Questionnaire Name', 50, lineSpacing)
-                        .text('SSQ Completed By', 250, lineSpacing)
+                        .text('Clinician First Name', 250, lineSpacing)
+                        .text('Clinician Last Name', 450, lineSpacing)
+
                     lineSpacing += 20;
                     doc.font('Helvetica').fontSize(12)
                         .text(questionnaire.title, 50, lineSpacing)
-                        .text(personalDetails.completedBy, 250, lineSpacing);
+                        .text(clinician.firstName, 250, lineSpacing)
+                        .text(clinician.lastName, 450, lineSpacing)
+
+                    lineSpacing += 20
+
+                    if (!(questionnaire.isSSQ_Ch)) {
+                        doc.font('Helvetica-Bold').fontSize(12)
+                            .text('Relationship', 250, lineSpacing)
+                            .text('Completed By (Name)', 450, lineSpacing)
+
+                        lineSpacing += 20
+
+                        doc.font('Helvetica').fontSize(12)
+                            .text(personalDetails.completedByRelationship, 50, lineSpacing)
+                            .text(personalDetails.completedByName, 250, lineSpacing)
+                        lineSpacing += 20
+                    }
+
+                    doc.fillOpacity(0.1).rect(30, initialSpacing, lineSpacing - initialSpacing, 70).fill('purple');
+                    doc.fillOpacity(1).fill('black');
+
 
                     // prints out summary of section scores
                     doc.font('Helvetica-Bold').fontSize(14).text("Performance Rating Summary", 30, lineSpacing + 70);
