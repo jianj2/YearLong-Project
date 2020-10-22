@@ -75,7 +75,7 @@ const FormParentDetails = ({
             setRightDeviceTypeOtherVisible(false);
         }
 
-    }, [rightDeviceType, deviceTypeOption]);
+    }, [rightDeviceType]);
 
     useEffect(() => {
         if (leftDeviceType === "Other" || (deviceTypeOption.indexOf(leftDeviceType) === -1)) {
@@ -84,7 +84,7 @@ const FormParentDetails = ({
             setLeftDeviceTypeOtherVisible(false);
         }
 
-    }, [leftDeviceType, deviceTypeOption]);
+    }, [leftDeviceType]);
 
     useEffect(() => {
 
