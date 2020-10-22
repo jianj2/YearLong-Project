@@ -1,7 +1,9 @@
 // Import Libraries.
 import React, { useEffect, useState } from "react";
 // Import Utilities.
-import * as API from "../../utils/API";
+import {
+    adminCopyQuestionnaire
+} from "../../utils/API";
 import {
     addStandardQuestionnaire,
     getStandardisedQuestionnaires,
@@ -52,7 +54,7 @@ const AdminManageQuestionnaires = () => {
     };
 
     const copyQuestionnaire = async (questionnaire) => {
-        await API.adminCopyQuestionnaire(questionnaire);
+        await adminCopyQuestionnaire(questionnaire);
         window.location.reload(false);
     };
 

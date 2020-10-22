@@ -3,7 +3,10 @@ import React, { useState, useEffect } from "react";
 import { Modal, Backdrop, Fade, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 // Import Utilities.
-import * as API from "../../utils/API";
+import {
+    getSpecificInstruction,
+    updateInstruction
+} from "../../utils/API";
 // Import Components.
 import { Loading } from "../../components/Commons";
 
@@ -49,7 +52,7 @@ const SSQInstructionsContainer = ({ instructionType }) => {
 
     const getInstruction = async (instructionType) => {
         try {
-            const [statusCode, instruction] = await API.getSpecificInstruction(instructionType);
+            const [statusCode, instruction] = await getSpecificInstruction(instructionType);
             if (statusCode === 200) {
                 setInstruction(instruction);
             }
@@ -101,7 +104,7 @@ const SSQInstructionsContainer = ({ instructionType }) => {
         setLoading(true);
 
         try {
-            const [statusCode,] = await API.updateInstruction(instructionType, {instruction});
+            const [statusCode,] = await updateInstruction(instructionType, {instruction});
             setLoading(false);
             if (statusCode === 200) {
                 setsaveSuccess(true);

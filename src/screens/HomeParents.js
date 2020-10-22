@@ -3,7 +3,12 @@ import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { withRouter } from "react-router-dom";
 // Import Utilities.
-import * as API from "../utils/API";
+import {
+    getSpecificInstruction,
+    getShareDetails,
+    getQuestionnaireById,
+    sendQuestionnaireData
+} from "../utils/API";
 import { HELPER_SORT } from "../utils/helper";
 // Import Components.
 import { FormParentDetails } from "../components/Forms";
@@ -81,7 +86,7 @@ const HomeParents = ({ match }) => {
         } else {
             instructionType = "RP";
         }
-        const [statusCode, res] = await API.getSpecificInstruction(instructionType);
+        const [statusCode, res] = await getSpecificInstruction(instructionType);
         if (statusCode === 200) {
             setInstruction({
                 title: res["title"],
@@ -125,13 +130,13 @@ const HomeParents = ({ match }) => {
 
         // Server call to get the questionnaireId
         const getDetails = async () => {
-            const [statusCode, shareResponse] = await API.getShareDetails(match.params.shareId);
+            const [statusCode, shareResponse] = await getShareDetails(match.params.shareId);
             if (statusCode === 200) {
                 // Server call to get the questionnaire.
                 setSortBy(shareResponse.sortBy);
                 setClinicianEmail(shareResponse.clinicianEmail);
                 setReadOnly(shareResponse.readOnly);
-                API.getQuestionnaireById(
+                getQuestionnaireById(
                     shareResponse.questionnaireId
                 ).then((res) => {
                     const [statusCode, data] = res;
@@ -234,7 +239,7 @@ const HomeParents = ({ match }) => {
         };
 
         setLoading(true);
-        const [statusCode, response] = await API.sendQuestionnaireData(
+        const [statusCode, response] = await sendQuestionnaireData(
             data,
             match.params.shareId
         );
