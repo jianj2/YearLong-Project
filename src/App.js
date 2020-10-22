@@ -1,6 +1,7 @@
 // Import Libraries.
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Helmet } from "react-helmet";
 // Import Screens
 import Landing from "./screens/Landing";
 import HomeClinician from "./screens/HomeClinician";
@@ -47,6 +48,10 @@ const App = () => {
     return (
         <div className="app-container">
             <Router>
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>SSQ of Hearing</title>
+                </Helmet>
                 <NavBar/>
                 <Switch>
                     <Route
