@@ -174,6 +174,13 @@ const Question = ({
         return (
             <div className="question-container">
                 <p>{description}</p>
+
+                <div className="slider-labels">
+                    <label>{rangeOptions[0]}</label>
+                    <label
+                        className="slider-value">{data.value === "" || data.value === undefined ? "Ø" : data.value}</label>
+                    <label>{rangeOptions[1]}</label>
+                </div>
                 <SliderWithTicks
                     value={data.value}
                     color="secondary"

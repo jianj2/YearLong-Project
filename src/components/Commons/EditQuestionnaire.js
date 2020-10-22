@@ -7,7 +7,7 @@ import {
     editStandardQuestionnaire 
 } from "../../utils/API";
 import { useAuth0 } from "../../utils/react-auth0-spa";
-// Import Components.
+// Import Components. 
 import { Loading, EditDescription, SectionsContainer } from "./";
 
 /**

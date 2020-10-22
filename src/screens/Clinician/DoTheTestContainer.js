@@ -132,7 +132,6 @@ const DoTheTestContainer = () => {
 
     const onClickQuestion = async (questionnaireId) => {
         setLoading(true)
-        setWizardStep(0);
         const [statusCode, data] = await getQuestionnaireById(
             questionnaireId
         );
@@ -160,6 +159,7 @@ const DoTheTestContainer = () => {
             setCommentData(tempComments);
             setQuestionnaireData(tempResponse);
             setSelectedQuestionnaire(questionnaire);
+            setWizardStep(0);
         } else {
             console.error(data);
         }
@@ -190,6 +190,8 @@ const DoTheTestContainer = () => {
         }
 
     };
+
+    console.log("selectedQuestionnaire ",selectedQuestionnaire)
 
     if (wizardStep === 0) {
         return (
