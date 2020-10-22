@@ -10,6 +10,8 @@ import time
 class unittest_frontend_parentPage4(unittest.TestCase):
 
     def setUp(self):
+
+        # self.driver = webdriver.Chrome("../chromedriver_mac")  # for mac
         self.driver = webdriver.Chrome("chromedriver.exe")
         self.driver.get("http://localhost:3000/parent/:questionnaireId/:clinicianEmail")
         next_button = self.driver.find_element_by_class_name("button")
