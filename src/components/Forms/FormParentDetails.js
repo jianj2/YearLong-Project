@@ -56,8 +56,7 @@ const FormParentDetails = ({
     const [completedByRelationshipOther, setCompletedByRelationshipOther] = useState(defaultValue.completedByRelationship);
     const [completedByRelationshipOtherVisible,setCompletedByRelationshipOtherVisible ] = useState(false);
 
-
-
+    console.log(rightDeviceType)
     let personalData = {};
 
     const deviceTypeOption = ["None", "Hearing Aid", "Cochlear Implant", "Other", ""];
