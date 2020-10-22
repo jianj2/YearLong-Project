@@ -129,8 +129,7 @@ const DoTheTestContainer = () => {
     };
 
     const onClickQuestion = async (questionnaireId) => {
-        setLoading(true)
-        
+        setLoading(true);
         const [statusCode, data] = await getQuestionnaireById(
             questionnaireId
         );
@@ -183,10 +182,12 @@ const DoTheTestContainer = () => {
         const [statusCode, response] = await completeQuestionnaire(token, data);
         if (statusCode === 200) {
             setWizardStep(3);
-            setLoading(false);
         } else {
             console.error(response);
+
+
         }
+            setLoading(false);
     };
 
     if (loading){
@@ -255,8 +256,8 @@ const DoTheTestContainer = () => {
                     questionnaireData={questionnaireData}
                     commentData={commentData}
                     emailResponse={emailResponse}
+                    clinicianAccess={true}
                     isSSQ_Ch={selectedQuestionnaire.isSSQ_Ch}
-
                 />
             </div>
         );

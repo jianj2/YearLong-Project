@@ -1,6 +1,6 @@
 // Import Libraries.
 import React from "react";
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { IoMdLogOut } from "react-icons/io";
 // Import Utilities.
 import { useAuth0 } from "../../utils/react-auth0-spa";
@@ -25,58 +25,71 @@ import logoCompressed from "../../assets/logo_compressed.png";
 ////////////////////////////////////////////////////////////////////////////////
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
-const NavBar = () => {
+const NavBar = ({ history }) => {
     const { isAuthenticated, logout } = useAuth0();
     const { isAdminAuthenticated, adminLogout } = useAdminAuth();
 
-    return (
-        <div className="navbar-container">
-            <div className="navbar-left">
-                {
-                    isAuthenticated ?
-                        <Link to="/clinician">
-                            <img src={logoCompressed} alt="logo" />
-                        </Link>
-                        : null
-                }
-                {
-                    isAdminAuthenticated ?
-                        <Link to="/admin">
-                            <img src={logoCompressed} alt="logo" />
-                        </Link>
-                        : null
-                }
-                {
-                    (!isAdminAuthenticated && !isAuthenticated) ?
-                            <img src={logoCompressed} alt="logo" />
-                        : null
-                }
+    // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
+    // If the user is a participant, we load a different kind of Navbar.
+    // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
+    if (history.location.pathname.includes("participant")) {
+        return (
+            <div className="navbar-container">
+                <div className="navbar-center">
+                   <img src={logoCompressed} alt="logo" />
+                </div>
             </div>
-
-            <div className="navbar-right">
-                {isAuthenticated && (
-                    <button
-                        onClick={() => logout()}
-                        className="button"
-                        title="Log Out"
-                    >
-                        <label>Clinician Log Out</label>
-                        <IoMdLogOut />
-                    </button>
-                )}
-                {isAdminAuthenticated && (
-                    <button
-                        onClick={() => adminLogout()}
-                        className="button"
-                        title="Log Out"
-                    >
-                        <label>Admin Log Out</label>
-                        <IoMdLogOut />
-                    </button>
-                )}
+        );
+    } else {
+        return (
+            <div className="navbar-container">
+                <div className="navbar-left">
+                    {
+                        isAuthenticated ?
+                            <Link to="/clinician">
+                                <img src={logoCompressed} alt="logo" />
+                            </Link>
+                            : null
+                    }
+                    {
+                        isAdminAuthenticated ?
+                            <Link to="/admin">
+                                <img src={logoCompressed} alt="logo" />
+                            </Link>
+                            : null
+                    }
+                    {
+                        (!isAdminAuthenticated && !isAuthenticated) ?
+                                <img src={logoCompressed} alt="logo" />
+                            : null
+                    }
+                </div>
+    
+                <div className="navbar-right">
+                    {isAuthenticated && (
+                        <button
+                            onClick={() => logout()}
+                            className="button"
+                            title="Log Out"
+                        >
+                            <label>Clinician Log Out</label>
+                            <IoMdLogOut />
+                        </button>
+                    )}
+                    {isAdminAuthenticated && (
+                        <button
+                            onClick={() => adminLogout()}
+                            className="button"
+                            title="Log Out"
+                        >
+                            <label>Admin Log Out</label>
+                            <IoMdLogOut />
+                        </button>
+                    )}
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 };
 
-export default NavBar;
+export default withRouter(NavBar);

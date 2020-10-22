@@ -26,6 +26,47 @@
     height: 25px;
 }
 
+.navbar-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+@keyframes logo-animation {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(-180deg) scale(0.5);
+    }
+    100% {
+        transform: rotate(-360deg) scale(1);
+    }
+}
+@keyframes logo-animation-hover {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(180deg) scale(0.6);
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+.navbar-center img {
+    height: 30px;
+    padding: 10px;
+    transition: all 0.1s;
+    
+    animation: logo-animation 0.2s ease-in-out;
+}
+
+.navbar-center img:hover {
+    animation: logo-animation-hover 0.5s ease-in-out;
+}
+
 .navbar-right {
 
 }

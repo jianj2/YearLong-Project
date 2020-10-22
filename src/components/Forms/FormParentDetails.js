@@ -9,7 +9,9 @@ import {
     FormHelperText,
     Select
 } from "@material-ui/core";
-import {Loading} from "../Commons";
+// Import Utilities
+import { deviceTypeOption, completedByRelationshipOptions } from '../../utils/helper'
+import { Loading } from "../Commons";
 
 /**
  * =============================================================================
@@ -47,10 +49,10 @@ const FormParentDetails = ({
     const [leftDeviceTypeOtherVisible, setLeftDeviceTypeOtherVisible] = useState(null);
     const [rightDeviceTypeOther, setRightDeviceTypeOther] = useState(defaultValue.rightDeviceType);
     const [leftDeviceTypeOther, setLeftDeviceTypeOther] = useState(defaultValue.leftDeviceType);
-    const [rightDeviceSubmit, setRightDeviceSubmit] = useState(null);
-    const [leftDeviceSubmit, setLeftDeviceSubmit] = useState(null);
-
-    const [completedByRelationshipSubmit, setCompletedByRelationshipSubmit] = useState(null);
+    // Made into let to solve a latency issue.
+    let [rightDeviceSubmit, setRightDeviceSubmit] = useState(defaultValue.rightDeviceType);
+    let [leftDeviceSubmit, setLeftDeviceSubmit] = useState(defaultValue.leftDeviceType);
+    let [completedByRelationshipSubmit, setCompletedByRelationshipSubmit] = useState(defaultValue.completedByRelationship);
     const [completedByRelationship, setCompletedByRelationship] = useState(defaultValue.completedByRelationship);
     const [completedByName, setCompletedByName] = useState(defaultValue.completedByName);
     const [completedByRelationshipOther, setCompletedByRelationshipOther] = useState(defaultValue.completedByRelationship);
@@ -58,12 +60,7 @@ const FormParentDetails = ({
 
     let personalData = {};
 
-    const deviceTypeOption = ["None", "Hearing Aid", "Cochlear Implant", "Other", ""];
-
-    const completedByRelationshipOptions = ["Mother", "Father", "Guardian", "Other", ""];
-
     useEffect(() => {
-
         if (completedByRelationship === "Other" || (completedByRelationshipOptions.indexOf(completedByRelationship) === -1) ) {
             setCompletedByRelationshipOtherVisible(true);
         } else {
@@ -73,25 +70,22 @@ const FormParentDetails = ({
     }, [completedByRelationship]);
 
     useEffect(() => {
-
         if (rightDeviceType === "Other" || (deviceTypeOption.indexOf(rightDeviceType) === -1)) {
             setRightDeviceTypeOtherVisible(true);
         } else {
             setRightDeviceTypeOtherVisible(false);
         }
 
-    }, [rightDeviceType, deviceTypeOption]);
+    }, [rightDeviceType]);
 
     useEffect(() => {
-
         if (leftDeviceType === "Other" || (deviceTypeOption.indexOf(leftDeviceType) === -1)) {
             setLeftDeviceTypeOtherVisible(true);
         } else {
             setLeftDeviceTypeOtherVisible(false);
         }
 
-    }, [leftDeviceType, deviceTypeOption]);
-
+    }, [leftDeviceType]);
 
     useEffect(() => {
 
@@ -103,19 +97,26 @@ const FormParentDetails = ({
         }
         if (rightDeviceTypeOtherVisible) {
             setRightDeviceSubmit(rightDeviceTypeOther);
+            rightDeviceSubmit = rightDeviceTypeOther
         } else {
             setRightDeviceSubmit(rightDeviceType);
+            rightDeviceSubmit = rightDeviceType
+
         }
         if (leftDeviceTypeOtherVisible) {
             setLeftDeviceSubmit(leftDeviceTypeOther);
+            leftDeviceSubmit = leftDeviceTypeOther
         } else {
             setLeftDeviceSubmit(leftDeviceType);
+            leftDeviceSubmit = leftDeviceType
         }
 
         if (completedByRelationshipOtherVisible){
             setCompletedByRelationshipSubmit(completedByRelationshipOther)
+            completedByRelationshipSubmit=completedByRelationshipOther
         }else{
             setCompletedByRelationshipSubmit(completedByRelationship)
+            completedByRelationshipSubmit=completedByRelationship
         }
 
         personalData = {
@@ -133,7 +134,6 @@ const FormParentDetails = ({
 
     const handleButtonPress = () => {
         submitDetails(personalData);
-
     };
 
     const handleDateChange = (event) => {
@@ -145,7 +145,6 @@ const FormParentDetails = ({
     if (loading){
         return <Loading/>
     }
-
     return (
         <form onSubmit={handleSubmit(handleButtonPress)}
               className="parents-detail-form" id="parents-detail-form">
@@ -170,6 +169,7 @@ const FormParentDetails = ({
                     <FormControl margin="dense">
                         <InputLabel>Right Device Type</InputLabel>
                         <Select id="DeviceOne"
+                                defaultValue=""
                                 value={deviceTypeOption.indexOf(rightDeviceType) === -1 ? "Other" : rightDeviceType}
                                 onChange={(event) => setRightDeviceType(event.target.value)}
                                 name="rightDeviceType"
@@ -178,7 +178,7 @@ const FormParentDetails = ({
                                 inputRef={register({
                                     required: "You have not specified the device type."
                                 })}>
-                            <option value="" disabled selected></option>
+                            <option value="" disabled></option>
                             <option value="None">None</option>
                             <option value="Hearing Aid">Hearing Aid</option>
                             <option value="Cochlear Implant">Cochlear Implant
@@ -225,7 +225,6 @@ const FormParentDetails = ({
                         <FormHelperText>{errors.completedByName ? errors.completedByName.message : "Please enter the name of the person who completed this questionnaire."}</FormHelperText>
                     </FormControl>
                         )}
-
                 </div>
 
 
@@ -257,6 +256,7 @@ const FormParentDetails = ({
                     <FormControl margin="dense">
                         <InputLabel>Left Device Type</InputLabel>
                         <Select
+                            defaultValue=""
                             value={deviceTypeOption.indexOf(leftDeviceType) === -1 ? "Other" : leftDeviceType}
                             onChange={(event) => setLeftDeviceType(event.target.value)}
                             name="leftDeviceType"
@@ -267,7 +267,7 @@ const FormParentDetails = ({
                                 required: "You have not specified the device type."
                             })}
                         >
-                            <option value="" disabled selected></option>
+                            <option value="" disabled></option>
                             <option value="None">None</option>
                             <option value="Hearing Aid">Hearing Aid</option>
                             <option value="Cochlear Implant">Cochlear Implant
@@ -344,9 +344,6 @@ const FormParentDetails = ({
                             <FormHelperText>{errors.completedByRelationshipOther ? errors.completedByRelationshipOther.message : "Please specify who completed the questionnaire(relationship)."}</FormHelperText>
                         </FormControl>
                     ) : null}
-
-
-
                 </div>
             </div>
 

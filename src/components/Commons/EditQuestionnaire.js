@@ -2,9 +2,12 @@
 import React, { useState } from "react";
 import { CustomModal } from "./index";
 // Import Utilities.
-import * as API from "../../utils/API";
+import { 
+    editQuestionnaire, 
+    editStandardQuestionnaire 
+} from "../../utils/API";
 import { useAuth0 } from "../../utils/react-auth0-spa";
-// Import Components.
+// Import Components. 
 import { Loading, EditDescription, SectionsContainer } from "./";
 
 /**
@@ -50,9 +53,9 @@ const EditQuestionnaire = ({
 
     const handleSaveQuestionnaire = async () => {
         if (manage_questionnaire_url === "/clinician") {
-            await API.editQuestionnaire(token, questionnaire);
+            await editQuestionnaire(token, questionnaire);
         } else {
-            await API.editStandardQuestionnaire(questionnaire);
+            await editStandardQuestionnaire(questionnaire);
         }
         window.location.href = manage_questionnaire_url;
     };

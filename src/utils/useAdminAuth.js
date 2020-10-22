@@ -31,7 +31,6 @@ export const AdminAuthProvider = ({ children }) => {
             } else {
                 setLoading(false);
             }
-       
     }
 
     useEffect(() => {

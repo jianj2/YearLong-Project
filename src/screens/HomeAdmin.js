@@ -1,5 +1,6 @@
 // Import Libraries.
 import React from "react";
+import { Helmet } from "react-helmet";
 // Import Utilities.
 import { useAdminAuth } from "../utils/useAdminAuth";
 import { USER_TYPE_ADMIN } from "../utils/helper";
@@ -43,7 +44,13 @@ const HomeAdmin = ({
     if (isAdminAuthenticated === true) {
         return (
             <div className="HomeAdmin">
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>SSQ: Administrator</title>
+                </Helmet>
+
                 <SideBar userType={USER_TYPE_ADMIN}/>
+                
                 <div className="content-container">
                     <ContentPanel
                         userType={USER_TYPE_ADMIN}

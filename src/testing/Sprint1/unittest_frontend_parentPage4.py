@@ -16,7 +16,7 @@ class unittest_frontend_parentPage4(unittest.TestCase):
         config_object.read("../driverConfig.ini")
         self.driver = webdriver.Chrome(config_object["DRIVERLOCATION"]["Driver"])
 
-        self.driver.get("http://localhost:3000/parent/:questionnaireId/:clinicianEmail")
+        self.driver.get("http://localhost:3000/participant/:questionnaireId/:clinicianEmail")
         next_button = self.driver.find_element_by_class_name("button")
         next_button.click()
         time.sleep(2)

@@ -1,7 +1,7 @@
 // Import Libraries.
 import React, { useState, useEffect } from "react";
 // Import Utilities.
-import * as API from "../../utils/API";
+import { getQuestionnaireById } from "../../utils/API";
 // Import Components.
 import { EditQuestionnaire } from "../../components/Commons";
 
@@ -32,7 +32,7 @@ const QuestionnaireContainer = ({
     // get the questionnaire content from API
     useEffect(() => {
         const setup = async () => {
-            const [statusCode, data] = await API.getQuestionnaireById(questionnaireID);
+            const [statusCode, data] = await getQuestionnaireById(questionnaireID);
 
             if (statusCode === 200) {
                 setQuestionnaire(data);

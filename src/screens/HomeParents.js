@@ -1,8 +1,15 @@
 // Import Libraries.
 import React, { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
 import { withRouter } from "react-router-dom";
 // Import Utilities.
-import * as API from "../utils/API";
+import {
+    getSpecificInstruction,
+    getShareDetails,
+    getQuestionnaireById,
+    sendQuestionnaireData
+} from "../utils/API";
+import { HELPER_SORT } from "../utils/helper";
 // Import Components.
 import { FormParentDetails } from "../components/Forms";
 import {
@@ -46,7 +53,7 @@ const HomeParents = ({ match }) => {
         isSSQ_Ch: true
     });
     const [clinicianEmail, setClinicianEmail] = useState("");
-    const [sortBy, setSortBy] = useState("PERFORMANCE");
+    const [sortBy, setSortBy] = useState(HELPER_SORT.PERFORMANCE);
 
     const [personalDetails, setPersonalDetails] = useState({
         name: "",
@@ -79,7 +86,7 @@ const HomeParents = ({ match }) => {
         } else {
             instructionType = "RP";
         }
-        const [statusCode, res] = await API.getSpecificInstruction(instructionType);
+        const [statusCode, res] = await getSpecificInstruction(instructionType);
         if (statusCode === 200) {
             setInstruction({
                 title: res["title"],
@@ -129,53 +136,53 @@ const HomeParents = ({ match }) => {
 
         // Server call to get the questionnaireId
         const getDetails = async () => {
-            const [statusCode, shareResponse] = await API.getShareDetails(match.params.shareId);
+            const [statusCode, shareResponse] = await getShareDetails(match.params.shareId);
             if (statusCode === 200) {
                 // Server call to get the questionnaire.
                 setSortBy(shareResponse.sortBy);
                 setClinicianEmail(shareResponse.clinicianEmail);
                 setReadOnly(shareResponse.readOnly);
-                const [statusCode, data] = await API.getQuestionnaireById(shareResponse.questionnaireId);
 
-                    updateSections(data, shareResponse.shareSection);
-                    // Define initial values for the Questionnaire
-                    if (statusCode === 200) {
-                        let tempResponse = [];
-                        let tempComments = [];
-                        data.sections.forEach((section, sectionIndex) => {
-                            tempResponse[sectionIndex] = [];
-                            tempComments[sectionIndex] = [];
-                            section.scenarios.forEach(
-                                (scenario, scenarioIndex) => {
-                                    tempResponse[sectionIndex][
-                                        scenarioIndex
-                                        ] = [];
-                                    tempComments[sectionIndex][scenarioIndex] =
-                                        "";
-                                    scenario.questions.forEach(
-                                        (question, questionIndex) => {
-                                            tempResponse[sectionIndex][
-                                                scenarioIndex
-                                                ][questionIndex] = {
-                                                value: "",
-                                                supplementaryValue: ""
-                                            };
-                                        }
-                                    );
-                                }
-                            );
-                        });
-                        // Updating the state using the initial data and the questionnaire
-                        // retrieved from the server.
-                        setCommentData(tempComments);
-                        setQuestionnaireData(tempResponse);
-                        setQuestionnaire(data);
-                        setQuestionnaireInstruction(data.isSSQ_Ch);
+                const [statusCode, data] = await getQuestionnaireById(shareResponse.questionnaireId);
+                updateSections(data, shareResponse.shareSection);
+                // Define initial values for the Questionnaire
+                if (statusCode === 200) {
+                    let tempResponse = [];
+                    let tempComments = [];
+                    data.sections.forEach((section, sectionIndex) => {
+                        tempResponse[sectionIndex] = [];
+                        tempComments[sectionIndex] = [];
+                        section.scenarios.forEach(
+                            (scenario, scenarioIndex) => {
+                                tempResponse[sectionIndex][
+                                    scenarioIndex
+                                    ] = [];
+                                tempComments[sectionIndex][scenarioIndex] =
+                                    "";
+                                scenario.questions.forEach(
+                                    (question, questionIndex) => {
+                                        tempResponse[sectionIndex][
+                                            scenarioIndex
+                                            ][questionIndex] = {
+                                            value: "",
+                                            supplementaryValue: ""
+                                        };
+                                    }
+                                );
+                            }
+                        );
+                    });
+                    // Updating the state using the initial data and the questionnaire
+                    // retrieved from the server.
+                    setCommentData(tempComments);
+                    setQuestionnaireData(tempResponse);
+                    setQuestionnaire(data);
+                    setQuestionnaireInstruction(data.isSSQ_Ch);
 
-                        setWizardStep(0);
-                    } else {
-                        setWizardStep(-1);
-                    }
+                    setWizardStep(0);
+                } else {
+                    setWizardStep(-1);
+                }
             } else {
                 setWizardStep(-1);
             }
@@ -234,7 +241,7 @@ const HomeParents = ({ match }) => {
         };
 
         setLoading(true);
-        const [statusCode, response] = await API.sendQuestionnaireData(
+        const [statusCode, response] = await sendQuestionnaireData(
             data,
             match.params.shareId
         );
@@ -257,6 +264,11 @@ const HomeParents = ({ match }) => {
     if (wizardStep === -1) {
         return (
             <div className="parents-home">
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>SSQ: Client - Invalid Link</title>
+                </Helmet>
+
                 <div className="subheader-container"></div>
                 <div className="parents-container">
                     <h1 style={{ textAlign: "center" }}>
@@ -270,6 +282,11 @@ const HomeParents = ({ match }) => {
     if (wizardStep === 0) {
         return (
             <div className="parents-home">
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>SSQ: Client - Instructions</title>
+                </Helmet>
+
                 <div className="subheader-container">
                     <button className="button" onClick={nextStep}>
                         N E X T
@@ -295,6 +312,11 @@ const HomeParents = ({ match }) => {
         if (readOnly) nextStep();
         return (
             <div className="parents-home">
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>SSQ: Client - Participant Details</title>
+                </Helmet>
+
                 <div className="subheader-container">
                     <button
                         id="instructions"
@@ -321,6 +343,11 @@ const HomeParents = ({ match }) => {
     if (wizardStep === 2) {
         return (
             <div className="parents-home">
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>SSQ: Client - Questionnaire</title>
+                </Helmet>
+
                 <div className="subheader-container">
                     <button
                         id="instructions"
@@ -354,6 +381,11 @@ const HomeParents = ({ match }) => {
     if (wizardStep === 3) {
         return (
             <div className="parents-home">
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>SSQ: Client - Review Results</title>
+                </Helmet>
+
                 {loading ? <Loading/> : null}
                 <div className="subheader-container">
                     <button
@@ -380,7 +412,8 @@ const HomeParents = ({ match }) => {
                         questionnaire={questionnaire}
                         personalDetails={personalDetails}
                         questionnaireData={questionnaireData}
-                        commentData={commentData}
+                        commentData={commentData} 
+                        clinicianAccess={false}
                         isSSQ_Ch={questionnaire.isSSQ_Ch}
                     />
                 </div>
@@ -390,6 +423,11 @@ const HomeParents = ({ match }) => {
 
     return (
         <div className="landing">
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>SSQ: Client - Successfully Finished Questionnaire</title>
+            </Helmet>
+            
             <div className="landing-logo">
                 <img src={logoComplete} alt="SSQ Logo"/>
             </div>

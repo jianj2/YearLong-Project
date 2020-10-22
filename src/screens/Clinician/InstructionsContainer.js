@@ -1,7 +1,7 @@
 // Import Libraries.
 import React, { useState, useEffect } from "react";
 // Import Utilities.
-import * as API from "../../utils/API";
+import { getSpecificInstruction } from "../../utils/API";
 
 /**
  * =============================================================================
@@ -29,7 +29,7 @@ const InstructionsContainer = () => {
 
     useEffect(() => {
         const getInstructions = async () => {
-            let [statusCode, res] = await API.getSpecificInstruction("CC");
+            let [statusCode, res] = await getSpecificInstruction("CC");
             if (statusCode === 200) {
                 setInstructionCC({
                     title: res["title"],
@@ -37,7 +37,7 @@ const InstructionsContainer = () => {
                 });
             }
 
-            [statusCode, res] = await API.getSpecificInstruction("CP");
+            [statusCode, res] = await getSpecificInstruction("CP");
             if (statusCode === 200) {
                 setInstructionCP({
                     title: res["title"],
