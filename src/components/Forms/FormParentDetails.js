@@ -51,7 +51,6 @@ const FormParentDetails = ({
     const [leftDeviceTypeOther, setLeftDeviceTypeOther] = useState(defaultValue.leftDeviceType);
     const [rightDeviceSubmit, setRightDeviceSubmit] = useState(null);
     const [leftDeviceSubmit, setLeftDeviceSubmit] = useState(null);
-
     const [filledByTypeOptionSubmit, setFilledByTypeOptionSubmit] = useState(null);
     const [filledByTypeOption, setFilledByTypeOption] = useState(defaultValue.filledByTypeOption);
     const [filledBy, setFilledBy] = useState(defaultValue.filledBy);
@@ -61,7 +60,6 @@ const FormParentDetails = ({
     let personalData = {};
 
     useEffect(() => {
-
         if (filledByTypeOption === "Other" || (filledByTypeOptions.indexOf(filledByTypeOption) === -1) ) {
             setFilledByTypeOptionOtherVisible(true);
         } else {
@@ -71,7 +69,6 @@ const FormParentDetails = ({
     }, [filledByTypeOption]);
 
     useEffect(() => {
-
         if (rightDeviceType === "Other" || (deviceTypeOption.indexOf(rightDeviceType) === -1)) {
             setRightDeviceTypeOtherVisible(true);
         } else {
@@ -81,7 +78,6 @@ const FormParentDetails = ({
     }, [rightDeviceType, deviceTypeOption]);
 
     useEffect(() => {
-
         if (leftDeviceType === "Other" || (deviceTypeOption.indexOf(leftDeviceType) === -1)) {
             setLeftDeviceTypeOtherVisible(true);
         } else {
@@ -89,7 +85,6 @@ const FormParentDetails = ({
         }
 
     }, [leftDeviceType, deviceTypeOption]);
-
 
     useEffect(() => {
 
@@ -131,7 +126,6 @@ const FormParentDetails = ({
 
     const handleButtonPress = () => {
         submitDetails(personalData);
-
     };
 
     const handleDateChange = (event) => {
@@ -139,7 +133,7 @@ const FormParentDetails = ({
             setDate("");
         }
     };
-    
+
     if (loading){
         return <Loading/>
     }
@@ -341,9 +335,6 @@ const FormParentDetails = ({
                             <FormHelperText>{errors.filledByTypeOptionOther ? errors.filledByTypeOptionOther.message : "Please specify who filled the questionnaire(relationship)."}</FormHelperText>
                         </FormControl>
                     ) : null}
-
-
-
                 </div>
             </div>
 
