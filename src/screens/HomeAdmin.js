@@ -48,7 +48,9 @@ const HomeAdmin = ({
                     <meta charSet="utf-8" />
                     <title>SSQ: Administrator</title>
                 </Helmet>
+
                 <SideBar userType={USER_TYPE_ADMIN}/>
+                
                 <div className="content-container">
                     <ContentPanel
                         userType={USER_TYPE_ADMIN}

@@ -1,5 +1,6 @@
 // Import Libraries.
 import React, { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
 import { withRouter } from "react-router-dom";
 // Import Utilities.
 import * as API from "../utils/API";
@@ -255,6 +256,11 @@ const HomeParents = ({ match }) => {
     if (wizardStep === -1) {
         return (
             <div className="parents-home">
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>SSQ: Client - Invalid Link</title>
+                </Helmet>
+
                 <div className="subheader-container"></div>
                 <div className="parents-container">
                     <h1 style={{ textAlign: "center" }}>
@@ -268,6 +274,11 @@ const HomeParents = ({ match }) => {
     if (wizardStep === 0) {
         return (
             <div className="parents-home">
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>SSQ: Client</title>
+                </Helmet>
+
                 <div className="subheader-container">
                     <button className="button" onClick={nextStep}>
                         N E X T
@@ -293,6 +304,11 @@ const HomeParents = ({ match }) => {
         if (readOnly) nextStep();
         return (
             <div className="parents-home">
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>SSQ: Client</title>
+                </Helmet>
+                
                 <div className="subheader-container">
                     <button
                         id="instructions"
@@ -320,6 +336,11 @@ const HomeParents = ({ match }) => {
     if (wizardStep === 2) {
         return (
             <div className="parents-home">
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>SSQ: Client</title>
+                </Helmet>
+
                 <div className="subheader-container">
                     <button
                         id="instructions"
@@ -353,6 +374,11 @@ const HomeParents = ({ match }) => {
     if (wizardStep === 3) {
         return (
             <div className="parents-home">
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>SSQ: Client</title>
+                </Helmet>
+
                 {loading ? <Loading/> : null}
                 <div className="subheader-container">
                     <button
@@ -388,6 +414,11 @@ const HomeParents = ({ match }) => {
 
     return (
         <div className="landing">
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>SSQ: Client</title>
+            </Helmet>
+            
             <div className="landing-logo">
                 <img src={logoComplete} alt="SSQ Logo"/>
             </div>
