@@ -1,5 +1,7 @@
 import unittest
 from selenium import webdriver
+from configparser import ConfigParser
+
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -11,8 +13,10 @@ class unittest_frontend_parentPage1(unittest.TestCase):
 
     def setUp(self):
 
-        # self.driver = webdriver.Chrome("../chromedriver_mac")  # for mac
-        self.driver = webdriver.Chrome("chromedriver.exe")
+        config_object = ConfigParser()
+        config_object.read("../driverConfig.ini")
+        self.driver = webdriver.Chrome(config_object["DRIVERLOCATION"]["Driver"])
+
         self.driver.get("http://localhost:3000/parent/:questionnaireId/:clinicianEmail")
 
     def test_navbar_left(self):
