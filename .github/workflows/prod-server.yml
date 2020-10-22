@@ -12,11 +12,13 @@ name: server-CI/CD
 on:
   # Pipeline trigger on push
   push:
-    branches: 
+    branches:
+    - deployment-server-update   
     - production-server
   # Pipeline trigger on pull request
   pull_request:
     branches:
+    - deployment-server-update  
     - production-server
 
 jobs:
@@ -36,26 +38,26 @@ jobs:
         dry: true
 
   # Deploy nodejs to heroku
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    name: deploy
-    steps:
+  #deploy:
+  #  needs: test
+  #  runs-on: ubuntu-latest
+  #  name: deploy
+  #  steps:
     # Checking out code to server
-    - name: Checkout
-      uses: actions/checkout@v2
-    # Setting up heroku
-    - name: Set up Heroku
-      uses: akhileshns/heroku-deploy@v3.5.6
-      with:
-        heroku_api_key: ${{secrets.HEROKU_API_KEY}} # Heroku key
-        heroku_app_name: "ssq-server" # Heroku app name
-        heroku_email: ${{secrets.HEROKU_EMAIL}} # Heroku email
-      env:
-        HD_SERVER: ${{secrets.HEROKU_SERVER}} # Server URL
-        HD_CLIENT: ${{secrets.HEROKU_CLIENT}} # Client URL
-        HD_GMAILUSERNAME: ${{secrets.HEROKU_GMAILUSERNAME}} # Gmail username
-        HD_GMAILPASSWORD: ${{secrets.HEROKU_GMAILPASSWORD}} # Gmail password
-        HD_MONGOURI: ${{secrets.HEROKU_MONGOURI}} # Mongo URI
+  #  - name: Checkout
+  #    uses: actions/checkout@v2
+  #  # Setting up heroku
+  #  - name: Set up Heroku
+  #    uses: akhileshns/heroku-deploy@v3.5.6
+  #    with:
+  #      heroku_api_key: ${{secrets.HEROKU_API_KEY}} # Heroku key
+  #      heroku_app_name: "ssq-server" # Heroku app name
+  #      heroku_email: ${{secrets.HEROKU_EMAIL}} # Heroku email
+  #    env:
+  #      HD_SERVER: ${{secrets.HEROKU_SERVER}} # Server URL
+  #      HD_CLIENT: ${{secrets.HEROKU_CLIENT}} # Client URL
+  #      HD_GMAILUSERNAME: ${{secrets.HEROKU_GMAILUSERNAME}} # Gmail username
+  #      HD_GMAILPASSWORD: ${{secrets.HEROKU_GMAILPASSWORD}} # Gmail password
+  #      HD_MONGOURI: ${{secrets.HEROKU_MONGOURI}} # Mongo URI
 
         
