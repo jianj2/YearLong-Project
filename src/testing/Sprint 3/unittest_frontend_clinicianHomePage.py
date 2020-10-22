@@ -11,7 +11,7 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
 
     def setUp(self):
 
-        self.driver = webdriver.Chrome("../chromedriver_mac")  # for mac
+        # self.driver = webdriver.Chrome("../chromedriver_mac")  # for mac
         self.driver = webdriver.Chrome("chromedriver.exe")
         self.driver.get("http://localhost:3000/clinician")
         email = self.driver.find_element_by_id("email")
