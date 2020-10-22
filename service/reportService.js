@@ -853,21 +853,6 @@ x
                     } else {
                         printCustomQuestionnaireResults(doc, sortedResults, lineSpacing, comments)
                     }
-                            // -------  TO DO  --------
-                            // MAKE THIS BETTER
-                            // const sortedResults = sortByImportance(resultToPrint)
-                            if (sortBy === HELPER_SORT.PERFORMANCE) {
-                                sortedResults = sortByPerformance(resultToPrint)
-                            } else {
-                                sortedResults = sortByImportance(resultToPrint)
-                            }
-
-
-                            if (sortedResults.isStandard) {
-                                printStandardQuestionnaireResults(doc, sortedResults, lineSpacing, comments)
-                            } else {
-                                printCustomQuestionnaireResults(doc, sortedResults, lineSpacing, comments)
-                            }
 
                             // CLOSE THE DOCUMENT,
                             doc.end();
