@@ -266,7 +266,10 @@ const DoTheTestContainer = () => {
                 <div className="dothetest-submit">
                     <h1>Questionnaire Completed!</h1>
                     <p>
-                        A report will be sent to your registered email address.
+                        A report will be sent to your registered email address. 
+                    </p>
+                    <p>
+                        If you cannot find the report, please have a look at the spam box. 
                     </p>
                     <button className="button" onClick={resetStep}>
                         G O &nbsp; B A C K
