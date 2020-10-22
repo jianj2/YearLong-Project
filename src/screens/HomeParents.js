@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import { withRouter } from "react-router-dom";
 // Import Utilities.
 import * as API from "../utils/API";
+import { HELPER_SORT } from "../utils/helper";
 // Import Components.
 import { FormParentDetails } from "../components/Forms";
 import {
@@ -47,7 +48,7 @@ const HomeParents = ({ match }) => {
         isSSQ_Ch: true
     });
     const [clinicianEmail, setClinicianEmail] = useState("");
-    const [sortBy, setSortBy] = useState("PERFORMANCE");
+    const [sortBy, setSortBy] = useState(HELPER_SORT.PERFORMANCE);
 
     const [personalDetails, setPersonalDetails] = useState({
         name: "",

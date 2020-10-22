@@ -16,6 +16,7 @@ import { makeStyles } from "@material-ui/core/styles";
 // Import Utilities.
 import * as API from "../../utils/API";
 import { useAuth0 } from "../../utils/react-auth0-spa";
+import { HELPER_SORT } from "../../utils/helper";
 // Import Components.
 import {
     QuestionnaireList,
@@ -79,7 +80,7 @@ const ShareQuestionnaire = () => {
         clinicianEmail: user.name,
         message: "",
         readOnly: false,
-        sortBy: "PERFORMANCE"
+        sortBy: HELPER_SORT.PERFORMANCE
     });
 
     const [isSelectedStandard, setIsSelectedStandard] = useState(false);
@@ -330,13 +331,13 @@ const ShareQuestionnaire = () => {
                                         value={shareModalData.sortBy}
                                         className="slider-checkboxes">
                                 <FormControlLabel
-                                    value="PERFORMANCE"
+                                    value={HELPER_SORT.PERFORMANCE}
                                     control={
                                         <Radio
                                             onChange={() => {
                                                 setShareModalData({
                                                     ...shareModalData,
-                                                    sortBy: "PERFORMANCE"
+                                                    sortBy: HELPER_SORT.PERFORMANCE
                                                 });
                                             }}
                                         />
@@ -346,13 +347,13 @@ const ShareQuestionnaire = () => {
                                 {isSelectedStandard
                                     ? (
                                         <FormControlLabel
-                                            value="IMPORTANCE"
+                                            value={HELPER_SORT.IMPORTANCE}
                                             control={
                                                 <Radio
                                                     onChange={() => {
                                                         setShareModalData({
                                                             ...shareModalData,
-                                                            sortBy: "IMPORTANCE"
+                                                            sortBy: HELPER_SORT.IMPORTANCE
                                                         });
                                                     }}
                                                 />
