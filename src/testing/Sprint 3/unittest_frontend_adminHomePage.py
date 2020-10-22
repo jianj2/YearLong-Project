@@ -1,5 +1,6 @@
 import unittest
 from selenium import webdriver
+from configparser import ConfigParser
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
