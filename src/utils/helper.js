@@ -17,7 +17,7 @@ export const USER_TYPE_ADMIN = "ADMIN";
 export const USER_TYPE_PARTICIPANT = "PARTICIPANT";
 
 export const deviceTypeOption = ["None", "Hearing Aid", "Cochlear Implant", "Other", ""];
-export const filledByTypeOptions = ["Mother", "Father", "Guardian", "Other", ""];
+export const completedByRelationshipOptions = ["Mother", "Father", "Guardian", "Other", ""];
 
 export const HELPER_SORT = {
     "PERFORMANCE": "PERFORMANCE",
@@ -72,7 +72,6 @@ export const createMarks = () => {
     }
     return mymarks;
 };
-
 export const romeNumber = ["i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x"];
 
 // Helper Function

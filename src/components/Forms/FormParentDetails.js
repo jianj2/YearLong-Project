@@ -10,7 +10,7 @@ import {
     Select
 } from "@material-ui/core";
 // Import Utilities
-import { deviceTypeOption, filledByTypeOptions } from '../../utils/helper'
+import { deviceTypeOption, completedByRelationshipOptions } from '../../utils/helper'
 import { Loading } from "../Commons";
 
 /**
