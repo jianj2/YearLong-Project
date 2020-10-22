@@ -41,8 +41,8 @@ const DoTheTestContainer = () => {
         completedBy: "clinician",
         rightDeviceType: "",
         leftDeviceType: "",
-        filledByTypeOption:"",
-        filledBy:"",
+        completedByRelationship:"",
+        completedByName:""
     });
 
     const [questionnaires, setQuestionnaires] = useState([]);
@@ -56,7 +56,6 @@ const DoTheTestContainer = () => {
 
     const [selectedQuestionnaire, setSelectedQuestionnaire] = useState(null);
 
-    console.log("SELECTED QUESTIONnAIRE:", selectedQuestionnaire);
 
     // This is called whenever "user" changes
     useEffect(() => {
@@ -188,9 +187,11 @@ const DoTheTestContainer = () => {
         } else {
             console.error(response);
         }
-
     };
 
+    if (loading){
+        return <Loading/>
+    }
     if (wizardStep === 0) {
         return (
             <div className="dothetest-container">
@@ -258,6 +259,8 @@ const DoTheTestContainer = () => {
                     questionnaireData={questionnaireData}
                     commentData={commentData}
                     emailResponse={emailResponse}
+                    isSSQ_Ch={selectedQuestionnaire.isSSQ_Ch}
+
                 />
             </div>
         );
