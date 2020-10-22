@@ -105,7 +105,6 @@ const ParentReviewSubmission = ({
                 ))}
             </div>
             {/* BUTTONS - SEND (SORTED)REPORT TO EMAIL */}
-
             { clinicianAccess 
                 ? (
                     <div className="dothetest-bottom-container">
@@ -127,10 +126,8 @@ const ParentReviewSubmission = ({
                             ) : null
                         }
                     </div>
-
                 ) : null
             }
-
         </div>
     );
 }
