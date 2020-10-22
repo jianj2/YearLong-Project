@@ -54,8 +54,8 @@ const HomeParents = ({ match }) => {
         completedBy: "parent",
         rightDeviceType: "",
         leftDeviceType: "",
-        filledByTypeOption:"",
-        filledBy:"",
+        completedByRelationship:"",
+        completedByName:""
     });
 
     const [questionnaireData, setQuestionnaireData] = useState([]);
@@ -113,7 +113,13 @@ const HomeParents = ({ match }) => {
         setLoading(true);
         // set the updates questionnaire sections.
         const updateSections = (questionnaire, sectionVisibility) => {
-            if (sectionVisibility !== undefined) {
+            console.log("In")
+            console.log("VIsi", sectionVisibility)
+            console.log("Ques", questionnaire)
+
+            if (sectionVisibility) {
+                console.log("In if")
+
                 questionnaire.sections = getVisibleSections(
                     questionnaire.sections,
                     sectionVisibility
@@ -129,13 +135,11 @@ const HomeParents = ({ match }) => {
                 setSortBy(shareResponse.sortBy);
                 setClinicianEmail(shareResponse.clinicianEmail);
                 setReadOnly(shareResponse.readOnly);
-                API.getQuestionnaireById(
-                    shareResponse.questionnaireId
-                ).then((res) => {
-                    const [statusCode, data] = res;
+                const [statusCode, data] = await API.getQuestionnaireById(shareResponse.questionnaireId);
+
+                    updateSections(data, shareResponse.shareSection);
                     // Define initial values for the Questionnaire
                     if (statusCode === 200) {
-                        updateSections(data, shareResponse.shareSection);
                         let tempResponse = [];
                         let tempComments = [];
                         data.sections.forEach((section, sectionIndex) => {
@@ -166,14 +170,12 @@ const HomeParents = ({ match }) => {
                         setCommentData(tempComments);
                         setQuestionnaireData(tempResponse);
                         setQuestionnaire(data);
-
                         setQuestionnaireInstruction(data.isSSQ_Ch);
 
                         setWizardStep(0);
                     } else {
                         setWizardStep(-1);
                     }
-                });
             } else {
                 setWizardStep(-1);
             }
@@ -316,7 +318,6 @@ const HomeParents = ({ match }) => {
             </div>
         );
     }
-
     if (wizardStep === 2) {
         return (
             <div className="parents-home">
@@ -380,6 +381,7 @@ const HomeParents = ({ match }) => {
                         personalDetails={personalDetails}
                         questionnaireData={questionnaireData}
                         commentData={commentData}
+                        isSSQ_Ch={questionnaire.isSSQ_Ch}
                     />
                 </div>
             </div>

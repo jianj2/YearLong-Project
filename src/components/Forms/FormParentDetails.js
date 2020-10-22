@@ -60,17 +60,17 @@ const FormParentDetails = ({
 
     const deviceTypeOption = ["None", "Hearing Aid", "Cochlear Implant", "Other", ""];
 
-    const filledByTypeOptions = ["Mother", "Father", "Guardian", "Other", ""];
+    const completedByRelationshipOptions = ["Mother", "Father", "Guardian", "Other", ""];
 
     useEffect(() => {
 
-        if (filledByTypeOption === "Other" || (filledByTypeOptions.indexOf(filledByTypeOption) === -1) ) {
-            setFilledByTypeOptionOtherVisible(true);
+        if (completedByRelationship === "Other" || (completedByRelationshipOptions.indexOf(completedByRelationship) === -1) ) {
+            setCompletedByRelationshipOtherVisible(true);
         } else {
-            setFilledByTypeOptionOtherVisible(false);
+            setCompletedByRelationshipOtherVisible(false);
         }
 
-    }, [filledByTypeOption]);
+    }, [completedByRelationship]);
 
     useEffect(() => {
 
@@ -112,10 +112,10 @@ const FormParentDetails = ({
             setLeftDeviceSubmit(leftDeviceType);
         }
 
-        if (filledByTypeOptionOtherVisible){
-            setFilledByTypeOptionSubmit(filledByTypeOptionOther)
+        if (completedByRelationshipOtherVisible){
+            setCompletedByRelationshipSubmit(completedByRelationshipOther)
         }else{
-            setFilledByTypeOptionSubmit(filledByTypeOption)
+            setCompletedByRelationshipSubmit(completedByRelationship)
         }
 
         personalData = {
@@ -124,12 +124,12 @@ const FormParentDetails = ({
             rightDeviceType: rightDeviceSubmit,
             leftDeviceType: leftDeviceSubmit,
             completedBy,
-            filledByTypeOption: filledByTypeOptionSubmit,
-            filledBy
+            completedByRelationship: completedByRelationshipSubmit,
+            completedByName: completedByName
         };
 
         getPersonalDetails(personalData);
-    }, [name, date, rightDeviceType, leftDeviceType, rightDeviceTypeOther, leftDeviceTypeOther, filledByTypeOptionOther, filledByTypeOption, filledBy]);
+    }, [name, date, rightDeviceType, leftDeviceType, rightDeviceTypeOther, leftDeviceTypeOther, completedByRelationshipOther, completedByRelationship, completedByName]);
 
     const handleButtonPress = () => {
         submitDetails(personalData);
@@ -210,19 +210,19 @@ const FormParentDetails = ({
 
                     {isSSQ_Ch? (null) :(
                     <FormControl margin="dense">
-                        <InputLabel>Filled by</InputLabel>
+                        <InputLabel>Completed by (Name)</InputLabel>
                         <Input
-                            value={filledBy}
-                            onChange={(event) => setFilledBy(event.target.value)}
+                            value={completedByName}
+                            onChange={(event) => setCompletedByName(event.target.value)}
                             // defaultValue={defaultValue.name}
                             name="filledBy"
-                            placeholder="Write the name of the person who filled this"
-                            error={errors.filledBy !== undefined}
+                            placeholder="Write the name of the person who completed this questionnaire."
+                            error={errors.completedByName !== undefined}
                             inputRef={register({
                                 required: "You have not entered the name."
                             })}
                         />
-                        <FormHelperText>{errors.filledBy ? errors.filledBy.message : "Please enter the name of the person who filled this questionnaire."}</FormHelperText>
+                        <FormHelperText>{errors.completedByName ? errors.completedByName.message : "Please enter the name of the person who filled this questionnaire."}</FormHelperText>
                     </FormControl>
                         )}
 
@@ -301,17 +301,17 @@ const FormParentDetails = ({
                     {isSSQ_Ch ? (null) :(
 
                     <FormControl margin="dense">
-                        <InputLabel>Filled by (Relationship)</InputLabel>
+                        <InputLabel>Completed by (Relationship)</InputLabel>
                         <Select
                             // defaultValue={defaultValue.leftDeviceType}
-                            value={filledByTypeOptions.indexOf(filledByTypeOption) === -1 ? "Other" : filledByTypeOption}
-                            onChange={(event) => setFilledByTypeOption(event.target.value)}
+                            value={completedByRelationshipOptions.indexOf(completedByRelationship) === -1 ? "Other" : completedByRelationship}
+                            onChange={(event) => setCompletedByRelationship(event.target.value)}
                             name="filledByTypeOption"
-                            error={errors.filledByTypeOption !== undefined}
+                            error={errors.completedByRelationship !== undefined}
                             // required
                             native
                             inputRef={register({
-                                required: "You have not entered who filled the questionnaire."
+                                required: "You have not entered who completed the questionnaire."
                             })}
                         >
                             <option value="" disabled selected></option>
@@ -321,27 +321,27 @@ const FormParentDetails = ({
                             <option value="Other">Other</option>
                         </Select>
 
-                        <FormHelperText>{errors.filledByTypeOption ? errors.filledByTypeOption.message : "Please specify who filled the questionnaire."}</FormHelperText>
+                        <FormHelperText>{errors.completedByRelationship ? errors.completedByRelationship.message : "Please specify who filled the questionnaire."}</FormHelperText>
                     </FormControl>
 
                     )}
 
-                    {filledByTypeOptionOtherVisible && !isSSQ_Ch ? (
+                    {completedByRelationshipOtherVisible && !isSSQ_Ch ? (
                         <FormControl margin="dense">
-                            <InputLabel>Filled by (Relationship), please specify</InputLabel>
+                            <InputLabel>Completed by (Relationship), please specify</InputLabel>
                             <Input
                                 // defaultValue={defaultValue.date}
-                                value={filledByTypeOptionOther}
-                                onChange={(event) => setFilledByTypeOptionOther(event.target.value)}
-                                name="filledByTypeOptionOther"
+                                value={completedByRelationshipOther}
+                                onChange={(event) => setCompletedByRelationshipOther(event.target.value)}
+                                name="completedByRelationshipOther"
                                 placeholder="e.g. Aunt, Uncle"
                                 required
-                                error={errors.filledByTypeOptionOther !== undefined}
+                                error={errors.completedByRelationshipOther !== undefined}
                                 inputRef={register({
-                                    required: "You have not entered who filled the questionnaire(relationship)."
+                                    required: "You have not entered who completed the questionnaire(relationship)."
                                 })}
                             />
-                            <FormHelperText>{errors.filledByTypeOptionOther ? errors.filledByTypeOptionOther.message : "Please specify who filled the questionnaire(relationship)."}</FormHelperText>
+                            <FormHelperText>{errors.completedByRelationshipOther ? errors.completedByRelationshipOther.message : "Please specify who filled the questionnaire(relationship)."}</FormHelperText>
                         </FormControl>
                     ) : null}
 
