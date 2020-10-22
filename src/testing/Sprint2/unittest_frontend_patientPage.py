@@ -10,6 +10,7 @@ import time
 class unittest_frontend_patientPage(unittest.TestCase):
 
     def setUp(self):
+        # self.driver = webdriver.Chrome("../chromedriver_mac")  # for mac
         self.driver = webdriver.Chrome("chromedriver.exe")
         self.driver.get("http://localhost:3000/parent/06b33da0-e910-11ea-b82c-9f026748dd35")
         time.sleep(3)

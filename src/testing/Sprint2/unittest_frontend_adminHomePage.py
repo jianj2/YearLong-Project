@@ -10,6 +10,8 @@ import time
 class unittest_frontend_adminHomePage(unittest.TestCase):
 
     def setUp(self):
+
+        # self.driver = webdriver.Chrome("../chromedriver_mac")  # for mac
         self.driver = webdriver.Chrome("chromedriver.exe")
         self.driver.get("http://localhost:3000/admin")
         username = self.driver.find_element_by_name("username")

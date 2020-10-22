@@ -10,6 +10,7 @@ import time
 class unittest_frontend_loginPage(unittest.TestCase):
 
     def setUp(self):
+        # self.driver = webdriver.Chrome("../chromedriver_mac")  # for mac
         self.driver = webdriver.Chrome("chromedriver.exe")
         self.driver.get("http://localhost:3000")
 
