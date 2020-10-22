@@ -56,8 +56,6 @@ const DoTheTestContainer = () => {
 
     const [selectedQuestionnaire, setSelectedQuestionnaire] = useState(null);
 
-    console.log("SELECTED QUESTIONnAIRE:", selectedQuestionnaire);
-
     // This is called whenever "user" changes
     useEffect(() => {
         setLoading(true)
@@ -132,7 +130,7 @@ const DoTheTestContainer = () => {
 
     const onClickQuestion = async (questionnaireId) => {
         setLoading(true)
-        setWizardStep(0);
+        
         const [statusCode, data] = await getQuestionnaireById(
             questionnaireId
         );
@@ -160,6 +158,7 @@ const DoTheTestContainer = () => {
             setCommentData(tempComments);
             setQuestionnaireData(tempResponse);
             setSelectedQuestionnaire(questionnaire);
+            setWizardStep(0);
         } else {
             console.error(data);
         }
@@ -212,7 +211,7 @@ const DoTheTestContainer = () => {
                     clinicianAccess={true}
                     defaultValue={personalDetails}
                     getPersonalDetails={getPersonalDetails}
-                    isSSQ_Ch={selectedQuestionnaire.isSSQ_Ch}
+                    isSSQ_Ch = {selectedQuestionnaire.isSSQ_Ch}
                     loading={loading}
                 />
             </div>

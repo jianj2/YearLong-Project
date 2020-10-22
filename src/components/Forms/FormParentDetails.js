@@ -56,10 +56,6 @@ const FormParentDetails = ({
     const [filledByTypeOptionOther, setFilledByTypeOptionOther] = useState(defaultValue.filledByTypeOption);
     const [filledByTypeOptionOtherVisible,setFilledByTypeOptionOtherVisible ] = useState(false);
 
-    console.log("ch",isSSQ_Ch)
-    console.log("visible",filledByTypeOptionOtherVisible)
-
-
     let personalData = {};
 
     const deviceTypeOption = ["None", "Hearing Aid", "Cochlear Implant", "Other", ""];
@@ -146,7 +142,6 @@ const FormParentDetails = ({
         }
     };
 
-    console.log("loading", loading)
     if (loading){
         return <Loading/>
     }

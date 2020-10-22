@@ -130,15 +130,15 @@ const Question = ({
 
     useEffect(() => {
         onQuestionChange(sectionIndex, scenarioIndex, questionIndex, answered);
-    }, [answered, onQuestionChange, sectionIndex, scenarioIndex, questionIndex]);
+    }, [answered]);
 
     // if it becomes not applicable, disable the next mcq question.
     useEffect(() => {
-        if (isNotApplicable === true && isMCQ) {
+        if (isNotApplicable == true && isMCQ) {
             setAnswered({ ...answered, value: "" });
             data.value = "";
         }
-    }, [isNotApplicable, isMCQ, data, answered]);
+    }, [isNotApplicable]);
 
     // If it is an MCQ question.
     if (isMCQ) {
