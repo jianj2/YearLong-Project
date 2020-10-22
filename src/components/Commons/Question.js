@@ -85,7 +85,7 @@ const Question = ({
 
     // if it becomes not applicable, disable the next mcq question.
     useEffect(() => {
-        if (isNotApplicable == true && isMCQ) {
+        if (isNotApplicable === true && isMCQ) {
             setAnswered({ ...answered, value: "" });
             data.value = "";
         }
