@@ -176,9 +176,7 @@ const Question = ({
                 <p>{description}</p>
 
                 <div className="slider-labels">
-                    <label>{rangeOptions[0]}</label>
-                    <label
-                        className="slider-value">{data.value === "" || data.value === undefined ? "Ø" : data.value}</label>
+                    <label>{rangeOptions[0]}</label> 
                     <label>{rangeOptions[1]}</label>
                 </div>
                 <SliderWithTicks
@@ -201,10 +199,10 @@ const Question = ({
                     name="slider"
                 />
                 <div className="slider-labels">
-                    <label>{rangeOptions[0]}</label>
+                    <label>Minimum</label>
                     <label
                         className="slider-value">{data.value === "" || data.value === undefined ? "Ø" : data.value}</label>
-                    <label>{rangeOptions[1]}</label>
+                    <label>Maximum</label>
                 </div>
                 <p>{"("}{romeNumber[questionIndex]}{")"}</p>
                 <FormControl color="secondary" margin="dense">
