@@ -55,7 +55,7 @@ const InstructionsContainer = () => {
 
             <div>
                 <h2>{instructionCC.title}</h2>
-                <p style={{whiteSpace:'pre'}}>{instructionCC.content}</p>
+                <p style={{whiteSpace:'pre-line'}}>{instructionCC.content}</p>
             </div>
 
             <div>
@@ -64,7 +64,7 @@ const InstructionsContainer = () => {
 
             <div>
                 <h2>{instructionCP.title}</h2>
-                <p style={{whiteSpace: 'pre'}}>{instructionCP.content}</p>
+                <p style={{whiteSpace: 'pre-line'}}>{instructionCP.content}</p>
             </div>
         </div>
     );
