@@ -1,5 +1,6 @@
 import unittest
 from selenium import webdriver
+from configparser import ConfigParser
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -10,9 +11,10 @@ import time
 class unittest_frontend_patientPage(unittest.TestCase):
 
     def setUp(self):
+        config_object = ConfigParser()
+        config_object.read("../driverConfig.ini")
+        self.driver = webdriver.Chrome(config_object["DRIVERLOCATION"]["Driver"])
 
-        # self.driver = webdriver.Chrome("../chromedriver_mac")  # for mac
-        self.driver = webdriver.Chrome("chromedriver.exe")
         self.driver.get("http://localhost:3000/parent/3d00a650-fd82-11ea-8313-814f9cea06fc")
         time.sleep(3)
 
