@@ -49,6 +49,7 @@ const FormParentDetails = ({
     const [leftDeviceTypeOtherVisible, setLeftDeviceTypeOtherVisible] = useState(null);
     const [rightDeviceTypeOther, setRightDeviceTypeOther] = useState(defaultValue.rightDeviceType);
     const [leftDeviceTypeOther, setLeftDeviceTypeOther] = useState(defaultValue.leftDeviceType);
+    // Made into let to solve a latency issue.
     let [rightDeviceSubmit, setRightDeviceSubmit] = useState(defaultValue.rightDeviceType);
     let [leftDeviceSubmit, setLeftDeviceSubmit] = useState(defaultValue.leftDeviceType);
     let [completedByRelationshipSubmit, setCompletedByRelationshipSubmit] = useState(defaultValue.completedByRelationship);
