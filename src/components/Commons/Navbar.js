@@ -29,10 +29,8 @@ const NavBar = ({ history }) => {
     const { isAuthenticated, logout } = useAuth0();
     const { isAdminAuthenticated, adminLogout } = useAdminAuth();
 
-    console.log("HISTORYU", )
-
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
-    // This portion gets rendered if the user is a parent.
+    // If the user is a parent, we load a different kind of Navbar.
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
     if (history.location.pathname.includes("parent")) {
         return (
@@ -42,57 +40,56 @@ const NavBar = ({ history }) => {
                 </div>
             </div>
         );
+    } else {
+        return (
+            <div className="navbar-container">
+                <div className="navbar-left">
+                    {
+                        isAuthenticated ?
+                            <Link to="/clinician">
+                                <img src={logoCompressed} alt="logo" />
+                            </Link>
+                            : null
+                    }
+                    {
+                        isAdminAuthenticated ?
+                            <Link to="/admin">
+                                <img src={logoCompressed} alt="logo" />
+                            </Link>
+                            : null
+                    }
+                    {
+                        (!isAdminAuthenticated && !isAuthenticated) ?
+                                <img src={logoCompressed} alt="logo" />
+                            : null
+                    }
+                </div>
+    
+                <div className="navbar-right">
+                    {isAuthenticated && (
+                        <button
+                            onClick={() => logout()}
+                            className="button"
+                            title="Log Out"
+                        >
+                            <label>Clinician Log Out</label>
+                            <IoMdLogOut />
+                        </button>
+                    )}
+                    {isAdminAuthenticated && (
+                        <button
+                            onClick={() => adminLogout()}
+                            className="button"
+                            title="Log Out"
+                        >
+                            <label>Admin Log Out</label>
+                            <IoMdLogOut />
+                        </button>
+                    )}
+                </div>
+            </div>
+        );
     }
-
-
-    return (
-        <div className="navbar-container">
-            <div className="navbar-left">
-                {
-                    isAuthenticated ?
-                        <Link to="/clinician">
-                            <img src={logoCompressed} alt="logo" />
-                        </Link>
-                        : null
-                }
-                {
-                    isAdminAuthenticated ?
-                        <Link to="/admin">
-                            <img src={logoCompressed} alt="logo" />
-                        </Link>
-                        : null
-                }
-                {
-                    (!isAdminAuthenticated && !isAuthenticated) ?
-                            <img src={logoCompressed} alt="logo" />
-                        : null
-                }
-            </div>
-
-            <div className="navbar-right">
-                {isAuthenticated && (
-                    <button
-                        onClick={() => logout()}
-                        className="button"
-                        title="Log Out"
-                    >
-                        <label>Clinician Log Out</label>
-                        <IoMdLogOut />
-                    </button>
-                )}
-                {isAdminAuthenticated && (
-                    <button
-                        onClick={() => adminLogout()}
-                        className="button"
-                        title="Log Out"
-                    >
-                        <label>Admin Log Out</label>
-                        <IoMdLogOut />
-                    </button>
-                )}
-            </div>
-        </div>
-    );
 };
 
 export default withRouter(NavBar);
