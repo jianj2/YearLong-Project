@@ -56,7 +56,6 @@ const DoTheTestContainer = () => {
 
     const [selectedQuestionnaire, setSelectedQuestionnaire] = useState(null);
 
-    console.log("SELECTED QUESTIONnAIRE:", selectedQuestionnaire);
 
     // This is called whenever "user" changes
     useEffect(() => {
