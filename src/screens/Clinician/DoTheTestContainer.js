@@ -42,7 +42,7 @@ const DoTheTestContainer = () => {
         rightDeviceType: "",
         leftDeviceType: "",
         completedByRelationship:"",
-        completedByName:"",
+        completedByName:""
     });
 
     const [questionnaires, setQuestionnaires] = useState([]);

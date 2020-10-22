@@ -128,8 +128,8 @@ const FormParentDetails = ({
             rightDeviceType: rightDeviceSubmit,
             leftDeviceType: leftDeviceSubmit,
             completedBy,
-            filledByTypeOption: filledByTypeOptionSubmit,
-            filledBy
+            completedByRelationship: filledByTypeOptionSubmit,
+            completedByName: filledBy
         };
 
         getPersonalDetails(personalData);

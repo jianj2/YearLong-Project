@@ -54,8 +54,8 @@ const HomeParents = ({ match }) => {
         completedBy: "parent",
         rightDeviceType: "",
         leftDeviceType: "",
-        filledByTypeOption:"",
-        filledBy:"",
+        completedByRelationship:"",
+        completedByName:""
     });
 
     const [questionnaireData, setQuestionnaireData] = useState([]);
