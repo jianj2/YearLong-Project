@@ -146,7 +146,6 @@ const FormParentDetails = ({
         }
     };
 
-    console.log("loading", loading)
     if (loading){
         return <Loading/>
     }

@@ -41,8 +41,8 @@ const DoTheTestContainer = () => {
         completedBy: "clinician",
         rightDeviceType: "",
         leftDeviceType: "",
-        filledByTypeOption:"",
-        filledBy:"",
+        completedByRelationship:"",
+        completedByName:"",
     });
 
     const [questionnaires, setQuestionnaires] = useState([]);
@@ -188,9 +188,11 @@ const DoTheTestContainer = () => {
         } else {
             console.error(response);
         }
-
     };
 
+    if (loading){
+        return <Loading/>
+    }
     if (wizardStep === 0) {
         return (
             <div className="dothetest-container">
