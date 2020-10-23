@@ -38,7 +38,7 @@ const SSQInstructionsList = () => {
                     "questionnaire-list-item questionnaire-list-item-selectable"
                 }
                 onClick={() => {
-                    const url = "/admin/SSQInstruction/" + type + "/edit";
+                    const url = "/admin/SSQ_Instructions/" + type + "/edit";
                     window.location.href = url;
                 }}
             >

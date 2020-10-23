@@ -24,7 +24,7 @@ import { USER_TYPE_ADMIN, USER_TYPE_CLINICIAN } from "../../utils/helper";
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
 const SideBar = ({ userType }) => {
-    const pathNamesWithWarning = ["DoTheTest", "SSQInstruction"];
+    const pathNamesWithWarning = ["DoTheTest"];
 
     const [isSideBarResetModal, setIsSideBarResetModal] = useState(false);
     const [refreshUrl, setRefreshUrl] = useState("");

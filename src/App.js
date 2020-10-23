@@ -104,7 +104,7 @@ const App = () => {
                                                           questionnaireID={match.params.id}/>}
                     />
                     <Route
-                        path="/admin/SSQInstruction/:type/edit"
+                        path="/admin/SSQ_Instructions/:type/edit"
                         exact
                         render={({ match }) => <HomeAdmin active={6}
                                                           instructionType={match.params.type}/>}
