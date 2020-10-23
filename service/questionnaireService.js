@@ -353,9 +353,10 @@ const copyQuestionnaireToDatabase = async (IdBeingCopied,
     clinicianId) => {
     const uuid = uuidv1();
     try {
-        const questionnaireBeingCopied = await Questionnaire.findOne({ questionnaireId: IdBeingCopied});
+        const questionnaireBeingCopied =await Questionnaire.findOne({ questionnaireId: IdBeingCopied});
+        const questionnaireJSON = questionnaireBeingCopied.toJSON();
         const newQuestionnaire = generateCopy(
-            questionnaireBeingCopied,
+            questionnaireJSON,
             uuid,
             !isCopyingToCustomisedQuestionnaire
         );
