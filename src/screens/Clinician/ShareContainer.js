@@ -91,7 +91,7 @@ const ShareQuestionnaire = () => {
         setLoading(true);
         const retrieveCustomisedQuestionnaires = async () => {
 
-            const [_, customisedQuestionnaires] = await API.getClinicianQuestionnaires(token,
+            const [, customisedQuestionnaires] = await API.getClinicianQuestionnaires(token,
                 user.name
             );
             setCustomisedQuestionnaires(customisedQuestionnaires);

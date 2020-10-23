@@ -25,6 +25,8 @@ import { useAdminAuth } from "../../utils/useAdminAuth";
 ////                            Define Component                            ////
 ////////////////////////////////////////////////////////////////////////////////
 const ManageQuestionnaires = () => {
+    const QUESTIONNAIRE_LIST_MAX_SIZE = 50;
+
     const { isAuthenticated, user, token } = useAuth0();
 
     const [customisedQuestionnaires, setCustomisedQuestionnaires] = useState(
@@ -32,7 +34,7 @@ const ManageQuestionnaires = () => {
     );
     const [
         standardisedQuestionnaires,
-        setStandardisedQuestionnaires
+        setStandardisedQuestionnaires,
     ] = useState([]);
 
     const [loading, setLoading] = useState(false);
@@ -41,7 +43,7 @@ const ManageQuestionnaires = () => {
 
     const [deleteQuestionnaireData, setDeleteQuestionnaireData] = useState({
         deleteQuestionnaireID: "",
-        deleteQuestionnaireName: ""
+        deleteQuestionnaireName: "",
     });
 
     const { isAdminAuthenticated, adminLogout } = useAdminAuth();
@@ -55,26 +57,27 @@ const ManageQuestionnaires = () => {
         if (isAuthenticated && token !== "") {
             const retrieveCustomisedQuestionnaires = async () => {
                 const [
-                    _,
-                    customisedQuestionnaires
-                 ] = await API.getClinicianQuestionnaires(token, user.name);
-                const sortedCustomisedQuestionnaires = customisedQuestionnaires
-                    .sort((a, b) => (new Date(b.updateDate) - new Date(a.updateDate)));
+                    ,
+                    customisedQuestionnaires,
+                ] = await API.getClinicianQuestionnaires(token, user.name);
+                const sortedCustomisedQuestionnaires = customisedQuestionnaires.sort(
+                    (a, b) => new Date(b.updateDate) - new Date(a.updateDate)
+                );
                 setCustomisedQuestionnaires(sortedCustomisedQuestionnaires);
-                setLoading(false)
+                setLoading(false);
             };
 
             const retrieveStandardisedQuestionnaires = async () => {
                 const [
                     statusCode,
-                    data
+                    data,
                 ] = await API.getStandardisedQuestionnaires();
                 if (statusCode === 200) {
                     setStandardisedQuestionnaires(data);
                 } else {
                     console.error(data);
                 }
-            }
+            };
 
             retrieveStandardisedQuestionnaires();
             retrieveCustomisedQuestionnaires();
@@ -83,18 +86,24 @@ const ManageQuestionnaires = () => {
 
     // Function called when Edit is clicked on the QuestionnaireList
     const editQuestionnaire = (questionnaireID) => {
-        const edit_url = "/clinician/Questionnaire/" + questionnaireID + "/edit";
+        const edit_url =
+            "/clinician/Questionnaire/" + questionnaireID + "/edit";
         window.location.href = edit_url;
     };
 
     // Function called when Copy is clicked on the QuestionnaireList
     const copyQuestionnaire = (questionnaire) => {
-        API.copyQuestionnaire(questionnaire.questionnaireId, user.name);
+        if (customisedQuestionnaires.length < QUESTIONNAIRE_LIST_MAX_SIZE) {
+            API.copyQuestionnaire(questionnaire.questionnaireId, user.name);
+        } else {
+            alert("The max number of customised questionnaires exceeded.");
+        }
         window.location.reload(false);
     };
 
     const viewQuestionnaire = (questionnaireID) => {
-        const view_url = "/clinician/Questionnaire/" + questionnaireID + "/view";
+        const view_url =
+            "/clinician/Questionnaire/" + questionnaireID + "/view";
         window.location.href = view_url;
     };
 
@@ -102,7 +111,7 @@ const ManageQuestionnaires = () => {
     const deleteQuestionnaire = (questionnaireId, title) => {
         setDeleteQuestionnaireData({
             deleteQuestionnaireID: questionnaireId,
-            deleteQuestionnaireName: title
+            deleteQuestionnaireName: title,
         });
         setIsDeleteModalVisible(true);
     };
@@ -110,10 +119,14 @@ const ManageQuestionnaires = () => {
     // Function called when Add New Button is clicked
     const addNew = async () => {
         setLoading(true);
-        await API.addQuestionnaire(token, user.name);
+        if (customisedQuestionnaires.length < QUESTIONNAIRE_LIST_MAX_SIZE) {
+            await API.addQuestionnaire(token, user.name);
+        } else {
+            alert("The max number of customised questionnaires exceeded.");
+        }
         setLoading(false);
         window.location.reload(false);
-    }
+    };
 
     // ========================================================================
     // Delete Modal Functions
@@ -137,15 +150,14 @@ const ManageQuestionnaires = () => {
                 setIsModalVisible={setIsDeleteModalVisible}
                 message={message}
                 onClickConfirm={deleteSelectedQuestionnaire}
-                onClickCancel={() => {
-                }}
+                onClickCancel={() => {}}
             />
         );
     };
 
     return (
         <div>
-            {loading ? <Loading/> : null}
+            {loading ? <Loading /> : null}
             {renderDeleteModal()}
             <div className="standard-questionnaire-container">
                 <div className="SQ-header">
