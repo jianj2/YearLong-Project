@@ -89,7 +89,7 @@ const ManageQuestionnaires = () => {
 
     // Function called when Copy is clicked on the QuestionnaireList
     const copyQuestionnaire = (questionnaire) => {
-        API.copyQuestionnaire(questionnaire, user.name);
+        API.copyQuestionnaire(questionnaire.questionnaireId, user.name);
         window.location.reload(false);
     };
 

@@ -54,7 +54,7 @@ const AdminManageQuestionnaires = () => {
     };
 
     const copyQuestionnaire = async (questionnaire) => {
-        await adminCopyQuestionnaire(questionnaire);
+        await adminCopyQuestionnaire(questionnaire.questionnaireId);
         window.location.reload(false);
     };
 
