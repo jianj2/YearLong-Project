@@ -75,18 +75,18 @@ const App = () => {
                         render={() => <HomeAdmin active={2}/>}
                     />
                     <Route
-                        path="/admin/Country"
+                        path="/admin/Organisation"
                         exact
                         render={() => <HomeAdmin active={3}/>}
                     />
                     <Route
-                        path="/admin/:country/Organisation"
+                        path="/admin/Organisation/:country"
                         exact
                         render={({ match }) => <HomeAdmin active={7}
                                                           countryName={match.params.country}/>}
                     />
                     <Route
-                        path="/admin/:country/:name"
+                        path="/admin/Organisation/:country/:name"
                         exact
                         render={({ match }) => (<HomeAdmin active={8}
                                                            organName={match.params.name}/>)}

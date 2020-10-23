@@ -28,7 +28,7 @@ const OrganisationList = ({ countryName }) => {
                     "organisation-list-item organisation-list-item-selectable"
                 }
                 onClick={() => {
-                    const url = `/admin/${countryName}/` + title;
+                    const url = `/admin/Organisation/${countryName}/` + title;
                     window.location.href = url;
                 }}
             >

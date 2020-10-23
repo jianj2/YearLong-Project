@@ -38,7 +38,7 @@ const CountryList = () => {
                     "country-list-item country-list-item-selectable"
                 }
                 onClick={() => {
-                    const url = "/admin/" + title + "/Organisation";
+                    const url = "/admin/Organisation/" + title;
                     window.location.href = url;
                 }}
             >

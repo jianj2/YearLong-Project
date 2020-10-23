@@ -142,7 +142,7 @@ const SideBar = ({ userType }) => {
 
                 {renderSideBarTab(
                     "organisation",
-                    "admin/Country",
+                    "admin/Organisation",
                     "Organisation"
                 )}
             </div>
