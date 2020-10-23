@@ -171,7 +171,7 @@ const ShareQuestionnaire = () => {
                         {isShareSuccess ?
                             <div>
                                 <h2 className="center-h2">Shared Successfully!</h2>
-                                <p className = "center-p">Please have a look at the spam box if did not recieve the email.</p>
+                                <p className = "center-p">Please inform your client to check their spams if they cannot find the email.</p>
                             </div>
                             
                             :
