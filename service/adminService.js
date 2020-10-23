@@ -99,7 +99,7 @@ const getCountryListFromDatabase = async () => {
         const clinicians = await Clinician.find({});
         const filteredClinicians = clinicians.filter(
             (clinician) =>
-                clinician.country !== null && clinician.country.trim() !== ""
+                clinician.country && clinician.country.trim() !== ""
         );
         const summary = filteredClinicians.map((clinician) => {
             return {
