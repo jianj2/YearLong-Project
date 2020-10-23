@@ -1,11 +1,10 @@
-#!/bin/bash
 # ####################################################################
 # PIPELINE YAML FILE
 # ####################################################################
 # Mayank Sharma - 22th August 2020
 #
-# This YAML file runs a pipeline in GitHub Actions containing a number of jobs.
-# Jobs include linting the code and deploying the production-client branch to Heroku.
+# This YAML file runs a pipeline in GitHub Actions.
+# Jobs include deploying the production-client branch to Heroku.
 
 ---
 name: client-CI/CD
@@ -21,38 +20,8 @@ on:
     - production-client
 
 jobs:
-  # Linting client code with flake8
-  test:
-    runs-on: ubuntu-latest
-    name: test
-    steps:
-    # Checking out code to server
-    - name: Checkout
-      uses: actions/checkout@v2 
-    # Setting up Python 3.8 for linting   
-    - name: Set up Python 3.8 for Linting
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-    # Installing pip dependencies
-    - name: Install dependencies
-      run: |
-        cd src/testing/Sprint1
-        python -m pip install --upgrade pip
-        pip install flake8
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    # Running flake8
-    - name: Lint with flake8
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-        cd ../../
-
   # Deploy reactjs to heroku
   deploy:
-    needs: test
     runs-on: ubuntu-latest
     name: deploy
     steps:
