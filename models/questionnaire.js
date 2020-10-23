@@ -28,7 +28,7 @@ questionSchema.set('toJSON', {
 })
 
 const scenarioSchema = mongoose.Schema({
-    description: {type: String, required:true} ,
+    description: {type: String} ,
     questions: [questionSchema]
 })
 
