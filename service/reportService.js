@@ -358,7 +358,7 @@ const getVisibleSections = (sections, visibilityInfoList) => {
 
 // set the updates questionnaire sections.
 const updateSections = (questionnaire, sectionVisibility) => {
-    if (sectionVisibility !== undefined) {
+    if (sectionVisibility) {
         questionnaire.sections = getVisibleSections(
             questionnaire.sections,
             sectionVisibility
