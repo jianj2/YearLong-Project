@@ -71,32 +71,6 @@ const addPage = function (doc, spacing, docHeight, paragraphHeight) {
     return spacing;
 }
 
-//print MCQ
-//print range
-const printRQAnswer = function (doc, questionAnswer, startMargin, midMargin, spacing) {
-    doc.font('Helvetica-Bold').fontSize(12).text("Answer: ", startMargin, spacing)
-    if ((questionAnswer === "" || questionAnswer === undefined)) {
-        questionAnswer = "Unanswered"
-        doc.font('Helvetica')
-            .text(questionAnswer.value, midMargin, spacing)
-    } else {
-        scoreColour(doc, questionAnswer)
-        doc.font('Helvetica')
-            .text(questionAnswer, midMargin, spacing);
-        doc.fillColor('black');
-    }
-}
-
-const printMCQAnswer = function (doc, questionAnswer, startMargin, midMargin, spacing) {
-    doc.font('Helvetica-Bold').fontSize(12).text("Answer: ", startMargin, spacing)
-    if (questionAnswer === "" || questionAnswer === undefined) {
-        doc.font('Helvetica')
-            .text("Unanswered", midMargin, spacing);
-    } else {
-        doc.font('Helvetica')
-            .text(questionAnswer, midMargin, spacing);
-    }
-}
 
 const scoreColour = function (doc, value) {
     if (value < 4.0) {
