@@ -23,7 +23,7 @@ router.post("/instruction/:type", admin_controller.authorize, admin_controller.u
 
 router.get("/specificInstruction/:instructionType", admin_controller.getSpecificInstruction);
 router.get("/verifylogin/:token", admin_controller.verifyLogin);
-router.get("/instructionsSummary", admin_controller.getInstructionsSummary);
+router.get("/instructionsSummary", admin_controller.authorize, admin_controller.getInstructionsSummary);
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // Router for getting the organisation information
