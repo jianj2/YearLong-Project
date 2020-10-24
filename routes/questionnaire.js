@@ -31,7 +31,8 @@ router.post("/add", checkJwt, questionnaire_controller.addEmptyQuestionnaire);
 router.post("/addStandard", admin_controller.authorize, questionnaire_controller.addStandardisedQuestionnaire);
 router.post("/edit", checkJwt, questionnaire_controller.editQuestionnaire);
 router.post("/editStandard", admin_controller.authorize, questionnaire_controller.editStandardQuestionnaire);
-router.post("/copy", questionnaire_controller.copyQuestionnaire);
+router.post("/copy", checkJwt, questionnaire_controller.copyQuestionnaire);
+router.post("/copyStandard", admin_controller.authorize, questionnaire_controller.copyQuestionnaire);
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                             Export Modules                             ////
