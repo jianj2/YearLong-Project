@@ -72,12 +72,12 @@ export const editStandardQuestionnaire = async (questionnaireData) => {
  * @returns {Promise} ~ response from the server.
  */
 export const adminCopyQuestionnaire = async (questionnaireId) => {
-    const url = "questionnaire/copy";
+    const url = "questionnaire/copyStandard";
     const data = {
         isCopyingToCustomisedQuestionnaire: false,
         questionnaireId
     };
-    return await sendRequest("POST", url, data);
+    return await sendRequest("POST", url, data, getToken());
 };
 /**
  * =============================================================================
@@ -148,14 +148,14 @@ export const editQuestionnaire = async (accessToken, questionnaireData) => {
  * @param clinicianId
  * @returns {Promise} ~ response from the server.
  */
-export const copyQuestionnaire = async (questionnaireId, clinicianId) => {
+export const copyQuestionnaire = async (questionnaireId, clinicianId, accessToken) => {
     const url = "questionnaire/copy";
     const data = {
         clinicianId,
         copyToCustomisedQuestionnaire: true,
         questionnaireId
     };
-    return await sendRequest("POST", url, data);
+    return await sendRequest("POST", url, data, accessToken);
 };
 /**
  * =============================================================================

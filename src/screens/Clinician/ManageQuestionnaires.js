@@ -94,7 +94,7 @@ const ManageQuestionnaires = () => {
     // Function called when Copy is clicked on the QuestionnaireList
     const copyQuestionnaire = (questionnaire) => {
         if (customisedQuestionnaires.length < QUESTIONNAIRE_LIST_MAX_SIZE) {
-            API.copyQuestionnaire(questionnaire.questionnaireId, user.name);
+            API.copyQuestionnaire(questionnaire.questionnaireId, user.name, token);
         } else {
             alert("The max number of customised questionnaires exceeded.");
         }
