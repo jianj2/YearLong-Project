@@ -96,7 +96,7 @@ class unittest_frontend_adminHomePage(unittest.TestCase):
 
 
     def test_edit_instructions_title(self):
-        self.driver.get("http://localhost:3000/admin/instruction/CC/edit")
+        self.driver.get("http://localhost:3000/admin/SSQ_Instructions/CC/edit")
         title = self.driver.find_element_by_class_name("Instruction-title").find_element_by_id("filled-required")
         title.click()
         time.sleep(2)
@@ -125,13 +125,19 @@ class unittest_frontend_adminHomePage(unittest.TestCase):
         time.sleep(2)
         assert ("http://localhost:3000/admin/SSQ_Instructions" in self.driver.current_url)
 
-    def test_organisation_item(self):
+    def test_organisation_country(self):
         self.driver.get("http://localhost:3000/admin/Organisation")
+        item = self.driver.find_elements_by_class_name("country-list-item")[0]
+        item.click()
+        time.sleep(2)
+        assert "http://localhost:3000/admin/Organisation/AUSTRALIA" in self.driver.current_url
+
+    def test_organisation_country_organisation(self):
+        self.driver.get("http://localhost:3000/admin/Organisation/AUSTRALIA")
         item = self.driver.find_elements_by_class_name("organisation-list-item")[0]
         item.click()
         time.sleep(2)
-        assert "http://localhost:3000/admin/Organisation/zoo" in self.driver.current_url
-
+        assert "http://localhost:3000/admin/Organisation/AUSTRALIA/aus" in self.driver.current_url
 
 
     def tearDown(self):
