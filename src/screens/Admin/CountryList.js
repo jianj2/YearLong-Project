@@ -62,7 +62,7 @@ const CountryList = () => {
             }
         };
         getCountryList();
-    }, []);
+    }, [counts]);
 
     countryList.map((country) => {
         return country.toUpperCase() + counts[country.toUpperCase()];
