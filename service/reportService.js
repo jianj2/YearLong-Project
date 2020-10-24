@@ -112,99 +112,6 @@ const scoreColour = function (doc, value) {
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to print the results on the document
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const printCustomQuestionnaireResults = function (doc, resultToPrint, startSpacing, comments) {
-    // initial document spacing after patient information
-    let docHeight = Math.ceil(doc.page.height / 10) * 10 - 100;
-    let rightMargin = 40
-    let startMargin = 30
-    let spacing = startSpacing;
-    let answerMargin = Math.ceil((doc.widthOfString("Answer: ") + rightMargin) / 10) * 10 + 5;
-    let paragraphWidth = 465;
-    let scenarioParagraphWidth = 440;
-
-    resultToPrint.sections.forEach((section, sectionIndex) => {
-        spacing = addPage(doc, spacing, docHeight)
-        // Writing the title for each scenario.
-        doc.font('Helvetica-Bold').fontSize(14).text(section.title, startMargin, spacing);
-        // doc.font('Helvetica').fontSize(12).text("Section average: " + section.score, midMargin, spacing);
-        spacing = spacing + 30;
-        let count = 1;
-        section.scenarios.map((scenario, scenarioIndex) => {
-            spacing = addPage(doc, spacing, docHeight, Math.ceil(doc.heightOfString(scenario.description, {width: paragraphWidth}) / 10) * 10 + 15)
-            // Writing the description for each scenario.
-            let scenarioString = count + ". Listening Situation: "
-
-
-            doc.font('Helvetica-Bold').fontSize(12).text(scenarioString, rightMargin, spacing);
-            //spacing = spacing + 20;
-            let margin = Math.ceil((doc.widthOfString(scenarioString) + rightMargin) / 10) * 10 + 5;
-
-            doc.font('Helvetica').fontSize(12).text(scenario.description, margin, spacing, {
-                width: scenarioParagraphWidth,
-                align: 'justify'
-            });
-
-            // adds purple overlay on top of scenario
-            doc.fillOpacity(0.1).rect(30, spacing - 10, 550, doc.heightOfString(scenario.description, {width: scenarioParagraphWidth}) + 15).fill('purple');
-            doc.fillOpacity(1).fill('black');
-
-            spacing = spacing + Math.ceil(doc.heightOfString(scenario.description, {width: scenarioParagraphWidth}) / 10) * 10 + 15;
-
-            scenario.questions.map((question) => {
-                spacing = addPage(doc, spacing, docHeight)
-
-                let questionAnswer = question.response;
-                // If the question is range type then the print out both value and supplementary value.
-                if (!question.isMCQ) {
-                    printRQAnswer(doc, questionAnswer, rightMargin, answerMargin, spacing)
-
-                    spacing = spacing + 35;
-                    spacing = addPage(doc, spacing, docHeight)
-                }
-
-                // MCQ questions will have the question and answer printed on pdf.
-                else {
-                    spacing = addPage(doc, spacing, docHeight, Math.ceil(doc.heightOfString(question.description, {width: paragraphWidth}) / 10) * 10 + 10)
-                    doc.font('Helvetica-Bold')
-                        .text(question.description, rightMargin, spacing, {
-                            width: paragraphWidth,
-                            align: 'justify'
-                        });
-
-                    spacing = spacing + Math.ceil(doc.heightOfString(question.description, {width: paragraphWidth}) / 10) * 10 + 10;
-                    spacing = addPage(doc, spacing, docHeight)
-
-                    printMCQAnswer(doc, questionAnswer, rightMargin, answerMargin, spacing)
-                    spacing = spacing + 35;
-                }
-                spacing = addPage(doc, spacing, docHeight)
-
-            });
-            // Add a comment
-            if (comments[sectionIndex][scenarioIndex] !== null && comments[sectionIndex][scenarioIndex] !== "") {
-                let comment = comments[sectionIndex][scenarioIndex]
-                spacing = addPage(doc, spacing, docHeight, Math.ceil(doc.heightOfString(comment, {width: paragraphWidth-25}) / 10) * 10 + 10)
-                doc.font('Helvetica-Bold').fontSize(12)
-                    .text('Comments: ', rightMargin, spacing);
-                doc.font('Helvetica').text(comment, answerMargin, spacing, {
-                    width: paragraphWidth - 25,
-                    align: 'justify'
-                })
-                spacing = spacing + Math.ceil(doc.heightOfString(comment, {width: paragraphWidth-25}) / 10) * 10 + 15;
-                spacing = addPage(doc, spacing, docHeight)
-            }
-            count += 1;
-
-
-        });
-        // Add a separation line.
-        spacing = spacing + 10;
-        doc.lineCap('butt').moveTo(startMargin, spacing).lineTo(doc.page.width - 30, spacing).stroke();
-        spacing = spacing + 20;
-        spacing = addPage(doc, spacing, docHeight)
-    });
-
-}
 
 const printStandardQuestionnaireResults = function (doc, resultToPrint, startSpacing, comments) {
     // initial document spacing after patient information
@@ -287,16 +194,28 @@ const printStandardQuestionnaireResults = function (doc, resultToPrint, startSpa
         spacing = spacing + 20;
         spacing = addPage(doc, spacing, docHeight)
     });
+
+    if (spacing !== 100) {
+        doc.addPage();
+        // prints time stamp
+        doc.font('Helvetica').fontSize(10).text(getTimeStamp(), 10, 10);
+        // insert logo
+        doc.image('assets/logo_complete.png', 450, 30, {width: 100})
+        spacing = 70;
+    }
+    else {
+        spacing = 70;
+    }
     // scale key
     doc.font('Helvetica-Bold').fontSize(14).text("Definitions", startMargin, spacing);
-    spacing = spacing + 20;
+    spacing = spacing + 30;
     doc.font('Helvetica-Bold').fontSize(12).text("Performance ratings were chosen using this ruler:", rightMargin, spacing)
 
     spacing = spacing + 20;
     spacing = addPage(doc, spacing, docHeight)
     // slider image
     doc.image('assets/slider.png', rightMargin, spacing, {width: 540, height: 50})
-    spacing = spacing + 70;
+    spacing = spacing + 60;
     spacing = addPage(doc, spacing, docHeight)
     doc.font('Helvetica-Bold').fontSize(12).text("If a performance rating was not provided, one of these alternative responses was selected:", rightMargin, spacing)
     spacing = spacing + 30;
@@ -826,7 +745,7 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     doc.fillOpacity(0.1).rect(30, initialSpacing, 550, lineSpacing - initialSpacing).fill('purple');
                     doc.fillOpacity(1).fill('black');
 
-                    lineSpacing += 20;
+                    lineSpacing += 30;
                     // prints out summary of section scores
                     doc.font('Helvetica-Bold').fontSize(14).text("Performance Rating Summary", 30, lineSpacing);
 
@@ -835,25 +754,109 @@ const generateAttachments = function (questionnaireId, personalDetails, question
 
                     doc.font('Helvetica-Bold').fontSize(12).text("Overall Average Rating: ", 50, lineSpacing);
                     let overallAverage = lineSpacing;
+                    let oldMargin = 0
                     lineSpacing += 30;
                     resultToPrint.sections.forEach((section, sectionIndex) => {
                         doc.font('Helvetica-Bold').fontSize(12).text(section.title + " Average Rating: ", 50, lineSpacing);
 
-                        margin = Math.ceil(doc.widthOfString("Speech Average Rating: ") / 10) * 10 + 60;
-                        doc.font('Helvetica').text(scores.sectionScores[sectionIndex] === "N/A" ? "N/A" : scores.sectionScores[sectionIndex].toFixed(2), margin, lineSpacing);
+                        margin = Math.ceil(doc.widthOfString(section.title + " Average Rating: ") / 10) * 10 + 60;
+                        if (margin > oldMargin) {
+                            oldMargin = margin;
+                        }
+                        doc.font('Helvetica').text(scores.sectionScores[sectionIndex] === "N/A" ? "N/A" : scores.sectionScores[sectionIndex].toFixed(2), oldMargin, lineSpacing);
                         lineSpacing += 30;
                         lineSpacing = addPage(doc, lineSpacing, doc.page.height);
                     })
 
-                    doc.font('Helvetica').text(scores.averageScore.toFixed(2), margin, overallAverage);
+                    doc.font('Helvetica').text(scores.averageScore.toFixed(2), oldMargin, overallAverage);
 
                     doc.fillOpacity(0.1).rect(30, initialSpacing, 550, lineSpacing - initialSpacing).fill('purple');
                     doc.fillOpacity(1).fill('black');
-                    lineSpacing += 40
+                    lineSpacing += 30;
+
+                    doc.font('Helvetica-Bold').fontSize(14).text("Subscale Speech Score Summary", 30, lineSpacing);
+                    initialSpacing = lineSpacing + 20;
+                    lineSpacing += 40;
+
+                    margin = Math.ceil(doc.widthOfString("Speech in Quiet: ") / 10) * 10 + 50;
+                    doc.font('Helvetica-Bold').fontSize(12).text('Speech in Quiet: ', 50, lineSpacing);
+                    doc.font('Helvetica').fontSize(12).text(newSubScaleScore.Speech.SpQ, margin, lineSpacing);
+                    lineSpacing += 20;
+
+                    doc.font('Helvetica-Bold').fontSize(12).text('Speech in Noise: ', 50, lineSpacing);
+                    doc.font('Helvetica').fontSize(12).text(newSubScaleScore.Speech.SpN, margin, lineSpacing);
+                    lineSpacing += 20;
+
+                    margin = Math.ceil(doc.widthOfString("Speech in Speech Context: ") / 10) * 10 + 70;
+                    doc.font('Helvetica-Bold').fontSize(12).text('Speech in Speech Context: ', 50, lineSpacing);
+                    doc.font('Helvetica').fontSize(12).text(newSubScaleScore.Speech.SpSp, margin, lineSpacing);
+                    lineSpacing += 20;
+
+                    margin = Math.ceil(doc.widthOfString("Multiple Speech Stream Processing and Switching: ") / 10) * 10 + 70;
+                    doc.font('Helvetica-Bold').fontSize(12).text('Multiple Speech Stream Processing and Switching: ', 50, lineSpacing);
+                    doc.font('Helvetica').fontSize(12).text(newSubScaleScore.Speech.SpStrm, margin, lineSpacing);
+                    lineSpacing += 30;
+
+                    doc.fillOpacity(0.1).rect(30, initialSpacing, 550, lineSpacing - initialSpacing).fill('purple');
+                    doc.fillOpacity(1).fill('black');
+
+                    // new page to prevent overflow
+                    doc.addPage();
+                    // prints time stamp
+                    doc.font('Helvetica').fontSize(10).text(ts, 10, 10);
+                    // insert logo
+                    doc.image('assets/logo_complete.png', 450, 30, {width: 100})
+                    lineSpacing = 70;
+
+                    //spatial
+                    doc.font('Helvetica-Bold').fontSize(14).text("Subscale Spatial Score Summary", 30, lineSpacing);
+                    initialSpacing = lineSpacing + 20;
+                    lineSpacing += 40;
+                    margin = Math.ceil(doc.widthOfString("Localization: ") / 10) * 10 + 50;
+                    doc.font('Helvetica-Bold').fontSize(12).text('Localization: ', 50, lineSpacing);
+                    doc.font('Helvetica').fontSize(12).text(newSubScaleScore.Spatial.Localiz, margin, lineSpacing);
+                    lineSpacing += 20;
+
+                    margin = Math.ceil(doc.widthOfString("Distance and Movement: ") / 10) * 10 + 60;
+                    doc.font('Helvetica-Bold').fontSize(12).text('Distance and Movement: ', 50, lineSpacing);
+                    doc.font('Helvetica').fontSize(12).text(newSubScaleScore.Spatial.Dist, margin, lineSpacing);
+                    lineSpacing += 30;
+
+                    // purple overlay
+                    doc.fillOpacity(0.1).rect(30, initialSpacing, 550, lineSpacing - initialSpacing).fill('purple');
+                    doc.fillOpacity(1).fill('black');
+
+                    // other qualities
+                    lineSpacing += 30;
+                    doc.font('Helvetica-Bold').fontSize(14).text("Subscale Other Qualities Score Summary", 30, lineSpacing);
+                    initialSpacing = lineSpacing + 20;
+                    lineSpacing += 40;
+
+                    margin = Math.ceil(doc.widthOfString("Segregation of Sounds: ") / 10) * 10 + 30;
+                    doc.font('Helvetica-Bold').fontSize(12).text('Segregation of Sounds: ', 50, lineSpacing);
+                    doc.font('Helvetica').fontSize(12).text(newSubScaleScore.Qualities.Segreg, margin, lineSpacing);
+                    lineSpacing += 20;
+
+                    margin = Math.ceil(doc.widthOfString("Identification of Sounds and Objects: ") / 10) * 10 + 70;
+                    doc.font('Helvetica-Bold').fontSize(12).text('Identification of Sounds and Objects: ', 50, lineSpacing);
+                    doc.font('Helvetica').fontSize(12).text(newSubScaleScore.Qualities.IDSound, margin, lineSpacing);
+                    lineSpacing += 20;
+
+                    margin = Math.ceil(doc.widthOfString("Listening Effort: ") / 10) * 10 + 60;
+                    doc.font('Helvetica-Bold').fontSize(12).text('Listening Effort: ', 50, lineSpacing);
+                    doc.font('Helvetica').fontSize(12).text(newSubScaleScore.Qualities.ListEff, margin, lineSpacing);
+                    lineSpacing += 30;
+
+                    // purple overlay
+                    doc.fillOpacity(0.1).rect(30, initialSpacing, 550, lineSpacing - initialSpacing).fill('purple');
+                    doc.fillOpacity(1).fill('black');
+
+                    lineSpacing += 30
                     doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire Responses", 30, lineSpacing);
                     lineSpacing += 30
                     doc.lineCap('butt').moveTo(30, lineSpacing).lineTo(doc.page.width - 30, lineSpacing).stroke();
                     lineSpacing += 20;
+
 
                     let sortedResults = {};
 
@@ -867,11 +870,8 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                         sortedResults = sortByPerformance(resultToPrint)
                     }
 
-                    if (sortedResults.isStandard) {
-                        printStandardQuestionnaireResults(doc, sortedResults, lineSpacing, comments)
-                    } else {
-                        printCustomQuestionnaireResults(doc, sortedResults, lineSpacing, comments)
-                    }
+                    printStandardQuestionnaireResults(doc, sortedResults, lineSpacing, comments)
+
 
                             // CLOSE THE DOCUMENT,
                             doc.end();
