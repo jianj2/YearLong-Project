@@ -20,19 +20,21 @@ import { getOrganisations } from "../../utils/API";
 ////////////////////////////////////////////////////////////////////////////////
 const OrganisationList = ({ countryName }) => {
     const [OrganisationSummary, setOrganisationSummary] = useState([]);
+    const [counts, setCounts] = useState({});
 
-    const OrganisationItem = ({ title }) => {
+    const OrganisationItem = ({ title, count }) => {
         return (
             <div
                 className={
                     "organisation-list-item organisation-list-item-selectable"
                 }
                 onClick={() => {
-                    const url = `/admin/Organisation/${countryName}/` + title;
+                    const url = `/admin/Organisation/${countryName}/` + title.toLowerCase();
                     window.location.href = url;
                 }}
             >
                 <div className="q-name">{title}</div>
+                <div>{count}</div>
             </div>
         );
     };
@@ -47,23 +49,35 @@ const OrganisationList = ({ countryName }) => {
                 if (statusCode === 200) {
                     let OrganList = new Set(
                         allOrganisation.map((item) => {
-                            return item.organisation.toLowerCase();
+                            return item.organisation.toUpperCase();
                         })
                     );
-                    setOrganisationSummary(Array.from(OrganList));
+                    allOrganisation.forEach((o) => {
+                        const org = o.organisation.toUpperCase();
+                        counts[org] = counts[org] ? counts[org] + 1 : 1;
+                    });
+                    setCounts(counts);
+                    const organisationList = Array.from(OrganList);
+                    organisationList.sort((first, second) =>{
+                        return counts[second] - counts[first];
+                      }); 
+                    setOrganisationSummary(organisationList);
+                    
                 }
             }catch(err){
                 console.error(err);
             }
         };
         getOrganisationList();
-    }, [countryName]);
+    }, [countryName, counts]);
 
     return (
         <div className="organisation-list-container">
             <h1>Organisation</h1>
-            {OrganisationSummary.map((organisations, index) => (
-                <OrganisationItem key={index} title={organisations}/>
+            {OrganisationSummary.map((organisation, index) => (
+                <OrganisationItem key={index} 
+                title={organisation}
+                count = {counts[organisation]}/>
             ))}
         </div>
     );

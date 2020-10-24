@@ -19,50 +19,65 @@ import { getCountries } from "../../utils/API";
 ////////////////////////////////////////////////////////////////////////////////
 const CountryList = () => {
     const [countryList, setCountryList] = useState([]);
+    const [counts, setCounts] = useState({});
+    
 
-    const getCountryList = async () => {
-        const [statusCode, allCountries] = await getCountries();
-
-        if (statusCode === 200) {
-            let Coun_List = new Set(allCountries.map((item) => {
-                return item.country.toUpperCase();
-            }));
-            setCountryList(Array.from(Coun_List));
-        }
-    };
-
-    const CountryItem = ({ title }) => {
+    const CountryItem = ({ title, count }) => {
         return (
             <div
-                className={
-                    "country-list-item country-list-item-selectable"
-                }
+                className={"country-list-item country-list-item-selectable"}
                 onClick={() => {
                     const url = "/admin/Organisation/" + title;
                     window.location.href = url;
                 }}
             >
-                <div className="q-name">
-                    {title}
-                </div>
-
+                <div className="q-name">{title}</div>
+                <div>{count}</div>
             </div>
         );
     };
 
     useEffect(() => {
+        const getCountryList = async () => {
+            const [statusCode, allCountries] = await getCountries();
+    
+            if (statusCode === 200) {
+                let Coun_List = new Set(
+                    allCountries.map((item) => {
+                        return item.country.toUpperCase();
+                    })
+                );
+    
+                allCountries.forEach((c) => {
+                    const country = c.country.toUpperCase();
+                    counts[country] = counts[country] ? counts[country] + 1 : 1;
+                });
+    
+                const countryList = Array.from(Coun_List);
+                countryList.sort((first, second) =>{
+                    return counts[second] - counts[first];
+                  }); 
+                setCounts(counts);
+                setCountryList(countryList);
+            }
+        };
         getCountryList();
     }, []);
+
+    countryList.map((country) => {
+        return country.toUpperCase() + counts[country.toUpperCase()];
+    });
 
     return (
         <div className="country-list-container">
             <h1>Countries</h1>
-            {countryList.map((countries, index) =>
+            {countryList.map((country, index) => (
                 <CountryItem
                     key={index}
-                    title={countries}
-                />)
-            }
+                    title={country}
+                    count={counts[country]}
+                />
+            ))}
         </div>
     );
 };
