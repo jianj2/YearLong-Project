@@ -29,7 +29,7 @@ const OrganisationList = ({ countryName }) => {
                     "organisation-list-item organisation-list-item-selectable"
                 }
                 onClick={() => {
-                    const url = `/admin/Organisation/${countryName}/` + title;
+                    const url = `/admin/Organisation/${countryName}/` + title.toLowerCase();
                     window.location.href = url;
                 }}
             >
@@ -69,7 +69,7 @@ const OrganisationList = ({ countryName }) => {
             }
         };
         getOrganisationList();
-    }, [countryName]);
+    }, [countryName, counts]);
 
     return (
         <div className="organisation-list-container">

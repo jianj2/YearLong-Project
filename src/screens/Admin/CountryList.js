@@ -20,29 +20,7 @@ import { getCountries } from "../../utils/API";
 const CountryList = () => {
     const [countryList, setCountryList] = useState([]);
     const [counts, setCounts] = useState({});
-    const getCountryList = async () => {
-        const [statusCode, allCountries] = await getCountries();
-
-        if (statusCode === 200) {
-            let Coun_List = new Set(
-                allCountries.map((item) => {
-                    return item.country.toUpperCase();
-                })
-            );
-
-            allCountries.forEach((c) => {
-                const country = c.country.toUpperCase();
-                counts[country] = counts[country] ? counts[country] + 1 : 1;
-            });
-
-            const countryList = Array.from(Coun_List);
-            countryList.sort((first, second) =>{
-                return counts[second] - counts[first];
-              }); 
-            setCounts(counts);
-            setCountryList(countryList);
-        }
-    };
+    
 
     const CountryItem = ({ title, count }) => {
         return (
@@ -60,6 +38,29 @@ const CountryList = () => {
     };
 
     useEffect(() => {
+        const getCountryList = async () => {
+            const [statusCode, allCountries] = await getCountries();
+    
+            if (statusCode === 200) {
+                let Coun_List = new Set(
+                    allCountries.map((item) => {
+                        return item.country.toUpperCase();
+                    })
+                );
+    
+                allCountries.forEach((c) => {
+                    const country = c.country.toUpperCase();
+                    counts[country] = counts[country] ? counts[country] + 1 : 1;
+                });
+    
+                const countryList = Array.from(Coun_List);
+                countryList.sort((first, second) =>{
+                    return counts[second] - counts[first];
+                  }); 
+                setCounts(counts);
+                setCountryList(countryList);
+            }
+        };
         getCountryList();
     }, []);
 
