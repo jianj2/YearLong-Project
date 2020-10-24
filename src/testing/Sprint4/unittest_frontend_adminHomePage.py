@@ -52,37 +52,37 @@ class unittest_frontend_adminHomePage(unittest.TestCase):
         view = self.driver.find_elements_by_class_name("questionnaire-list-item")[0]
         view.click()
         time.sleep(2)
-        assert ("http://localhost:3000/admin/standard/75bea290-a6c4-11ea-90b9-4720072c0f8f/view" in self.driver.current_url)
+        assert ("http://localhost:3000/admin/Questionnaire/standard/1d2a95a0-082e-11eb-a69a-2d6c84ab30fa/view" in self.driver.current_url)
 
     def test_edit_questionnaire(self):
         edit = self.driver.find_elements_by_class_name("button")[2]
         edit.click()
         time.sleep(2)
-        assert ("http://localhost:3000/admin/75bea290-a6c4-11ea-90b9-4720072c0f8f/edit" in self.driver.current_url)
+        assert ("http://localhost:3000/admin/Questionnaire/standard/1d2a95a0-082e-11eb-a69a-2d6c84ab30fa/edit" in self.driver.current_url)
 
-    def test_copy_questionnaire(self):
+    def test_copy_delete_confirm_questionnaire(self):
         copy = self.driver.find_elements_by_class_name("button")[3]
         copy.click()
         time.sleep(2)
-        assert self.driver.find_elements_by_class_name("questionnaire-list-item")[3]
+        assert self.driver.find_elements_by_class_name("questionnaire-list-item")[4]
+        delete = self.driver.find_elements_by_class_name("button")[4]
+        delete.click()
+        time.sleep(2)
+        yes = self.driver.find_elements_by_id("margin-button")[0]
+        yes.click()
+        time.sleep(2)
 
     def test_addNew_questionnaire(self):
         addNew = self.driver.find_elements_by_class_name("button")[1]
         addNew.click()
         time.sleep(2)
 
-    def test_delete_questionnaire(self):
-        delete = self.driver.find_elements_by_class_name("button")[13]
+    def test_delete_cancel_questionnaire(self):
+        delete = self.driver.find_elements_by_class_name("button")[4]
         delete.click()
         time.sleep(2)
         cancel = self.driver.find_elements_by_id("margin-button")[1]
         cancel.click()
-        time.sleep(2)
-        delete = self.driver.find_elements_by_class_name("button")[13]
-        delete.click()
-        time.sleep(2)
-        yes = self.driver.find_elements_by_id("margin-button")[0]
-        yes.click()
         time.sleep(2)
 
     def test_select_instructions(self):
