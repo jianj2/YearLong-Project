@@ -104,7 +104,7 @@ describe('Sprint3 Backend unit-test',function(){
         });
         it('Test admin get the instruction',function(done){
             chai.request('http://localhost:3001/admin')
-                .get('/instruction')
+                .get('/specificInstruction/CC')
                 .end(function(err,res){
                     if(!err){
                         res.should.have.status(200);
@@ -114,18 +114,6 @@ describe('Sprint3 Backend unit-test',function(){
                     }
                 });
         }).timeout(5000);
-        it('Test admin get the questionnaire',function(done){
-            chai.request('http://localhost:3001/admin')
-                .get('/getStandardisedQuestionnaire')
-                .end(function(err,res){
-                    if(!err){
-                        res.should.have.status(200);
-                        done();
-                    }else{
-                        done(err);
-                    }
-                });
-        });
         it('Test admin verify login',function(done){
             chai.request('http://localhost:3001/admin')
                 .get('/verifylogin/:token')
@@ -151,9 +139,21 @@ describe('Sprint3 Backend unit-test',function(){
                 });
         }).timeout(5000);
 
-        it('Test admin get all organisation',function(done){
+        it('Test admin get all country',function(done){
             chai.request('http://localhost:3001/admin')
-                .get('/organisation')
+                .get('/country')
+                .end(function(err,res){
+                    if(!err){
+                        res.should.have.status(200);
+                        done();
+                    }else{
+                        done(err);
+                    }
+                });
+        }).timeout(5000);
+        it('Test admin get organisations from a contry',function(done){
+            chai.request('http://localhost:3001/admin')
+                .get('/country/organisation/australia')
                 .end(function(err,res){
                     if(!err){
                         res.should.have.status(200);
@@ -165,7 +165,7 @@ describe('Sprint3 Backend unit-test',function(){
         }).timeout(5000);
         it('Test admin get clinicians in a organisation',function(done){
             chai.request('http://localhost:3001/admin')
-                .get('/organisation/zoo')
+                .get('/organisation/clinician/aus')
                 .end(function(err,res){
                     if(!err){
                         res.should.have.status(200);
@@ -299,20 +299,6 @@ describe('Sprint3 Backend unit-test',function(){
     });
 
     describe('Test the questionnaire.js router',function(){
-
-        it('Test getAllQuestionnaire',function(done){
-            chai.request('http://localhost:3001/questionnaire')
-                .get('/')
-                .end(function(err,res){
-                    if(!err){
-                        res.should.have.status(200);
-                        res.body.should.have.lengthOf(36);
-                        done();
-                    }else{
-                        done(err);
-                    }
-                });
-        });
 
         it('Test get first Questionnaire by /:questionnaireId',function(done){
             chai.request('http://localhost:3001/questionnaire')
