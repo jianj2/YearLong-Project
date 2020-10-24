@@ -230,7 +230,7 @@ export const verifyAdminLogin = async (accessToken) => {
  */
 export const getSpecificInstruction = async (instructionType) => {
     const url = `admin/specificInstruction/${instructionType}`;
-    return await sendRequest("GET", url, undefined, getToken());
+    return await sendRequest("GET", url);
 };
 /**
  * =============================================================================
