@@ -37,32 +37,30 @@ const CountryList = () => {
         );
     };
 
-    useEffect(() => {
-        const getCountryList = async () => {
-            const [statusCode, allCountries] = await getCountries();
-    
-            if (statusCode === 200) {
-                let Coun_List = new Set(
-                    allCountries.map((item) => {
-                        return item.country.toUpperCase();
-                    })
-                );
-    
-                allCountries.forEach((c) => {
-                    const country = c.country.toUpperCase();
-                    counts[country] = counts[country] ? counts[country] + 1 : 1;
-                });
-    
-                const countryList = Array.from(Coun_List);
-                countryList.sort((first, second) =>{
-                    return counts[second] - counts[first];
-                  }); 
-                setCounts(counts);
-                setCountryList(countryList);
-            }
-        };
-        getCountryList();
-    }, []);
+    const getCountryList = async () => {
+        const [statusCode, allCountries] = await getCountries();
+
+        if (statusCode === 200) {
+            let Coun_List = new Set(
+                allCountries.map((item) => {
+                    return item.country.toUpperCase();
+                })
+            );
+
+            allCountries.forEach((c) => {
+                const country = c.country.toUpperCase();
+                counts[country] = counts[country] ? counts[country] + 1 : 1;
+            });
+
+            const countryList = Array.from(Coun_List);
+            countryList.sort((first, second) =>{
+                return counts[second] - counts[first];
+              }); 
+            setCounts(counts);
+            setCountryList(countryList);
+        }
+    };
+    useEffect(getCountryList, []);
 
     countryList.map((country) => {
         return country.toUpperCase() + counts[country.toUpperCase()];
