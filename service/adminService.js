@@ -99,7 +99,7 @@ const getCountryListFromDatabase = async () => {
         const clinicians = await Clinician.find({});
         const filteredClinicians = clinicians.filter(
             (clinician) =>
-                clinician.country !== null && clinician.country.trim() !== ""
+                clinician.country && clinician.country.trim() !== ""
         );
         const summary = filteredClinicians.map((clinician) => {
             return {
@@ -121,7 +121,7 @@ const getOrganisationListFromDatabase = async (req) => {
         const clinicians = await Clinician.find({});
         const filteredClinicians = clinicians.filter(
             (clinician) =>
-                clinician.country !== null &&
+                clinician.country &&
                 clinician.country.toUpperCase() === req.params.countryName
         );
         const summary = filteredClinicians.map((clinician) => {
@@ -144,7 +144,7 @@ const getOrganisationCliniciansFromDatabase = async (req) => {
         const clinicians = await Clinician.find({});
         const filteredClinicians = clinicians.filter(
             (clinician) =>
-                clinician.organisation !== null &&
+                clinician.organisation &&
                 clinician.organisation.toLowerCase() ===
                 req.params.organisationName
         );

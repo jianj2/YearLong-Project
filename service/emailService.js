@@ -40,7 +40,7 @@ const sendInvitationEmail = (createdShare) => {
     return new Promise((resolve, reject) => {
         const {patientEmail} = createdShare;
         let client = process.env.CLIENT || "http://localhost:3000";
-        let link = client + "/parent/" + createdShare.shareId + "";
+        let link = client + "/participant/" + createdShare.shareId + "";
         let message = "";
         if (createdShare.message !== undefined && createdShare.message !== "") {
             message =

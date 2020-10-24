@@ -147,7 +147,7 @@ const deleteQuestionnaire = async (req, res) => {
 // This function is called to delete standardised questionnaire
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const deleteStandardisedQuestionnaire = async (req, res) => {
-    const questionnaireId = req.body.questionnaireID;
+    const questionnaireId = req.body.questionnaireId;
     const [err, message] = await deleteQuestionnaireFromDatabase(
         questionnaireId,
         ""
@@ -167,13 +167,13 @@ const getStandardisedQuestionnaires = async (req, res) => {
 // This function is called to copy a questionnaire.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const copyQuestionnaire = async (req, res) => {
-    const copiedQuestionnaire = req.body.questionnaire;
-    const copyToCustomisedQuestionnaire =
-        req.body.copyToCustomisedQuestionnaire;
+    const copiedQuestionnaireId = req.body.questionnaireId;
+    const isCopyingToCustomisedQuestionnaire =
+        req.body.isCopyingToCustomisedQuestionnaire;
     const clinicianId = req.body.clinicianId;
     const [err, message] = await copyQuestionnaireToDatabase(
-        copiedQuestionnaire,
-        copyToCustomisedQuestionnaire,
+        copiedQuestionnaireId,
+        isCopyingToCustomisedQuestionnaire,
         clinicianId
     );
 

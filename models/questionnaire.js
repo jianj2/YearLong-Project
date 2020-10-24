@@ -28,7 +28,7 @@ questionSchema.set('toJSON', {
 })
 
 const scenarioSchema = mongoose.Schema({
-    description: {type: String, required:true} ,
+    description: {type: String} ,
     questions: [questionSchema]
 })
 
@@ -55,7 +55,7 @@ sectionSchema.set('toJSON', {
 const questionnaireSchema = mongoose.Schema({
     questionnaireId: { type: String, required:true, lowercase:true, unique:true, trim:true},
     title: {type: String, required:true},
-    description: {type: String, required:true},
+    description: {type: String},
     sections: [sectionSchema],
     sectionNames: [String],
     isStandard: Boolean,

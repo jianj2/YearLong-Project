@@ -348,15 +348,17 @@ const deleteQuestionnaireFromDatabase = async (
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to copy questionnaire to database.
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const copyQuestionnaireToDatabase = async (copiedQuestionnaire,
-    copyToCustomisedQuestionnaire,
+const copyQuestionnaireToDatabase = async (IdBeingCopied,
+    isCopyingToCustomisedQuestionnaire,
     clinicianId) => {
     const uuid = uuidv1();
     try {
+        const questionnaireBeingCopied =await Questionnaire.findOne({ questionnaireId: IdBeingCopied});
+        const questionnaireJSON = questionnaireBeingCopied.toJSON();
         const newQuestionnaire = generateCopy(
-            copiedQuestionnaire,
+            questionnaireJSON,
             uuid,
-            !copyToCustomisedQuestionnaire
+            !isCopyingToCustomisedQuestionnaire
         );
         await newQuestionnaire.save();
         if (clinicianId) {
