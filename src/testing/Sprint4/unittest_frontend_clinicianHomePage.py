@@ -206,6 +206,30 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         time.sleep(2)
         assert self.driver.find_element_by_class_name("scenario-container")
 
+    def test_complete_enterPersonalDetails_wrongBirth(self):
+        test = self.driver.find_element_by_class_name("sidebar-do-the-test")
+        test.click()
+        time.sleep(2)
+        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[1]
+        q.click()
+        time.sleep(2)
+        name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
+        name.send_keys("Daniel")
+        time.sleep(2)
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        birth.send_keys("aabbccdd")
+        time.sleep(2)
+        ld = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
+        ld.send_keys("None")
+        time.sleep(2)
+        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        rd.send_keys("None")
+        time.sleep(2)
+        next = self.driver.find_elements_by_class_name("button")[2]
+        next.click()
+        time.sleep(2)
+        assert self.driver.find_element_by_class_name("parents-detail-form")
+
     def test_complete_nextWithoutInput(self):
         test = self.driver.find_element_by_class_name("sidebar-do-the-test")
         test.click()
