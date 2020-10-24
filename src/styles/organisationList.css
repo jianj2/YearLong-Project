@@ -19,7 +19,9 @@
     position: relative;
     transition: all 0.2s;
     display: flex;
-    flex-flow: column;
+    flex-flow: row;
+    justify-content: space-between;
+
 }
 
 .organisation-list-item-selectable {
