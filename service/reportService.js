@@ -218,7 +218,7 @@ const printStandardQuestionnaireResults = function (doc, resultToPrint, startSpa
     spacing = spacing + 60;
     spacing = addPage(doc, spacing, docHeight)
     doc.font('Helvetica-Bold').fontSize(12).text("If a performance rating was not provided, one of these alternative responses was selected:", rightMargin, spacing)
-    spacing = spacing + 30;
+    spacing = spacing + 40;
     //other options for slider
     otherOptions.map((option, index) => {
         doc.font('Helvetica-Bold').fontSize(12)
@@ -705,7 +705,7 @@ const generateAttachments = function (questionnaireId, personalDetails, question
 
                             const csvResult = generateCSV(resultToPrint, personalDetails, scenarioResults, comments, scores);
 
-                    let lineSpacing = 230;
+                    let lineSpacing = 220;
                     let margin = 0;
                     let initialSpacing = lineSpacing + 20
                     doc.font('Helvetica-Bold').fontSize(14).text("Questionnaire Information", 30, lineSpacing);
@@ -745,7 +745,7 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     doc.fillOpacity(0.1).rect(30, initialSpacing, 550, lineSpacing - initialSpacing).fill('purple');
                     doc.fillOpacity(1).fill('black');
 
-                    lineSpacing += 30;
+                    lineSpacing += 20;
                     // prints out summary of section scores
                     doc.font('Helvetica-Bold').fontSize(14).text("Performance Rating Summary", 30, lineSpacing);
 
@@ -772,7 +772,7 @@ const generateAttachments = function (questionnaireId, personalDetails, question
 
                     doc.fillOpacity(0.1).rect(30, initialSpacing, 550, lineSpacing - initialSpacing).fill('purple');
                     doc.fillOpacity(1).fill('black');
-                    lineSpacing += 30;
+                    lineSpacing += 20;
 
                     doc.font('Helvetica-Bold').fontSize(14).text("Subscale Speech Score Summary", 30, lineSpacing);
                     initialSpacing = lineSpacing + 20;
@@ -781,16 +781,16 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     margin = Math.ceil(doc.widthOfString("Speech in Quiet: ") / 10) * 10 + 50;
                     doc.font('Helvetica-Bold').fontSize(12).text('Speech in Quiet: ', 50, lineSpacing);
                     doc.font('Helvetica').fontSize(12).text(newSubScaleScore.Speech.SpQ, margin, lineSpacing);
-                    lineSpacing += 20;
+                    lineSpacing += 30;
 
                     doc.font('Helvetica-Bold').fontSize(12).text('Speech in Noise: ', 50, lineSpacing);
                     doc.font('Helvetica').fontSize(12).text(newSubScaleScore.Speech.SpN, margin, lineSpacing);
-                    lineSpacing += 20;
+                    lineSpacing += 30;
 
                     margin = Math.ceil(doc.widthOfString("Speech in Speech Context: ") / 10) * 10 + 70;
                     doc.font('Helvetica-Bold').fontSize(12).text('Speech in Speech Context: ', 50, lineSpacing);
                     doc.font('Helvetica').fontSize(12).text(newSubScaleScore.Speech.SpSp, margin, lineSpacing);
-                    lineSpacing += 20;
+                    lineSpacing += 30;
 
                     margin = Math.ceil(doc.widthOfString("Multiple Speech Stream Processing and Switching: ") / 10) * 10 + 70;
                     doc.font('Helvetica-Bold').fontSize(12).text('Multiple Speech Stream Processing and Switching: ', 50, lineSpacing);
@@ -815,7 +815,7 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     margin = Math.ceil(doc.widthOfString("Localization: ") / 10) * 10 + 50;
                     doc.font('Helvetica-Bold').fontSize(12).text('Localization: ', 50, lineSpacing);
                     doc.font('Helvetica').fontSize(12).text(newSubScaleScore.Spatial.Localiz, margin, lineSpacing);
-                    lineSpacing += 20;
+                    lineSpacing += 30;
 
                     margin = Math.ceil(doc.widthOfString("Distance and Movement: ") / 10) * 10 + 60;
                     doc.font('Helvetica-Bold').fontSize(12).text('Distance and Movement: ', 50, lineSpacing);
@@ -827,7 +827,7 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     doc.fillOpacity(1).fill('black');
 
                     // other qualities
-                    lineSpacing += 30;
+                    lineSpacing += 20;
                     doc.font('Helvetica-Bold').fontSize(14).text("Subscale Other Qualities Score Summary", 30, lineSpacing);
                     initialSpacing = lineSpacing + 20;
                     lineSpacing += 40;
@@ -835,12 +835,12 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                     margin = Math.ceil(doc.widthOfString("Segregation of Sounds: ") / 10) * 10 + 30;
                     doc.font('Helvetica-Bold').fontSize(12).text('Segregation of Sounds: ', 50, lineSpacing);
                     doc.font('Helvetica').fontSize(12).text(newSubScaleScore.Qualities.Segreg, margin, lineSpacing);
-                    lineSpacing += 20;
+                    lineSpacing += 30;
 
                     margin = Math.ceil(doc.widthOfString("Identification of Sounds and Objects: ") / 10) * 10 + 70;
                     doc.font('Helvetica-Bold').fontSize(12).text('Identification of Sounds and Objects: ', 50, lineSpacing);
                     doc.font('Helvetica').fontSize(12).text(newSubScaleScore.Qualities.IDSound, margin, lineSpacing);
-                    lineSpacing += 20;
+                    lineSpacing += 30;
 
                     margin = Math.ceil(doc.widthOfString("Listening Effort: ") / 10) * 10 + 60;
                     doc.font('Helvetica-Bold').fontSize(12).text('Listening Effort: ', 50, lineSpacing);
