@@ -296,7 +296,7 @@ const MultipleChoiceQuestionFrom = ({
                         {
                             isStandard ? "" :
                                 <button
-                                    className="delete-answer-button"
+                                    className="button-circle"
                                     type="button"
                                     onClick={(event) => {
                                         event.preventDefault();
