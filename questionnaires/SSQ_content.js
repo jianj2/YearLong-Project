@@ -9,7 +9,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -41,7 +41,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -73,7 +73,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -105,7 +105,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -137,7 +137,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -169,7 +169,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -201,7 +201,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -233,7 +233,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -265,7 +265,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -297,7 +297,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -334,7 +334,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -366,7 +366,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -398,7 +398,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -430,7 +430,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -462,7 +462,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -494,7 +494,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -526,7 +526,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -558,7 +558,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -590,7 +590,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -622,7 +622,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -654,7 +654,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -686,7 +686,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -714,7 +714,7 @@ const SSQ_CH = [
         ],
     },
     {
-        title: "Section C - Quality",
+        title: "Section C - Other Qualities",
         scenarios: [
             {
                 // first question
@@ -723,7 +723,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -755,7 +755,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -787,7 +787,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -819,7 +819,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -851,7 +851,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -883,7 +883,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -915,7 +915,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Try very hard", "Don't try hard"],
                     },
                     {
                         description:
@@ -947,7 +947,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -979,7 +979,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Try very hard", "Don't try hard"],
                     },
                     {
                         description:
@@ -1011,7 +1011,7 @@ const SSQ_CH = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not easy", "Easy"],
                     },
                     {
                         description:
@@ -1053,7 +1053,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -1085,7 +1085,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -1117,7 +1117,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -1149,7 +1149,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -1181,7 +1181,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -1213,7 +1213,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -1245,7 +1245,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -1277,7 +1277,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -1309,7 +1309,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -1346,7 +1346,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -1378,7 +1378,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -1410,7 +1410,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -1442,7 +1442,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -1474,7 +1474,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -1506,7 +1506,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -1534,7 +1534,7 @@ const SSQ_P = [
         ],
     },
     {
-        title: "Section C - Quality",
+        title: "Section C - Other Qualities",
         scenarios: [
             {
                 // first question
@@ -1543,7 +1543,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -1575,7 +1575,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -1607,7 +1607,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -1639,7 +1639,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -1671,7 +1671,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -1703,7 +1703,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not at all", "Perfectly"],
                     },
                     {
                         description:
@@ -1735,7 +1735,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["A lot of effort", "No effort"],
                     },
                     {
                         description:
@@ -1767,7 +1767,7 @@ const SSQ_P = [
                 questions: [
                     {
                         isMCQ: false,
-                        rangeOptions: ["Zero", "Ten"],
+                        rangeOptions: ["Not easily ignore", "Easily ignore"],
                     },
                     {
                         description:

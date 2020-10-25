@@ -5,21 +5,21 @@ const mongoose = require('mongoose');
 
 /**
  * =============================================================================
- * SCHEMA OF Instruction (WITH MONGOOSE)
+ * SCHEMA OF ADMIN (WITH MONGOOSE)
  * =============================================================================
- * @date created: 17 August 2020
- * @authors: Guang Yang
+ * @date created: 11 Oct 2020
+ * @authors: Uvin Abeysinghe
  *
- * The models/instruction.js is used for establishing the 'instruction' schema and types using mongoose.
+ * The models/admin.js is used for keeping track fo admin users.
  */
 
-const instructionSchema = mongoose.Schema({
-    title:{type: String, required:true},
-    type:{type: String, required:false},
-    content:{type: String, required:true},
+const adminSchema = mongoose.Schema({
+    username: { type: String, required:true, trim:true},
+    email: {type: String, required:true, unique:true },
+    password : {type: String, required:true, unique:true },
 });
 
 ////////////////////////////////////////////////////////////////////////////////
 ////                             Export Modules                             ////
 ////////////////////////////////////////////////////////////////////////////////
-module.exports = mongoose.model('instruction', instructionSchema);
+module.exports = mongoose.model('admin', adminSchema);

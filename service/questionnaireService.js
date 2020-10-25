@@ -1,26 +1,33 @@
-/**
- * ============================================
- * DEFINING QUESTIONNAIRE SERVICE
- * ============================================
- * @date created: 13 Sep 2020
- * @authors: Cary Jin
- *
- * The questionnaire service handles the domain and datasource
- * logic related to adding/removing/updating questionnaires. 
- *
- */
+////////////////////////////////////////////////////////////////////////////////
+////                             Import Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
 const { v1: uuidv1 } = require("uuid");
-
 const mongoose = require("mongoose");
 const { SSQ_CH, SSQ_P } = require("../questionnaires/SSQ_content");
 const Questionnaire = mongoose.model("questionnaire");
 const Clinician = mongoose.model("clinician");
 
+/**
+ * =============================================================================
+ * DEFINING QUESTIONNAIRE SERVICE
+ * =============================================================================
+ * @date created: 13 Sep 2020
+ * @authors: Cary Jin
+ *
+ * The questionnaire service handles the domain and datasource
+ * logic related to adding/removing/updating questionnaires.
+ *
+ */
+
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+    // This function is used to find a questionnaire by the given id.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const findQuestionnaireById = async (questionnaireId) => {
     try {
         const questionnaire = await Questionnaire.findOne({ questionnaireId });
         // throw Error("My Error");
-        if (questionnaire != null ){
+        if (questionnaire !== null ){
             return await new Promise((resolve, reject) => {
                 resolve([undefined, questionnaire]);
              });
@@ -33,12 +40,15 @@ const findQuestionnaireById = async (questionnaireId) => {
     }
 };
 
-// find all questiionnaires that belong to the clinician with clinicianId
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to find all questionnaires that belong to the clinician
+// with clinicianId
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const findQuestionnaireForClinician = async (clinicianId) => {
     try {
         const clinician = await Clinician.findOne({ clinicianId: clinicianId });
         const questionnaireIds = clinician.questionnaires;
-        const questionnaires = await Questionnaire.find()
+        const questionnaires = await Questionnaire.find({}, {sections: 0 })
             .where("questionnaireId")
             .in(questionnaireIds)
             .exec();
@@ -52,10 +62,12 @@ const findQuestionnaireForClinician = async (clinicianId) => {
     }
 };
 
-// find all standardised questionnaires
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to find all standardised questionnaires
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const findStandardisedQuestionnaires = async () => {
     try {
-        const questionnaires = await Questionnaire.find({ isStandard: true });
+        const questionnaires = await Questionnaire.find({ isStandard: true }, {sections: 0 });
         const result = await new Promise((resolve, reject) => {
             resolve([undefined, questionnaires]);
         });
@@ -65,7 +77,9 @@ const findStandardisedQuestionnaires = async () => {
     }
 };
 
-// generate an almost empty questionnaire with uuid.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to generate an almost empty questionnaire with uuid.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const generateNewCustomisedQuestionnaire = (uuid) => {
     return new Questionnaire({
         questionnaireId: uuid,
@@ -76,13 +90,17 @@ const generateNewCustomisedQuestionnaire = (uuid) => {
         sections: [
             { title: "Section A - Speech", scenarios: [] },
             { title: "Section B - Spatial", scenarios: [] },
-            { title: "Section C - Quality", scenarios: [] },
+            { title: "Section C - Other Qualities", scenarios: [] },
         ],
+        sectionNames: ["Section A - Speech", "Section B - Spatial", "Section C - Other Qualities"],
         isStandard: false,
     });
 };
 
-//generates a questionnaire template for a standard one with uuid.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to generates a questionnaire template for a standard
+// one with uuid.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const generateNewStandardisedQuestionnaire = (uuid) => {
     return new Questionnaire({
         questionnaireId: uuid,
@@ -93,13 +111,17 @@ const generateNewStandardisedQuestionnaire = (uuid) => {
         sections: [
             { title: "Section A - Speech", scenarios: [] },
             { title: "Section B - Spatial", scenarios: [] },
-            { title: "Section C - Quality", scenarios: [] },
+            { title: "Section C - Other Qualities", scenarios: [] },
         ],
+        sectionNames: ["Section A - Speech", "Section B - Spatial", "Section C - Other Qualities"],
         isStandard: true,
     });
 };
 
-//generates a complete standard questionnaire template for parents with uuid.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to generate a complete standard questionnaire template
+// for parents with uuid.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const generateCompleteParentQuestionnaire = (uuid) => {
     return new Questionnaire({
         questionnaireId: uuid,
@@ -108,11 +130,15 @@ const generateCompleteParentQuestionnaire = (uuid) => {
         isSSQ_Ch: false,
         updateDate: new Date().toLocaleString("en-US", {timeZone: "Australia/Sydney"}),
         sections: SSQ_P,
+        sectionNames: ["Section A - Speech", "Section B - Spatial", "Section C - Other Qualities"],
         isStandard: true,
     });
 };
 
-//generates a complete standard questionnaire template for children with uuid.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to generate a complete standard questionnaire template
+// for children with uuid.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const generateCompleteChildQuestionnaire = (uuid) => {
     return new Questionnaire({
         questionnaireId: uuid,
@@ -121,11 +147,15 @@ const generateCompleteChildQuestionnaire = (uuid) => {
         isSSQ_Ch: true,
         updateDate: new Date().toLocaleString("en-US", {timeZone: "Australia/Sydney"}),
         sections: SSQ_CH,
+        sectionNames: ["Section A - Speech", "Section B - Spatial", "Section C - Other Qualities"],
         isStandard: true,
     });
 };
 
-// generates a new questionnaire with given content and fields
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to generates a new questionnaire with given content
+// and fields.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const generateCopy = (copiedQuestionnaire, questionnaireId, isStandard) => {
     return new Questionnaire({
         ...copiedQuestionnaire,
@@ -136,7 +166,10 @@ const generateCopy = (copiedQuestionnaire, questionnaireId, isStandard) => {
     });
 };
 
-// insert a questionnaireId to the clincian's list of customised questionnaires
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to insert a questionnaireId to the clincian's list of
+// customised questionnaires
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const attachQuestionnaireToClinician = async (uuid, clinicianId) => {
     try {
         await Clinician.updateOne(
@@ -149,7 +182,10 @@ const attachQuestionnaireToClinician = async (uuid, clinicianId) => {
     }
 };
 
-// Save a new customised questionnaire belonging to clincianId and return a message
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to save a new customised questionnaire belonging to
+// clincianId and return a message.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const saveNewCustomisedQuestionnaire = async (
     newQuestionnaire,
     clinicianId
@@ -165,7 +201,10 @@ const saveNewCustomisedQuestionnaire = async (
     }
 };
 
-// Save a new standardised questionnaire belonging to admin
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to save a new standardised questionnaire belonging to
+// admin.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const saveNewStandardisedQuestionnaire = async (newQuestionnaire) => {
     try {
         await newQuestionnaire.save();
@@ -178,7 +217,10 @@ const saveNewStandardisedQuestionnaire = async (newQuestionnaire) => {
     }
 };
 
-// update a questionnaire with the id and content provided.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to update a questionnaire with the id and content
+// provided.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const updateQuestionnaireOnDatabase = async (
     questionnaireId,
     editedQuestionnaire
@@ -203,6 +245,9 @@ const updateQuestionnaireOnDatabase = async (
     }
 };
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to remove a edit custom questionnaire.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const editCustomisedQuestionnaire = async (
     userEmail,
     questionnaireId,
@@ -226,7 +271,10 @@ const editCustomisedQuestionnaire = async (
     }
 };
 
-// remove a questionnaire id from the clincian's list of customised questionnaires
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to remove a questionnaire id from the clincian's list
+// of customised questionnaires
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const detachQuestionnaireFromClinician = async (
     questionnaireId,
     clinicianId
@@ -245,6 +293,9 @@ const detachQuestionnaireFromClinician = async (
     }
 };
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to delete a customised questionnaire from the database.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const deleteCustomisedQuestionnaireFromDatabase = async (
     questionnaireId,
     userEmail,
@@ -268,7 +319,10 @@ const deleteCustomisedQuestionnaireFromDatabase = async (
     }
 };
 
-// delete a questionnaire with given id, and remove it from the clinician's list, if it is customised.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to delete a questionnaire with given id, and remove it
+// from the clinician's list, if it is customised.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 const deleteQuestionnaireFromDatabase = async (
     questionnaireId,
     clinicianId
@@ -291,15 +345,20 @@ const deleteQuestionnaireFromDatabase = async (
     }
 };
 
-const copyQuestionnaireToDatabase = async (copiedQuestionnaire,
-    copyToCustomisedQuestionnaire,
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// This function is used to copy questionnaire to database.
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+const copyQuestionnaireToDatabase = async (IdBeingCopied,
+    isCopyingToCustomisedQuestionnaire,
     clinicianId) => {
     const uuid = uuidv1();
     try {
+        const questionnaireBeingCopied =await Questionnaire.findOne({ questionnaireId: IdBeingCopied});
+        const questionnaireJSON = questionnaireBeingCopied.toJSON();
         const newQuestionnaire = generateCopy(
-            copiedQuestionnaire,
+            questionnaireJSON,
             uuid,
-            !copyToCustomisedQuestionnaire
+            !isCopyingToCustomisedQuestionnaire
         );
         await newQuestionnaire.save();
         if (clinicianId) {
@@ -315,19 +374,24 @@ const copyQuestionnaireToDatabase = async (copiedQuestionnaire,
     }
 };
 
-module.exports.findQuestionnaireById = findQuestionnaireById;
-module.exports.findQuestionnaireForClinician = findQuestionnaireForClinician;
-module.exports.findStandardisedQuestionnaires = findStandardisedQuestionnaires;
-module.exports.generateNewCustomisedQuestionnaire = generateNewCustomisedQuestionnaire;
-module.exports.generateNewStandardisedQuestionnaire = generateNewStandardisedQuestionnaire;
-module.exports.generateCompleteParentQuestionnaire = generateCompleteParentQuestionnaire;
-module.exports.generateCompleteChildQuestionnaire = generateCompleteChildQuestionnaire;
-module.exports.generateCopy = generateCopy;
-module.exports.copyQuestionnaireToDatabase = copyQuestionnaireToDatabase;
-module.exports.attachQuestionnaireToClinician = attachQuestionnaireToClinician;
-module.exports.saveNewCustomisedQuestionnaire = saveNewCustomisedQuestionnaire;
-module.exports.saveNewStandardisedQuestionnaire = saveNewStandardisedQuestionnaire;
-module.exports.updateQuestionnaireOnDatabase = updateQuestionnaireOnDatabase;
-module.exports.editCustomisedQuestionnaire = editCustomisedQuestionnaire;
-module.exports.deleteCustomisedQuestionnaireFromDatabase = deleteCustomisedQuestionnaireFromDatabase;
-module.exports.deleteQuestionnaireFromDatabase = deleteQuestionnaireFromDatabase;
+////////////////////////////////////////////////////////////////////////////////
+////                             Export Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
+module.exports = {
+    findQuestionnaireById,
+    findQuestionnaireForClinician,
+    findStandardisedQuestionnaires,
+    generateNewCustomisedQuestionnaire,
+    generateNewStandardisedQuestionnaire,
+    generateCompleteParentQuestionnaire,
+    generateCompleteChildQuestionnaire,
+    generateCopy,
+    copyQuestionnaireToDatabase,
+    attachQuestionnaireToClinician,
+    saveNewCustomisedQuestionnaire,
+    saveNewStandardisedQuestionnaire,
+    updateQuestionnaireOnDatabase,
+    editCustomisedQuestionnaire,
+    deleteCustomisedQuestionnaireFromDatabase,
+    deleteQuestionnaireFromDatabase,
+}

@@ -1,32 +1,35 @@
-/**
- * ========================================
- * DEFINING SHARE API CALLS CONTROLLER
- * ========================================
- * @date created: 31 May 2020
- * @authors: Uvin, Waqas
- *
- * The share_controller is used for defining the functionality of api calls related to share.
- *
- */
-
-// Import Libraries
+////////////////////////////////////////////////////////////////////////////////
+////                             Import Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
 const { extractUserEmail } = require("../utils/jwtUtils");
 const {
     sendInvitationEmail,
-    sendResultsEmail,
+    sendResultsEmail
 } = require("../service/emailService");
 const {
     deleteShare,
     findShareById,
     createShare,
-    saveShare,
+    saveShare
 } = require("../service/shareService");
 const { sendJSONResponse } = require("../utils/apiUtils");
 
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+/**
+ * =============================================================================
+ * DEFINING SHARE API CALLS CONTROLLER
+ * =============================================================================
+ * @date created: 31 May 2020
+ * @authors: Uvin, Waqas
+ *
+ * The share_controller is used for defining the functionality of api calls
+ * related to share.
+ *
+ */
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to create a new share.
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const shareQuestionnaire = async function (req, res) {
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+const shareQuestionnaire = async (req, res) => {
     const userEmail = extractUserEmail(req);
     const clinicianEmail = req.body.clinicianEmail;
 
@@ -48,34 +51,28 @@ const shareQuestionnaire = async function (req, res) {
     }
 };
 
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to get ShareDetails using ShareId
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const getShareDetails = async function (req, res) {
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+const getShareDetails = async (req, res) => {
     const shareId = req.params.shareId;
     const [err, foundShare] = await findShareById(shareId);
     sendJSONResponse(res, foundShare, err, 404);
 };
 
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is called when share response is completed.
-// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-const completeShare = async function (req, res) {
-    let questionnaireData = req.body.questionnaireData;
-    let clinicianEmail = req.body.clinicianEmail;
-    let personalDetails = req.body.personalDetails;
-    let questionnaireId = req.body.questionnaireId;
-    let comments = req.body.comments;
-    let sortBy = req.body.sortBy;
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+const completeShare = async (req, res) => {
     try {
         const emailResponse = await sendResultsEmail(
-            questionnaireId,
-            questionnaireData,
-            clinicianEmail,
-            personalDetails,
-            sortBy,
+            req.body.questionnaireId,
+            req.body.questionnaireData,
+            req.body.clinicianEmail,
+            req.body.personalDetails,
+            req.body.sortBy,
             req.params.shareId,
-            comments
+            req.body.comments
         );
         const err = await deleteShare(req.params.shareId);
         if (!err) {
@@ -88,8 +85,13 @@ const completeShare = async function (req, res) {
     }
 };
 
-module.exports.sendResultsEmail = sendResultsEmail;
-module.exports.deleteShare = deleteShare;
-module.exports.completeShare = completeShare;
-module.exports.getShareDetails = getShareDetails;
-module.exports.shareQuestionnaire = shareQuestionnaire;
+////////////////////////////////////////////////////////////////////////////////
+////                             Export Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
+module.exports = {
+    sendResultsEmail,
+    deleteShare,
+    completeShare,
+    getShareDetails,
+    shareQuestionnaire
+};

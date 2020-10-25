@@ -1,14 +1,19 @@
+////////////////////////////////////////////////////////////////////////////////
+////                             Import Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
+const mongoose = require('mongoose');
+
 /**
- * =======================================
+ * =============================================================================
  * SCHEMA OF SHARE (WITH MONGOOSE)
- * =======================================
+ * =============================================================================
  * @date created: 31 May 2020
  * @authors: Uvin Abeysinghe
  *
- * The models/share.js is used for establishing the 'share' schema and types using mongoose.
+ * The models/share.js is used for establishing the 'share' schema and types
+ * using mongoose.
+ *
  */
-
-const mongoose = require('mongoose');
 
 const visibleSections = mongoose.Schema({
     title: {type: String, required: true },
@@ -26,6 +31,7 @@ const shareSchema = mongoose.Schema({
     sortBy: {type:String, required:true},
 });
 
-
-
+////////////////////////////////////////////////////////////////////////////////
+////                             Export Modules                             ////
+////////////////////////////////////////////////////////////////////////////////
 module.exports = mongoose.model('share', shareSchema);
