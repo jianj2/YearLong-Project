@@ -72,7 +72,7 @@ const SideBar = ({ userType }) => {
 
         return (
             <a
-                className={`sidebar-${classSuffix} ${determineActive(
+                className={`sidebar-button ${determineActive(
                     currentPathName,
                     destPathName
                 )}`}
