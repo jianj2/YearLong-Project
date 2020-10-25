@@ -31,17 +31,11 @@
     background-color: #101132;
 }
 
-.sidebar-share,
-.sidebar-questionnaires,
-.sidebar-do-the-test,
-.sidebar-instructions,
-.sidebar-organisation,
-.sidebar-ssq-instructions,
-.sidebar-ssq-introduction {
+.sidebar-button{
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 6rem;
+    height: 6.1rem;
     background-color: rgba(0, 0, 0, 0.2);
     text-align: center;
     font-family: Raleway;
@@ -49,18 +43,26 @@
     cursor: pointer;
     color: white;
     text-decoration: none;
-    transition: all 0.2s;
+    transition: all 0.1s;
 }
 
 .sidebar-container a {
-    transition: all 0.2s;
+    /*transition: all 0.2s;*/
 }
 
 .sidebar-container a:hover {
     background-color: #af8bc0;
+    background-color: rgba(	219, 61, 148, 0.5);
+    font-size: 1.4em;
 }
 
 .active {
-    background-color: #db3d94;
+    background-color: rgba(	219, 61, 148, 1);
+    font-size: 1.55rem;
     cursor: pointer;
+}
+
+.active:hover {
+    background-color: rgba(	219, 61, 148, 1) !important;
+    font-size: 1.55em !important;
 }
