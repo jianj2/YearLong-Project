@@ -1,5 +1,7 @@
 import unittest
 from selenium import webdriver
+from configparser import ConfigParser
+
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -10,7 +12,10 @@ import time
 class unittest_frontend_clinicianAfterLoginPage(unittest.TestCase):
 
     def setUp(self):
-        self.driver = webdriver.Chrome("chromedriver.exe")
+        config_object = ConfigParser()
+        config_object.read("../driverConfig.ini")
+        self.driver = webdriver.Chrome(config_object["DRIVERLOCATION"]["Driver"])
+
         self.driver.get("http://localhost:3000/clinician")
         email = self.driver.find_element_by_id("email")
         email.send_keys("unittest2@gmail.com")

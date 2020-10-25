@@ -1,19 +1,29 @@
+// Import Libraries.
 import React, { useState, useEffect, useContext } from "react";
-import * as API from "./api";
+// Import Utilities.
+import * as API from "./API";
 
+/**
+ * =============================================================================
+ * JAVASCRIPT HELPER FILE
+ * =============================================================================
+ * @date created: 18th May  2020
+ * @authors:  Waqas Rehmani
+ *
+ * This file defines the context for admin authentication.
+ *
+ * =============================================================================
+ */
 
 export const AdminAuthContext = React.createContext();
 export const useAdminAuth = () => useContext(AdminAuthContext);
 export const AdminAuthProvider = ({ children }) => {
-    
     const [isAdminAuthenticated, setAuthenticated] = useState(false);
     const [adminToken, setAdminToken] = useState("");
     const [loading, setLoading] = useState(true);
 
     const verifyAdminLoginFun = async (previousAuth) => {  //this is for shortly redirect to the admin login page(bug)
         const [statusCode, response] = await API.verifyAdminLogin(previousAuth.token);
-     
-            console.log("VERYIFY LOGIN in CUSTOM HOOK", response);
             if (statusCode === 200 && response.auth) {
                 setAuthenticated(true);
                 setLoading(false);
@@ -21,25 +31,23 @@ export const AdminAuthProvider = ({ children }) => {
             } else {
                 setLoading(false);
             }
-       
     }
 
     useEffect(() => {
         let previousAuth = JSON.parse(
             localStorage.getItem("adminAuthentication")
         );
-        // console.log("previousAuth", previousAuth);
         if ( previousAuth && previousAuth.token !== "") {
-            console.log("pr: ", previousAuth);
             verifyAdminLoginFun(previousAuth);
-        } else { //if the previousAuth is null(not have previousAuth in localStorage, the loading will disappear)
+        } else {
+            // If the previousAuth is null (not have previousAuth in
+            // localStorage), the loading will disappear.
             setLoading(false);
         }
     }, []);
 
     const adminLogin = async (loginData) => {
         const [statusCode, response] = await API.adminLogin(loginData);
-        console.log("response from login", response);
         if (statusCode === 200) {
             setAuthenticated(response.message.auth);
             setAdminToken(response.message.token);
@@ -69,7 +77,6 @@ export const AdminAuthProvider = ({ children }) => {
         window.location.href = "/"
         setAuthenticated(false);
         setAdminToken("");
-        console.log("logout admin");
     };
    
     return (
@@ -85,6 +92,17 @@ export const AdminAuthProvider = ({ children }) => {
             {children}
         </AdminAuthContext.Provider>
     );
-
-    // return { isAdminAuthenticated, adminToken, adminLogin, adminLogout };
 };
+
+export const getToken = () => {
+    let previousAuth = JSON.parse(
+        localStorage.getItem("adminAuthentication")
+    );
+    if ( !previousAuth ) {
+        previousAuth=""
+    }else{
+        previousAuth = previousAuth['token']
+    }
+    return previousAuth
+}
+

@@ -1,66 +1,63 @@
 /**
-  * ====================================================================
-  * CSS FILE TO STYLE the 'HomeAdmin' Component 
-  * ====================================================================
+  * ============================================================================
+  * CSS STYLING FILE
+  * ============================================================================
   * @date created: 13th May 2020
   * @authors: Waqas Rehmani
-  *
-  * This file contains all the CSS classes related to the HomeAdmin 
-  * to style the component.
   *
 */
 
 @media all and (max-width: 800px) {
-  .HomeAdmin{
-    height: 100vh;
-    display: flex;
-    flex-flow: row wrap;
-    flex-direction: row;
-  }
+    .HomeAdmin {
+        height: 100vh;
+        display: flex;
+        flex-flow: row wrap;
+        flex-direction: row;
+    }
 }
 
 #error-message-login {
-  display: none;
-  background: rgba(240, 240, 240, 0.2);
-  border: 1px solid rgba(240, 240, 240, 0.4);
-  color: #eee;
-  border-radius: 120px;
-  flex-flow: column;
-  height: 5vh;
-  text-align: center;
-  padding-top: 2vh;
+    display: none;
+    background: rgba(240, 240, 240, 0.2);
+    border: 1px solid rgba(240, 240, 240, 0.4);
+    color: #eee;
+    border-radius: 120px;
+    flex-flow: column;
+    height: 5vh;
+    text-align: center;
+    padding-top: 2vh;
 }
 
-.HomeAdmin{
-  height: 95vh;
-  display: flex;
+.HomeAdmin {
+    height: 95vh;
+    display: flex;
 }
 
 .admin-form {
-  /* width: 50vw; */
-  min-width: 400px;
-  display: flex;
-  flex-flow: column;
+    /* width: 50vw; */
+    min-width: 400px;
+    display: flex;
+    flex-flow: column;
 }
 
-.Instruction-title{
-  /* margin-top: 5em; */
-  min-width: 400px;
-  display: flex;
-  flex-flow: column;
+.Instruction-title {
+    /* margin-top: 5em; */
+    min-width: 400px;
+    display: flex;
+    flex-flow: column;
 }
 
-.Instruction-contents{
-  /* margin-top: 3em; */
-  min-width: 400px;
-  display: flex;
-  flex-flow: column;
+.Instruction-contents {
+    /* margin-top: 3em; */
+    min-width: 400px;
+    display: flex;
+    flex-flow: column;
 }
 
-.Instruction-button-group{
-  display: flex;
-  flex-direction: row-reverse;
-  padding-top: 2vh;
-  padding-right: 2vw;
+.Instruction-button-group {
+    display: flex;
+    flex-direction: row-reverse;
+    padding-top: 2vh;
+    padding-right: 2vw;
 }
 

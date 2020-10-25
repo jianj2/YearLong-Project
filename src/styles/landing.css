@@ -1,14 +1,11 @@
 /**
- * ====================================================================
- * CSS FILE TO STYLE the 'Landing' Component 
- * ====================================================================
- * @date created: 13th May 2020
- * @authors: Waqas Rehmani
- *
- * This file contains all the CSS classes related to the Login screen
- * to style the component.
- *
- */
+  * ============================================================================
+  * CSS STYLING FILE
+  * ============================================================================
+  * @date created: 13th May 2020
+  * @authors: Waqas Rehmani
+  *
+*/
 
 .landing {
     width: 100vw;
@@ -20,9 +17,7 @@
         ".  .       .       .       ."
         ".  logo    logo    logo    ."
         ".  buttons buttons buttons   ."
-        ".  .       .       .       ."
-
-    ;
+        ".  .       .       .       .";
     grid-gap: 2vh;
 
 }
@@ -34,9 +29,9 @@
     align-self: center;
 }
 
-.landing-logo img{
+.landing-logo img {
     /* width: 40%; */
-    height: 25vh ; 
+    height: 25vh;
 }
 
 .landing-buttons {
@@ -48,7 +43,7 @@
 .landing-button {
     width: 25vh;
     height: 25vh;
-    background: rgba(255,255,255,0.02);
+    background: rgba(255, 255, 255, 0.02);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -58,12 +53,15 @@
     color: #eee;
     font-size: 1.8vh;
     font-weight: 100;
-    transition: all 0.1s;
+    transition: all 0.15s;
+    border: 1px solid rgba(255, 255, 255, 0.02);
 }
 
 .landing-button:hover {
-    background: rgba(255,255,255,0.05);
-    font-size: 2.1vh;
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.06);;
+    font-size: 2.3vh;
+    transform: scale(0.95);
 }
 
 .landing-button-parent {

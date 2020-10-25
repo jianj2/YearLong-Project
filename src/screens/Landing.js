@@ -1,7 +1,14 @@
+// Import Libraries.
+import React from "react";
+import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
+// Import Assets.
+import logoComplete from "../assets/logo_complete.png";
+
 /**
- * ====================================================================
+ * =============================================================================
  * REACT SCREEN COMPONENT CLASS
- * ====================================================================
+ * =============================================================================
  * @date created: 10th May 2020
  * @authors: Waqas Rehmani
  *
@@ -12,26 +19,19 @@
  * This file is used to display the Home screen.
  *
  */
-
-import React from "react"; 
-import { Link } from 'react-router-dom';
-
-// Import assets.
-import logoComplete from '../assets/logo_complete.png';
-
-
-// Import styles.
-import "../styles/landing.css";
-
-// ---------------------------------------------------------------
-// This method defines the elements for this component.
-// ---------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const Landing = () => {
 
     return (
         <div className="landing">
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>SSQ: Digital Scale</title>
+            </Helmet>
             <div className="landing-logo">
-                <img src={logoComplete} />
+                <img src={logoComplete} alt="SSQ Logo"/>
             </div>
 
             <div className="landing-buttons">
