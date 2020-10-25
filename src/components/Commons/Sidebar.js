@@ -71,7 +71,7 @@ const SideBar = ({ userType }) => {
         }
 
         return (
-            <div
+            <a
                 className={`sidebar-${classSuffix} ${determineActive(
                     currentPathName,
                     destPathName
@@ -89,7 +89,7 @@ const SideBar = ({ userType }) => {
                 }}
             >
                 {textLabel}
-            </div>
+            </a>
         );
     };
 
