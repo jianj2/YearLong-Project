@@ -54,11 +54,14 @@
     font-size: 1.8vh;
     font-weight: 100;
     transition: all 0.1s;
+    border: 1px solid rgba(255, 255, 255, 0.02);
 }
 
 .landing-button:hover {
     background: rgba(255, 255, 255, 0.05);
-    font-size: 2.1vh;
+    border-color: rgba(255, 255, 255, 0.06);;
+    font-size: 2.3vh;
+    transform: scale(0.95);
 }
 
 .landing-button-parent {
