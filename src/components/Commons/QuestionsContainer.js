@@ -314,14 +314,12 @@ const MultipleChoiceQuestionFrom = ({
             {
                 isStandard ? "" :
                     <button
-                        className="add-answer-button"
+                        className="button-circle"
                         onClick={(event) => {
                             event.preventDefault();
                             addAnswerToMCQQuestion(sectionIndex, scenarioIndex, questionIndex);
                         }}
-                    >
-                        {" "}
-                        +{" "}
+                    >+
                     </button>
             }
         </div>
