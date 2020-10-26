@@ -2,10 +2,9 @@
 import React, { useState, useEffect } from "react";
 // Import Utilities.
 import * as API from "../../utils/API";
-import { CustomModal } from "../../components/Commons";
 import { useAuth0 } from "../../utils/react-auth0-spa";
 // Import Components.
-import { QuestionnaireList, Loading } from "../../components/Commons";
+import { CustomModal, QuestionnaireList, Loading } from "../../components/Commons";
 import { useAdminAuth } from "../../utils/useAdminAuth";
 
 /**
@@ -56,22 +55,18 @@ const ManageQuestionnaires = () => {
 
         if (isAuthenticated && token !== "") {
             const retrieveCustomisedQuestionnaires = async () => {
-                const [
-                    ,
-                    customisedQuestionnaires,
-                ] = await API.getClinicianQuestionnaires(token, user.name);
+                const [,customisedQuestionnaires] = 
+                    await API.getClinicianQuestionnaires(token, user.name);
+                setLoading(false);
                 const sortedCustomisedQuestionnaires = customisedQuestionnaires.sort(
                     (a, b) => new Date(b.updateDate) - new Date(a.updateDate)
                 );
                 setCustomisedQuestionnaires(sortedCustomisedQuestionnaires);
-                setLoading(false);
+                
             };
 
             const retrieveStandardisedQuestionnaires = async () => {
-                const [
-                    statusCode,
-                    data,
-                ] = await API.getStandardisedQuestionnaires();
+                const [ statusCode, data] = await API.getStandardisedQuestionnaires();
                 if (statusCode === 200) {
                     setStandardisedQuestionnaires(data);
                 } else {
@@ -81,6 +76,7 @@ const ManageQuestionnaires = () => {
 
             retrieveStandardisedQuestionnaires();
             retrieveCustomisedQuestionnaires();
+            
         }
     }, [isAuthenticated, token, adminLogout, isAdminAuthenticated, user]);
 
@@ -92,9 +88,11 @@ const ManageQuestionnaires = () => {
     };
 
     // Function called when Copy is clicked on the QuestionnaireList
-    const copyQuestionnaire = (questionnaire) => {
+    const copyQuestionnaire = async (questionnaire) => {
         if (customisedQuestionnaires.length < QUESTIONNAIRE_LIST_MAX_SIZE) {
-            API.copyQuestionnaire(questionnaire.questionnaireId, user.name, token);
+            setLoading(true);
+            await API.copyQuestionnaire(questionnaire.questionnaireId, user.name, token);
+            setLoading(false);
         } else {
             alert("The max number of customised questionnaires exceeded.");
         }
@@ -120,7 +118,9 @@ const ManageQuestionnaires = () => {
     const addNew = async () => {
         setLoading(true);
         if (customisedQuestionnaires.length < QUESTIONNAIRE_LIST_MAX_SIZE) {
+            setLoading(true);
             await API.addQuestionnaire(token, user.name);
+            setLoading(false);
         } else {
             alert("The max number of customised questionnaires exceeded.");
         }
@@ -131,13 +131,15 @@ const ManageQuestionnaires = () => {
     // ========================================================================
     // Delete Modal Functions
     // ========================================================================
-    const deleteSelectedQuestionnaire = () => {
+    const deleteSelectedQuestionnaire = async () => {
         let questionnaireId = deleteQuestionnaireData.deleteQuestionnaireID;
         const arrayCopy = customisedQuestionnaires.filter(
             (q) => q.questionnaireId !== questionnaireId
         );
+        setLoading(true);
+        await API.deleteQuestionnaire(token, questionnaireId, user.name);
+        setLoading(false);
         setCustomisedQuestionnaires(arrayCopy);
-        API.deleteQuestionnaire(token, questionnaireId, user.name);
     };
 
     // renders a modal when user chooses to delete a questionnaire
