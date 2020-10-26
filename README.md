@@ -23,6 +23,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The GitHub repository is set up with a CI/CD pipeline to provide continuous integration to Heroku deployment via GitHub Actions. GitHub automatically deploys commits made to production-client branch to Heroku for the client.<br />
 The environment variables that the Heroku apps use are encrypted secrets that can be configured under Settings in GitHub.<br />
-The link to the client can be accessed at https://ssq-client.herokuapp.com/.<br />
+
+The client can be accessed at https://ssq-client.herokuapp.com/.<br />
 
 
