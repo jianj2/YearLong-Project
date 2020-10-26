@@ -152,7 +152,7 @@ export const copyQuestionnaire = async (questionnaireId, clinicianId, accessToke
     const url = "questionnaire/copy";
     const data = {
         clinicianId,
-        copyToCustomisedQuestionnaire: true,
+        isCopyingToCustomisedQuestionnaire: true,
         questionnaireId
     };
     return await sendRequest("POST", url, data, accessToken);

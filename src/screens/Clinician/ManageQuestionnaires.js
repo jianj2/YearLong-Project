@@ -98,7 +98,7 @@ const ManageQuestionnaires = () => {
         } else {
             alert("The max number of customised questionnaires exceeded.");
         }
-        window.location.reload(false);
+        window.location.reload();
     };
 
     const viewQuestionnaire = (questionnaireID) => {
@@ -125,7 +125,7 @@ const ManageQuestionnaires = () => {
             alert("The max number of customised questionnaires exceeded.");
         }
         setLoading(false);
-        window.location.reload(false);
+        window.location.reload();
     };
 
     // ========================================================================

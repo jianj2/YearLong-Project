@@ -24,6 +24,14 @@
 
 .navbar-left img {
     height: 25px;
+    padding: 10px;
+    transition: all 0.1s;
+    animation: logo-animation 0.2s ease-in-out;
+}
+
+.navbar-left img:hover{
+    transform: scale(1.1);
+    animation: logo-animation-hover 0.5s ease-in-out;
 }
 
 .navbar-center {
@@ -59,7 +67,6 @@
     height: 30px;
     padding: 10px;
     transition: all 0.1s;
-    
     animation: logo-animation 0.2s ease-in-out;
 }
 
