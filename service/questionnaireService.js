@@ -176,7 +176,7 @@ const attachQuestionnaireToClinician = async (uuid, clinicianId) => {
             { clinicianId: clinicianId },
             { $push: { questionnaires: uuid } }
         );
-        return Promise.resolve([err, "successfully add new questionnaire!"]);
+        return Promise.resolve([undefined, "successfully add new questionnaire!"]);
     } catch (error) {
         return Promise.resolve([error, undefined]);
     }
