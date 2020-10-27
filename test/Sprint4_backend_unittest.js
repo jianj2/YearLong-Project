@@ -275,6 +275,7 @@ describe('Sprint4 Backend unit-test',function(){
         }).timeout(5000);
 
         it('Test the shareId does not exist',function(done){
+            this.timeout(10000);
             chai.request('http://localhost:3001/share')
                 .get('/testerId')
                 .end(function(err,res){
