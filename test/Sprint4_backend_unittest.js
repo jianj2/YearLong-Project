@@ -70,6 +70,7 @@ describe('Sprint4 Backend unit-test',function(){
         it('Test admin update the instruction',function(done){
             chai.request('http://localhost:3001/admin')
                 .post('/instruction/T')
+                .set({'authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFkbWluVXNlcjEiLCJpYXQiOjE2MDM3NzcxNzUsImV4cCI6MTYwMzg2MzU3NX0.ildcY1ZbFfPcMMDsjexJYMqNhzDbEfBqPPi1aKzQP1E'})
                 .send({'instruction':{'_id':'5f96c75ae88a5b10885202c1'
                         ,'title':'This is test'
                         ,'content':'only for testing'
@@ -123,6 +124,7 @@ describe('Sprint4 Backend unit-test',function(){
         it('Test admin get all instructions',function(done){
             chai.request('http://localhost:3001/admin')
                 .get('/instructionsSummary')
+                .set({'authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFkbWluVXNlcjEiLCJpYXQiOjE2MDM3NzcxNzUsImV4cCI6MTYwMzg2MzU3NX0.ildcY1ZbFfPcMMDsjexJYMqNhzDbEfBqPPi1aKzQP1E'})
                 .end(function(err,res){
                     if(!err){
                         res.should.have.status(200);
@@ -136,6 +138,7 @@ describe('Sprint4 Backend unit-test',function(){
         it('Test admin get all country',function(done){
             chai.request('http://localhost:3001/admin')
                 .get('/country')
+                .set({'authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFkbWluVXNlcjEiLCJpYXQiOjE2MDM3NzcxNzUsImV4cCI6MTYwMzg2MzU3NX0.ildcY1ZbFfPcMMDsjexJYMqNhzDbEfBqPPi1aKzQP1E'})
                 .end(function(err,res){
                     if(!err){
                         res.should.have.status(200);
@@ -148,6 +151,7 @@ describe('Sprint4 Backend unit-test',function(){
         it('Test admin get organisations from a contry',function(done){
             chai.request('http://localhost:3001/admin')
                 .get('/country/organisation/australia')
+                .set({'authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFkbWluVXNlcjEiLCJpYXQiOjE2MDM3NzcxNzUsImV4cCI6MTYwMzg2MzU3NX0.ildcY1ZbFfPcMMDsjexJYMqNhzDbEfBqPPi1aKzQP1E'})
                 .end(function(err,res){
                     if(!err){
                         res.should.have.status(200);
@@ -160,6 +164,7 @@ describe('Sprint4 Backend unit-test',function(){
         it('Test admin get clinicians in a organisation',function(done){
             chai.request('http://localhost:3001/admin')
                 .get('/organisation/clinician/aus')
+                .set({'authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFkbWluVXNlcjEiLCJpYXQiOjE2MDM3NzcxNzUsImV4cCI6MTYwMzg2MzU3NX0.ildcY1ZbFfPcMMDsjexJYMqNhzDbEfBqPPi1aKzQP1E'})
                 .end(function(err,res){
                     if(!err){
                         res.should.have.status(200);
@@ -176,15 +181,21 @@ describe('Sprint4 Backend unit-test',function(){
         it('Test clinician shares the questionnaire',function(done){
             chai.request('http://localhost:3001/clinician')
                 .post('/share')
+                .set({'authorization':'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkNiRnZUazZSRzFIZkJZS3A4MGlzbiJ9.eyJodHRwOi8vcGVkaWF0cmljLXNjYWxlLmNvbS9lbWFpbCI6InVuaXR0ZXN0MkBnbWFpbC5jb20iLCJpc3MiOiJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWVkYjM5NWM2YjQ2NGMwMDEzOGFlOTEwIiwiYXVkIjpbImh0dHA6Ly9sb2NhbGhvc3Q6MzAwMS9jbGluaWNpYW4iLCJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNjAzNzc0Njk2LCJleHAiOjE2MDM4NjEwOTYsImF6cCI6ImtvNUlJdWdvUlhRZjJ1Q3BxUmNsb2N3YmhyYnFBWXg0Iiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCJ9.T5RbQoqidWDNjKK2JLExpUwfMfk9qHUqtL6XXq63s0Svjh59GMVYTZT31XNsDdaOZJKxEAppDdzU1qk_Suqn6RVeAMoxevftIHGTUDp4sxbUapmBfy_ija3inmzLtfRECcQ3OkGKb-xrl68MNdQ8g9GJQeLy0hIw2TpFyM9CPIroOWUZbfeznnE602W5AQPpUbqrkWcdJwiJ2eqbvMLkrfTJ-mQ7MIX9d_WtFYLikOVmjamzOpZ4Sgrypu9HhqTDIgHOFxHbrl8n1vtRRtMRTIV-WR-279brLyyI_iw0FihIAJTWUBygJ_1IAHSuRqmMGzvvQAt1lGpHZLzITD2Dwg'})
                 .send({
-                    'clinicianEmail': 'jiaojian1996@gmail.com',
+                    'clinicianEmail': 'unittest2@gmail.com',
                     'patientEmail': 'jiaojian1996@gmail.com',
-                    'questionnaireId': '5f3751273f71077d57c2c114',
+                    'questionnaireId': '7c342880-178e-11eb-9a18-39f607a871cf',
                     'readOnly': false,
                     'message': 'test',
-                    'shareSection':[{'title':'Section 1 - Speech','isVisible':true},{'title':'Section 2 - Spatial','isVisible':true},{'title':'Section 3 - Other Qualities','isVisible':true}],})
+                    'shareSection':{ 'Section A - Speech': true,
+                        'Section B - Spatial': true,
+                        'Section C - Other Qualities': true },
+                    'sortBy':'PERFORMANCE'})
                 .end(function(err,res){
                     if(!err){
+
+                        res.should.have.status(200);
                         done();
                     }else{
                         done(err);
@@ -194,11 +205,14 @@ describe('Sprint4 Backend unit-test',function(){
         it('Test clinician complete the questionnaire',function(done){
             chai.request('http://localhost:3001/clinician')
                 .post('/complete-questionnaire')
+                .set({'authorization':'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkNiRnZUazZSRzFIZkJZS3A4MGlzbiJ9.eyJodHRwOi8vcGVkaWF0cmljLXNjYWxlLmNvbS9lbWFpbCI6InVuaXR0ZXN0MkBnbWFpbC5jb20iLCJpc3MiOiJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWVkYjM5NWM2YjQ2NGMwMDEzOGFlOTEwIiwiYXVkIjpbImh0dHA6Ly9sb2NhbGhvc3Q6MzAwMS9jbGluaWNpYW4iLCJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNjAzNzc0Njk2LCJleHAiOjE2MDM4NjEwOTYsImF6cCI6ImtvNUlJdWdvUlhRZjJ1Q3BxUmNsb2N3YmhyYnFBWXg0Iiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCJ9.T5RbQoqidWDNjKK2JLExpUwfMfk9qHUqtL6XXq63s0Svjh59GMVYTZT31XNsDdaOZJKxEAppDdzU1qk_Suqn6RVeAMoxevftIHGTUDp4sxbUapmBfy_ija3inmzLtfRECcQ3OkGKb-xrl68MNdQ8g9GJQeLy0hIw2TpFyM9CPIroOWUZbfeznnE602W5AQPpUbqrkWcdJwiJ2eqbvMLkrfTJ-mQ7MIX9d_WtFYLikOVmjamzOpZ4Sgrypu9HhqTDIgHOFxHbrl8n1vtRRtMRTIV-WR-279brLyyI_iw0FihIAJTWUBygJ_1IAHSuRqmMGzvvQAt1lGpHZLzITD2Dwg'})
                 .send({
                     'clinicianEmail':'unittest2@gmail.com',
-                    'questionnaireData':[[[{'value':'1','supplumentaryValue':''}]],[],[]],
-                    'personalDetails':{'name':'','date':'', 'rightDeviceType':'','leftDeviceType':'','completedBy':'clinician'},
-                    'questionnaireId': '6b2b75d0-e92a-11ea-a345-17af331cb519'
+                    'questionnaireData':[[[{'value':'','supplementaryValue':'Would not hear it.'},{'supplementaryValue':''}]],[],[]],
+                    'personalDetails':{'name':'daniel','date':'19960829', 'rightDeviceType':'None','leftDeviceType':'None','completedBy':'Child','completeByRelationship':'','completeByName':''},
+                    'questionnaireId': '7c342880-178e-11eb-9a18-39f607a871cf',
+                    'sortBy':'PERFORMANCE',
+                    'comments':[[''],[],[]]
                 })
                 .end(function(err,res){
                     if(!err){
@@ -335,6 +349,7 @@ describe('Sprint4 Backend unit-test',function(){
         it('Test getClinicianQuestionnaires 1',function(done){
             chai.request('http://localhost:3001/questionnaire')
                 .get('/standardised')
+                .headers({'authorization':'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkNiRnZUazZSRzFIZkJZS3A4MGlzbiJ9.eyJodHRwOi8vcGVkaWF0cmljLXNjYWxlLmNvbS9lbWFpbCI6InVuaXR0ZXN0MkBnbWFpbC5jb20iLCJpc3MiOiJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWVkYjM5NWM2YjQ2NGMwMDEzOGFlOTEwIiwiYXVkIjpbImh0dHA6Ly9sb2NhbGhvc3Q6MzAwMS9jbGluaWNpYW4iLCJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNjAzNzY1MzkzLCJleHAiOjE2MDM4NTE3OTMsImF6cCI6ImtvNUlJdWdvUlhRZjJ1Q3BxUmNsb2N3YmhyYnFBWXg0Iiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCJ9.LQZZa4prRd1GTU5d7Uf30n6KDEsvKJEtZHzA_VFCzI2N1L7I6Ov92a3T-VqkQvchZGUqps7bm8uoijrkpscOELRUszOUfPX5Id_fwlPU3-iBcL-ja4csucme-FqBHaRIwEgwd9PIdDemQ--AdGpCiEWjtYoQHe7Qg3bX4g3G2Epa7zkmyY4DQlqeSDm0PyMjQBHxOruwsGeT12PhCRaSV939L3xy4p1fcfW9W03WoSsDF8ZRmnYoUMq7dbg9P_XdgcX1dXNUhlO06erfCmZ-zBbI5_pOEhm_b9fH6TkzwkTAa7xYCutFQaRNMynlUsILaZ4F892oHseqcZwFbT28pA'})
                 .query({clinicianId:'unittest2@gmail.com'})
                 .end(function(err,res){
                     if(!err){
