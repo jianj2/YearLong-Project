@@ -1,11 +1,6 @@
 var chai = require('chai');
 var chaiHttp = require('chai-http');
-var should = chai.should();
-var expect = chai.expect;
-const { v1: uuidv1 } = require("uuid");
 chai.use(chaiHttp);
-let delete_id = uuidv1();
-let share_id = uuidv1();
 
 describe('Sprint4 Backend unit-test',function(){
 
