@@ -276,7 +276,7 @@ describe('Sprint4 Backend unit-test',function(){
                 .get('/testerId')
                 .end(function(err,res){
                     if(!err){
-                        res.should.have.status(200);
+                        res.should.have.status(404);
                         done();
                     }else{
                         done(err);
@@ -284,25 +284,25 @@ describe('Sprint4 Backend unit-test',function(){
                 });
         }).timeout(5000);
 
-        it('Test the completeShare',function(done){
-            chai.request('http://localhost:3001/share')
-                .post('/submit/c1fad4b0-1791-11eb-8657-470a08479b0a')
-                .send({
-                    'clinicianEmail':'unittest2@gmail.com',
-                    'questionnaireData':[[[{'value':'','supplementaryValue':'Would not hear it.'},{'supplementaryValue':''}]],[],[]],
-                    'personalDetails':{'name':'daniel','date':'19960829', 'rightDeviceType':'None','leftDeviceType':'None','completedBy':'Child','completeByRelationship':'','completeByName':''},
-                    'questionnaireId': '7c342880-178e-11eb-9a18-39f607a871cf',
-                    'sortBy':'PERFORMANCE',
-                    'comments':[[''],[],[]]
-                })
-                .end(function(err,res){
-                    if(!err){
-                        done();
-                    }else {
-                        done(err);
-                    }
-                });
-        }).timeout(20000);
+        // it('Test the completeShare',function(done){
+        //     chai.request('http://localhost:3001/share')
+        //         .post('/submit/7522ce80-1814-11eb-9f20-8d9d038dc75d')
+        //         .send({
+        //             'clinicianEmail':'unittest2@gmail.com',
+        //             'questionnaireData':[[[{'value':'','supplementaryValue':'Would not hear it.'},{'supplementaryValue':''}]],[],[]],
+        //             'personalDetails':{'name':'daniel','date':'19960829', 'rightDeviceType':'None','leftDeviceType':'None','completedBy':'Child','completeByRelationship':'','completeByName':''},
+        //             'questionnaireId': '7c342880-178e-11eb-9a18-39f607a871cf',
+        //             'sortBy':'PERFORMANCE',
+        //             'comments':[[''],[],[]]
+        //         })
+        //         .end(function(err,res){
+        //             if(!err){
+        //                 done();
+        //             }else {
+        //                 done(err);
+        //             }
+        //         });
+        // }).timeout(20000);
     });
 
     describe('Test the questionnaire.js router',function(){
@@ -335,6 +335,7 @@ describe('Sprint4 Backend unit-test',function(){
         it('Test getClinicianQuestionnaires',function(done){
             chai.request('http://localhost:3001/questionnaire')
                 .get('/clinician')
+                .set({'authorization':'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkNiRnZUazZSRzFIZkJZS3A4MGlzbiJ9.eyJodHRwOi8vcGVkaWF0cmljLXNjYWxlLmNvbS9lbWFpbCI6InVuaXR0ZXN0MkBnbWFpbC5jb20iLCJpc3MiOiJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWVkYjM5NWM2YjQ2NGMwMDEzOGFlOTEwIiwiYXVkIjpbImh0dHA6Ly9sb2NhbGhvc3Q6MzAwMS9jbGluaWNpYW4iLCJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNjAzNzY1MzkzLCJleHAiOjE2MDM4NTE3OTMsImF6cCI6ImtvNUlJdWdvUlhRZjJ1Q3BxUmNsb2N3YmhyYnFBWXg0Iiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCJ9.LQZZa4prRd1GTU5d7Uf30n6KDEsvKJEtZHzA_VFCzI2N1L7I6Ov92a3T-VqkQvchZGUqps7bm8uoijrkpscOELRUszOUfPX5Id_fwlPU3-iBcL-ja4csucme-FqBHaRIwEgwd9PIdDemQ--AdGpCiEWjtYoQHe7Qg3bX4g3G2Epa7zkmyY4DQlqeSDm0PyMjQBHxOruwsGeT12PhCRaSV939L3xy4p1fcfW9W03WoSsDF8ZRmnYoUMq7dbg9P_XdgcX1dXNUhlO06erfCmZ-zBbI5_pOEhm_b9fH6TkzwkTAa7xYCutFQaRNMynlUsILaZ4F892oHseqcZwFbT28pA'})
                 .query({clinicianId:'unittest2@gmail.com'})
                 .end(function(err,res){
                     if(!err){
@@ -349,7 +350,7 @@ describe('Sprint4 Backend unit-test',function(){
         it('Test getClinicianQuestionnaires 1',function(done){
             chai.request('http://localhost:3001/questionnaire')
                 .get('/standardised')
-                .headers({'authorization':'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkNiRnZUazZSRzFIZkJZS3A4MGlzbiJ9.eyJodHRwOi8vcGVkaWF0cmljLXNjYWxlLmNvbS9lbWFpbCI6InVuaXR0ZXN0MkBnbWFpbC5jb20iLCJpc3MiOiJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWVkYjM5NWM2YjQ2NGMwMDEzOGFlOTEwIiwiYXVkIjpbImh0dHA6Ly9sb2NhbGhvc3Q6MzAwMS9jbGluaWNpYW4iLCJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNjAzNzY1MzkzLCJleHAiOjE2MDM4NTE3OTMsImF6cCI6ImtvNUlJdWdvUlhRZjJ1Q3BxUmNsb2N3YmhyYnFBWXg0Iiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCJ9.LQZZa4prRd1GTU5d7Uf30n6KDEsvKJEtZHzA_VFCzI2N1L7I6Ov92a3T-VqkQvchZGUqps7bm8uoijrkpscOELRUszOUfPX5Id_fwlPU3-iBcL-ja4csucme-FqBHaRIwEgwd9PIdDemQ--AdGpCiEWjtYoQHe7Qg3bX4g3G2Epa7zkmyY4DQlqeSDm0PyMjQBHxOruwsGeT12PhCRaSV939L3xy4p1fcfW9W03WoSsDF8ZRmnYoUMq7dbg9P_XdgcX1dXNUhlO06erfCmZ-zBbI5_pOEhm_b9fH6TkzwkTAa7xYCutFQaRNMynlUsILaZ4F892oHseqcZwFbT28pA'})
+                .set({'authorization':'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkNiRnZUazZSRzFIZkJZS3A4MGlzbiJ9.eyJodHRwOi8vcGVkaWF0cmljLXNjYWxlLmNvbS9lbWFpbCI6InVuaXR0ZXN0MkBnbWFpbC5jb20iLCJpc3MiOiJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWVkYjM5NWM2YjQ2NGMwMDEzOGFlOTEwIiwiYXVkIjpbImh0dHA6Ly9sb2NhbGhvc3Q6MzAwMS9jbGluaWNpYW4iLCJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNjAzNzY1MzkzLCJleHAiOjE2MDM4NTE3OTMsImF6cCI6ImtvNUlJdWdvUlhRZjJ1Q3BxUmNsb2N3YmhyYnFBWXg0Iiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCJ9.LQZZa4prRd1GTU5d7Uf30n6KDEsvKJEtZHzA_VFCzI2N1L7I6Ov92a3T-VqkQvchZGUqps7bm8uoijrkpscOELRUszOUfPX5Id_fwlPU3-iBcL-ja4csucme-FqBHaRIwEgwd9PIdDemQ--AdGpCiEWjtYoQHe7Qg3bX4g3G2Epa7zkmyY4DQlqeSDm0PyMjQBHxOruwsGeT12PhCRaSV939L3xy4p1fcfW9W03WoSsDF8ZRmnYoUMq7dbg9P_XdgcX1dXNUhlO06erfCmZ-zBbI5_pOEhm_b9fH6TkzwkTAa7xYCutFQaRNMynlUsILaZ4F892oHseqcZwFbT28pA'})
                 .query({clinicianId:'unittest2@gmail.com'})
                 .end(function(err,res){
                     if(!err){
@@ -364,7 +365,23 @@ describe('Sprint4 Backend unit-test',function(){
         it('Test add the questionnaire',function(done){
             chai.request('http://localhost:3001/questionnaire')
                 .post("/add")
+                .set({'authorization':'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkNiRnZUazZSRzFIZkJZS3A4MGlzbiJ9.eyJodHRwOi8vcGVkaWF0cmljLXNjYWxlLmNvbS9lbWFpbCI6InVuaXR0ZXN0MkBnbWFpbC5jb20iLCJpc3MiOiJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWVkYjM5NWM2YjQ2NGMwMDEzOGFlOTEwIiwiYXVkIjpbImh0dHA6Ly9sb2NhbGhvc3Q6MzAwMS9jbGluaWNpYW4iLCJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNjAzNzY1MzkzLCJleHAiOjE2MDM4NTE3OTMsImF6cCI6ImtvNUlJdWdvUlhRZjJ1Q3BxUmNsb2N3YmhyYnFBWXg0Iiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCJ9.LQZZa4prRd1GTU5d7Uf30n6KDEsvKJEtZHzA_VFCzI2N1L7I6Ov92a3T-VqkQvchZGUqps7bm8uoijrkpscOELRUszOUfPX5Id_fwlPU3-iBcL-ja4csucme-FqBHaRIwEgwd9PIdDemQ--AdGpCiEWjtYoQHe7Qg3bX4g3G2Epa7zkmyY4DQlqeSDm0PyMjQBHxOruwsGeT12PhCRaSV939L3xy4p1fcfW9W03WoSsDF8ZRmnYoUMq7dbg9P_XdgcX1dXNUhlO06erfCmZ-zBbI5_pOEhm_b9fH6TkzwkTAa7xYCutFQaRNMynlUsILaZ4F892oHseqcZwFbT28pA'})
                 .send({'isStandard':false,'clinicianId':'unittest2@gmail.com'})
+                .end(function(err,res){
+                    if(!err){
+                        res.should.have.status(200);
+                        done();
+                    }else{
+                        done(err);
+                    }
+                });
+
+        });
+
+        it('Test add the standard questionnaire',function(done){
+            chai.request('http://localhost:3001/questionnaire')
+                .post("/addStandard")
+                .set({'authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFkbWluVXNlcjEiLCJpYXQiOjE2MDM3NzcxNzUsImV4cCI6MTYwMzg2MzU3NX0.ildcY1ZbFfPcMMDsjexJYMqNhzDbEfBqPPi1aKzQP1E'})
                 .end(function(err,res){
                     if(!err){
                         res.should.have.status(200);
@@ -379,9 +396,10 @@ describe('Sprint4 Backend unit-test',function(){
         it('Test edit the questionnaire',function(done){
             chai.request('http://localhost:3001/questionnaire')
                 .post('/edit')
-                .send({'questionnaire': {'_id': '5edb399a7f8f3d102cefb714',
-                        'questionnaireId': '28c6fb70-a7c0-11ea-97ef-23fd8b2a64b6',
-                        'title': "Unit Test Edit",
+                .set({'authorization':'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkNiRnZUazZSRzFIZkJZS3A4MGlzbiJ9.eyJodHRwOi8vcGVkaWF0cmljLXNjYWxlLmNvbS9lbWFpbCI6InVuaXR0ZXN0MkBnbWFpbC5jb20iLCJpc3MiOiJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWVkYjM5NWM2YjQ2NGMwMDEzOGFlOTEwIiwiYXVkIjpbImh0dHA6Ly9sb2NhbGhvc3Q6MzAwMS9jbGluaWNpYW4iLCJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNjAzNzY1MzkzLCJleHAiOjE2MDM4NTE3OTMsImF6cCI6ImtvNUlJdWdvUlhRZjJ1Q3BxUmNsb2N3YmhyYnFBWXg0Iiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCJ9.LQZZa4prRd1GTU5d7Uf30n6KDEsvKJEtZHzA_VFCzI2N1L7I6Ov92a3T-VqkQvchZGUqps7bm8uoijrkpscOELRUszOUfPX5Id_fwlPU3-iBcL-ja4csucme-FqBHaRIwEgwd9PIdDemQ--AdGpCiEWjtYoQHe7Qg3bX4g3G2Epa7zkmyY4DQlqeSDm0PyMjQBHxOruwsGeT12PhCRaSV939L3xy4p1fcfW9W03WoSsDF8ZRmnYoUMq7dbg9P_XdgcX1dXNUhlO06erfCmZ-zBbI5_pOEhm_b9fH6TkzwkTAa7xYCutFQaRNMynlUsILaZ4F892oHseqcZwFbT28pA'})
+                .send({'questionnaire': {'_id': '5f97c32474452d3e79f37677',
+                        'questionnaireId': 'a95e4600-1820-11eb-bc18-878edcae65c9',
+                        'title': "test for edit",
                         'description': "Please click edit to begin with this questionnaire.",
                         'sections': [],
                         'isStandard': false,
@@ -396,14 +414,51 @@ describe('Sprint4 Backend unit-test',function(){
                 });
         });
 
-        it('Test delete the questionnaire',function(done){
+        it('Test edit the standard questionnaire',function(done){
             chai.request('http://localhost:3001/questionnaire')
-                .post('/delete')
-                .send({'CQid':delete_id,'clinicianId':'unittest2@gmail.com'})
+                .post('/editStandard')
+                .set({'authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFkbWluVXNlcjEiLCJpYXQiOjE2MDM3NzcxNzUsImV4cCI6MTYwMzg2MzU3NX0.ildcY1ZbFfPcMMDsjexJYMqNhzDbEfBqPPi1aKzQP1E'})
+                .send({'questionnaire': {'_id': '5f97cab874452d3e79f37694',
+                        'questionnaireId': '2df3efb0-1825-11eb-bc18-878edcae65c9',
+                        'title': "test for edit standard",
+                        'description': "Please click edit to begin with this questionnaire.",
+                        'sections': [],
+                        'isStandard': true,
+                        '__v': 0}})
                 .end(function(err,res){
                     if(!err){
                         res.should.have.status(200);
-                        res.text.should.equal('successfully delete');
+                        done();
+                    }else{
+                        done(err);
+                    }
+                });
+        });
+
+        it('Test delete the questionnaire',function(done){
+            chai.request('http://localhost:3001/questionnaire')
+                .post('/delete')
+                .set({'authorization':'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkNiRnZUazZSRzFIZkJZS3A4MGlzbiJ9.eyJodHRwOi8vcGVkaWF0cmljLXNjYWxlLmNvbS9lbWFpbCI6InVuaXR0ZXN0MkBnbWFpbC5jb20iLCJpc3MiOiJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWVkYjM5NWM2YjQ2NGMwMDEzOGFlOTEwIiwiYXVkIjpbImh0dHA6Ly9sb2NhbGhvc3Q6MzAwMS9jbGluaWNpYW4iLCJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNjAzNzY1MzkzLCJleHAiOjE2MDM4NTE3OTMsImF6cCI6ImtvNUlJdWdvUlhRZjJ1Q3BxUmNsb2N3YmhyYnFBWXg0Iiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCJ9.LQZZa4prRd1GTU5d7Uf30n6KDEsvKJEtZHzA_VFCzI2N1L7I6Ov92a3T-VqkQvchZGUqps7bm8uoijrkpscOELRUszOUfPX5Id_fwlPU3-iBcL-ja4csucme-FqBHaRIwEgwd9PIdDemQ--AdGpCiEWjtYoQHe7Qg3bX4g3G2Epa7zkmyY4DQlqeSDm0PyMjQBHxOruwsGeT12PhCRaSV939L3xy4p1fcfW9W03WoSsDF8ZRmnYoUMq7dbg9P_XdgcX1dXNUhlO06erfCmZ-zBbI5_pOEhm_b9fH6TkzwkTAa7xYCutFQaRNMynlUsILaZ4F892oHseqcZwFbT28pA'})
+                .send({'CQid':'d97ff080-1821-11eb-bc18-878edcae65c9','clinicianId':'unittest2@gmail.com'})
+                .end(function(err,res){
+                    if(!err){
+                        res.should.have.status(200);
+                        done();
+                    }else{
+                        done(err);
+                    }
+                });
+        });
+
+        it('Test delete the standard questionnaire',function(done){
+            chai.request('http://localhost:3001/questionnaire')
+                .post('/deleteStandard')
+                .set({'authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFkbWluVXNlcjEiLCJpYXQiOjE2MDM3NzcxNzUsImV4cCI6MTYwMzg2MzU3NX0.ildcY1ZbFfPcMMDsjexJYMqNhzDbEfBqPPi1aKzQP1E'})
+                .send({'questionnaireId':'b2a1aee0-1821-11eb-bc18-878edcae65c9'})
+                .end(function(err,res){
+                    if(!err){
+                        res.should.have.status(200);
+                        res.text.should.equal('"Successfully deleted questionnaire"');
                         done();
                     }else{
                         done(err);
@@ -414,11 +469,11 @@ describe('Sprint4 Backend unit-test',function(){
         it('Test copy the questionnaire',function(done){
             chai.request('http://localhost:3001/questionnaire')
                 .post('/copy')
-                .send({'CQid':delete_id,'clinicianId':'unittest2@gmail.com'})
+                .set({'authorization':'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkNiRnZUazZSRzFIZkJZS3A4MGlzbiJ9.eyJodHRwOi8vcGVkaWF0cmljLXNjYWxlLmNvbS9lbWFpbCI6InVuaXR0ZXN0MkBnbWFpbC5jb20iLCJpc3MiOiJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWVkYjM5NWM2YjQ2NGMwMDEzOGFlOTEwIiwiYXVkIjpbImh0dHA6Ly9sb2NhbGhvc3Q6MzAwMS9jbGluaWNpYW4iLCJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNjAzNzY1MzkzLCJleHAiOjE2MDM4NTE3OTMsImF6cCI6ImtvNUlJdWdvUlhRZjJ1Q3BxUmNsb2N3YmhyYnFBWXg0Iiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCJ9.LQZZa4prRd1GTU5d7Uf30n6KDEsvKJEtZHzA_VFCzI2N1L7I6Ov92a3T-VqkQvchZGUqps7bm8uoijrkpscOELRUszOUfPX5Id_fwlPU3-iBcL-ja4csucme-FqBHaRIwEgwd9PIdDemQ--AdGpCiEWjtYoQHe7Qg3bX4g3G2Epa7zkmyY4DQlqeSDm0PyMjQBHxOruwsGeT12PhCRaSV939L3xy4p1fcfW9W03WoSsDF8ZRmnYoUMq7dbg9P_XdgcX1dXNUhlO06erfCmZ-zBbI5_pOEhm_b9fH6TkzwkTAa7xYCutFQaRNMynlUsILaZ4F892oHseqcZwFbT28pA'})
+                .send({'questionnaireId':'fd4a39b0-082e-11eb-b88c-dd849a33659e','isCopyingToCustomisedQuestionnaire':true,'clinicianId':'unittest2@gmail.com'})
                 .end(function(err,res){
                     if(!err){
                         res.should.have.status(200);
-                        res.text.should.equal('successfully delete');
                         done();
                     }else{
                         done(err);
@@ -429,11 +484,11 @@ describe('Sprint4 Backend unit-test',function(){
         it('Test copyStandard the questionnaire',function(done){
             chai.request('http://localhost:3001/questionnaire')
                 .post('/copyStandard')
-                .send({'CQid':delete_id,'clinicianId':'unittest2@gmail.com'})
+                .set({'authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFkbWluVXNlcjEiLCJpYXQiOjE2MDM3NzcxNzUsImV4cCI6MTYwMzg2MzU3NX0.ildcY1ZbFfPcMMDsjexJYMqNhzDbEfBqPPi1aKzQP1E'})
+                .send({'questionnaireId':'fd4a39b0-082e-11eb-b88c-dd849a33659e','isCopyingToCustomisedQuestionnaire':false,'clinicianId':undefined})
                 .end(function(err,res){
                     if(!err){
                         res.should.have.status(200);
-                        res.text.should.equal('successfully delete');
                         done();
                     }else{
                         done(err);
