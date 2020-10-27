@@ -198,6 +198,7 @@ describe('Sprint4 Backend unit-test',function(){
                     'sortBy':'PERFORMANCE'})
                 .end(function(err,res){
                     if(!err){
+                        res.should.have.status(200);
                         done();
                     }else{
                         done(err);
@@ -219,6 +220,7 @@ describe('Sprint4 Backend unit-test',function(){
                 })
                 .end(function(err,res){
                     if(!err){
+                        res.should.have.status(200);
                         done();
                     }else{
                         done(err);
@@ -288,25 +290,25 @@ describe('Sprint4 Backend unit-test',function(){
                 });
         }).timeout(5000);
 
-        // it('Test the completeShare',function(done){
-        //     chai.request('http://localhost:3001/share')
-        //         .post('/submit/7522ce80-1814-11eb-9f20-8d9d038dc75d')
-        //         .send({
-        //             'clinicianEmail':'unittest2@gmail.com',
-        //             'questionnaireData':[[[{'value':'','supplementaryValue':'Would not hear it.'},{'supplementaryValue':''}]],[],[]],
-        //             'personalDetails':{'name':'daniel','date':'19960829', 'rightDeviceType':'None','leftDeviceType':'None','completedBy':'Child','completeByRelationship':'','completeByName':''},
-        //             'questionnaireId': '7c342880-178e-11eb-9a18-39f607a871cf',
-        //             'sortBy':'PERFORMANCE',
-        //             'comments':[[''],[],[]]
-        //         })
-        //         .end(function(err,res){
-        //             if(!err){
-        //                 done();
-        //             }else {
-        //                 done(err);
-        //             }
-        //         });
-        // }).timeout(20000);
+        it('Test the completeShare',function(done){
+            chai.request('http://localhost:3001/share')
+                .post('/submit/7522ce80-1814-11eb-9f20-8d9d038dc75d')
+                .send({
+                    'clinicianEmail':'unittest2@gmail.com',
+                    'questionnaireData':[[[{'value':'','supplementaryValue':'Would not hear it.'},{'supplementaryValue':''}]],[],[]],
+                    'personalDetails':{'name':'daniel','date':'19960829', 'rightDeviceType':'None','leftDeviceType':'None','completedBy':'Child','completeByRelationship':'','completeByName':''},
+                    'questionnaireId': '7c342880-178e-11eb-9a18-39f607a871cf',
+                    'sortBy':'PERFORMANCE',
+                    'comments':[[''],[],[]]
+                })
+                .end(function(err,res){
+                    if(!err){
+                        done();
+                    }else {
+                        done(err);
+                    }
+                });
+        }).timeout(20000);
     });
 
     describe('Test the questionnaire.js router',function(){
