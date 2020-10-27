@@ -74,7 +74,7 @@ describe('Sprint4 Backend unit-test',function(){
                         ,'title':'This is test'
                         ,'content':'only for testing'
                         ,'type':'T'
-                        ,'__v':'0'}})
+                        ,'__v':0}})
                 .end(function(err,res){
                     if(!err){
                         res.should.have.status(200);
@@ -96,9 +96,21 @@ describe('Sprint4 Backend unit-test',function(){
                     }
                 });
         }).timeout(5000);
-        it('Test admin verify login',function(done){
+        it('Test admin verify login wrong',function(done){
             chai.request('http://localhost:3001/admin')
                 .get('/verifylogin/:token')
+                .end(function(err,res){
+                    if(!err){
+                        res.should.have.status(401);
+                        done();
+                    }else{
+                        done(err);
+                    }
+                });
+        });
+        it('Test admin verify login success',function(done){
+            chai.request('http://localhost:3001/admin')
+                .get('/verifylogin/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFkbWluVXNlcjEiLCJpYXQiOjE2MDM3NjAzMjMsImV4cCI6MTYwMzg0NjcyM30.fGIcjMeIenVmTfPb0xEKZrPErp1h5Ey-brfPH29IWd8')
                 .end(function(err,res){
                     if(!err){
                         res.should.have.status(200);
