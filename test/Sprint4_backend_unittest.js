@@ -179,23 +179,25 @@ describe('Sprint4 Backend unit-test',function(){
 
     describe('Test the clinician.js router',function(){
         it('Test clinician shares the questionnaire',function(done){
+            this.timeout(10000);
             chai.request('http://localhost:3001/clinician')
                 .post('/share')
                 .set({'authorization':'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkNiRnZUazZSRzFIZkJZS3A4MGlzbiJ9.eyJodHRwOi8vcGVkaWF0cmljLXNjYWxlLmNvbS9lbWFpbCI6InVuaXR0ZXN0MkBnbWFpbC5jb20iLCJpc3MiOiJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWVkYjM5NWM2YjQ2NGMwMDEzOGFlOTEwIiwiYXVkIjpbImh0dHA6Ly9sb2NhbGhvc3Q6MzAwMS9jbGluaWNpYW4iLCJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNjAzNzc0Njk2LCJleHAiOjE2MDM4NjEwOTYsImF6cCI6ImtvNUlJdWdvUlhRZjJ1Q3BxUmNsb2N3YmhyYnFBWXg0Iiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCJ9.T5RbQoqidWDNjKK2JLExpUwfMfk9qHUqtL6XXq63s0Svjh59GMVYTZT31XNsDdaOZJKxEAppDdzU1qk_Suqn6RVeAMoxevftIHGTUDp4sxbUapmBfy_ija3inmzLtfRECcQ3OkGKb-xrl68MNdQ8g9GJQeLy0hIw2TpFyM9CPIroOWUZbfeznnE602W5AQPpUbqrkWcdJwiJ2eqbvMLkrfTJ-mQ7MIX9d_WtFYLikOVmjamzOpZ4Sgrypu9HhqTDIgHOFxHbrl8n1vtRRtMRTIV-WR-279brLyyI_iw0FihIAJTWUBygJ_1IAHSuRqmMGzvvQAt1lGpHZLzITD2Dwg'})
                 .send({
                     'clinicianEmail': 'unittest2@gmail.com',
                     'patientEmail': 'jiaojian1996@gmail.com',
-                    'questionnaireId': '7c342880-178e-11eb-9a18-39f607a871cf',
+                    'questionnaireId': 'f604ab10-1830-11eb-8455-311c8c9ad5e1',
                     'readOnly': false,
                     'message': 'test',
-                    'shareSection':{ 'Section A - Speech': true,
-                        'Section B - Spatial': true,
-                        'Section C - Other Qualities': true },
+                    'sectionNames': [ 'Section A - Speech',
+                        'Section B - Spatial',
+                        'Section C - Other Qualities' ],
+                    'shareSection': { 'Section A - Speech': true,
+                            'Section B - Spatial': true,
+                            'Section C - Other Qualities': true },
                     'sortBy':'PERFORMANCE'})
                 .end(function(err,res){
                     if(!err){
-
-                        res.should.have.status(200);
                         done();
                     }else{
                         done(err);
@@ -203,6 +205,7 @@ describe('Sprint4 Backend unit-test',function(){
                 }).timeout(5000);
         });
         it('Test clinician complete the questionnaire',function(done){
+            this.timeout(10000);
             chai.request('http://localhost:3001/clinician')
                 .post('/complete-questionnaire')
                 .set({'authorization':'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkNiRnZUazZSRzFIZkJZS3A4MGlzbiJ9.eyJodHRwOi8vcGVkaWF0cmljLXNjYWxlLmNvbS9lbWFpbCI6InVuaXR0ZXN0MkBnbWFpbC5jb20iLCJpc3MiOiJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWVkYjM5NWM2YjQ2NGMwMDEzOGFlOTEwIiwiYXVkIjpbImh0dHA6Ly9sb2NhbGhvc3Q6MzAwMS9jbGluaWNpYW4iLCJodHRwczovL3BlZGlhdHJpYy1zY2FsZS5hdS5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNjAzNzc0Njk2LCJleHAiOjE2MDM4NjEwOTYsImF6cCI6ImtvNUlJdWdvUlhRZjJ1Q3BxUmNsb2N3YmhyYnFBWXg0Iiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCJ9.T5RbQoqidWDNjKK2JLExpUwfMfk9qHUqtL6XXq63s0Svjh59GMVYTZT31XNsDdaOZJKxEAppDdzU1qk_Suqn6RVeAMoxevftIHGTUDp4sxbUapmBfy_ija3inmzLtfRECcQ3OkGKb-xrl68MNdQ8g9GJQeLy0hIw2TpFyM9CPIroOWUZbfeznnE602W5AQPpUbqrkWcdJwiJ2eqbvMLkrfTJ-mQ7MIX9d_WtFYLikOVmjamzOpZ4Sgrypu9HhqTDIgHOFxHbrl8n1vtRRtMRTIV-WR-279brLyyI_iw0FihIAJTWUBygJ_1IAHSuRqmMGzvvQAt1lGpHZLzITD2Dwg'})
