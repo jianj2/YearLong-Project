@@ -198,7 +198,7 @@ describe('Sprint4 Backend unit-test',function(){
                     }else{
                         done(err);
                     }
-                }).timeout(5000);
+                });
         });
         it('Test clinician complete the questionnaire',function(done){
             this.timeout(10000);
