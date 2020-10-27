@@ -42,12 +42,6 @@ class unittest_frontend_adminHomePage(unittest.TestCase):
         time.sleep(2)
         assert ("http://localhost:3000/admin/Organisation" in self.driver.current_url)
 
-    def test_navbar_left(self):
-        navbar_left = self.driver.find_element_by_class_name("navbar-left")
-        navbar_left.click()
-        time.sleep(2)
-        assert ("http://localhost:3000" in self.driver.current_url)
-
     def test_view_questionnaire(self):
         view = self.driver.find_elements_by_class_name("questionnaire-list-item")[0]
         view.click()
