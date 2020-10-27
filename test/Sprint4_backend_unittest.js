@@ -200,6 +200,7 @@ describe('Sprint4 Backend unit-test',function(){
                     }
                 });
         });
+
         it('Test clinician complete the questionnaire',function(done){
             this.timeout(10000);
             chai.request('http://localhost:3001/clinician')
@@ -220,7 +221,7 @@ describe('Sprint4 Backend unit-test',function(){
                     }else{
                         done(err);
                     }
-                }).timeout(5000);
+                });
         });
     });
 
