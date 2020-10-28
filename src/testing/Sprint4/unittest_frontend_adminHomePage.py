@@ -90,7 +90,7 @@ class unittest_frontend_adminHomePage(unittest.TestCase):
 
 
     def test_edit_instructions_title(self):
-        self.driver.get("http://localhost:3000/admin/SSQ_Instructions/CC/edit")
+        self.driver.get("http://localhost:3000/admin/SSQ_Instructions/T/edit")
         title = self.driver.find_element_by_class_name("Instruction-title").find_element_by_id("filled-required")
         title.click()
         time.sleep(2)

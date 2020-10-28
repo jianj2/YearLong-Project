@@ -22,35 +22,28 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         password.send_keys("Unittest123")
         login = self.driver.find_element_by_id("btn-login")
         login.click()
-        time.sleep(2)
-        self.driver.get("http://localhost:3000/clinician")
-
-    def test_sidebar(self):
-        navbar = self.driver.find_element_by_class_name("navbar-left")
-        navbar.click()
-        time.sleep(2)
-        assert ("http://localhost:3000/clinician" in self.driver.current_url)
+        time.sleep(5)
 
     def test_questionnaire_tab(self):
-        questionnaire = self.driver.find_element_by_class_name("sidebar-questionnaires")
+        questionnaire = self.driver.find_elements_by_class_name("sidebar-button")[3]
         questionnaire.click()
         time.sleep(2)
         assert ("http://localhost:3000/clinician/Questionnaires" in self.driver.current_url)
 
     def test_doTheTest_tab(self):
-        test = self.driver.find_element_by_class_name("sidebar-do-the-test")
+        test = self.driver.find_elements_by_class_name("sidebar-button")[1]
         test.click()
         time.sleep(2)
         assert ("http://localhost:3000/clinician/DoTheTest" in self.driver.current_url)
 
     def test_share_tab(self):
-        questionnaire = self.driver.find_element_by_class_name("sidebar-share")
+        questionnaire = self.driver.find_elements_by_class_name("sidebar-button")[2]
         questionnaire.click()
         time.sleep(2)
         assert ("http://localhost:3000/clinician/Share" in self.driver.current_url)
 
     def test_instructions_tab(self):
-        questionnaire = self.driver.find_element_by_class_name("sidebar-instructions")
+        questionnaire = self.driver.find_elements_by_class_name("sidebar-button")[0]
         questionnaire.click()
         time.sleep(2)
         assert ("http://localhost:3000/clinician/Instructions" in self.driver.current_url)
@@ -59,31 +52,31 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         add = self.driver.find_element_by_class_name("CQ-header").find_element_by_class_name("button")
         add.click()
         time.sleep(2)
-        assert "New Questionnaire" in self.driver.find_elements_by_class_name("q-name")[4].text
 
     def test_editQuestionnaire_cancel(self):
-        edit = self.driver.find_elements_by_class_name("button")[6]
+        edit = self.driver.find_elements_by_class_name("button")[10]
         edit.click()
         time.sleep(2)
         cancel = self.driver.find_element_by_id("edit-cancel-button")
         cancel.click()
         time.sleep(2)
-        yes = self.driver.find_elements_by_class_name("MuiButton-label")[0]
         no = self.driver.find_elements_by_class_name("MuiButton-label")[1]
         no.click()
         time.sleep(2)
         save = self.driver.find_element_by_id("edit-save-button")
         save.click()
         time.sleep(2)
+        no = self.driver.find_elements_by_class_name("MuiButton-label")[1]
         no.click()
         time.sleep(2)
         cancel = self.driver.find_element_by_id("edit-cancel-button")
         cancel.click()
         time.sleep(2)
+        yes = self.driver.find_elements_by_class_name("MuiButton-label")[0]
         yes.click()
 
     def test_editQuestionnaire_save(self):
-        edit = self.driver.find_elements_by_class_name("button")[2]
+        edit = self.driver.find_elements_by_class_name("button")[10]
         edit.click()
         time.sleep(2)
         cancel = self.driver.find_element_by_id("edit-cancel-button")
@@ -105,7 +98,7 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         yes.click()
 
     def test_editQuestionnaire(self):
-        edit = self.driver.find_elements_by_class_name("button")[2]
+        edit = self.driver.find_elements_by_class_name("button")[10]
         edit.click()
         time.sleep(2)
         child = self.driver.find_elements_by_class_name("MuiTypography-root")[0]
