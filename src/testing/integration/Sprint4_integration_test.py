@@ -831,6 +831,25 @@ class Sprint3_integration_test(unittest.TestCase):
         time.sleep(2)
         assert ("http://localhost:3000/admin/SSQ_Instructions" in self.driver.current_url)
 
+    def test_country_item(self):
+        admin_login = self.driver.find_element_by_link_text("Admin")
+        admin_login.click()
+        time.sleep(2)
+        username = self.driver.find_element_by_name("username")
+        username.send_keys("AdminUser1")
+        password = self.driver.find_element_by_name("password")
+        password.send_keys("pw1234")
+        enter = self.driver.find_element_by_class_name("button")
+        enter.click()
+        time.sleep(2)
+        organisation = self.driver.find_element_by_class_name("sidebar-button ")[2]
+        organisation.click()
+        time.sleep(2)
+        country = self.driver.find_elements_by_class_name("country-list-item")[0]
+        country.click()
+        time.sleep(2)
+        assert "http://localhost:3000/admin/Organisation/AUSTRALIA" in self.driver.current_url
+
     def test_organisation_item(self):
         admin_login = self.driver.find_element_by_link_text("Admin")
         admin_login.click()
@@ -842,13 +861,16 @@ class Sprint3_integration_test(unittest.TestCase):
         enter = self.driver.find_element_by_class_name("button")
         enter.click()
         time.sleep(2)
-        organisation = self.driver.find_element_by_class_name("sidebar-organisation ")
+        organisation = self.driver.find_element_by_class_name("sidebar-button ")[2]
         organisation.click()
         time.sleep(2)
-        item = self.driver.find_elements_by_class_name("organisation-list-item")[0]
-        item.click()
+        country = self.driver.find_elements_by_class_name("country-list-item")[0]
+        country.click()
         time.sleep(2)
-        assert "http://localhost:3000/admin/Organisation/zoo" in self.driver.current_url
+        organ = self.driver.find_elements_by_class_name("organisation-list-item")[0]
+        organ.click()
+        time.sleep(2)
+        assert "http://localhost:3000/admin/Organisation/AUSTRALIA/aus" in self.driver.current_url
 
     def test_forgetPassword_withoutInput(self):
         self.driver.get("http://localhost:3000/findPassword")
