@@ -29,6 +29,11 @@ class unittest_frontend_clinicianSignup(unittest.TestCase):
         lastName.send_keys("Last")
         time.sleep(2)
 
+    def test_country(self):
+        country = self.driver.find_element_by_id("country")
+        country.send_keys("country")
+        time.sleep(2)
+
     def test_organisation(self):
         organisation = self.driver.find_element_by_id("organisation")
         organisation.send_keys("organisation")
@@ -52,6 +57,8 @@ class unittest_frontend_clinicianSignup(unittest.TestCase):
     def test_empty_firstName(self):
         lastName = self.driver.find_element_by_id("lname")
         lastName.send_keys("Last")
+        country = self.driver.find_element_by_id("country")
+        country.send_keys("country")
         organisation = self.driver.find_element_by_id("organisation")
         organisation.send_keys("organisation")
         password = self.driver.find_element_by_id("signup-password")
@@ -69,6 +76,8 @@ class unittest_frontend_clinicianSignup(unittest.TestCase):
     def test_empty_lastName(self):
         firstName = self.driver.find_element_by_id("fname")
         firstName.send_keys("First")
+        country = self.driver.find_element_by_id("country")
+        country.send_keys("country")
         organisation = self.driver.find_element_by_id("organisation")
         organisation.send_keys("organisation")
         password = self.driver.find_element_by_id("signup-password")
@@ -83,11 +92,32 @@ class unittest_frontend_clinicianSignup(unittest.TestCase):
         assert "Your lastName must be non-empty." \
                in self.driver.find_element_by_id("error-message-signup").text
 
+    def test_empty_country(self):
+        firstName = self.driver.find_element_by_id("fname")
+        firstName.send_keys("First")
+        lastName = self.driver.find_element_by_id("lname")
+        lastName.send_keys("Last")
+        organisation = self.driver.find_element_by_id("organisation")
+        organisation.send_keys("organisation")
+        password = self.driver.find_element_by_id("signup-password")
+        password.send_keys("samplePassword1")
+        confirmPassword = self.driver.find_element_by_id("cpassword")
+        confirmPassword.send_keys("samplePassword1")
+        email = self.driver.find_element_by_id("signup-email")
+        email.send_keys("emailt2@gmail.com")
+        signup = self.driver.find_element_by_id("btn-signup")
+        signup.click()
+        time.sleep(2)
+        assert "Your country must be non-empty." \
+               in self.driver.find_element_by_id("error-message-signup").text
+
     def test_empty_organisation(self):
         firstName = self.driver.find_element_by_id("fname")
         firstName.send_keys("First")
         lastName = self.driver.find_element_by_id("lname")
         lastName.send_keys("Last")
+        country = self.driver.find_element_by_id("country")
+        country.send_keys("country")
         password = self.driver.find_element_by_id("signup-password")
         password.send_keys("samplePassword1")
         confirmPassword = self.driver.find_element_by_id("cpassword")
@@ -105,6 +135,8 @@ class unittest_frontend_clinicianSignup(unittest.TestCase):
         firstName.send_keys("First")
         lastName = self.driver.find_element_by_id("lname")
         lastName.send_keys("Last")
+        country = self.driver.find_element_by_id("country")
+        country.send_keys("country")
         organisation = self.driver.find_element_by_id("organisation")
         organisation.send_keys("organisation")
         password = self.driver.find_element_by_id("signup-password")
@@ -122,6 +154,8 @@ class unittest_frontend_clinicianSignup(unittest.TestCase):
         firstName.send_keys("First")
         lastName = self.driver.find_element_by_id("lname")
         lastName.send_keys("Last")
+        country = self.driver.find_element_by_id("country")
+        country.send_keys("country")
         organisation = self.driver.find_element_by_id("organisation")
         organisation.send_keys("organisation")
         email = self.driver.find_element_by_id("signup-email")
@@ -139,6 +173,8 @@ class unittest_frontend_clinicianSignup(unittest.TestCase):
         firstName.send_keys("First")
         lastName = self.driver.find_element_by_id("lname")
         lastName.send_keys("Last")
+        country = self.driver.find_element_by_id("country")
+        country.send_keys("country")
         organisation = self.driver.find_element_by_id("organisation")
         organisation.send_keys("organisation")
         password = self.driver.find_element_by_id("signup-password")
@@ -156,6 +192,8 @@ class unittest_frontend_clinicianSignup(unittest.TestCase):
         firstName.send_keys("First")
         lastName = self.driver.find_element_by_id("lname")
         lastName.send_keys("Last")
+        country = self.driver.find_element_by_id("country")
+        country.send_keys("country")
         organisation = self.driver.find_element_by_id("organisation")
         organisation.send_keys("organisation")
         password = self.driver.find_element_by_id("signup-password")
@@ -175,6 +213,8 @@ class unittest_frontend_clinicianSignup(unittest.TestCase):
         firstName.send_keys("First")
         lastName = self.driver.find_element_by_id("lname")
         lastName.send_keys("Last")
+        country = self.driver.find_element_by_id("country")
+        country.send_keys("country")
         organisation = self.driver.find_element_by_id("organisation")
         organisation.send_keys("organisation")
         password = self.driver.find_element_by_id("signup-password")
@@ -186,7 +226,6 @@ class unittest_frontend_clinicianSignup(unittest.TestCase):
         signup = self.driver.find_element_by_id("btn-signup")
         signup.click()
         time.sleep(2)
-        assert "Authorize Pediatric Scale" in self.driver.title
 
 
     def tearDown(self):
