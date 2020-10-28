@@ -62,6 +62,7 @@ describe('Sprint4 Backend unit-test',function(){
                     }
                 });
         });
+
         it('Test admin update the instruction',function(done){
             chai.request('http://localhost:3001/admin')
                 .post('/instruction/T')
@@ -80,6 +81,7 @@ describe('Sprint4 Backend unit-test',function(){
                     }
                 });
         });
+
         it('Test admin get the instruction',function(done){
             chai.request('http://localhost:3001/admin')
                 .get('/specificInstruction/CC')
@@ -92,6 +94,7 @@ describe('Sprint4 Backend unit-test',function(){
                     }
                 });
         }).timeout(5000);
+
         it('Test admin verify login wrong',function(done){
             chai.request('http://localhost:3001/admin')
                 .get('/verifylogin/:token')
@@ -104,6 +107,7 @@ describe('Sprint4 Backend unit-test',function(){
                     }
                 });
         });
+
         it('Test admin verify login success',function(done){
             chai.request('http://localhost:3001/admin')
                 .get('/verifylogin/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFkbWluVXNlcjEiLCJpYXQiOjE2MDM3NjAzMjMsImV4cCI6MTYwMzg0NjcyM30.fGIcjMeIenVmTfPb0xEKZrPErp1h5Ey-brfPH29IWd8')
@@ -116,6 +120,7 @@ describe('Sprint4 Backend unit-test',function(){
                     }
                 });
         });
+
         it('Test admin get all instructions',function(done){
             chai.request('http://localhost:3001/admin')
                 .get('/instructionsSummary')
@@ -143,6 +148,7 @@ describe('Sprint4 Backend unit-test',function(){
                     }
                 });
         }).timeout(5000);
+
         it('Test admin get organisations from a contry',function(done){
             chai.request('http://localhost:3001/admin')
                 .get('/country/organisation/australia')
@@ -156,6 +162,7 @@ describe('Sprint4 Backend unit-test',function(){
                     }
                 });
         }).timeout(5000);
+
         it('Test admin get clinicians in a organisation',function(done){
             chai.request('http://localhost:3001/admin')
                 .get('/organisation/clinician/aus')
@@ -171,8 +178,8 @@ describe('Sprint4 Backend unit-test',function(){
         }).timeout(5000);
     });
 
-
     describe('Test the clinician.js router',function(){
+
         it('Test clinician shares the questionnaire',function(done){
             this.timeout(10000);
             chai.request('http://localhost:3001/clinician')
