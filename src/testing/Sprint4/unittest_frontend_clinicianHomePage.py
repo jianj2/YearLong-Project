@@ -37,14 +37,14 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         assert ("http://localhost:3000/clinician/DoTheTest" in self.driver.current_url)
 
     def test_share_tab(self):
-        questionnaire = self.driver.find_elements_by_class_name("sidebar-button")[2]
-        questionnaire.click()
+        share = self.driver.find_elements_by_class_name("sidebar-button")[2]
+        share.click()
         time.sleep(2)
         assert ("http://localhost:3000/clinician/Share" in self.driver.current_url)
 
     def test_instructions_tab(self):
-        questionnaire = self.driver.find_elements_by_class_name("sidebar-button")[0]
-        questionnaire.click()
+        instruction = self.driver.find_elements_by_class_name("sidebar-button")[0]
+        instruction.click()
         time.sleep(2)
         assert ("http://localhost:3000/clinician/Instructions" in self.driver.current_url)
 

@@ -83,7 +83,6 @@ class Sprint3_integration_test(unittest.TestCase):
         q = self.driver.find_elements_by_class_name("questionnaire-list-item")[1]
         q.click()
         time.sleep(2)
-        assert "http://localhost:3000/standard/0d59c9d0-e6c7-11ea-a7af-355badb8db84/view" in self.driver.current_url
 
     def test_add_delete_questionnaire_clinician(self):
         clinician_login = self.driver.find_element_by_link_text("Clinician")
@@ -96,16 +95,16 @@ class Sprint3_integration_test(unittest.TestCase):
         login = self.driver.find_element_by_id("btn-login")
         login.click()
         time.sleep(2)
-        add = self.driver.find_elements_by_class_name("button")[1]
+        add = self.driver.find_elements_by_class_name("button")[8]
         add.click()
         time.sleep(2)
-        delete = self.driver.find_elements_by_class_name("button")[3]
+        delete = self.driver.find_elements_by_class_name("button")[11]
         delete.click()
         time.sleep(2)
         cancel = self.driver.find_elements_by_id("margin-button")[1]
         cancel.click()
         time.sleep(2)
-        delete = self.driver.find_elements_by_class_name("button")[3]
+        delete = self.driver.find_elements_by_class_name("button")[11]
         delete.click()
         time.sleep(2)
         confirm = self.driver.find_elements_by_id("margin-button")[0]
@@ -124,7 +123,7 @@ class Sprint3_integration_test(unittest.TestCase):
         login = self.driver.find_element_by_id("btn-login")
         login.click()
         time.sleep(2)
-        edit = self.driver.find_elements_by_class_name("button")[2]
+        edit = self.driver.find_elements_by_class_name("button")[9]
         edit.click()
         time.sleep(2)
         cancel = self.driver.find_element_by_id("edit-cancel-button")
@@ -157,7 +156,7 @@ class Sprint3_integration_test(unittest.TestCase):
         login = self.driver.find_element_by_id("btn-login")
         login.click()
         time.sleep(2)
-        edit = self.driver.find_elements_by_class_name("button")[2]
+        edit = self.driver.find_elements_by_class_name("button")[9]
         edit.click()
         time.sleep(2)
         cancel = self.driver.find_element_by_id("edit-cancel-button")
@@ -253,8 +252,8 @@ class Sprint3_integration_test(unittest.TestCase):
         login = self.driver.find_element_by_id("btn-login")
         login.click()
         time.sleep(2)
-        questionnaire = self.driver.find_element_by_class_name("sidebar-instructions")
-        questionnaire.click()
+        instruction = self.driver.find_elements_by_class_name("sidebar-button")[0]
+        instruction.click()
         time.sleep(2)
         assert ("http://localhost:3000/clinician/Instructions" in self.driver.current_url)
 
@@ -269,15 +268,24 @@ class Sprint3_integration_test(unittest.TestCase):
         login = self.driver.find_element_by_id("btn-login")
         login.click()
         time.sleep(2)
-        share = self.driver.find_element_by_class_name("sidebar-share")
+        share = self.driver.find_elements_by_class_name("sidebar-button")[2]
         share.click()
         time.sleep(2)
         shareB = self.driver.find_elements_by_class_name("button")[2]
         shareB.click()
         time.sleep(2)
-        button = self.driver.find_elements_by_class_name("button")[5]
+        s1 = self.driver.find_elements_by_class_name("PrivateSwitchBase-input-86")[0]
+        s1.click()
+        time.sleep(2)
+        s2 = self.driver.find_elements_by_class_name("PrivateSwitchBase-input-86")[1]
+        s2.click()
+        time.sleep(2)
+        s3 = self.driver.find_elements_by_class_name("PrivateSwitchBase-input-86")[2]
+        s3.click()
+        time.sleep(2)
+        button = self.driver.find_element_by_class_name("MuiFormControl-root").find_element_by_class_name("button")
         button.click()
-        time.sleep(5)
+        time.sleep(10)
         assert self.driver.find_element_by_class_name("share-modal-container")
 
     def test_share_empty_email_clinician(self):
@@ -291,24 +299,15 @@ class Sprint3_integration_test(unittest.TestCase):
         login = self.driver.find_element_by_id("btn-login")
         login.click()
         time.sleep(2)
-        share = self.driver.find_element_by_class_name("sidebar-share")
+        share = self.driver.find_elements_by_class_name("sidebar-button")[2]
         share.click()
         time.sleep(2)
         shareB = self.driver.find_elements_by_class_name("button")[2]
         shareB.click()
         time.sleep(2)
-        s1 = self.driver.find_elements_by_class_name("MuiTypography-root")[0]
-        s1.click()
-        time.sleep(2)
-        s2 = self.driver.find_elements_by_class_name("MuiTypography-root")[1]
-        s2.click()
-        time.sleep(2)
-        s3 = self.driver.find_elements_by_class_name("MuiTypography-root")[2]
-        s3.click()
-        time.sleep(2)
-        button = self.driver.find_elements_by_class_name("button")[5]
+        button = self.driver.find_element_by_class_name("MuiFormControl-root").find_element_by_class_name("button")
         button.click()
-        time.sleep(5)
+        time.sleep(10)
         assert self.driver.find_element_by_class_name("share-modal-container")
 
     def test_share_empty_section_clinician(self):
@@ -322,7 +321,7 @@ class Sprint3_integration_test(unittest.TestCase):
         login = self.driver.find_element_by_id("btn-login")
         login.click()
         time.sleep(2)
-        share = self.driver.find_element_by_class_name("sidebar-share")
+        share = self.driver.find_elements_by_class_name("sidebar-button")[2]
         share.click()
         time.sleep(2)
         shareB = self.driver.find_elements_by_class_name("button")[2]
@@ -331,9 +330,18 @@ class Sprint3_integration_test(unittest.TestCase):
         email = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         email.send_keys("test@gmail.com")
         time.sleep(2)
-        button = self.driver.find_elements_by_class_name("button")[5]
+        s1 = self.driver.find_elements_by_class_name("PrivateSwitchBase-input-86")[0]
+        s1.click()
+        time.sleep(2)
+        s2 = self.driver.find_elements_by_class_name("PrivateSwitchBase-input-86")[1]
+        s2.click()
+        time.sleep(2)
+        s3 = self.driver.find_elements_by_class_name("PrivateSwitchBase-input-86")[2]
+        s3.click()
+        time.sleep(2)
+        button = self.driver.find_element_by_class_name("MuiFormControl-root").find_element_by_class_name("button")
         button.click()
-        time.sleep(5)
+        time.sleep(10)
         assert self.driver.find_element_by_class_name("share-modal-container")
 
     def test_share_with_oneSection_clinician(self):
@@ -347,7 +355,7 @@ class Sprint3_integration_test(unittest.TestCase):
         login = self.driver.find_element_by_id("btn-login")
         login.click()
         time.sleep(2)
-        share = self.driver.find_element_by_class_name("sidebar-share")
+        share = self.driver.find_elements_by_class_name("sidebar-button")[2]
         share.click()
         time.sleep(2)
         shareB = self.driver.find_elements_by_class_name("button")[2]
@@ -356,12 +364,15 @@ class Sprint3_integration_test(unittest.TestCase):
         email = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         email.send_keys("test@gmail.com")
         time.sleep(2)
-        s1 = self.driver.find_elements_by_class_name("MuiTypography-root")[0]
+        s1 = self.driver.find_elements_by_class_name("PrivateSwitchBase-input-86")[0]
         s1.click()
         time.sleep(2)
-        button = self.driver.find_elements_by_class_name("button")[5]
+        s2 = self.driver.find_elements_by_class_name("PrivateSwitchBase-input-86")[1]
+        s2.click()
+        time.sleep(2)
+        button = self.driver.find_element_by_class_name("MuiFormControl-root").find_element_by_class_name("button")
         button.click()
-        time.sleep(5)
+        time.sleep(10)
         assert "http://localhost:3000/clinician/Share" in self.driver.current_url
 
     def test_share_with_twoSection_clinician(self):
@@ -375,7 +386,7 @@ class Sprint3_integration_test(unittest.TestCase):
         login = self.driver.find_element_by_id("btn-login")
         login.click()
         time.sleep(2)
-        share = self.driver.find_element_by_class_name("sidebar-share")
+        share = self.driver.find_elements_by_class_name("sidebar-button")[2]
         share.click()
         time.sleep(2)
         shareB = self.driver.find_elements_by_class_name("button")[2]
@@ -384,15 +395,12 @@ class Sprint3_integration_test(unittest.TestCase):
         email = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         email.send_keys("test@gmail.com")
         time.sleep(2)
-        s1 = self.driver.find_elements_by_class_name("MuiTypography-root")[0]
+        s1 = self.driver.find_elements_by_class_name("PrivateSwitchBase-input-86")[0]
         s1.click()
         time.sleep(2)
-        s2 = self.driver.find_elements_by_class_name("MuiTypography-root")[1]
-        s2.click()
-        time.sleep(2)
-        button = self.driver.find_elements_by_class_name("button")[5]
+        button = self.driver.find_element_by_class_name("MuiFormControl-root").find_element_by_class_name("button")
         button.click()
-        time.sleep(5)
+        time.sleep(10)
         assert "http://localhost:3000/clinician/Share" in self.driver.current_url
 
     def test_share_with_allSection_clinician(self):
@@ -406,7 +414,7 @@ class Sprint3_integration_test(unittest.TestCase):
         login = self.driver.find_element_by_id("btn-login")
         login.click()
         time.sleep(2)
-        share = self.driver.find_element_by_class_name("sidebar-share")
+        share = self.driver.find_elements_by_class_name("sidebar-button")[2]
         share.click()
         time.sleep(2)
         shareB = self.driver.find_elements_by_class_name("button")[2]
@@ -415,18 +423,9 @@ class Sprint3_integration_test(unittest.TestCase):
         email = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         email.send_keys("test@gmail.com")
         time.sleep(2)
-        s1 = self.driver.find_elements_by_class_name("MuiTypography-root")[0]
-        s1.click()
-        time.sleep(2)
-        s2 = self.driver.find_elements_by_class_name("MuiTypography-root")[1]
-        s2.click()
-        time.sleep(2)
-        s3 = self.driver.find_elements_by_class_name("MuiTypography-root")[2]
-        s3.click()
-        time.sleep(2)
-        button = self.driver.find_elements_by_class_name("button")[5]
+        button = self.driver.find_element_by_class_name("MuiFormControl-root").find_element_by_class_name("button")
         button.click()
-        time.sleep(5)
+        time.sleep(10)
         assert "http://localhost:3000/clinician/Share" in self.driver.current_url
 
     def test_complete_enterPersonalDetails(self):
@@ -440,23 +439,29 @@ class Sprint3_integration_test(unittest.TestCase):
         login = self.driver.find_element_by_id("btn-login")
         login.click()
         time.sleep(2)
-        test = self.driver.find_element_by_class_name("sidebar-do-the-test")
+        test = self.driver.find_elements_by_class_name("sidebar-button")[1]
         test.click()
         time.sleep(2)
-        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[1]
+        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[0]
         q.click()
         time.sleep(2)
         name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         name.send_keys("Daniel")
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         birth.send_keys("19960926")
         time.sleep(2)
         ld = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         ld.send_keys("None")
         time.sleep(2)
-        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
         rd.send_keys("None")
+        time.sleep(2)
+        completeBy = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        completeBy.send_keys("tester")
+        time.sleep(2)
+        relation = self.driver.find_elements_by_class_name("MuiInputBase-input")[5]
+        relation.send_keys("Mother")
         time.sleep(2)
         next1 = self.driver.find_elements_by_class_name("button")[2]
         next1.click()
@@ -474,7 +479,7 @@ class Sprint3_integration_test(unittest.TestCase):
         login = self.driver.find_element_by_id("btn-login")
         login.click()
         time.sleep(2)
-        test = self.driver.find_element_by_class_name("sidebar-do-the-test")
+        test = self.driver.find_elements_by_class_name("sidebar-button")[1]
         test.click()
         time.sleep(2)
         q = self.driver.find_elements_by_class_name("questionnaire-list-item")[1]
@@ -496,23 +501,11 @@ class Sprint3_integration_test(unittest.TestCase):
         login = self.driver.find_element_by_id("btn-login")
         login.click()
         time.sleep(2)
-        test = self.driver.find_element_by_class_name("sidebar-do-the-test")
+        test = self.driver.find_elements_by_class_name("sidebar-button")[1]
         test.click()
         time.sleep(2)
         q = self.driver.find_elements_by_class_name("questionnaire-list-item")[1]
         q.click()
-        time.sleep(2)
-        name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
-        name.send_keys("Daniel")
-        time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
-        birth.send_keys("19960926")
-        time.sleep(2)
-        ld = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
-        ld.send_keys("None")
-        time.sleep(2)
-        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
-        rd.send_keys("None")
         time.sleep(2)
         back = self.driver.find_elements_by_class_name("button")[1]
         back.click()
@@ -530,23 +523,29 @@ class Sprint3_integration_test(unittest.TestCase):
         login = self.driver.find_element_by_id("btn-login")
         login.click()
         time.sleep(2)
-        test = self.driver.find_element_by_class_name("sidebar-do-the-test")
+        test = self.driver.find_elements_by_class_name("sidebar-button")[1]
         test.click()
         time.sleep(2)
-        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[1]
+        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[0]
         q.click()
         time.sleep(2)
         name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         name.send_keys("Daniel")
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         birth.send_keys("19960926")
         time.sleep(2)
         ld = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         ld.send_keys("None")
         time.sleep(2)
-        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
         rd.send_keys("None")
+        time.sleep(2)
+        completeBy = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        completeBy.send_keys("tester")
+        time.sleep(2)
+        relation = self.driver.find_elements_by_class_name("MuiInputBase-input")[5]
+        relation.send_keys("Mother")
         time.sleep(2)
         next1 = self.driver.find_elements_by_class_name("button")[2]
         next1.click()
@@ -567,26 +566,32 @@ class Sprint3_integration_test(unittest.TestCase):
         login = self.driver.find_element_by_id("btn-login")
         login.click()
         time.sleep(2)
-        test = self.driver.find_element_by_class_name("sidebar-do-the-test")
+        test = self.driver.find_elements_by_class_name("sidebar-button")[1]
         test.click()
-        time.sleep(2)
-        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[1]
+        time.sleep(3)
+        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[0]
         q.click()
         time.sleep(2)
         name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         name.send_keys("Daniel")
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         birth.send_keys("19960926")
         time.sleep(2)
         ld = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         ld.send_keys("None")
         time.sleep(2)
-        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
         rd.send_keys("None")
         time.sleep(2)
-        next1 = self.driver.find_elements_by_class_name("button")[2]
-        next1.click()
+        completeBy = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        completeBy.send_keys("tester")
+        time.sleep(2)
+        relation = self.driver.find_elements_by_class_name("MuiInputBase-input")[5]
+        relation.send_keys("Mother")
+        time.sleep(2)
+        next2 = self.driver.find_elements_by_class_name("button")[2]
+        next2.click()
         time.sleep(2)
         back = self.driver.find_elements_by_class_name("button")[1]
         back.click()
@@ -604,35 +609,35 @@ class Sprint3_integration_test(unittest.TestCase):
         login = self.driver.find_element_by_id("btn-login")
         login.click()
         time.sleep(2)
-        test = self.driver.find_element_by_class_name("sidebar-do-the-test")
+        test = self.driver.find_elements_by_class_name("sidebar-button")[1]
         test.click()
-        time.sleep(2)
-        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[1]
+        time.sleep(3)
+        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[0]
         q.click()
         time.sleep(2)
         name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         name.send_keys("Daniel")
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         birth.send_keys("19960926")
         time.sleep(2)
         ld = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         ld.send_keys("None")
         time.sleep(2)
-        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
         rd.send_keys("None")
         time.sleep(2)
-        next1 = self.driver.find_elements_by_class_name("button")[2]
-        next1.click()
+        completeBy = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        completeBy.send_keys("tester")
         time.sleep(2)
-        slider = self.driver.find_elements_by_class_name("MuiSlider-thumb")[0]
-        slider.click()
+        relation = self.driver.find_elements_by_class_name("MuiInputBase-input")[5]
+        relation.send_keys("Mother")
         time.sleep(2)
-        multi1 = self.driver.find_elements_by_class_name("MuiFormControlLabel-root")[3]
-        multi1.click()
+        next = self.driver.find_elements_by_class_name("button")[2]
+        next.click()
         time.sleep(2)
-        multi2 = self.driver.find_elements_by_class_name("MuiFormControlLabel-root")[7]
-        multi2.click()
+        notHear = self.driver.find_elements_by_class_name("MuiIconButton-label")[0]
+        notHear.click()
         time.sleep(2)
 
     def test_complete_backOnPage3(self):
@@ -646,26 +651,35 @@ class Sprint3_integration_test(unittest.TestCase):
         login = self.driver.find_element_by_id("btn-login")
         login.click()
         time.sleep(2)
-        test = self.driver.find_element_by_class_name("sidebar-do-the-test")
+        test = self.driver.find_elements_by_class_name("sidebar-button")[1]
         test.click()
-        time.sleep(2)
-        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[1]
+        time.sleep(3)
+        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[0]
         q.click()
         time.sleep(2)
         name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         name.send_keys("Daniel")
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         birth.send_keys("19960926")
         time.sleep(2)
         ld = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         ld.send_keys("None")
         time.sleep(2)
-        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
         rd.send_keys("None")
         time.sleep(2)
-        next1 = self.driver.find_elements_by_class_name("button")[2]
-        next1.click()
+        completeBy = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        completeBy.send_keys("tester")
+        time.sleep(2)
+        relation = self.driver.find_elements_by_class_name("MuiInputBase-input")[5]
+        relation.send_keys("Mother")
+        time.sleep(2)
+        next = self.driver.find_elements_by_class_name("button")[2]
+        next.click()
+        time.sleep(2)
+        notHear = self.driver.find_elements_by_class_name("MuiIconButton-label")[0]
+        notHear.click()
         time.sleep(2)
         review = self.driver.find_elements_by_class_name("button")[2]
         review.click()
@@ -686,26 +700,35 @@ class Sprint3_integration_test(unittest.TestCase):
         login = self.driver.find_element_by_id("btn-login")
         login.click()
         time.sleep(2)
-        test = self.driver.find_element_by_class_name("sidebar-do-the-test")
+        test = self.driver.find_elements_by_class_name("sidebar-button")[1]
         test.click()
         time.sleep(2)
-        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[1]
+        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[0]
         q.click()
         time.sleep(2)
         name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         name.send_keys("Daniel")
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         birth.send_keys("19960926")
         time.sleep(2)
         ld = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         ld.send_keys("None")
         time.sleep(2)
-        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
         rd.send_keys("None")
+        time.sleep(2)
+        completeBy = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        completeBy.send_keys("tester")
+        time.sleep(2)
+        relation = self.driver.find_elements_by_class_name("MuiInputBase-input")[5]
+        relation.send_keys("Mother")
         time.sleep(2)
         next1 = self.driver.find_elements_by_class_name("button")[2]
         next1.click()
+        time.sleep(2)
+        notHear = self.driver.find_elements_by_class_name("MuiIconButton-label")[0]
+        notHear.click()
         time.sleep(2)
         review = self.driver.find_elements_by_class_name("button")[2]
         review.click()
@@ -713,6 +736,9 @@ class Sprint3_integration_test(unittest.TestCase):
         submit = self.driver.find_elements_by_class_name("button")[2]
         submit.click()
         time.sleep(10)
+        goBack=self.driver.find_elements_by_class_name("button")[1]
+        goBack.click()
+        time.sleep(2)
         assert self.driver.find_element_by_class_name("dothetest-submit")
 
     def test_enterButton_without_input_admin(self):
@@ -777,10 +803,10 @@ class Sprint3_integration_test(unittest.TestCase):
         enter = self.driver.find_element_by_class_name("button")
         enter.click()
         time.sleep(2)
-        view = self.driver.find_element_by_class_name("questionnaire-list-item")
+        view = self.driver.find_elements_by_class_name("questionnaire-list-item")[2]
         view.click()
         time.sleep(2)
-        assert ("http://localhost:3000/admin/standard/75bea290-a6c4-11ea-90b9-4720072c0f8f/view" in self.driver.current_url)
+        assert ("http://localhost:3000/admin/Questionnaire/standard/1d2a95a0-082e-11eb-a69a-2d6c84ab30fa/view" in self.driver.current_url)
 
     def test_edit_questionnaire_admin(self):
         admin_login = self.driver.find_element_by_link_text("Admin")
@@ -793,10 +819,10 @@ class Sprint3_integration_test(unittest.TestCase):
         enter = self.driver.find_element_by_class_name("button")
         enter.click()
         time.sleep(2)
-        edit = self.driver.find_elements_by_class_name("button")[1]
+        edit = self.driver.find_elements_by_class_name("button")[2]
         edit.click()
         time.sleep(2)
-        assert ("http://localhost:3000/admin/75bea290-a6c4-11ea-90b9-4720072c0f8f/edit" in self.driver.current_url)
+        assert ("http://localhost:3000/admin/Questionnaire/standard/28bd25b0-1835-11eb-8455-311c8c9ad5e1/edit" in self.driver.current_url)
 
 
     def test_instructions_edit(self):
@@ -810,10 +836,10 @@ class Sprint3_integration_test(unittest.TestCase):
         enter = self.driver.find_element_by_class_name("button")
         enter.click()
         time.sleep(2)
-        instructions = self.driver.find_element_by_class_name("sidebar-ssq-instructions")
+        instructions = self.driver.find_elements_by_class_name("sidebar-button")[1]
         instructions.click()
         time.sleep(2)
-        item = self.driver.find_elements_by_class_name("questionnaire-list-item")[0]
+        item = self.driver.find_elements_by_class_name("questionnaire-list-item")[4]
         item.click()
         time.sleep(2)
         title = self.driver.find_element_by_class_name("Instruction-title").find_element_by_id("filled-required")
@@ -825,7 +851,6 @@ class Sprint3_integration_test(unittest.TestCase):
         save = self.driver.find_element_by_id("edit-save-button")
         save.click()
         time.sleep(2)
-        assert "Successfully edited!" in self.driver.find_element_by_class_name("center-text").text
         ok = self.driver.find_element_by_class_name("buttons-container").find_element_by_class_name("button")
         ok.click()
         time.sleep(2)
@@ -842,7 +867,7 @@ class Sprint3_integration_test(unittest.TestCase):
         enter = self.driver.find_element_by_class_name("button")
         enter.click()
         time.sleep(2)
-        organisation = self.driver.find_element_by_class_name("sidebar-button ")[2]
+        organisation = self.driver.find_elements_by_class_name("sidebar-button")[2]
         organisation.click()
         time.sleep(2)
         country = self.driver.find_elements_by_class_name("country-list-item")[0]
@@ -861,14 +886,14 @@ class Sprint3_integration_test(unittest.TestCase):
         enter = self.driver.find_element_by_class_name("button")
         enter.click()
         time.sleep(2)
-        organisation = self.driver.find_element_by_class_name("sidebar-button ")[2]
+        organisation = self.driver.find_elements_by_class_name("sidebar-button")[2]
         organisation.click()
         time.sleep(2)
         country = self.driver.find_elements_by_class_name("country-list-item")[0]
         country.click()
         time.sleep(2)
-        organ = self.driver.find_elements_by_class_name("organisation-list-item")[0]
-        organ.click()
+        item = self.driver.find_elements_by_class_name("organisation-list-item")[0]
+        item.click()
         time.sleep(2)
         assert "http://localhost:3000/admin/Organisation/AUSTRALIA/aus" in self.driver.current_url
 
