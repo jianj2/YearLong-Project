@@ -306,6 +306,7 @@ describe('Sprint4 Backend unit-test',function(){
                 })
                 .end(function(err,res){
                     if(!err){
+                        res.should.have.status(200);
                         done();
                     }else {
                         done(err);
