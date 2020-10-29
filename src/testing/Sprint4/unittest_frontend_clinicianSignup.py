@@ -234,4 +234,3 @@ class unittest_frontend_clinicianSignup(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-

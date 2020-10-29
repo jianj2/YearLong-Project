@@ -201,8 +201,8 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         rd.send_keys("None")
         time.sleep(2)
-        next = self.driver.find_elements_by_class_name("button")[2]
-        next.click()
+        next1 = self.driver.find_elements_by_class_name("button")[2]
+        next1.click()
         time.sleep(2)
         assert self.driver.find_element_by_class_name("scenario-container")
 
@@ -213,8 +213,8 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         q = self.driver.find_elements_by_class_name("questionnaire-list-item")[1]
         q.click()
         time.sleep(2)
-        next1 = self.driver.find_elements_by_class_name("button")[2]
-        next1.click()
+        next2 = self.driver.find_elements_by_class_name("button")[2]
+        next2.click()
         time.sleep(2)
         assert self.driver.find_element_by_class_name("parents-detail-form")
 
@@ -249,8 +249,8 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         rd.send_keys("None")
         time.sleep(2)
-        next = self.driver.find_elements_by_class_name("button")[2]
-        next.click()
+        next1 = self.driver.find_elements_by_class_name("button")[2]
+        next1.click()
         time.sleep(2)
         review = self.driver.find_elements_by_class_name("button")[2]
         review.click()
@@ -276,8 +276,8 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         rd.send_keys("None")
         time.sleep(2)
-        next = self.driver.find_elements_by_class_name("button")[2]
-        next.click()
+        next1 = self.driver.find_elements_by_class_name("button")[2]
+        next1.click()
         time.sleep(2)
         back = self.driver.find_elements_by_class_name("button")[1]
         back.click()
