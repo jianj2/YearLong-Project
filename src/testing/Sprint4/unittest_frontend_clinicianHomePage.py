@@ -176,23 +176,29 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         time.sleep(2)
 
     def test_complete_enterPersonalDetails(self):
-        test = self.driver.find_element_by_class_name("sidebar-do-the-test")
+        test = self.driver.find_elements_by_class_name("sidebar-button")[1]
         test.click()
         time.sleep(2)
-        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[1]
+        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[0]
         q.click()
         time.sleep(2)
         name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         name.send_keys("Daniel")
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         birth.send_keys("19960926")
         time.sleep(2)
         ld = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         ld.send_keys("None")
         time.sleep(2)
-        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
         rd.send_keys("None")
+        time.sleep(2)
+        completeBy = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        completeBy.send_keys("tester")
+        time.sleep(2)
+        relation = self.driver.find_elements_by_class_name("MuiInputBase-input")[5]
+        relation.send_keys("Mother")
         time.sleep(2)
         next = self.driver.find_elements_by_class_name("button")[2]
         next.click()
@@ -200,23 +206,29 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         assert self.driver.find_element_by_class_name("scenario-container")
 
     def test_complete_enterPersonalDetails_wrongBirth(self):
-        test = self.driver.find_element_by_class_name("sidebar-do-the-test")
+        test = self.driver.find_elements_by_class_name("sidebar-button")[1]
         test.click()
         time.sleep(2)
-        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[1]
+        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[0]
         q.click()
         time.sleep(2)
         name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         name.send_keys("Daniel")
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         birth.send_keys("aabbccdd")
         time.sleep(2)
         ld = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         ld.send_keys("None")
         time.sleep(2)
-        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
         rd.send_keys("None")
+        time.sleep(2)
+        completeBy = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        completeBy.send_keys("tester")
+        time.sleep(2)
+        relation = self.driver.find_elements_by_class_name("MuiInputBase-input")[5]
+        relation.send_keys("Mother")
         time.sleep(2)
         next = self.driver.find_elements_by_class_name("button")[2]
         next.click()
@@ -224,7 +236,7 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         assert self.driver.find_element_by_class_name("parents-detail-form")
 
     def test_complete_nextWithoutInput(self):
-        test = self.driver.find_element_by_class_name("sidebar-do-the-test")
+        test = self.driver.find_elements_by_class_name("sidebar-button")[1]
         test.click()
         time.sleep(2)
         q = self.driver.find_elements_by_class_name("questionnaire-list-item")[1]
@@ -236,7 +248,7 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         assert self.driver.find_element_by_class_name("parents-detail-form")
 
     def test_complete_backOnPage1(self):
-        test = self.driver.find_element_by_class_name("sidebar-do-the-test")
+        test = self.driver.find_elements_by_class_name("sidebar-button")[1]
         test.click()
         time.sleep(2)
         q = self.driver.find_elements_by_class_name("questionnaire-list-item")[1]
@@ -248,23 +260,29 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         assert self.driver.find_element_by_class_name("questionnaire-list-container")
 
     def test_complete_reviewnPage2(self):
-        test = self.driver.find_element_by_class_name("sidebar-do-the-test")
+        test = self.driver.find_elements_by_class_name("sidebar-button")[1]
         test.click()
         time.sleep(2)
-        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[1]
+        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[0]
         q.click()
         time.sleep(2)
         name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         name.send_keys("Daniel")
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         birth.send_keys("19960926")
         time.sleep(2)
         ld = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         ld.send_keys("None")
         time.sleep(2)
-        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
         rd.send_keys("None")
+        time.sleep(2)
+        completeBy = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        completeBy.send_keys("tester")
+        time.sleep(2)
+        relation = self.driver.find_elements_by_class_name("MuiInputBase-input")[5]
+        relation.send_keys("Mother")
         time.sleep(2)
         next = self.driver.find_elements_by_class_name("button")[2]
         next.click()
@@ -275,23 +293,29 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         assert self.driver.find_element_by_class_name("dothetest-container")
 
     def test_complete_backOnPage2(self):
-        test = self.driver.find_element_by_class_name("sidebar-do-the-test")
+        test = self.driver.find_elements_by_class_name("sidebar-button")[1]
         test.click()
-        time.sleep(2)
-        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[1]
+        time.sleep(3)
+        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[0]
         q.click()
         time.sleep(2)
         name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         name.send_keys("Daniel")
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         birth.send_keys("19960926")
         time.sleep(2)
         ld = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         ld.send_keys("None")
         time.sleep(2)
-        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
         rd.send_keys("None")
+        time.sleep(2)
+        completeBy = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        completeBy.send_keys("tester")
+        time.sleep(2)
+        relation = self.driver.find_elements_by_class_name("MuiInputBase-input")[5]
+        relation.send_keys("Mother")
         time.sleep(2)
         next = self.driver.find_elements_by_class_name("button")[2]
         next.click()
@@ -302,61 +326,67 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         assert self.driver.find_element_by_class_name("parents-detail-form")
 
     def test_complete_fillInQuestionnaire(self):
-        test = self.driver.find_element_by_class_name("sidebar-do-the-test")
+        test = self.driver.find_elements_by_class_name("sidebar-button")[1]
         test.click()
-        time.sleep(2)
-        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[1]
+        time.sleep(3)
+        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[0]
         q.click()
         time.sleep(2)
         name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         name.send_keys("Daniel")
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         birth.send_keys("19960926")
         time.sleep(2)
         ld = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         ld.send_keys("None")
         time.sleep(2)
-        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
         rd.send_keys("None")
+        time.sleep(2)
+        completeBy = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        completeBy.send_keys("tester")
+        time.sleep(2)
+        relation = self.driver.find_elements_by_class_name("MuiInputBase-input")[5]
+        relation.send_keys("Mother")
         time.sleep(2)
         next = self.driver.find_elements_by_class_name("button")[2]
         next.click()
         time.sleep(2)
-        slider = self.driver.find_elements_by_class_name("MuiSlider-thumb")[0]
-        slider.click()
-        time.sleep(2)
-        multi1 = self.driver.find_elements_by_class_name("MuiFormControlLabel-root")[3]
-        multi1.click()
-        time.sleep(2)
-        multi2 = self.driver.find_elements_by_class_name("MuiFormControlLabel-root")[7]
-        multi2.click()
+        notHear = self.driver.find_elements_by_class_name("MuiIconButton-label")[0]
+        notHear.click()
         time.sleep(2)
 
     def test_complete_backOnPage3(self):
-        test = self.driver.find_element_by_class_name("sidebar-do-the-test")
+        test = self.driver.find_elements_by_class_name("sidebar-button")[1]
         test.click()
-        time.sleep(2)
-        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[4]
+        time.sleep(3)
+        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[0]
         q.click()
         time.sleep(2)
         name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         name.send_keys("Daniel")
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         birth.send_keys("19960926")
         time.sleep(2)
         ld = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         ld.send_keys("None")
         time.sleep(2)
-        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
         rd.send_keys("None")
+        time.sleep(2)
+        completeBy = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        completeBy.send_keys("tester")
+        time.sleep(2)
+        relation = self.driver.find_elements_by_class_name("MuiInputBase-input")[5]
+        relation.send_keys("Mother")
         time.sleep(2)
         next = self.driver.find_elements_by_class_name("button")[2]
         next.click()
         time.sleep(2)
-        select=self.driver.find_elements_by_class_name("MuiButtonBase-root")[0]
-        select.click()
+        notHear = self.driver.find_elements_by_class_name("MuiIconButton-label")[0]
+        notHear.click()
         time.sleep(2)
         review = self.driver.find_elements_by_class_name("button")[2]
         review.click()
@@ -366,41 +396,50 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         time.sleep(2)
         assert self.driver.find_element_by_class_name("questionaire-container")
 
-    def test_complete_SubmitOnPage2(self):
-        test = self.driver.find_element_by_class_name("sidebar-do-the-test")
+    def test_complete_SubmitOnPage3(self):
+        test = self.driver.find_elements_by_class_name("sidebar-button")[1]
         test.click()
         time.sleep(2)
-        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[1]
+        q = self.driver.find_elements_by_class_name("questionnaire-list-item")[0]
         q.click()
         time.sleep(2)
         name = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         name.send_keys("Daniel")
         time.sleep(2)
-        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        birth = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
         birth.send_keys("19960926")
         time.sleep(2)
         ld = self.driver.find_elements_by_class_name("MuiInputBase-input")[1]
         ld.send_keys("None")
         time.sleep(2)
-        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[3]
+        rd = self.driver.find_elements_by_class_name("MuiInputBase-input")[4]
         rd.send_keys("None")
+        time.sleep(2)
+        completeBy = self.driver.find_elements_by_class_name("MuiInputBase-input")[2]
+        completeBy.send_keys("tester")
+        time.sleep(2)
+        relation = self.driver.find_elements_by_class_name("MuiInputBase-input")[5]
+        relation.send_keys("Mother")
         time.sleep(2)
         next = self.driver.find_elements_by_class_name("button")[2]
         next.click()
         time.sleep(2)
-        select=self.driver.find_elements_by_class_name("MuiButtonBase-root")[0]
-        select.click()
+        notHear = self.driver.find_elements_by_class_name("MuiIconButton-label")[0]
+        notHear.click()
         time.sleep(2)
         review = self.driver.find_elements_by_class_name("button")[2]
         review.click()
         time.sleep(2)
         submit = self.driver.find_elements_by_class_name("button")[2]
         submit.click()
+        time.sleep(10)
+        goBack=self.driver.find_elements_by_class_name("button")[1]
+        goBack.click()
         time.sleep(2)
-        assert "http://localhost:3000/clinician" in self.driver.current_url
+        assert "http://localhost:3000/clinician/DoTheTest" in self.driver.current_url
 
     def test_clickShare(self):
-        share = self.driver.find_element_by_class_name("sidebar-share")
+        share = self.driver.find_elements_by_class_name("sidebar-button")[2]
         share.click()
         time.sleep(2)
         shareB = self.driver.find_elements_by_class_name("button")[2]
@@ -409,7 +448,7 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         assert self.driver.find_elements_by_class_name("share-modal-container")
 
     def test_selectEmail_share(self):
-        share = self.driver.find_element_by_class_name("sidebar-share")
+        share = self.driver.find_elements_by_class_name("sidebar-button")[2]
         share.click()
         time.sleep(2)
         shareB = self.driver.find_elements_by_class_name("button")[2]
@@ -420,7 +459,7 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         time.sleep(2)
 
     def test_selectMessage_share(self):
-        share = self.driver.find_element_by_class_name("sidebar-share")
+        share = self.driver.find_elements_by_class_name("sidebar-button")[2]
         share.click()
         time.sleep(2)
         shareB = self.driver.find_elements_by_class_name("button")[2]
@@ -431,35 +470,35 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         time.sleep(2)
 
     def test_selectSections_share(self):
-        share = self.driver.find_element_by_class_name("sidebar-share")
+        share = self.driver.find_elements_by_class_name("sidebar-button")[2]
         share.click()
         time.sleep(2)
         shareB = self.driver.find_elements_by_class_name("button")[2]
         shareB.click()
         time.sleep(2)
-        s1 = self.driver.find_elements_by_class_name("MuiTypography-root")[0]
+        s1 = self.driver.find_elements_by_class_name("PrivateSwitchBase-input-86")[0]
         s1.click()
         time.sleep(2)
-        s2 = self.driver.find_elements_by_class_name("MuiTypography-root")[1]
+        s2 = self.driver.find_elements_by_class_name("PrivateSwitchBase-input-86")[1]
         s2.click()
         time.sleep(2)
-        s3 = self.driver.find_elements_by_class_name("MuiTypography-root")[2]
+        s3 = self.driver.find_elements_by_class_name("PrivateSwitchBase-input-86")[2]
         s3.click()
         time.sleep(2)
 
     def test_selectReadonly_share(self):
-        share = self.driver.find_element_by_class_name("sidebar-share")
+        share = self.driver.find_elements_by_class_name("sidebar-button")[2]
         share.click()
         time.sleep(2)
         shareB = self.driver.find_elements_by_class_name("button")[2]
         shareB.click()
         time.sleep(2)
-        readOnly = self.driver.find_elements_by_class_name("MuiTypography-root")[3]
+        readOnly = self.driver.find_elements_by_class_name("PrivateSwitchBase-input-86")[3]
         readOnly.click()
         time.sleep(2)
 
     def test_shareButton_share(self):
-        share = self.driver.find_element_by_class_name("sidebar-share")
+        share = self.driver.find_elements_by_class_name("sidebar-button")[2]
         share.click()
         time.sleep(2)
         shareB = self.driver.find_elements_by_class_name("button")[2]
@@ -468,12 +507,9 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         email = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
         email.send_keys("test@gmail.com")
         time.sleep(2)
-        s1 = self.driver.find_elements_by_class_name("MuiTypography-root")[0]
-        s1.click()
-        time.sleep(2)
-        button = self.driver.find_elements_by_class_name("button")[4]
+        button = self.driver.find_element_by_class_name("MuiFormControl-root").find_element_by_class_name("button")
         button.click()
-        time.sleep(5)
+        time.sleep(10)
         assert "http://localhost:3000/clinician/Share" in self.driver.current_url
 
     def tearDown(self):
