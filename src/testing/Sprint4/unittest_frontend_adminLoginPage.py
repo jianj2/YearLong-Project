@@ -77,14 +77,14 @@ class unittest_frontend_adminLoginPage(unittest.TestCase):
         assert self.driver.find_elements_by_id("error-message-login")
 
     def test_login_success(self):
-            username = self.driver.find_element_by_name("username")
-            username.send_keys("AdminUser1")
-            password = self.driver.find_element_by_name("password")
-            password.send_keys("pw1234")
-            enter = self.driver.find_element_by_class_name("button")
-            enter.click()
-            time.sleep(2)
-            assert self.driver.find_element_by_class_name("content-container")
+        username = self.driver.find_element_by_name("username")
+        username.send_keys("AdminUser1")
+        password = self.driver.find_element_by_name("password")
+        password.send_keys("pw1234")
+        enter = self.driver.find_element_by_class_name("button")
+        enter.click()
+        time.sleep(2)
+        assert self.driver.find_element_by_class_name("content-container")
 
     def test_logout(self):
         username = self.driver.find_element_by_name("username")

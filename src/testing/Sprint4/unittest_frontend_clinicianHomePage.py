@@ -497,7 +497,69 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         readOnly.click()
         time.sleep(2)
 
-    def test_shareButton_share(self):
+    def test_share_noSection(self):
+        share = self.driver.find_elements_by_class_name("sidebar-button")[2]
+        share.click()
+        time.sleep(2)
+        shareB = self.driver.find_elements_by_class_name("button")[2]
+        shareB.click()
+        time.sleep(2)
+        s1 = self.driver.find_elements_by_class_name("PrivateSwitchBase-input-86")[0]
+        s1.click()
+        time.sleep(2)
+        s2 = self.driver.find_elements_by_class_name("PrivateSwitchBase-input-86")[1]
+        s2.click()
+        time.sleep(2)
+        s3 = self.driver.find_elements_by_class_name("PrivateSwitchBase-input-86")[2]
+        s3.click()
+        time.sleep(2)
+        email = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
+        email.send_keys("test@gmail.com")
+        time.sleep(2)
+        button = self.driver.find_element_by_class_name("MuiFormControl-root").find_element_by_class_name("button")
+        button.click()
+        time.sleep(10)
+
+    def test_share_oneSection(self):
+        share = self.driver.find_elements_by_class_name("sidebar-button")[2]
+        share.click()
+        time.sleep(2)
+        shareB = self.driver.find_elements_by_class_name("button")[2]
+        shareB.click()
+        time.sleep(2)
+        s1 = self.driver.find_elements_by_class_name("PrivateSwitchBase-input-86")[0]
+        s1.click()
+        time.sleep(2)
+        s2 = self.driver.find_elements_by_class_name("PrivateSwitchBase-input-86")[1]
+        s2.click()
+        time.sleep(2)
+        email = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
+        email.send_keys("test@gmail.com")
+        time.sleep(2)
+        button = self.driver.find_element_by_class_name("MuiFormControl-root").find_element_by_class_name("button")
+        button.click()
+        time.sleep(10)
+        assert "http://localhost:3000/clinician/Share" in self.driver.current_url
+
+    def test_share_twoSection(self):
+        share = self.driver.find_elements_by_class_name("sidebar-button")[2]
+        share.click()
+        time.sleep(2)
+        shareB = self.driver.find_elements_by_class_name("button")[2]
+        shareB.click()
+        time.sleep(2)
+        s1 = self.driver.find_elements_by_class_name("PrivateSwitchBase-input-86")[0]
+        s1.click()
+        time.sleep(2)
+        email = self.driver.find_elements_by_class_name("MuiInputBase-input")[0]
+        email.send_keys("test@gmail.com")
+        time.sleep(2)
+        button = self.driver.find_element_by_class_name("MuiFormControl-root").find_element_by_class_name("button")
+        button.click()
+        time.sleep(10)
+        assert "http://localhost:3000/clinician/Share" in self.driver.current_url
+
+    def test_share_allSection(self):
         share = self.driver.find_elements_by_class_name("sidebar-button")[2]
         share.click()
         time.sleep(2)
