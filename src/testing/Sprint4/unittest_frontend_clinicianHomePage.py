@@ -200,8 +200,8 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         relation = self.driver.find_elements_by_class_name("MuiInputBase-input")[5]
         relation.send_keys("Mother")
         time.sleep(2)
-        next = self.driver.find_elements_by_class_name("button")[2]
-        next.click()
+        next1 = self.driver.find_elements_by_class_name("button")[2]
+        next1.click()
         time.sleep(2)
         assert self.driver.find_element_by_class_name("scenario-container")
 
@@ -317,8 +317,8 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         relation = self.driver.find_elements_by_class_name("MuiInputBase-input")[5]
         relation.send_keys("Mother")
         time.sleep(2)
-        next = self.driver.find_elements_by_class_name("button")[2]
-        next.click()
+        next1 = self.driver.find_elements_by_class_name("button")[2]
+        next1.click()
         time.sleep(2)
         back = self.driver.find_elements_by_class_name("button")[1]
         back.click()
@@ -421,8 +421,8 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
         relation = self.driver.find_elements_by_class_name("MuiInputBase-input")[5]
         relation.send_keys("Mother")
         time.sleep(2)
-        next = self.driver.find_elements_by_class_name("button")[2]
-        next.click()
+        next1 = self.driver.find_elements_by_class_name("button")[2]
+        next1.click()
         time.sleep(2)
         notHear = self.driver.find_elements_by_class_name("MuiIconButton-label")[0]
         notHear.click()
@@ -518,4 +518,3 @@ class unittest_frontend_clinicianHomePage(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
