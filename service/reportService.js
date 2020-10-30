@@ -691,14 +691,15 @@ const generateAttachments = function (questionnaireId, personalDetails, question
                         lineSpacing += 20
 
                         doc.font('Helvetica-Bold').fontSize(12)
-                            .text('Relationship', 50, lineSpacing)
-                            .text('Completed By (Name)', 240, lineSpacing)
+                            .text('Completed By (Name)', 50, lineSpacing)
+                            .text('Relationship', 240, lineSpacing)
+
 
                         lineSpacing += 20
 
                         doc.font('Helvetica').fontSize(12)
-                            .text(personalDetails.completedByRelationship, 50, lineSpacing)
-                            .text(personalDetails.completedByName, 240, lineSpacing)
+                            .text(personalDetails.completedByName, 50, lineSpacing)
+                            .text(personalDetails.completedByRelationship, 240, lineSpacing)
                         lineSpacing += 30
                     } else {
                                 lineSpacing += 30
