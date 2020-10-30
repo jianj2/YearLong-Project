@@ -22,7 +22,7 @@ Open [http://localhost:3001](http://localhost:3001) to view it in the browser.
 ## Production Environment
 
 The GitHub repository is set up with a CI/CD pipeline to provide continuous integration to Heroku deployment via GitHub Actions. GitHub automatically deploys commits made for the server on the *production-server* branch to Heroku.<br />
-The environment variables that the Heroku apps use are encrypted secrets that can be configured under Settings in GitHub.<br />
+The environment variables that the Heroku app uses is encrypted secrets that can be configured under Settings in GitHub.<br />
 
 The server can be accessed at https://ssq-server.herokuapp.com/.<br />
 
