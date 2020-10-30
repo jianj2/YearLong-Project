@@ -12,7 +12,7 @@ const {
     getOrganisationCliniciansFromDatabase,
     authenticateAdmin,
 } = require("../service/adminService");
-const serverSecret = "secretLOL";
+const serverSecret = "fvpkZXY5BJBXImW8c";
 
 /**
  * =============================================================================
