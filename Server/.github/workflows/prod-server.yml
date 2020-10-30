@@ -3,9 +3,8 @@
 # ####################################################################
 # Mayank Sharma - 22th August 2020
 #
-# This YAML file runs a pipeline in GitHub Actions containing a number of jobs.
-# Jobs include testing the code and deploying the deployment-server and development-server branches
-# to Heroku.
+# This YAML file runs a pipeline in GitHub Actions.
+# Jobs include deploying the production-server branch to Heroku.
 
 ---
 name: server-CI/CD
@@ -13,35 +12,16 @@ name: server-CI/CD
 on:
   # Pipeline trigger on push
   push:
-    branches: 
-    - deployment-server 
-    - development-server
+    branches:
+    - production-server
   # Pipeline trigger on pull request
   pull_request:
     branches:
-    - development-server
+    - production-server
 
 jobs:
-  # Testing dependency installing
-  test:
-    runs-on: ubuntu-latest
-    name: test
-    steps:
-    # Checking out code to server
-    - name: Checkout
-      uses: actions/checkout@v2
-    # Setting up Node.js 14.8 for testing    
-    - name: Set up Node.js 14.x for testing
-      uses: actions/setup-node@v1
-      with:
-        node-version: 14.8
-    # Installing npm dependencies  
-    - name: Install dependencies    
-      run: npm install
-
   # Deploy nodejs to heroku
   deploy:
-    needs: test
     runs-on: ubuntu-latest
     name: deploy
     steps:
@@ -53,7 +33,7 @@ jobs:
       uses: akhileshns/heroku-deploy@v3.5.6
       with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}} # Heroku key
-        heroku_app_name: "dev-server" # Heroku app name
+        heroku_app_name: "ssq-server" # Heroku app name
         heroku_email: ${{secrets.HEROKU_EMAIL}} # Heroku email
       env:
         HD_SERVER: ${{secrets.HEROKU_SERVER}} # Server URL
@@ -61,3 +41,5 @@ jobs:
         HD_GMAILUSERNAME: ${{secrets.HEROKU_GMAILUSERNAME}} # Gmail username
         HD_GMAILPASSWORD: ${{secrets.HEROKU_GMAILPASSWORD}} # Gmail password
         HD_MONGOURI: ${{secrets.HEROKU_MONGOURI}} # Mongo URI
+
+        

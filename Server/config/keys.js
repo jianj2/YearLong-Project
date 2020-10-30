@@ -9,7 +9,7 @@
  */
 
 module.exports = {
-    MongoURI:'mongodb+srv://dev:pediatricssq@pediatricssq-yqbgg.mongodb.net/test?retryWrites=true&w=majority',
-    GmailUserName:'ssq.paediatric@gmail.com',
+    MongoURI:'mongodb+srv://dev:pediatricssq@pediatricssq-yqbgg.mongodb.net/production?retryWrites=true&w=majority',
+    GmailUserName:'noreply.ssq@gmail.com',
     GmailPassword:'zb5Mx6mKC*qTF5-#7h_ZN!C6'
 };

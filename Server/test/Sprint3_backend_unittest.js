@@ -188,7 +188,7 @@ describe('Sprint3 Backend unit-test',function(){
                     'questionnaireId': '0d59c9d0-e6c7-11ea-a7af-355badb8db84',
                     'readOnly': false,
                     'message': 'test',
-                    'shareSection':[{'title':'Section 1 - Speech','isVisible':true},{'title':'Section 2 - Spatial','isVisible':true},{'title':'Section 3 - Quality','isVisible':true}],})
+                    'shareSection':[{'title':'Section 1 - Speech','isVisible':true},{'title':'Section 2 - Spatial','isVisible':true},{'title':'Section 3 - Other Qualities','isVisible':true}],})
                 .end(function(err,res){
                     if(!err){
                         done();
