@@ -74,11 +74,11 @@ const addPage = function (doc, spacing, docHeight, paragraphHeight) {
 
 const scoreColour = function (doc, value) {
     if (value < 4.0) {
-        doc.fillColor('red')
+        doc.fillColor('black')
     } else if (value >= 4.0 && value < 7.0) {
-        doc.fillColor('orange')
+        doc.fillColor('black')
     } else if (value >= 7.0 && value <= 10.0) {
-        doc.fillColor('green')
+        doc.fillColor('black')
     }
 }
 
@@ -393,12 +393,11 @@ const speechSection = function (speechScenarios, subScaleScore) {
             }
         }
     }
-
     // Averaging the score for each subscale
-    subScaleScore.Speech.SpQ = (!isNaN(scoreSpQ / spQCount)) ? (scoreSpQ / spQCount) : "N/A"
-    subScaleScore.Speech.SpN = (!isNaN(scoreSpN / spNCount)) ? (scoreSpN / spNCount) : "N/A"
-    subScaleScore.Speech.SpSp = (!isNaN(scoreSpSp / spSpCount)) ? (scoreSpSp / spSpCount) : "N/A"
-    subScaleScore.Speech.SpStrm = (!isNaN(scoreSpStrm / spStrmCount)) ? (scoreSpStrm / spStrmCount) : "N/A"
+    subScaleScore.Speech.SpQ = (!isNaN(scoreSpQ / spQCount)) ? Math.round((scoreSpQ / spQCount) * 100) / 100 : "N/A"
+    subScaleScore.Speech.SpN = (!isNaN(scoreSpN / spNCount)) ? Math.round((scoreSpN / spNCount) * 100) / 100 : "N/A"
+    subScaleScore.Speech.SpSp = (!isNaN(scoreSpSp / spSpCount)) ? Math.round((scoreSpSp / spSpCount) * 100) / 100 : "N/A"
+    subScaleScore.Speech.SpStrm = (!isNaN(scoreSpStrm / spStrmCount)) ? Math.round((scoreSpStrm / spStrmCount) * 100) / 100 : "N/A"
 
     return subScaleScore;
 }
@@ -451,9 +450,10 @@ const spatialSection = function (spatialScenarios, subScaleScore) {
         }
     }
 
+
     // Averaging the score for each subscale
-    subScaleScore.Spatial.Localiz = (!isNaN(scoreLocaliz / localizCount)) ? (scoreLocaliz / localizCount) : "N/A"
-    subScaleScore.Spatial.Dist = (!isNaN(scoreDist / distCount)) ? (scoreDist / distCount) : "N/A"
+    subScaleScore.Spatial.Localiz = (!isNaN(scoreLocaliz / localizCount)) ? Math.round((scoreLocaliz / localizCount) * 100) / 100 : "N/A"
+    subScaleScore.Spatial.Dist = (!isNaN(scoreDist / distCount)) ? Math.round((scoreDist / distCount) * 100) / 100 : "N/A"
 
     return subScaleScore;
 }
@@ -509,10 +509,11 @@ const qualitiesSection = function (qualitiesScenarios, subScaleScore) {
         }
     }
 
+
     // Averaging the score for each subscale
-    subScaleScore.Qualities.Segreg = (!isNaN(scoreSegreg / segregCount)) ? (scoreSegreg / segregCount) : "N/A"
-    subScaleScore.Qualities.IDSound = (!isNaN(scoreIDSound / idSoundCount)) ? (scoreIDSound / idSoundCount) : "N/A"
-    subScaleScore.Qualities.ListEff = (!isNaN(scoreListEff / listEffCount)) ? (scoreListEff / listEffCount) : "N/A"
+    subScaleScore.Qualities.Segreg = (!isNaN(scoreSegreg / segregCount)) ? Math.round((scoreSegreg / segregCount) * 100) / 100 : "N/A"
+    subScaleScore.Qualities.IDSound = (!isNaN(scoreIDSound / idSoundCount)) ? Math.round((scoreIDSound / idSoundCount) * 100) / 100 : "N/A"
+    subScaleScore.Qualities.ListEff = (!isNaN(scoreListEff / listEffCount)) ? Math.round((scoreListEff / listEffCount) * 100) / 100 : "N/A"
 
     return subScaleScore;
 }
