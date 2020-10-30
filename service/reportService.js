@@ -71,18 +71,6 @@ const addPage = function (doc, spacing, docHeight, paragraphHeight) {
     return spacing;
 }
 
-
-const scoreColour = function (doc, value) {
-    if (value < 4.0) {
-        doc.fillColor('black')
-    } else if (value >= 4.0 && value < 7.0) {
-        doc.fillColor('black')
-    } else if (value >= 7.0 && value <= 10.0) {
-        doc.fillColor('black')
-    }
-}
-
-
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // This function is used to print the results on the document
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
