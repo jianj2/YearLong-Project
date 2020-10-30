@@ -1,9 +1,31 @@
+// Import Libraries.
+import React, { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
+import { withRouter } from "react-router-dom";
+// Import Utilities.
+import {
+    getSpecificInstruction,
+    getShareDetails,
+    getQuestionnaireById,
+    sendQuestionnaireData
+} from "../utils/API";
+import { HELPER_SORT } from "../utils/helper";
+// Import Components.
+import { FormParentDetails } from "../components/Forms";
+import {
+    Questionnaire,
+    ParentReviewSubmission,
+    Loading
+} from "../components/Commons";
+// Import assets.
+import logoComplete from "../assets/logo_complete.png";
+
 /**
- * ====================================================================
+ * =============================================================================
  * REACT SCREEN COMPONENT FUNCTION
- * ====================================================================
+ * =============================================================================
  * @date created: 10th May 2020
- * @authors:    Waqas Rehmani, Cary Jin, SaiEr Ding, Uvin AbeySinghe.
+ * @authors: Waqas Rehmani, Cary Jin, SaiEr Ding, Uvin AbeySinghe.
  *
  *
  * The Home screen component defines our screen for the route
@@ -14,32 +36,12 @@
  *
  */
 
-import React, { useState, useEffect } from "react";
-import { Link, withRouter } from "react-router-dom";
-
-// Import components.
-import FormParentDetails from "../components/FormParentDetails";
-import Questionnaire from "../components/Questionnaire";
-import ParentReviewSubmission from "../components/ParentReviewSubmission";
-import Loading from "../components/Loading";
-
-// Import assets.
-import logoComplete from "../assets/logo_complete.png";
-
-// Import utils
-import * as API from "../utils/api";
-
-// Import styles.
-import "../styles/parents.css";
-import "../styles/landing.css";
-import "../styles/main.css";
-
 const INSTRUCTIONS_READ_ONLY =
     "Go to the next page to view the questions. These would be the questions asked to you by the clinician on the call.";
-const INSTRUCTIONS = "We would have instructions here stored by the admin.";
-// ---------------------------------------------------------------
-// This method defines the elements for this component.
-// ---------------------------------------------------------------
+
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
 const HomeParents = ({ match }) => {
     const [wizardStep, setWizardStep] = useState(-2);
     const [questionnaire, setQuestionnaire] = useState({
@@ -47,17 +49,20 @@ const HomeParents = ({ match }) => {
         title: "",
         description: "",
         sections: [],
-        isStandard: true
+        isStandard: true,
+        isSSQ_Ch: true
     });
     const [clinicianEmail, setClinicianEmail] = useState("");
-    const [sortBy, setSortBy] = useState("PERFORMANCE");
+    const [sortBy, setSortBy] = useState(HELPER_SORT.PERFORMANCE);
 
     const [personalDetails, setPersonalDetails] = useState({
         name: "",
         date: "",
         completedBy: "parent",
         rightDeviceType: "",
-        leftDeviceType: ""
+        leftDeviceType: "",
+        completedByRelationship:"",
+        completedByName:""
     });
 
     const [questionnaireData, setQuestionnaireData] = useState([]);
@@ -74,19 +79,20 @@ const HomeParents = ({ match }) => {
         setPersonalDetails(data);
     };
 
-    const setQuestionnaireInstruction = (isSSQ_ch) => {
+    const setQuestionnaireInstruction = async (isSSQ_ch) => {
         let instructionType;
         if (isSSQ_ch) {
             instructionType = "RC";
         } else {
             instructionType = "RP";
         }
-        API.getSpecificInstruction(instructionType).then((res) => {
+        const [statusCode, res] = await getSpecificInstruction(instructionType);
+        if (statusCode === 200) {
             setInstruction({
                 title: res["title"],
                 content: res["content"]
             });
-        });
+        }
     };
 
     //////////// Share section update /////////////////////////////
@@ -98,7 +104,7 @@ const HomeParents = ({ match }) => {
                     return visibilityInfo.title === section.title;
                 }
             );
-            if (foundVisibilityInfo != undefined) {
+            if (foundVisibilityInfo !== undefined) {
                 return foundVisibilityInfo.isVisible;
             } else {
                 return null;
@@ -107,73 +113,84 @@ const HomeParents = ({ match }) => {
         return filteredSections;
     };
 
-    // set the updates questionnaire sections.
-    const updateSections = (questionnaire, sectionVisibility) => {
-        if (sectionVisibility != undefined) {
-            questionnaire.sections = getVisibleSections(
-                questionnaire.sections,
-                sectionVisibility
-            );
-        }
-    };
-
     //////////////////////////////////////////////////////////////
 
     // This is called when the component first mounts.
     useEffect(() => {
+        setLoading(true);
+        // set the updates questionnaire sections.
+        const updateSections = (questionnaire, sectionVisibility) => {
+            console.log("In")
+            console.log("VIsi", sectionVisibility)
+            console.log("Ques", questionnaire)
+
+            if (sectionVisibility) {
+                console.log("In if")
+
+                questionnaire.sections = getVisibleSections(
+                    questionnaire.sections,
+                    sectionVisibility
+                );
+            }
+        };
+
         // Server call to get the questionnaireId
-        API.getShareDetails(match.params.shareId).then((shareResponse) => {
-            if (shareResponse.statusCode === 200) {
-                console.log("shareResponse", shareResponse);
+        const getDetails = async () => {
+            const [statusCode, shareResponse] = await getShareDetails(match.params.shareId);
+            if (statusCode === 200) {
                 // Server call to get the questionnaire.
-                setSortBy(shareResponse.data.sortBy);
-                setClinicianEmail(shareResponse.data.clinicianEmail);
-                setReadOnly(shareResponse.data.readOnly);
-                API.getQuestionnaireById(
-                    shareResponse.data.questionnaireId
-                ).then((res) => {
-                    const [statusCode, data] = res;
-                    // Define initial values for the Questionnaire
-                    if (statusCode === 200) {
-                        updateSections(data, shareResponse.data.shareSection);
-                        let tempResponse = [];
-                        let tempComments = [];
-                        data.sections.forEach((section, sectionIndex) => {
-                            tempResponse[sectionIndex] = [];
-                            tempComments[sectionIndex] = [];
-                            section.scenarios.forEach(
-                                (scenario, scenarioIndex) => {
-                                    tempResponse[sectionIndex][scenarioIndex] = [];
-                                    tempComments[sectionIndex][scenarioIndex] = "";
-                                    scenario.questions.forEach(
-                                        (question, questionIndex) => {
-                                            tempResponse[sectionIndex][scenarioIndex][questionIndex] = {
-                                                value: "",
-                                                supplementaryValue: ""
-                                            };
-                                        }
-                                    );
-                                }
-                            );
-                        });
-                        // Updating the state using the initial data and the questionnaire
-                        // retrieved from the server.
-                        setCommentData(tempComments);
-                        setQuestionnaireData(tempResponse);
-                        setQuestionnaire(data);
+                setSortBy(shareResponse.sortBy);
+                setClinicianEmail(shareResponse.clinicianEmail);
+                setReadOnly(shareResponse.readOnly);
 
-                        setQuestionnaireInstruction(data.isSSQ_Ch);
+                const [statusCode, data] = await getQuestionnaireById(shareResponse.questionnaireId);
+                updateSections(data, shareResponse.shareSection);
+                // Define initial values for the Questionnaire
+                if (statusCode === 200) {
+                    let tempResponse = [];
+                    let tempComments = [];
+                    data.sections.forEach((section, sectionIndex) => {
+                        tempResponse[sectionIndex] = [];
+                        tempComments[sectionIndex] = [];
+                        section.scenarios.forEach(
+                            (scenario, scenarioIndex) => {
+                                tempResponse[sectionIndex][
+                                    scenarioIndex
+                                    ] = [];
+                                tempComments[sectionIndex][scenarioIndex] =
+                                    "";
+                                scenario.questions.forEach(
+                                    (question, questionIndex) => {
+                                        tempResponse[sectionIndex][
+                                            scenarioIndex
+                                            ][questionIndex] = {
+                                            value: "",
+                                            supplementaryValue: ""
+                                        };
+                                    }
+                                );
+                            }
+                        );
+                    });
+                    // Updating the state using the initial data and the questionnaire
+                    // retrieved from the server.
+                    setCommentData(tempComments);
+                    setQuestionnaireData(tempResponse);
+                    setQuestionnaire(data);
+                    setQuestionnaireInstruction(data.isSSQ_Ch);
 
-                        setWizardStep(0);
-                    } else {
-                        setWizardStep(-1);
-                    }
-                });
+                    setWizardStep(0);
+                } else {
+                    setWizardStep(-1);
+                }
             } else {
                 setWizardStep(-1);
             }
-        });
-    }, []);
+
+        };
+        getDetails();
+        setLoading(false);
+    }, [match]);
 
     // Method called to update questionnaire data when a question is updated.
     const handleQuestionnaireChange = (
@@ -213,7 +230,7 @@ const HomeParents = ({ match }) => {
         nextStep();
     };
 
-    const submitResponse = () => {
+    const submitResponse = async () => {
         let data = {
             questionnaireData,
             comments: commentData,
@@ -223,15 +240,17 @@ const HomeParents = ({ match }) => {
             sortBy
         };
 
-        console.log(data);
         setLoading(true);
-        API.sendQuestionnaireData(data, match.params.shareId).then((res) => {
-            if (res) {
-                setLoading(false);
-                nextStep();
-            }
-            console.log(res);
-        });
+        const [statusCode, response] = await sendQuestionnaireData(
+            data,
+            match.params.shareId
+        );
+        if (statusCode === 200) {
+            setLoading(false);
+            nextStep();
+        } else {
+            console.error(response);
+        }
     };
 
     if (wizardStep === -2) {
@@ -245,6 +264,11 @@ const HomeParents = ({ match }) => {
     if (wizardStep === -1) {
         return (
             <div className="parents-home">
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>SSQ: Client - Invalid Link</title>
+                </Helmet>
+
                 <div className="subheader-container"></div>
                 <div className="parents-container">
                     <h1 style={{ textAlign: "center" }}>
@@ -258,6 +282,11 @@ const HomeParents = ({ match }) => {
     if (wizardStep === 0) {
         return (
             <div className="parents-home">
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>SSQ: Client - Instructions</title>
+                </Helmet>
+
                 <div className="subheader-container">
                     <button className="button" onClick={nextStep}>
                         N E X T
@@ -270,7 +299,7 @@ const HomeParents = ({ match }) => {
                     ) : (
                         <div>
                             <h2>{instruction.title}</h2>
-                            <p>{instruction.content}</p>
+                            <p style={{whiteSpace:'pre-line'}}>{instruction.content}</p>
                         </div>
                     )}
                 </div>
@@ -283,6 +312,11 @@ const HomeParents = ({ match }) => {
         if (readOnly) nextStep();
         return (
             <div className="parents-home">
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>SSQ: Client - Participant Details</title>
+                </Helmet>
+
                 <div className="subheader-container">
                     <button
                         id="instructions"
@@ -300,15 +334,20 @@ const HomeParents = ({ match }) => {
                         defaultValue={personalDetails}
                         getPersonalDetails={getPersonalDetails}
                         isSSQ_Ch={questionnaire.isSSQ_Ch}
+                        loading={loading}
                     />
                 </div>
             </div>
         );
     }
-
     if (wizardStep === 2) {
         return (
             <div className="parents-home">
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>SSQ: Client - Questionnaire</title>
+                </Helmet>
+
                 <div className="subheader-container">
                     <button
                         id="instructions"
@@ -342,6 +381,11 @@ const HomeParents = ({ match }) => {
     if (wizardStep === 3) {
         return (
             <div className="parents-home">
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>SSQ: Client - Review Results</title>
+                </Helmet>
+
                 {loading ? <Loading/> : null}
                 <div className="subheader-container">
                     <button
@@ -368,7 +412,9 @@ const HomeParents = ({ match }) => {
                         questionnaire={questionnaire}
                         personalDetails={personalDetails}
                         questionnaireData={questionnaireData}
-                        commentData={commentData}
+                        commentData={commentData} 
+                        clinicianAccess={false}
+                        isSSQ_Ch={questionnaire.isSSQ_Ch}
                     />
                 </div>
             </div>
@@ -377,8 +423,13 @@ const HomeParents = ({ match }) => {
 
     return (
         <div className="landing">
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>SSQ: Client - Successfully Finished Questionnaire</title>
+            </Helmet>
+            
             <div className="landing-logo">
-                <img src={logoComplete}/>
+                <img src={logoComplete} alt="SSQ Logo"/>
             </div>
 
             <div className="form-completed">

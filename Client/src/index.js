@@ -1,14 +1,16 @@
 // src/index.js
 
+// Import Libraries.
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { Auth0Provider } from "./utils/react-auth0-spa";
 import { AdminAuthProvider } from "./utils/useAdminAuth";
 import config from "./auth_config.json";
 import history from "./utils/history";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+// Import Components.
+import App from "./App";
 
 // Defining Material UI Theme
 const theme = createMuiTheme({
@@ -40,19 +42,24 @@ const onRedirectCallback = (appState) => {
     );
 };
 
-const link = //`${process.env.REACT_APP_SERVER}/clinician` || 
-"http://localhost:3001/clinician";
+const production = process.env.NODE_ENV;
+
+const managementAPI = production === "production" ? "https://ssq.au.auth0.com/api/v2/" : "https://pediatric-scale.au.auth0.com/api/v2/";
+
+const domain = production === "production" ? config.prod_domain : config.domain;
+const client_id = production === "production" ? config.prod_clientId : config.clientId;
+
 
 ReactDOM.render(
     <React.StrictMode>
         <MuiThemeProvider theme={theme}>
             <AdminAuthProvider>
                 <Auth0Provider
-                    domain={config.domain}
-                    client_id={config.clientId}
-                    redirect_uri={window.location.origin}
+                    domain={domain}
+                    client_id={client_id}
+                    redirect_uri= {window.location.origin}
                     onRedirectCallback={onRedirectCallback}
-                    audience={link}
+                    audience={managementAPI}
                     scope={"read:current_user"}
                 >
                     <App />

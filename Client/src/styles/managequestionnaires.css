@@ -1,24 +1,28 @@
 /**
  * ====================================================================
- * CSS FILE TO STYLE the 'ManageQuestionnaires' Component
+ * CSS STYLING FILE
  * ====================================================================
  * @date created: 17th May 2020
  * @authors:Guang Yang
  *
- * This file contains all the CSS classes related to the ManageQuestionnaires
- * component to style the component.
- *
  */
+.center-h2 {
+    text-align: center;
+}
 
+.center-p {
+    text-align: center;
+}
 
 @media all and (max-width: 800px) {
-    .CQ-header, .SQ-header{
+    .CQ-header, .SQ-header {
         display: flex;
-        flex-direction: column; 
+        flex-direction: column;
         align-items: stretch;
         min-width: 400px;
     }
-    .CQ-header h1, .SQ-header h1{
+
+    .CQ-header h1, .SQ-header h1 {
         font-size: 6vw;
         min-width: 400px;
     }
@@ -26,66 +30,67 @@
 }
 
 
-.CQ-header,.SQ-header {
+.CQ-header, .SQ-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 2rem 0;
 }
-.CQ-header h1, .SQ-header h1{
+
+.CQ-header h1, .SQ-header h1 {
     font-weight: 200;
 }
 
-.q-frame{
+.q-frame {
     margin: 0 0 1rem 0;
     padding: 20px;
     border-radius: 10px;
     min-width: 400px;
-    border: rgba(255,255,255,0.3);
+    border: rgba(255, 255, 255, 0.3);
     border-style: solid;
     border-width: 1px;
     background-color: #1E1F48;
     position: relative;
 }
 
-.Add-btn{
+.Add-btn {
     position: relative;
     float: right;
     margin-top: 10px;
 }
 
-.q-name{
+.q-name {
     font-size: 18px;
     font-family: Raleway;
     width: fit-content;
-    display:flex;
-    margin-bottom:4px
+    display: flex;
+    margin-bottom: 4px
 }
 
-.q-description{
+.q-description {
     font-size: 12px;
     font-family: Raleway;
     width: fit-content;
-    display:flex;
+    display: flex;
     color: #888686;
-    margin-bottom:4px
+    margin-bottom: 4px
 }
 
-.date{
+.date {
     position: absolute;
-    top:10px;
-    right:10px;
-    
+    top: 10px;
+    right: 10px;
+
 }
 
-.edit-btn{
+.edit-btn {
     margin-right: 10px;
 }
 
-.btns-container{
+.btns-container {
     position: absolute;
-    right:10px;
-    top:40px;
+    right: 10px;
+    top: 40px;
     height: fit-content;
 }
 
@@ -94,7 +99,7 @@
 
     width: 40vw;
     /* background-color: rgba(200,200,200); */
-    background-color: rgba(18,19,58,1);
+    background-color: rgba(18, 19, 58, 1);
     outline: none;
     border-radius: 20px;
     display: flex;
@@ -110,14 +115,14 @@
     align-self: center;
 }
 
-.buttons-container{
+.buttons-container {
     text-align: center;
 }
 
- #margin-button{
+#margin-button {
     margin: 1rem 2rem;
 }
 
-.center-text{
+.center-text {
     text-align: center;
 }

@@ -1,5 +1,6 @@
 import unittest
 from selenium import webdriver
+from configparser import ConfigParser
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -10,7 +11,10 @@ import time
 class unittest_frontend_adminLoginPage(unittest.TestCase):
 
     def setUp(self):
-        self.driver = webdriver.Chrome("chromedriver.exe")
+        config_object = ConfigParser()
+        config_object.read("../driverConfig.ini")
+        self.driver = webdriver.Chrome(config_object["DRIVERLOCATION"]["Driver"])
+
         self.driver.get("http://localhost:3000/admin")
 
     def test_select_username(self):

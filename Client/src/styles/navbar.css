@@ -1,14 +1,11 @@
 /**
- * ====================================================================
- * CSS FILE TO STYLE the 'Navbar' Component
- * ====================================================================
- * @date created: 10th May 2020
- * @authors: Waqas Rehmani
- *
- * This file contains all the CSS classes related to the Navbar
- * component to style the component.
- *
- */
+  * ============================================================================
+  * CSS STYLING FILE
+  * ============================================================================
+  * @date created: 10th May 2020
+  * @authors: Waqas Rehmani
+  *
+*/
 
 .navbar-container {
     width: 96vw;
@@ -18,17 +15,63 @@
     justify-content: space-between;
     align-items: center;
     background-color: #151641;
-    box-shadow: 0 1px  20px 0 rgba(0,0,0,0.2);
-
-    /* border-bottom: 1px solid #000; */
-
+    box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.2);
 }
+
 .navbar-left {
 
 }
 
-.navbar-left img{
+.navbar-left img {
     height: 25px;
+    padding: 10px;
+    transition: all 0.1s;
+    animation: logo-animation 0.2s ease-in-out;
+}
+
+.navbar-left img:hover{
+    transform: scale(1.1);
+    animation: logo-animation-hover 0.5s ease-in-out;
+}
+
+.navbar-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+@keyframes logo-animation {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(-180deg) scale(0.5);
+    }
+    100% {
+        transform: rotate(-360deg) scale(1);
+    }
+}
+@keyframes logo-animation-hover {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(180deg) scale(0.6);
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+.navbar-center img {
+    height: 30px;
+    padding: 10px;
+    transition: all 0.1s;
+    animation: logo-animation 0.2s ease-in-out;
+}
+
+.navbar-center img:hover {
+    animation: logo-animation-hover 0.5s ease-in-out;
 }
 
 .navbar-right {
@@ -46,19 +89,17 @@
     align-items: center;
     font-size: 0.8rem;
     font-weight: 200;
-
-
 }
 
-.navbar-right label  {
+.navbar-right label {
     cursor: pointer;
     font-size: 0.8rem;
     font-weight: 200;
 }
+
 .navbar-right svg {
     cursor: pointer;
     color: #eee;
     padding: 5px;
     font-size: 2vh;
-
 }

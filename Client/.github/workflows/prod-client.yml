@@ -1,0 +1,41 @@
+# ####################################################################
+# PIPELINE YAML FILE
+# ####################################################################
+# Mayank Sharma - 22th August 2020
+#
+# This YAML file runs a pipeline in GitHub Actions.
+# Jobs include deploying the production-client branch to Heroku.
+
+---
+name: client-CI/CD
+
+on:
+  # Pipeline trigger on push
+  push:
+    branches: 
+    - production-client
+  # Pipeline trigger on pull request    
+  pull_request:
+    branches:
+    - production-client
+
+jobs:
+  # Deploy reactjs to heroku
+  deploy:
+    runs-on: ubuntu-latest
+    name: deploy
+    steps:
+    # Checking out code to server
+    - name: Checkout
+      uses: actions/checkout@v2
+    # Setting up heroku
+    - name: Set up Heroku
+      uses: akhileshns/heroku-deploy@v3.5.6
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}} # Heroku key
+        heroku_app_name: "ssq-client" # Heroku app name
+        heroku_email: ${{secrets.HEROKU_EMAIL}} # Heroku email
+        buildpack: "https://github.com/mars/create-react-app-buildpack.git" # Buildpack
+      env:
+        HD_REACT_APP_SERVER: ${{secrets.HEROKU_SERVER}} # Server URL
+        HD_REACT_APP_CLIENT: ${{secrets.HEROKU_CLIENT}} # Client URL

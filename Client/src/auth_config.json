@@ -1,4 +1,6 @@
 {
   "domain": "pediatric-scale.au.auth0.com",
-  "clientId": "ko5IIugoRXQf2uCpqRclocwbhrbqAYx4"
+  "clientId": "ko5IIugoRXQf2uCpqRclocwbhrbqAYx4",
+  "prod_domain": "ssq.au.auth0.com",
+  "prod_clientId": "cFvWQEJAqVjpvvvaz3WVkFsAilRxl8jo"
 }

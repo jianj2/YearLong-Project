@@ -1,7 +1,20 @@
+// Import Libraries.
+import React from "react";
+import { Helmet } from "react-helmet";
+// Import Utilities.
+import { useAdminAuth } from "../utils/useAdminAuth";
+import { USER_TYPE_ADMIN } from "../utils/helper";
+// Import Components.
+import { FormLoginAdmin } from "../components/Forms";
+import { SideBar, ContentPanel } from "../components/Commons";
+// Import Assets.
+import logoComplete from "../assets/logo_complete.png";
+import { Loading } from "../components/Commons";
+
 /**
- * ====================================================================
+ * =============================================================================
  * REACT SCREEN COMPONENT CLASS
- * ====================================================================
+ * =============================================================================
  * @date created: 10th May 2020
  * @authors: Waqas Rehmani, Cary Jin, SaiEr Ding
  *
@@ -13,58 +26,52 @@
  *
  */
 
-import React, { useEffect, useState } from "react";
-
-// Import Utilities
-
-import { useAdminAuth } from "../utils/useAdminAuth";
-
-// Import components
-import FormLoginAdmin from "../components/FormLoginAdmin";
-import AdminSideBar from "../components/Admin/AdminSideBar";
-import AdminContentPanel from "../components/Admin/AdminContentPanel";
-
-// Import styles.
-import "../styles/admin.css";
-import "../styles/main.css";
-
-// Import assets.
-import logoComplete from "../assets/logo_complete.png";
-import ContentPanel from "../components/Clinician/ContentPanel";
-import Loading from "../components/Loading";
-
-// ---------------------------------------------------------------
-// This function defines the Admin's Home screen.
-// ---------------------------------------------------------------
-const HomeAdmin = (props) => {
-    console.log("It exists",process.env.REACT_APP_SERVER);
+////////////////////////////////////////////////////////////////////////////////
+////                            Define Component                            ////
+////////////////////////////////////////////////////////////////////////////////
+const HomeAdmin = ({
+    active,
+    questionnaireID,
+    instructionType,
+    organName,
+    countryName
+}) => {
     const { isAdminAuthenticated, adminLogin, loading } = useAdminAuth();
-    if (loading == true) {
-        return <Loading />
+    if (loading === true) {
+        return <Loading/>;
     }
-    // console.log(loading,isAdminAuthenticated);
+
     if (isAdminAuthenticated === true) {
         return (
             <div className="HomeAdmin">
-                <AdminSideBar />
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>SSQ: Administrator</title>
+                </Helmet>
 
-                <AdminContentPanel
-                    active={props.active}
-                    questionnaireID={props.questionnaireID}
-                    instructionType = {props.instructionType}
-                    organName = {props.organName}
-                />
+                <SideBar userType={USER_TYPE_ADMIN}/>
+                
+                <div className="content-container">
+                    <ContentPanel
+                        userType={USER_TYPE_ADMIN}
+                        active={active}
+                        questionnaireID={questionnaireID}
+                        instructionType={instructionType}
+                        organName={organName}
+                        countryName={countryName}
+                    />
+                </div>
             </div>
         );
     } else {
         return (
             <div className="landing">
                 <div className="landing-logo">
-                    <img src={logoComplete} />
+                    <img src={logoComplete} alt="SSQ Logo"/>
                 </div>
 
                 <div className="landing-buttons">
-                    <FormLoginAdmin adminLogin={adminLogin} />
+                    <FormLoginAdmin adminLogin={adminLogin}/>
                 </div>
             </div>
         );

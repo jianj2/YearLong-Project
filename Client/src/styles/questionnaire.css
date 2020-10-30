@@ -1,76 +1,82 @@
+/**
+  * ============================================================================
+  * CSS STYLING FILE
+  * ============================================================================
+  * @date created: 13th May 2020
+  * @authors: Waqas Rehmani
+  *
+*/
+
 .questionaire-container h1 {
-    font-weight: 100; 
+    font-weight: 100;
 }
 
-.questionaire-container h2 { 
+.questionaire-container h2 {
     font-weight: 200;
     margin: 1rem 0;
 }
 
 .questionaire-container h4 {
-    display: inline; 
+    display: inline;
 }
- 
+
 .questionaire-container {
     margin: 0 0 2rem 0;
     /* padding: 20px; */
-    border-radius: 10px; 
+    border-radius: 10px;
     /* flexbox */
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+    -webkit-flex: 1;
+    -webkit-box-flex: 1;
+    -moz-flex: 1;
+    -moz-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
     flex-flow: column wrap;
     align-items: stretch;
 }
 
-/*questionnaire-container-outer{*/
-/*    overflow: hidden;*/
-/*}*/
-
-.section-container{
+.section-container {
     display: flex;
     flex-flow: column wrap;
-    align-items: stretch;   
-}
-.scenario-container{
-    /* flexbox */
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
-    flex-flow: column wrap;
-    align-items: stretch; 
-    border: 1px solid rgba(255,255,255,0.05);
-    background-color: rgba(255,255,255,0.03);
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 10px; 
-    /* flexbox */
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
-    flex-flow: column nowrap; 
-} 
-.question-container { 
-    /* flexbox */
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
-    flex-flow: column nowrap; 
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    align-items: stretch;
 }
 
+.scenario-container {
+    /* flexbox */
+    -webkit-flex: 1;
+    -webkit-box-flex: 1;
+    -moz-flex: 1;
+    -moz-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    flex-flow: column wrap;
+    align-items: stretch;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.03);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    /* flexbox */
+    -webkit-flex: 1;
+    -webkit-box-flex: 1;
+    -moz-flex: 1;
+    -moz-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    flex-flow: column nowrap;
+}
+
+.question-container {
+    /* flexbox */
+    -webkit-flex: 1;
+    -webkit-box-flex: 1;
+    -moz-flex: 1;
+    -moz-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    flex-flow: column nowrap;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
 
 .slider-labels {
     display: flex;
@@ -78,16 +84,22 @@
     align-items: center;
 }
 
+.slider-value-disappear {
+    background-color: rgba(245, 0, 87, 0.7);
+    padding: 0 !important;
+    margin: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Gill Sans';
+    font-weight: 200;
+    transition: all 0.1s;
+}
 
-/*.MuiSlider-mark{*/
-/*    backgroundColor: '#bfbfbf';*/
-/*    height: 80px;*/
-/*    width: 100px;*/
-/*    marginTop: -3;*/
-/*}*/
-
-
-.slider-value {
+.slider-value-display {
     background-color: rgba(245, 0, 87, 0.7);
     padding: 0 !important;
     margin: 0;
@@ -102,50 +114,48 @@
     transition: all 0.1s;
 }
 
-.slider-labels label{
-    /* padding: 10px 0 20px; */
-}
-
 .slider-checkboxes {
     /* flexbox */
-    -webkit-flex:1;
-    -webkit-box-flex:1;
-    -moz-flex:1;
-    -moz-box-flex:1;
-    -ms-flex:1;
-    flex:1;
+    -webkit-flex: 1;
+    -webkit-box-flex: 1;
+    -moz-flex: 1;
+    -moz-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
     flex-direction: row !important;
 }
 
 .questionaire-submit-button {
     display: flex;
-    flex:1;
+    flex: 1;
     justify-content: center;
     padding: 1rem 0 0;
 }
 
-
 .subquestion-container {
-    margin: 1rem 0 0 0 ;
-    /* padding: 0 0 0 2rem; */
-    border-top: 1px solid rgba(255,255,255,0.1);
-
+    margin: 1rem 0 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 .subquestion-container p {
     margin: 0.5rem 0;
     font-weight: 200;
     color: #888;
 }
 
-.comment-container{
+.comment-container {
     margin-top: 2vh;
 }
 
-.comment-input{
+.comment-input {
     width: 100%;
 }
 
-.comment-review-container{
+.comment-review-container {
     margin-top: 2vh;
     width: 100%;
+}
+
+.scenario-number {
+    font-size: 20px;
 }
