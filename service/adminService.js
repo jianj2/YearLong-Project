@@ -51,7 +51,7 @@ const authenticateAdmin = async (username, password) => {
         const isMatch = await compareAsync(password, admin.password);
 
         if (isMatch) {
-            const token = jwt.sign({ username: username }, "secretLOL", {
+            const token = jwt.sign({ username: username }, "fvpkZXY5BJBXImW8c", {
                 expiresIn: 86400 // expires in 24 hours
                 //expiresIn: 100, // expires in 100 seconds FOR TESTING
             });
