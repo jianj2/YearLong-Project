@@ -137,7 +137,7 @@ const printStandardQuestionnaireResults = function (doc, resultToPrint, startSpa
                 spacing = addPage(doc, spacing, docHeight)
                 let questionAnswer = question.response;
                 doc.font('Helvetica-Bold').fontSize(12).text(questionHeading[questionIndex] + ": ", rightMargin, spacing)
-                scoreColour(doc, questionAnswer)
+                doc.fillColor('black')
                 doc.font('Helvetica').fontSize(12).text(questionAnswer, answerMargin, spacing, {
                     width: paragraphWidth,
                     align: 'justify'
