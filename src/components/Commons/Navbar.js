@@ -1,6 +1,6 @@
 // Import Libraries.
 import React from "react";
-import { Link, withRouter } from 'react-router-dom'
+import { Link, withRouter } from "react-router-dom";
 import { IoMdLogOut } from "react-icons/io";
 // Import Utilities.
 import { useAuth0 } from "../../utils/react-auth0-spa";
@@ -29,14 +29,14 @@ const NavBar = ({ history }) => {
     const { isAuthenticated, logout } = useAuth0();
     const { isAdminAuthenticated, adminLogout } = useAdminAuth();
 
-    // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
+    // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     // If the user is a participant, we load a different kind of Navbar.
-    // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
+    // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     if (history.location.pathname.includes("participant")) {
         return (
             <div className="navbar-container">
                 <div className="navbar-center">
-                   <img src={logoCompressed} alt="logo" />
+                    <img src={logoCompressed} alt="logo" />
                 </div>
             </div>
         );
@@ -44,27 +44,23 @@ const NavBar = ({ history }) => {
         return (
             <div className="navbar-container">
                 <div className="navbar-left">
-                    {
-                        isAuthenticated ?
-                            <Link to="/clinician">
-                                <img src={logoCompressed} alt="logo" />
-                            </Link>
-                            : null
-                    }
-                    {
-                        isAdminAuthenticated ?
-                            <Link to="/admin">
-                                <img src={logoCompressed} alt="logo" />
-                            </Link>
-                            : null
-                    }
-                    {
-                        (!isAdminAuthenticated && !isAuthenticated) ?
-                                <img src={logoCompressed} alt="logo" />
-                            : null
-                    }
+                    {isAuthenticated ? (
+                        <Link to="/clinician">
+                            <img src={logoCompressed} alt="logo" />
+                        </Link>
+                    ) : null}
+                    {isAdminAuthenticated ? (
+                        <Link to="/admin">
+                            <img src={logoCompressed} alt="logo" />
+                        </Link>
+                    ) : null}
+                    {!isAdminAuthenticated && !isAuthenticated ? (
+                        <Link to="/">
+                            <img src={logoCompressed} alt="logo" />
+                        </Link>
+                    ) : null}
                 </div>
-    
+
                 <div className="navbar-right">
                     {isAuthenticated && (
                         <button
