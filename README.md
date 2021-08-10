@@ -6,7 +6,7 @@
 
 In the project directory, run the following commands step by step:
 
-### `git clone git@github.com:mayankshar21/SWEN90013-2020-PS.git`
+### `git@github.com:jianj2/YearLong-Project.git`
 
 This command allows the developer to obtain a development copy. It is a one-time operation.<br />
 
